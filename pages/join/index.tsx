@@ -1,10 +1,11 @@
 import type { NextPage } from 'next';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../src/components/Input';
+import { JoinModal } from '../../src/components/Join/Modal';
 import { useMutation } from '../../src/libs/client/useMutation';
 
-interface IJoinForm {
+export interface IJoinForm {
   username?: string;
   userId?: string;
   password?: string;
@@ -21,13 +22,26 @@ const Join: NextPage = () => {
   };
   //Post
   const [postJoin, { loading, data, error }] = useMutation('/api/user/join');
-  console.log('ERROR: ', error);
-  console.log(data);
+
+  //After post
+  const [modal, setModal] = useState(false);
+  useEffect(() => {
+    if (data?.ok) {
+      setModal(true);
+    }
+  }, [data]);
+  const toggleClick = () => {
+    setModal((value) => !value);
+  };
+  console.log(modal);
   //
   return (
     <>
+      {modal && <JoinModal toggleClick={toggleClick} />}
+      {/* {true && <JoinModal toggleClick={toggleClick} />} */}
       <form onSubmit={handleSubmit(onValid)}>
-        {!data?.ok && <span>{data.error}</span>}
+        {data?.error && <span>{data.error}</span>}
+        {error && <span>{error}</span>}
         <Input
           register={register('userId', { required: '아이디를 입력해주세요.' })}
           name="userId"
