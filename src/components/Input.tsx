@@ -1,4 +1,15 @@
-export const Input = (props: any) => {
+import { UseFormRegisterReturn } from 'react-hook-form';
+
+interface IInputProps {
+  register?: UseFormRegisterReturn;
+  name?: string;
+  type?: string;
+  placeholder?: string;
+  loading?: boolean;
+  btnName?: string;
+}
+
+export const Input = (props: IInputProps) => {
   return (
     <>
       {props.type !== 'submit' && (
@@ -10,7 +21,7 @@ export const Input = (props: any) => {
         />
       )}
       {props.type === 'submit' && (
-        <input type={props.type} value={props.value} />
+        <button type={props.type}>{props.btnName}</button>
       )}
     </>
   );
