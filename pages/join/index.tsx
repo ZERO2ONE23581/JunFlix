@@ -1,12 +1,22 @@
 import type { NextPage } from 'next';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../src/components/Input';
 
 const Join: NextPage = () => {
+  //Form
   const { register, handleSubmit } = useForm();
   const onValid = (formData: any) => {
-    console.log(formData);
+    //Post
+    fetch('/api/user/join', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   };
+
   //
   return (
     <>
