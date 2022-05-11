@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prismaClient from '../../src/libs/server/prisma_client';
+import prismaClient from '../../../src/libs/server/prisma_client';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
