@@ -2,21 +2,17 @@ import type { NextPage } from 'next';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../src/components/Input';
+import { useMutation } from '../../src/libs/client/useMutation';
 
 const Join: NextPage = () => {
   //Form
   const { register, handleSubmit } = useForm();
   const onValid = (formData: any) => {
-    //Post
-    fetch('/api/user/join', {
-      method: 'POST',
-      body: JSON.stringify(formData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    postJoin(formData);
   };
-
+  //Post
+  const [postJoin, { loading, data, error }] = useMutation('/api/user/join');
+  console.log(data);
   //
   return (
     <>

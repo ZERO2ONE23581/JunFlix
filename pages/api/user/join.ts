@@ -6,8 +6,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   const data = req.body;
   console.log(data);
-
+  return res.json({ ok: true });
   //
-  return;
+  // return;
 }
-export default withHandler(['GET', 'POST'], handler);
+export default withHandler(['POST'], handler);
