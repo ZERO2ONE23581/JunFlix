@@ -14,17 +14,11 @@ export interface IJoinForm {
   confirmPw?: string;
   email?: string;
   idCheckError?: string;
-  userIdCheck?: string;
 }
 
 const Join: NextPage = () => {
   //Post
   const [postJoin, { loading, data, error }] = useMutation('/api/user/join');
-  const [
-    postCheck,
-    { loading: checkLoading, data: checkData, error: checkError },
-  ] = useMutation('/api/user/join/userId_check');
-  console.log(checkData);
 
   //Form
   const {
@@ -38,33 +32,39 @@ const Join: NextPage = () => {
     getValues,
   } = useForm<IJoinForm>({ mode: 'onBlur' });
   //
+
   const onValid = (formData: IJoinForm) => {
     //아이디 중복체크
-    if (!checkData) {
-      setError('idCheckError', {
+    if (!confirm) {
+      return setError('idCheckError', {
         message: '아이디 중복확인을 실행해주세요.',
       });
     }
+    console.log('성공');
     return;
     if (loading) return;
     postJoin(formData);
   };
 
-  const onValidCheck = ({ userIdCheck }: IJoinForm) => {
-    if (checkLoading) return;
-    return postCheck(userIdCheck);
+  const [confirm, setConfirm] = useState(false);
+  const confirmClick = () => {
+    setConfirm((p) => !p);
+    return setOpenIdModal((value) => !value);
   };
 
   //Modal
   const [modal, setModal] = useState(false);
+  const [openIdModal, setOpenIdModal] = useState(false);
 
   useEffect(() => {
     if (data?.ok) {
       setModal(true);
     }
   }, [data]);
-  const toggleClick = () => {
-    setModal((value) => !value);
+
+  const toggleClick = (idCheck: string, final: string) => {
+    if (idCheck) return setOpenIdModal((value) => !value);
+    if (final) return setModal((value) => !value);
   };
 
   //UI
@@ -90,30 +90,22 @@ const Join: NextPage = () => {
     watch('email'),
   ]);
 
-  useEffect(() => {
-    setValue('userIdCheck', getValues('userId'));
-  }, [getValues('userId')]);
-
   //
   return (
     <>
       {modal && <JoinModal toggleClick={toggleClick} />}
-      {/* {true && <JoinModal toggleClick={toggleClick} />} */}
 
-      <form onSubmit={handleSubmit(onValidCheck)}>
-        <input
-          {...register('userIdCheck')}
-          type="text"
-          // value={getValues('userId')}
-          // disabled={true}
+      {openIdModal && (
+        <IdModal
+          userId={getValues('userId')}
+          confirmClick={confirmClick}
+          toggleClick={toggleClick}
         />
-        <input
-          type="submit"
-          value={checkLoading ? 'Loading...' : '아이디 중복체크'}
-        />
-      </form>
+      )}
+      <button onClick={() => setOpenIdModal((p) => !p)}>아이디 중복체크</button>
 
       <Form onSubmit={handleSubmit(onValid)}>
+        {!confirm && <Error>{errors?.idCheckError?.message}</Error>}
         <>
           {data?.error && <span>{data.error}</span>}
           {error && <span>{error}</span>}
@@ -140,10 +132,8 @@ const Join: NextPage = () => {
               placeholder="아이디를 입력해주세요."
               errMsg={errors.userId?.message}
             />
-            {errors.idCheckError && (
-              <Error>{errors.idCheckError.message}</Error>
-            )}
-            {checkData?.ok && state.layerTwo && (
+
+            {confirm && state.layerTwo && (
               <SecondLayer>
                 <Input
                   label="PASSWORD"
@@ -212,7 +202,7 @@ const FourthLayer = styled(ThirdLayer)`
   border: 2px solid green;
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
   padding: 20px;
   border: 5px solid black;
   margin: 100px auto;
