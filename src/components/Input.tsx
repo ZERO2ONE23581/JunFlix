@@ -34,6 +34,8 @@ export const Input = (props: IInputProps) => {
     </>
   );
 };
-const Error = styled.span`
+export const Error = styled.span`
   color: red;
+  font-style: italic;
+  background-color: bisque;
 `;

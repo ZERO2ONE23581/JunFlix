@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Input } from '../../src/components/Input';
+import { Error, Input } from '../../src/components/Input';
 import { IdModal } from '../../src/components/Join/IdModal';
 import { JoinModal } from '../../src/components/Join/Modal';
 import { useMutation } from '../../src/libs/client/useMutation';
@@ -13,23 +13,36 @@ export interface IJoinForm {
   password?: string;
   confirmPw?: string;
   email?: string;
+  idCheckError?: string;
 }
 
 const Join: NextPage = () => {
+  //Post
+  const [postJoin, { loading, data, error }] = useMutation('/api/user/join');
+  const [
+    postCheck,
+    { loading: checkLoading, data: checkData, error: checkError },
+  ] = useMutation('/api/user/userId_check');
+
   //Form
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
+    setError,
   } = useForm<IJoinForm>({ mode: 'onBlur' });
   //
   const onValid = (formData: IJoinForm) => {
+    //아이디 중복체크
+    if (!checkData) {
+      setError('idCheckError', {
+        message: '아이디 중복확인을 실행해주세요.',
+      });
+    }
     if (loading) return;
     postJoin(formData);
   };
-  //Post
-  const [postJoin, { loading, data, error }] = useMutation('/api/user/join');
 
   //Modal
   const [modal, setModal] = useState(false);
@@ -65,12 +78,15 @@ const Join: NextPage = () => {
     watch('confirmPw'),
     watch('email'),
   ]);
+  console.log(errors.idCheckError);
   //
   return (
     <>
       {modal && <JoinModal toggleClick={toggleClick} />}
       {idModal && <IdModal toggleClick={toggleClick} />}
       {/* {true && <JoinModal toggleClick={toggleClick} />} */}
+
+      <button>아이디 중복체크</button>
 
       <Form onSubmit={handleSubmit(onValid)}>
         <>
@@ -99,7 +115,10 @@ const Join: NextPage = () => {
               placeholder="아이디를 입력해주세요."
               errMsg={errors.userId?.message}
             />
-            {state.layerTwo && (
+            {errors.idCheckError && (
+              <Error>{errors.idCheckError.message}</Error>
+            )}
+            {checkData && state.layerTwo && (
               <SecondLayer>
                 <Input
                   label="PASSWORD"
