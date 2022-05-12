@@ -13,7 +13,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     where: { userId },
   });
   if (dupData)
-    return res.json({ ok: false, error: '이미 가입한 아이디 입니다.' });
+    return res.json({ ok: false, error: '이미 가입한 아이디 입니다.', userId });
   //
   return res.json({ ok: true, userId });
 }

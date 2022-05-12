@@ -40,7 +40,7 @@ const Join: NextPage = () => {
         message: '아이디 중복확인을 실행해주세요.',
       });
     }
-    console.log('성공');
+
     return;
     if (loading) return;
     postJoin(formData);
@@ -48,13 +48,14 @@ const Join: NextPage = () => {
 
   const [confirm, setConfirm] = useState(false);
   const confirmClick = () => {
-    setConfirm((p) => !p);
+    setConfirm(true);
     return setOpenIdModal((value) => !value);
   };
 
   //Modal
   const [modal, setModal] = useState(false);
   const [openIdModal, setOpenIdModal] = useState(false);
+  const [openBtn, setOpenBtn] = useState(false);
 
   useEffect(() => {
     if (data?.ok) {
@@ -77,6 +78,7 @@ const Join: NextPage = () => {
   });
   //
   useEffect(() => {
+    setOpenBtn(Boolean(watch('userId')));
     setState((prev) => ({ ...prev, layerOne: Boolean(watch('username')) }));
     setState((prev) => ({ ...prev, layerTwo: Boolean(watch('userId')) }));
     setState((prev) => ({ ...prev, layerThree: Boolean(watch('password')) }));
@@ -90,6 +92,15 @@ const Join: NextPage = () => {
     watch('email'),
   ]);
 
+  //GET VALUE FROM MODAL
+  const [dataFromModal, setDataFromModal] = useState('');
+  const handleData = (data: any) => {
+    setDataFromModal(data);
+  };
+  useEffect(() => {
+    setValue('userId', dataFromModal);
+  }, [dataFromModal]);
+
   //
   return (
     <>
@@ -97,12 +108,18 @@ const Join: NextPage = () => {
 
       {openIdModal && (
         <IdModal
+          handleData={handleData}
           userId={getValues('userId')}
           confirmClick={confirmClick}
           toggleClick={toggleClick}
         />
       )}
-      <button onClick={() => setOpenIdModal((p) => !p)}>아이디 중복체크</button>
+
+      {openBtn && (
+        <button onClick={() => setOpenIdModal((p) => !p)}>
+          아이디 중복체크
+        </button>
+      )}
 
       <Form onSubmit={handleSubmit(onValid)}>
         {!confirm && <Error>{errors?.idCheckError?.message}</Error>}

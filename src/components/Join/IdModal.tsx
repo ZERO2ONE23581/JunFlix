@@ -3,19 +3,33 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form } from '../../../pages/join';
 import { useMutation } from '../../libs/client/useMutation';
-import { Error } from '../Input';
+import { Error, Input } from '../Input';
 
-export const IdModal = ({ userId, confirmClick, toggleClick }: any) => {
+export const IdModal = ({
+  handleData,
+  userId,
+  confirmClick,
+  toggleClick,
+}: any) => {
   //POST API
   const [postCheck, { loading, data, error }] = useMutation(
     '/api/user/join/userId_check'
   );
 
   //FORM SUBMIT
-  const { register, handleSubmit, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm();
+
   const onValid = ({ checkID }: any) => {
     if (loading) return;
     postCheck(checkID);
+    setResult((p) => !p);
+    // reset();
   };
 
   //GET VALUE
@@ -23,26 +37,50 @@ export const IdModal = ({ userId, confirmClick, toggleClick }: any) => {
     setValue('checkID', userId);
     if (data?.ok) {
       setValue('userId', data?.userId);
+      setValue('checkID', data?.userId);
+      const value = getValues('checkID');
+      handleData(value);
+    }
+    if (data?.error) {
+      setValue('checkID', data?.userId);
     }
   }, [userId, data]);
 
+  const [result, setResult] = useState(false);
+  const clickRewrite = () => {
+    setResult((p) => !p);
+  };
   //
   return (
     <>
       <ModalCont>
         <button onClick={toggleClick}>❌</button>
 
-        {data?.error && <Error>{data?.error}</Error>}
-        {data?.ok ? (
+        {result && data?.error && (
           <>
-            <h1>"{data?.userId}"는 사용가능한 아이디 입니다.</h1>
-            <h2>사용하시겠습니까?</h2>
-            <button onClick={confirmClick}>YES</button>
-            <button onClick={confirmClick}>NO</button>
+            <Error>{data?.error}</Error>
+            <button onClick={clickRewrite}>Back</button>
+          </>
+        )}
+        {result ? (
+          <>
+            {!data?.error && data?.userId && (
+              <>
+                <h2>
+                  "{data?.userId}"는 사용가능한 아이디 입니다. 사용하시겠습니까?
+                </h2>
+                <button onClick={confirmClick}>YES</button>
+                <button onClick={clickRewrite}>NO</button>
+              </>
+            )}
           </>
         ) : (
           <Form onSubmit={handleSubmit(onValid)}>
-            <input {...register('checkID')} type="text" />
+            <input
+              {...register('checkID')}
+              type="text"
+              placeholder="아이디를 입력해주세요."
+            />
             <button type="submit">
               {loading ? 'Loading...' : '아이디 중복체크'}
             </button>
