@@ -34,6 +34,11 @@ export const ModalCont = styled.article`
   top: 0;
   left: 0;
   //
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  //
   background-color: whitesmoke;
   z-index: 999;
   width: 700px;

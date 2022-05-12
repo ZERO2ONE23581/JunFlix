@@ -17,10 +17,10 @@ export interface IJoinForm {
 }
 
 const Join: NextPage = () => {
-  //Post
+  //Post api
   const [postJoin, { loading, data, error }] = useMutation('/api/user/join');
 
-  //Form
+  //Submit Form
   const {
     register,
     handleSubmit,
@@ -31,45 +31,44 @@ const Join: NextPage = () => {
     setValue,
     getValues,
   } = useForm<IJoinForm>({ mode: 'onBlur' });
-  //
 
+  //아이디 중복체크 모달
+  const [confirm, setConfirm] = useState(false);
+  const [openIdModal, setOpenIdModal] = useState(false);
+  const confirmClick = () => {
+    setConfirm(true);
+    return setOpenIdModal((value) => !value);
+    //confirm해주고 모달을 닫아준다.
+  };
+
+  //
   const onValid = (formData: IJoinForm) => {
-    //아이디 중복체크
     if (!confirm) {
       return setError('idCheckError', {
         message: '아이디 중복확인을 실행해주세요.',
       });
     }
-
-    return;
     if (loading) return;
     postJoin(formData);
   };
 
-  const [confirm, setConfirm] = useState(false);
-  const confirmClick = () => {
-    setConfirm(true);
-    return setOpenIdModal((value) => !value);
-  };
-
-  //Modal
+  //최종확인 모달
   const [modal, setModal] = useState(false);
-  const [openIdModal, setOpenIdModal] = useState(false);
-  const [openBtn, setOpenBtn] = useState(false);
-
   useEffect(() => {
     if (data?.ok) {
       setModal(true);
     }
   }, [data]);
 
+  //클릭시 각각 모달을 닫아준다.
   const toggleClick = (idCheck: string, final: string) => {
     if (idCheck) return setOpenIdModal((value) => !value);
     if (final) return setModal((value) => !value);
   };
 
-  //UI
+  //아이디입력 -> 버튼생성 -> 아이디확인 -> 패스워드생성 (+패스워드확인) -> 이메일생성 -> 회원가입
   const [state, setState] = useState({
+    openBtn: false,
     layerOne: false,
     layerTwo: false,
     layerThree: false,
@@ -78,7 +77,7 @@ const Join: NextPage = () => {
   });
   //
   useEffect(() => {
-    setOpenBtn(Boolean(watch('userId')));
+    setState((prev) => ({ ...prev, openBtn: Boolean(watch('userId')) }));
     setState((prev) => ({ ...prev, layerOne: Boolean(watch('username')) }));
     setState((prev) => ({ ...prev, layerTwo: Boolean(watch('userId')) }));
     setState((prev) => ({ ...prev, layerThree: Boolean(watch('password')) }));
@@ -115,14 +114,13 @@ const Join: NextPage = () => {
         />
       )}
 
-      {openBtn && (
+      {state.openBtn && (
         <button onClick={() => setOpenIdModal((p) => !p)}>
           아이디 중복체크
         </button>
       )}
 
       <Form onSubmit={handleSubmit(onValid)}>
-        {!confirm && <Error>{errors?.idCheckError?.message}</Error>}
         <>
           {data?.error && <span>{data.error}</span>}
           {error && <span>{error}</span>}
@@ -137,6 +135,7 @@ const Join: NextPage = () => {
           placeholder="닉네임을 입력해주세요."
           errMsg={errors.username?.message}
         />
+
         {state.layerOne && (
           <FirstLayer>
             <Input
@@ -149,6 +148,7 @@ const Join: NextPage = () => {
               placeholder="아이디를 입력해주세요."
               errMsg={errors.userId?.message}
             />
+            {!confirm && <Error>{errors?.idCheckError?.message}</Error>}
 
             {confirm && state.layerTwo && (
               <SecondLayer>

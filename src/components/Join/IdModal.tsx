@@ -4,6 +4,12 @@ import { useForm } from 'react-hook-form';
 import { Form } from '../../../pages/join';
 import { useMutation } from '../../libs/client/useMutation';
 import { Error, Input } from '../Input';
+import { Btn } from '../Btn';
+import { ModalClose, ModalCont } from './Modal';
+
+interface IIDModalForm {
+  checkID?: string;
+}
 
 export const IdModal = ({
   handleData,
@@ -11,101 +17,108 @@ export const IdModal = ({
   confirmClick,
   toggleClick,
 }: any) => {
-  //POST API
+  //Post api
   const [postCheck, { loading, data, error }] = useMutation(
     '/api/user/join/userId_check'
   );
 
-  //FORM SUBMIT
+  //Submit Form
   const {
     register,
     handleSubmit,
     setValue,
     getValues,
     formState: { errors },
-  } = useForm();
+  } = useForm<IIDModalForm>({ mode: 'onSubmit' });
 
-  const onValid = ({ checkID }: any) => {
+  const onValid = ({ checkID }: IIDModalForm) => {
     if (loading) return;
     postCheck(checkID);
-    setResult((p) => !p);
-    // reset();
+    setSubmit((p) => !p);
+    //로딩 -> fecth Post -> close modal
   };
 
-  //GET VALUE
+  //Modal Control
+  const [submit, setSubmit] = useState(false);
+  const backClick = () => {
+    setSubmit((p) => !p);
+  };
+
+  //Setting
   useEffect(() => {
+    //초기모달 인풋데이터 === 회원가입폼 프랍데이터
     setValue('checkID', userId);
-    if (data?.ok) {
-      setValue('userId', data?.userId);
-      setValue('checkID', data?.userId);
-      const value = getValues('checkID');
-      handleData(value);
-    }
+    //에러 발생뒤 뒤로가기 버튼 누를시
     if (data?.error) {
       setValue('checkID', data?.userId);
     }
-  }, [userId, data]);
+    if (data?.ok) {
+      //데이터 fetch로 받은후, 인풋데이터 = 받은데이터
+      setValue('checkID', data?.userId);
+      handleData(getValues('checkID'));
+    }
+  }, [data]);
 
-  const [result, setResult] = useState(false);
-  const clickRewrite = () => {
-    setResult((p) => !p);
-  };
   //
   return (
     <>
-      <ModalCont>
-        <button onClick={toggleClick}>❌</button>
+      <Cont>
+        <Btn type="toggle" onClick={toggleClick} btnName={'❌'} />
+        {loading && <h2>Loading...</h2>}
 
-        {result && data?.error && (
-          <>
+        {submit && data?.error && (
+          <article className="error">
             <Error>{data?.error}</Error>
-            <button onClick={clickRewrite}>Back</button>
-          </>
+            <Btn type="button" onClick={backClick} btnName="아이디 재확인" />
+          </article>
         )}
-        {result ? (
+
+        {!submit ? (
+          <Form onSubmit={handleSubmit(onValid)}>
+            <Input
+              register={register('checkID', {
+                required: '아이디를 입력해주세요.',
+              })}
+              type="text"
+              name="checkID"
+              placeholder="아이디를 입력해주세요."
+              errMsg={errors.checkID?.message}
+            />
+            <Btn
+              type="submit"
+              btnName={loading ? 'Loading...' : '아이디 중복체크'}
+            />
+          </Form>
+        ) : (
           <>
             {!data?.error && data?.userId && (
-              <>
-                <h2>
-                  "{data?.userId}"는 사용가능한 아이디 입니다. 사용하시겠습니까?
-                </h2>
-                <button onClick={confirmClick}>YES</button>
-                <button onClick={clickRewrite}>NO</button>
-              </>
+              <article className="pass">
+                <h2>"{data?.userId}"는 사용가능한 아이디 입니다.</h2>
+                <p>사용하시겠습니까?</p>
+                <div className="btn-wrap">
+                  <Btn type="button" btnName="YES" onClick={confirmClick} />
+                  <Btn type="button" btnName="NO" onClick={backClick} />
+                </div>
+              </article>
             )}
           </>
-        ) : (
-          <Form onSubmit={handleSubmit(onValid)}>
-            <input
-              {...register('checkID')}
-              type="text"
-              placeholder="아이디를 입력해주세요."
-            />
-            <button type="submit">
-              {loading ? 'Loading...' : '아이디 중복체크'}
-            </button>
-          </Form>
         )}
-      </ModalCont>
+      </Cont>
       <ModalClose onClick={toggleClick} />
     </>
   );
 };
-export const ModalCont = styled.article`
-  position: absolute;
-  top: 0;
-  left: 0;
-  //
-  background-color: whitesmoke;
-  z-index: 999;
-  width: 700px;
-  height: 300px;
-`;
-export const ModalClose = styled.article`
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  width: 100vw;
-  height: 100vh;
+
+export const Cont = styled(ModalCont)`
+  .pass,
+  .error {
+    width: 60%;
+    text-align: center;
+  }
+  .pass {
+    .btn-wrap {
+      display: flex;
+      gap: 10px;
+    }
+  }
 `;
