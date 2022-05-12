@@ -14,6 +14,7 @@ export interface IJoinForm {
   confirmPw?: string;
   email?: string;
   idCheckError?: string;
+  userIdCheck?: string;
 }
 
 const Join: NextPage = () => {
@@ -22,7 +23,8 @@ const Join: NextPage = () => {
   const [
     postCheck,
     { loading: checkLoading, data: checkData, error: checkError },
-  ] = useMutation('/api/user/userId_check');
+  ] = useMutation('/api/user/join/userId_check');
+  console.log(checkData);
 
   //Form
   const {
@@ -31,6 +33,9 @@ const Join: NextPage = () => {
     formState: { errors },
     watch,
     setError,
+    reset,
+    setValue,
+    getValues,
   } = useForm<IJoinForm>({ mode: 'onBlur' });
   //
   const onValid = (formData: IJoinForm) => {
@@ -40,13 +45,19 @@ const Join: NextPage = () => {
         message: '아이디 중복확인을 실행해주세요.',
       });
     }
+    return;
     if (loading) return;
     postJoin(formData);
   };
 
+  const onValidCheck = ({ userIdCheck }: IJoinForm) => {
+    if (checkLoading) return;
+    return postCheck(userIdCheck);
+  };
+
   //Modal
   const [modal, setModal] = useState(false);
-  const [idModal, setIdModal] = useState(false);
+
   useEffect(() => {
     if (data?.ok) {
       setModal(true);
@@ -78,15 +89,29 @@ const Join: NextPage = () => {
     watch('confirmPw'),
     watch('email'),
   ]);
-  console.log(errors.idCheckError);
+
+  useEffect(() => {
+    setValue('userIdCheck', getValues('userId'));
+  }, [getValues('userId')]);
+
   //
   return (
     <>
       {modal && <JoinModal toggleClick={toggleClick} />}
-      {idModal && <IdModal toggleClick={toggleClick} />}
       {/* {true && <JoinModal toggleClick={toggleClick} />} */}
 
-      <button>아이디 중복체크</button>
+      <form onSubmit={handleSubmit(onValidCheck)}>
+        <input
+          {...register('userIdCheck')}
+          type="text"
+          // value={getValues('userId')}
+          // disabled={true}
+        />
+        <input
+          type="submit"
+          value={checkLoading ? 'Loading...' : '아이디 중복체크'}
+        />
+      </form>
 
       <Form onSubmit={handleSubmit(onValid)}>
         <>
@@ -118,7 +143,7 @@ const Join: NextPage = () => {
             {errors.idCheckError && (
               <Error>{errors.idCheckError.message}</Error>
             )}
-            {checkData && state.layerTwo && (
+            {checkData?.ok && state.layerTwo && (
               <SecondLayer>
                 <Input
                   label="PASSWORD"

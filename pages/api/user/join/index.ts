@@ -1,10 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prismaClient from '../../../src/libs/server/prisma_client';
-import withHandler from '../../../src/libs/server/withHandler';
+import prismaClient from '../../../../src/libs/server/prisma_client';
+import withHandler from '../../../../src/libs/server/withHandler';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { username, userId, password, confirmPassword, email } = req.body;
-
   //데이터 미입력 체크
   const data = Boolean(
     username && (userId || email) && password && confirmPassword
@@ -18,17 +17,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   //중복체크
   if (userId) {
-    const DupData = await prismaClient.user.findUnique({
+    const dupData = await prismaClient.user.findUnique({
       where: { userId },
     });
-    if (DupData)
+    if (dupData)
       return res.json({ ok: false, error: '이미 가입한 아이디 입니다.' });
   }
   if (email) {
-    const DupData = await prismaClient.user.findUnique({
+    const dupData = await prismaClient.user.findUnique({
       where: { email },
     });
-    if (DupData)
+    if (dupData)
       return res.json({ ok: false, error: '이미 가입한 이메일 입니다.' });
   }
 
