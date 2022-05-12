@@ -5,7 +5,7 @@ import { Form } from '../../../pages/join';
 import { useMutation } from '../../libs/client/useMutation';
 import { Error, Input } from '../Input';
 import { Btn } from '../Btn';
-import { ModalClose, ModalCont } from './Modal';
+import { ModalClose, ModalCont } from '../../../styles/modal-style';
 
 interface IIDModalForm {
   checkID?: string;
@@ -65,14 +65,6 @@ export const IdModal = ({
       <Cont>
         <Btn type="toggle" onClick={toggleClick} btnName={'❌'} />
         {loading && <h2>Loading...</h2>}
-
-        {submit && data?.error && (
-          <article className="error">
-            <Error>{data?.error}</Error>
-            <Btn type="button" onClick={backClick} btnName="아이디 재확인" />
-          </article>
-        )}
-
         {!submit ? (
           <Form onSubmit={handleSubmit(onValid)}>
             <Input
@@ -90,18 +82,24 @@ export const IdModal = ({
             />
           </Form>
         ) : (
-          <>
+          <article className="pass">
             {!data?.error && data?.userId && (
-              <article className="pass">
+              <>
                 <h2>"{data?.userId}"는 사용가능한 아이디 입니다.</h2>
                 <p>사용하시겠습니까?</p>
                 <div className="btn-wrap">
                   <Btn type="button" btnName="YES" onClick={confirmClick} />
                   <Btn type="button" btnName="NO" onClick={backClick} />
                 </div>
-              </article>
+              </>
             )}
-          </>
+          </article>
+        )}
+        {submit && data?.error && (
+          <article className="error">
+            <Error>{data?.error}</Error>
+            <Btn type="button" onClick={backClick} btnName="아이디 재확인" />
+          </article>
         )}
       </Cont>
       <ModalClose onClick={toggleClick} />
@@ -109,7 +107,7 @@ export const IdModal = ({
   );
 };
 
-export const Cont = styled(ModalCont)`
+const Cont = styled(ModalCont)`
   .pass,
   .error {
     width: 60%;

@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Btn } from '../../src/components/Btn';
 import { Error, Input } from '../../src/components/Input';
 import { IdModal } from '../../src/components/Join/IdModal';
 import { JoinModal } from '../../src/components/Join/Modal';
@@ -13,7 +14,7 @@ export interface IJoinForm {
   password?: string;
   confirmPw?: string;
   email?: string;
-  idCheckError?: string;
+  userIdCheck?: string;
 }
 
 const Join: NextPage = () => {
@@ -32,41 +33,48 @@ const Join: NextPage = () => {
     getValues,
   } = useForm<IJoinForm>({ mode: 'onBlur' });
 
-  //아이디 중복체크 모달
-  const [confirm, setConfirm] = useState(false);
-  const [openIdModal, setOpenIdModal] = useState(false);
-  const confirmClick = () => {
-    setConfirm(true);
-    return setOpenIdModal((value) => !value);
-    //confirm해주고 모달을 닫아준다.
-  };
-
-  //
   const onValid = (formData: IJoinForm) => {
     if (!confirm) {
-      return setError('idCheckError', {
-        message: '아이디 중복확인을 실행해주세요.',
+      setError('userId', {
+        type: 'custom',
+        message: '아이디 중복확인이 필요합니다!',
       });
+      return;
     }
     if (loading) return;
     postJoin(formData);
   };
 
-  //최종확인 모달
-  const [modal, setModal] = useState(false);
-  useEffect(() => {
-    if (data?.ok) {
-      setModal(true);
-    }
-  }, [data]);
+  //Prevet Overlap
+  const [confirm, setConfirm] = useState(false);
+  const confirmClick = () => {
+    setConfirm(true);
+    return setOpenIdModal((value) => !value);
+  };
 
-  //클릭시 각각 모달을 닫아준다.
+  //Modals
+  const [openIdModal, setOpenIdModal] = useState(false);
+  const [modal, setModal] = useState(false);
   const toggleClick = (idCheck: string, final: string) => {
     if (idCheck) return setOpenIdModal((value) => !value);
     if (final) return setModal((value) => !value);
   };
+  // useEffect(() => {
+  //   if (data?.ok) {
+  //     setModal(true);
+  //   }
+  // }, [data]);
 
-  //아이디입력 -> 버튼생성 -> 아이디확인 -> 패스워드생성 (+패스워드확인) -> 이메일생성 -> 회원가입
+  //Set confirmed userId
+  const [verifiedID, setVerifiedID] = useState('');
+  const handleData = (data: any) => {
+    setVerifiedID(data);
+  };
+  useEffect(() => {
+    setValue('userId', verifiedID);
+  }, [verifiedID]);
+
+  //UI순서. 아이디입력 -> 버튼생성 -> 아이디확인 -> 패스워드생성 (+패스워드확인) -> 이메일생성 -> 회원가입
   const [state, setState] = useState({
     openBtn: false,
     layerOne: false,
@@ -83,22 +91,17 @@ const Join: NextPage = () => {
     setState((prev) => ({ ...prev, layerThree: Boolean(watch('password')) }));
     setState((prev) => ({ ...prev, layerFour: Boolean(watch('confirmPw')) }));
     setState((prev) => ({ ...prev, layerFive: Boolean(watch('email')) }));
+    if (data?.ok) {
+      setModal(true);
+    }
   }, [
     watch('username'),
     watch('userId'),
     watch('password'),
     watch('confirmPw'),
     watch('email'),
+    data,
   ]);
-
-  //GET VALUE FROM MODAL
-  const [dataFromModal, setDataFromModal] = useState('');
-  const handleData = (data: any) => {
-    setDataFromModal(data);
-  };
-  useEffect(() => {
-    setValue('userId', dataFromModal);
-  }, [dataFromModal]);
 
   //
   return (
@@ -137,7 +140,7 @@ const Join: NextPage = () => {
         />
 
         {state.layerOne && (
-          <FirstLayer>
+          <Layer>
             <Input
               label="ID"
               register={register('userId', {
@@ -148,10 +151,12 @@ const Join: NextPage = () => {
               placeholder="아이디를 입력해주세요."
               errMsg={errors.userId?.message}
             />
-            {!confirm && <Error>{errors?.idCheckError?.message}</Error>}
-
-            {confirm && state.layerTwo && (
-              <SecondLayer>
+          </Layer>
+        )}
+        {confirm && (
+          <>
+            {state.layerTwo && (
+              <Layer>
                 <Input
                   label="PASSWORD"
                   register={register('password', {
@@ -162,40 +167,41 @@ const Join: NextPage = () => {
                   placeholder="비밀번호를 입력해주세요."
                   errMsg={errors.password?.message}
                 />
-                {state.layerThree && (
-                  <ThirdLayer>
-                    <Input
-                      label="CONFIRM PASSWORD"
-                      register={register('confirmPw', {
-                        required: '비번호를 재입력해주세요.',
-                      })}
-                      name="confirmPw"
-                      type="password"
-                      placeholder="비밀번호를 재입력해주세요."
-                      errMsg={errors.confirmPw?.message}
-                    />
-                    {state.layerFour && (
-                      <FourthLayer>
-                        <Input
-                          label="EMAIL"
-                          register={register('email', {
-                            required: '이메일을 입력해주세요.',
-                          })}
-                          name="email"
-                          type="email"
-                          placeholder="이메일을 입력해주세요."
-                          errMsg={errors.email?.message}
-                        />
-                      </FourthLayer>
-                    )}
-                  </ThirdLayer>
-                )}
-              </SecondLayer>
+              </Layer>
             )}
-          </FirstLayer>
-        )}
 
-        <Input type="submit" btnName={loading ? 'Loading...' : '회원가입'} />
+            {state.layerThree && (
+              <Layer>
+                <Input
+                  label="CONFIRM PASSWORD"
+                  register={register('confirmPw', {
+                    required: '비번호를 재입력해주세요.',
+                  })}
+                  name="confirmPw"
+                  type="password"
+                  placeholder="비밀번호를 재입력해주세요."
+                  errMsg={errors.confirmPw?.message}
+                />
+              </Layer>
+            )}
+
+            {state.layerFour && (
+              <Layer>
+                <Input
+                  label="EMAIL"
+                  register={register('email', {
+                    required: '이메일을 입력해주세요.',
+                  })}
+                  name="email"
+                  type="email"
+                  placeholder="이메일을 입력해주세요."
+                  errMsg={errors.email?.message}
+                />
+              </Layer>
+            )}
+          </>
+        )}
+        <Btn type="submit" btnName={loading ? 'Loading...' : '회원가입'} />
       </Form>
     </>
   );
@@ -203,20 +209,10 @@ const Join: NextPage = () => {
 
 export default Join;
 
-const FirstLayer = styled.div`
-  border: 5px solid red;
+const Layer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
-`;
-const SecondLayer = styled(FirstLayer)`
-  border: 4px solid orange;
-`;
-const ThirdLayer = styled(SecondLayer)`
-  border: 3px solid yellow;
-`;
-const FourthLayer = styled(ThirdLayer)`
-  border: 2px solid green;
 `;
 
 export const Form = styled.form`
