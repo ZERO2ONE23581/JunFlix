@@ -8,6 +8,7 @@ import { IdCheckModal } from '../../src/components/Modal/UserIdCheck';
 import { Form, Layer } from '../../styles/join-style';
 import { IJoinForm, IJoinRes } from '../../src/types/join';
 import useMutation from '../../src/libs/client/useMutation';
+import { Title } from '../../src/components/Layout/parts/Title';
 
 const Join: NextPage = () => {
   //Post api
@@ -93,6 +94,7 @@ const Join: NextPage = () => {
   //
   return (
     <>
+      <Title title="회원가입" />
       {modal && <JoinModal />}
 
       {checkModal && (

@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { NavModalClose } from '../../../styles/modal-style';
 
 interface INavModalProps {
   username?: string;
 }
 
-export const NavModal = ({ toggleClick, username }: INavModalProps) => {
+export const NavModal = ({ username }: INavModalProps) => {
   return (
     <>
       <Cont>
@@ -27,6 +26,7 @@ export const NavModal = ({ toggleClick, username }: INavModalProps) => {
   );
 };
 const Cont = styled.nav`
+  z-index: 999;
   position: absolute;
   top: 50px;
   right: -20px;

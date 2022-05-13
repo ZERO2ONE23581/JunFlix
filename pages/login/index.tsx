@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
 import { Error, Input } from '../../src/components/Input';
+import { Title } from '../../src/components/Layout/parts/Title';
 import useMutation from '../../src/libs/client/useMutation';
 import { ILoginForm, ILoginRes } from '../../src/types/login';
 import { Form } from '../../styles/join-style';
@@ -33,6 +34,7 @@ const Login: NextPage = () => {
 
   return (
     <>
+      <Title title="로그인" />
       <Form onSubmit={handleSubmit(onValid)}>
         {data?.error && <Error>{data?.error}</Error>}
         <Input
