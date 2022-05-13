@@ -1,6 +1,12 @@
 import styled from '@emotion/styled';
 
-export const Btn = ({ onClick, btnName, type }: any) => {
+interface IBtnProps {
+  onClick?: () => void;
+  btnName?: string;
+  type?: string;
+}
+
+export const Btn = ({ onClick, btnName, type }: IBtnProps) => {
   //
   return (
     <>

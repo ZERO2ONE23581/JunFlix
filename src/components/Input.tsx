@@ -16,23 +16,16 @@ interface IInputProps {
 export const Input = (props: IInputProps) => {
   return (
     <>
-      {props.type !== 'submit' && (
-        <>
-          <label htmlFor={props.name}>{props.label}</label>
-          <input
-            disabled={props.disabled}
-            {...props.register}
-            name={props.name}
-            id={props.name}
-            type={props.type}
-            placeholder={props.placeholder}
-          />
-          {props.errMsg && <Error>{props.errMsg}</Error>}
-        </>
-      )}
-      {props.type === 'submit' && (
-        <button type={props.type}>{props.btnName}</button>
-      )}
+      <label htmlFor={props.name}>{props.label}</label>
+      <input
+        disabled={props.disabled}
+        {...props.register}
+        name={props.name}
+        id={props.name}
+        type={props.type}
+        placeholder={props.placeholder}
+      />
+      {props.errMsg && <Error>{props.errMsg}</Error>}
     </>
   );
 };
