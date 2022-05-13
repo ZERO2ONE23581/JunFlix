@@ -1,16 +1,15 @@
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
 import { Error, Input } from '../../src/components/Input';
 import useMutation from '../../src/libs/client/useMutation';
 import { ILoginForm, ILoginRes } from '../../src/types/login';
 import { Form } from '../../styles/join-style';
-import useSWR from 'swr';
 
 const Login: NextPage = () => {
-  //Get
-  const { data: userData } = useSWR(`/api/user/login`);
-  console.log(userData);
+  const router = useRouter();
   //Post
   const [postJoin, { loading, data }] =
     useMutation<ILoginRes>(`/api/user/login`);
@@ -20,13 +19,17 @@ const Login: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<ILoginForm>({ mode: 'onSubmit' });
   //
   const onValid = (formData: ILoginForm) => {
     if (loading) return;
     postJoin(formData);
   };
+  useEffect(() => {
+    if (data?.ok) {
+      router.replace('/');
+    }
+  }, [data]);
   //
   return (
     <>

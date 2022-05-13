@@ -28,6 +28,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     await req.session.save();
     return res.json({ ok: true });
   }
+
   if (req.method === 'GET') {
     const { user } = req.session;
     const loggedInUser = await prismaClient.user.findUnique({
@@ -36,4 +37,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: true, loggedInUser });
   }
 }
-export default withApiSession(withHandler(['GET'], handler));
+export default withApiSession(
+  withHandler({ methods: ['GET', 'POST'], handler })
+);
