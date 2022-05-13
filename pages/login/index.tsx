@@ -46,7 +46,7 @@ const Login: NextPage = () => {
           placeholder="비밀번호를 입력해주세요."
           errMsg={errors.password?.message}
         />
-        <Btn type="submit" btnName="로그인" />
+        <Btn type="submit" btnName={loading ? 'Loading...' : '로그인'} />
       </Form>
     </>
   );
