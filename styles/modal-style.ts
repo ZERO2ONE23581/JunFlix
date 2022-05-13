@@ -23,3 +23,6 @@ export const ModalClose = styled.article`
   width: 100vw;
   height: 100vh;
 `;
+export const NavModalClose = styled(ModalClose)`
+  background-color: rgba(0, 0, 0, 0);
+`;

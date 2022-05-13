@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import { User } from '@prisma/client';
 import Link from 'next/link';
+import { useState } from 'react';
 import useSWR from 'swr';
+import { ModalClose, NavModalClose } from '../../../../styles/modal-style';
+import { NavModal } from '../../Modal/NavModal';
 
 export interface IUser {
   ok: boolean;
@@ -11,6 +14,14 @@ export interface IUser {
 export const Header = () => {
   const { data } = useSWR<IUser>(`/api/user/login`);
   const username = data?.loggedInUser?.username;
+  const [open, setOpen] = useState(false);
+  const toggleModal = () => {
+    setOpen((p) => !p);
+  };
+  const closeModal = () => {
+    setOpen(false);
+  };
+  console.log(open);
   //
   return (
     <Cont>
@@ -19,47 +30,50 @@ export const Header = () => {
           <a>Home(로고)</a>
         </Link>
         {data?.ok ? (
-          <div className="mypage">
-            <Link href="/mypage">
-              <a>{username}'s page</a>
+          <Profile onClick={toggleModal}>
+            {open && <NavModal username={username} />}
+          </Profile>
+        ) : (
+          <div className="unloggedIn">
+            <Link href="/join">
+              <a>Join</a>
             </Link>
-            <Link href="/api/user/logout">
-              <a>Log out</a>
+            <Link href="/login">
+              <a>Login</a>
             </Link>
           </div>
-        ) : (
-          <>
-            <div className="unloggedIn">
-              <Link href="/join">
-                <a>Join</a>
-              </Link>
-              <Link href="/login">
-                <a>Login</a>
-              </Link>
-            </div>
-          </>
         )}
       </Nav>
+      {open && <NavModalClose onClick={closeModal} />}
     </Cont>
   );
 };
+
+const Profile = styled.button`
+  width: 50px;
+  height: 50px;
+  position: relative;
+  border-radius: 100%;
+  border: 1px solid white;
+  background: center / contain no-repeat url('/img/profile.svg');
+`;
+
 const Nav = styled.nav`
+  height: 50px;
   display: flex;
   justify-content: space-between;
-  border: 1px solid red;
-  .unloggedIn,
-  .mypage {
+  align-items: center;
+  .unloggedIn {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 20%;
-    border: 1px solid white;
+    gap: 30px;
     a {
     }
   }
+  border: 1px solid white;
 `;
 const Cont = styled.section`
   background-color: black;
-  padding: 20px;
+  padding: 10px 15%;
   color: white;
 `;
