@@ -23,6 +23,9 @@ export const Header = () => {
             <Link href="/mypage">
               <a>{username}'s page</a>
             </Link>
+            <Link href="/api/user/logout">
+              <a>Log out</a>
+            </Link>
           </div>
         ) : (
           <>
@@ -43,13 +46,16 @@ export const Header = () => {
 const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
+  border: 1px solid red;
   .unloggedIn,
   .mypage {
-    border: 1px solid white;
-    width: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 20%;
+    border: 1px solid white;
+    a {
+    }
   }
 `;
 const Cont = styled.section`
