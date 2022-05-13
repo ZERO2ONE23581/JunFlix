@@ -5,8 +5,12 @@ import { Error, Input } from '../../src/components/Input';
 import useMutation from '../../src/libs/client/useMutation';
 import { ILoginForm, ILoginRes } from '../../src/types/login';
 import { Form } from '../../styles/join-style';
+import useSWR from 'swr';
 
 const Login: NextPage = () => {
+  //Get
+  const { data: userData } = useSWR(`/api/user/login`);
+  console.log(userData);
   //Post
   const [postJoin, { loading, data }] =
     useMutation<ILoginRes>(`/api/user/login`);
