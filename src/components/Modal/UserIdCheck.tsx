@@ -1,24 +1,25 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Form } from '../../../pages/join';
 import { useMutation } from '../../libs/client/useMutation';
 import { Error, Input } from '../Input';
 import { Btn } from '../Btn';
 import { ModalClose, ModalCont } from '../../../styles/modal-style';
+import { Form } from '../../../styles/join-style';
 
 interface IIDModalForm {
   checkID?: string;
 }
 
-export const IdModal = ({
+export const IdCheckModal = ({
   handleData,
   userId,
   confirmClick,
-  toggleClick,
+  toggleCheckModal,
+  confirm,
 }: any) => {
   //Post api
-  const [postCheck, { loading, data, error }] = useMutation(
+  const [postCheck, { loading, data }] = useMutation(
     '/api/user/join/userId_check'
   );
 
@@ -58,12 +59,12 @@ export const IdModal = ({
       handleData(getValues('checkID'));
     }
   }, [data]);
-
+  console.log(data?.userId);
   //
   return (
     <>
       <Cont>
-        <Btn type="toggle" onClick={toggleClick} btnName={'❌'} />
+        <Btn type="toggle" onClick={toggleCheckModal} btnName={'❌'} />
         {loading && <h2>Loading...</h2>}
         {!submit ? (
           <Form onSubmit={handleSubmit(onValid)}>
@@ -78,7 +79,13 @@ export const IdModal = ({
             />
             <Btn
               type="submit"
-              btnName={loading ? 'Loading...' : '아이디 중복체크'}
+              btnName={
+                loading
+                  ? 'Loading...'
+                  : confirm
+                  ? '아이디 재확인'
+                  : '아이디 중복체크'
+              }
             />
           </Form>
         ) : (
@@ -102,7 +109,7 @@ export const IdModal = ({
           </article>
         )}
       </Cont>
-      <ModalClose onClick={toggleClick} />
+      <ModalClose onClick={toggleCheckModal} />
     </>
   );
 };

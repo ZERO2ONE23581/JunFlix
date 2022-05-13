@@ -10,6 +10,7 @@ interface IInputProps {
   loading?: boolean;
   btnName?: string;
   errMsg?: string;
+  disabled?: boolean;
 }
 
 export const Input = (props: IInputProps) => {
@@ -19,6 +20,7 @@ export const Input = (props: IInputProps) => {
         <>
           <label htmlFor={props.name}>{props.label}</label>
           <input
+            disabled={props.disabled}
             {...props.register}
             name={props.name}
             id={props.name}

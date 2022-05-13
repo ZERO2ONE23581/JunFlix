@@ -1,21 +1,13 @@
-import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
 import { Error, Input } from '../../src/components/Input';
-import { IdModal } from '../../src/components/Join/IdModal';
-import { JoinModal } from '../../src/components/Join/Modal';
+import { JoinModal } from '../../src/components/Modal/JoinConfirm';
 import { useMutation } from '../../src/libs/client/useMutation';
-
-export interface IJoinForm {
-  username?: string;
-  userId?: string;
-  password?: string;
-  confirmPw?: string;
-  email?: string;
-  userIdCheck?: string;
-}
+import { IdCheckModal } from '../../src/components/Modal/UserIdCheck';
+import { Form, Layer } from '../../styles/join-style';
+import { IJoinForm } from '../../src/types/join';
 
 const Join: NextPage = () => {
   //Post api
@@ -28,53 +20,47 @@ const Join: NextPage = () => {
     formState: { errors },
     watch,
     setError,
-    reset,
+    clearErrors,
     setValue,
     getValues,
   } = useForm<IJoinForm>({ mode: 'onBlur' });
 
+  //중복아이디 방지
+  const [confirm, setConfirm] = useState(false);
+  const confirmClick = () => {
+    setConfirm(true);
+    return setCheckModal((value) => !value);
+  };
+
   const onValid = (formData: IJoinForm) => {
     if (!confirm) {
-      setError('userId', {
+      return setError('dupUserId', {
         type: 'custom',
         message: '아이디 중복확인이 필요합니다!',
       });
-      return;
     }
     if (loading) return;
     postJoin(formData);
   };
 
-  //Prevet Overlap
-  const [confirm, setConfirm] = useState(false);
-  const confirmClick = () => {
-    setConfirm(true);
-    return setOpenIdModal((value) => !value);
-  };
-
   //Modals
-  const [openIdModal, setOpenIdModal] = useState(false);
   const [modal, setModal] = useState(false);
-  const toggleClick = (idCheck: string, final: string) => {
-    if (idCheck) return setOpenIdModal((value) => !value);
-    if (final) return setModal((value) => !value);
+  const [checkModal, setCheckModal] = useState(false);
+  const toggleCheckModal = () => {
+    return setCheckModal((value) => !value);
   };
-  // useEffect(() => {
-  //   if (data?.ok) {
-  //     setModal(true);
-  //   }
-  // }, [data]);
 
-  //Set confirmed userId
+  //Confirmation
   const [verifiedID, setVerifiedID] = useState('');
   const handleData = (data: any) => {
     setVerifiedID(data);
   };
   useEffect(() => {
     setValue('userId', verifiedID);
+    if (verifiedID) clearErrors('dupUserId');
   }, [verifiedID]);
 
-  //UI순서. 아이디입력 -> 버튼생성 -> 아이디확인 -> 패스워드생성 (+패스워드확인) -> 이메일생성 -> 회원가입
+  //UI
   const [state, setState] = useState({
     openBtn: false,
     layerOne: false,
@@ -106,22 +92,26 @@ const Join: NextPage = () => {
   //
   return (
     <>
-      {modal && <JoinModal toggleClick={toggleClick} />}
+      {modal && <JoinModal />}
 
-      {openIdModal && (
-        <IdModal
+      {checkModal && (
+        <IdCheckModal
           handleData={handleData}
           userId={getValues('userId')}
           confirmClick={confirmClick}
-          toggleClick={toggleClick}
+          toggleCheckModal={toggleCheckModal}
+          confirm={confirm}
         />
       )}
 
       {state.openBtn && (
-        <button onClick={() => setOpenIdModal((p) => !p)}>
-          아이디 중복체크
-        </button>
+        <Btn
+          type="button"
+          btnName={confirm ? '아이디 재입력' : '아이디 중복체크'}
+          onClick={() => setCheckModal((p) => !p)}
+        />
       )}
+      {errors.dupUserId && <Error>{errors.dupUserId.message}</Error>}
 
       <Form onSubmit={handleSubmit(onValid)}>
         <>
@@ -142,6 +132,7 @@ const Join: NextPage = () => {
         {state.layerOne && (
           <Layer>
             <Input
+              disabled={confirm ? true : false}
               label="ID"
               register={register('userId', {
                 required: '아이디를 입력해주세요.',
@@ -206,21 +197,4 @@ const Join: NextPage = () => {
     </>
   );
 };
-
 export default Join;
-
-const Layer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
-
-export const Form = styled.form`
-  padding: 20px;
-  border: 5px solid black;
-  margin: 100px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 50%;
-`;
