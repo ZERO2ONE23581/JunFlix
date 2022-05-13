@@ -3,7 +3,7 @@ import { User } from '@prisma/client';
 import Link from 'next/link';
 import { useState } from 'react';
 import useSWR from 'swr';
-import { ModalClose, NavModalClose } from '../../../../styles/modal-style';
+import { NavModalClose } from '../../../../styles/modal-style';
 import { NavModal } from '../../Modal/NavModal';
 
 export interface IUser {
@@ -21,7 +21,6 @@ export const Header = () => {
   const closeModal = () => {
     setOpen(false);
   };
-  console.log(open);
   //
   return (
     <Cont>
@@ -50,8 +49,8 @@ export const Header = () => {
 };
 
 const Profile = styled.button`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   position: relative;
   border-radius: 100%;
   border: 1px solid white;
@@ -73,7 +72,7 @@ const Nav = styled.nav`
   border: 1px solid white;
 `;
 const Cont = styled.section`
-  background-color: black;
+  background-color: ${(p) => p.theme.color.bg};
+  color: ${(p) => p.theme.color.font};
   padding: 10px 15%;
-  color: white;
 `;

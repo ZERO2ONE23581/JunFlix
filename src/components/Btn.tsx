@@ -10,6 +10,11 @@ export const Btn = ({ onClick, btnName, type }: IBtnProps) => {
   //
   return (
     <>
+      {type === 'theme' && (
+        <Theme type="button" onClick={onClick}>
+          {btnName}
+        </Theme>
+      )}
       {type === 'button' && (
         <Cont type="button" onClick={onClick}>
           {btnName}
@@ -35,17 +40,25 @@ export const Cont = styled.button`
   background-color: inherit;
   outline: none;
 `;
+
 const Back = styled(Cont)`
   /* width: none; */
 `;
 const Toggle = styled(Cont)`
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 30px;
+  right: 40px;
   width: 20px;
   height: 20px;
   padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+const Theme = styled(Toggle)`
+  background-color: ${(p) => p.theme.color.bg};
+  color: ${(p) => p.theme.color.font};
+  border: 1px solid ${(p) => p.theme.color.font};
+  border-radius: 5px;
+  padding: 10px 30px;
 `;
