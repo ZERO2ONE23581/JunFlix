@@ -30,7 +30,7 @@ const Login: NextPage = () => {
       router.replace('/');
     }
   }, [data]);
-  //
+
   return (
     <>
       <Form onSubmit={handleSubmit(onValid)}>

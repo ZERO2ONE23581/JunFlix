@@ -13,5 +13,6 @@ export const Footer = () => {
 };
 export const Cont = styled.section`
   background-color: black;
+  padding: 20px;
   color: white;
 `;

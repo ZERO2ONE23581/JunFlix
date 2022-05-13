@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import prismaClient from '../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../src/libs/server/withHandler';
+import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const userId = req.body;
@@ -17,4 +18,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   return res.json({ ok: true, userId });
 }
-export default withHandler(['POST'], handler);
+export default withApiSession(
+  withHandler({ methods: ['GET', 'POST'], handler, isPrivate: false })
+);

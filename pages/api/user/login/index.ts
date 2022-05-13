@@ -31,12 +31,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === 'GET') {
     const { user } = req.session;
-    const loggedInUser = await prismaClient.user.findUnique({
-      where: { id: user?.id },
-    });
-    return res.json({ ok: true, loggedInUser });
+    if (user) {
+      const loggedInUser = await prismaClient.user.findUnique({
+        where: { id: user?.id },
+      });
+      return res.json({ ok: true, loggedInUser });
+    }
+    return res.json({ ok: false });
   }
 }
 export default withApiSession(
-  withHandler({ methods: ['GET', 'POST'], handler })
+  withHandler({ methods: ['GET', 'POST'], handler, isPrivate: false })
 );

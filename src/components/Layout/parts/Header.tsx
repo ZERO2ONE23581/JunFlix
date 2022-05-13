@@ -26,12 +26,14 @@ export const Header = () => {
           </div>
         ) : (
           <>
-            <Link href="/join">
-              <a>Join</a>
-            </Link>
-            <Link href="/login">
-              <a>Login</a>
-            </Link>
+            <div className="unloggedIn">
+              <Link href="/join">
+                <a>Join</a>
+              </Link>
+              <Link href="/login">
+                <a>Login</a>
+              </Link>
+            </div>
           </>
         )}
       </Nav>
@@ -41,10 +43,13 @@ export const Header = () => {
 const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
-  padding: 5px;
-  border: 1px solid white;
+  .unloggedIn,
   .mypage {
     border: 1px solid white;
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 `;
 const Cont = styled.section`
