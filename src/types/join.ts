@@ -6,3 +6,7 @@ export interface IJoinForm {
   email?: string;
   dupUserId?: string;
 }
+export interface IJoinRes {
+  ok?: boolean;
+  error?: string;
+}

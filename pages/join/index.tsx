@@ -4,16 +4,17 @@ import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
 import { Error, Input } from '../../src/components/Input';
 import { JoinModal } from '../../src/components/Modal/JoinConfirm';
-import { useMutation } from '../../src/libs/client/useMutation';
 import { IdCheckModal } from '../../src/components/Modal/UserIdCheck';
 import { Form, Layer } from '../../styles/join-style';
-import { IJoinForm } from '../../src/types/join';
+import { IJoinForm, IJoinRes } from '../../src/types/join';
+import useMutation from '../../src/libs/client/useMutation';
 
 const Join: NextPage = () => {
   //Post api
-  const [postJoin, { loading, data, error }] = useMutation('/api/user/join');
+  const [postJoin, { loading, data, error }] =
+    useMutation<IJoinRes>('/api/user/join');
 
-  //Submit Form
+  //Form
   const {
     register,
     handleSubmit,
@@ -114,10 +115,7 @@ const Join: NextPage = () => {
       {errors.dupUserId && <Error>{errors.dupUserId.message}</Error>}
 
       <Form onSubmit={handleSubmit(onValid)}>
-        <>
-          {data?.error && <span>{data.error}</span>}
-          {error && <span>{error}</span>}
-        </>
+        {data?.error && <span>{data.error}</span>}
         <Input
           label="NICK NAME"
           register={register('username', {

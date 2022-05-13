@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
-interface IMutationResult {
+interface IMutationResult<T> {
   loading: boolean;
-  data?: object | any;
-  error?: object | any;
+  data?: T;
+  error?: object;
 }
-type IMutationReturn = [(formData: any) => void, IMutationResult];
+type IMutationReturn<T> = [(formData: any) => void, IMutationResult<T>];
 
-export const useMutation = (url: string): IMutationReturn => {
-  const [result, setResult] = useState<IMutationResult>({
+export default function useMutation<T = any>(url: string): IMutationReturn<T> {
+  const [result, setResult] = useState<IMutationResult<T>>({
     loading: false,
     data: undefined,
     error: undefined,
@@ -32,4 +32,4 @@ export const useMutation = (url: string): IMutationReturn => {
       .finally(() => setResult((prev) => ({ ...prev, loading: false })));
   };
   return [mutation, { ...result }];
-};
+}

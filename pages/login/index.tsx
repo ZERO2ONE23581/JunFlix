@@ -1,23 +1,22 @@
 import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
-import { Input } from '../../src/components/Input';
-import { useMutation } from '../../src/libs/client/useMutation';
+import { Error, Input } from '../../src/components/Input';
+import useMutation from '../../src/libs/client/useMutation';
+import { ILoginForm, ILoginRes } from '../../src/types/login';
 import { Form } from '../../styles/join-style';
-
-export interface ILoginForm {
-  userId?: string;
-  password?: string;
-}
 
 const Login: NextPage = () => {
   //Post
-  const [postJoin, { loading, data }] = useMutation(`/api/user/login`);
+  const [postJoin, { loading, data }] =
+    useMutation<ILoginRes>(`/api/user/login`);
 
+  //Form
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ILoginForm>({ mode: 'onSubmit' });
   //
   const onValid = (formData: ILoginForm) => {
@@ -28,6 +27,7 @@ const Login: NextPage = () => {
   return (
     <>
       <Form onSubmit={handleSubmit(onValid)}>
+        {data?.error && <Error>{data?.error}</Error>}
         <Input
           register={register('userId', { required: '아이디를 입력해주세요.' })}
           label="ID"

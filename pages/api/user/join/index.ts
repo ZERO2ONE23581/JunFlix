@@ -4,7 +4,7 @@ import withHandler from '../../../../src/libs/server/withHandler';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { username, userId, password, confirmPw, email } = req.body;
-  //데이터 미입력 체크
+  //
   const data = Boolean(username && (userId || email) && password && confirmPw);
   if (!data)
     return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
