@@ -1,15 +1,7 @@
-import { withIronSessionApiRoute } from 'iron-session/next';
 import { NextApiRequest, NextApiResponse } from 'next';
 import prismaClient from '../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../src/libs/server/withHandler';
-
-declare module 'iron-session' {
-  interface IronSessionData {
-    user?: {
-      id: number;
-    };
-  }
-}
+import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId, password } = req.body;
@@ -38,7 +30,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   return res.json({ ok: true });
 }
-export default withIronSessionApiRoute(withHandler(['POST'], handler), {
-  cookieName: 'junflix_cookie',
-  password: 'asdfl;jkasdjljfljasdjfjasdlkjfkljkl;sdajfkl;jasdk;jfjsdkal',
-});
+export default withApiSession(withHandler(['POST'], handler));
