@@ -34,7 +34,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (user) {
       const loggedInUser = await prismaClient.user.findUnique({
         where: { id: user?.id },
-        select: { id: true, username: true },
+        select: { id: true, username: true, userId: true, password: true },
       });
       return res.json({ ok: true, loggedInUser });
     }

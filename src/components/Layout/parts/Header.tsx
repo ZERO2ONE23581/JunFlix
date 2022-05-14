@@ -4,16 +4,12 @@ import Link from 'next/link';
 import { useState } from 'react';
 import useSWR from 'swr';
 import { NavModalClose } from '../../../../styles/modal-style';
+import { ILoggedInUser } from '../../../types/login';
 import { NavModal } from '../../Modal/NavModal';
 import { LogoSvg } from '../../Svg/Logo';
 
-export interface IUser {
-  ok: boolean;
-  loggedInUser?: User;
-}
-
 export const Header = () => {
-  const { data } = useSWR<IUser>(`/api/user/login`);
+  const { data } = useSWR<ILoggedInUser>(`/api/user/login`);
   const username = data?.loggedInUser?.username;
   const [open, setOpen] = useState(false);
   const toggleModal = () => {
