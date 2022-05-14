@@ -5,6 +5,11 @@ declare module '@emotion/react' {
     color: {
       bg: string;
       font: string;
+      logo: string;
+    };
+    border?: string;
+    boxShadow: {
+      nav: string;
     };
   }
 }

@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import { Btn } from '../Btn';
 import { Footer } from './parts/Footer';
 import { Header } from './parts/Header';

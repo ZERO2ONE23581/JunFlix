@@ -5,6 +5,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import { NavModalClose } from '../../../../styles/modal-style';
 import { NavModal } from '../../Modal/NavModal';
+import { LogoSvg } from '../../Svg/Logo';
 
 export interface IUser {
   ok: boolean;
@@ -24,10 +25,14 @@ export const Header = () => {
   //
   return (
     <Cont>
-      <Nav>
-        <Link href="/">
-          <a>Home(로고)</a>
-        </Link>
+      <NavBar>
+        <Logo>
+          <Link href="/">
+            <a>
+              <LogoSvg />
+            </a>
+          </Link>
+        </Logo>
         {data?.ok ? (
           <Profile onClick={toggleModal}>
             {open && <NavModal username={username} />}
@@ -42,22 +47,29 @@ export const Header = () => {
             </Link>
           </div>
         )}
-      </Nav>
+      </NavBar>
       {open && <NavModalClose onClick={closeModal} />}
     </Cont>
   );
 };
-
+const Logo = styled.article`
+  a {
+    img {
+      width: 100px;
+      height: 100px;
+    }
+  }
+`;
 const Profile = styled.button`
   width: 40px;
   height: 40px;
   position: relative;
   border-radius: 100%;
-  border: 1px solid white;
+  border: ${(p) => p.theme.border};
   background: center / contain no-repeat url('/img/profile.svg');
 `;
 
-const Nav = styled.nav`
+const NavBar = styled.nav`
   height: 50px;
   display: flex;
   justify-content: space-between;
@@ -69,10 +81,11 @@ const Nav = styled.nav`
     a {
     }
   }
-  border: 1px solid white;
 `;
 const Cont = styled.section`
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => p.theme.color.font};
-  padding: 10px 15%;
+  padding: 15px 12%;
+  margin-bottom: 5px;
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
 `;
