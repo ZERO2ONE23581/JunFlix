@@ -6,7 +6,10 @@ interface argType {
   handler: (req: NextApiRequest, res: NextApiResponse) => void;
   isPrivate?: boolean;
 }
-
+export interface ResponseType {
+  ok: boolean;
+  [key: string]: any;
+}
 export default function withHandler({
   methods,
   handler,

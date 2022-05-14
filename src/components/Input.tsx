@@ -7,8 +7,6 @@ interface IInputProps {
   name?: string;
   type?: string;
   placeholder?: string;
-  loading?: boolean;
-  btnName?: string;
   errMsg?: string;
   disabled?: boolean;
 }

@@ -4,9 +4,10 @@ interface IBtnProps {
   onClick?: () => void;
   btnName?: string;
   type?: string;
+  loading?: boolean;
 }
 
-export const Btn = ({ onClick, btnName, type }: IBtnProps) => {
+export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
   //
   return (
     <>
@@ -25,7 +26,9 @@ export const Btn = ({ onClick, btnName, type }: IBtnProps) => {
           {btnName}
         </Toggle>
       )}
-      {type === 'submit' && <Cont type="submit">{btnName}</Cont>}
+      {type === 'submit' && (
+        <Cont type="submit">{loading ? 'Loading...' : btnName}</Cont>
+      )}
     </>
   );
 };
