@@ -11,4 +11,12 @@ export interface IProfileEditForm {
   oldPassword: string;
   newPassword: string;
   newPasswordConfirm: string;
+  //
+  avatar?: string;
+  username?: string;
+  name?: string;
+  birth?: string;
+  gender?: string;
+  location?: string;
+  email?: string;
 }

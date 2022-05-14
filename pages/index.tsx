@@ -1,17 +1,17 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Title } from '../src/components/Layout/parts/Title';
-import { Container } from '../styles/global';
+import { PageContainer } from '../styles/global';
 
 const Home: NextPage = () => {
   //
   return (
     <>
       <Title title="홈" />
-      <Container>
+      <PageContainer>
         <H1>Home</H1>
         <H1>Home</H1>
-      </Container>
+      </PageContainer>
     </>
   );
 };

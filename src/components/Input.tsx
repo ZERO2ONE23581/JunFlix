@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import { Error } from '../../styles/global';
 
 interface IInputProps {
   label?: string;
@@ -12,8 +13,9 @@ interface IInputProps {
 }
 
 export const Input = (props: IInputProps) => {
+  //
   return (
-    <>
+    <Cont>
       <label htmlFor={props.name}>{props.label}</label>
       <input
         disabled={props.disabled}
@@ -24,12 +26,11 @@ export const Input = (props: IInputProps) => {
         placeholder={props.placeholder}
       />
       {props.errMsg && <Error>{props.errMsg}</Error>}
-    </>
+    </Cont>
   );
 };
-export const Error = styled.span`
-  color: red;
-  font-style: italic;
-  background-color: bisque;
-  text-align: center;
+const Cont = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;

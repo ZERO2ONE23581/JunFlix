@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Error, Input } from '../Input';
+import { Input } from '../Input';
 import { Btn } from '../Btn';
 import { ModalClose, ModalCont } from '../../../styles/modal-style';
-import { Form } from '../../../styles/join-style';
 import useMutation from '../../libs/client/useMutation';
+import { Error, Form } from '../../../styles/global';
 
 interface IIDModalForm {
   checkID?: string;

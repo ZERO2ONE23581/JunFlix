@@ -18,5 +18,8 @@ model User {
   name        String?
   birth       String?
   gender      String?
-  location    String?  
+  location    String?
+  avatar      String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }

@@ -7,7 +7,7 @@ import { Error, Input } from '../../src/components/Input';
 import { Title } from '../../src/components/Layout/parts/Title';
 import useMutation from '../../src/libs/client/useMutation';
 import { ILoginForm, ILoginRes } from '../../src/types/login';
-import { Form } from '../../styles/join-style';
+import { Form } from '../../styles/global';
 
 const Login: NextPage = () => {
   const router = useRouter();

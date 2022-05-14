@@ -5,10 +5,12 @@ import { Btn } from '../../src/components/Btn';
 import { Error, Input } from '../../src/components/Input';
 import { JoinModal } from '../../src/components/Modal/JoinConfirm';
 import { IdCheckModal } from '../../src/components/Modal/UserIdCheck';
-import { Form, Layer } from '../../styles/join-style';
+
 import { IJoinForm, IJoinRes } from '../../src/types/join';
 import useMutation from '../../src/libs/client/useMutation';
 import { Title } from '../../src/components/Layout/parts/Title';
+import { Form } from '../../styles/global';
+import { Layer } from '../../styles/join-style';
 
 const Join: NextPage = () => {
   //Post api
@@ -107,11 +109,11 @@ const Join: NextPage = () => {
         />
       )}
 
-      {state.openBtn && (
+      {state?.openBtn && (
         <Btn
           type="button"
           btnName={confirm ? '아이디 재입력' : '아이디 중복체크'}
-          onClick={() => setCheckModal((p) => !p)}
+          onClick={toggleCheckModal}
         />
       )}
       {errors.dupUserId && <Error>{errors.dupUserId.message}</Error>}
@@ -119,7 +121,7 @@ const Join: NextPage = () => {
       <Form onSubmit={handleSubmit(onValid)}>
         {data?.error && <span>{data.error}</span>}
         <Input
-          label="NICK NAME"
+          label="USERNAME"
           register={register('username', {
             required: '닉네임을 입력해주세요.',
           })}

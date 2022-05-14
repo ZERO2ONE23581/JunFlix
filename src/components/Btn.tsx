@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 interface IBtnProps {
-  onClick?: () => void;
+  onClick?: any;
   btnName?: string;
   type?: string;
   loading?: boolean;
