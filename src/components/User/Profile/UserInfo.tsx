@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
-import { Error, Form, UserInfoEditForm } from '../../../../styles/global';
+import { Error } from '../../../../styles/global-style';
+import { UserInfoEditForm } from '../../../../styles/profileEdit-style';
 import useMutation from '../../../libs/client/useMutation';
 import { IProfileEditForm, IProfileEditRes } from '../../../types/edit-profile';
 import { ILoggedInUser } from '../../../types/login';
 import { Btn } from '../../Btn';
-import { Input } from '../../Input';
-import { Select } from '../../Select';
+import { Input, Select } from '../../Input';
 
 export const UserInfo = () => {
   //Get
@@ -69,7 +69,7 @@ export const UserInfo = () => {
             register={register('name')}
           />
         </div>
-        <div className="input-wrap">
+        <div className="input-wrap second-layer">
           <Input
             label="BIRTH"
             type="date"
@@ -104,7 +104,7 @@ export const UserInfo = () => {
           placeholder="새로운 이메일을 입력해주세요."
           register={register('email')}
         />
-        <Btn type="submit" loading={loading} btnName="수정사항 저장" />
+        <Btn type="submit" loading={loading} btnName="SAVE" />
       </UserInfoEditForm>
     </>
   );

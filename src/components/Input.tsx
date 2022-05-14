@@ -1,21 +1,9 @@
-import styled from '@emotion/styled';
-import { UseFormRegisterReturn } from 'react-hook-form';
-import { Error } from '../../styles/global';
-
-interface IInputProps {
-  label?: string;
-  register?: UseFormRegisterReturn;
-  name?: string;
-  type?: string;
-  placeholder?: string;
-  errMsg?: string;
-  disabled?: boolean;
-}
+import { Error, InputCont, SelectCont } from '../../styles/global-style';
+import { IInputProps } from '../types/input';
 
 export const Input = (props: IInputProps) => {
-  //
   return (
-    <Cont>
+    <InputCont>
       <label htmlFor={props.name}>{props.label}</label>
       <input
         disabled={props.disabled}
@@ -26,11 +14,28 @@ export const Input = (props: IInputProps) => {
         placeholder={props.placeholder}
       />
       {props.errMsg && <Error>{props.errMsg}</Error>}
-    </Cont>
+    </InputCont>
   );
 };
-const Cont = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
+
+export const Select = ({
+  options,
+  label,
+  name,
+  errMsg,
+  placeholder,
+  register,
+}: IInputProps) => {
+  //
+  return (
+    <SelectCont>
+      <label htmlFor={name}>{label}</label>
+      <select {...register} name={name} id={name}>
+        <option value="x">{placeholder}</option>
+        <option value="0">{options[0]}</option>
+        <option value="1">{options[1]}</option>
+      </select>
+      {errMsg && <Error>{errMsg}</Error>}
+    </SelectCont>
+  );
+};

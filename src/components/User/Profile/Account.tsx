@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
-import { Form } from '../../../../styles/global';
+import { Error, Form } from '../../../../styles/global-style';
 import useMutation from '../../../libs/client/useMutation';
 import { IProfileEditForm, IProfileEditRes } from '../../../types/edit-profile';
 import { ILoggedInUser } from '../../../types/login';
 import { Btn } from '../../Btn';
-import { Error, Input } from '../../Input';
+import { Input } from '../../Input';
 
 export const Account = () => {
   //Get
@@ -90,7 +90,7 @@ export const Account = () => {
               required: '새로운 비밀번호를 재입력해주세요.',
             })}
           />
-          <Btn type="submit" loading={loading} btnName="수정사항 저장" />
+          <Btn type="submit" loading={loading} btnName="SAVE" />
         </Form>
       </>
     </>

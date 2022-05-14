@@ -2,14 +2,14 @@ import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
-import { Error, Input } from '../../src/components/Input';
+import { Input } from '../../src/components/Input';
 import { JoinModal } from '../../src/components/Modal/JoinConfirm';
 import { IdCheckModal } from '../../src/components/Modal/UserIdCheck';
 
 import { IJoinForm, IJoinRes } from '../../src/types/join';
 import useMutation from '../../src/libs/client/useMutation';
 import { Title } from '../../src/components/Layout/parts/Title';
-import { Form } from '../../styles/global';
+import { Error, Form } from '../../styles/global-style';
 import { Layer } from '../../styles/join-style';
 
 const Join: NextPage = () => {

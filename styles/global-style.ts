@@ -1,11 +1,10 @@
 import styled from '@emotion/styled';
 
 export const PageContainer = styled.section`
-  height: 95vh;
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => p.theme.color.font};
-  padding: 0 12%;
-  //
+  /* height: 95vh; */
+  padding: 10px 20%;
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -31,18 +30,32 @@ export const Error = styled.span`
 `;
 export const Form = styled.form`
   margin: 0 auto;
-  padding: 20px;
   border: 5px solid black;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%;
+  width: 600px;
+  padding: 20px 40px;
 `;
-
-export const AccountEditForm = styled(Form)``;
-export const UserInfoEditForm = styled(Form)`
-  .input-wrap {
+export const InputCont = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  select,
+  input {
     width: 100%;
-    display: flex;
+    padding: 10px;
+    border: none;
+    box-shadow: ${(p) => p.theme.boxShadow.nav};
+    background-color: white;
+    border-radius: 5px;
+  }
+`;
+export const SelectCont = styled(InputCont)`
+  select {
+    option {
+      border: 3px solid blue;
+      border-radius: 5px;
+    }
   }
 `;

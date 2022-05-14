@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Title } from '../src/components/Layout/parts/Title';
-import { PageContainer } from '../styles/global';
+import { PageContainer } from '../styles/global-style';
 
 const Home: NextPage = () => {
   //

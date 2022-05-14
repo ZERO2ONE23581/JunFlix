@@ -5,7 +5,7 @@ import type { AppProps } from 'next/app';
 import { Layout } from '../src/components/Layout';
 import { darkTheme, lightTheme } from '../src/types/theme';
 import { useState } from 'react';
-import { BodyBg } from '../styles/global';
+import { BodyBg } from '../styles/global-style';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState(true);
