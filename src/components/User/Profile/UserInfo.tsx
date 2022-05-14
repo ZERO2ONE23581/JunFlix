@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import { Error } from '../../../../styles/global-style';
 import { UserInfoEditForm } from '../../../../styles/profileEdit-style';
+import useUser from '../../../libs/client/loggedInUser';
 import useMutation from '../../../libs/client/useMutation';
 import { IProfileEditForm, IProfileEditRes } from '../../../types/edit-profile';
 import { ILoggedInUser } from '../../../types/login';
@@ -11,7 +12,7 @@ import { Input, Select } from '../../Input';
 
 export const UserInfo = () => {
   //Get
-  const { data: swr } = useSWR<ILoggedInUser>(`/api/user/login`);
+  const { loggedInUser } = useUser();
 
   //Post
   const [postEdit, { loading, data }] = useMutation<IProfileEditRes>(
@@ -25,25 +26,23 @@ export const UserInfo = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-    reset,
   } = useForm<IProfileEditForm>({ mode: 'onSubmit' });
   //
   const onValid = (formData: IProfileEditForm) => {
     if (loading) return;
     postEdit(formData);
     setMessage(true);
-    reset({ newPassword: '', newPasswordConfirm: '', name: '' });
   };
 
   //Set up
   useEffect(() => {
-    if (swr?.loggedInUser?.userId) {
-      setValue('userId', swr?.loggedInUser?.userId);
-    }
-    if (data?.ok) {
-      setMessage(false);
-    }
-  }, [swr]);
+    if (loggedInUser?.username) setValue('username', loggedInUser?.username);
+    if (loggedInUser?.birth) setValue('birth', loggedInUser?.birth);
+    if (loggedInUser?.gender) setValue('gender', loggedInUser?.gender);
+    if (loggedInUser?.location) setValue('location', loggedInUser?.location);
+    if (loggedInUser?.email) setValue('email', loggedInUser?.email);
+    if (data?.ok) setMessage((p) => !p);
+  }, [loggedInUser]);
   //
   return (
     <>
@@ -58,18 +57,8 @@ export const UserInfo = () => {
             name="username"
             errMsg={errors.username?.message}
             placeholder="새로운 닉네임을 입력해주세요."
-            register={register('userId')}
+            register={register('username')}
           />
-          <Input
-            label="NAME"
-            type="text"
-            name="name"
-            errMsg={errors.name?.message}
-            placeholder="새로운 이름을 입력해주세요."
-            register={register('name')}
-          />
-        </div>
-        <div className="input-wrap second-layer">
           <Input
             label="BIRTH"
             type="date"
@@ -78,12 +67,14 @@ export const UserInfo = () => {
             placeholder="생년월일을 입력해주세요."
             register={register('birth')}
           />
+        </div>
+        <div className="input-wrap">
           <Select
-            options={['MALE', 'FEMALE']}
+            options={['남', '녀']}
             label="GENDER"
             name="gender"
             errMsg={errors.gender?.message}
-            placeholder="생년월일을 입력해주세요."
+            placeholder="성별을 선택해주세요."
             register={register('gender')}
           />
 

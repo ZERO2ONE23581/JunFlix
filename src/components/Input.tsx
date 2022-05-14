@@ -31,9 +31,9 @@ export const Select = ({
     <SelectCont>
       <label htmlFor={name}>{label}</label>
       <select {...register} name={name} id={name}>
-        <option value="x">{placeholder}</option>
-        <option value="0">{options[0]}</option>
-        <option value="1">{options[1]}</option>
+        <option value="">{placeholder}</option>
+        <option value="Male">{options[0]}</option>
+        <option value="Female">{options[1]}</option>
       </select>
       {errMsg && <Error>{errMsg}</Error>}
     </SelectCont>

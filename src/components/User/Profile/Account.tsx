@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import { Error, Form } from '../../../../styles/global-style';
+import { AccountEditForm } from '../../../../styles/profileEdit-style';
 import useMutation from '../../../libs/client/useMutation';
 import { IProfileEditForm, IProfileEditRes } from '../../../types/edit-profile';
 import { ILoggedInUser } from '../../../types/login';
@@ -47,7 +48,7 @@ export const Account = () => {
   return (
     <>
       <>
-        <Form onSubmit={handleSubmit(onValid)}>
+        <AccountEditForm onSubmit={handleSubmit(onValid)}>
           {message && <Error>{data?.message}</Error>}
           {data?.error && <Error>{data?.error}</Error>}
           <Input
@@ -70,28 +71,30 @@ export const Account = () => {
               required: '현재 비밀번호를 입력해주세요.',
             })}
           />
-          <Input
-            label="Password"
-            type="password"
-            name="newPassword"
-            errMsg={errors.newPassword?.message}
-            placeholder="새로운 비밀번호를 입력해주세요."
-            register={register('newPassword', {
-              required: '새로운 비밀번호를 입력해주세요.',
-            })}
-          />
-          <Input
-            label="Password Confirm"
-            type="password"
-            name="newPasswordConfirm"
-            errMsg={errors.newPasswordConfirm?.message}
-            placeholder="새로운 비밀번호를 재입력해주세요."
-            register={register('newPasswordConfirm', {
-              required: '새로운 비밀번호를 재입력해주세요.',
-            })}
-          />
+          <div className="input-wrap">
+            <Input
+              label="Password"
+              type="password"
+              name="newPassword"
+              errMsg={errors.newPassword?.message}
+              placeholder="새로운 비밀번호를 입력해주세요."
+              register={register('newPassword', {
+                required: '새로운 비밀번호를 입력해주세요.',
+              })}
+            />
+            <Input
+              label="Password Confirm"
+              type="password"
+              name="newPasswordConfirm"
+              errMsg={errors.newPasswordConfirm?.message}
+              placeholder="새로운 비밀번호를 재입력해주세요."
+              register={register('newPasswordConfirm', {
+                required: '새로운 비밀번호를 재입력해주세요.',
+              })}
+            />
+          </div>
           <Btn type="submit" loading={loading} btnName="SAVE" />
-        </Form>
+        </AccountEditForm>
       </>
     </>
   );

@@ -22,7 +22,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!loggedInUser)
     return res.json({ ok: false, error: '로그인이 필요합니다!' });
 
-  if (email !== loggedInUser.email) {
+  if (email && email !== loggedInUser.email) {
     const dupData = Boolean(
       await prismaClient.user.findUnique({
         where: { email },

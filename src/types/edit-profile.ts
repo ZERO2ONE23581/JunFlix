@@ -14,7 +14,6 @@ export interface IProfileEditForm {
   //
   avatar?: string;
   username?: string;
-  name?: string;
   birth?: string;
   gender?: string;
   location?: string;
