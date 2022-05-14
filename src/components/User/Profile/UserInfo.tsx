@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useSWR from 'swr';
 import { Error } from '../../../../styles/global-style';
 import { UserInfoEditForm } from '../../../../styles/profileEdit-style';
 import useUser from '../../../libs/client/loggedInUser';
 import useMutation from '../../../libs/client/useMutation';
 import { IProfileEditForm, IProfileEditRes } from '../../../types/edit-profile';
-import { ILoggedInUser } from '../../../types/login';
 import { Btn } from '../../Btn';
 import { Input, Select } from '../../Input';
 
@@ -16,7 +14,7 @@ export const UserInfo = () => {
 
   //Post
   const [postEdit, { loading, data }] = useMutation<IProfileEditRes>(
-    `/api/user/profile/userinfo`
+    `/api/user/profile/edit`
   );
 
   //Form
@@ -37,6 +35,7 @@ export const UserInfo = () => {
   //Set up
   useEffect(() => {
     if (loggedInUser?.username) setValue('username', loggedInUser?.username);
+    if (loggedInUser?.name) setValue('name', loggedInUser?.name);
     if (loggedInUser?.birth) setValue('birth', loggedInUser?.birth);
     if (loggedInUser?.gender) setValue('gender', loggedInUser?.gender);
     if (loggedInUser?.location) setValue('location', loggedInUser?.location);
@@ -60,6 +59,16 @@ export const UserInfo = () => {
             register={register('username')}
           />
           <Input
+            label="NAME"
+            type="text"
+            name="name"
+            errMsg={errors.name?.message}
+            placeholder="이름을 입력해주세요."
+            register={register('name')}
+          />
+        </div>
+        <div className="input-wrap second-layer">
+          <Input
             label="BIRTH"
             type="date"
             name="birth"
@@ -67,8 +76,6 @@ export const UserInfo = () => {
             placeholder="생년월일을 입력해주세요."
             register={register('birth')}
           />
-        </div>
-        <div className="input-wrap">
           <Select
             options={['남', '녀']}
             label="GENDER"

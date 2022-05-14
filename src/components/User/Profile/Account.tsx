@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import { Error, Form } from '../../../../styles/global-style';
 import { AccountEditForm } from '../../../../styles/profileEdit-style';
+import useUser from '../../../libs/client/loggedInUser';
 import useMutation from '../../../libs/client/useMutation';
 import { IProfileEditForm, IProfileEditRes } from '../../../types/edit-profile';
 import { ILoggedInUser } from '../../../types/login';
@@ -11,11 +12,11 @@ import { Input } from '../../Input';
 
 export const Account = () => {
   //Get
-  const { data: swr } = useSWR<ILoggedInUser>(`/api/user/login`);
+  const { loggedInUser } = useUser();
 
   //Post
   const [postEdit, { loading, data }] = useMutation<IProfileEditRes>(
-    `/api/user/profile/account`
+    `/api/user/profile/edit`
   );
 
   //Form
@@ -37,13 +38,9 @@ export const Account = () => {
 
   //Set up
   useEffect(() => {
-    if (swr?.loggedInUser?.userId) {
-      setValue('userId', swr?.loggedInUser?.userId);
-    }
-    if (data?.ok) {
-      setMessage(false);
-    }
-  }, [swr]);
+    if (loggedInUser?.userId) setValue('userId', loggedInUser?.userId);
+    if (data?.ok) setMessage(false);
+  }, [loggedInUser]);
   //
   return (
     <>
