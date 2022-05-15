@@ -1,10 +1,13 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { ModalClose, ModalCont } from '../../../../styles/modal-style';
 import useMutation from '../../../libs/client/useMutation';
 import { Btn } from '../../Btn';
 
 export const Delete_Account = () => {
+  const router = useRouter();
+
   //Post
   const [postDelete, { data, loading }] = useMutation(
     `/api/user/profile/delete`
@@ -21,6 +24,16 @@ export const Delete_Account = () => {
     if (loading) return;
     postDelete(true);
   };
+
+  //UI
+  useEffect(() => {
+    if (data?.ok) {
+      alert('계정이 삭제되었습니다.');
+      setTimeout(() => {
+        router.push('/');
+      }, 3000);
+    }
+  }, [data]);
 
   //
   return (
