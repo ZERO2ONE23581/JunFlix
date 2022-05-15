@@ -4,15 +4,16 @@ import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { userId, password } = req.body;
+  const { userID, password } = req.body;
+
   if (req.method === 'POST') {
     //
-    if (!Boolean(userId && password))
+    if (!Boolean(userID && password))
       return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
 
     //일치하는 유저찾기
     const foundUser = await prismaClient.user.findUnique({
-      where: { userId },
+      where: { userId: userID.toString() },
       select: { id: true, userId: true, password: true },
     });
     if (!foundUser)
@@ -28,7 +29,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     await req.session.save();
     return res.json({ ok: true });
   }
-
+  //
   if (req.method === 'GET') {
     const { user } = req.session;
     if (user) {
@@ -37,7 +38,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       });
       return res.json({ ok: true, loggedInUser });
     }
-    return res.json({ ok: false });
+    return res.json({ ok: false, error: 'YOU NEED TO SIGN IN FIRST!' });
   }
 }
 export default withApiSession(

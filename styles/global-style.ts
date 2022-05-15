@@ -3,8 +3,7 @@ import styled from '@emotion/styled';
 export const PageContainer = styled.section`
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => p.theme.color.font};
-  /* height: 95vh; */
-  padding: 10px 20%;
+  padding: 10px 100px;
   display: flex;
   flex-direction: column;
   align-content: center;

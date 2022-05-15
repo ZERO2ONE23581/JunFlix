@@ -5,7 +5,6 @@ import { Btn } from '../../src/components/Btn';
 import { Input } from '../../src/components/Input';
 import { JoinModal } from '../../src/components/Modal/JoinConfirm';
 import { IdCheckModal } from '../../src/components/Modal/UserIdCheck';
-
 import { IJoinForm, IJoinRes } from '../../src/types/join';
 import useMutation from '../../src/libs/client/useMutation';
 import { Title } from '../../src/components/Layout/parts/Title';
@@ -36,7 +35,13 @@ const Join: NextPage = () => {
     return setCheckModal((value) => !value);
   };
 
-  const onValid = (formData: IJoinForm) => {
+  const onValid = ({
+    username,
+    userId,
+    email,
+    password,
+    confirmPw,
+  }: IJoinForm) => {
     if (!confirm) {
       return setError('dupUserId', {
         type: 'custom',
@@ -44,7 +49,8 @@ const Join: NextPage = () => {
       });
     }
     if (loading) return;
-    postJoin(formData);
+    const userID = userId!.toUpperCase();
+    postJoin({ username, userID, email, password, confirmPw });
   };
 
   //Modals

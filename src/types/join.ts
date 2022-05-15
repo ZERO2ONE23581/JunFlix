@@ -1,9 +1,9 @@
 export interface IJoinForm {
   username?: string;
   userId?: string;
+  email?: string;
   password?: string;
   confirmPw?: string;
-  email?: string;
   dupUserId?: string;
 }
 export interface IJoinRes {

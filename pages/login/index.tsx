@@ -20,11 +20,14 @@ const Login: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<ILoginForm>({ mode: 'onSubmit' });
   //
-  const onValid = (formData: ILoginForm) => {
+  const onValid = ({ userId, password }: ILoginForm) => {
     if (loading) return;
-    postJoin(formData);
+    if (!userId) setError('userId', { message: '아이디를 입력해주세요.' });
+    const userID = userId!.toUpperCase();
+    postJoin({ userID, password });
   };
   useEffect(() => {
     if (data?.ok) {

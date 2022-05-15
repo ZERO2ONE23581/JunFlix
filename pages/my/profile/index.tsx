@@ -1,15 +1,17 @@
 import type { NextPage } from 'next';
-import { Account } from '../../../src/components/User/Profile/Account';
-import { UserInfo } from '../../../src/components/User/Profile/UserInfo';
-import { PageContainer } from '../../../styles/global-style';
+import { Edit_Password } from '../../../src/components/User/Profile/Edit_Password';
+import { Edit_UserId } from '../../../src/components/User/Profile/Edit_UserId';
+import { Edit_UserInfo } from '../../../src/components/User/Profile/Edit_UserInfo';
+import { ProEditPgCont } from '../../../styles/profileEdit-style';
 
 const Profile: NextPage = () => {
   //
   return (
-    <PageContainer>
-      <Account />
-      <UserInfo />
-    </PageContainer>
+    <ProEditPgCont>
+      <Edit_UserId />
+      <Edit_Password />
+      <Edit_UserInfo />
+    </ProEditPgCont>
   );
 };
 

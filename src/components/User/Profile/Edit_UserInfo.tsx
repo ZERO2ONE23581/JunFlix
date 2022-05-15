@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Error } from '../../../../styles/global-style';
-import { UserInfoEditForm } from '../../../../styles/profileEdit-style';
+import { Error, Form } from '../../../../styles/global-style';
+import { InputsWrap, InputWrap } from '../../../../styles/profileEdit-style';
 import useUser from '../../../libs/client/loggedInUser';
 import useMutation from '../../../libs/client/useMutation';
 import { IProfileEditForm, IProfileEditRes } from '../../../types/edit-profile';
 import { Btn } from '../../Btn';
 import { Input, Select } from '../../Input';
 
-export const UserInfo = () => {
+export const Edit_UserInfo = () => {
   //Get
   const { loggedInUser } = useUser();
 
   //Post
+  const postType = 'userInfo';
   const [postEdit, { loading, data }] = useMutation<IProfileEditRes>(
     `/api/user/profile/edit`
   );
@@ -26,9 +27,26 @@ export const UserInfo = () => {
     setValue,
   } = useForm<IProfileEditForm>({ mode: 'onSubmit' });
   //
-  const onValid = (formData: IProfileEditForm) => {
+  const onValid = ({
+    avatar,
+    username,
+    name,
+    birth,
+    gender,
+    location,
+    email,
+  }: IProfileEditForm) => {
     if (loading) return;
-    postEdit(formData);
+    postEdit({
+      postType,
+      avatar,
+      username,
+      name,
+      birth,
+      gender,
+      location,
+      email,
+    });
     setMessage(true);
   };
 
@@ -45,11 +63,11 @@ export const UserInfo = () => {
   //
   return (
     <>
-      <UserInfoEditForm onSubmit={handleSubmit(onValid)}>
+      <Form onSubmit={handleSubmit(onValid)}>
         {message && <Error>{data?.message}</Error>}
         {data?.error && <Error>{data?.error}</Error>}
 
-        <div className="input-wrap">
+        <InputWrap>
           <Input
             label="USERNAME"
             type="text"
@@ -66,8 +84,8 @@ export const UserInfo = () => {
             placeholder="이름을 입력해주세요."
             register={register('name')}
           />
-        </div>
-        <div className="input-wrap second-layer">
+        </InputWrap>
+        <InputsWrap>
           <Input
             label="BIRTH"
             type="date"
@@ -84,7 +102,6 @@ export const UserInfo = () => {
             placeholder="성별을 선택해주세요."
             register={register('gender')}
           />
-
           <Input
             label="LOCATION"
             type="text"
@@ -93,7 +110,7 @@ export const UserInfo = () => {
             placeholder="거주지역을 입력해주세요."
             register={register('location')}
           />
-        </div>
+        </InputsWrap>
         <Input
           label="EMAIL"
           type="email"
@@ -103,7 +120,7 @@ export const UserInfo = () => {
           register={register('email')}
         />
         <Btn type="submit" loading={loading} btnName="SAVE" />
-      </UserInfoEditForm>
+      </Form>
     </>
   );
 };

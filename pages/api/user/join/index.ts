@@ -4,9 +4,10 @@ import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { username, userId, password, confirmPw, email } = req.body;
+  const { username, userID, password, confirmPw, email } = req.body;
+
   //
-  const data = Boolean(username && (userId || email) && password && confirmPw);
+  const data = Boolean(username && (userID || email) && password && confirmPw);
   if (!data)
     return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
 
@@ -15,9 +16,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: '비밀번호가 일치하지 않습니다.' });
 
   //중복체크
-  if (userId) {
+  if (userID) {
     const dupData = await prismaClient.user.findUnique({
-      where: { userId },
+      where: { userId: userID },
     });
     if (dupData)
       return res.json({ ok: false, error: '이미 등록된 아이디 입니다.' });
@@ -34,7 +35,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   await prismaClient.user.create({
     data: {
       username,
-      userId,
+      userId: userID.toString(),
       password,
       email,
     },
