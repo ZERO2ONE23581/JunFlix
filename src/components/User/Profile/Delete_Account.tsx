@@ -29,9 +29,7 @@ export const Delete_Account = () => {
   useEffect(() => {
     if (data?.ok) {
       alert('계정이 삭제되었습니다.');
-      setTimeout(() => {
-        router.push('/');
-      }, 3000);
+      router.push('/');
     }
   }, [data]);
 

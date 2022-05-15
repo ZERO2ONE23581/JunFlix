@@ -13,8 +13,7 @@ import { Layer } from '../../styles/join-style';
 
 const Join: NextPage = () => {
   //Post api
-  const [postJoin, { loading, data, error }] =
-    useMutation<IJoinRes>('/api/user/join');
+  const [postJoin, { loading, data }] = useMutation<IJoinRes>('/api/user/join');
 
   //Form
   const {
@@ -46,6 +45,11 @@ const Join: NextPage = () => {
       return setError('dupUserId', {
         type: 'custom',
         message: '아이디 중복확인이 필요합니다!',
+      });
+    }
+    if (password !== confirmPw) {
+      return setError('confirmPw', {
+        message: '비밀번호가 일치하지 않습니다.',
       });
     }
     if (loading) return;

@@ -10,14 +10,13 @@ export const EditInputUserId = ({
   onClick,
   loading,
   Type,
-  errExists,
   dataErrMsg,
 }: any) => {
   //
   return (
     <>
-      {Type === 'userId' && !errExists && <OkMsg>{dataOkMsg}</OkMsg>}
-      {Type === 'userId' && errExists && <ErrMsg>{dataErrMsg}</ErrMsg>}
+      {Type === 'userId' && !dataErrMsg && <OkMsg>{dataOkMsg}</OkMsg>}
+      {Type === 'userId' && dataErrMsg && <ErrMsg>{dataErrMsg}</ErrMsg>}
       <Input
         label="ID"
         type="text"
@@ -31,9 +30,56 @@ export const EditInputUserId = ({
   );
 };
 
+export const EditInputPassword = ({
+  Type,
+  dataErrMsg,
+  errMsg,
+  errMsg1,
+  errMsg2,
+  register,
+  register1,
+  register2,
+  onClick,
+  loading,
+}: any) => {
+  //
+  return (
+    <>
+      {Type === 'password' && !dataErrMsg && <OkMsg>{dataOkMsg}</OkMsg>}
+      {Type === 'password' && dataErrMsg && <ErrMsg>{dataErrMsg}</ErrMsg>}
+      <Input
+        label="Old Password"
+        type="password"
+        name="oldPassword"
+        errMsg={errMsg}
+        placeholder="현재 비밀번호를 입력해주세요."
+        register={register}
+      />
+      <InputWrap>
+        <Input
+          label="Password"
+          type="password"
+          name="newPassword"
+          errMsg={errMsg1}
+          placeholder="새로운 비밀번호를 입력해주세요."
+          register={register1}
+        />
+        <Input
+          label="Password Confirm"
+          type="password"
+          name="newPasswordConfirm"
+          errMsg={errMsg2}
+          placeholder="새로운 비밀번호를 재입력해주세요."
+          register={register2}
+        />
+      </InputWrap>
+      <Btn onClick={onClick} type="submit" loading={loading} btnName="SAVE" />
+    </>
+  );
+};
+
 export const EditInputUserInfo = ({
   Type,
-  errExists,
   dataErrMsg,
   errMsg,
   errMsg1,
@@ -54,11 +100,11 @@ export const EditInputUserInfo = ({
   //
   return (
     <>
-      {Type === 'userInfo' && !errExists && <OkMsg>{dataOkMsg}</OkMsg>}
-      {Type === 'userInfo_noUsername' && !errExists && (
+      {Type === 'userInfo' && !dataErrMsg && <OkMsg>{dataOkMsg}</OkMsg>}
+      {Type === 'userInfo_noUsername' && !dataErrMsg && (
         <OkMsg>{noUsernameMsg}</OkMsg>
       )}
-      {Type === 'userInfo' && errExists && <ErrMsg>{dataErrMsg}</ErrMsg>}
+      {Type === 'userInfo' && dataErrMsg && <ErrMsg>{dataErrMsg}</ErrMsg>}
       <>
         <InputWrap>
           <Input
@@ -114,55 +160,6 @@ export const EditInputUserInfo = ({
         />
       </>
       <Btn onClick={onClick} type="submit" loading={loading} btnName={'SAVE'} />
-    </>
-  );
-};
-export const EditInputPassword = ({
-  Type,
-  errExists,
-  dataOkMsg,
-  dataErrMsg,
-  errMsg,
-  errMsg1,
-  errMsg2,
-  register,
-  register1,
-  register2,
-  onClick,
-  loading,
-}: any) => {
-  //
-  return (
-    <>
-      {Type === 'password' && !errExists && <OkMsg>{dataOkMsg}</OkMsg>}
-      {Type === 'password' && errExists && <ErrMsg>{dataErrMsg}</ErrMsg>}
-      <Input
-        label="Old Password"
-        type="password"
-        name="oldPassword"
-        errMsg={errMsg}
-        placeholder="현재 비밀번호를 입력해주세요."
-        register={register}
-      />
-      <InputWrap>
-        <Input
-          label="Password"
-          type="password"
-          name="newPassword"
-          errMsg={errMsg1}
-          placeholder="새로운 비밀번호를 입력해주세요."
-          register={register1}
-        />
-        <Input
-          label="Password Confirm"
-          type="password"
-          name="newPasswordConfirm"
-          errMsg={errMsg2}
-          placeholder="새로운 비밀번호를 재입력해주세요."
-          register={register2}
-        />
-      </InputWrap>
-      <Btn onClick={onClick} type="submit" loading={loading} btnName="SAVE" />
     </>
   );
 };

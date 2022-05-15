@@ -129,7 +129,6 @@ const Profile: NextPage = () => {
         <Form onSubmit={handleSubmit(onValid)}>
           <EditInputUserId
             Type={data?.type}
-            errExists={Boolean(data?.error)}
             dataErrMsg={data?.error}
             errMsg={errors.userId?.message}
             register={register(
@@ -139,13 +138,12 @@ const Profile: NextPage = () => {
                 : { required: false }
             )}
             onClick={() => categorySelect('userId')}
-            loading={data?.type === 'userId' && loading}
+            loading={Boolean(data?.type === 'userId' && loading)}
           />
         </Form>
         <Form onSubmit={handleSubmit(onValid)}>
           <EditInputPassword
             Type={data?.type}
-            errExists={Boolean(data?.error)}
             dataErrMsg={data?.error}
             errMsg={errors.oldPassword?.message}
             errMsg1={errors.newPassword?.message}
@@ -169,13 +167,12 @@ const Profile: NextPage = () => {
                 : { required: false }
             )}
             onClick={() => categorySelect('password')}
-            loading={data?.type === 'password' && loading}
+            loading={Boolean(data?.type === 'password' && loading)}
           />
         </Form>
         <Form onSubmit={handleSubmit(onValid)}>
           <EditInputUserInfo
             Type={data?.type}
-            errExists={Boolean(data?.error)}
             dataErrMsg={data?.error}
             errMsg={errors.username?.message}
             errMsg1={errors.name?.message}
@@ -190,7 +187,7 @@ const Profile: NextPage = () => {
             register4={register('location')}
             register5={register('email')}
             onClick={() => categorySelect('userInfo')}
-            loading={data?.type === 'userInfo' && loading}
+            loading={Boolean(data?.type === 'userInfo' && loading)}
           />
         </Form>
       </section>

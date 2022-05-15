@@ -39,7 +39,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.json({
         type: 'userId',
         ok: false,
-        error: 'no change on userId',
+        error: '현재 쓰고계신 아이디 입니다. 새로운 아이디를 입력해주세요.',
       });
 
     const dupData = Boolean(
@@ -52,7 +52,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.json({
         type: 'userId',
         ok: false,
-        error: 'userId already exists',
+        error: '이미 등록된 아이디 입니다. 아이디를 재입력 해주세요.',
       });
 
     await prismaClient.user.update({
@@ -80,7 +80,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.json({
         type: 'password',
         ok: false,
-        error: 'invalid current password',
+        error:
+          '비밀번호가 일치하지 않습니다. 현재 쓰고계신 비밀번호를 재확인 해주세요.',
       });
     if (newPassword !== newPasswordConfirm)
       return res.json({
@@ -92,7 +93,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.json({
         type: 'password',
         ok: false,
-        error: 'no change on password',
+        error:
+          '현재 쓰고 계신 비밀번호 입니다. 새로운 비밀번호를 입력해주세요.',
       });
     //UPDATE
     await prismaClient.user.update({
