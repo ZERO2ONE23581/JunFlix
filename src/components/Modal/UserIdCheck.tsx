@@ -59,7 +59,6 @@ export const IdCheckModal = ({
       handleData(getValues('checkID'));
     }
   }, [data]);
-  console.log(data?.userId);
   //
   return (
     <>

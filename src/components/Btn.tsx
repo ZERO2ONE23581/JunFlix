@@ -21,6 +21,11 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
           {btnName}
         </Cont>
       )}
+      {type === 'delete' && (
+        <Delete type="button" onClick={onClick}>
+          {btnName}
+        </Delete>
+      )}
       {type === 'toggle' && (
         <Toggle type="button" onClick={onClick}>
           {btnName}
@@ -36,6 +41,9 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
 };
 
 export const Cont = styled.button`
+  background-color: ${(p) => p.theme.color.bg};
+  color: ${(p) => p.theme.color.font};
+  border: 5px solid ${(p) => p.theme.color.font};
   margin: 10px auto;
   cursor: pointer;
   border: 1px solid black;
@@ -45,7 +53,17 @@ export const Cont = styled.button`
   background-color: inherit;
   outline: none;
 `;
-
+const Delete = styled(Cont)`
+  border: none;
+  background-color: ${(p) => p.theme.color.font};
+  color: ${(p) => p.theme.color.bg};
+  width: 150px;
+  padding: 10px;
+  &:hover {
+    background-color: red;
+    color: white;
+  }
+`;
 const Back = styled(Cont)`
   /* width: none; */
 `;

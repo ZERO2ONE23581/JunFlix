@@ -2,13 +2,14 @@ import styled from '@emotion/styled';
 import { Form, PageContainer } from './global-style';
 
 export const ProEditPgCont = styled(PageContainer)`
-  display: flex;
-  flex-direction: row;
-  /* justify-content: center; */
-  align-items: center;
   form {
     width: 500px;
     height: 380px;
+  }
+  .form-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 `;
 

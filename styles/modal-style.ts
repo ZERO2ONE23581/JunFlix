@@ -1,20 +1,21 @@
 import styled from '@emotion/styled';
 
 export const ModalCont = styled.article`
-  position: absolute;
-  top: 0;
-  left: 0;
-  //
+  border: 5px solid ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
+  color: ${(p) => p.theme.color.font};
+  width: 700px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  //
-  background-color: whitesmoke;
   z-index: 999;
-  width: 700px;
-  height: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
+
 export const ModalClose = styled.article`
   position: absolute;
   top: 0;
