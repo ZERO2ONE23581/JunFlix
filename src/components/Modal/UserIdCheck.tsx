@@ -5,7 +5,7 @@ import { Input } from '../Input';
 import { Btn } from '../Btn';
 import { ModalClose, ModalCont } from '../../../styles/modal-style';
 import useMutation from '../../libs/client/useMutation';
-import { Error, Form } from '../../../styles/global-style';
+import { ErrMsg, Form } from '../../../styles/global-style';
 
 interface IIDModalForm {
   checkID?: string;
@@ -104,7 +104,7 @@ export const IdCheckModal = ({
         )}
         {submit && data?.error && (
           <article className="error">
-            <Error>{data?.error}</Error>
+            <ErrMsg>{data?.error}</ErrMsg>
             <Btn type="button" onClick={backClick} btnName="아이디 재확인" />
           </article>
         )}

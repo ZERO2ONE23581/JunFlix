@@ -1,4 +1,4 @@
-import { Error, InputCont, SelectCont } from '../../styles/global-style';
+import { ErrMsg, InputCont, SelectCont } from '../../styles/global-style';
 import { IInputProps } from '../types/input';
 
 export const Input = (props: IInputProps) => {
@@ -13,7 +13,7 @@ export const Input = (props: IInputProps) => {
         type={props.type}
         placeholder={props.placeholder}
       />
-      {props.errMsg && <Error>{props.errMsg}</Error>}
+      {props.errMsg && <ErrMsg>{props.errMsg}</ErrMsg>}
     </InputCont>
   );
 };
@@ -35,7 +35,7 @@ export const Select = ({
         <option value="Male">{options[0]}</option>
         <option value="Female">{options[1]}</option>
       </select>
-      {errMsg && <Error>{errMsg}</Error>}
+      {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </SelectCont>
   );
 };

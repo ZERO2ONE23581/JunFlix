@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Error, Form } from '../../../../styles/global-style';
+import { ErrMsg, Form } from '../../../../styles/global-style';
 import { InputWrap } from '../../../../styles/profileEdit-style';
 import useUser from '../../../libs/client/loggedInUser';
 import useMutation from '../../../libs/client/useMutation';
@@ -54,8 +54,8 @@ export const Edit_Password = () => {
     <>
       <>
         <Form onSubmit={handleSubmit(onValid)}>
-          {message && <Error>{data?.message}</Error>}
-          {data?.error && <Error>{data?.error}</Error>}
+          {message && <ErrMsg>{data?.}</ErrMsg>}
+          {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
           <Input
             label="Old Password"
             type="password"

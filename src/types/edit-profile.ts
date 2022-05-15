@@ -1,12 +1,13 @@
 import { User } from '@prisma/client';
 
 export interface IProfileEditRes {
+  type?: string;
   ok: boolean;
   error?: string;
-  message?: string;
-  updatedUser?: User;
 }
 export interface IProfileEditForm {
+  fetchError?: string;
+  //
   userId?: string | null;
   oldPassword: string;
   newPassword: string;

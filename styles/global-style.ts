@@ -21,11 +21,14 @@ export const BodyBg = styled.div`
   width: 100vw;
   height: 100vh;
 `;
-export const Error = styled.span`
+export const ErrMsg = styled.span`
+  background-color: inherit;
+  text-align: center;
   color: red;
   font-style: italic;
-  background-color: bisque;
-  text-align: center;
+`;
+export const OkMsg = styled(ErrMsg)`
+  color: #2ecc71;
 `;
 export const Form = styled.form`
   margin: 0 auto;

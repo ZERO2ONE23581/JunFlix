@@ -7,7 +7,7 @@ import { Input } from '../../src/components/Input';
 import { Title } from '../../src/components/Layout/parts/Title';
 import useMutation from '../../src/libs/client/useMutation';
 import { ILoginForm, ILoginRes } from '../../src/types/login';
-import { Error, Form } from '../../styles/global-style';
+import { ErrMsg, Form } from '../../styles/global-style';
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -39,7 +39,7 @@ const Login: NextPage = () => {
     <>
       <Title title="로그인" />
       <Form onSubmit={handleSubmit(onValid)}>
-        {data?.error && <Error>{data?.error}</Error>}
+        {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
         <Input
           register={register('userId', { required: '아이디를 입력해주세요.' })}
           label="ID"

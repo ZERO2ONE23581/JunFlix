@@ -8,7 +8,7 @@ import { IdCheckModal } from '../../src/components/Modal/UserIdCheck';
 import { IJoinForm, IJoinRes } from '../../src/types/join';
 import useMutation from '../../src/libs/client/useMutation';
 import { Title } from '../../src/components/Layout/parts/Title';
-import { Error, Form } from '../../styles/global-style';
+import { ErrMsg, Form } from '../../styles/global-style';
 import { Layer } from '../../styles/join-style';
 
 const Join: NextPage = () => {
@@ -122,7 +122,7 @@ const Join: NextPage = () => {
           onClick={toggleCheckModal}
         />
       )}
-      {errors.dupUserId && <Error>{errors.dupUserId.message}</Error>}
+      {errors.dupUserId && <ErrMsg>{errors.dupUserId.message}</ErrMsg>}
 
       <Form onSubmit={handleSubmit(onValid)}>
         {data?.error && <span>{data.error}</span>}
