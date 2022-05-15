@@ -25,6 +25,7 @@ export const Edit_Password = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    setError,
     reset,
   } = useForm<IProfileEditForm>({ mode: 'onSubmit' });
   //
@@ -34,6 +35,10 @@ export const Edit_Password = () => {
     newPasswordConfirm,
   }: IProfileEditForm) => {
     if (loading) return;
+    if (newPassword !== newPasswordConfirm)
+      return setError('newPasswordConfirm', {
+        message: '비밀번호가 일치하지 않습니다.',
+      });
     postEdit({ postType, oldPassword, newPassword, newPasswordConfirm });
     setMessage(true);
     reset({ newPassword: '', newPasswordConfirm: '', oldPassword: '' });
@@ -57,10 +62,9 @@ export const Edit_Password = () => {
             name="oldPassword"
             errMsg={errors.oldPassword?.message}
             placeholder="현재 비밀번호를 입력해주세요."
-            register={register('oldPassword')}
-            // register={register('oldPassword', {
-            //   required: '현재 비밀번호를 입력해주세요.',
-            // })}
+            register={register('oldPassword', {
+              required: '현재 비밀번호를 입력해주세요.',
+            })}
           />
           <InputWrap>
             <Input
@@ -69,10 +73,9 @@ export const Edit_Password = () => {
               name="newPassword"
               errMsg={errors.newPassword?.message}
               placeholder="새로운 비밀번호를 입력해주세요."
-              register={register('newPassword')}
-              // register={register('newPassword', {
-              //   required: '새로운 비밀번호를 입력해주세요.',
-              // })}
+              register={register('newPassword', {
+                required: '새로운 비밀번호를 입력해주세요.',
+              })}
             />
             <Input
               label="Password Confirm"
@@ -80,10 +83,9 @@ export const Edit_Password = () => {
               name="newPasswordConfirm"
               errMsg={errors.newPasswordConfirm?.message}
               placeholder="새로운 비밀번호를 재입력해주세요."
-              register={register('newPasswordConfirm')}
-              // register={register('newPasswordConfirm', {
-              //   required: '새로운 비밀번호를 재입력해주세요.',
-              // })}
+              register={register('newPasswordConfirm', {
+                required: '새로운 비밀번호를 재입력해주세요.',
+              })}
             />
           </InputWrap>
 

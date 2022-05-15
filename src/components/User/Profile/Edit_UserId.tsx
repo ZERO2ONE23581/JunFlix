@@ -30,7 +30,8 @@ export const Edit_UserId = () => {
   //
   const onValid = ({ userId }: IProfileEditForm) => {
     if (loading) return;
-    // if (!userId) setError('userId', { message: '아이디를 입력해주세요.' });
+    if (!userId)
+      return setError('userId', { message: '아이디를 입력해주세요.' });
     const userID = userId?.toUpperCase();
     postEdit({ userID, postType });
     setMessage(true);
@@ -55,10 +56,9 @@ export const Edit_UserId = () => {
             name="userId"
             errMsg={errors.userId?.message}
             placeholder="새로운 아이디를 입력해주세요."
-            register={register('userId')}
-            // register={register('userId', {
-            //   required: '새로운 아이디를 입력해주세요.',
-            // })}
+            register={register('userId', {
+              required: '새로운 아이디를 입력해주세요.',
+            })}
           />
           <Btn type="submit" loading={loading} btnName="SAVE" />
         </Form>
