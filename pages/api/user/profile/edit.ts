@@ -5,7 +5,7 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
-    postType,
+    method,
     userID,
     email,
     oldPassword,
@@ -27,35 +27,36 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!loggedInUser)
     return res.json({ ok: false, error: '로그인이 필요합니다!' });
 
+  const idMatch = { id: loggedInUser.id };
+
   //USERID EDIT
-  if (postType === 'userId') {
+  if (method === 'userId') {
     //NO INFO ERROR
     if (!userID) return res.json({ ok: false, error: 'NO USERID ERROR!' });
+    if (userID === loggedInUser.userId)
+      return res.json({ ok: false, error: 'no change on userId' });
+
     //DUPDATA CHECK (USERID)
-    if (userID !== loggedInUser.userId) {
-      const dupData = Boolean(
-        await prismaClient.user.findUnique({
-          where: { userId: userID.toString() },
-        })
-      );
-      if (dupData)
-        return res.json({
-          ok: false,
-          error: '이미 사용중인 아이디 입니다. 아이디를 재입력 해주세요.',
-        });
-      //UPDATE
-      await prismaClient.user.update({
-        where: { id: loggedInUser.id },
-        data: { userId: userID.toString() },
-      });
-    }
+    const dupData = Boolean(
+      await prismaClient.user.findUnique({
+        where: { userId: userID.toString() },
+      })
+    );
+    if (dupData) return res.json({ ok: false, error: 'userId already exists' });
+
+    //UPDATE
+    await prismaClient.user.update({
+      where: { ...idMatch },
+      data: { userId: userID.toString() },
+    });
   }
 
   //PW EDIT
-  if (postType === 'password') {
+  if (method === 'password') {
     //NO INFO ERROR
     const password = Boolean(oldPassword && newPassword && newPasswordConfirm);
     if (!password) return res.json({ ok: false, error: 'NO PASSWORD ERROR!' });
+
     //OTHER ERRORS
     if (oldPassword !== loggedInUser.password)
       return res.json({
@@ -70,20 +71,21 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (newPassword === loggedInUser.password)
       return res.json({
         ok: false,
-        error: 'different password needed',
+        error: 'no change on password',
       });
+
     //UPDATE
     await prismaClient.user.update({
-      where: { id: loggedInUser.id },
+      where: { ...idMatch },
       data: { password: newPassword },
     });
   }
 
   //USERINFO EDIT
-  if (postType === 'userInfo') {
+  if (method === 'userInfo') {
     if (!username) {
       await prismaClient.user.update({
-        where: { id: loggedInUser.id },
+        where: { ...idMatch },
         data: {
           username: 'Anonymous',
           name,
@@ -112,13 +114,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           error: '이미 사용중인 이메일 입니다. 다른 이메일을 이용해 주세요.',
         });
       await prismaClient.user.update({
-        where: { id: loggedInUser.id },
+        where: { ...idMatch },
         data: { email },
       });
     }
     //UPDATE
     await prismaClient.user.update({
-      where: { id: loggedInUser.id },
+      where: { ...idMatch },
       data: { username, name, birth, gender, location, email, avatar },
     });
   }

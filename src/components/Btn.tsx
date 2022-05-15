@@ -27,7 +27,9 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
         </Toggle>
       )}
       {type === 'submit' && (
-        <Cont type="submit">{loading ? 'Loading...' : btnName}</Cont>
+        <Cont onClick={onClick} type="submit">
+          {loading ? 'Loading...' : btnName}
+        </Cont>
       )}
     </>
   );
