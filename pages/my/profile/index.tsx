@@ -1,26 +1,19 @@
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../src/components/Btn';
-import { Input, Select } from '../../../src/components/Input';
 import useUser from '../../../src/libs/client/loggedInUser';
 import useMutation from '../../../src/libs/client/useMutation';
+import { Form } from '../../../styles/global-style';
+import { ProEditPgCont } from '../../../styles/profileEdit-style';
 import {
   IProfileEditForm,
   IProfileEditRes,
 } from '../../../src/types/edit-profile';
 import {
-  ErrMsg,
-  Error,
-  Form,
-  OkMsg,
-  Success,
-} from '../../../styles/global-style';
-import {
-  InputsWrap,
-  InputWrap,
-  ProEditPgCont,
-} from '../../../styles/profileEdit-style';
+  EditInputPassword,
+  EditInputUserId,
+  EditInputUserInfo,
+} from '../../../src/components/User/Profile/Edit_Input';
 
 const Profile: NextPage = () => {
   //Get
@@ -118,10 +111,6 @@ const Profile: NextPage = () => {
   };
 
   //Set up
-  const success = '프로필이 성공적으로 업데이트 되었습니다.';
-  const noUsernameMsg = `유저이름 미입력시 'Anonymous'로 저장됩니다. `;
-  const errExists = Boolean(data?.error);
-  const Type = data?.type;
   useEffect(() => {
     if (loggedInUser?.userId) setValue('userId', loggedInUser?.userId);
     if (loggedInUser?.username) setValue('username', loggedInUser?.username);
@@ -135,162 +124,73 @@ const Profile: NextPage = () => {
   //
   return (
     <ProEditPgCont>
-      <>
-        {Type === 'userId' && !errExists && <OkMsg>{success}</OkMsg>}
-        {Type === 'userId' && errExists && <ErrMsg>{data?.error}</ErrMsg>}
-
-        <Form onSubmit={handleSubmit(onValid)}>
-          <>
-            <Input
-              label="ID"
-              type="text"
-              name="userId"
-              errMsg={errors.userId?.message}
-              placeholder="새로운 아이디를 입력해주세요."
-              register={register(
-                'userId',
-                category.userId
-                  ? { required: '새로운 아이디를 입력해주세요.' }
-                  : { required: false }
-              )}
-            />
-          </>
-          <Btn
-            onClick={() => categorySelect('userId')}
-            type="submit"
-            loading={data?.type === 'userId' && loading}
-            btnName="SAVE"
-          />
-        </Form>
-      </>
-
-      <>
-        {Type === 'password' && !errExists && <OkMsg>{success}</OkMsg>}
-        {Type === 'password' && errExists && <ErrMsg>{data?.error}</ErrMsg>}
-
-        <Form onSubmit={handleSubmit(onValid)}>
-          <>
-            <Input
-              label="Old Password"
-              type="password"
-              name="oldPassword"
-              errMsg={errors.oldPassword?.message}
-              placeholder="현재 비밀번호를 입력해주세요."
-              register={register(
-                'oldPassword',
-                category.password
-                  ? { required: '현재 비밀번호를 입력해주세요.' }
-                  : { required: false }
-              )}
-            />
-            <InputWrap>
-              <Input
-                label="Password"
-                type="password"
-                name="newPassword"
-                errMsg={errors.newPassword?.message}
-                placeholder="새로운 비밀번호를 입력해주세요."
-                register={register(
-                  'newPassword',
-                  category.password
-                    ? { required: '새로운 비밀번호를 입력해주세요.' }
-                    : { required: false }
-                )}
-              />
-              <Input
-                label="Password Confirm"
-                type="password"
-                name="newPasswordConfirm"
-                errMsg={errors.newPasswordConfirm?.message}
-                placeholder="새로운 비밀번호를 재입력해주세요."
-                register={register(
-                  'newPasswordConfirm',
-                  category.password
-                    ? { required: '새로운 비밀번호를 재입력해주세요.' }
-                    : { required: false }
-                )}
-              />
-            </InputWrap>
-          </>
-          <Btn
-            onClick={() => categorySelect('password')}
-            type="submit"
-            loading={data?.type === 'password' && loading}
-            btnName="SAVE"
-          />
-        </Form>
-      </>
-
-      <>
-        {Type === 'userInfo' && !errExists && <OkMsg>{success}</OkMsg>}
-        {Type === 'userInfo_noUsername' && !errExists && (
-          <OkMsg>{noUsernameMsg}</OkMsg>
-        )}
-        {Type === 'userInfo' && errExists && <ErrMsg>{data?.error}</ErrMsg>}
-
-        <Form onSubmit={handleSubmit(onValid)}>
-          <>
-            <InputWrap>
-              <Input
-                label="USERNAME"
-                type="text"
-                name="username"
-                errMsg={errors.username?.message}
-                placeholder="새로운 닉네임을 입력해주세요."
-                register={register('username')}
-              />
-              <Input
-                label="NAME"
-                type="text"
-                name="name"
-                errMsg={errors.name?.message}
-                placeholder="이름을 입력해주세요."
-                register={register('name')}
-              />
-            </InputWrap>
-            <InputsWrap>
-              <Input
-                label="BIRTH"
-                type="date"
-                name="birth"
-                errMsg={errors.birth?.message}
-                placeholder="생년월일을 입력해주세요."
-                register={register('birth')}
-              />
-              <Select
-                options={['남', '녀']}
-                label="GENDER"
-                name="gender"
-                errMsg={errors.gender?.message}
-                placeholder="성별을 선택해주세요."
-                register={register('gender')}
-              />
-              <Input
-                label="LOCATION"
-                type="text"
-                name="location"
-                errMsg={errors.location?.message}
-                placeholder="거주지역을 입력해주세요."
-                register={register('location')}
-              />
-            </InputsWrap>
-            <Input
-              label="EMAIL"
-              type="email"
-              name="email"
-              errMsg={errors.email?.message}
-              placeholder="새로운 이메일을 입력해주세요."
-              register={register('email')}
-            />
-          </>
-          <Btn
-            onClick={() => categorySelect('userInfo')}
-            type="submit"
-            loading={data?.type === 'userInfo' && loading}
-            btnName={'SAVE'}
-          />
-        </Form>
-      </>
+      <Form onSubmit={handleSubmit(onValid)}>
+        <EditInputUserId
+          Type={data?.type}
+          errExists={Boolean(data?.error)}
+          dataErrMsg={data?.error}
+          errMsg={errors.userId?.message}
+          register={register(
+            'userId',
+            category.userId
+              ? { required: '새로운 아이디를 입력해주세요.' }
+              : { required: false }
+          )}
+          onClick={() => categorySelect('userId')}
+          loading={data?.type === 'userId' && loading}
+        />
+      </Form>
+      <Form onSubmit={handleSubmit(onValid)}>
+        <EditInputPassword
+          Type={data?.type}
+          errExists={Boolean(data?.error)}
+          dataErrMsg={data?.error}
+          errMsg={errors.oldPassword?.message}
+          errMsg1={errors.newPassword?.message}
+          errMsg2={errors.newPasswordConfirm?.message}
+          register={register(
+            'oldPassword',
+            category.password
+              ? { required: '현재 비밀번호를 입력해주세요.' }
+              : { required: false }
+          )}
+          register1={register(
+            'newPassword',
+            category.password
+              ? { required: '새로운 비밀번호를 입력해주세요.' }
+              : { required: false }
+          )}
+          register2={register(
+            'newPasswordConfirm',
+            category.password
+              ? { required: '새로운 비밀번호를 재입력해주세요.' }
+              : { required: false }
+          )}
+          onClick={() => categorySelect('password')}
+          loading={data?.type === 'password' && loading}
+        />
+      </Form>
+      <Form onSubmit={handleSubmit(onValid)}>
+        <EditInputUserInfo
+          Type={data?.type}
+          errExists={Boolean(data?.error)}
+          dataErrMsg={data?.error}
+          errMsg={errors.username?.message}
+          errMsg1={errors.name?.message}
+          errMsg2={errors.birth?.message}
+          errMsg3={errors.gender?.message}
+          errMsg4={errors.location?.message}
+          errMsg5={errors.email?.message}
+          register={register('username')}
+          register1={register('name')}
+          register2={register('birth')}
+          register3={register('gender')}
+          register4={register('location')}
+          register5={register('email')}
+          onClick={() => categorySelect('userInfo')}
+          loading={data?.type === 'userInfo' && loading}
+        />
+      </Form>
     </ProEditPgCont>
   );
 };
