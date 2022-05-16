@@ -5,7 +5,8 @@ import { Input } from '../Input';
 import { Btn } from '../Btn';
 import { ModalClose, ModalCont } from '../../../styles/modalStyle';
 import useMutation from '../../libs/client/useMutation';
-import { ErrMsg, Form } from '../../../styles/globalStyle';
+import { Form } from '../../../styles/formStyle';
+import { ErrMsg } from '../../../styles/defaultStyle';
 
 interface IIDModalForm {
   checkID?: string;

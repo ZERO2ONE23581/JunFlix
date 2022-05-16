@@ -1,14 +1,14 @@
 import type { NextPage } from 'next';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
 import { Input } from '../../src/components/Input';
 import { Title } from '../../src/components/Layout/parts/Title';
-import { MoveHome } from '../../src/components/moveHome';
 import useMutation from '../../src/libs/client/useMutation';
 import { ILoginForm, ILoginRes } from '../../src/types/login';
-import { ErrMsg, Form } from '../../styles/globalStyle';
+import { ErrMsg } from '../../styles/defaultStyle';
+import { Form } from '../../styles/formStyle';
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -38,7 +38,6 @@ const Login: NextPage = () => {
 
   return (
     <>
-      {/* <MoveHome data={data?.ok} /> */}
       <Title title="로그인" />
       <Form onSubmit={handleSubmit(onValid)}>
         {data?.error && <ErrMsg>{data?.error}</ErrMsg>}

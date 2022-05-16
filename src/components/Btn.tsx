@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import { Cont, Delete, Logout, Theme, Toggle } from '../../styles/btnStyle';
 
 interface IBtnProps {
   onClick?: any;
@@ -8,9 +8,13 @@ interface IBtnProps {
 }
 
 export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
-  //
   return (
     <>
+      {type === 'submit' && (
+        <Cont onClick={onClick} type="submit">
+          {loading ? 'Loading...' : btnName}
+        </Cont>
+      )}
       {type === 'button' && (
         <Cont type="button" onClick={onClick}>
           {btnName}
@@ -37,66 +41,6 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
           {btnName}
         </Toggle>
       )}
-      {type === 'submit' && (
-        <Cont onClick={onClick} type="submit">
-          {loading ? 'Loading...' : btnName}
-        </Cont>
-      )}
     </>
   );
 };
-
-export const Cont = styled.button`
-  background-color: ${(p) => p.theme.color.font};
-  box-shadow: ${(p) => p.theme.boxShadow.input};
-  color: ${(p) => p.theme.color.bg};
-  border: ${(p) => p.theme.border};
-  border-radius: 5px;
-  margin: 10px auto;
-  padding: 5px 0;
-  outline: none;
-  width: 100%;
-  cursor: pointer;
-`;
-const Delete = styled(Cont)`
-  border: none;
-  background-color: ${(p) => p.theme.color.font};
-  color: ${(p) => p.theme.color.bg};
-  width: 150px;
-  padding: 10px;
-  &:hover {
-    background-color: red;
-    color: white;
-  }
-`;
-const Logout = styled(Cont)`
-  color: ${(p) => p.theme.color.font};
-  border: none;
-  box-shadow: none;
-  background-color: inherit;
-  &:hover {
-    background-color: ${(p) => p.theme.color.font};
-    color: ${(p) => p.theme.color.bg};
-  }
-`;
-const Back = styled(Cont)`
-  /* width: none; */
-`;
-const Toggle = styled(Cont)`
-  position: absolute;
-  top: 30px;
-  right: 40px;
-  width: 20px;
-  height: 20px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const Theme = styled(Toggle)`
-  background-color: ${(p) => p.theme.color.bg};
-  color: ${(p) => p.theme.color.font};
-  border: 1px solid ${(p) => p.theme.color.font};
-  border-radius: 5px;
-  padding: 10px 30px;
-`;
