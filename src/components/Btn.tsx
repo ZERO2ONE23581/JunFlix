@@ -11,16 +11,22 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
   //
   return (
     <>
-      {type === 'theme' && (
-        <Theme type="button" onClick={onClick}>
-          {btnName}
-        </Theme>
-      )}
       {type === 'button' && (
         <Cont type="button" onClick={onClick}>
           {btnName}
         </Cont>
       )}
+      {type === 'logout' && (
+        <Logout type="button" onClick={onClick}>
+          {btnName}
+        </Logout>
+      )}
+      {type === 'theme' && (
+        <Theme type="button" onClick={onClick}>
+          {btnName}
+        </Theme>
+      )}
+
       {type === 'delete' && (
         <Delete type="button" onClick={onClick}>
           {btnName}
@@ -62,6 +68,16 @@ const Delete = styled(Cont)`
   &:hover {
     background-color: red;
     color: white;
+  }
+`;
+const Logout = styled(Cont)`
+  color: ${(p) => p.theme.color.font};
+  border: none;
+  box-shadow: none;
+  background-color: inherit;
+  &:hover {
+    background-color: ${(p) => p.theme.color.font};
+    color: ${(p) => p.theme.color.bg};
   }
 `;
 const Back = styled(Cont)`

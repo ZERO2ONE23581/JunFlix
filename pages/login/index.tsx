@@ -1,10 +1,11 @@
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
 import { Input } from '../../src/components/Input';
 import { Title } from '../../src/components/Layout/parts/Title';
+import { MoveHome } from '../../src/components/moveHome';
 import useMutation from '../../src/libs/client/useMutation';
 import { ILoginForm, ILoginRes } from '../../src/types/login';
 import { ErrMsg, Form } from '../../styles/global-style';
@@ -31,12 +32,14 @@ const Login: NextPage = () => {
   };
   useEffect(() => {
     if (data?.ok) {
+      alert('로그인 되었습니다. 메인홈으로 이동합니다.');
       router.replace('/');
     }
-  }, [data]);
+  }, [data, router]);
 
   return (
     <>
+      {/* <MoveHome data={data?.ok} /> */}
       <Title title="로그인" />
       <Form onSubmit={handleSubmit(onValid)}>
         {data?.error && <ErrMsg>{data?.error}</ErrMsg>}

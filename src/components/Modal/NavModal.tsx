@@ -1,11 +1,14 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { Btn } from '../Btn';
 
 interface INavModalProps {
   username?: string;
 }
-
 export const NavModal = ({ username }: INavModalProps) => {
+  const router = useRouter();
+  //
   return (
     <>
       <Cont>
@@ -21,9 +24,11 @@ export const NavModal = ({ username }: INavModalProps) => {
             </Link>
           </li>
           <li>
-            <Link href="/api/user/logout">
-              <a>Log out</a>
-            </Link>
+            <Btn
+              type="logout"
+              btnName="Sign Out"
+              onClick={() => router.replace('/api/user/logout')}
+            />
           </li>
         </Wrapper>
       </Cont>
@@ -32,17 +37,21 @@ export const NavModal = ({ username }: INavModalProps) => {
 };
 
 const Wrapper = styled.ul`
+  padding: 5px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2px 0;
   border-radius: 5px;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   li {
+    padding: 10px;
     width: 100%;
-    padding: 6px 0;
+    height: 40px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: ${(p) => p.theme.color.bg};
     color: ${(p) => p.theme.color.font};
     &:hover {
@@ -61,5 +70,5 @@ const Cont = styled.nav`
   right: -20px;
   width: 150px;
   border-radius: 5px;
-  padding: 5px 0;
+  padding-bottom: 3px;
 `;

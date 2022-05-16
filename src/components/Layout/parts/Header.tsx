@@ -1,23 +1,23 @@
 import styled from '@emotion/styled';
-import { User } from '@prisma/client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { NavModalClose } from '../../../../styles/modal-style';
+import useUser from '../../../libs/client/loggedInUser';
 import { ILoggedInUser } from '../../../types/login';
 import { NavModal } from '../../Modal/NavModal';
 import { LogoSvg } from '../../Svg/Logo';
 
 export const Header = () => {
-  const { data } = useSWR<ILoggedInUser>(`/api/user/login`);
-  const username = data?.loggedInUser?.username;
+  const { loggedInUser, isloggedIn } = useUser();
+  const username = loggedInUser?.username;
+
   const [open, setOpen] = useState(false);
   const toggleModal = () => {
     setOpen((p) => !p);
   };
-  const closeModal = () => {
-    setOpen(false);
-  };
+
   //
   return (
     <Cont>
@@ -29,7 +29,7 @@ export const Header = () => {
             </a>
           </Link>
         </Logo>
-        {data?.ok ? (
+        {isloggedIn ? (
           <Profile onClick={toggleModal}>
             {open && <NavModal username={username} />}
           </Profile>
@@ -44,7 +44,7 @@ export const Header = () => {
           </div>
         )}
       </NavBar>
-      {open && <NavModalClose onClick={closeModal} />}
+      {open && <NavModalClose onClick={() => setOpen(false)} />}
     </Cont>
   );
 };
@@ -56,7 +56,7 @@ const Logo = styled.article`
     }
   }
 `;
-const Profile = styled.button`
+const Profile = styled.article`
   width: 40px;
   height: 40px;
   position: relative;
