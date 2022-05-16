@@ -17,13 +17,13 @@ export const Cont = styled.button`
   cursor: pointer;
 `;
 export const Delete = styled(Cont)`
-  background-color: ${(p) => p.theme.color.font};
-  color: ${(p) => p.theme.color.bg};
   width: 150px;
   padding: 10px;
+  color: ${(p) => p.theme.color.bg};
+  background-color: ${(p) => p.theme.color.font};
   &:hover {
-    background-color: red;
-    color: white;
+    color: ${(p) => p.theme.color.logo};
+    background-color: ${(p) => p.theme.color.bg};
   }
 `;
 export const Logout = styled(Cont)`

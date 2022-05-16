@@ -9,7 +9,11 @@ export const Footer = () => {
 };
 
 const Cont = styled.footer`
-  background-color: black;
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
+  background-color: ${(p) => p.theme.color.font};
+  color: ${(p) => p.theme.color.bg};
+  border: ${(p) => p.theme.border};
   padding: 20px;
-  color: white;
 `;

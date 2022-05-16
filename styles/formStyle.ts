@@ -6,7 +6,6 @@ export const Form = styled.form`
   color: ${(p) => p.theme.color.font};
   border: ${(p) => p.theme.border};
   border-radius: 10px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

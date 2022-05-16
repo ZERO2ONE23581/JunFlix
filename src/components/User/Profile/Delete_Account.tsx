@@ -1,9 +1,9 @@
-import styled from '@emotion/styled';
+import { Btn } from '../../Btn';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { ModalClose, ModalCont } from '../../../../styles/modalStyle';
+import { ModalClose } from '../../../../styles/modalStyle';
 import useMutation from '../../../libs/client/useMutation';
-import { Btn } from '../../Btn';
+import { Cont, DeleteModal, Desc } from '../../../../styles/deleteAcctStyle';
 
 export const Delete_Account = () => {
   const router = useRouter();
@@ -37,48 +37,29 @@ export const Delete_Account = () => {
   return (
     <>
       {openModal && (
-        <ModalCont>
-          <Warning>
+        <DeleteModal>
+          <article>
             <h1>계정을 삭제할 경우에는 복구가 불가능합니다.</h1>
             <p>(This is a permanent action and it can't be undone.</p>
             <p>
               After you delete your account no one will be able to recover it.)
             </p>
-          </Warning>
+          </article>
           <Btn
             type="delete"
             onClick={deleteConfirm}
             btnName={loading ? 'Loading...' : 'Confirm Delete'}
           />
-        </ModalCont>
+        </DeleteModal>
       )}
       <Cont>
+        <Desc>
+          <h1>DANGER ZONE ⚠</h1>
+          <span>"Action can't be undone after submit!"</span>
+        </Desc>
         <Btn onClick={onClick} type="delete" btnName="Delete Account" />
       </Cont>
       {openModal && <ModalClose onClick={() => setOpenModal(false)} />}
     </>
   );
 };
-
-const Warning = styled.article`
-  border: 1px solid red;
-  text-align: center;
-  padding: 20px;
-  width: 100%;
-  h1 {
-    margin-bottom: 10px;
-  }
-  p {
-    font-size: 0.9rem;
-  }
-`;
-
-const Cont = styled.section`
-  border: 5px solid ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
-  color: ${(p) => p.theme.color.font};
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  gap: 30px;
-`;

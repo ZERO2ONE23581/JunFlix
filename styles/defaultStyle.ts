@@ -3,17 +3,25 @@ import styled from '@emotion/styled';
 export const PageContainer = styled.section`
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => p.theme.color.font};
-  padding: 10px 100px;
+  padding: 100px 200px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-content: center;
   gap: 20px;
   font-size: 1.2rem;
 `;
-
+export const LoginPageCont = styled(PageContainer)`
+  flex-direction: row;
+  form {
+    height: 250px;
+  }
+`;
 export const ProEditPgCont = styled(PageContainer)`
   .form-wrapper {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 `;
 

@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 
 export const ModalCont = styled.article`
-  border: 5px solid ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
   color: ${(p) => p.theme.color.font};
+  border: ${(p) => p.theme.border};
+  border-radius: 10px;
   width: 700px;
   height: 300px;
   display: flex;
@@ -12,8 +14,9 @@ export const ModalCont = styled.article`
   align-items: center;
   z-index: 999;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 export const ModalClose = styled.article`

@@ -9,7 +9,7 @@ import {
 } from '../../../src/types/edit-profile';
 import { Delete_Account } from '../../../src/components/User/Profile/Delete_Account';
 import { DataResult, EditForm, Form } from '../../../styles/formStyle';
-import { ErrMsg, OkMsg, ProEditPgCont } from '../../../styles/defaultStyle';
+import { ProEditPgCont } from '../../../styles/defaultStyle';
 import { Input, Select } from '../../../src/components/Input';
 import { Btn } from '../../../src/components/Btn';
 import { InputWrap } from '../../../styles/inputStyle';

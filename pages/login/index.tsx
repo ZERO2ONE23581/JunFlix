@@ -7,7 +7,11 @@ import { Input } from '../../src/components/Input';
 import { Title } from '../../src/components/Layout/parts/Title';
 import useMutation from '../../src/libs/client/useMutation';
 import { ILoginForm, ILoginRes } from '../../src/types/login';
-import { ErrMsg } from '../../styles/defaultStyle';
+import {
+  ErrMsg,
+  LoginPageCont,
+  PageContainer,
+} from '../../styles/defaultStyle';
 import { Form } from '../../styles/formStyle';
 
 const Login: NextPage = () => {
@@ -39,28 +43,32 @@ const Login: NextPage = () => {
   return (
     <>
       <Title title="로그인" />
-      <Form onSubmit={handleSubmit(onValid)}>
-        {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
-        <Input
-          register={register('userId', { required: '아이디를 입력해주세요.' })}
-          label="ID"
-          name="userId"
-          type="text"
-          placeholder="아이디를 입력해주세요."
-          errMsg={errors.userId?.message}
-        />
-        <Input
-          register={register('password', {
-            required: '비밀번호를 입력해주세요.',
-          })}
-          label="Password"
-          name="password"
-          type="password"
-          placeholder="비밀번호를 입력해주세요."
-          errMsg={errors.password?.message}
-        />
-        <Btn type="submit" btnName={loading ? 'Loading...' : '로그인'} />
-      </Form>
+      <LoginPageCont>
+        <Form onSubmit={handleSubmit(onValid)}>
+          {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
+          <Input
+            register={register('userId', {
+              required: '아이디를 입력해주세요.',
+            })}
+            label="ID"
+            name="userId"
+            type="text"
+            placeholder="아이디를 입력해주세요."
+            errMsg={errors.userId?.message}
+          />
+          <Input
+            register={register('password', {
+              required: '비밀번호를 입력해주세요.',
+            })}
+            label="Password"
+            name="password"
+            type="password"
+            placeholder="비밀번호를 입력해주세요."
+            errMsg={errors.password?.message}
+          />
+          <Btn type="submit" btnName={loading ? 'Loading...' : '로그인'} />
+        </Form>
+      </LoginPageCont>
     </>
   );
 };
