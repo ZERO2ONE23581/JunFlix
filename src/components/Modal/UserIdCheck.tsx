@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../Input';
 import { Btn } from '../Btn';
-import { ModalClose, ModalCont } from '../../../styles/modal-style';
+import { ModalClose, ModalCont } from '../../../styles/modalStyle';
 import useMutation from '../../libs/client/useMutation';
-import { ErrMsg, Form } from '../../../styles/global-style';
+import { ErrMsg, Form } from '../../../styles/globalStyle';
 
 interface IIDModalForm {
   checkID?: string;

@@ -1,4 +1,4 @@
-import { ErrMsg, InputCont, SelectCont } from '../../styles/global-style';
+import { ErrMsg, InputCont, SelectCont } from '../../styles/globalStyle';
 import { IInputProps } from '../types/input';
 
 export const Input = (props: IInputProps) => {

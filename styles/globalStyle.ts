@@ -31,33 +31,52 @@ export const OkMsg = styled(ErrMsg)`
   color: #2ecc71;
 `;
 export const Form = styled.form`
+  background-color: ${(p) => p.theme.color.bg};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  color: ${(p) => p.theme.color.font};
+  border: ${(p) => p.theme.border};
+  border-radius: 10px;
   margin: 0 auto;
-  border: 5px solid black;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 600px;
-  padding: 20px 40px;
+  padding: 20px 25px;
+  /* width: 500px; */
 `;
 export const InputCont = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
+  label {
+    font-size: 1rem;
+    margin-bottom: 5px;
+  }
   select,
   input {
+    background-color: ${(p) => p.theme.color.bg};
+    box-shadow: ${(p) => p.theme.boxShadow.input};
+    color: ${(p) => p.theme.color.font};
+    border: ${(p) => p.theme.border};
     width: 100%;
     padding: 10px;
-    border: none;
-    box-shadow: ${(p) => p.theme.boxShadow.nav};
-    background-color: white;
     border-radius: 5px;
+    &:focus {
+      outline: 2px solid ${(p) => p.theme.color.font};
+    }
   }
 `;
 export const SelectCont = styled(InputCont)`
   select {
-    option {
-      border: 3px solid blue;
-      border-radius: 5px;
-    }
+    width: 210px;
+  }
+`;
+
+export const InputWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  input {
+    width: 210px;
   }
 `;

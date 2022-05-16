@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { ModalClose, ModalCont } from '../../../../styles/modal-style';
+import { ModalClose, ModalCont } from '../../../../styles/modalStyle';
 import useMutation from '../../../libs/client/useMutation';
 import { Btn } from '../../Btn';
 

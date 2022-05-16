@@ -8,7 +8,7 @@ import { Title } from '../../src/components/Layout/parts/Title';
 import { MoveHome } from '../../src/components/moveHome';
 import useMutation from '../../src/libs/client/useMutation';
 import { ILoginForm, ILoginRes } from '../../src/types/login';
-import { ErrMsg, Form } from '../../styles/global-style';
+import { ErrMsg, Form } from '../../styles/globalStyle';
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -32,8 +32,7 @@ const Login: NextPage = () => {
   };
   useEffect(() => {
     if (data?.ok) {
-      alert('로그인 되었습니다. 메인홈으로 이동합니다.');
-      router.replace('/');
+      router.replace('/api/user/login/move');
     }
   }, [data, router]);
 

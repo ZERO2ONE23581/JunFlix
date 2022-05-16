@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { NavModalClose } from '../../../../styles/modal-style';
+import { NavModalClose } from '../../../../styles/modalStyle';
 import useUser from '../../../libs/client/loggedInUser';
 import { ILoggedInUser } from '../../../types/login';
 import { NavModal } from '../../Modal/NavModal';

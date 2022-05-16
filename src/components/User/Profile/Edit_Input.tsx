@@ -1,5 +1,4 @@
-import { ErrMsg, OkMsg } from '../../../../styles/global-style';
-import { InputsWrap, InputWrap } from '../../../../styles/profileEdit-style';
+import { ErrMsg, InputWrap, OkMsg } from '../../../../styles/globalStyle';
 import { Btn } from '../../Btn';
 import { Input, Select } from '../../Input';
 
@@ -55,24 +54,22 @@ export const EditInputPassword = ({
         placeholder="현재 비밀번호를 입력해주세요."
         register={register}
       />
-      <InputWrap>
-        <Input
-          label="Password"
-          type="password"
-          name="newPassword"
-          errMsg={errMsg1}
-          placeholder="새로운 비밀번호를 입력해주세요."
-          register={register1}
-        />
-        <Input
-          label="Password Confirm"
-          type="password"
-          name="newPasswordConfirm"
-          errMsg={errMsg2}
-          placeholder="새로운 비밀번호를 재입력해주세요."
-          register={register2}
-        />
-      </InputWrap>
+      <Input
+        label="Password"
+        type="password"
+        name="newPassword"
+        errMsg={errMsg1}
+        placeholder="새로운 비밀번호를 입력해주세요."
+        register={register1}
+      />
+      <Input
+        label="Password Confirm"
+        type="password"
+        name="newPasswordConfirm"
+        errMsg={errMsg2}
+        placeholder="새로운 비밀번호를 재입력해주세요."
+        register={register2}
+      />
       <Btn onClick={onClick} type="submit" loading={loading} btnName="SAVE" />
     </>
   );
@@ -108,7 +105,7 @@ export const EditInputUserInfo = ({
       <>
         <InputWrap>
           <Input
-            label="USERNAME"
+            label="Username"
             type="text"
             name="username"
             errMsg={errMsg}
@@ -116,7 +113,7 @@ export const EditInputUserInfo = ({
             register={register}
           />
           <Input
-            label="NAME"
+            label="Name"
             type="text"
             name="name"
             errMsg={errMsg1}
@@ -124,9 +121,9 @@ export const EditInputUserInfo = ({
             register={register1}
           />
         </InputWrap>
-        <InputsWrap>
+        <InputWrap>
           <Input
-            label="BIRTH"
+            label="Birth"
             type="date"
             name="birth"
             errMsg={errMsg2}
@@ -135,23 +132,23 @@ export const EditInputUserInfo = ({
           />
           <Select
             options={['남', '녀']}
-            label="GENDER"
+            label="Gender"
             name="gender"
             errMsg={errMsg3}
             placeholder="성별을 선택해주세요."
             register={register3}
           />
-          <Input
-            label="LOCATION"
-            type="text"
-            name="location"
-            errMsg={errMsg4}
-            placeholder="거주지역을 입력해주세요."
-            register={register4}
-          />
-        </InputsWrap>
+        </InputWrap>
         <Input
-          label="EMAIL"
+          label="Location"
+          type="text"
+          name="location"
+          errMsg={errMsg4}
+          placeholder="거주지역을 입력해주세요."
+          register={register4}
+        />
+        <Input
+          label="Email"
           type="email"
           name="email"
           errMsg={errMsg5}

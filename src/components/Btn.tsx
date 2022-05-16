@@ -47,17 +47,16 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
 };
 
 export const Cont = styled.button`
-  background-color: ${(p) => p.theme.color.bg};
-  color: ${(p) => p.theme.color.font};
-  border: 5px solid ${(p) => p.theme.color.font};
-  margin: 10px auto;
-  cursor: pointer;
-  border: 1px solid black;
+  background-color: ${(p) => p.theme.color.font};
+  box-shadow: ${(p) => p.theme.boxShadow.input};
+  color: ${(p) => p.theme.color.bg};
+  border: ${(p) => p.theme.border};
   border-radius: 5px;
+  margin: 10px auto;
   padding: 5px 0;
-  width: 100%;
-  background-color: inherit;
   outline: none;
+  width: 100%;
+  cursor: pointer;
 `;
 const Delete = styled(Cont)`
   border: none;

@@ -8,8 +8,8 @@ import { IdCheckModal } from '../../src/components/Modal/UserIdCheck';
 import { IJoinForm, IJoinRes } from '../../src/types/join';
 import useMutation from '../../src/libs/client/useMutation';
 import { Title } from '../../src/components/Layout/parts/Title';
-import { ErrMsg, Form } from '../../styles/global-style';
-import { Layer } from '../../styles/join-style';
+import { ErrMsg, Form } from '../../styles/globalStyle';
+import { Layer } from '../../styles/joinStyle';
 
 const Join: NextPage = () => {
   //Post api

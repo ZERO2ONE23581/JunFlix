@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ModalCont } from '../../../styles/modal-style';
+import { ModalCont } from '../../../styles/modalStyle';
 
 export const JoinModal = () => {
   return (

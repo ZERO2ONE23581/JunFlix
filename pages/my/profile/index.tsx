@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useUser from '../../../src/libs/client/loggedInUser';
 import useMutation from '../../../src/libs/client/useMutation';
-import { Form } from '../../../styles/global-style';
-import { ProEditPgCont } from '../../../styles/profileEdit-style';
+import { Form } from '../../../styles/globalStyle';
+import { ProEditPgCont } from '../../../styles/profileStyle';
 import {
   IProfileEditForm,
   IProfileEditRes,

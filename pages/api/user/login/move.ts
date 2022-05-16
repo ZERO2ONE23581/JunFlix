@@ -11,8 +11,7 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  await req.session.destroy();
-  return res.redirect('/login');
+  return res.redirect('/');
 }
 
 export default withApiSession(
