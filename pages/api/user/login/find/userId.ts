@@ -4,10 +4,10 @@ import withHandler from '../../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { user } = req.session;
-  if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
-  const tokenNum = Math.floor(Math.random() * 90000) + 10000; //6 random digits
   const email = req.body;
+  const { user } = req.session;
+  const tokenNum = Math.floor(Math.random() * 90000) + 10000; //6 random digits
+  if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
   //
   if (!email)
     return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });

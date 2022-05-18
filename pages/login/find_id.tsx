@@ -31,11 +31,11 @@ const Find_Id: NextPage = () => {
     return postFindId(email);
   };
   //
-  const onTokenValid = ({ token }: any) => {
+  const onTokenValid = ({ tokenNum }: any) => {
     if (tokenLoading) return;
     if (data?.ok) {
-      if (!token) setError('token', { message: '토큰을 입력해주세요.' });
-      return postToken(token);
+      if (!tokenNum) setError('tokenNum', { message: '토큰을 입력해주세요.' });
+      return postToken(tokenNum);
     }
   };
   //
@@ -57,11 +57,11 @@ const Find_Id: NextPage = () => {
         <Form onSubmit={handleSubmit(onTokenValid)}>
           <Input
             type="text"
-            name="token"
+            name="tokenNum"
             label="Token"
             placeholder="6자리 토큰번호를 입력하세요."
-            errMsg={errors.token?.message}
-            register={register('token', {
+            errMsg={errors.tokenNum?.message}
+            register={register('tokenNum', {
               required: '6자리 토큰번호를 입력하세요.',
             })}
           />
