@@ -1,10 +1,13 @@
 import {
-  Cont,
+  BtnCont,
   Delete,
+  IdCheck,
   Logout,
   Theme,
   Toggle,
 } from '../../styles/components/btn';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 interface IBtnProps {
   onClick?: any;
@@ -17,14 +20,19 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
   return (
     <>
       {type === 'submit' && (
-        <Cont onClick={onClick} type="submit">
+        <BtnCont onClick={onClick} type="submit">
           {loading ? 'Loading...' : btnName}
-        </Cont>
+        </BtnCont>
       )}
       {type === 'button' && (
-        <Cont type="button" onClick={onClick}>
+        <BtnCont type="button" onClick={onClick}>
           {btnName}
-        </Cont>
+        </BtnCont>
+      )}
+      {type === 'idCheck' && (
+        <IdCheck type="button" onClick={onClick}>
+          {btnName}
+        </IdCheck>
       )}
       {type === 'logout' && (
         <Logout type="button" onClick={onClick}>
@@ -44,7 +52,7 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
       )}
       {type === 'toggle' && (
         <Toggle type="button" onClick={onClick}>
-          {btnName}
+          <FontAwesomeIcon style={{ fontSize: 30 }} icon={faXmark} />
         </Toggle>
       )}
     </>

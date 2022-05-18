@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const Cont = styled.button`
+export const BtnCont = styled.button`
   background-color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.input};
   color: ${(p) => p.theme.color.bg};
@@ -15,6 +15,9 @@ export const Cont = styled.button`
     background-color: ${(p) => p.theme.color.logo};
     color: ${(p) => p.theme.color.bg};
   }
+`;
+export const IdCheck = styled(BtnCont)`
+  width: 100px;
 `;
 export const LinkBtn = styled.div`
   display: block;
@@ -37,7 +40,7 @@ export const LinkBtn = styled.div`
   font-size: 15px;
   width: 100px;
 `;
-export const Delete = styled(Cont)`
+export const Delete = styled(BtnCont)`
   width: 150px;
   padding: 10px;
   color: ${(p) => p.theme.color.bg};
@@ -47,7 +50,7 @@ export const Delete = styled(Cont)`
     background-color: ${(p) => p.theme.color.bg};
   }
 `;
-export const Logout = styled(Cont)`
+export const Logout = styled(BtnCont)`
   color: ${(p) => p.theme.color.font};
   border: none;
   box-shadow: none;
@@ -58,16 +61,17 @@ export const Logout = styled(Cont)`
   }
 `;
 
-export const Toggle = styled(Cont)`
+export const Toggle = styled.button`
   position: absolute;
-  top: 30px;
   right: 40px;
-  width: 20px;
-  height: 20px;
-  padding: 10px;
+  top: 30px;
+  width: 10px;
+  height: 10px;
+  background: none;
+  border: none;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 `;
 export const Theme = styled(Toggle)`
   background-color: ${(p) => p.theme.color.bg};

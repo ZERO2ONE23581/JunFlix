@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
 
-export const Article = styled.article`
+export const BodyBg = styled.div`
   background-color: ${(p) => p.theme.color.bg};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
   color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border};
-  justify-content: center;
-  align-content: center;
-  border-radius: 8px;
-  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -999;
+  width: 100vw;
+  height: 100vh;
 `;
 
 export const PageContainer = styled.section`
@@ -29,26 +29,15 @@ export const PageContainer = styled.section`
   }
 `;
 
-export const BodyBg = styled.div`
+export const Article = styled.article`
   background-color: ${(p) => p.theme.color.bg};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
   color: ${(p) => p.theme.color.font};
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -999;
-  width: 100vw;
-  height: 100vh;
-`;
-
-export const ErrMsg = styled.span`
-  background-color: inherit;
-  text-align: center;
-  color: red;
-  font-style: italic;
-  font-size: 0.8rem;
-`;
-export const OkMsg = styled(ErrMsg)`
-  color: #2ecc71;
+  border: ${(p) => p.theme.border};
+  justify-content: center;
+  align-content: center;
+  border-radius: 8px;
+  display: flex;
 `;
 
 export const Form = styled.form`
@@ -62,6 +51,21 @@ export const Form = styled.form`
   padding: 20px 25px;
   display: flex;
   width: 330px;
+`;
+export const EditForm = styled(Form)`
+  /* width: 330px;
+  padding: 20px 100px; */
+`;
+
+export const ErrMsg = styled.span`
+  background-color: inherit;
+  text-align: center;
+  color: red;
+  font-style: italic;
+  font-size: 0.8rem;
+`;
+export const OkMsg = styled(ErrMsg)`
+  color: #2ecc71;
 `;
 export const DataResult = styled.div`
   background-color: inherit;

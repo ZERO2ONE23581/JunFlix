@@ -10,8 +10,8 @@ import useMutation from '../../src/libs/client/useMutation';
 import { Title } from '../../src/components/Layout/parts/Title';
 import { LoginLink } from '../../src/components/Login/LoginLink';
 import {
+  EditForm,
   ErrMsg,
-  Form,
   Layer,
   PageContainer,
 } from '../../styles/components/default';
@@ -112,6 +112,7 @@ const Join: NextPage = () => {
   return (
     <PageContainer>
       <Title title="회원가입" />
+
       {modal && <JoinModal />}
 
       {checkModal && (
@@ -124,16 +125,9 @@ const Join: NextPage = () => {
         />
       )}
 
-      {state?.openBtn && (
-        <Btn
-          type="button"
-          btnName={confirm ? '아이디 재입력' : '아이디 중복체크'}
-          onClick={toggleCheckModal}
-        />
-      )}
       {errors.dupUserId && <ErrMsg>{errors.dupUserId.message}</ErrMsg>}
 
-      <Form onSubmit={handleSubmit(onValid)}>
+      <EditForm onSubmit={handleSubmit(onValid)}>
         {data?.error && <span>{data.error}</span>}
         <Input
           label="Username"
@@ -160,6 +154,13 @@ const Join: NextPage = () => {
               errMsg={errors.userId?.message}
             />
           </Layer>
+        )}
+        {state?.openBtn && (
+          <Btn
+            type="idCheck"
+            btnName={confirm ? '아이디 재입력' : '아이디 중복체크'}
+            onClick={toggleCheckModal}
+          />
         )}
         {confirm && (
           <>
@@ -210,7 +211,7 @@ const Join: NextPage = () => {
           </>
         )}
         <Btn type="submit" btnName={loading ? 'Loading...' : '회원가입'} />
-      </Form>
+      </EditForm>
 
       <LoginLink joined={true} />
     </PageContainer>
