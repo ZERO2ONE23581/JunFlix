@@ -4,18 +4,17 @@ export const Cont = styled.button`
   background-color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.input};
   color: ${(p) => p.theme.color.bg};
+  border-radius: 5px;
+  font-size: 0.8rem;
+  margin: 8px auto;
+  cursor: pointer;
+  padding: 10px 0;
   border: none;
+  width: 100%;
   &:hover {
     background-color: ${(p) => p.theme.color.logo};
     color: ${(p) => p.theme.color.bg};
   }
-  border-radius: 5px;
-  margin: 10px auto;
-  padding: 10px 0;
-  outline: none;
-  cursor: pointer;
-  font-size: 15px;
-  width: 100px;
 `;
 export const LinkBtn = styled.div`
   display: block;

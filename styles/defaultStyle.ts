@@ -1,5 +1,16 @@
 import styled from '@emotion/styled';
 
+export const Article = styled.article`
+  background-color: ${(p) => p.theme.color.bg};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  color: ${(p) => p.theme.color.font};
+  border: ${(p) => p.theme.border};
+  justify-content: center;
+  align-content: center;
+  border-radius: 8px;
+  display: flex;
+`;
+
 export const PageContainer = styled.section`
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => p.theme.color.font};
@@ -7,19 +18,13 @@ export const PageContainer = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content: center;
+  align-items: center;
   gap: 20px;
   font-size: 1.2rem;
 `;
 export const LoginPageCont = styled(PageContainer)`
-  flex-direction: row;
   form {
     height: 250px;
-  }
-`;
-export const FindIdPageCont = styled(PageContainer)`
-  form {
-    height: 100%;
   }
 `;
 export const ProEditPgCont = styled(PageContainer)`

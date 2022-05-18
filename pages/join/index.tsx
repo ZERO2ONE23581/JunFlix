@@ -9,8 +9,9 @@ import { IJoinForm, IJoinRes } from '../../src/types/join';
 import useMutation from '../../src/libs/client/useMutation';
 import { Title } from '../../src/components/Layout/parts/Title';
 import { Layer } from '../../styles/joinStyle';
-import { ErrMsg } from '../../styles/defaultStyle';
+import { ErrMsg, PageContainer } from '../../styles/defaultStyle';
 import { Form } from '../../styles/formStyle';
+import { LoginLink } from '../../src/components/Login/LoginLink';
 
 const Join: NextPage = () => {
   //Post api
@@ -106,7 +107,7 @@ const Join: NextPage = () => {
 
   //
   return (
-    <>
+    <PageContainer>
       <Title title="회원가입" />
       {modal && <JoinModal />}
 
@@ -207,7 +208,9 @@ const Join: NextPage = () => {
         )}
         <Btn type="submit" btnName={loading ? 'Loading...' : '회원가입'} />
       </Form>
-    </>
+
+      <LoginLink joined={true} />
+    </PageContainer>
   );
 };
 export default Join;

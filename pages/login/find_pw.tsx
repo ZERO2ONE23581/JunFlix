@@ -2,10 +2,11 @@ import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
 import { Input } from '../../src/components/Input';
+import { LoginLink } from '../../src/components/Login/LoginLink';
 import { ConfirmModal } from '../../src/components/Modal/ConfirmModal';
 import useMutation from '../../src/libs/client/useMutation';
 import { IFindForm, IPostRes } from '../../src/types/login';
-import { ErrMsg } from '../../styles/defaultStyle';
+import { ErrMsg, LoginPageCont } from '../../styles/defaultStyle';
 import { Form } from '../../styles/formStyle';
 
 const Find_Pw: NextPage = () => {
@@ -55,7 +56,7 @@ const Find_Pw: NextPage = () => {
   console.log(paswordUpdated);
   //
   return (
-    <>
+    <LoginPageCont>
       {paswordUpdated?.ok && <ConfirmModal />}
       {!tokenData?.ok ? (
         <>
@@ -132,7 +133,9 @@ const Find_Pw: NextPage = () => {
           </Form>
         </>
       )}
-    </>
+
+      <LoginLink findPassword={true} />
+    </LoginPageCont>
   );
 };
 

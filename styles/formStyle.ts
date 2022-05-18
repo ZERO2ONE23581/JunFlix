@@ -5,13 +5,12 @@ export const Form = styled.form`
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   color: ${(p) => p.theme.color.font};
   border: ${(p) => p.theme.border};
-  border-radius: 10px;
-  display: flex;
+  justify-content: center;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 20px 25px;
+  border-radius: 10px;
+  padding: 10px 25px;
+  display: flex;
   width: 330px;
-  height: 380px;
 `;
 export const EditForm = styled(Form)``;
 export const DataResult = styled.div`
