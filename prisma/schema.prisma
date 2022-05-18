@@ -3,18 +3,21 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+
 }
 model User {
-  id          Int     @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   username    String
-  userId      String?  @unique
-  password    String?
-  email       String?  @unique
+  userId      String?     @unique
+  password    String? 
+  email       String?     @unique
   name        String?
   birth       String?
   gender      String?
@@ -22,4 +25,14 @@ model User {
   avatar      String?
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+  tokens      Token[]
+}
+
+model Token {
+  id           Int         @id @default(autoincrement())
+  tokenNum     Int         @unique
+  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
+  UserID       Int   
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 }
