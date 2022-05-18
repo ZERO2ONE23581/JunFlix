@@ -4,33 +4,34 @@ import withHandler from '../../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const tokenNum = req.body;
+  const userId = req.body;
   const { user } = req.session;
   if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
-  //
-  if (!tokenNum)
-    return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
-  //
-  const foundToken = await prismaClient.token.findUnique({
-    where: { tokenNum: +tokenNum },
-    select: { UserID: true },
-  });
-  if (!foundToken)
-    return res.json({ ok: false, error: '토큰번호가 일치하지 않습니다.' });
+  if (!userId) return res.json({ ok: false, error: 'NO INPUT DATA' });
+  const tokenNum = Math.floor(Math.random() * 90000) + 10000; //6 random digits
   //
   const foundUser = await prismaClient.user.findUnique({
-    where: { id: foundToken.UserID },
+    where: { userId },
     select: { id: true, userId: true },
   });
   if (!foundUser)
-    return res.json({ ok: false, error: 'NO USER FOUND FOR THIS TOKEN..' });
-  //
-  const foundUserId = foundUser.userId;
-  await prismaClient.token.deleteMany({
-    where: { UserID: foundToken.UserID },
+    return res.json({ ok: false, error: '존재하지 않는 아이디 입니다.' });
+
+  //토큰생성
+  const token = await prismaClient.token.create({
+    data: {
+      tokenNum,
+      user: {
+        connect: { id: foundUser.id },
+      },
+    },
   });
+  if (!token) return res.json({ ok: false, error: 'FAIL TO CREATE TOKEN' });
+
+  //이메일로 토큰숫자 전달 (나중에 구현)
+
   //
-  return res.json({ ok: true, foundUserId });
+  return res.json({ ok: true });
 }
 
 export default withApiSession(

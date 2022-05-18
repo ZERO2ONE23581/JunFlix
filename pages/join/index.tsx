@@ -132,7 +132,7 @@ const Join: NextPage = () => {
       <Form onSubmit={handleSubmit(onValid)}>
         {data?.error && <span>{data.error}</span>}
         <Input
-          label="USERNAME"
+          label="Username"
           register={register('username', {
             required: '닉네임을 입력해주세요.',
           })}
@@ -162,7 +162,7 @@ const Join: NextPage = () => {
             {state.layerTwo && (
               <Layer>
                 <Input
-                  label="PASSWORD"
+                  label="Password"
                   register={register('password', {
                     required: '비밀번호를 입력해주세요.',
                   })}
@@ -177,7 +177,7 @@ const Join: NextPage = () => {
             {state.layerThree && (
               <Layer>
                 <Input
-                  label="CONFIRM PASSWORD"
+                  label="Confirm Password"
                   register={register('confirmPw', {
                     required: '비번호를 재입력해주세요.',
                   })}
@@ -192,7 +192,7 @@ const Join: NextPage = () => {
             {state.layerFour && (
               <Layer>
                 <Input
-                  label="EMAIL"
+                  label="Email"
                   register={register('email', {
                     required: '이메일을 입력해주세요.',
                   })}
