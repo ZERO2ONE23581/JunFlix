@@ -7,8 +7,8 @@ export const Input = (props: IInputProps) => {
     <InputCont>
       <label htmlFor={props.name}>{props.label}</label>
       <input
-        disabled={props.disabled}
         {...props.register}
+        disabled={props.disabled}
         name={props.name}
         id={props.name}
         type={props.type}

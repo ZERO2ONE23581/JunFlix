@@ -17,6 +17,11 @@ export const LoginPageCont = styled(PageContainer)`
     height: 250px;
   }
 `;
+export const FindIdPageCont = styled(PageContainer)`
+  form {
+    height: 100%;
+  }
+`;
 export const ProEditPgCont = styled(PageContainer)`
   .form-wrapper {
     display: flex;

@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -7,11 +8,7 @@ import { Input } from '../../src/components/Input';
 import { Title } from '../../src/components/Layout/parts/Title';
 import useMutation from '../../src/libs/client/useMutation';
 import { ILoginForm, ILoginRes } from '../../src/types/login';
-import {
-  ErrMsg,
-  LoginPageCont,
-  PageContainer,
-} from '../../styles/defaultStyle';
+import { ErrMsg, LoginPageCont } from '../../styles/defaultStyle';
 import { Form } from '../../styles/formStyle';
 
 const Login: NextPage = () => {
@@ -68,6 +65,17 @@ const Login: NextPage = () => {
           />
           <Btn type="submit" btnName={loading ? 'Loading...' : '로그인'} />
         </Form>
+        <div>
+          <Link href="/login/find_id">
+            <a>아이디 찾기</a>
+          </Link>
+          <Link href="/login/find_pw">
+            <a>비밀번호 찾기</a>
+          </Link>
+          <Link href="/join">
+            <a>회원가입</a>
+          </Link>
+        </div>
       </LoginPageCont>
     </>
   );
