@@ -9,6 +9,7 @@ export interface ILoginRes {
   error?: string;
 }
 export interface IFindIdRes extends ILoginRes {}
+export interface ITokenRes extends ILoginRes {}
 export interface ILoggedInUser {
   ok: boolean;
   loggedInUser?: User;
