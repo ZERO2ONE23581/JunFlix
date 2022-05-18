@@ -12,6 +12,7 @@ export const ModalCont = styled.article`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
   z-index: 999;
   position: absolute;
   top: 50%;

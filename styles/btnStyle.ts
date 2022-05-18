@@ -13,8 +13,30 @@ export const Cont = styled.button`
   margin: 10px auto;
   padding: 10px 0;
   outline: none;
-  width: 100%;
   cursor: pointer;
+  font-size: 15px;
+  width: 100px;
+`;
+export const LinkBtn = styled.div`
+  display: block;
+  background-color: ${(p) => p.theme.color.font};
+  box-shadow: ${(p) => p.theme.boxShadow.input};
+  color: ${(p) => p.theme.color.bg};
+  border: none;
+  &:hover {
+    background-color: ${(p) => p.theme.color.logo};
+    color: ${(p) => p.theme.color.bg};
+  }
+  border-radius: 5px;
+  margin: 10px auto;
+  padding: 6px 0;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 15px;
+  width: 100px;
 `;
 export const Delete = styled(Cont)`
   width: 150px;

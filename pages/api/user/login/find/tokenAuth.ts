@@ -26,10 +26,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: 'NO USER FOUND FOR THIS TOKEN..' });
   //
   const foundUserId = foundUser.userId;
+  await prismaClient.token.deleteMany({
+    where: { UserID: foundToken.UserID },
+  });
   //
   return res.json({ ok: true, foundUserId });
 }
 
 export default withApiSession(
-  withHandler({ methods: ['GET', 'POST'], handler, isPrivate: false })
+  withHandler({ methods: ['POST'], handler, isPrivate: false })
 );
