@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import { LinkBtn } from '../../../styles/components/btn';
+import { Flex, H1 } from '../../../styles/components/default';
 import { ModalCont } from '../../../styles/components/modal';
 import { Btn } from '../Btn';
 
@@ -40,14 +41,3 @@ export const ConfirmModal = ({ userId }: any) => {
     </>
   );
 };
-const H1 = styled.h1`
-  span {
-    font-weight: 500;
-    font-style: italic;
-  }
-`;
-const Flex = styled.div`
-  display: flex;
-  gap: 10px;
-  width: 200px;
-`;

@@ -19,14 +19,22 @@ export const ModalCont = styled.article`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
+export const UserIdCheckModalCont = styled(ModalCont)`
+  width: 520px;
+  height: 250px;
+`;
+export const JoinConfirmModalCont = styled(ModalCont)`
+  width: 520px;
+  height: 200px;
+`;
 
 export const ModalClose = styled.article`
+  background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
+  height: 100vh;
+  width: 100vw;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  width: 100vw;
-  height: 100vh;
 `;
 export const NavModalClose = styled(ModalClose)`
   background-color: rgba(0, 0, 0, 0);

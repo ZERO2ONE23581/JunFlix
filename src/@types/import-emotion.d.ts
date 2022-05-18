@@ -6,6 +6,7 @@ declare module '@emotion/react' {
       bg: string;
       font: string;
       logo: string;
+      ok: string;
     };
     border?: string;
     boxShadow: {

@@ -56,6 +56,17 @@ export const EditForm = styled(Form)`
   /* width: 330px;
   padding: 20px 100px; */
 `;
+export const H1 = styled.h1`
+  span {
+    font-weight: 500;
+    font-style: italic;
+  }
+`;
+export const Flex = styled.div`
+  display: flex;
+  gap: 13px;
+  width: 200px;
+`;
 
 export const ErrMsg = styled.span`
   background-color: inherit;
@@ -63,6 +74,7 @@ export const ErrMsg = styled.span`
   color: red;
   font-style: italic;
   font-size: 0.8rem;
+  margin: 10px auto;
 `;
 export const OkMsg = styled(ErrMsg)`
   color: #2ecc71;

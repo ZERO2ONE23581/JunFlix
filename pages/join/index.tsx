@@ -1,20 +1,20 @@
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Btn } from '../../src/components/Btn';
-import { Input } from '../../src/components/Input';
-import { JoinModal } from '../../src/components/Modal/JoinConfirm';
-import { IdCheckModal } from '../../src/components/Modal/UserIdCheck';
-import { IJoinForm, IJoinRes } from '../../src/types/join';
-import useMutation from '../../src/libs/client/useMutation';
-import { Title } from '../../src/components/Layout/parts/Title';
-import { LoginLink } from '../../src/components/Login/LoginLink';
 import {
   EditForm,
   ErrMsg,
   Layer,
   PageContainer,
 } from '../../styles/components/default';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Btn } from '../../src/components/Btn';
+import { Input } from '../../src/components/Input';
+import { IJoinForm, IJoinRes } from '../../src/types/join';
+import useMutation from '../../src/libs/client/useMutation';
+import { Title } from '../../src/components/Layout/parts/Title';
+import { LoginLink } from '../../src/components/Login/LoginLink';
+import { JoinConfirmModal } from '../../src/components/Modal/JoinConfirmModal';
+import { UserIdCheckModal } from '../../src/components/Modal/UserIdCheckModal';
 
 const Join: NextPage = () => {
   //Post api
@@ -47,7 +47,7 @@ const Join: NextPage = () => {
     confirmPw,
   }: IJoinForm) => {
     if (!confirm) {
-      return setError('dupUserId', {
+      return setError('userIdCheckErr', {
         type: 'custom',
         message: '아이디 중복확인이 필요합니다!',
       });
@@ -76,7 +76,7 @@ const Join: NextPage = () => {
   };
   useEffect(() => {
     setValue('userId', verifiedID);
-    if (verifiedID) clearErrors('dupUserId');
+    if (verifiedID) clearErrors('userIdCheckErr');
   }, [verifiedID]);
 
   //UI
@@ -112,11 +112,9 @@ const Join: NextPage = () => {
   return (
     <PageContainer>
       <Title title="회원가입" />
-
-      {modal && <JoinModal />}
-
+      {modal && <JoinConfirmModal toggleCheckModal={toggleCheckModal} />}
       {checkModal && (
-        <IdCheckModal
+        <UserIdCheckModal
           handleData={handleData}
           userId={getValues('userId')}
           confirmClick={confirmClick}
@@ -125,10 +123,8 @@ const Join: NextPage = () => {
         />
       )}
 
-      {errors.dupUserId && <ErrMsg>{errors.dupUserId.message}</ErrMsg>}
-
       <EditForm onSubmit={handleSubmit(onValid)}>
-        {data?.error && <span>{data.error}</span>}
+        {data?.error && <ErrMsg>{data.error}</ErrMsg>}
         <Input
           label="Username"
           register={register('username', {
@@ -161,6 +157,9 @@ const Join: NextPage = () => {
             btnName={confirm ? '아이디 재입력' : '아이디 중복체크'}
             onClick={toggleCheckModal}
           />
+        )}
+        {errors.userIdCheckErr && (
+          <ErrMsg>{errors.userIdCheckErr.message}</ErrMsg>
         )}
         {confirm && (
           <>

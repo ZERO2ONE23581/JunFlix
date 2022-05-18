@@ -3,15 +3,19 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../Input';
 import { Btn } from '../Btn';
-import { ModalClose, ModalCont } from '../../../styles/components/modal';
+import {
+  ModalClose,
+  ModalCont,
+  UserIdCheckModalCont,
+} from '../../../styles/components/modal';
 import useMutation from '../../libs/client/useMutation';
-import { ErrMsg, Form } from '../../../styles/components/default';
+import { ErrMsg, Flex, Form } from '../../../styles/components/default';
 
 interface IIDModalForm {
   checkID?: string;
 }
 
-export const IdCheckModal = ({
+export const UserIdCheckModal = ({
   handleData,
   userId,
   confirmClick,
@@ -62,7 +66,7 @@ export const IdCheckModal = ({
   //
   return (
     <>
-      <Cont>
+      <UserIdCheckModalCont>
         <Btn type="toggle" onClick={toggleCheckModal} btnName={'❌'} />
         {loading && <h2>Loading...</h2>}
         {!submit ? (
@@ -88,41 +92,53 @@ export const IdCheckModal = ({
             />
           </Form>
         ) : (
-          <article className="pass">
+          <>
             {!data?.error && data?.userId && (
-              <>
-                <h2>"{data?.userId}"는 사용가능한 아이디 입니다.</h2>
-                <p>사용하시겠습니까?</p>
-                <div className="btn-wrap">
-                  <Btn type="button" btnName="YES" onClick={confirmClick} />
-                  <Btn type="button" btnName="NO" onClick={backClick} />
-                </div>
-              </>
+              <SuccessCont>
+                <h2>
+                  <span>"{data?.userId}"</span> 은 사용가능한 아이디 입니다.
+                </h2>
+                <span>사용하시겠습니까?</span>
+                <Flex>
+                  <Btn type="idCheck" btnName="YES" onClick={confirmClick} />
+                  <Btn type="idCheck" btnName="NO" onClick={backClick} />
+                </Flex>
+              </SuccessCont>
             )}
-          </article>
+          </>
         )}
         {submit && data?.error && (
-          <article className="error">
+          <ErrCont>
             <ErrMsg>{data?.error}</ErrMsg>
             <Btn type="button" onClick={backClick} btnName="아이디 재확인" />
-          </article>
+          </ErrCont>
         )}
-      </Cont>
+      </UserIdCheckModalCont>
       <ModalClose onClick={toggleCheckModal} />
     </>
   );
 };
-
-const Cont = styled(ModalCont)`
-  .pass,
-  .error {
-    width: 60%;
-    text-align: center;
+const ErrCont = styled.article`
+  padding: 0 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  span {
+    font-weight: 600;
+    font-size: 1.2rem;
   }
-  .pass {
-    .btn-wrap {
-      display: flex;
-      gap: 10px;
+`;
+const SuccessCont = styled(ErrCont)`
+  padding: 0 50px;
+  gap: 10px;
+  h2 {
+    text-align: center;
+    span {
+      color: ${(p) => p.theme.color.ok};
+      font-weight: 600;
+      font-style: italic;
     }
   }
 `;

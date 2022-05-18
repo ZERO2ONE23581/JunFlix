@@ -5,6 +5,7 @@ export const lightTheme: Theme = {
     bg: 'white',
     font: 'black',
     logo: '#E50914',
+    ok: '#2ecc71',
   },
   border: 'none',
   boxShadow: {
@@ -18,6 +19,7 @@ export const darkTheme: Theme = {
     bg: 'black',
     font: 'white',
     logo: '#E50914',
+    ok: '#2ecc71',
   },
   border: '1px solid white',
   boxShadow: {

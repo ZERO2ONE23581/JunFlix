@@ -4,7 +4,7 @@ export interface IJoinForm {
   email?: string;
   password?: string;
   confirmPw?: string;
-  dupUserId?: string;
+  userIdCheckErr?: string;
 }
 export interface IJoinRes {
   ok?: boolean;
