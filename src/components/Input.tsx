@@ -1,5 +1,4 @@
-import { ErrMsg } from '../../styles/defaultStyle';
-import { InputCont } from '../../styles/inputStyle';
+import { ErrMsg, InputCont } from '../../styles/components/default';
 import { IInputProps } from '../types/input';
 
 export const Input = (props: IInputProps) => {

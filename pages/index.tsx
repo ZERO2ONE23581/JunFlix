@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Title } from '../src/components/Layout/parts/Title';
-import { PageContainer } from '../styles/defaultStyle';
+import { PageContainer } from '../styles/components/default';
 
 const Home: NextPage = () => {
   //
@@ -9,7 +9,6 @@ const Home: NextPage = () => {
     <>
       <Title title="홈" />
       <PageContainer>
-        <H1>Home</H1>
         <H1>Home</H1>
       </PageContainer>
     </>

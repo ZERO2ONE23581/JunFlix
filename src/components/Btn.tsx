@@ -1,4 +1,10 @@
-import { Cont, Delete, Logout, Theme, Toggle } from '../../styles/btnStyle';
+import {
+  Cont,
+  Delete,
+  Logout,
+  Theme,
+  Toggle,
+} from '../../styles/components/btn';
 
 interface IBtnProps {
   onClick?: any;

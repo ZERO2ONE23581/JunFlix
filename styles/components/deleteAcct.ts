@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ModalCont } from './modalStyle';
+import { ModalCont } from './modal';
 
 export const Cont = styled.section`
   background-color: ${(p) => p.theme.color.bg};

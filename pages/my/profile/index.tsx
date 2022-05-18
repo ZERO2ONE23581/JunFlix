@@ -8,11 +8,14 @@ import {
   IProfileEditRes,
 } from '../../../src/types/edit-profile';
 import { Delete_Account } from '../../../src/components/User/Profile/Delete_Account';
-import { DataResult, EditForm, Form } from '../../../styles/formStyle';
-import { ProEditPgCont } from '../../../styles/defaultStyle';
 import { Input, Select } from '../../../src/components/Input';
 import { Btn } from '../../../src/components/Btn';
-import { InputWrap } from '../../../styles/inputStyle';
+import {
+  DataResult,
+  Form,
+  InputWrap,
+  PageContainer,
+} from '../../../styles/components/default';
 
 const Profile: NextPage = () => {
   //Get
@@ -127,9 +130,9 @@ const Profile: NextPage = () => {
   };
   //
   return (
-    <ProEditPgCont>
+    <PageContainer>
       <section className="form-wrapper">
-        <EditForm onSubmit={handleSubmit(onValid)}>
+        <Form onSubmit={handleSubmit(onValid)}>
           <article className="layer-one">
             {data && (
               <DataResult>
@@ -157,8 +160,8 @@ const Profile: NextPage = () => {
             loading={Boolean(data?.type === 'userId' && loading)}
             btnName="SAVE"
           />
-        </EditForm>
-        <EditForm onSubmit={handleSubmit(onValid)}>
+        </Form>
+        <Form onSubmit={handleSubmit(onValid)}>
           <article className="layer-one">
             {data && (
               <DataResult>
@@ -214,8 +217,8 @@ const Profile: NextPage = () => {
             loading={Boolean(data?.type === 'password' && loading)}
             btnName="SAVE"
           />
-        </EditForm>
-        <EditForm onSubmit={handleSubmit(onValid)}>
+        </Form>
+        <Form onSubmit={handleSubmit(onValid)}>
           <article className="layer-one">
             {data && (
               <DataResult>
@@ -287,10 +290,10 @@ const Profile: NextPage = () => {
             loading={Boolean(data?.type === 'userInfo' && loading)}
             btnName={'SAVE'}
           />
-        </EditForm>
+        </Form>
       </section>
       <Delete_Account />
-    </ProEditPgCont>
+    </PageContainer>
   );
 };
 

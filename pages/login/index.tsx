@@ -8,8 +8,7 @@ import { Title } from '../../src/components/Layout/parts/Title';
 import { LoginLink } from '../../src/components/Login/LoginLink';
 import useMutation from '../../src/libs/client/useMutation';
 import { ILoginForm, ILoginRes } from '../../src/types/login';
-import { ErrMsg, LoginPageCont } from '../../styles/defaultStyle';
-import { Form } from '../../styles/formStyle';
+import { ErrMsg, Form, PageContainer } from '../../styles/components/default';
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -40,7 +39,7 @@ const Login: NextPage = () => {
   return (
     <>
       <Title title="로그인" />
-      <LoginPageCont>
+      <PageContainer>
         <Form onSubmit={handleSubmit(onValid)}>
           {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
           <Input
@@ -67,7 +66,7 @@ const Login: NextPage = () => {
         </Form>
 
         <LoginLink />
-      </LoginPageCont>
+      </PageContainer>
     </>
   );
 };

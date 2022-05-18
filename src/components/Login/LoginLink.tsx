@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { Article } from '../../../styles/defaultStyle';
+import { Article } from '../../../styles/components/default';
 
 export const LoginLink = ({ findId, findPassword, join, joined }: any) => {
   return (

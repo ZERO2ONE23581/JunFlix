@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { LinkBtn } from '../../../styles/btnStyle';
-import { ModalCont } from '../../../styles/modalStyle';
-import { IPostRes } from '../../types/login';
+import { LinkBtn } from '../../../styles/components/btn';
+import { ModalCont } from '../../../styles/components/modal';
 import { Btn } from '../Btn';
 
 export const ConfirmModal = ({ userId }: any) => {

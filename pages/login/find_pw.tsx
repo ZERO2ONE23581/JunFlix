@@ -6,8 +6,7 @@ import { LoginLink } from '../../src/components/Login/LoginLink';
 import { ConfirmModal } from '../../src/components/Modal/ConfirmModal';
 import useMutation from '../../src/libs/client/useMutation';
 import { IFindForm, IPostRes } from '../../src/types/login';
-import { ErrMsg, LoginPageCont } from '../../styles/defaultStyle';
-import { Form } from '../../styles/formStyle';
+import { ErrMsg, Form, PageContainer } from '../../styles/components/default';
 
 const Find_Pw: NextPage = () => {
   //Post
@@ -56,7 +55,7 @@ const Find_Pw: NextPage = () => {
   console.log(paswordUpdated);
   //
   return (
-    <LoginPageCont>
+    <PageContainer>
       {paswordUpdated?.ok && <ConfirmModal />}
       {!tokenData?.ok ? (
         <>
@@ -135,7 +134,7 @@ const Find_Pw: NextPage = () => {
       )}
 
       <LoginLink findPassword={true} />
-    </LoginPageCont>
+    </PageContainer>
   );
 };
 

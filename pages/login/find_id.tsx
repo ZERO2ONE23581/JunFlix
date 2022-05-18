@@ -1,13 +1,12 @@
 import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
-import { Form } from '../../styles/formStyle';
 import { Btn } from '../../src/components/Btn';
 import { Input } from '../../src/components/Input';
 import useMutation from '../../src/libs/client/useMutation';
 import { IFindForm, IPostRes } from '../../src/types/login';
-import { ErrMsg, LoginPageCont } from '../../styles/defaultStyle';
 import { ConfirmModal } from '../../src/components/Modal/ConfirmModal';
 import { LoginLink } from '../../src/components/Login/LoginLink';
+import { ErrMsg, Form, PageContainer } from '../../styles/components/default';
 
 const Find_Id: NextPage = () => {
   //Post
@@ -42,7 +41,7 @@ const Find_Id: NextPage = () => {
   };
   //
   return (
-    <LoginPageCont>
+    <PageContainer>
       {tokenData?.ok ? (
         <ConfirmModal userId={tokenData?.foundUser?.userId} />
       ) : (
@@ -86,7 +85,7 @@ const Find_Id: NextPage = () => {
       )}
 
       <LoginLink findId={true} />
-    </LoginPageCont>
+    </PageContainer>
   );
 };
 

@@ -1,9 +1,13 @@
 import { Btn } from '../../Btn';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { ModalClose } from '../../../../styles/modalStyle';
+import { ModalClose } from '../../../../styles/components/modal';
 import useMutation from '../../../libs/client/useMutation';
-import { Cont, DeleteModal, Desc } from '../../../../styles/deleteAcctStyle';
+import {
+  Cont,
+  DeleteModal,
+  Desc,
+} from '../../../../styles/components/deleteAcct';
 
 export const Delete_Account = () => {
   const router = useRouter();

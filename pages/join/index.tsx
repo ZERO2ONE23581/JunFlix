@@ -8,10 +8,13 @@ import { IdCheckModal } from '../../src/components/Modal/UserIdCheck';
 import { IJoinForm, IJoinRes } from '../../src/types/join';
 import useMutation from '../../src/libs/client/useMutation';
 import { Title } from '../../src/components/Layout/parts/Title';
-import { Layer } from '../../styles/joinStyle';
-import { ErrMsg, PageContainer } from '../../styles/defaultStyle';
-import { Form } from '../../styles/formStyle';
 import { LoginLink } from '../../src/components/Login/LoginLink';
+import {
+  ErrMsg,
+  Form,
+  Layer,
+  PageContainer,
+} from '../../styles/components/default';
 
 const Join: NextPage = () => {
   //Post api
