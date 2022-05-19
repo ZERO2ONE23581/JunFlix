@@ -12,7 +12,7 @@ const CreateBlog: NextPage = () => {
   //Post
   const [createBlog, { loading, data }] =
     useMutation<CreateBlogResponse>(`/api/blog/create`);
-  console.log(data);
+
   //Form
   const { register, handleSubmit } = useForm<BlogForm>({ mode: 'onSubmit' });
   const onValid = ({ title, intro, genre, avatar, follow }: BlogForm) => {

@@ -9,3 +9,8 @@ export interface CreateBlogResponse extends PostResponse {
   creatorId: number;
   boardTitle: string;
 }
+export interface BoardInfo {
+  boardId: number;
+  creatorId: number;
+  boardTitle: string;
+}

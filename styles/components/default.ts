@@ -29,6 +29,10 @@ export const PageContainer = styled.section`
   }
 `;
 
+export const BoardPage = styled(PageContainer)`
+  padding: 0 10px;
+`;
+
 export const Article = styled.article`
   background-color: ${(p) => p.theme.color.bg};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
@@ -52,10 +56,7 @@ export const Form = styled.form`
   display: flex;
   width: 330px;
 `;
-export const EditForm = styled(Form)`
-  /* width: 330px;
-  padding: 20px 100px; */
-`;
+
 export const H1 = styled.h1`
   span {
     font-weight: 500;

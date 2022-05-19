@@ -1,16 +1,12 @@
 import { useRouter } from 'next/router';
 import { ModalClose, SmallModalCont } from '../../../styles/components/modal';
-import { CreateBlogResponse } from '../../types/postResponse';
+import { BoardInfo } from '../../types/postResponse';
 import { Btn } from '../Btn';
 
-export const CreateBlogModal = ({
-  boardId,
-  boardTitle,
-  creatorId,
-}: CreateBlogResponse) => {
+export const CreateBlogModal = ({ boardId, creatorId }: BoardInfo) => {
   const router = useRouter();
   const handleClick = () => {
-    router.push(`/user/${creatorId}/blog/${boardTitle}`);
+    router.push(`/user/${creatorId}/blog/${boardId}`);
   };
   //
   return (

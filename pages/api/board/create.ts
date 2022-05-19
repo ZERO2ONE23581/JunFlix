@@ -31,6 +31,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   return res.json({ ok: true, boardId, boardTitle, creatorId });
 }
-export default withApiSession(
-  withHandler({ methods: ['GET', 'POST'], handler })
-);
+export default withApiSession(withHandler({ methods: ['POST'], handler }));
