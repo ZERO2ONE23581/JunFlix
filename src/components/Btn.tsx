@@ -1,5 +1,6 @@
 import {
   BtnCont,
+  CreateBtn,
   Delete,
   IdCheck,
   Logout,
@@ -9,6 +10,7 @@ import {
 } from '../../styles/components/btn';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/router';
 
 interface IBtnProps {
   onClick?: any;
@@ -18,8 +20,15 @@ interface IBtnProps {
 }
 
 export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
+  const router = useRouter();
+  //
   return (
     <>
+      {type === 'create' && (
+        <CreateBtn onClick={() => router.push('/blog/create')} type="submit">
+          {loading ? 'Loading...' : btnName}
+        </CreateBtn>
+      )}
       {type === 'submit' && (
         <BtnCont onClick={onClick} type="submit">
           {loading ? 'Loading...' : btnName}
