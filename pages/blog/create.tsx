@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
 import { Input, Select } from '../../src/components/Input';
+import useMutation from '../../src/libs/client/useMutation';
 import { Form, PageContainer } from '../../styles/components/default';
 
 interface BlogForm {
@@ -13,9 +14,13 @@ interface BlogForm {
 }
 
 const CreateBlog: NextPage = () => {
+  //Post
+  const [createBlog, { loading, data }] = useMutation(`/api/blog/create`);
+  //Form
   const { register, handleSubmit } = useForm<BlogForm>({ mode: 'onSubmit' });
-  const onValid = (formData: BlogForm) => {
-    console.log(formData);
+  const onValid = ({ title, intro, genre, avatar, follow }: BlogForm) => {
+    if (loading) return;
+    createBlog({ title, intro, genre });
   };
   //
 
