@@ -19,17 +19,15 @@ export const ModalCont = styled.article`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
-export const UserIdCheckModalCont = styled(ModalCont)`
-  width: 520px;
-  height: 250px;
-`;
-export const JoinConfirmModalCont = styled(ModalCont)`
+export const H200ModalCont = styled(ModalCont)`
   width: 520px;
   height: 200px;
 `;
-export const FindConfirmModalCont = styled(ModalCont)`
-  width: 500px;
-  height: 200px;
+export const SmallModalCont = styled(ModalCont)`
+  padding-top: 10px;
+  height: 120px;
+  width: 300px;
+  gap: 0;
 `;
 export const ModalClose = styled.article`
   background-color: rgba(0, 0, 0, 0.6);

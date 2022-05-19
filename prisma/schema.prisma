@@ -26,7 +26,7 @@ model User {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   tokens      Token[]
-  blogs       Blog[]
+  blogs       Board[]
 }
 
 model Token {
@@ -38,9 +38,9 @@ model Token {
   updatedAt    DateTime    @updatedAt
 }
 
-model Blog {
+model Board {
   id           Int         @id @default(autoincrement())
-  title        String
+  title        String     @unique
   intro        String
   genre        String
   avatar       String?

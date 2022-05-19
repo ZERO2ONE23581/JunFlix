@@ -2,20 +2,17 @@ import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
 import { Input, Select } from '../../src/components/Input';
+import { CreateBlogModal } from '../../src/components/Modal/CreateBlogModal';
 import useMutation from '../../src/libs/client/useMutation';
-import { Form, PageContainer } from '../../styles/components/default';
-
-interface BlogForm {
-  title: string;
-  intro: string;
-  genre: string;
-  avatar?: string;
-  follow?: string;
-}
+import { BlogForm } from '../../src/types/blog';
+import { CreateBlogResponse } from '../../src/types/postResponse';
+import { ErrMsg, Form, PageContainer } from '../../styles/components/default';
 
 const CreateBlog: NextPage = () => {
   //Post
-  const [createBlog, { loading, data }] = useMutation(`/api/blog/create`);
+  const [createBlog, { loading, data }] =
+    useMutation<CreateBlogResponse>(`/api/blog/create`);
+  console.log(data);
   //Form
   const { register, handleSubmit } = useForm<BlogForm>({ mode: 'onSubmit' });
   const onValid = ({ title, intro, genre, avatar, follow }: BlogForm) => {
@@ -26,8 +23,16 @@ const CreateBlog: NextPage = () => {
 
   return (
     <>
+      {data?.ok && (
+        <CreateBlogModal
+          boardId={data?.boardId}
+          boardTitle={data?.boardTitle}
+          creatorId={data?.creatorId}
+        />
+      )}
       <PageContainer>
         <Form onSubmit={handleSubmit(onValid)}>
+          {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
           <Input
             type="text"
             label="Title"
@@ -67,7 +72,7 @@ const CreateBlog: NextPage = () => {
             register={register('genre')}
           />
 
-          <Btn type="submit" btnName="나의 보드 만들기" />
+          <Btn type="submit" btnName="나의 보드 만들기" loading={loading} />
         </Form>
       </PageContainer>
     </>

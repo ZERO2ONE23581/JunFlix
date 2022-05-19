@@ -1,14 +1,11 @@
-import {
-  ModalClose,
-  UserIdCheckModalCont,
-} from '../../../styles/components/modal';
-import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Input } from '../Input';
 import { Btn } from '../Btn';
+import { Input } from '../Input';
+import styled from '@emotion/styled';
+import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import useMutation from '../../libs/client/useMutation';
 import { ErrMsg, Flex, Form } from '../../../styles/components/default';
+import { ModalClose, H200ModalCont } from '../../../styles/components/modal';
 
 interface IIDModalForm {
   checkID?: string;
@@ -65,7 +62,7 @@ export const UserIdCheckModal = ({
   //
   return (
     <>
-      <UserIdCheckModalCont>
+      <H200ModalCont>
         <Btn type="toggle" onClick={toggleCheckModal} btnName={'❌'} />
         {loading && <h2>Loading...</h2>}
         {!submit ? (
@@ -112,7 +109,7 @@ export const UserIdCheckModal = ({
             <Btn type="button" onClick={backClick} btnName="아이디 재확인" />
           </ErrCont>
         )}
-      </UserIdCheckModalCont>
+      </H200ModalCont>
       <ModalClose onClick={toggleCheckModal} />
     </>
   );

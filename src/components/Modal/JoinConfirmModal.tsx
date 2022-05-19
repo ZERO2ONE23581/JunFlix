@@ -1,15 +1,12 @@
 import Link from 'next/link';
 import { LinkBtn } from '../../../styles/components/btn';
 import { Flex } from '../../../styles/components/default';
-import {
-  JoinConfirmModalCont,
-  ModalClose,
-} from '../../../styles/components/modal';
+import { H200ModalCont, ModalClose } from '../../../styles/components/modal';
 
 export const JoinConfirmModal = ({ toggleCheckModal }: any) => {
   return (
     <>
-      <JoinConfirmModalCont>
+      <H200ModalCont>
         <h1>회원가입이 성공적으로 완료되었습니다.</h1>
         <h2>로그인 페이지로 이동하시겠습니까?</h2>
         <Flex>
@@ -24,7 +21,7 @@ export const JoinConfirmModal = ({ toggleCheckModal }: any) => {
             </Link>
           </LinkBtn>
         </Flex>
-      </JoinConfirmModalCont>
+      </H200ModalCont>
       <ModalClose onClick={toggleCheckModal} />
     </>
   );
