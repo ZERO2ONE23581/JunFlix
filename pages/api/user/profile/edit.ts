@@ -139,7 +139,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         return res.json({
           type: 'userInfo',
           ok: false,
-          error: '이미 사용중인 이메일 입니다. 다른 이메일을 이용해 주세요.',
+          error: `이미 사용중인 이메일 입니다. 다른 이메일을 이용해 주세요.`,
         });
       await prismaClient.user.update({
         where: { ...idMatch },

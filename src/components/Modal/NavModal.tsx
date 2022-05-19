@@ -57,6 +57,14 @@ const Wrapper = styled.ul`
     &:hover {
       background-color: ${(p) => p.theme.color.font};
       color: ${(p) => p.theme.color.bg};
+      a,
+      button {
+        color: ${(p) => p.theme.color.logo};
+      }
+    }
+    a,
+    button {
+      font-size: 1rem;
     }
   }
 `;

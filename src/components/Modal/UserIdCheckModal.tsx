@@ -1,13 +1,12 @@
+import {
+  ModalClose,
+  UserIdCheckModalCont,
+} from '../../../styles/components/modal';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../Input';
 import { Btn } from '../Btn';
-import {
-  ModalClose,
-  ModalCont,
-  UserIdCheckModalCont,
-} from '../../../styles/components/modal';
 import useMutation from '../../libs/client/useMutation';
 import { ErrMsg, Flex, Form } from '../../../styles/components/default';
 

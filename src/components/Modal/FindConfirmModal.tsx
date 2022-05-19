@@ -2,15 +2,19 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import { LinkBtn } from '../../../styles/components/btn';
 import { Flex, H1 } from '../../../styles/components/default';
-import { ModalCont } from '../../../styles/components/modal';
+import {
+  FindConfirmModalCont,
+  ModalClose,
+  ModalCont,
+} from '../../../styles/components/modal';
 import { Btn } from '../Btn';
 
-export const ConfirmModal = ({ userId }: any) => {
+export const FindConfirmModal = ({ userId }: any) => {
   //
   return (
     <>
       {userId ? (
-        <ModalCont>
+        <FindConfirmModalCont>
           <H1>
             회원님의 아이디는 " <span>{userId}</span> " 입니다.
           </H1>
@@ -21,11 +25,15 @@ export const ConfirmModal = ({ userId }: any) => {
                 <a>YES</a>
               </Link>
             </LinkBtn>
-            <Btn type="button" onClick={() => location.reload()} btnName="NO" />
+            <Btn
+              type="yesOrno"
+              onClick={() => location.reload()}
+              btnName="NO"
+            />
           </Flex>
-        </ModalCont>
+        </FindConfirmModalCont>
       ) : (
-        <ModalCont>
+        <FindConfirmModalCont>
           <H1>비밀번호가 성공적으로 업데이트 되었습니다.</H1>
           <h2>로그인 페이지로 이동하시겠습니까?</h2>
           <Flex>
@@ -34,10 +42,15 @@ export const ConfirmModal = ({ userId }: any) => {
                 <a>YES</a>
               </Link>
             </LinkBtn>
-            <Btn type="button" onClick={() => location.reload()} btnName="NO" />
+            <Btn
+              type="yesOrno"
+              onClick={() => location.reload()}
+              btnName="NO"
+            />
           </Flex>
-        </ModalCont>
+        </FindConfirmModalCont>
       )}
+      <ModalClose />
     </>
   );
 };

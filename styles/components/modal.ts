@@ -27,7 +27,10 @@ export const JoinConfirmModalCont = styled(ModalCont)`
   width: 520px;
   height: 200px;
 `;
-
+export const FindConfirmModalCont = styled(ModalCont)`
+  width: 500px;
+  height: 200px;
+`;
 export const ModalClose = styled.article`
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;

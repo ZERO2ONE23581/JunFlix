@@ -18,6 +18,11 @@ export const BtnCont = styled.button`
 `;
 export const IdCheck = styled(BtnCont)`
   width: 100px;
+  height: 35px;
+`;
+export const YesOrNo = styled(BtnCont)`
+  width: 100px;
+  height: 35px;
 `;
 export const LinkBtn = styled.div`
   display: block;
@@ -39,6 +44,7 @@ export const LinkBtn = styled.div`
   cursor: pointer;
   font-size: 15px;
   width: 100px;
+  height: 35px;
 `;
 export const Delete = styled(BtnCont)`
   width: 150px;

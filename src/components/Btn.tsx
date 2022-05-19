@@ -5,6 +5,7 @@ import {
   Logout,
   Theme,
   Toggle,
+  YesOrNo,
 } from '../../styles/components/btn';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -33,6 +34,11 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
         <IdCheck type="button" onClick={onClick}>
           {btnName}
         </IdCheck>
+      )}
+      {type === 'yesOrno' && (
+        <YesOrNo type="button" onClick={onClick}>
+          {btnName}
+        </YesOrNo>
       )}
       {type === 'logout' && (
         <Logout type="button" onClick={onClick}>

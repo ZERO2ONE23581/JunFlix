@@ -12,8 +12,10 @@ import { Input, Select } from '../../../src/components/Input';
 import { Btn } from '../../../src/components/Btn';
 import {
   DataResult,
+  ErrMsg,
   Form,
   InputWrap,
+  OkMsg,
   PageContainer,
 } from '../../../styles/components/default';
 
@@ -136,8 +138,10 @@ const Profile: NextPage = () => {
           <article className="layer-one">
             {data && (
               <DataResult>
-                {dataConditon('userId', true) && <p>{dataOkMsg}</p>}
-                {dataConditon('userId', false) && <p>{data?.error}</p>}
+                {dataConditon('userId', false) && (
+                  <ErrMsg>{data?.error}</ErrMsg>
+                )}
+                {dataConditon('userId', true) && <OkMsg>{dataOkMsg}</OkMsg>}
               </DataResult>
             )}
             <Input
@@ -165,8 +169,10 @@ const Profile: NextPage = () => {
           <article className="layer-one">
             {data && (
               <DataResult>
-                {dataConditon('password', true) && <p>{dataOkMsg}</p>}
-                {dataConditon('password', false) && <p>{data?.error}</p>}
+                {dataConditon('password', false) && (
+                  <ErrMsg>{data?.error}</ErrMsg>
+                )}
+                {dataConditon('password', true) && <OkMsg>{dataOkMsg}</OkMsg>}
               </DataResult>
             )}
             <>
@@ -222,11 +228,13 @@ const Profile: NextPage = () => {
           <article className="layer-one">
             {data && (
               <DataResult>
+                {dataConditon('userInfo', true) && <OkMsg>{dataOkMsg}</OkMsg>}
                 {dataConditon('userInfo_noUsername', true) && (
-                  <p>유저이름 미입력시 'Anonymous'로 저장됩니다.</p>
+                  <ErrMsg>유저이름 미입력시 'Anonymous'로 저장됩니다.</ErrMsg>
                 )}
-                {dataConditon('userInfo', true) && <p>{dataOkMsg}</p>}
-                {dataConditon('userInfo', false) && <p>{data?.error}</p>}
+                {dataConditon('userInfo', false) && (
+                  <ErrMsg>{data?.error}</ErrMsg>
+                )}
               </DataResult>
             )}
             <>

@@ -64,6 +64,8 @@ export const H1 = styled.h1`
 `;
 export const Flex = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 13px;
   width: 200px;
 `;
@@ -82,7 +84,7 @@ export const OkMsg = styled(ErrMsg)`
 export const DataResult = styled.div`
   background-color: inherit;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `;
 
 export const InputCont = styled.div`

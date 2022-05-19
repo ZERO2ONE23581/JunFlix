@@ -4,9 +4,9 @@ import { Btn } from '../../src/components/Btn';
 import { Input } from '../../src/components/Input';
 import useMutation from '../../src/libs/client/useMutation';
 import { IFindForm, IPostRes } from '../../src/types/login';
-import { ConfirmModal } from '../../src/components/Modal/ConfirmModal';
 import { LoginLink } from '../../src/components/Login/LoginLink';
 import { ErrMsg, Form, PageContainer } from '../../styles/components/default';
+import { FindConfirmModal } from '../../src/components/Modal/FindConfirmModal';
 
 const Find_Id: NextPage = () => {
   //Post
@@ -14,7 +14,7 @@ const Find_Id: NextPage = () => {
     `/api/user/login/find/userId`
   );
   const [postToken, { loading: tokenLoading, data: tokenData }] =
-    useMutation<IPostRes>(`/api/user/login/find/tokenAuth`);
+    useMutation<IPostRes>(`/api/user/login/find/token-confirm`);
 
   //Form
   const {
@@ -28,23 +28,22 @@ const Find_Id: NextPage = () => {
   const onValid = ({ email }: IFindForm) => {
     if (loading) return;
     if (!email) setError('email', { message: '이메일을 입력해주세요.' });
+    postFindId(email);
     reset();
-    return postFindId(email);
   };
   //
   const onTokenValid = ({ tokenNum }: IFindForm) => {
     if (tokenLoading) return;
     if (data?.ok) {
       if (!tokenNum) setError('tokenNum', { message: '토큰을 입력해주세요.' });
+      console.log(tokenNum);
       return postToken(tokenNum);
     }
   };
   //
   return (
     <PageContainer>
-      {tokenData?.ok ? (
-        <ConfirmModal userId={tokenData?.foundUser?.userId} />
-      ) : (
+      {!tokenData?.ok ? (
         <>
           {!data?.ok ? (
             <Form onSubmit={handleSubmit(onValid)}>
@@ -81,10 +80,11 @@ const Find_Id: NextPage = () => {
               />
             </Form>
           )}
+          <LoginLink findId={true} />
         </>
+      ) : (
+        <FindConfirmModal userId={tokenData?.foundUser?.userId} />
       )}
-
-      <LoginLink findId={true} />
     </PageContainer>
   );
 };

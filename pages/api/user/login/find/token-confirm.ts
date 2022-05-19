@@ -5,7 +5,7 @@ import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { tokenNum } = req.body;
+  const tokenNum = req.body;
   const noInput = Boolean(!tokenNum);
   //
   if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
