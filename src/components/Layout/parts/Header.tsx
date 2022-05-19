@@ -62,7 +62,7 @@ const Profile = styled.article`
   position: relative;
   border-radius: 100%;
   border: ${(p) => p.theme.border};
-  background: center / contain no-repeat url('/img/profile.svg');
+  background: url('/img/profile.svg') center / contain no-repeat;
 `;
 
 const NavBar = styled.nav`

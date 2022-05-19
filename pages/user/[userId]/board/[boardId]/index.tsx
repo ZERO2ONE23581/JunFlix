@@ -14,19 +14,17 @@ interface IBoardRes {
   board: Board;
 }
 
-const myBlog: NextPage = () => {
+const myBoard: NextPage = () => {
   const router = useRouter();
-  const { userId, boardId } = router.query;
+  const { boardId } = router.query;
   const { data } = useSWR<IBoardRes>(`/api/board/${Number(boardId)}`);
-  const boardTitle = data?.board?.title?.toUpperCase();
   //
-
   return (
     <>
       <BoardPage>
         {data && (
           <BoardCont>
-            <h1>{boardTitle}</h1>
+            <h1>{data?.board?.title?.toUpperCase()}</h1>
             <h2>{data?.board?.genre}</h2>
             <h3>{data?.board?.intro}</h3>
           </BoardCont>
@@ -35,7 +33,7 @@ const myBlog: NextPage = () => {
     </>
   );
 };
-export default myBlog;
+export default myBoard;
 
 const BoardCont = styled(Article)`
   flex-direction: column;

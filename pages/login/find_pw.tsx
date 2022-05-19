@@ -52,7 +52,6 @@ const Find_Pw: NextPage = () => {
       return postCreateNewPw({ newPassword, id });
     }
   };
-  console.log(paswordUpdated);
   //
   return (
     <PageContainer>

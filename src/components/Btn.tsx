@@ -24,13 +24,13 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
   //
   return (
     <>
-      {type === 'move-to-created-blog' && (
+      {type === 'move-to-created-board' && (
         <CreateBtn onClick={onClick} type="submit">
           {loading ? 'Loading...' : btnName}
         </CreateBtn>
       )}
       {type === 'create' && (
-        <CreateBtn onClick={() => router.push('/blog/create')} type="submit">
+        <CreateBtn onClick={() => router.push('/Board/create')} type="submit">
           {loading ? 'Loading...' : btnName}
         </CreateBtn>
       )}

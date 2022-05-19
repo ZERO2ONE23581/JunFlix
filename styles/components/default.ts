@@ -11,6 +11,14 @@ export const BodyBg = styled.div`
   height: 100vh;
 `;
 
+export const PageCont = styled.section`
+  padding: 20px 5%;
+  background-color: ${(p) => p.theme.color.bg};
+  color: ${(p) => p.theme.color.font};
+  width: 100vw;
+  height: 100vh;
+`;
+
 export const PageContainer = styled.section`
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => p.theme.color.font};
@@ -42,6 +50,16 @@ export const Article = styled.article`
   align-content: center;
   border-radius: 8px;
   display: flex;
+  padding: 20px;
+`;
+export const HomeArticle = styled(Article)`
+  flex-direction: column;
+  gap: 20px;
+  h1 {
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: center;
+  }
 `;
 
 export const Form = styled.form`

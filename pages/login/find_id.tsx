@@ -36,7 +36,6 @@ const Find_Id: NextPage = () => {
     if (tokenLoading) return;
     if (data?.ok) {
       if (!tokenNum) setError('tokenNum', { message: '토큰을 입력해주세요.' });
-      console.log(tokenNum);
       return postToken(tokenNum);
     }
   };

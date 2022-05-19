@@ -1,30 +1,30 @@
 import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
+import { BoardForm } from '../../src/types/blog';
 import { Input, Select } from '../../src/components/Input';
-import { CreateBlogModal } from '../../src/components/Modal/CreateBlogModal';
 import useMutation from '../../src/libs/client/useMutation';
-import { BlogForm } from '../../src/types/blog';
-import { CreateBlogResponse } from '../../src/types/postResponse';
+import { CreateBoardResponse } from '../../src/types/postResponse';
 import { ErrMsg, Form, PageContainer } from '../../styles/components/default';
+import { CreateBoardModal } from '../../src/components/Modal/CreateBoardModal';
 
-const CreateBlog: NextPage = () => {
+const CreateBoard: NextPage = () => {
   //Post
-  const [createBlog, { loading, data }] =
-    useMutation<CreateBlogResponse>(`/api/blog/create`);
+  const [createBoard, { loading, data }] =
+    useMutation<CreateBoardResponse>(`/api/board/create`);
 
   //Form
-  const { register, handleSubmit } = useForm<BlogForm>({ mode: 'onSubmit' });
-  const onValid = ({ title, intro, genre, avatar, follow }: BlogForm) => {
+  const { register, handleSubmit } = useForm<BoardForm>({ mode: 'onSubmit' });
+  const onValid = ({ title, intro, genre, avatar, follow }: BoardForm) => {
     if (loading) return;
-    createBlog({ title, intro, genre });
+    createBoard({ title, intro, genre });
   };
   //
 
   return (
     <>
       {data?.ok && (
-        <CreateBlogModal
+        <CreateBoardModal
           boardId={data?.boardId}
           boardTitle={data?.boardTitle}
           creatorId={data?.creatorId}
@@ -79,4 +79,4 @@ const CreateBlog: NextPage = () => {
   );
 };
 
-export default CreateBlog;
+export default CreateBoard;

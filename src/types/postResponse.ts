@@ -4,7 +4,7 @@ export interface PostResponse {
   message?: string;
   [key: string]: any;
 }
-export interface CreateBlogResponse extends PostResponse {
+export interface CreateBoardResponse extends PostResponse {
   boardId: number;
   creatorId: number;
   boardTitle: string;

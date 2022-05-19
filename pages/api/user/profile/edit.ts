@@ -28,7 +28,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: '로그인이 필요합니다!' });
 
   const idMatch = { id: loggedInUser.id };
-  console.log(category);
 
   //UserId
   if (category.userId) {

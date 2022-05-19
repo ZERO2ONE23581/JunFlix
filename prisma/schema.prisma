@@ -26,7 +26,7 @@ model User {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   tokens      Token[]
-  blogs       Board[]
+  Boards       Board[]
 }
 
 model Token {

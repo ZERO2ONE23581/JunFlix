@@ -1,4 +1,4 @@
-export interface BlogForm {
+export interface BoardForm {
   title: string;
   intro: string;
   genre: string;
