@@ -21,9 +21,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   });
   if (!foundBoard) return res.json({ ok: false, error: 'NO BOARD FOUND!' });
 
-  //Only creator can edit his board!
+  //UNAUTHORIZED
   if (foundBoard?.UserID !== user?.id)
-    return res.json({ ok: false, error: '보드의 작성자가 아닙니다.' });
+    return res.json({ ok: false, error: 'UNAUTHORIZED!' });
 
   //중복된 제목 체크
   const dupTitle = Boolean(

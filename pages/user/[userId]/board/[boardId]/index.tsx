@@ -95,7 +95,9 @@ const myBoard: NextPage = () => {
                 </article>
               </>
             )}
-            {delModal && <DeleteBoardModal />}
+            {delModal && (
+              <DeleteBoardModal boardId={boardId} deleteClick={deleteClick} />
+            )}
 
             {editedData?.message && <OkMsg>{editedData?.message}</OkMsg>}
             {editedData?.error && <ErrMsg>{editedData?.error}</ErrMsg>}

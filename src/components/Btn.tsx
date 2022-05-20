@@ -72,7 +72,7 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
       )}
       {type === 'delete' && (
         <Delete type="button" onClick={onClick}>
-          {btnName}
+          {loading ? 'Loading...' : btnName}
         </Delete>
       )}
       {type === 'toggle' && (

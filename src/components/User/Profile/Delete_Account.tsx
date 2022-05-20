@@ -61,7 +61,12 @@ export const Delete_Account = () => {
           <h1>DANGER ZONE ⚠</h1>
           <span>"Action can't be undone after submit!"</span>
         </Desc>
-        <Btn onClick={onClick} type="delete" btnName="Delete Account" />
+        <Btn
+          onClick={onClick}
+          type="delete"
+          btnName="Delete Account"
+          loading={loading}
+        />
       </Cont>
       {openModal && <ModalClose onClick={() => setOpenModal(false)} />}
     </>
