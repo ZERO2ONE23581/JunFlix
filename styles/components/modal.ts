@@ -28,6 +28,10 @@ export const SmallModalCont = styled(ModalCont)`
   height: 120px;
   width: 300px;
   gap: 0;
+  h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
 `;
 export const ModalClose = styled.article`
   background-color: rgba(0, 0, 0, 0.6);

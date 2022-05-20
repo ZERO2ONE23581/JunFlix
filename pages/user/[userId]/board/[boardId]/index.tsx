@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import { Btn } from '../../../../../src/components/Btn';
 import { Input, Select } from '../../../../../src/components/Input';
+import { DeleteBoardModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
 import useMutation from '../../../../../src/libs/client/useMutation';
 import { PostResponse } from '../../../../../src/types/postResponse';
 import {
@@ -50,11 +51,12 @@ const myBoard: NextPage = () => {
   };
   const [setting, setSetting] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [delModal, setDelModal] = useState(false);
   const editClick = () => {
     setEdit((p) => !p);
   };
   const deleteClick = () => {
-    console.log(`deleted!`);
+    setDelModal((p) => !p);
   };
   //Set up
   useEffect(() => {
@@ -93,6 +95,8 @@ const myBoard: NextPage = () => {
                 </article>
               </>
             )}
+            {delModal && <DeleteBoardModal />}
+
             {editedData?.message && <OkMsg>{editedData?.message}</OkMsg>}
             {editedData?.error && <ErrMsg>{editedData?.error}</ErrMsg>}
             <form onSubmit={handleSubmit(onValid)}>

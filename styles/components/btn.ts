@@ -60,8 +60,8 @@ export const Delete = styled(BtnCont)`
   color: ${(p) => p.theme.color.bg};
   background-color: ${(p) => p.theme.color.font};
   &:hover {
-    color: ${(p) => p.theme.color.logo};
-    background-color: ${(p) => p.theme.color.bg};
+    color: whitesmoke;
+    background-color: ${(p) => p.theme.color.logo};
   }
 `;
 export const Logout = styled(BtnCont)`
