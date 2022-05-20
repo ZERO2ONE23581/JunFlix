@@ -14,9 +14,9 @@ export const CreateBoardModal = ({ boardId, creatorId }: BoardInfo) => {
       <SmallModalCont>
         <h1>보드를 성공적으로 생성하셨습니다.</h1>
         <Btn
-          type="move-to-created-board"
           btnName="확인"
           onClick={handleClick}
+          type="move-to-created-board"
         />
       </SmallModalCont>
       <ModalClose />

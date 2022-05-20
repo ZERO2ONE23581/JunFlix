@@ -9,7 +9,6 @@ export const Input = (props: IInputProps) => {
         {...props.register}
         disabled={props.disabled}
         name={props.name}
-        id={props.name}
         type={props.type}
         placeholder={props.placeholder}
       />

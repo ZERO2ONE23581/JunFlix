@@ -20,24 +20,23 @@ interface IBtnProps {
 }
 
 export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
-  const router = useRouter();
   //
   return (
     <>
-      {type === 'move-to-created-board' && (
-        <CreateBtn onClick={onClick} type="submit">
-          {loading ? 'Loading...' : btnName}
-        </CreateBtn>
-      )}
-      {type === 'create' && (
-        <CreateBtn onClick={() => router.push('/Board/create')} type="submit">
-          {loading ? 'Loading...' : btnName}
-        </CreateBtn>
-      )}
       {type === 'submit' && (
         <BtnCont onClick={onClick} type="submit">
           {loading ? 'Loading...' : btnName}
         </BtnCont>
+      )}
+      {type === 'move-to-created-board' && (
+        <CreateBtn onClick={onClick} type="button">
+          {loading ? 'Loading...' : btnName}
+        </CreateBtn>
+      )}
+      {type === 'create' && (
+        <CreateBtn onClick={onClick} type="button">
+          {loading ? 'Loading...' : btnName}
+        </CreateBtn>
       )}
       {type === 'button' && (
         <BtnCont type="button" onClick={onClick}>
@@ -64,7 +63,6 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
           {btnName}
         </Theme>
       )}
-
       {type === 'delete' && (
         <Delete type="button" onClick={onClick}>
           {btnName}
