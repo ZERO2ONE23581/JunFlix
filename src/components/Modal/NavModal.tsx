@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import useUser from '../../libs/client/loggedInUser';
 import { Btn } from '../Btn';
 
 interface INavModalProps {
@@ -8,30 +9,33 @@ interface INavModalProps {
 }
 export const NavModal = ({ username }: INavModalProps) => {
   const router = useRouter();
+  const { loggedInUser } = useUser();
   //
   return (
     <>
-      <Cont>
-        <Wrapper>
-          <li>
-            <Link href="/mypage">
-              <a>{username}'s page</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/my/profile">
-              <a>Edit Profile</a>
-            </Link>
-          </li>
-          <li>
-            <Btn
-              type="logout"
-              btnName="Sign Out"
-              onClick={() => router.replace('/api/user/logout')}
-            />
-          </li>
-        </Wrapper>
-      </Cont>
+      {loggedInUser && (
+        <Cont>
+          <Wrapper>
+            <li>
+              <Link href="/mypage">
+                <a>{username}'s page</a>
+              </Link>
+            </li>
+            <li>
+              <Link href={`/user/${loggedInUser.id}/profile/edit`}>
+                <a>Edit Profile</a>
+              </Link>
+            </li>
+            <li>
+              <Btn
+                type="logout"
+                btnName="Sign Out"
+                onClick={() => router.replace('/api/user/logout')}
+              />
+            </li>
+          </Wrapper>
+        </Cont>
+      )}
     </>
   );
 };

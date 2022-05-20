@@ -1,15 +1,4 @@
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import useUser from '../../../src/libs/client/loggedInUser';
-import useMutation from '../../../src/libs/client/useMutation';
-import {
-  IProfileEditForm,
-  IProfileEditRes,
-} from '../../../src/types/edit-profile';
-import { Delete_Account } from '../../../src/components/User/Profile/Delete_Account';
-import { Input, Select } from '../../../src/components/Input';
-import { Btn } from '../../../src/components/Btn';
 import {
   DataResult,
   ErrMsg,
@@ -17,7 +6,18 @@ import {
   InputWrap,
   OkMsg,
   PageContainer,
-} from '../../../styles/components/default';
+} from '../../../../styles/components/default';
+import {
+  IProfileEditForm,
+  IProfileEditRes,
+} from '../../../../src/types/edit-profile';
+import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { Btn } from '../../../../src/components/Btn';
+import useUser from '../../../../src/libs/client/loggedInUser';
+import useMutation from '../../../../src/libs/client/useMutation';
+import { Delete_Account } from '../../../../src/components/User/Profile/Delete_Account';
+import { Input, Select } from '../../../../src/components/Input';
 
 const Profile: NextPage = () => {
   //Get

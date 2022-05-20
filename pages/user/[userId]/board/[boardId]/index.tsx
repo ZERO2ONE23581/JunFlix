@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Board } from '@prisma/client';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import { Btn } from '../../../../../src/components/Btn';
@@ -20,94 +20,95 @@ interface IBoardRes {
   board: Board;
 }
 
+interface IEditBoardForm {
+  title?: string;
+  intro?: string;
+  genre?: string;
+}
+
 const myBoard: NextPage = () => {
   const router = useRouter();
   const { boardId } = router.query;
   const { data } = useSWR<IBoardRes>(`/api/board/${Number(boardId)}`);
 
   //Post
-  const [editBoardInfo, { data: editedData, loading }] = useMutation(
+  const [editBoard, { data: editedData, loading }] = useMutation(
     `/api/board/${Number(boardId)}/edit`
   );
 
   //Edit Form
-  const { register, handleSubmit } = useForm({ mode: 'onSubmit' });
-  const onValid = (formData: any) => {
-    console.log(formData);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<IEditBoardForm>({ mode: 'onSubmit' });
+
+  const onValid = (formData: IEditBoardForm) => {
+    if (loading) return;
+    editBoard(formData);
   };
   const [edit, setEdit] = useState(false);
   const onClick = () => {
     setEdit((p) => !p);
   };
+  //Set up
+  useEffect(() => {
+    if (data?.board?.title) setValue('title', data.board.title.toUpperCase());
+    if (data?.board?.genre) setValue('genre', data.board.genre);
+    if (data?.board?.intro) setValue('intro', data.board.intro);
+  }, [setValue, data]);
   //
   return (
     <>
       <BoardPage>
         {data && (
           <BoardCont>
-            <Btn onClick={onClick} type="yesOrno" btnName="Edit" />
+            <Btn
+              onClick={onClick}
+              type="yesOrno"
+              btnName={edit ? 'Back' : 'Edit'}
+            />
             <form onSubmit={handleSubmit(onValid)}>
-              {edit ? (
-                <>
-                  <Input
-                    type="text"
-                    name="title"
-                    errMsg=""
-                    placeholder="수정할 보드의 제목을 입력하세요."
-                    register={register('title', {
-                      required: '수정할 보드의 제목을 입력하세요.',
-                    })}
-                  />
-                </>
-              ) : (
-                <h1>{data?.board?.title?.toUpperCase()}</h1>
-              )}
-              {edit ? (
-                <>
-                  <Input
-                    type="text"
-                    name="intro"
-                    errMsg=""
-                    placeholder="수정할 보드의 소개글을 작성해 주세요."
-                    register={register('intro', {
-                      maxLength: 50,
-                    })}
-                  />
-                </>
-              ) : (
-                <h2>{data?.board?.genre}</h2>
-              )}
-              {edit ? (
-                <>
-                  <Select
-                    name="genre"
-                    errMsg=""
-                    options={[
-                      'SF',
-                      'Drama',
-                      'Horror',
-                      'Comedy',
-                      'Fantasy',
-                      'Romance',
-                      'Action',
-                      'Mystery',
-                      'Thriller',
-                    ]}
-                    placeholder="수정할 장르를 선택해주세요."
-                    register={register('genre')}
-                  />
-                </>
-              ) : (
-                <h3>{data?.board?.intro}</h3>
-              )}
-
-              {edit && (
-                <Btn
-                  type="submit"
-                  btnName="나의 보드 수정하기"
-                  loading={loading}
-                />
-              )}
+              <Input
+                errMsg={errors.title?.message}
+                type="text"
+                name="title"
+                disabled={!edit && true}
+                placeholder="수정할 보드의 제목을 입력하세요."
+                register={register('title', {
+                  required: '수정할 보드의 제목을 입력하세요.',
+                })}
+              />
+              <Input
+                errMsg={errors.intro?.message}
+                type="text"
+                name="intro"
+                disabled={!edit && true}
+                placeholder="수정할 보드의 소개글을 작성해 주세요."
+                register={register('intro', {
+                  maxLength: 50,
+                })}
+              />
+              <Select
+                errMsg={errors.genre?.message}
+                name="genre"
+                disabled={!edit && true}
+                placeholder="수정할 장르를 선택해주세요."
+                register={register('genre')}
+                options={[
+                  'SF',
+                  'Drama',
+                  'Horror',
+                  'Comedy',
+                  'Fantasy',
+                  'Romance',
+                  'Action',
+                  'Mystery',
+                  'Thriller',
+                ]}
+              />
+              {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
             </form>
           </BoardCont>
         )}

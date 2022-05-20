@@ -6,10 +6,10 @@ export const Input = (props: IInputProps) => {
     <InputCont>
       <label htmlFor={props.name}>{props.label}</label>
       <input
-        {...props.register}
-        disabled={props.disabled}
         name={props.name}
         type={props.type}
+        {...props.register}
+        disabled={props.disabled}
         placeholder={props.placeholder}
       />
       {props.errMsg && <ErrMsg>{props.errMsg}</ErrMsg>}
@@ -24,8 +24,8 @@ export const Select = ({
   options,
   register,
   placeholder,
+  disabled,
 }: IInputProps) => {
-  //
   return (
     <>
       {name !== 'genre' ? (
@@ -41,7 +41,7 @@ export const Select = ({
       ) : (
         <InputCont>
           <label htmlFor={name}>{label}</label>
-          <select {...register} name={name} id={name}>
+          <select disabled={disabled} {...register} name={name} id={name}>
             <option value="">{placeholder}</option>
             <option value="SF">{options[0]}</option>
             <option value="Drama">{options[1]}</option>

@@ -6,6 +6,7 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { board_id } = req.query;
+  const data = req.body;
 
   //error handling
   if (!user) return res.json({ ok: false, error: 'LOGIN NEEDED' });
@@ -18,4 +19,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   return res.json({ ok: true, board });
 }
-export default withApiSession(withHandler({ methods: ['GET'], handler }));
+export default withApiSession(withHandler({ methods: ['POST'], handler }));
