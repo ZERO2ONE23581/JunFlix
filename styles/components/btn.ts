@@ -20,6 +20,10 @@ export const IdCheck = styled(BtnCont)`
   width: 100px;
   height: 35px;
 `;
+export const EditBoardBtn = styled(BtnCont)`
+  width: 100px;
+  height: 35px;
+`;
 export const CreateBtn = styled(BtnCont)`
   width: 100px;
   height: 35px;

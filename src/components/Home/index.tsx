@@ -24,7 +24,7 @@ export const MainComponent = () => {
         <h1>WELCOME TO JUNFLIX!</h1>
         <Btn
           type="create"
-          btnName="Create Clapper"
+          btnName="Create Board"
           onClick={() => router.push('/board/create')}
         />
       </HomeArticle>

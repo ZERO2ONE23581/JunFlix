@@ -2,6 +2,7 @@ import {
   BtnCont,
   CreateBtn,
   Delete,
+  EditBoardBtn,
   IdCheck,
   Logout,
   Theme,
@@ -10,7 +11,6 @@ import {
 } from '../../styles/components/btn';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { useRouter } from 'next/router';
 
 interface IBtnProps {
   onClick?: any;
@@ -32,6 +32,13 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
         <CreateBtn onClick={onClick} type="button">
           {loading ? 'Loading...' : btnName}
         </CreateBtn>
+      )}
+      {(type === 'board-setting' ||
+        type === 'board-edit' ||
+        type === 'board-delete') && (
+        <EditBoardBtn onClick={onClick} type="button">
+          {loading ? 'Loading...' : btnName}
+        </EditBoardBtn>
       )}
       {type === 'create' && (
         <CreateBtn onClick={onClick} type="button">

@@ -48,16 +48,19 @@ const myBoard: NextPage = () => {
     const titleCap = title?.toUpperCase();
     editBoard({ titleCap, genre, intro });
   };
+  const [setting, setSetting] = useState(false);
   const [edit, setEdit] = useState(false);
-  const onClick = () => {
+  const editClick = () => {
     setEdit((p) => !p);
+  };
+  const deleteClick = () => {
+    console.log(`deleted!`);
   };
   //Set up
   useEffect(() => {
     if (data?.board?.title) setValue('title', data.board.title.toUpperCase());
     if (data?.board?.genre) setValue('genre', data.board.genre);
     if (data?.board?.intro) setValue('intro', data.board.intro);
-    // if (editedData?.ok) setEdit((p) => !p);
     if (editedData?.ok)
       setTimeout(() => {
         router.reload();
@@ -70,10 +73,26 @@ const myBoard: NextPage = () => {
         {data && (
           <BoardCont>
             <Btn
-              onClick={onClick}
-              type="yesOrno"
-              btnName={edit ? 'Back' : 'Edit'}
+              type="board-setting"
+              onClick={() => setSetting((p) => !p)}
+              btnName="Setting"
             />
+            {setting && (
+              <>
+                <article>
+                  <Btn
+                    type="board-edit"
+                    onClick={editClick}
+                    btnName={edit ? 'Back' : 'Edit Board'}
+                  />
+                  <Btn
+                    type="board-delete"
+                    onClick={deleteClick}
+                    btnName="Delete"
+                  />
+                </article>
+              </>
+            )}
             {editedData?.message && <OkMsg>{editedData?.message}</OkMsg>}
             {editedData?.error && <ErrMsg>{editedData?.error}</ErrMsg>}
             <form onSubmit={handleSubmit(onValid)}>

@@ -14,7 +14,7 @@ export const NavModal = ({ username }: INavModalProps) => {
   return (
     <>
       {loggedInUser && (
-        <Cont>
+        <NavCont>
           <Wrapper>
             <li>
               <Link href="/mypage">
@@ -34,7 +34,7 @@ export const NavModal = ({ username }: INavModalProps) => {
               />
             </li>
           </Wrapper>
-        </Cont>
+        </NavCont>
       )}
     </>
   );
@@ -73,7 +73,7 @@ const Wrapper = styled.ul`
   }
 `;
 
-const Cont = styled.nav`
+const NavCont = styled.nav`
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => p.theme.color.font};
   z-index: 999;
