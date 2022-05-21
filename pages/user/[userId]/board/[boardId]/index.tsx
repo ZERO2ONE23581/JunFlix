@@ -16,6 +16,7 @@ import { Input, Select } from '../../../../../src/components/Input';
 import { DeleteBoardModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
 import useMutation from '../../../../../src/libs/client/useMutation';
 import { PostResponse } from '../../../../../src/types/postResponse';
+import { AllPosts } from '../../../../../src/components/Post/AllPost';
 
 interface IBoardRes {
   board: Board;
@@ -74,18 +75,20 @@ const myBoard: NextPage = () => {
       <BoardPage>
         {data && (
           <BoardCont>
-            <Btn
-              type="create"
-              onClick={() => {
-                router.push(`/user/${userId}/board/${boardId}/post/create`);
-              }}
-              btnName="Create Post"
-            />
-            <Btn
-              type="board-setting"
-              onClick={() => setSetting((p) => !p)}
-              btnName="Setting"
-            />
+            <>
+              <Btn
+                type="create"
+                onClick={() => {
+                  router.push(`/user/${userId}/board/${boardId}/post/create`);
+                }}
+                btnName="Create Post"
+              />
+              <Btn
+                type="board-setting"
+                onClick={() => setSetting((p) => !p)}
+                btnName="Setting"
+              />
+            </>
             {setting && (
               <>
                 <article>
@@ -151,6 +154,7 @@ const myBoard: NextPage = () => {
             </form>
           </BoardCont>
         )}
+        <AllPosts userId={userId} boardId={boardId} />
       </BoardPage>
     </>
   );
