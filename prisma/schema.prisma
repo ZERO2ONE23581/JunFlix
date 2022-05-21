@@ -26,7 +26,8 @@ model User {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   tokens      Token[]
-  Boards       Board[]
+  boards      Board[]
+  posts       Post[]
 }
 
 model Token {
@@ -47,6 +48,21 @@ model Board {
   follow       String?
   user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID       Int   
+  post         Post[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Post {
+  id           Int         @id @default(autoincrement())
+  title        String     
+  content      String? 
+  avatar       String?
+  follow       String?
+  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
+  UserID       Int   
+  board        Board        @relation(fields: [BoardID], references: [id], onDelete: Cascade)
+  BoardID      Int   
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }

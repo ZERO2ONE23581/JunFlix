@@ -4,11 +4,6 @@ import withHandler from '../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { user } = req.session;
-
-  //error handling
-  if (!user) return res.json({ ok: false, error: 'LOGIN NEEDED' });
-
   //All board
   const allBoards = await prismaClient.board.findMany({
     select: {
@@ -23,4 +18,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   return res.json({ ok: true, allBoards });
 }
-export default withApiSession(withHandler({ methods: ['GET'], handler }));
+export default withApiSession(
+  withHandler({ methods: ['GET'], handler, isPrivate: false })
+);

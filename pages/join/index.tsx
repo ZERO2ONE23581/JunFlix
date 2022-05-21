@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import {
-  EditForm,
   ErrMsg,
+  Form,
   Layer,
   PageContainer,
 } from '../../styles/components/default';
@@ -123,7 +123,7 @@ const Join: NextPage = () => {
         />
       )}
 
-      <EditForm onSubmit={handleSubmit(onValid)}>
+      <Form onSubmit={handleSubmit(onValid)}>
         {data?.error && <ErrMsg>{data.error}</ErrMsg>}
         <Input
           label="Username"
@@ -210,7 +210,7 @@ const Join: NextPage = () => {
           </>
         )}
         <Btn type="submit" btnName={loading ? 'Loading...' : '회원가입'} />
-      </EditForm>
+      </Form>
 
       <LoginLink joined={true} />
     </PageContainer>

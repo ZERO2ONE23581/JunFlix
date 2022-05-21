@@ -1,3 +1,9 @@
+import {
+  Article,
+  BoardPage,
+  ErrMsg,
+  OkMsg,
+} from '../../../../../styles/components/default';
 import styled from '@emotion/styled';
 import { Board } from '@prisma/client';
 import type { NextPage } from 'next';
@@ -10,12 +16,6 @@ import { Input, Select } from '../../../../../src/components/Input';
 import { DeleteBoardModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
 import useMutation from '../../../../../src/libs/client/useMutation';
 import { PostResponse } from '../../../../../src/types/postResponse';
-import {
-  Article,
-  BoardPage,
-  ErrMsg,
-  OkMsg,
-} from '../../../../../styles/components/default';
 
 interface IBoardRes {
   board: Board;
@@ -29,7 +29,7 @@ interface IEditBoardForm {
 
 const myBoard: NextPage = () => {
   const router = useRouter();
-  const { boardId } = router.query;
+  const { userId, boardId } = router.query;
   const { data } = useSWR<IBoardRes>(`/api/board/${Number(boardId)}`);
 
   //Post
@@ -74,6 +74,13 @@ const myBoard: NextPage = () => {
       <BoardPage>
         {data && (
           <BoardCont>
+            <Btn
+              type="create"
+              onClick={() => {
+                router.push(`/user/${userId}/board/${boardId}/post/create`);
+              }}
+              btnName="Create Post"
+            />
             <Btn
               type="board-setting"
               onClick={() => setSetting((p) => !p)}
@@ -150,7 +157,7 @@ const myBoard: NextPage = () => {
 };
 export default myBoard;
 
-const BoardCont = styled(Article)`
+export const BoardCont = styled(Article)`
   flex-direction: column;
   justify-content: center;
   padding: 20px 100px;
