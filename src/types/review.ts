@@ -1,6 +1,6 @@
 import { MutationRes } from './mutation';
 
-export interface ReviewForm {
+export interface IReviewForm {
   title: string;
   movieTitle: string;
   genre: string;

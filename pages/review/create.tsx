@@ -2,13 +2,14 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
-import { BoardForm } from '../../src/types/board';
 import { Input, Select } from '../../src/components/Input';
 import useMutation from '../../src/libs/client/useMutation';
-import { CreateBoardResponse } from '../../src/types/mutation';
-import { CreateBoardModal } from '../../src/components/Modal/CreateBoardModal';
-import { ErrMsg, Form, PageContainer } from '../../styles/components/default';
-import { CreateReviewRes, ReviewForm } from '../../src/types/review';
+import { CreateReviewRes, IReviewForm } from '../../src/types/review';
+import {
+  ErrMsg,
+  ReviewForm,
+  ReviewPageCont,
+} from '../../styles/components/default';
 
 const CreateReview: NextPage = () => {
   const router = useRouter();
@@ -20,18 +21,16 @@ const CreateReview: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ReviewForm>({ mode: 'onSubmit' });
-  const onValid = ({ title, movieTitle, genre, content }: ReviewForm) => {
-    console.log(title, movieTitle, genre, content);
-    return;
+  } = useForm<IReviewForm>({ mode: 'onSubmit' });
+  const onValid = ({ title, movieTitle, genre, content }: IReviewForm) => {
     if (loading) return;
     createReview({ title, movieTitle, genre, content });
   };
   //
   return (
     <>
-      <PageContainer>
-        <Form onSubmit={handleSubmit(onValid)}>
+      <ReviewPageCont>
+        <ReviewForm onSubmit={handleSubmit(onValid)}>
           {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
           <Input
             type="text"
@@ -70,7 +69,9 @@ const CreateReview: NextPage = () => {
               'Others',
             ]}
             placeholder="영화의 장르를 선택해주세요."
-            register={register('genre')}
+            register={register('genre', {
+              required: '영화의 장르를 선택해주세요.',
+            })}
           />
           <Input
             type="text"
@@ -79,12 +80,13 @@ const CreateReview: NextPage = () => {
             errMsg={errors.content?.message}
             placeholder="내용을 작성해 주세요."
             register={register('content', {
+              required: '내용을 작성해 주세요.',
               minLength: 20,
             })}
           />
           <Btn type="submit" btnName="리뷰 작성하기" loading={loading} />
-        </Form>
-      </PageContainer>
+        </ReviewForm>
+      </ReviewPageCont>
     </>
   );
 };

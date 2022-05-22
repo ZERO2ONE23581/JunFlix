@@ -37,6 +37,10 @@ export const PageContainer = styled.section`
   }
 `;
 
+export const ReviewPageCont = styled(PageContainer)`
+  padding: 10px;
+`;
+
 export const BoardPage = styled(PageContainer)`
   padding: 0 10px;
 `;
@@ -74,7 +78,9 @@ export const Form = styled.form`
   display: flex;
   width: 330px;
 `;
-
+export const ReviewForm = styled(Form)`
+  width: 100%;
+`;
 export const H1 = styled.h1`
   span {
     font-weight: 500;

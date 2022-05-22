@@ -1,19 +1,30 @@
+import styled from '@emotion/styled';
 import { ErrMsg, InputCont } from '../../styles/components/default';
 import { IInputProps } from '../types/input';
 
 export const Input = (props: IInputProps) => {
   return (
-    <InputCont>
-      <label htmlFor={props.name}>{props.label}</label>
-      <input
-        name={props.name}
-        type={props.type}
-        {...props.register}
-        disabled={props.disabled}
-        placeholder={props.placeholder}
-      />
-      {props.errMsg && <ErrMsg>{props.errMsg}</ErrMsg>}
-    </InputCont>
+    <>
+      {props.name !== 'content' ? (
+        <InputCont>
+          <label htmlFor={props.name}>{props.label}</label>
+          <input
+            name={props.name}
+            type={props.type}
+            {...props.register}
+            disabled={props.disabled}
+            placeholder={props.placeholder}
+          />
+          {props.errMsg && <ErrMsg>{props.errMsg}</ErrMsg>}
+        </InputCont>
+      ) : (
+        <InputCont>
+          <label htmlFor={props.name}>{props.label}</label>
+          <Textarea {...props.register} name={props.name} cols={20} rows={20} />
+          {props.errMsg && <ErrMsg>{props.errMsg}</ErrMsg>}
+        </InputCont>
+      )}
+    </>
   );
 };
 
@@ -60,3 +71,8 @@ export const Select = ({
     </>
   );
 };
+
+const Textarea = styled.textarea`
+  padding: 20px;
+  font-size: 1rem;
+`;
