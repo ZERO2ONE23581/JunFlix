@@ -10,8 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   if (!user) return res.json({ ok: false, error: 'LOGIN NEEDED!' });
   if (!board_id) return res.json({ ok: false, error: 'QUERY ERROR!' });
-  if (!Boolean(title && content))
-    return res.json({ ok: false, error: 'NO INPUT DATA!' });
+  if (!title) return res.json({ ok: false, error: 'NO INPUT DATA!' });
 
   //보드 존재 x || 현 보드의 주인이 아닌경우 -> error
   const currentBoard = await prismaClient.board.findUnique({

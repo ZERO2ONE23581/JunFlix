@@ -51,9 +51,7 @@ const myPost: NextPage = () => {
           type="text"
           name="content"
           placeholder="게시물의 내용을 입력해주세요."
-          register={register('content', {
-            required: '게시물의 내용을 입력해주세요.',
-          })}
+          register={register('content')}
         />
         <Btn type="submit" btnName="Create Post" loading={loading} />
       </form>

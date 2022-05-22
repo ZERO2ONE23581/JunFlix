@@ -7,13 +7,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { board_id, post_id } = req.query;
   const { title, content } = req.body;
-  const noInput = !Boolean(title && content);
   const noQuery = !Boolean(board_id && post_id);
 
   //error handling
   if (!user) return res.json({ ok: false, error: 'LOGIN NEEDED!' });
   if (noQuery) return res.json({ ok: false, error: 'QUERY ERROR!' });
-  if (noInput) return res.json({ ok: false, error: 'NO INPUT DATA!' });
+  if (!title) return res.json({ ok: false, error: 'NO INPUT DATA!' });
 
   //Select post
   const foundPost = await prismaClient.post.findUnique({

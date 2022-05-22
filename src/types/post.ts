@@ -9,3 +9,11 @@ export interface IEditPostForm {
 export interface IPostRes {
   post: Post;
 }
+export interface IGetAllPosts {
+  ok: boolean;
+  allPosts?: Post[];
+}
+export interface IAllPostsProps {
+  userId?: string | string[];
+  boardId?: string | string[];
+}

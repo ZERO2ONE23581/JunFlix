@@ -65,7 +65,7 @@ const myBoard: NextPage = () => {
                 onClick={() => {
                   router.push(`/user/${userId}/board/${boardId}/post/create`);
                 }}
-                btnName="Create Board"
+                btnName="Create Post"
               />
               <Btn
                 type="board-setting"

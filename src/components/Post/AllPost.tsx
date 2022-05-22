@@ -1,19 +1,10 @@
 import useSWR from 'swr';
-import { Btn } from '../Btn';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { Board, Post, User } from '@prisma/client';
-import { HomeArticle, PageCont } from '../../../styles/components/default';
+import { PageCont } from '../../../styles/components/default';
+import { IAllPostsProps, IGetAllPosts } from '../../types/post';
 
-interface IGetAllPosts {
-  ok: boolean;
-  allPosts?: IPost[];
-}
-interface IPost extends Post {}
-
-export const AllPosts = ({ userId, boardId }: any) => {
-  const router = useRouter();
+export const AllPosts = ({ userId, boardId }: IAllPostsProps) => {
   const { data } = useSWR<IGetAllPosts>(`/api/board/${boardId}/post/all_posts`);
   //
   return (
