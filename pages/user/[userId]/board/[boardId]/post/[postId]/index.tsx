@@ -34,7 +34,6 @@ const myPost: NextPage = () => {
 
   //Get
   const { data } = useSWR<IPostRes>(`/api/board/${boardId}/post/${postId}`);
-  console.log(data?.post);
 
   //Post
   const [editPost, { data: editedData, loading }] = useMutation<PostResponse>(
@@ -50,7 +49,8 @@ const myPost: NextPage = () => {
   } = useForm<IEditPostForm>({ mode: 'onSubmit' });
 
   const onValid = ({ title, content }: any) => {
-    console.log(title, content);
+    if (loading) return;
+    editPost({ title, content });
   };
 
   //Set up

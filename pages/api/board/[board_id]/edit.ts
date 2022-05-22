@@ -31,8 +31,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       where: { title: titleCap },
     })
   );
-  console.log('titleCap==', titleCap);
-  console.log('foundBoard.title==', foundBoard.title);
   if (dupTitle && titleCap !== foundBoard.title)
     return res.json({ ok: false, error: '이미 사용중인 제목입니다.' });
 
