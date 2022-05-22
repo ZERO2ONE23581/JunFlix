@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
 import { Input, Select } from '../../src/components/Input';
@@ -23,9 +24,17 @@ const CreateReview: NextPage = () => {
     formState: { errors },
   } = useForm<IReviewForm>({ mode: 'onSubmit' });
   const onValid = ({ title, movieTitle, genre, content }: IReviewForm) => {
+    const titleCap = title.toUpperCase();
     if (loading) return;
-    createReview({ title, movieTitle, genre, content });
+    createReview({ titleCap, movieTitle, genre, content });
   };
+  //After post
+  useEffect(() => {
+    if (data?.ok) {
+      alert('새로운 리뷰를 생성하였습니다.');
+      router.push('/review');
+    }
+  }, [data]);
   //
   return (
     <>

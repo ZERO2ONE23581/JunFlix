@@ -5,8 +5,8 @@ import { withApiSession } from '../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { title, movieTitle, genre, content } = req.body;
-  const noInput = !Boolean(title && movieTitle && genre && content);
+  const { titleCap, movieTitle, genre, content } = req.body;
+  const noInput = !Boolean(titleCap && movieTitle && genre && content);
 
   //error handling
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN' });
@@ -14,7 +14,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   await prismaClient.review.create({
     data: {
-      title,
+      title: titleCap,
       movieTitle,
       genre,
       content,

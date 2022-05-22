@@ -72,7 +72,7 @@ model Review {
   title        String  
   movieTitle   String
   genre        String
-  content      String? 
+  content      String?    @db.LongText
   avatar       String? 
   user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID       Int     
