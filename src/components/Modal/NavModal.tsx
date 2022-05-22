@@ -22,7 +22,7 @@ export const NavModal = ({ username }: INavModalProps) => {
               </Link>
             </li>
             <li>
-              <Link href={`/user/${loggedInUser.id}/profile/edit`}>
+              <Link href={`/user/${loggedInUser.id}/edit`}>
                 <a>Edit Profile</a>
               </Link>
             </li>

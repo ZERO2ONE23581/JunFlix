@@ -17,18 +17,24 @@ export const Header = () => {
   const toggleModal = () => {
     setOpen((p) => !p);
   };
-
   //
   return (
     <Cont>
       <NavBar>
-        <Logo>
-          <Link href="/">
-            <a>
-              <LogoSvg />
-            </a>
-          </Link>
-        </Logo>
+        <LeftWrap>
+          <Logo>
+            <Link href="/">
+              <a>
+                <LogoSvg />
+              </a>
+            </Link>
+          </Logo>
+          <Review>
+            <Link href="/review">
+              <a>Review</a>
+            </Link>
+          </Review>
+        </LeftWrap>
         {isloggedIn ? (
           <Profile onClick={toggleModal}>
             {open && <NavModal username={username} />}
@@ -48,13 +54,34 @@ export const Header = () => {
     </Cont>
   );
 };
-const Logo = styled.article`
+const Review = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  a {
+    background-color: ${(p) => p.theme.color.font};
+    color: ${(p) => p.theme.color.bg};
+    border-radius: 20px;
+    padding: 10px 15px;
+    &:hover {
+      background-color: ${(p) => p.theme.color.logo};
+      color: whitesmoke;
+    }
+  }
+`;
+const Logo = styled.div`
   a {
     img {
       width: 100px;
       height: 100px;
     }
   }
+`;
+const LeftWrap = styled.article`
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 20px;
 `;
 const Profile = styled.article`
   width: 40px;

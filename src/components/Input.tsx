@@ -52,6 +52,7 @@ export const Select = ({
             <option value="Action">{options[6]}</option>
             <option value="Mystery">{options[7]}</option>
             <option value="Thriller">{options[8]}</option>
+            <option value="Others">{options[9]}</option>
           </select>
           {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
         </InputCont>

@@ -25,13 +25,15 @@ export const MainComponent = () => {
       <HomeArticle>
         <h1>WELCOME TO JUNFLIX!</h1>
         {isloggedIn && (
-          <Btn
-            type="create"
-            btnName="Create Board"
-            onClick={() =>
-              router.push(`/user/${loggedInUser?.id}/board/create`)
-            }
-          />
+          <>
+            <Btn
+              type="create"
+              btnName="Create Board"
+              onClick={() =>
+                router.push(`/user/${loggedInUser?.id}/board/create`)
+              }
+            />
+          </>
         )}
       </HomeArticle>
       {data?.ok && data.allBoards && (

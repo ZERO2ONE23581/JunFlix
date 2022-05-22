@@ -28,6 +28,7 @@ model User {
   tokens      Token[]
   boards      Board[]
   posts       Post[]
+  reviews     Review[]
 }
 
 model Token {
@@ -63,6 +64,18 @@ model Post {
   UserID       Int   
   board        Board        @relation(fields: [BoardID], references: [id], onDelete: Cascade)
   BoardID      Int   
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+model Review {
+  id           Int         @id @default(autoincrement())
+  title        String  
+  movieTitle   String
+  genre        String
+  content      String? 
+  avatar       String? 
+  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
+  UserID       Int     
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }

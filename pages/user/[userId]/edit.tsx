@@ -2,11 +2,11 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../../../src/components/Btn';
-import useUser from '../../../../src/libs/client/loggedInUser';
-import useMutation from '../../../../src/libs/client/useMutation';
-import { Input, Select } from '../../../../src/components/Input';
-import { Delete_Account } from '../../../../src/components/User/Profile/Delete_Account';
+import { Btn } from '../../../src/components/Btn';
+import useUser from '../../../src/libs/client/loggedInUser';
+import useMutation from '../../../src/libs/client/useMutation';
+import { Input, Select } from '../../../src/components/Input';
+import { Delete_Account } from '../../../src/components/User/Profile/Delete_Account';
 import {
   DataResult,
   ErrMsg,
@@ -14,11 +14,11 @@ import {
   InputWrap,
   OkMsg,
   PageContainer,
-} from '../../../../styles/components/default';
+} from '../../../styles/components/default';
 import {
   IProfileEditForm,
   IProfileEditRes,
-} from '../../../../src/types/edit-profile';
+} from '../../../src/types/edit-profile';
 
 const Profile: NextPage = () => {
   const router = useRouter();
