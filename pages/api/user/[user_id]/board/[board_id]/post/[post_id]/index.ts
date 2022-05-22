@@ -4,7 +4,6 @@ import prismaClient from '../../../../../../../../src/libs/server/prisma_client'
 import { withApiSession } from '../../../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  //다른사람의 보드를 들어가서 포스트를 볼수있지만 수정이나 삭제는 안됨.
   const { user_id, board_id, post_id } = req.query;
   const noQuery = !Boolean(user_id && board_id && post_id);
 
@@ -22,4 +21,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   return res.json({ ok: true, post });
 }
-export default withApiSession(withHandler({ methods: ['GET'], handler }));
+export default withApiSession(
+  withHandler({ methods: ['GET'], handler, isPrivate: false })
+  //public can read any posts!
+);

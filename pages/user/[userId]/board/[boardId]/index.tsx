@@ -21,12 +21,12 @@ import useUser from '../../../../../src/libs/client/loggedInUser';
 
 const myBoard: NextPage = () => {
   const router = useRouter();
-  const { loggedInUser } = useUser();
   const { userId, boardId } = router.query;
+  const { isloggedIn, loggedInUser } = useUser();
+  const security = Boolean(isloggedIn && loggedInUser?.id === Number(userId));
   const { data: boardData } = useSWR<IBoardRes>(
     `/api/user/${userId}/board/${boardId}`
   );
-
   //Post
   const [editBoard, { data: editedData, loading }] = useMutation<MutationRes>(
     `/api/user/${userId}/board/${boardId}/edit`
@@ -65,7 +65,7 @@ const myBoard: NextPage = () => {
         {boardData && (
           <BoardCont>
             {/* 세팅 및 포스트생성 버튼 */}
-            {loggedInUser?.id === Number(userId) && (
+            {security && (
               <>
                 <Btn
                   type="create"

@@ -4,7 +4,6 @@ import prismaClient from '../../../../../../src/libs/server/prisma_client';
 import { withApiSession } from '../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  //PUBLIC SIDE: READ, PRIVATE SIDE: UPDATE, DELETE
   const { user_id, board_id } = req.query;
   const noQuery = !Boolean(user_id && board_id);
 
@@ -21,4 +20,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   return res.json({ ok: true, board });
 }
-export default withApiSession(withHandler({ methods: ['GET'], handler }));
+export default withApiSession(
+  withHandler({ methods: ['GET'], handler, isPrivate: false })
+  //public can read any boards!
+);

@@ -10,7 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const noQuery = !Boolean(board_id && post_id);
 
   //error handling
-  if (!user) return res.json({ ok: false, error: 'LOGIN NEEDED!' });
+  if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (noQuery) return res.json({ ok: false, error: 'QUERY ERROR!' });
   if (!delConfirm) return res.json({ ok: false, error: 'DELETE UNCONFIRMED!' });
   //

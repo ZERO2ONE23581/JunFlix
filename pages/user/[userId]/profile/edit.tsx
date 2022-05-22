@@ -1,4 +1,12 @@
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { Btn } from '../../../../src/components/Btn';
+import useUser from '../../../../src/libs/client/loggedInUser';
+import useMutation from '../../../../src/libs/client/useMutation';
+import { Input, Select } from '../../../../src/components/Input';
+import { Delete_Account } from '../../../../src/components/User/Profile/Delete_Account';
 import {
   DataResult,
   ErrMsg,
@@ -11,23 +19,13 @@ import {
   IProfileEditForm,
   IProfileEditRes,
 } from '../../../../src/types/edit-profile';
-import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import { Btn } from '../../../../src/components/Btn';
-import useUser from '../../../../src/libs/client/loggedInUser';
-import useMutation from '../../../../src/libs/client/useMutation';
-import { Delete_Account } from '../../../../src/components/User/Profile/Delete_Account';
-import { Input, Select } from '../../../../src/components/Input';
 
 const Profile: NextPage = () => {
-  //Get
+  const router = useRouter();
   const { loggedInUser } = useUser();
-
-  //Post
   const [postEdit, { loading, data }] = useMutation<IProfileEditRes>(
     `/api/user/profile/edit`
   );
-
   //Category
   const [category, setCategory] = useState({
     userId: false,
@@ -123,7 +121,12 @@ const Profile: NextPage = () => {
     if (loggedInUser?.gender) setValue('gender', loggedInUser?.gender);
     if (loggedInUser?.location) setValue('location', loggedInUser?.location);
     if (loggedInUser?.email) setValue('email', loggedInUser?.email);
-  }, [loggedInUser]);
+    if (data?.ok) {
+      setTimeout(() => {
+        router.reload();
+      }, 1000);
+    }
+  }, [loggedInUser, data]);
   //
   let dataOkMsg = '프로필이 성공적으로 업데이트 되었습니다.';
   const dataConditon = (type: string, ok: boolean) => {

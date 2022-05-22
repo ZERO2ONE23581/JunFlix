@@ -7,8 +7,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { user_id, board_id } = req.query;
   const { titleCap, genre, intro } = req.body;
+
   //error handling
-  if (!user) return res.json({ ok: false, error: 'LOGIN NEEDED!' });
+  if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (!board_id) return res.json({ ok: false, error: 'QUERY ERROR!' });
   if (!titleCap) return res.json({ ok: false, error: 'NO INPUT DATA!' });
   if (user?.id !== +user_id)

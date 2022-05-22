@@ -125,7 +125,7 @@ const Find_Pw: NextPage = () => {
             />
             <Btn
               type="submit"
-              btnName="새로운 비밀번호 생성하기."
+              btnName="새로운 비밀번호 만들기"
               loading={newLoading}
             />
           </Form>

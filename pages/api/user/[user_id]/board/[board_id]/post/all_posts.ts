@@ -4,8 +4,8 @@ import prismaClient from '../../../../../../../src/libs/server/prisma_client';
 import { withApiSession } from '../../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { user_id, board_id, post_id } = req.query;
-  const noQuery = !Boolean(user_id && board_id && post_id);
+  const { user_id, board_id } = req.query;
+  const noQuery = !Boolean(user_id && board_id);
   if (noQuery) return res.json({ ok: false, error: 'QUERY ERROR!' });
 
   //Select post on current Board!
@@ -25,4 +25,5 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 export default withApiSession(
   withHandler({ methods: ['GET'], handler, isPrivate: false })
+  //public can read any posts!
 );

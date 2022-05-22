@@ -11,10 +11,9 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
+  const { user } = req.session;
+  if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   await req.session.destroy();
   return res.redirect('/login');
 }
-
-export default withApiSession(
-  withHandler({ methods: ['GET'], handler, isPrivate: false })
-);
+export default withApiSession(withHandler({ methods: ['GET'], handler }));

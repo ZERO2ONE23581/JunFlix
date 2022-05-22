@@ -24,8 +24,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const loggedInUser = await prismaClient.user.findUnique({
     where: { id: user?.id },
   });
-  if (!loggedInUser)
-    return res.json({ ok: false, error: '로그인이 필요합니다!' });
+  if (!loggedInUser) return res.json({ ok: false, error: 'MUST LOGIN!' });
 
   const idMatch = { id: loggedInUser.id };
 

@@ -16,20 +16,19 @@ import {
   ErrMsg,
   OkMsg,
 } from '../../../../../../../styles/components/default';
+import useUser from '../../../../../../../src/libs/client/loggedInUser';
 
 const myPost: NextPage = () => {
   const router = useRouter();
+  const { isloggedIn, loggedInUser } = useUser();
   const { userId, boardId, postId } = router.query;
-
-  //Get
-  const { data } = useSWR<IPostRes>(`/api/board/${boardId}/post/${postId}`);
-
-  //Post
-  const [editPost, { data: editedData, loading }] = useMutation<MutationRes>(
-    `/api/board/${boardId}/post/${postId}/edit`
+  const security = Boolean(isloggedIn && loggedInUser?.id === Number(userId));
+  const { data: postData } = useSWR<IPostRes>(
+    `/api/user/${userId}/board/${boardId}/post/${postId}`
   );
-
-  //Edit Form
+  const [editPost, { data: editedData, loading }] = useMutation<MutationRes>(
+    `/api/user/${userId}/board/${boardId}/post/${postId}/edit`
+  );
   const {
     register,
     handleSubmit,
@@ -47,25 +46,28 @@ const myPost: NextPage = () => {
   const [setting, setSetting] = useState(false);
   const [delModal, setDelModal] = useState(false);
   useEffect(() => {
-    if (data?.post?.title) setValue('title', data.post.title);
-    if (data?.post?.content) setValue('content', data.post.content);
-    if (data?.post?.createdAt) setValue('createdAt', data.post.createdAt);
+    if (postData?.post?.title) setValue('title', postData.post.title);
+    if (postData?.post?.content) setValue('content', postData.post.content);
+    if (postData?.post?.createdAt)
+      setValue('createdAt', postData.post.createdAt);
     if (editedData?.ok)
       setTimeout(() => {
         router.reload();
       }, 1000);
-  }, [setValue, data, editedData]);
+  }, [setValue, postData, editedData]);
   //
   return (
     <>
       <BoardPage>
-        {data && (
+        {postData && (
           <BoardCont>
-            <Btn
-              type="board-setting"
-              onClick={() => setSetting((p) => !p)}
-              btnName="Setting"
-            />
+            {security && (
+              <Btn
+                type="board-setting"
+                onClick={() => setSetting((p) => !p)}
+                btnName="Setting"
+              />
+            )}
             <>
               {setting && (
                 <article>
