@@ -3,21 +3,21 @@ import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
 import { Input } from '../../src/components/Input';
 import useMutation from '../../src/libs/client/useMutation';
-import { IFindForm, IPostRes } from '../../src/types/login';
+import { IFindForm, IFindPostRes } from '../../src/types/login';
 import { LoginLink } from '../../src/components/Login/LoginLink';
 import { ErrMsg, Form, PageContainer } from '../../styles/components/default';
 import { FindConfirmModal } from '../../src/components/Modal/FindConfirmModal';
 
 const Find_Pw: NextPage = () => {
   //Post
-  const [postFindPw, { loading, data }] = useMutation<IPostRes>(
+  const [postFindPw, { loading, data }] = useMutation<IFindPostRes>(
     `/api/user/login/find/password`
   );
   const [postToken, { loading: tokenLoading, data: tokenData }] =
-    useMutation<IPostRes>(`/api/user/login/find/token-confirm`);
+    useMutation<IFindPostRes>(`/api/user/login/find/token-confirm`);
 
   const [postCreateNewPw, { loading: newLoading, data: paswordUpdated }] =
-    useMutation<IPostRes>(`/api/user/login/find/create-new-password`);
+    useMutation<IFindPostRes>(`/api/user/login/find/create-new-password`);
 
   //Form
   const {

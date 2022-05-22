@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
-import { BoardForm } from '../../src/types/blog';
+import { BoardForm } from '../../src/types/board';
 import { Input, Select } from '../../src/components/Input';
 import useMutation from '../../src/libs/client/useMutation';
-import { CreateBoardResponse } from '../../src/types/postResponse';
+import { CreateBoardResponse } from '../../src/types/mutation';
 import { ErrMsg, Form, PageContainer } from '../../styles/components/default';
 import { CreateBoardModal } from '../../src/components/Modal/CreateBoardModal';
 

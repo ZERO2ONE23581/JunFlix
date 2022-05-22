@@ -1,32 +1,22 @@
+import useSWR from 'swr';
+import type { NextPage } from 'next';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Btn } from '../../../../../src/components/Btn';
+import { Input, Select } from '../../../../../src/components/Input';
+import useMutation from '../../../../../src/libs/client/useMutation';
+import { MutationRes } from '../../../../../src/types/mutation';
+import { AllPosts } from '../../../../../src/components/Post/AllPost';
+import { DeleteModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
+import { IBoardRes, IEditBoardForm } from '../../../../../src/types/board';
 import {
   Article,
   BoardPage,
   ErrMsg,
   OkMsg,
 } from '../../../../../styles/components/default';
-import styled from '@emotion/styled';
-import { Board } from '@prisma/client';
-import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import useSWR from 'swr';
-import { Btn } from '../../../../../src/components/Btn';
-import { Input, Select } from '../../../../../src/components/Input';
-import { DeleteBoardModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
-import useMutation from '../../../../../src/libs/client/useMutation';
-import { PostResponse } from '../../../../../src/types/postResponse';
-import { AllPosts } from '../../../../../src/components/Post/AllPost';
-
-interface IBoardRes {
-  board: Board;
-}
-
-interface IEditBoardForm {
-  title?: string;
-  intro?: string;
-  genre?: string;
-}
 
 const myBoard: NextPage = () => {
   const router = useRouter();
@@ -34,7 +24,7 @@ const myBoard: NextPage = () => {
   const { data } = useSWR<IBoardRes>(`/api/board/${Number(boardId)}`);
 
   //Post
-  const [editBoard, { data: editedData, loading }] = useMutation<PostResponse>(
+  const [editBoard, { data: editedData, loading }] = useMutation<MutationRes>(
     `/api/board/${Number(boardId)}/edit`
   );
   //Edit Form
@@ -44,22 +34,16 @@ const myBoard: NextPage = () => {
     setValue,
     formState: { errors },
   } = useForm<IEditBoardForm>({ mode: 'onSubmit' });
-
   const onValid = ({ title, genre, intro }: IEditBoardForm) => {
     if (loading) return;
     const titleCap = title?.toUpperCase();
     editBoard({ titleCap, genre, intro });
   };
-  const [setting, setSetting] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [delModal, setDelModal] = useState(false);
-  const editClick = () => {
-    setEdit((p) => !p);
-  };
-  const deleteClick = () => {
-    setDelModal((p) => !p);
-  };
+
   //Set up
+  const [edit, setEdit] = useState(false);
+  const [setting, setSetting] = useState(false);
+  const [delModal, setDelModal] = useState(false);
   useEffect(() => {
     if (data?.board?.title) setValue('title', data.board.title.toUpperCase());
     if (data?.board?.genre) setValue('genre', data.board.genre);
@@ -81,7 +65,7 @@ const myBoard: NextPage = () => {
                 onClick={() => {
                   router.push(`/user/${userId}/board/${boardId}/post/create`);
                 }}
-                btnName="Create Post"
+                btnName="Create Board"
               />
               <Btn
                 type="board-setting"
@@ -89,28 +73,34 @@ const myBoard: NextPage = () => {
                 btnName="Setting"
               />
             </>
-            {setting && (
-              <>
+            <>
+              {setting && (
                 <article>
                   <Btn
                     type="board-edit"
-                    onClick={editClick}
+                    onClick={() => setEdit((p) => !p)}
                     btnName={edit ? 'Back' : 'Edit Board'}
                   />
                   <Btn
                     type="board-delete"
-                    onClick={deleteClick}
+                    onClick={() => setDelModal((p) => !p)}
                     btnName="Delete"
                   />
                 </article>
-              </>
-            )}
-            {delModal && (
-              <DeleteBoardModal boardId={boardId} deleteClick={deleteClick} />
-            )}
-
-            {editedData?.message && <OkMsg>{editedData?.message}</OkMsg>}
-            {editedData?.error && <ErrMsg>{editedData?.error}</ErrMsg>}
+              )}
+            </>
+            <>
+              {delModal && (
+                <DeleteModal
+                  boardId={boardId}
+                  deleteClick={() => setDelModal((p) => !p)}
+                />
+              )}
+            </>
+            <>
+              {editedData?.message && <OkMsg>{editedData?.message}</OkMsg>}
+              {editedData?.error && <ErrMsg>{editedData?.error}</ErrMsg>}
+            </>
             <form onSubmit={handleSubmit(onValid)}>
               <Input
                 errMsg={errors.title?.message}

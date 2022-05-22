@@ -1,13 +1,13 @@
 import { Post } from '@prisma/client';
 
-export interface PostResponse {
+export interface MutationRes {
   ok: boolean;
   error?: string;
   message?: string;
   [key: string]: any;
 }
 
-export interface CreateBoardResponse extends PostResponse {
+export interface CreateBoardResponse extends MutationRes {
   boardId: number;
   creatorId: number;
   boardTitle: string;

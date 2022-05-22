@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { ModalClose, SmallModalCont } from '../../../styles/components/modal';
-import { BoardInfo } from '../../types/postResponse';
+import { BoardInfo } from '../../types/mutation';
 import { Btn } from '../Btn';
 
 export const CreateBoardModal = ({ boardId, creatorId }: BoardInfo) => {

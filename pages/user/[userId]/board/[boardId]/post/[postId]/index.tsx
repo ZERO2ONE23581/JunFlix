@@ -1,32 +1,21 @@
-import styled from '@emotion/styled';
-import { Post } from '@prisma/client';
-import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
+import type { NextPage } from 'next';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import { Btn } from '../../../../../../../src/components/Btn';
 import { Input } from '../../../../../../../src/components/Input';
-import { DeleteBoardModal } from '../../../../../../../src/components/Modal/board/settting/delete/modal';
+import { MutationRes } from '../../../../../../../src/types/mutation';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
-import { PostResponse } from '../../../../../../../src/types/postResponse';
+import { IEditPostForm, IPostRes } from '../../../../../../../src/types/post';
+import { DeleteModal } from '../../../../../../../src/components/Modal/board/settting/delete/modal';
 import {
   Article,
   BoardPage,
   ErrMsg,
   OkMsg,
 } from '../../../../../../../styles/components/default';
-
-interface IPostRes {
-  ok: boolean;
-  post: Post;
-}
-
-interface IEditPostForm {
-  title?: string;
-  content?: string;
-  createdAt?: Date;
-}
 
 const myPost: NextPage = () => {
   const router = useRouter();
@@ -36,7 +25,7 @@ const myPost: NextPage = () => {
   const { data } = useSWR<IPostRes>(`/api/board/${boardId}/post/${postId}`);
 
   //Post
-  const [editPost, { data: editedData, loading }] = useMutation<PostResponse>(
+  const [editPost, { data: editedData, loading }] = useMutation<MutationRes>(
     `/api/board/${boardId}/post/${postId}/edit`
   );
 
@@ -48,31 +37,24 @@ const myPost: NextPage = () => {
     formState: { errors },
   } = useForm<IEditPostForm>({ mode: 'onSubmit' });
 
-  const onValid = ({ title, content }: any) => {
+  const onValid = ({ title, content }: IEditPostForm) => {
     if (loading) return;
     editPost({ title, content });
   };
 
   //Set up
+  const [edit, setEdit] = useState(false);
+  const [setting, setSetting] = useState(false);
+  const [delModal, setDelModal] = useState(false);
   useEffect(() => {
     if (data?.post?.title) setValue('title', data.post.title);
     if (data?.post?.content) setValue('content', data.post.content);
     if (data?.post?.createdAt) setValue('createdAt', data.post.createdAt);
-    // if (editedData?.ok)
-    //   setTimeout(() => {
-    //     router.reload();
-    //   }, 1000);
+    if (editedData?.ok)
+      setTimeout(() => {
+        router.reload();
+      }, 1000);
   }, [setValue, data, editedData]);
-  //
-  const [setting, setSetting] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [delModal, setDelModal] = useState(false);
-  const editClick = () => {
-    setEdit((p) => !p);
-  };
-  const deleteClick = () => {
-    setDelModal((p) => !p);
-  };
   //
   return (
     <>
@@ -84,29 +66,36 @@ const myPost: NextPage = () => {
               onClick={() => setSetting((p) => !p)}
               btnName="Setting"
             />
-            {setting && (
-              <>
+            <>
+              {setting && (
                 <article>
                   <Btn
                     type="post-edit"
-                    onClick={editClick}
+                    onClick={() => setEdit((p) => !p)}
                     btnName={edit ? 'Back' : 'Edit Post'}
                   />
                   <Btn
                     type="post-delete"
-                    onClick={deleteClick}
+                    onClick={() => setDelModal((p) => !p)}
                     btnName="Delete"
                   />
                 </article>
-              </>
-            )}
-            {/* {delModal && (
-              <DeleteBoardModal boardId={boardId} deleteClick={deleteClick} />
-            )} */}
-
-            {editedData?.message && <OkMsg>{editedData?.message}</OkMsg>}
-            {editedData?.error && <ErrMsg>{editedData?.error}</ErrMsg>}
-
+              )}
+            </>
+            <>
+              {delModal && (
+                <DeleteModal
+                  userId={userId}
+                  postId={postId}
+                  boardId={boardId}
+                  deleteClick={() => setDelModal((p) => !p)}
+                />
+              )}
+            </>
+            <>
+              {editedData?.message && <OkMsg>{editedData?.message}</OkMsg>}
+              {editedData?.error && <ErrMsg>{editedData?.error}</ErrMsg>}
+            </>
             <form onSubmit={handleSubmit(onValid)}>
               <Input
                 errMsg={errors.title?.message}
@@ -133,7 +122,6 @@ const myPost: NextPage = () => {
                 disabled={true}
                 register={register('createdAt')}
               />
-
               {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
             </form>
           </BoardCont>

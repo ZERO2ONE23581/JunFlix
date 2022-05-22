@@ -15,15 +15,13 @@ const myPost: NextPage = () => {
   const [createPost, { data, loading }] = useMutation(
     `/api/board/${boardId}/post/create`
   );
-  console.log(data);
-  //Edit Form
+
+  //Form
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
-
   const onValid = ({ title, content }: any) => {
     if (loading) return;
     createPost({ title, content });
