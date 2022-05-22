@@ -1,4 +1,4 @@
-import { Board } from '@prisma/client';
+import { Board, User } from '@prisma/client';
 
 export interface BoardForm {
   title: string;
@@ -8,7 +8,10 @@ export interface BoardForm {
   follow?: string;
 }
 export interface IBoardRes {
-  board: Board;
+  board: BoardWithUser;
+}
+export interface BoardWithUser extends Board {
+  user: User;
 }
 export interface IEditBoardForm {
   title?: string;

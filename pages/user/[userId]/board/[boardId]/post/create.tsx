@@ -1,18 +1,21 @@
+import { useEffect } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { BoardCont } from '..';
 import { Btn } from '../../../../../../src/components/Btn';
 import { Input } from '../../../../../../src/components/Input';
+import { MutationRes } from '../../../../../../src/types/mutation';
 import useMutation from '../../../../../../src/libs/client/useMutation';
+import { BoardCont } from '..';
+import { IPostForm } from '../../../../../../src/types/post';
+import { ErrMsg } from '../../../../../../styles/components/default';
 
 const myPost: NextPage = () => {
   const router = useRouter();
   const { userId, boardId } = router.query;
 
   //Post
-  const [createPost, { data, loading }] = useMutation(
+  const [createPost, { data, loading }] = useMutation<MutationRes>(
     `/api/board/${boardId}/post/create`
   );
 
@@ -21,8 +24,8 @@ const myPost: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ mode: 'onSubmit' });
-  const onValid = ({ title, content }: any) => {
+  } = useForm<IPostForm>({ mode: 'onSubmit' });
+  const onValid = ({ title, content }: IPostForm) => {
     if (loading) return;
     createPost({ title, content });
   };
@@ -37,6 +40,7 @@ const myPost: NextPage = () => {
   return (
     <BoardCont>
       <form onSubmit={handleSubmit(onValid)}>
+        {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
         <Input
           errMsg={errors.title?.message}
           type="text"

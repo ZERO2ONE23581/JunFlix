@@ -14,6 +14,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //Select board
   const board = await prismaClient.board.findUnique({
     where: { id: +board_id.toString() },
+    include: { user: { select: { username: true } } },
   });
   //
   return res.json({ ok: true, board });

@@ -1,5 +1,3 @@
-import { Post } from '@prisma/client';
-
 export interface MutationRes {
   ok: boolean;
   error?: string;

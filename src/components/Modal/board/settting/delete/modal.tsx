@@ -7,6 +7,7 @@ import { Btn } from '../../../../Btn';
 import { useRouter } from 'next/router';
 import useMutation from '../../../../../libs/client/useMutation';
 import { MutationRes } from '../../../../../types/mutation';
+import { ErrMsg } from '../../../../../../styles/components/default';
 
 interface IDeleteModalProps {
   userId?: string[] | string;
@@ -24,9 +25,9 @@ export const DeleteModal = ({
   const router = useRouter();
 
   //Post (delete board)
-  const [deleteBoard, { data, loading }] = useMutation<MutationRes>(
-    `/api/board/${Number(boardId)}/delete`
-  );
+  const [deleteBoard, { data: boardData, loading: boardLoading }] =
+    useMutation<MutationRes>(`/api/board/${Number(boardId)}/delete`);
+
   //Post (delete post)
   const [deletePost, { data: postData, loading: postLoading }] =
     useMutation<MutationRes>(
@@ -38,12 +39,12 @@ export const DeleteModal = ({
       if (postLoading) return;
       return deletePost(true);
     }
-    if (loading) return;
+    if (boardLoading) return;
     return deleteBoard(true);
   };
   //
   useEffect(() => {
-    if (data?.ok) {
+    if (boardData?.ok) {
       alert('보드가 삭제되었습니다.');
       router.replace(`/`);
     }
@@ -51,18 +52,20 @@ export const DeleteModal = ({
       alert('해당 게시물이 삭제되었습니다.');
       router.replace(`/user/${userId}/board/${boardId}`);
     }
-  }, [data, postData, router]);
+  }, [boardData, postData, router]);
 
   return (
     <>
       <SmallModalCont>
+        {boardData?.error && <ErrMsg>{boardData?.error}</ErrMsg>}
+        {postData?.error && <ErrMsg>{postData?.error}</ErrMsg>}
         <h1>정말로 삭제하시겠습니까?</h1>
         <p>삭제시 복구가 불가능 합니다.</p>
         <Btn
           type="delete"
           btnName="삭제 확인"
           onClick={onClick}
-          loading={loading}
+          loading={postId ? postLoading : boardLoading}
         />
       </SmallModalCont>
       <ModalClose onClick={deleteClick} />

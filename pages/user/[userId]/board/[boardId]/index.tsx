@@ -2,15 +2,15 @@ import useSWR from 'swr';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import { Btn } from '../../../../../src/components/Btn';
+import { MutationRes } from '../../../../../src/types/mutation';
 import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
-import { MutationRes } from '../../../../../src/types/mutation';
 import { AllPosts } from '../../../../../src/components/Post/AllPost';
-import { DeleteModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
 import { IBoardRes, IEditBoardForm } from '../../../../../src/types/board';
+import { DeleteModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
 import {
   Article,
   BoardPage,
@@ -59,6 +59,7 @@ const myBoard: NextPage = () => {
       <BoardPage>
         {data && (
           <BoardCont>
+            {/* 세팅 및 포스트생성 버튼 */}
             <>
               <Btn
                 type="create"
@@ -73,6 +74,7 @@ const myBoard: NextPage = () => {
                 btnName="Setting"
               />
             </>
+            {/* 보드 수정 및 삭제 모달 */}
             <>
               {setting && (
                 <article>
@@ -88,8 +90,6 @@ const myBoard: NextPage = () => {
                   />
                 </article>
               )}
-            </>
-            <>
               {delModal && (
                 <DeleteModal
                   boardId={boardId}
@@ -97,10 +97,18 @@ const myBoard: NextPage = () => {
                 />
               )}
             </>
+            {/* 데이터 메시지 및 에러*/}
             <>
               {editedData?.message && <OkMsg>{editedData?.message}</OkMsg>}
               {editedData?.error && <ErrMsg>{editedData?.error}</ErrMsg>}
             </>
+
+            <article>
+              <span>{data?.board?.user?.username}</span>
+              <span>'s board</span>
+            </article>
+
+            {/* 폼 */}
             <form onSubmit={handleSubmit(onValid)}>
               <Input
                 errMsg={errors.title?.message}
