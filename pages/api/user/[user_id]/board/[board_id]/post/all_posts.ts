@@ -1,15 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import withHandler from '../../../../../src/libs/server/withHandler';
-import prismaClient from '../../../../../src/libs/server/prisma_client';
-import { withApiSession } from '../../../../../src/libs/server/withSession';
+import withHandler from '../../../../../../../src/libs/server/withHandler';
+import prismaClient from '../../../../../../../src/libs/server/prisma_client';
+import { withApiSession } from '../../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { board_id } = req.query;
-  if (!board_id) return res.json({ ok: false, error: 'QUERY ERROR!' });
+  const { user_id, board_id, post_id } = req.query;
+  const noQuery = !Boolean(user_id && board_id && post_id);
+  if (noQuery) return res.json({ ok: false, error: 'QUERY ERROR!' });
 
   //Select post on current Board!
   const allPosts = await prismaClient.post.findMany({
-    where: { BoardID: +board_id },
+    where: { UserID: +user_id, BoardID: +board_id },
     select: {
       id: true,
       title: true,

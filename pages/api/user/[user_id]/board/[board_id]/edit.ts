@@ -1,18 +1,18 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import withHandler from '../../../../src/libs/server/withHandler';
-import prismaClient from '../../../../src/libs/server/prisma_client';
-import { withApiSession } from '../../../../src/libs/server/withSession';
+import withHandler from '../../../../../../src/libs/server/withHandler';
+import prismaClient from '../../../../../../src/libs/server/prisma_client';
+import { withApiSession } from '../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { board_id } = req.query;
+  const { user_id, board_id } = req.query;
   const { titleCap, genre, intro } = req.body;
-  const noInput = !Boolean(titleCap && genre && intro);
-
   //error handling
   if (!user) return res.json({ ok: false, error: 'LOGIN NEEDED!' });
-  if (!board_id) return res.json({ ok: false, error: 'URL ERROR!' });
-  if (noInput) return res.json({ ok: false, error: 'NO INPUT DATA!' });
+  if (!board_id) return res.json({ ok: false, error: 'QUERY ERROR!' });
+  if (!titleCap) return res.json({ ok: false, error: 'NO INPUT DATA!' });
+  if (user?.id !== +user_id)
+    return res.json({ ok: false, error: 'NO RIGHTS!' });
 
   //Select board
   const foundBoard = await prismaClient.board.findUnique({
@@ -20,10 +20,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     select: { id: true, UserID: true, title: true },
   });
   if (!foundBoard) return res.json({ ok: false, error: 'NO BOARD FOUND!' });
-
-  //UNAUTHORIZED
-  if (foundBoard?.UserID !== user?.id)
-    return res.json({ ok: false, error: 'UNAUTHORIZED!' });
 
   //중복된 제목 체크
   const dupTitle = Boolean(

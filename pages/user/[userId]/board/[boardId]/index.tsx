@@ -17,15 +17,19 @@ import {
   ErrMsg,
   OkMsg,
 } from '../../../../../styles/components/default';
+import useUser from '../../../../../src/libs/client/loggedInUser';
 
 const myBoard: NextPage = () => {
   const router = useRouter();
+  const { loggedInUser } = useUser();
   const { userId, boardId } = router.query;
-  const { data } = useSWR<IBoardRes>(`/api/board/${Number(boardId)}`);
+  const { data: boardData } = useSWR<IBoardRes>(
+    `/api/user/${userId}/board/${boardId}`
+  );
 
   //Post
   const [editBoard, { data: editedData, loading }] = useMutation<MutationRes>(
-    `/api/board/${Number(boardId)}/edit`
+    `/api/user/${userId}/board/${boardId}/edit`
   );
   //Edit Form
   const {
@@ -45,35 +49,38 @@ const myBoard: NextPage = () => {
   const [setting, setSetting] = useState(false);
   const [delModal, setDelModal] = useState(false);
   useEffect(() => {
-    if (data?.board?.title) setValue('title', data.board.title.toUpperCase());
-    if (data?.board?.genre) setValue('genre', data.board.genre);
-    if (data?.board?.intro) setValue('intro', data.board.intro);
+    if (boardData?.board?.title)
+      setValue('title', boardData.board.title.toUpperCase());
+    if (boardData?.board?.genre) setValue('genre', boardData.board.genre);
+    if (boardData?.board?.intro) setValue('intro', boardData.board.intro);
     if (editedData?.ok)
       setTimeout(() => {
         router.reload();
       }, 1000);
-  }, [setValue, data, editedData]);
+  }, [setValue, boardData, editedData]);
   //
   return (
     <>
       <BoardPage>
-        {data && (
+        {boardData && (
           <BoardCont>
             {/* 세팅 및 포스트생성 버튼 */}
-            <>
-              <Btn
-                type="create"
-                onClick={() => {
-                  router.push(`/user/${userId}/board/${boardId}/post/create`);
-                }}
-                btnName="Create Post"
-              />
-              <Btn
-                type="board-setting"
-                onClick={() => setSetting((p) => !p)}
-                btnName="Setting"
-              />
-            </>
+            {loggedInUser?.id === Number(userId) && (
+              <>
+                <Btn
+                  type="create"
+                  onClick={() => {
+                    router.push(`/user/${userId}/board/${boardId}/post/create`);
+                  }}
+                  btnName="Create Post"
+                />
+                <Btn
+                  type="board-setting"
+                  onClick={() => setSetting((p) => !p)}
+                  btnName="Setting"
+                />
+              </>
+            )}
             {/* 보드 수정 및 삭제 모달 */}
             <>
               {setting && (
@@ -92,6 +99,7 @@ const myBoard: NextPage = () => {
               )}
               {delModal && (
                 <DeleteModal
+                  userId={userId}
                   boardId={boardId}
                   deleteClick={() => setDelModal((p) => !p)}
                 />
@@ -104,7 +112,7 @@ const myBoard: NextPage = () => {
             </>
 
             <article>
-              <span>{data?.board?.user?.username}</span>
+              <span>{boardData?.board?.user?.username}</span>
               <span>'s board</span>
             </article>
 

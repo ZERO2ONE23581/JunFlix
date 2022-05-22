@@ -24,16 +24,13 @@ export const DeleteModal = ({
 }: IDeleteModalProps) => {
   const router = useRouter();
 
-  //Post (delete board)
+  //Post
   const [deleteBoard, { data: boardData, loading: boardLoading }] =
-    useMutation<MutationRes>(`/api/board/${Number(boardId)}/delete`);
-
-  //Post (delete post)
+    useMutation<MutationRes>(`/api/user/${userId}/board/${boardId}/delete`);
   const [deletePost, { data: postData, loading: postLoading }] =
     useMutation<MutationRes>(
-      `/api/board/${Number(boardId)}/post/${Number(postId)}/delete`
+      `/api/user/${userId}/board/${boardId}/post/${postId}/delete`
     );
-
   const onClick = () => {
     if (postId) {
       if (postLoading) return;

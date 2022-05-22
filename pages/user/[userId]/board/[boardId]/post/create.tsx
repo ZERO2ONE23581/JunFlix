@@ -15,8 +15,8 @@ const myPost: NextPage = () => {
   const { userId, boardId } = router.query;
 
   //Post
-  const [createPost, { data, loading }] = useMutation<MutationRes>(
-    `/api/board/${boardId}/post/create`
+  const [createPost, { data: postData, loading }] = useMutation<MutationRes>(
+    `/api/user/${userId}/board/${boardId}/post/create`
   );
 
   //Form
@@ -31,16 +31,16 @@ const myPost: NextPage = () => {
   };
   //
   useEffect(() => {
-    if (data?.ok) {
+    if (postData?.ok) {
       alert('새로운 게시물이 생성되었습니다.');
       router.replace(`/user/${userId}/board/${boardId}/`);
     }
-  }, [data, router]);
+  }, [postData, router]);
   //
   return (
     <BoardCont>
       <form onSubmit={handleSubmit(onValid)}>
-        {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
+        {postData?.error && <ErrMsg>{postData?.error}</ErrMsg>}
         <Input
           errMsg={errors.title?.message}
           type="text"

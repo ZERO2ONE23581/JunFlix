@@ -4,7 +4,7 @@ import withHandler from '../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  //All board
+  //Get all boards exist
   const allBoards = await prismaClient.board.findMany({
     select: {
       id: true,

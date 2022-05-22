@@ -1,18 +1,25 @@
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../src/components/Btn';
-import { BoardForm } from '../../src/types/board';
-import { Input, Select } from '../../src/components/Input';
-import useMutation from '../../src/libs/client/useMutation';
-import { CreateBoardResponse } from '../../src/types/mutation';
-import { ErrMsg, Form, PageContainer } from '../../styles/components/default';
-import { CreateBoardModal } from '../../src/components/Modal/CreateBoardModal';
+import { Btn } from '../../../../src/components/Btn';
+import { BoardForm } from '../../../../src/types/board';
+import { Input, Select } from '../../../../src/components/Input';
+import useMutation from '../../../../src/libs/client/useMutation';
+import { CreateBoardResponse } from '../../../../src/types/mutation';
+import { CreateBoardModal } from '../../../../src/components/Modal/CreateBoardModal';
+import {
+  ErrMsg,
+  Form,
+  PageContainer,
+} from '../../../../styles/components/default';
 
 const CreateBoard: NextPage = () => {
+  const router = useRouter();
+  const { userId } = router.query;
   //Post
-  const [createBoard, { loading, data }] =
-    useMutation<CreateBoardResponse>(`/api/board/create`);
-
+  const [createBoard, { loading, data }] = useMutation<CreateBoardResponse>(
+    `/api/user/${userId}/board/create`
+  );
   //Form
   const { register, handleSubmit } = useForm<BoardForm>({ mode: 'onSubmit' });
   const onValid = ({ title, intro, genre, avatar, follow }: BoardForm) => {
@@ -20,7 +27,6 @@ const CreateBoard: NextPage = () => {
     createBoard({ title, intro, genre });
   };
   //
-
   return (
     <>
       {data?.ok && (

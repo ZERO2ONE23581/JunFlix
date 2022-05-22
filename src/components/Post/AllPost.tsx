@@ -5,7 +5,9 @@ import { PageCont } from '../../../styles/components/default';
 import { IAllPostsProps, IGetAllPosts } from '../../types/post';
 
 export const AllPosts = ({ userId, boardId }: IAllPostsProps) => {
-  const { data } = useSWR<IGetAllPosts>(`/api/board/${boardId}/post/all_posts`);
+  const { data } = useSWR<IGetAllPosts>(
+    `/api/user/${userId}/board/${boardId}/post/all_posts`
+  );
   //
   return (
     <PageCont>

@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import { Board, User } from '@prisma/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import useUser from '../../libs/client/loggedInUser';
 
 interface IGetAllBoards {
   ok: boolean;
@@ -16,17 +17,22 @@ interface IBoard extends Board {
 
 export const MainComponent = () => {
   const router = useRouter();
+  const { isloggedIn, loggedInUser } = useUser();
   const { data } = useSWR<IGetAllBoards>(`/api/board/all_boards`);
   //
   return (
     <PageCont>
       <HomeArticle>
         <h1>WELCOME TO JUNFLIX!</h1>
-        <Btn
-          type="create"
-          btnName="Create Board"
-          onClick={() => router.push('/board/create')}
-        />
+        {isloggedIn && (
+          <Btn
+            type="create"
+            btnName="Create Board"
+            onClick={() =>
+              router.push(`/user/${loggedInUser?.id}/board/create`)
+            }
+          />
+        )}
       </HomeArticle>
       {data?.ok && data.allBoards && (
         <ItemCont>
