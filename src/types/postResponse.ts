@@ -1,9 +1,12 @@
+import { Post } from '@prisma/client';
+
 export interface PostResponse {
   ok: boolean;
   error?: string;
   message?: string;
   [key: string]: any;
 }
+
 export interface CreateBoardResponse extends PostResponse {
   boardId: number;
   creatorId: number;

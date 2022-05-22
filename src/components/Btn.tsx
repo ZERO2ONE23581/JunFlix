@@ -35,7 +35,10 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
       )}
       {(type === 'board-setting' ||
         type === 'board-edit' ||
-        type === 'board-delete') && (
+        type === 'board-delete' ||
+        type === 'post-setting' ||
+        type === 'post-edit' ||
+        type === 'post-delete') && (
         <EditBoardBtn onClick={onClick} type="button">
           {loading ? 'Loading...' : btnName}
         </EditBoardBtn>
