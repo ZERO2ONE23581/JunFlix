@@ -54,9 +54,24 @@ const allReview: NextPage = () => {
                           </li>
                         </ul>
                         <Stars>
-                          {[1, 2, 3, 4, 5].map((score) => (
+                          <>
+                            {[1, 2, 3, 4, 5].map((score) => (
+                              <span key={score}>
+                                {review.score! >= score ? (
+                                  <FontAwesomeIcon
+                                    key={score}
+                                    icon={faStar}
+                                    style={{ color: 'red' }}
+                                  />
+                                ) : (
+                                  <FontAwesomeIcon key={score} icon={faStar} />
+                                )}
+                              </span>
+                            ))}
+                          </>
+                          {/* {[1, 2, 3, 4, 5].map((score) => (
                             <FontAwesomeIcon key={score} icon={faStar} />
-                          ))}
+                          ))} */}
                         </Stars>
                       </Items>
                     </Wrap>

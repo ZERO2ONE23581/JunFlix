@@ -31,11 +31,21 @@ const myReview: NextPage = () => {
               </li>
               <li>
                 <span>별점: </span>
-                <span>
+                <>
                   {[1, 2, 3, 4, 5].map((score) => (
-                    <FontAwesomeIcon key={score} icon={faStar} />
+                    <span key={score}>
+                      {review.score! >= score ? (
+                        <FontAwesomeIcon
+                          key={score}
+                          icon={faStar}
+                          style={{ color: 'red' }}
+                        />
+                      ) : (
+                        <FontAwesomeIcon key={score} icon={faStar} />
+                      )}
+                    </span>
                   ))}
-                </span>
+                </>
               </li>
               <li>
                 <span>한줄평: </span>
