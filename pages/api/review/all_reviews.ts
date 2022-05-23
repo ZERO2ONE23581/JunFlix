@@ -7,6 +7,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //Get all reviews exist
   const allReviews = await prismaClient.review.findMany({
     include: { user: { select: { username: true } } },
+    orderBy: {
+      id: 'desc',
+    },
   });
   if (!allReviews) return res.json({ ok: false, error: 'NO REVIEWS!' });
   //

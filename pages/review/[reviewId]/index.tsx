@@ -13,7 +13,6 @@ const myReview: NextPage = () => {
   const { data: reviewData } = useSWR<IGetMyReview>(`/api/review/${reviewId}`);
   const ok = reviewData?.ok;
   const review = reviewData?.foundReview;
-  console.log(reviewData);
   //
   return (
     <>

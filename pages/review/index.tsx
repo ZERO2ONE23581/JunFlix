@@ -3,16 +3,19 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Btn } from '../../src/components/Btn';
 import { IGetAllReviews } from '../../src/types/review';
-import { PageContainer, ReviewPageCont } from '../../styles/components/default';
+import { ReviewPageCont } from '../../styles/components/default';
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const allReview: NextPage = () => {
   const router = useRouter();
   const { data: reviewData } = useSWR<IGetAllReviews>(
     `/api/review/all_reviews`
   );
-  console.log(reviewData?.allReviews);
+  const ok = reviewData?.ok;
+  const allReviews = reviewData?.allReviews;
   //
   return (
     <>
@@ -24,37 +27,44 @@ const allReview: NextPage = () => {
             router.push(`/review/create`);
           }}
         />
-
-        {reviewData?.ok && reviewData.allReviews && (
-          <>
-            <ReviewList>
-              {reviewData.allReviews.map((review) => (
-                <Link href={`/review/${review.id}`} key={review.id}>
-                  <a>
-                    <ReviewWrap>
-                      <li>
+        {ok && allReviews && (
+          <ReviewList>
+            {allReviews.map((review) => (
+              <Link href={`/review/${review.id}`} key={review.id}>
+                <a>
+                  <Review>
+                    <Order>
+                      #{allReviews.length - allReviews.indexOf(review)}
+                    </Order>
+                    <Wrap>
+                      <ReviewTitle>{review.title}</ReviewTitle>
+                      <Items>
                         <ul>
                           <li>
-                            <h1>{review.title}</h1>
+                            <span>{review.movieTitle}</span>
+                            <span> / </span>
                           </li>
                           <li>
-                            <p>{review.movieTitle}</p>
+                            <span>{review.genre}</span>
+                            <span> / </span>
                           </li>
                           <li>
-                            <p>{review.genre}</p>
-                          </li>
-                          <li>
-                            <span>Written by</span>
+                            <span>작성자: </span>
                             <span>{review.user.username}</span>
                           </li>
                         </ul>
-                      </li>
-                    </ReviewWrap>
-                  </a>
-                </Link>
-              ))}
-            </ReviewList>
-          </>
+                        <Stars>
+                          {[1, 2, 3, 4, 5].map((score) => (
+                            <FontAwesomeIcon key={score} icon={faStar} />
+                          ))}
+                        </Stars>
+                      </Items>
+                    </Wrap>
+                  </Review>
+                </a>
+              </Link>
+            ))}
+          </ReviewList>
         )}
       </ReviewPageCont>
     </>
@@ -62,32 +72,65 @@ const allReview: NextPage = () => {
 };
 export default allReview;
 
-const ReviewList = styled.ol`
-  border: 1px solid blue;
-  padding: 20px;
-  width: 100%;
+const Stars = styled.span`
+  font-size: 0.8rem;
 `;
-const ReviewWrap = styled.div`
+
+const Order = styled.span`
+  padding: 8px;
+  font-size: 0.8rem;
+  border-radius: 100%;
+  color: ${(p) => p.theme.color.bg};
+  background-color: ${(p) => p.theme.color.font};
+`;
+
+const Review = styled.article`
+  gap: 5px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: ${(p) => p.theme.border};
+  color: ${(p) => p.theme.color.font};
+  box-shadow: ${(p) => p.theme.boxShadow.input};
+  background-color: ${(p) => p.theme.color.bg};
+`;
+
+const ReviewList = styled.article`
   width: 100%;
-  padding: 0 30px;
+  padding: 20px;
+  border-radius: 8px;
+  border: ${(p) => p.theme.border};
+  color: ${(p) => p.theme.color.font};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background-color: ${(p) => p.theme.color.bg};
+`;
+const ReviewTitle = styled.h1`
+  font-size: 1.3rem;
+  font-weight: 500;
+`;
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 0 15px;
+`;
+const Items = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   ul {
-    gap: 20px;
-    width: 100%;
+    gap: 5px;
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    border: 1px solid red;
     li {
-      h1 {
-        font-size: 1.5rem;
-        font-weight: 600;
-      }
       span {
-        &:last-of-type {
-          font-weight: 700;
-          margin-left: 10px;
-          font-size: 1.3rem;
-        }
+        font-size: 1rem;
+        font-style: italic;
+        color: ${(p) => p.theme.color.logo};
       }
     }
   }

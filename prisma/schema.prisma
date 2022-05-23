@@ -23,12 +23,13 @@ model User {
   gender      String?
   location    String?
   avatar      String?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
   tokens      Token[]
   boards      Board[]
   posts       Post[]
   reviews     Review[]
+  recommend   Recommend[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }
 
 model Token {
@@ -68,7 +69,7 @@ model Post {
   updatedAt    DateTime    @updatedAt
 }
 model Review {
-  id           Int         @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   title        String  
   movieTitle   String
   genre        String
@@ -76,6 +77,18 @@ model Review {
   avatar       String? 
   user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID       Int     
+  recommend    Recommend[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+model Recommend {
+  id           Int         @id @default(autoincrement())
+  title        String  
+  score        Int  
+  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
+  UserID       Int     
+  review       Review      @relation(fields: [ReviewID], references: [id], onDelete: Cascade)
+  ReviewID     Int     
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }
