@@ -1,28 +1,35 @@
-import { useEffect } from 'react';
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../src/components/Btn';
-import { IReviewForm } from '../../src/types/review';
-import { MutationRes } from '../../src/types/mutation';
-import { Input, Select } from '../../src/components/Input';
-import useMutation from '../../src/libs/client/useMutation';
+import useSWR from 'swr';
+import { Btn } from '../../../src/components/Btn';
+import { Input, Select } from '../../../src/components/Input';
+import useMutation from '../../../src/libs/client/useMutation';
+import { MutationRes } from '../../../src/types/mutation';
+import { IGetMyReview, IReviewForm } from '../../../src/types/review';
 import {
   ErrMsg,
   ReviewForm,
   ReviewPageCont,
-} from '../../styles/components/default';
+} from '../../../styles/components/default';
 
-const CreateReview: NextPage = () => {
+const EditReview: NextPage = () => {
   const router = useRouter();
+  const { reviewId } = router.query;
+  const { data: reviewData } = useSWR<IGetMyReview>(`/api/review/${reviewId}`);
+  const ok = reviewData?.ok;
+  const review = reviewData?.foundReview;
   //Post
-  const [createReview, { loading, data }] =
-    useMutation<MutationRes>(`/api/review/create`);
+  const [editReview, { loading, data }] = useMutation<MutationRes>(
+    `/api/review/${reviewId}/edit`
+  );
   //Form
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<IReviewForm>({ mode: 'onSubmit' });
   const onValid = ({
     title,
@@ -35,7 +42,7 @@ const CreateReview: NextPage = () => {
   }: IReviewForm) => {
     const Title = title.toUpperCase();
     if (loading) return;
-    createReview({
+    editReview({
       Title,
       movieTitle,
       genre,
@@ -45,13 +52,23 @@ const CreateReview: NextPage = () => {
       recommend,
     });
   };
-  //After post
+  //Setup
   useEffect(() => {
+    if (ok && review) {
+      if (review.title) setValue('title', review.title);
+      if (review.movieTitle) setValue('movieTitle', review.movieTitle);
+      if (review.genre) setValue('genre', review.genre);
+      if (review.content) setValue('content', review.content);
+      if (review.score) setValue('score', review.score);
+      if (review.oneline) setValue('oneline', review.oneline);
+      if (review.recommend) setValue('recommend', review.recommend);
+    }
     if (data?.ok) {
-      alert('새로운 리뷰를 생성하였습니다.');
+      alert('리뷰를 수정했습니다.');
       router.push('/review');
     }
-  }, [data]);
+  }, [setValue, reviewData, data]);
+
   //
   return (
     <>
@@ -116,7 +133,7 @@ const CreateReview: NextPage = () => {
             name="oneline"
             placeholder="한줄평을 적어보세요."
             errMsg={errors.oneline?.message}
-            register={register('oneline', { maxLength: 20 })}
+            register={register('oneline', { maxLength: 50 })}
           />
           <Input
             label="별점 (최대 별 5개)"
@@ -135,11 +152,11 @@ const CreateReview: NextPage = () => {
             label="이 영화를 추천한다면 체크하세요!"
             errMsg={errors.recommend?.message}
           />
-          <Btn type="submit" btnName="리뷰 작성하기" loading={loading} />
+          <Btn type="submit" btnName="리뷰 수정하기" loading={loading} />
         </ReviewForm>
       </ReviewPageCont>
     </>
   );
 };
 
-export default CreateReview;
+export default EditReview;

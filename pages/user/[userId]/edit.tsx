@@ -79,9 +79,7 @@ const Profile: NextPage = () => {
     location,
     email,
   }: IProfileEditForm) => {
-    //
     if (loading) return;
-    //
     if (category.userId) {
       if (!userId)
         return setError('userId', { message: '아이디를 입력해주세요.' });
@@ -127,7 +125,6 @@ const Profile: NextPage = () => {
       }, 1000);
     }
   }, [loggedInUser, data]);
-  //
   let dataOkMsg = '프로필이 성공적으로 업데이트 되었습니다.';
   const dataConditon = (type: string, ok: boolean) => {
     if (ok) return data?.type === type && !data?.error; //메시지
@@ -164,7 +161,7 @@ const Profile: NextPage = () => {
           <Btn
             onClick={() => categorySelect('userId')}
             type="submit"
-            loading={Boolean(data?.type === 'userId' && loading)}
+            loading={Boolean(category.userId && loading)}
             btnName="SAVE"
           />
         </Form>
@@ -223,7 +220,7 @@ const Profile: NextPage = () => {
           <Btn
             onClick={() => categorySelect('password')}
             type="submit"
-            loading={Boolean(data?.type === 'password' && loading)}
+            loading={Boolean(category.password && loading)}
             btnName="SAVE"
           />
         </Form>
@@ -269,7 +266,7 @@ const Profile: NextPage = () => {
                   register={register('birth')}
                 />
                 <Select
-                  options={['남', '녀']}
+                  options={['남', '여']}
                   label="Gender"
                   name="gender"
                   errMsg={errors.gender?.message}
@@ -298,8 +295,8 @@ const Profile: NextPage = () => {
           <Btn
             onClick={() => categorySelect('userInfo')}
             type="submit"
-            loading={Boolean(data?.type === 'userInfo' && loading)}
-            btnName={'SAVE'}
+            loading={Boolean(category.userInfo && loading)}
+            btnName="SAVE"
           />
         </Form>
       </section>

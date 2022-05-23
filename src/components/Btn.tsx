@@ -1,8 +1,10 @@
 import {
+  BtnAbs,
   BtnCont,
   CreateBtn,
   Delete,
   EditBoardBtn,
+  EditReviewBtn,
   IdCheck,
   Logout,
   Theme,
@@ -27,6 +29,11 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
         <BtnCont onClick={onClick} type="submit">
           {loading ? 'Loading...' : btnName}
         </BtnCont>
+      )}
+      {type === 'edit-review' && (
+        <EditReviewBtn onClick={onClick} type="button">
+          {loading ? 'Loading...' : btnName}
+        </EditReviewBtn>
       )}
       {type === 'move-to-created-board' && (
         <CreateBtn onClick={onClick} type="button">

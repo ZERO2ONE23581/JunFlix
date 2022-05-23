@@ -3,22 +3,37 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { IGetMyReview } from '../../../src/types/review';
-import { Article, ReviewPageCont } from '../../../styles/components/default';
+import {
+  Article,
+  ReviewArticle,
+  ReviewPageCont,
+} from '../../../styles/components/default';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Btn } from '../../../src/components/Btn';
+import useUser from '../../../src/libs/client/loggedInUser';
 
 const myReview: NextPage = () => {
+  const { isloggedIn, loggedInUser } = useUser();
   const router = useRouter();
   const { reviewId } = router.query;
   const { data: reviewData } = useSWR<IGetMyReview>(`/api/review/${reviewId}`);
   const ok = reviewData?.ok;
   const review = reviewData?.foundReview;
+  console.log(reviewData);
   //
   return (
     <>
       {ok && review && (
         <ReviewPageCont>
-          <Article>
+          <ReviewArticle>
+            {isloggedIn && review.UserID === loggedInUser?.id && (
+              <Btn
+                type="edit-review"
+                btnName="리뷰 수정"
+                onClick={() => router.push(`/review/${reviewId}/edit`)}
+              />
+            )}
             <ReviewList>
               <h1>{review.title}</h1>
               <li>
@@ -59,7 +74,7 @@ const myReview: NextPage = () => {
                 <p>{review.content}</p>
               </li>
             </ReviewList>
-          </Article>
+          </ReviewArticle>
         </ReviewPageCont>
       )}
     </>

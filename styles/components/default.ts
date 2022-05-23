@@ -56,6 +56,9 @@ export const Article = styled.article`
   display: flex;
   padding: 20px;
 `;
+export const ReviewArticle = styled(Article)`
+  position: relative;
+`;
 export const HomeArticle = styled(Article)`
   flex-direction: column;
   gap: 20px;

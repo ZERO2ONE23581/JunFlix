@@ -75,22 +75,45 @@ export const Logout = styled(BtnCont)`
   }
 `;
 
-export const Toggle = styled.button`
+export const BtnAbs = styled.button`
+  background-color: ${(p) => p.theme.color.font};
+  color: ${(p) => p.theme.color.bg};
+  padding: 8px;
+  border-radius: 5px;
   position: absolute;
+  border: none;
+  right: 0;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  &:hover {
+    background-color: ${(p) => p.theme.color.logo};
+    color: whitesmoke;
+  }
+`;
+
+export const EditReviewBtn = styled(BtnAbs)`
+  top: 15px;
+  right: 25px;
+`;
+
+export const Toggle = styled(BtnAbs)`
+  background: none;
+  height: 10px;
+  width: 10px;
   right: 40px;
   top: 30px;
-  width: 10px;
-  height: 10px;
-  background: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
-export const Theme = styled(Toggle)`
+export const Theme = styled(BtnAbs)`
   background-color: ${(p) => p.theme.color.bg};
+  border: 2px solid ${(p) => p.theme.color.font};
   color: ${(p) => p.theme.color.font};
-  border: 1px solid ${(p) => p.theme.color.font};
-  border-radius: 5px;
-  padding: 10px 30px;
+  padding: 5px 10px;
+  top: 25px;
+  right: 10px;
+  &:hover {
+    background-color: ${(p) => p.theme.color.font};
+    color: ${(p) => p.theme.color.bg};
+  }
 `;
