@@ -9,4 +9,6 @@ export interface IInputProps {
   placeholder?: string;
   options?: string[] | any;
   register?: UseFormRegisterReturn;
+  max?: number;
+  min?: number;
 }

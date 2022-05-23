@@ -15,5 +15,5 @@ const Cont = styled.footer`
   background-color: ${(p) => p.theme.color.font};
   color: ${(p) => p.theme.color.bg};
   border: ${(p) => p.theme.border};
-  padding: 20px;
+  padding: 10px;
 `;

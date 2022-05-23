@@ -5,6 +5,9 @@ export interface IReviewForm {
   movieTitle: string;
   genre: string;
   content?: string;
+  score?: number;
+  oneline?: string;
+  recommend?: boolean;
 }
 export interface IGetMyReview {
   ok: boolean;

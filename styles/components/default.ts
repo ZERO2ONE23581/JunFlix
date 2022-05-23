@@ -37,7 +37,7 @@ export const PageContainer = styled.section`
   }
 `;
 
-export const ReviewPageCont = styled(PageContainer)`
+export const ReviewPageCont = styled(PageCont)`
   padding: 10px;
 `;
 

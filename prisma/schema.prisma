@@ -26,8 +26,7 @@ model User {
   tokens      Token[]
   boards      Board[]
   posts       Post[]
-  reviews     Review[]
-  recommend   Recommend[]
+  reviews     Review[]  
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -73,22 +72,13 @@ model Review {
   title        String  
   movieTitle   String
   genre        String
-  content      String?    @db.LongText
   avatar       String? 
+  content      String?     @db.LongText
+  score        Int?        @default(1)
+  oneline      String?
+  recommend    Boolean?    @default(true)
   user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
-  UserID       Int     
-  recommend    Recommend[]
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-}
-model Recommend {
-  id           Int         @id @default(autoincrement())
-  title        String  
-  score        Int  
-  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
-  UserID       Int     
-  review       Review      @relation(fields: [ReviewID], references: [id], onDelete: Cascade)
-  ReviewID     Int     
+  UserID       Int
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }

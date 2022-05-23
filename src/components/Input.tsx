@@ -9,6 +9,8 @@ export const Input = (props: IInputProps) => {
         <InputCont>
           <label htmlFor={props.name}>{props.label}</label>
           <input
+            min={props.min}
+            max={props.max}
             name={props.name}
             type={props.type}
             {...props.register}
@@ -20,7 +22,7 @@ export const Input = (props: IInputProps) => {
       ) : (
         <InputCont>
           <label htmlFor={props.name}>{props.label}</label>
-          <Textarea {...props.register} name={props.name} cols={20} rows={20} />
+          <Textarea {...props.register} name={props.name} cols={10} rows={10} />
           {props.errMsg && <ErrMsg>{props.errMsg}</ErrMsg>}
         </InputCont>
       )}

@@ -24,10 +24,26 @@ const CreateReview: NextPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IReviewForm>({ mode: 'onSubmit' });
-  const onValid = ({ title, movieTitle, genre, content }: IReviewForm) => {
-    const titleCap = title.toUpperCase();
+  const onValid = ({
+    title,
+    movieTitle,
+    genre,
+    content,
+    score,
+    oneline,
+    recommend,
+  }: IReviewForm) => {
+    const Title = title.toUpperCase();
     if (loading) return;
-    createReview({ titleCap, movieTitle, genre, content });
+    createReview({
+      Title,
+      movieTitle,
+      genre,
+      content,
+      score,
+      oneline,
+      recommend,
+    });
   };
   //After post
   useEffect(() => {
@@ -49,7 +65,7 @@ const CreateReview: NextPage = () => {
             errMsg={errors.title?.message}
             placeholder="제목을 작성해 주세요."
             register={register('title', {
-              required: '제목을 작성해 주세요.',
+              // required: '제목을 작성해 주세요.',
             })}
           />
           <Input
@@ -59,7 +75,7 @@ const CreateReview: NextPage = () => {
             errMsg={errors.movieTitle?.message}
             placeholder="리뷰하는 영화제목을 작성해 주세요."
             register={register('movieTitle', {
-              required: '리뷰하는 영화제목을 작성해 주세요.',
+              // required: '리뷰하는 영화제목을 작성해 주세요.',
             })}
           />
           <Select
@@ -80,7 +96,7 @@ const CreateReview: NextPage = () => {
             ]}
             placeholder="영화의 장르를 선택해주세요."
             register={register('genre', {
-              required: '영화의 장르를 선택해주세요.',
+              // required: '영화의 장르를 선택해주세요.',
             })}
           />
           <Input
@@ -90,9 +106,34 @@ const CreateReview: NextPage = () => {
             errMsg={errors.content?.message}
             placeholder="내용을 작성해 주세요."
             register={register('content', {
-              required: '내용을 작성해 주세요.',
+              // required: '내용을 작성해 주세요.',
               minLength: 20,
             })}
+          />
+          <Input
+            type="text"
+            label="한줄평"
+            name="oneline"
+            placeholder="한줄평을 적어보세요."
+            errMsg={errors.oneline?.message}
+            register={register('oneline', { maxLength: 20 })}
+          />
+          <Input
+            label="별점 (최대 별 5개)"
+            name="score"
+            type="number"
+            max={5}
+            min={0}
+            register={register('score')}
+            errMsg={errors.oneline?.message}
+            placeholder="영화 별점을 기록해주세요."
+          />
+          <Input
+            type="checkbox"
+            name="recommend"
+            register={register('recommend')}
+            label="이 영화를 추천한다면 체크하세요!"
+            errMsg={errors.recommend?.message}
           />
           <Btn type="submit" btnName="리뷰 작성하기" loading={loading} />
         </ReviewForm>
