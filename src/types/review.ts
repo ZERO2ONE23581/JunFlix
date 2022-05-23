@@ -1,5 +1,4 @@
 import { Review, User } from '@prisma/client';
-import { MutationRes } from './mutation';
 
 export interface IReviewForm {
   title: string;
@@ -7,7 +6,10 @@ export interface IReviewForm {
   genre: string;
   content?: string;
 }
-export interface CreateReviewRes extends MutationRes {}
+export interface IGetMyReview {
+  ok: boolean;
+  foundReview?: IReviewWithUser;
+}
 export interface IGetAllReviews {
   ok?: true;
   allReviews?: IReviewWithUser[];

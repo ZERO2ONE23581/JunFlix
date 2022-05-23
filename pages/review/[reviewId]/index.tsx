@@ -1,173 +1,79 @@
-import useSWR from 'swr';
-import type { NextPage } from 'next';
 import styled from '@emotion/styled';
+import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+import { IGetMyReview } from '../../../src/types/review';
+import { Article, ReviewPageCont } from '../../../styles/components/default';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const myReview: NextPage = () => {
   const router = useRouter();
-  const { userId, boardId } = router.query;
-  const { isloggedIn, loggedInUser } = useUser();
-  const security = Boolean(isloggedIn && loggedInUser?.id === Number(userId));
-  const { data: boardData } = useSWR<IBoardRes>(
-    `/api/user/${userId}/board/${boardId}`
-  );
-  //Post
-  const [editBoard, { data: editedData, loading }] = useMutation<MutationRes>(
-    `/api/user/${userId}/board/${boardId}/edit`
-  );
-  //Edit Form
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<IEditBoardForm>({ mode: 'onSubmit' });
-  const onValid = ({ title, genre, intro }: IEditBoardForm) => {
-    if (loading) return;
-    const titleCap = title?.toUpperCase();
-    editBoard({ titleCap, genre, intro });
-  };
-
-  //Set up
-  const [edit, setEdit] = useState(false);
-  const [setting, setSetting] = useState(false);
-  const [delModal, setDelModal] = useState(false);
-  useEffect(() => {
-    if (boardData?.board?.title)
-      setValue('title', boardData.board.title.toUpperCase());
-    if (boardData?.board?.genre) setValue('genre', boardData.board.genre);
-    if (boardData?.board?.intro) setValue('intro', boardData.board.intro);
-    if (editedData?.ok)
-      setTimeout(() => {
-        router.reload();
-      }, 1000);
-  }, [setValue, boardData, editedData]);
+  const { reviewId } = router.query;
+  const { data: reviewData } = useSWR<IGetMyReview>(`/api/review/${reviewId}`);
+  const ok = reviewData?.ok;
+  const review = reviewData?.foundReview;
+  console.log(reviewData);
   //
   return (
     <>
-      <BoardPage>
-        {boardData && (
-          <BoardCont>
-            {/* 세팅 및 포스트생성 버튼 */}
-            {security && (
-              <>
-                <Btn
-                  type="create"
-                  onClick={() => {
-                    router.push(`/user/${userId}/board/${boardId}/post/create`);
-                  }}
-                  btnName="Create Post"
+      {ok && review && (
+        <ReviewPageCont>
+          <Article>
+            <ReviewList>
+              <h1>{review.title}</h1>
+              <li>
+                <span>Movie: </span>
+                <span>{review.movieTitle}</span>
+              </li>
+              <li>
+                <span>Genre: </span>
+                <span>{review.genre}</span>
+              </li>
+              <li>
+                <span>별점: </span>
+                <span>
+                  {[1, 2, 3, 4, 5].map((score) => (
+                    <FontAwesomeIcon key={score} icon={faStar} />
+                  ))}
+                </span>
+              </li>
+              <li>
+                <span>한줄평: </span>
+                <input
+                  disabled
+                  type="text"
+                  placeholder="I recommend this movie!"
                 />
-                <Btn
-                  type="board-setting"
-                  onClick={() => setSetting((p) => !p)}
-                  btnName="Setting"
-                />
-              </>
-            )}
-            {/* 보드 수정 및 삭제 모달 */}
-            <>
-              {setting && (
-                <article>
-                  <Btn
-                    type="board-edit"
-                    onClick={() => setEdit((p) => !p)}
-                    btnName={edit ? 'Back' : 'Edit Board'}
-                  />
-                  <Btn
-                    type="board-delete"
-                    onClick={() => setDelModal((p) => !p)}
-                    btnName="Delete"
-                  />
-                </article>
-              )}
-              {delModal && (
-                <DeleteModal
-                  userId={userId}
-                  boardId={boardId}
-                  deleteClick={() => setDelModal((p) => !p)}
-                />
-              )}
-            </>
-            {/* 데이터 메시지 및 에러*/}
-            <>
-              {editedData?.message && <OkMsg>{editedData?.message}</OkMsg>}
-              {editedData?.error && <ErrMsg>{editedData?.error}</ErrMsg>}
-            </>
-
-            <article>
-              <span>{boardData?.board?.user?.username}</span>
-              <span>'s board</span>
-            </article>
-
-            {/* 폼 */}
-            <form onSubmit={handleSubmit(onValid)}>
-              <Input
-                errMsg={errors.title?.message}
-                type="text"
-                name="title"
-                disabled={!edit && true}
-                placeholder="수정할 보드의 제목을 입력하세요."
-                register={register('title', {
-                  required: '수정할 보드의 제목을 입력하세요.',
-                })}
-              />
-              <Input
-                errMsg={errors.intro?.message}
-                type="text"
-                name="intro"
-                disabled={!edit && true}
-                placeholder="수정할 보드의 소개글을 작성해 주세요."
-                register={register('intro', {
-                  maxLength: 50,
-                })}
-              />
-              <Select
-                errMsg={errors.genre?.message}
-                name="genre"
-                disabled={!edit && true}
-                placeholder="수정할 장르를 선택해주세요."
-                register={register('genre')}
-                options={[
-                  'SF',
-                  'Drama',
-                  'Horror',
-                  'Comedy',
-                  'Fantasy',
-                  'Romance',
-                  'Action',
-                  'Mystery',
-                  'Thriller',
-                ]}
-              />
-              {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
-            </form>
-          </BoardCont>
-        )}
-        <AllPosts userId={userId} boardId={boardId} />
-      </BoardPage>
+              </li>
+              <li>
+                <p>{review.content}</p>
+              </li>
+            </ReviewList>
+          </Article>
+        </ReviewPageCont>
+      )}
     </>
   );
 };
-export default myBoard;
+export default myReview;
 
-export const BoardCont = styled(Article)`
-  flex-direction: column;
-  justify-content: center;
-  padding: 20px 100px;
-  width: 100%;
+const ReviewList = styled.ul`
   h1 {
-    font-weight: 600;
     font-size: 1.5rem;
-    text-align: start;
+    font-weight: 600;
+    text-align: center;
   }
-  h2 {
-    text-align: end;
-  }
-  h3 {
-    text-align: start;
-    font-size: 1rem;
+  li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    span {
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+    p {
+      padding: 5px;
+    }
   }
 `;

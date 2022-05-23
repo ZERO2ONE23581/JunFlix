@@ -9,8 +9,8 @@ import {
   Toggle,
   YesOrNo,
 } from '../../styles/components/btn';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IBtnProps {
   onClick?: any;

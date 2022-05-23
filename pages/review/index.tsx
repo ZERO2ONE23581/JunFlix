@@ -5,6 +5,7 @@ import { Btn } from '../../src/components/Btn';
 import { IGetAllReviews } from '../../src/types/review';
 import { PageContainer, ReviewPageCont } from '../../styles/components/default';
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
 const allReview: NextPage = () => {
   const router = useRouter();
@@ -28,25 +29,29 @@ const allReview: NextPage = () => {
           <>
             <ReviewList>
               {reviewData.allReviews.map((review) => (
-                <ReviewWrap key={review.id}>
-                  <li>
-                    <ul>
+                <Link href={`/review/${review.id}`} key={review.id}>
+                  <a>
+                    <ReviewWrap>
                       <li>
-                        <h1>{review.title}</h1>
+                        <ul>
+                          <li>
+                            <h1>{review.title}</h1>
+                          </li>
+                          <li>
+                            <p>{review.movieTitle}</p>
+                          </li>
+                          <li>
+                            <p>{review.genre}</p>
+                          </li>
+                          <li>
+                            <span>Written by</span>
+                            <span>{review.user.username}</span>
+                          </li>
+                        </ul>
                       </li>
-                      <li>
-                        <p>{review.movieTitle}</p>
-                      </li>
-                      <li>
-                        <p>{review.genre}</p>
-                      </li>
-                      <li>
-                        <span>Written by</span>
-                        <span>{review.user.username}</span>
-                      </li>
-                    </ul>
-                  </li>
-                </ReviewWrap>
+                    </ReviewWrap>
+                  </a>
+                </Link>
               ))}
             </ReviewList>
           </>
@@ -69,9 +74,10 @@ const ReviewWrap = styled.div`
     gap: 20px;
     width: 100%;
     display: flex;
+    justify-content: space-around;
     align-items: center;
+    border: 1px solid red;
     li {
-      border: 1px solid red;
       h1 {
         font-size: 1.5rem;
         font-weight: 600;

@@ -1,11 +1,12 @@
+import { useEffect } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Btn';
+import { IReviewForm } from '../../src/types/review';
+import { MutationRes } from '../../src/types/mutation';
 import { Input, Select } from '../../src/components/Input';
 import useMutation from '../../src/libs/client/useMutation';
-import { CreateReviewRes, IReviewForm } from '../../src/types/review';
 import {
   ErrMsg,
   ReviewForm,
@@ -16,7 +17,7 @@ const CreateReview: NextPage = () => {
   const router = useRouter();
   //Post
   const [createReview, { loading, data }] =
-    useMutation<CreateReviewRes>(`/api/review/create`);
+    useMutation<MutationRes>(`/api/review/create`);
   //Form
   const {
     register,
