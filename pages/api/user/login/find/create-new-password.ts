@@ -5,10 +5,10 @@ import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { newPassword, id } = req.body;
-  const noInput = !Boolean(newPassword && id);
+  const mustData = Boolean(newPassword && id);
   const { user } = req.session;
   if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
-  if (noInput) return res.json({ ok: false, error: 'NO INPUT DATA' });
+  if (!mustData) return res.json({ ok: false, error: 'NO INPUT DATA' });
   //
   const foundUser = await prismaClient.user.findUnique({
     where: { id },

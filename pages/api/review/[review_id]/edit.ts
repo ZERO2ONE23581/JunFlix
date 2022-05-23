@@ -6,20 +6,36 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { review_id } = req.query;
-  const data = req.body;
-  console.log(data);
-  return;
+  const { Title, movieTitle, genre, content, score, oneline, recommend } =
+    req.body;
+  const mustData = Boolean(Title && movieTitle && genre);
+
+  //ERR
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (!review_id) return res.json({ ok: false, error: 'QUERY ERROR' });
+  if (!mustData) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
 
-  const foundReview = await prismaClient.review.findUnique({
+  //Update review
+  const updatedReview = await prismaClient.review.update({
     where: { id: +review_id },
-    include: { user: { select: { username: true } } },
+    data: {
+      title: Title,
+      movieTitle,
+      genre,
+      content,
+      score: +score,
+      oneline,
+      recommend,
+    },
   });
-  if (!foundReview) return res.json({ ok: false, error: 'NO REVIEW FOUND!' });
-  if (foundReview.UserID !== user.id)
+
+  //ERR
+  if (!updatedReview)
+    return res.json({ ok: false, error: 'REVIEW UPDATE FAILED!' });
+  if (updatedReview.UserID !== user.id)
     return res.json({ ok: false, error: 'INVALID USER!' });
-  //
-  return res.json({ ok: true, foundReview });
+
+  //RETURN
+  return res.json({ ok: true });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

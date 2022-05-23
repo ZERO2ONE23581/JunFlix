@@ -6,10 +6,10 @@ import { withApiSession } from '../../../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const tokenNum = req.body;
-  const noInput = Boolean(!tokenNum);
+  const mustData = Boolean(tokenNum);
   //
   if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
-  if (noInput) return res.json({ ok: false, error: 'NO INPUT DATA' });
+  if (!mustData) return res.json({ ok: false, error: 'NO INPUT DATA' });
 
   //토큰인증
   const foundToken = await prismaClient.token.findUnique({

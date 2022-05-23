@@ -15,11 +15,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     recommend,
     score,
   } = req.body;
-  const noInput = !Boolean(Title && movieTitle && genre && content);
+  const mustData = Boolean(Title && movieTitle && genre && content);
 
   //error handling
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN' });
-  if (noInput) return res.json({ ok: false, error: 'NO INPUT DATA' });
+  if (!mustData) return res.json({ ok: false, error: 'NO INPUT DATA' });
 
   //Create review
   await prismaClient.review.create({

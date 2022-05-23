@@ -20,10 +20,12 @@ const EditReview: NextPage = () => {
   const { data: reviewData } = useSWR<IGetMyReview>(`/api/review/${reviewId}`);
   const ok = reviewData?.ok;
   const review = reviewData?.foundReview;
+
   //Post
   const [editReview, { loading, data }] = useMutation<MutationRes>(
-    `/api/review/${reviewId}/edit`
+    `/api/review/${review?.id}/edit`
   );
+
   //Form
   const {
     register,
@@ -52,6 +54,7 @@ const EditReview: NextPage = () => {
       recommend,
     });
   };
+
   //Setup
   useEffect(() => {
     if (ok && review) {
