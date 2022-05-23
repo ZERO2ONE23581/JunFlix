@@ -12,8 +12,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //error handling
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (noQuery) return res.json({ ok: false, error: 'QUERY ERROR!' });
-  if (!title) return res.json({ ok: false, error: 'NO INPUT DATA!' });
-  if (user.id !== +user_id) return res.json({ ok: false, error: 'NO RIGHTS!' });
+  if (!title) return res.json({ ok: false, error: 'MUST DATA REQUIRED!' });
+  if (user.id !== +user_id)
+    return res.json({ ok: false, error: 'UNAUTHORIZED!' });
 
   //Edit the post -> with Valid user + board
   const foundPost = await prismaClient.post.findUnique({

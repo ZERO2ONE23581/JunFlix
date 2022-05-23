@@ -23,12 +23,13 @@ const myBoard: NextPage = () => {
   const router = useRouter();
   const { userId, boardId } = router.query;
   const { isloggedIn, loggedInUser } = useUser();
-  const security = Boolean(isloggedIn && loggedInUser?.id === Number(userId));
   const { data: boardData } = useSWR<IBoardRes>(
     `/api/user/${userId}/board/${boardId}`
   );
+  const okBoard = boardData?.ok;
+  const board = boardData?.board;
   //Post
-  const [editBoard, { data: editedData, loading }] = useMutation<MutationRes>(
+  const [editBoard, { data, loading }] = useMutation<MutationRes>(
     `/api/user/${userId}/board/${boardId}/edit`
   );
   //Edit Form
@@ -40,8 +41,8 @@ const myBoard: NextPage = () => {
   } = useForm<IEditBoardForm>({ mode: 'onSubmit' });
   const onValid = ({ title, genre, intro }: IEditBoardForm) => {
     if (loading) return;
-    const titleCap = title?.toUpperCase();
-    editBoard({ titleCap, genre, intro });
+    const Title = title?.toUpperCase();
+    editBoard({ Title, genre, intro });
   };
 
   //Set up
@@ -49,23 +50,23 @@ const myBoard: NextPage = () => {
   const [setting, setSetting] = useState(false);
   const [delModal, setDelModal] = useState(false);
   useEffect(() => {
-    if (boardData?.board?.title)
-      setValue('title', boardData.board.title.toUpperCase());
-    if (boardData?.board?.genre) setValue('genre', boardData.board.genre);
-    if (boardData?.board?.intro) setValue('intro', boardData.board.intro);
-    if (editedData?.ok)
+    if (okBoard && board) {
+      if (board.title) setValue('title', board.title.toUpperCase());
+      if (board.genre) setValue('genre', board.genre);
+      if (board.intro) setValue('intro', board.intro);
+    }
+    if (data?.ok)
       setTimeout(() => {
         router.reload();
       }, 1000);
-  }, [setValue, boardData, editedData]);
+  }, [setValue, boardData, data]);
   //
   return (
     <>
       <BoardPage>
-        {boardData && (
+        {okBoard && board && (
           <BoardCont>
-            {/* 세팅 및 포스트생성 버튼 */}
-            {security && (
+            {isloggedIn && loggedInUser?.id === board?.UserID && (
               <>
                 <Btn
                   type="create"
@@ -81,7 +82,6 @@ const myBoard: NextPage = () => {
                 />
               </>
             )}
-            {/* 보드 수정 및 삭제 모달 */}
             <>
               {setting && (
                 <article>
@@ -105,18 +105,14 @@ const myBoard: NextPage = () => {
                 />
               )}
             </>
-            {/* 데이터 메시지 및 에러*/}
             <>
-              {editedData?.message && <OkMsg>{editedData?.message}</OkMsg>}
-              {editedData?.error && <ErrMsg>{editedData?.error}</ErrMsg>}
+              {data?.message && <OkMsg>{data?.message}</OkMsg>}
+              {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
             </>
-
             <article>
-              <span>{boardData?.board?.user?.username}</span>
+              <span>{board.user?.username}</span>
               <span>'s board</span>
             </article>
-
-            {/* 폼 */}
             <form onSubmit={handleSubmit(onValid)}>
               <Input
                 errMsg={errors.title?.message}

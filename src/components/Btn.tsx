@@ -1,10 +1,11 @@
 import {
-  BtnAbs,
   BtnCont,
+  BtnContDel,
+  BtnContInv,
+  BtnContInvDel,
+  BtnContRevSetup,
   CreateBtn,
-  Delete,
   EditBoardBtn,
-  EditReviewBtn,
   IdCheck,
   Logout,
   Theme,
@@ -30,10 +31,20 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
           {loading ? 'Loading...' : btnName}
         </BtnCont>
       )}
-      {type === 'edit-review' && (
-        <EditReviewBtn onClick={onClick} type="button">
+      {type === 'edit-setting' && (
+        <BtnContRevSetup onClick={onClick} type="button">
           {loading ? 'Loading...' : btnName}
-        </EditReviewBtn>
+        </BtnContRevSetup>
+      )}
+      {type === 'edit-review' && (
+        <BtnContInv onClick={onClick} type="button">
+          {loading ? 'Loading...' : btnName}
+        </BtnContInv>
+      )}
+      {type === 'delete-review' && (
+        <BtnContInvDel onClick={onClick} type="button">
+          {loading ? 'Loading...' : btnName}
+        </BtnContInvDel>
       )}
       {type === 'move-to-created-board' && (
         <CreateBtn onClick={onClick} type="button">
@@ -81,9 +92,9 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
         </Theme>
       )}
       {type === 'delete' && (
-        <Delete type="button" onClick={onClick}>
+        <BtnContDel type="button" onClick={onClick}>
           {loading ? 'Loading...' : btnName}
-        </Delete>
+        </BtnContDel>
       )}
       {type === 'toggle' && (
         <Toggle type="button" onClick={onClick}>

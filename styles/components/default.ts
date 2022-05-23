@@ -97,6 +97,11 @@ export const Flex = styled.div`
   gap: 13px;
   width: 200px;
 `;
+export const FlexAbsolute = styled(Flex)`
+  position: absolute;
+  top: 15px;
+  right: 90px;
+`;
 
 export const ErrMsg = styled.span`
   background-color: inherit;

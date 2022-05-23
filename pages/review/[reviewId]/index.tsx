@@ -5,6 +5,8 @@ import useSWR from 'swr';
 import { IGetMyReview } from '../../../src/types/review';
 import {
   Article,
+  Flex,
+  FlexAbsolute,
   ReviewArticle,
   ReviewPageCont,
 } from '../../../styles/components/default';
@@ -12,27 +14,54 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Btn } from '../../../src/components/Btn';
 import useUser from '../../../src/libs/client/loggedInUser';
+import { useState } from 'react';
+import { DeleteModal } from '../../../src/components/Modal/board/settting/delete/modal';
 
 const myReview: NextPage = () => {
-  const { isloggedIn, loggedInUser } = useUser();
   const router = useRouter();
   const { reviewId } = router.query;
+  const { isloggedIn, loggedInUser } = useUser();
   const { data: reviewData } = useSWR<IGetMyReview>(`/api/review/${reviewId}`);
   const ok = reviewData?.ok;
   const review = reviewData?.foundReview;
-  console.log(reviewData);
+  //
+  const [openSetup, setOpenSetup] = useState(false);
+  const [delModal, setDelModal] = useState(false);
   //
   return (
     <>
+      {ok && review && delModal && (
+        <DeleteModal
+          reviewId={review.id}
+          userId={review.UserID}
+          deleteClick={() => setDelModal((p) => !p)}
+        />
+      )}
       {ok && review && (
         <ReviewPageCont>
           <ReviewArticle>
             {isloggedIn && review.UserID === loggedInUser?.id && (
-              <Btn
-                type="edit-review"
-                btnName="리뷰 수정"
-                onClick={() => router.push(`/review/${reviewId}/edit`)}
-              />
+              <>
+                <Btn
+                  type="edit-setting"
+                  btnName={openSetup ? 'Back' : 'Setting'}
+                  onClick={() => setOpenSetup((p) => !p)}
+                />
+                {openSetup && (
+                  <FlexAbsolute>
+                    <Btn
+                      type="edit-review"
+                      btnName="리뷰 수정"
+                      onClick={() => router.push(`/review/${reviewId}/edit`)}
+                    />
+                    <Btn
+                      type="delete-review"
+                      btnName="리뷰 삭제"
+                      onClick={() => setDelModal((p) => !p)}
+                    />
+                  </FlexAbsolute>
+                )}
+              </>
             )}
             <ReviewList>
               <h1>{review.title}</h1>

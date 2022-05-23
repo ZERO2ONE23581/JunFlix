@@ -10,16 +10,23 @@ import { MutationRes } from '../../../../../types/mutation';
 import { ErrMsg } from '../../../../../../styles/components/default';
 
 interface IDeleteModalProps {
-  userId?: string[] | string;
-  postId?: string[] | string;
-  boardId?: string[] | string;
+  userId?: number | string[] | string;
+  postId?: number | string[] | string;
+  boardId?: number | string[] | string;
+  reviewId?: number | string[] | string;
   deleteClick?: any;
+}
+
+interface IIdInfo {
+  userId: number;
+  reviewId: number;
 }
 
 export const DeleteModal = ({
   userId,
   postId,
   boardId,
+  reviewId,
   deleteClick,
 }: IDeleteModalProps) => {
   const router = useRouter();
@@ -31,7 +38,14 @@ export const DeleteModal = ({
     useMutation<MutationRes>(
       `/api/user/${userId}/board/${boardId}/post/${postId}/delete`
     );
+  const [deleteReview, { data: reviewData, loading: reviewLoading }] =
+    useMutation<MutationRes>(`/api/review/${reviewId}/delete`);
+
   const onClick = () => {
+    if (reviewId) {
+      if (reviewLoading) return;
+      return deleteReview({ userId, reviewId });
+    }
     if (postId) {
       if (postLoading) return;
       return deletePost(true);
@@ -49,7 +63,11 @@ export const DeleteModal = ({
       alert('해당 게시물이 삭제되었습니다.');
       router.replace(`/user/${userId}/board/${boardId}`);
     }
-  }, [boardData, postData, router]);
+    if (reviewData?.ok) {
+      alert('해당 리뷰가 삭제되었습니다.');
+      router.replace(`/review`);
+    }
+  }, [boardData, postData, reviewData, router]);
 
   return (
     <>
@@ -62,7 +80,9 @@ export const DeleteModal = ({
           type="delete"
           btnName="삭제 확인"
           onClick={onClick}
-          loading={postId ? postLoading : boardLoading}
+          loading={
+            postId ? postLoading : boardId ? boardLoading : reviewLoading
+          }
         />
       </SmallModalCont>
       <ModalClose onClick={deleteClick} />

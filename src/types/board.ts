@@ -8,6 +8,7 @@ export interface BoardForm {
   follow?: string;
 }
 export interface IBoardRes {
+  ok: boolean;
   board: BoardWithUser;
 }
 export interface BoardWithUser extends Board {

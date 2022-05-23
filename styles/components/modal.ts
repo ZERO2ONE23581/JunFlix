@@ -24,10 +24,9 @@ export const H200ModalCont = styled(ModalCont)`
   height: 200px;
 `;
 export const SmallModalCont = styled(ModalCont)`
-  padding-top: 10px;
-  height: 120px;
-  width: 300px;
-  gap: 0;
+  width: 30%;
+  height: 20%;
+  gap: 15px;
   h1 {
     font-size: 1.2rem;
     font-weight: 600;

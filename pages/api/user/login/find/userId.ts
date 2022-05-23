@@ -7,7 +7,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const email = req.body;
   const { user } = req.session;
   if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
-  if (!email) return res.json({ ok: false, error: 'NO INPUT DATA' });
+  if (!email) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
   const tokenNum = Math.floor(Math.random() * 90000) + 10000; //6 random digits
   //
   const foundUser = await prismaClient.user.findUnique({

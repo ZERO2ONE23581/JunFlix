@@ -14,7 +14,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (noQuery) return res.json({ ok: false, error: 'QUERY ERROR' });
   if (!delConfirm) return res.json({ ok: false, error: 'DELETE UNCONFIRMED!' });
   if (user?.id !== +user_id)
-    return res.json({ ok: false, error: 'NO RIGHTS TO DELETE THIS BOARD!' });
+    return res.json({ ok: false, error: 'UNAUTHORIZED TO DELETE THIS BOARD!' });
   //
   const foundBoard = await prismaClient.board.findUnique({
     where: { id: +board_id.toString() },

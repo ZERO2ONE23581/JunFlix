@@ -20,7 +20,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   });
   if (!foundPost) return res.json({ ok: false, error: 'INVALID POST!' });
   if (foundPost?.UserID !== user?.id || foundPost.BoardID !== +board_id)
-    return res.json({ ok: false, error: 'NO RIGHTS TO DELETE THIS POST!' });
+    return res.json({ ok: false, error: 'UNAUTHORIZED TO DELETE THIS POST!' });
   //
   await prismaClient.post.delete({
     where: { id: foundPost.id },

@@ -40,7 +40,7 @@ export const Desc = styled.article`
     color: ${(p) => p.theme.color.bg};
   }
 `;
-export const DeleteModal = styled(ModalCont)`
+export const DeleteModalCont = styled(ModalCont)`
   article {
     margin-bottom: 10px;
   }
