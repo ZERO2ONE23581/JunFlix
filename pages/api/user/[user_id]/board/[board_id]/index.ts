@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler from '../../../../../../src/libs/server/withHandler';
-import prismaClient from '../../../../../../src/libs/server/prisma_client';
+import client from '../../../../../../src/libs/server/prisma_client';
 import { withApiSession } from '../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -11,7 +11,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (noQuery) return res.json({ ok: false, error: 'QUERY ERROR' });
 
   //Select my board -> with valid User
-  const board = await prismaClient.board.findUnique({
+  const board = await client.board.findUnique({
     where: { id: +board_id.toString() },
     include: { user: { select: { username: true } } },
   });

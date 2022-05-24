@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prismaClient from '../../../../../src/libs/server/prisma_client';
+import client from '../../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../../src/libs/server/withSession';
 
@@ -10,7 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
   if (!mustData) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
   //
-  const foundUser = await prismaClient.user.findUnique({
+  const foundUser = await client.user.findUnique({
     where: { id },
     select: { password: true },
   });
@@ -21,7 +21,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     });
 
   //업데이트
-  await prismaClient.user.update({
+  await client.user.update({
     where: { id },
     data: { password: newPassword },
   });

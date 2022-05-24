@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prismaClient from '../../../../src/libs/server/prisma_client';
+import client from '../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
@@ -18,7 +18,7 @@ async function handler(
   if (!deleteConfirm)
     return res.json({ ok: false, error: 'YOU MUST CONFIRM TO DELETE!' });
 
-  await prismaClient.user.delete({
+  await client.user.delete({
     where: {
       id: user.id,
     },

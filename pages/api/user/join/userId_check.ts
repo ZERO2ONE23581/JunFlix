@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prismaClient from '../../../../src/libs/server/prisma_client';
+import client from '../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
@@ -10,7 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
 
   //중복체크
-  const dupData = await prismaClient.user.findUnique({
+  const dupData = await client.user.findUnique({
     where: { userId },
   });
   if (dupData)

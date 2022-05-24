@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prismaClient from '../../../../src/libs/server/prisma_client';
+import client from '../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
@@ -16,7 +16,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!mustData) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
 
   //Update review
-  const updatedReview = await prismaClient.review.update({
+  const updatedReview = await client.review.update({
     where: { id: +review_id },
     data: {
       title: Title,

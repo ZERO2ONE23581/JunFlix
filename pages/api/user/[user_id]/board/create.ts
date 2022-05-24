@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler from '../../../../../src/libs/server/withHandler';
-import prismaClient from '../../../../../src/libs/server/prisma_client';
+import client from '../../../../../src/libs/server/prisma_client';
 import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -14,14 +14,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: 'UNAUTHORIZED!' });
   //
   const dupData = Boolean(
-    await prismaClient.board.findUnique({
+    await client.board.findUnique({
       where: { title },
     })
   );
   if (dupData)
     return res.json({ ok: false, error: '이미 쓰고있는 제목입니다.' });
   //
-  const newBoard = await prismaClient.board.create({
+  const newBoard = await client.board.create({
     data: {
       title,
       intro,

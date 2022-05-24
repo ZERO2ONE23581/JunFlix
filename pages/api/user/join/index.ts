@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prismaClient from '../../../../src/libs/server/prisma_client';
+import client from '../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
@@ -17,14 +17,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   //중복체크
   if (userID) {
-    const dupData = await prismaClient.user.findUnique({
+    const dupData = await client.user.findUnique({
       where: { userId: userID },
     });
     if (dupData)
       return res.json({ ok: false, error: '이미 등록된 아이디 입니다.' });
   }
   if (email) {
-    const dupData = await prismaClient.user.findUnique({
+    const dupData = await client.user.findUnique({
       where: { email },
     });
     if (dupData)
@@ -32,7 +32,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   //유저생성
-  await prismaClient.user.create({
+  await client.user.create({
     data: {
       username,
       userId: userID.toString(),

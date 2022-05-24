@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler from '../../../../../../../src/libs/server/withHandler';
-import prismaClient from '../../../../../../../src/libs/server/prisma_client';
+import client from '../../../../../../../src/libs/server/prisma_client';
 import { withApiSession } from '../../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -17,13 +17,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: 'UNAUTHORIZED!' });
 
   //Select Board -> Create Post on the board
-  const currentBoard = await prismaClient.board.findUnique({
+  const currentBoard = await client.board.findUnique({
     where: { id: +board_id },
     select: { id: true, UserID: true },
   });
   if (!currentBoard) return res.json({ ok: false, error: 'NO BOARD FOUND!' });
   //
-  await prismaClient.post.create({
+  await client.post.create({
     data: {
       title,
       content,

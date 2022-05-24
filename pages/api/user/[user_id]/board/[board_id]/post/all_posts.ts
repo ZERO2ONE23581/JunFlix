@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler from '../../../../../../../src/libs/server/withHandler';
-import prismaClient from '../../../../../../../src/libs/server/prisma_client';
+import client from '../../../../../../../src/libs/server/prisma_client';
 import { withApiSession } from '../../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (noQuery) return res.json({ ok: false, error: 'QUERY ERROR!' });
 
   //Select post on current Board!
-  const allPosts = await prismaClient.post.findMany({
+  const allPosts = await client.post.findMany({
     where: { UserID: +user_id, BoardID: +board_id },
     select: {
       id: true,

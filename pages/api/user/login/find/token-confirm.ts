@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prismaClient from '../../../../../src/libs/server/prisma_client';
+import client from '../../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../../src/libs/server/withSession';
 
@@ -12,14 +12,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!mustData) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
 
   //토큰인증
-  const foundToken = await prismaClient.token.findUnique({
+  const foundToken = await client.token.findUnique({
     where: { tokenNum: +tokenNum },
     select: { UserID: true },
   });
   if (!foundToken)
     return res.json({ ok: false, error: '토큰번호가 일치하지 않습니다.' });
   //
-  const foundUser = await prismaClient.user.findUnique({
+  const foundUser = await client.user.findUnique({
     where: { id: foundToken.UserID },
     select: { id: true, userId: true, password: true },
   });
@@ -27,7 +27,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: 'NO USER FOUND FOR THIS TOKEN..' });
 
   //찾은 유저의 아이디와 일치하는 토큰삭제
-  await prismaClient.token.deleteMany({
+  await client.token.deleteMany({
     where: { UserID: foundToken.UserID },
   });
 

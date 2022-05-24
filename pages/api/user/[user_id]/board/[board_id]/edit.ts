@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler from '../../../../../../src/libs/server/withHandler';
-import prismaClient from '../../../../../../src/libs/server/prisma_client';
+import client from '../../../../../../src/libs/server/prisma_client';
 import { withApiSession } from '../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -16,7 +16,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: 'UNAUTHORIZED!' });
 
   //Select board
-  const foundBoard = await prismaClient.board.findUnique({
+  const foundBoard = await client.board.findUnique({
     where: { id: +board_id.toString() },
     select: { id: true, UserID: true, title: true },
   });
@@ -24,7 +24,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   //중복된 제목 체크
   const dupTitle = Boolean(
-    await prismaClient.board.findUnique({
+    await client.board.findUnique({
       where: { title: Title },
     })
   );
@@ -32,7 +32,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: '이미 사용중인 제목입니다.' });
 
   //Edit board
-  await prismaClient.board.update({
+  await client.board.update({
     where: { id: foundBoard.id },
     data: { title: Title, genre, intro },
   });

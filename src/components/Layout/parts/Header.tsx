@@ -1,18 +1,14 @@
-import styled from '@emotion/styled';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import useSWR from 'swr';
-import { NavModalClose } from '../../../../styles/components/modal';
-import useUser from '../../../libs/client/loggedInUser';
-import { ILoggedInUser } from '../../../types/login';
-import { NavModal } from '../../Modal/NavModal';
+import { useState } from 'react';
+import styled from '@emotion/styled';
 import { LogoSvg } from '../../Svg/Logo';
+import { NavModal } from '../../Modal/NavModal';
+import useUser from '../../../libs/client/loggedInUser';
+import { NavModalClose } from '../../../../styles/components/modal';
 
 export const Header = () => {
-  const { loggedInUser, isloggedIn } = useUser();
+  const { loggedInUser, isloggedIn, loggedInUserId } = useUser();
   const username = loggedInUser?.username;
-
   const [open, setOpen] = useState(false);
   const toggleModal = () => {
     setOpen((p) => !p);
@@ -29,11 +25,31 @@ export const Header = () => {
               </a>
             </Link>
           </Logo>
-          <Review>
-            <Link href="/review">
+          <NavLink>
+            <Link href={`/`}>
+              <a>Home</a>
+            </Link>
+          </NavLink>
+          <NavLink>
+            <Link href={`/news`}>
+              <a>News</a>
+            </Link>
+          </NavLink>
+          <NavLink>
+            <Link href={`/boards`}>
+              <a>Boards</a>
+            </Link>
+          </NavLink>
+          <NavLink>
+            <Link href={`/review`}>
               <a>Review</a>
             </Link>
-          </Review>
+          </NavLink>
+          <NavLink>
+            <Link href={`/review/rating`}>
+              <a>Rating</a>
+            </Link>
+          </NavLink>
         </LeftWrap>
         {isloggedIn ? (
           <Profile onClick={toggleModal}>
@@ -54,7 +70,7 @@ export const Header = () => {
     </Cont>
   );
 };
-const Review = styled.div`
+const NavLink = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

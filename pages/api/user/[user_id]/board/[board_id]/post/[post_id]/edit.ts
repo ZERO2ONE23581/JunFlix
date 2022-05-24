@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler from '../../../../../../../../src/libs/server/withHandler';
-import prismaClient from '../../../../../../../../src/libs/server/prisma_client';
+import client from '../../../../../../../../src/libs/server/prisma_client';
 import { withApiSession } from '../../../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -17,7 +17,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: 'UNAUTHORIZED!' });
 
   //Edit the post -> with Valid user + board
-  const foundPost = await prismaClient.post.findUnique({
+  const foundPost = await client.post.findUnique({
     where: { id: +post_id.toString() },
     select: { id: true, UserID: true, BoardID: true, title: true },
   });
@@ -28,7 +28,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: 'INVALID BOARD!' });
 
   //Edit Post
-  await prismaClient.post.update({
+  await client.post.update({
     where: { id: foundPost.id },
     data: { title, content },
   });

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler from '../../../../src/libs/server/withHandler';
-import prismaClient from '../../../../src/libs/server/prisma_client';
+import client from '../../../../src/libs/server/prisma_client';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -19,7 +19,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: 'INVALID REVIEW!' });
 
   //Select Review
-  const foundReview = await prismaClient.review.findUnique({
+  const foundReview = await client.review.findUnique({
     where: { id: reviewId },
     select: { id: true, UserID: true },
   });
@@ -32,7 +32,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!validity) return res.json({ ok: false, error: 'UNAUTHORIZED!' });
 
   //Delete Review
-  await prismaClient.review.delete({
+  await client.review.delete({
     where: { id: foundReview.id },
   });
   return res.json({ ok: true });

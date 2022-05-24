@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prismaClient from '../../../../src/libs/server/prisma_client';
+import client from '../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (!review_id) return res.json({ ok: false, error: 'QUERY ERROR' });
 
-  const foundReview = await prismaClient.review.findUnique({
+  const foundReview = await client.review.findUnique({
     where: { id: +review_id },
     include: { user: { select: { username: true } } },
   });

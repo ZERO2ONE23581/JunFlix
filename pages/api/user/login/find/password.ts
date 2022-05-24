@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prismaClient from '../../../../../src/libs/server/prisma_client';
+import client from '../../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../../src/libs/server/withSession';
 
@@ -10,7 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!userId) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
   const tokenNum = Math.floor(Math.random() * 90000) + 10000; //6 random digits
   //
-  const foundUser = await prismaClient.user.findUnique({
+  const foundUser = await client.user.findUnique({
     where: { userId },
     select: { id: true, userId: true },
   });
@@ -18,7 +18,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: '존재하지 않는 아이디 입니다.' });
 
   //토큰생성
-  const token = await prismaClient.token.create({
+  const token = await client.token.create({
     data: {
       tokenNum,
       user: {

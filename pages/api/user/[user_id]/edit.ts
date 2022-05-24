@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prismaClient from '../../../../src/libs/server/prisma_client';
+import client from '../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
@@ -21,7 +21,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   //LOGIN ERROR
   const { user } = req.session;
-  const loggedInUser = await prismaClient.user.findUnique({
+  const loggedInUser = await client.user.findUnique({
     where: { id: user?.id },
   });
   if (!loggedInUser) return res.json({ ok: false, error: 'MUST LOGIN!' });
@@ -41,7 +41,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       });
 
     const dupData = Boolean(
-      await prismaClient.user.findUnique({
+      await client.user.findUnique({
         where: { userId: userID.toString() },
       })
     );
@@ -53,7 +53,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         error: '이미 등록된 아이디 입니다. 아이디를 재입력 해주세요.',
       });
 
-    await prismaClient.user.update({
+    await client.user.update({
       where: { ...idMatch },
       data: { userId: userID.toString() },
     });
@@ -95,7 +95,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           '현재 쓰고 계신 비밀번호 입니다. 새로운 비밀번호를 입력해주세요.',
       });
     //UPDATE
-    await prismaClient.user.update({
+    await client.user.update({
       where: { ...idMatch },
       data: { password: newPassword },
     });
@@ -109,7 +109,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //UserInfo
   if (category.userInfo) {
     if (!username) {
-      await prismaClient.user.update({
+      await client.user.update({
         where: { ...idMatch },
         data: {
           username: 'Anonymous',
@@ -129,7 +129,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     //DUPDATA CHECK (EMAIL)
     if (email !== loggedInUser.email) {
       const dupData = Boolean(
-        await prismaClient.user.findUnique({
+        await client.user.findUnique({
           where: { email },
         })
       );
@@ -139,13 +139,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           ok: false,
           error: `이미 사용중인 이메일 입니다. 다른 이메일을 이용해 주세요.`,
         });
-      await prismaClient.user.update({
+      await client.user.update({
         where: { ...idMatch },
         data: { email },
       });
     }
     //UPDATE
-    await prismaClient.user.update({
+    await client.user.update({
       where: { ...idMatch },
       data: { username, name, birth, gender, location, email, avatar },
     });
