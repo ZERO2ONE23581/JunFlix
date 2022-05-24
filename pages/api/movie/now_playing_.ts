@@ -9,6 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ` https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.THEMOVIEDB_APIKEY}&language=en-US&page=1`
     )
   ).json();
+
   //
   return res.json({ ok: true, nowPlaying });
 }
