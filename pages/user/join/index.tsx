@@ -3,18 +3,18 @@ import {
   ErrMsg,
   Form,
   Layer,
-  PageContainer,
-} from '../../styles/components/default';
+  PageSection,
+} from '../../../styles/components/default';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../src/components/Btn';
-import { Input } from '../../src/components/Input';
-import { IJoinForm, IJoinRes } from '../../src/types/join';
-import useMutation from '../../src/libs/client/useMutation';
-import { Title } from '../../src/components/Layout/parts/Title';
-import { LoginLink } from '../../src/components/Login/LoginLink';
-import { JoinConfirmModal } from '../../src/components/Modal/JoinConfirmModal';
-import { UserIdCheckModal } from '../../src/components/Modal/UserIdCheckModal';
+import { Btn } from '../../../src/components/Btn';
+import { Input } from '../../../src/components/Input';
+import { IJoinForm, IJoinRes } from '../../../src/types/join';
+import useMutation from '../../../src/libs/client/useMutation';
+import { Title } from '../../../src/components/Layout/parts/Title';
+import { LoginLink } from '../../../src/components/Login/LoginLink';
+import { JoinConfirmModal } from '../../../src/components/Modal/JoinConfirmModal';
+import { UserIdCheckModal } from '../../../src/components/Modal/UserIdCheckModal';
 
 const Join: NextPage = () => {
   //Post api
@@ -110,7 +110,7 @@ const Join: NextPage = () => {
 
   //
   return (
-    <PageContainer>
+    <PageSection>
       <Title title="회원가입" />
       {modal && <JoinConfirmModal toggleCheckModal={toggleCheckModal} />}
       {checkModal && (
@@ -213,7 +213,7 @@ const Join: NextPage = () => {
       </Form>
 
       <LoginLink joined={true} />
-    </PageContainer>
+    </PageSection>
   );
 };
 export default Join;

@@ -13,7 +13,7 @@ import {
   Flex,
   FlexAbsolute,
   ReviewArticle,
-  ReviewPageCont,
+  PageSectionWide,
 } from '../../../styles/components/default';
 
 const myReview: NextPage = () => {
@@ -38,7 +38,7 @@ const myReview: NextPage = () => {
       )}
 
       {ok && review && (
-        <ReviewPageCont>
+        <PageSectionWide>
           <ReviewArticle>
             <Btn
               btnName="Back"
@@ -110,7 +110,7 @@ const myReview: NextPage = () => {
               </li>
             </ReviewList>
           </ReviewArticle>
-        </ReviewPageCont>
+        </PageSectionWide>
       )}
     </>
   );

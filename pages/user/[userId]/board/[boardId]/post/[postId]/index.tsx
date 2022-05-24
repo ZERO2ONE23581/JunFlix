@@ -11,13 +11,12 @@ import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm, IPostRes } from '../../../../../../../src/types/post';
 import { DeleteModal } from '../../../../../../../src/components/Modal/board/settting/delete/modal';
 import {
-  Article,
-  BoardPage,
-  ErrMsg,
   Flex,
-  FlexAbsolute,
-  FlexAbsPost,
   OkMsg,
+  ErrMsg,
+  Article,
+  PageSectionWide,
+  FlexAbsPost,
 } from '../../../../../../../styles/components/default';
 import useUser from '../../../../../../../src/libs/client/loggedInUser';
 
@@ -70,7 +69,7 @@ const myPost: NextPage = () => {
   //
   return (
     <>
-      <BoardPage>
+      <PageSectionWide>
         {postData && (
           <BoardCont>
             <Flex>
@@ -149,7 +148,7 @@ const myPost: NextPage = () => {
             </form>
           </BoardCont>
         )}
-      </BoardPage>
+      </PageSectionWide>
     </>
   );
 };

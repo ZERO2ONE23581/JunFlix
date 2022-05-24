@@ -10,7 +10,7 @@ import useMutation from '../../src/libs/client/useMutation';
 import {
   ErrMsg,
   ReviewForm,
-  ReviewPageCont,
+  PageSectionWide,
 } from '../../styles/components/default';
 
 const CreateReview: NextPage = () => {
@@ -55,7 +55,7 @@ const CreateReview: NextPage = () => {
   //
   return (
     <>
-      <ReviewPageCont>
+      <PageSectionWide>
         <ReviewForm onSubmit={handleSubmit(onValid)}>
           {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
           <Input
@@ -137,7 +137,7 @@ const CreateReview: NextPage = () => {
           />
           <Btn type="submit" btnName="리뷰 작성하기" loading={loading} />
         </ReviewForm>
-      </ReviewPageCont>
+      </PageSectionWide>
     </>
   );
 };

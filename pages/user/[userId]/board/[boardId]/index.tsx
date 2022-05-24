@@ -13,7 +13,7 @@ import { IBoardRes, IEditBoardForm } from '../../../../../src/types/board';
 import { DeleteModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
 import {
   Article,
-  BoardPage,
+  PageSectionWide,
   ErrMsg,
   Flex,
   OkMsg,
@@ -64,7 +64,7 @@ const myBoard: NextPage = () => {
   //
   return (
     <>
-      <BoardPage>
+      <PageSectionWide>
         {okBoard && board && (
           <BoardCont>
             <Flex>
@@ -167,7 +167,7 @@ const myBoard: NextPage = () => {
           </BoardCont>
         )}
         <AllPosts userId={userId} boardId={boardId} />
-      </BoardPage>
+      </PageSectionWide>
     </>
   );
 };

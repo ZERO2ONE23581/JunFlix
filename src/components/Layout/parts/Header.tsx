@@ -57,10 +57,10 @@ export const Header = () => {
           </Profile>
         ) : (
           <div className="unloggedIn">
-            <Link href="/join">
+            <Link href="/user/join">
               <a>Join</a>
             </Link>
-            <Link href="/login">
+            <Link href="/user/login">
               <a>Login</a>
             </Link>
           </div>

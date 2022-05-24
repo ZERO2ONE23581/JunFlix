@@ -19,7 +19,7 @@ export const PageCont = styled.section`
   height: 100vh;
 `;
 
-export const PageContainer = styled.section`
+export const PageSection = styled.section`
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => p.theme.color.font};
   padding: 100px 200px;
@@ -37,12 +37,8 @@ export const PageContainer = styled.section`
   }
 `;
 
-export const ReviewPageCont = styled(PageCont)`
+export const PageSectionWide = styled(PageCont)`
   padding: 10px;
-`;
-
-export const BoardPage = styled(PageContainer)`
-  padding: 0 10px;
 `;
 
 export const Article = styled.article`

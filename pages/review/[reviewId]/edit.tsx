@@ -11,7 +11,7 @@ import { IGetMyReview, IReviewForm } from '../../../src/types/review';
 import {
   ErrMsg,
   ReviewForm,
-  ReviewPageCont,
+  PageSectionWide,
 } from '../../../styles/components/default';
 
 const EditReview: NextPage = () => {
@@ -75,7 +75,7 @@ const EditReview: NextPage = () => {
   //
   return (
     <>
-      <ReviewPageCont>
+      <PageSectionWide>
         <ReviewForm onSubmit={handleSubmit(onValid)}>
           {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
           <Input
@@ -157,7 +157,7 @@ const EditReview: NextPage = () => {
           />
           <Btn type="submit" btnName="리뷰 수정하기" loading={loading} />
         </ReviewForm>
-      </ReviewPageCont>
+      </PageSectionWide>
     </>
   );
 };

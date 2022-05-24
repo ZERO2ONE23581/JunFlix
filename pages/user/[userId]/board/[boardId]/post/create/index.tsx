@@ -2,15 +2,15 @@ import { useEffect } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../../../../src/components/Btn';
-import { Input } from '../../../../../../src/components/Input';
-import { MutationRes } from '../../../../../../src/types/mutation';
-import useMutation from '../../../../../../src/libs/client/useMutation';
-import { BoardCont } from '..';
-import { IPostForm } from '../../../../../../src/types/post';
-import { ErrMsg } from '../../../../../../styles/components/default';
+import { Btn } from '../../../../../../../src/components/Btn';
+import { Input } from '../../../../../../../src/components/Input';
+import { MutationRes } from '../../../../../../../src/types/mutation';
+import useMutation from '../../../../../../../src/libs/client/useMutation';
+import { BoardCont } from '../..';
+import { IPostForm } from '../../../../../../../src/types/post';
+import { ErrMsg } from '../../../../../../../styles/components/default';
 
-const myPost: NextPage = () => {
+const CreatePost: NextPage = () => {
   const router = useRouter();
   const { userId, boardId } = router.query;
 
@@ -62,4 +62,4 @@ const myPost: NextPage = () => {
     </BoardCont>
   );
 };
-export default myPost;
+export default CreatePost;

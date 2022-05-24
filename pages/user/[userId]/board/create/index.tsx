@@ -1,17 +1,17 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../../src/components/Btn';
-import { BoardForm } from '../../../../src/types/board';
-import { Input, Select } from '../../../../src/components/Input';
-import useMutation from '../../../../src/libs/client/useMutation';
-import { CreateBoardResponse } from '../../../../src/types/mutation';
-import { CreateBoardModal } from '../../../../src/components/Modal/CreateBoardModal';
+import { Btn } from '../../../../../src/components/Btn';
+import { BoardForm } from '../../../../../src/types/board';
+import { Input, Select } from '../../../../../src/components/Input';
+import useMutation from '../../../../../src/libs/client/useMutation';
+import { CreateBoardResponse } from '../../../../../src/types/mutation';
+import { CreateBoardModal } from '../../../../../src/components/Modal/CreateBoardModal';
 import {
   ErrMsg,
   Form,
-  PageContainer,
-} from '../../../../styles/components/default';
+  PageSection,
+} from '../../../../../styles/components/default';
 
 const CreateBoard: NextPage = () => {
   const router = useRouter();
@@ -36,7 +36,7 @@ const CreateBoard: NextPage = () => {
           creatorId={data?.creatorId}
         />
       )}
-      <PageContainer>
+      <PageSection>
         <Form onSubmit={handleSubmit(onValid)}>
           {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
           <Input
@@ -80,7 +80,7 @@ const CreateBoard: NextPage = () => {
 
           <Btn type="submit" btnName="나의 보드 만들기" loading={loading} />
         </Form>
-      </PageContainer>
+      </PageSection>
     </>
   );
 };

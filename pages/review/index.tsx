@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Btn } from '../../src/components/Btn';
 import { IGetAllReviews } from '../../src/types/review';
-import { ReviewPageCont } from '../../styles/components/default';
+import { PageSectionWide } from '../../styles/components/default';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +19,7 @@ const allReview: NextPage = () => {
   //
   return (
     <>
-      <ReviewPageCont>
+      <PageSectionWide>
         <Btn
           type="create"
           btnName="리뷰 작성하기"
@@ -76,7 +76,7 @@ const allReview: NextPage = () => {
             ))}
           </ReviewList>
         )}
-      </ReviewPageCont>
+      </PageSectionWide>
     </>
   );
 };

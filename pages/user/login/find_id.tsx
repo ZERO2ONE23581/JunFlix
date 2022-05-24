@@ -1,12 +1,12 @@
 import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../src/components/Btn';
-import { Input } from '../../src/components/Input';
-import useMutation from '../../src/libs/client/useMutation';
-import { IFindForm, IFindPostRes } from '../../src/types/login';
-import { LoginLink } from '../../src/components/Login/LoginLink';
-import { ErrMsg, Form, PageContainer } from '../../styles/components/default';
-import { FindConfirmModal } from '../../src/components/Modal/FindConfirmModal';
+import { Btn } from '../../../src/components/Btn';
+import { Input } from '../../../src/components/Input';
+import useMutation from '../../../src/libs/client/useMutation';
+import { IFindForm, IFindPostRes } from '../../../src/types/login';
+import { LoginLink } from '../../../src/components/Login/LoginLink';
+import { ErrMsg, Form, PageSection } from '../../../styles/components/default';
+import { FindConfirmModal } from '../../../src/components/Modal/FindConfirmModal';
 
 const Find_Id: NextPage = () => {
   //Post
@@ -41,7 +41,7 @@ const Find_Id: NextPage = () => {
   };
   //
   return (
-    <PageContainer>
+    <PageSection>
       {!tokenData?.ok ? (
         <>
           {!data?.ok ? (
@@ -84,7 +84,7 @@ const Find_Id: NextPage = () => {
       ) : (
         <FindConfirmModal userId={tokenData?.foundUser?.userId} />
       )}
-    </PageContainer>
+    </PageSection>
   );
 };
 
