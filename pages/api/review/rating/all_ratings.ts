@@ -10,6 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       score: true,
       oneline: true,
       recommend: true,
+      movieTitle: true,
       user: { select: { username: true } },
     },
     orderBy: {
