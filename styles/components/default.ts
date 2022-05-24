@@ -91,6 +91,7 @@ export const H1 = styled.h1`
   }
 `;
 export const Flex = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,8 +100,13 @@ export const Flex = styled.div`
 `;
 export const FlexAbsolute = styled(Flex)`
   position: absolute;
-  top: 15px;
+  top: 60px;
   right: 90px;
+`;
+export const FlexAbsPost = styled(Flex)`
+  position: absolute;
+  top: 0;
+  left: 190px;
 `;
 
 export const ErrMsg = styled.span`

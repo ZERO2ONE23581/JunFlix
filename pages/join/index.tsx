@@ -209,7 +209,7 @@ const Join: NextPage = () => {
             )}
           </>
         )}
-        <Btn type="submit" btnName={loading ? 'Loading...' : '회원가입'} />
+        <Btn type="register" btnName={loading ? 'Loading...' : '회원가입'} />
       </Form>
 
       <LoginLink joined={true} />

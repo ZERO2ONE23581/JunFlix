@@ -4,6 +4,7 @@ import useSWR from 'swr';
 interface ProfileResponse {
   ok?: boolean;
   loggedInUser?: User;
+  loggedInUserId?: number;
   error?: string;
 }
 
@@ -13,6 +14,7 @@ export default function useUser() {
   return {
     isloggedIn: data?.ok,
     loggedInUser: data?.loggedInUser,
+    loggedInUserId: data?.loggedInUser?.id,
     isLoading: !data && !error,
   };
 }

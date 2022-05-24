@@ -78,6 +78,7 @@ export const UserIdCheckModal = ({
             />
             <Btn
               type="submit"
+              // className="userId-check"
               btnName={
                 loading
                   ? 'Loading...'

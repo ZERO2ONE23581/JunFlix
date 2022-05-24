@@ -116,7 +116,7 @@ const CreateReview: NextPage = () => {
             name="oneline"
             placeholder="한줄평을 적어보세요."
             errMsg={errors.oneline?.message}
-            register={register('oneline', { maxLength: 20 })}
+            register={register('oneline', { maxLength: 50 })}
           />
           <Input
             label="별점 (최대 별 5개)"

@@ -1,21 +1,20 @@
+import useSWR from 'swr';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
+import { Btn } from '../../../src/components/Btn';
 import { IGetMyReview } from '../../../src/types/review';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import useUser from '../../../src/libs/client/loggedInUser';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DeleteModal } from '../../../src/components/Modal/board/settting/delete/modal';
 import {
-  Article,
   Flex,
   FlexAbsolute,
   ReviewArticle,
   ReviewPageCont,
 } from '../../../styles/components/default';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Btn } from '../../../src/components/Btn';
-import useUser from '../../../src/libs/client/loggedInUser';
-import { useState } from 'react';
-import { DeleteModal } from '../../../src/components/Modal/board/settting/delete/modal';
 
 const myReview: NextPage = () => {
   const router = useRouter();
@@ -37,9 +36,16 @@ const myReview: NextPage = () => {
           deleteClick={() => setDelModal((p) => !p)}
         />
       )}
+
       {ok && review && (
         <ReviewPageCont>
           <ReviewArticle>
+            <Btn
+              btnName="Back"
+              type="review-back-btn"
+              onClick={() => router.push(`/review`)}
+            />
+
             {isloggedIn && review.UserID === loggedInUser?.id && (
               <>
                 <Btn

@@ -14,18 +14,29 @@ import {
   Article,
   BoardPage,
   ErrMsg,
+  Flex,
+  FlexAbsolute,
+  FlexAbsPost,
   OkMsg,
 } from '../../../../../../../styles/components/default';
 import useUser from '../../../../../../../src/libs/client/loggedInUser';
 
 const myPost: NextPage = () => {
   const router = useRouter();
-  const { isloggedIn, loggedInUser } = useUser();
+  const { isloggedIn, loggedInUserId } = useUser();
   const { userId, boardId, postId } = router.query;
-  const security = Boolean(isloggedIn && loggedInUser?.id === Number(userId));
   const { data: postData } = useSWR<IPostRes>(
     `/api/user/${userId}/board/${boardId}/post/${postId}`
   );
+  const post = postData?.post;
+  const loginConfirmed = Boolean(isloggedIn && loggedInUserId === post?.UserID);
+  const manageAllowed = Boolean(
+    loginConfirmed &&
+      Number(userId) === post?.UserID &&
+      Number(boardId) === post?.BoardID &&
+      Number(postId) === post?.id
+  );
+
   const [editPost, { data: editedData, loading }] = useMutation<MutationRes>(
     `/api/user/${userId}/board/${boardId}/post/${postId}/edit`
   );
@@ -43,13 +54,14 @@ const myPost: NextPage = () => {
 
   //Set up
   const [edit, setEdit] = useState(false);
-  const [setting, setSetting] = useState(false);
   const [delModal, setDelModal] = useState(false);
+  const [openSetup, setOpenSetup] = useState(false);
   useEffect(() => {
-    if (postData?.post?.title) setValue('title', postData.post.title);
-    if (postData?.post?.content) setValue('content', postData.post.content);
-    if (postData?.post?.createdAt)
-      setValue('createdAt', postData.post.createdAt);
+    if (post) {
+      if (post.title) setValue('title', post.title);
+      if (post.content) setValue('content', post.content);
+      if (post.createdAt) setValue('createdAt', post.createdAt);
+    }
     if (editedData?.ok)
       setTimeout(() => {
         router.reload();
@@ -61,29 +73,38 @@ const myPost: NextPage = () => {
       <BoardPage>
         {postData && (
           <BoardCont>
-            {security && (
+            <Flex>
               <Btn
-                type="board-setting"
-                onClick={() => setSetting((p) => !p)}
-                btnName="Setting"
+                type="back"
+                btnName="Back"
+                onClick={() => router.push(`/user/${userId}/board/${boardId}`)}
               />
-            )}
-            <>
-              {setting && (
-                <article>
+              <>
+                {manageAllowed && (
                   <Btn
-                    type="post-edit"
-                    onClick={() => setEdit((p) => !p)}
-                    btnName={edit ? 'Back' : 'Edit Post'}
+                    type="board-setting"
+                    onClick={() => setOpenSetup((p) => !p)}
+                    btnName="Setting"
                   />
-                  <Btn
-                    type="post-delete"
-                    onClick={() => setDelModal((p) => !p)}
-                    btnName="Delete"
-                  />
-                </article>
-              )}
-            </>
+                )}
+              </>
+              <FlexAbsPost>
+                {openSetup && (
+                  <>
+                    <Btn
+                      type="edit-post"
+                      onClick={() => setEdit((p) => !p)}
+                      btnName={edit ? 'Back' : 'Edit Post'}
+                    />
+                    <Btn
+                      type="delete-post"
+                      onClick={() => setDelModal((p) => !p)}
+                      btnName="Delete"
+                    />
+                  </>
+                )}
+              </FlexAbsPost>
+            </Flex>
             <>
               {delModal && (
                 <DeleteModal

@@ -15,6 +15,7 @@ import {
   Article,
   BoardPage,
   ErrMsg,
+  Flex,
   OkMsg,
 } from '../../../../../styles/components/default';
 import useUser from '../../../../../src/libs/client/loggedInUser';
@@ -66,22 +67,31 @@ const myBoard: NextPage = () => {
       <BoardPage>
         {okBoard && board && (
           <BoardCont>
-            {isloggedIn && loggedInUser?.id === board?.UserID && (
-              <>
-                <Btn
-                  type="create"
-                  onClick={() => {
-                    router.push(`/user/${userId}/board/${boardId}/post/create`);
-                  }}
-                  btnName="Create Post"
-                />
-                <Btn
-                  type="board-setting"
-                  onClick={() => setSetting((p) => !p)}
-                  btnName="Setting"
-                />
-              </>
-            )}
+            <Flex>
+              <Btn
+                type="back"
+                btnName="Back"
+                onClick={() => router.push(`/`)}
+              />
+              {isloggedIn && loggedInUser?.id === board?.UserID && (
+                <Flex>
+                  <Btn
+                    type="create"
+                    onClick={() => {
+                      router.push(
+                        `/user/${userId}/board/${boardId}/post/create`
+                      );
+                    }}
+                    btnName="Create Post"
+                  />
+                  <Btn
+                    type="board-setting"
+                    onClick={() => setSetting((p) => !p)}
+                    btnName="Setting"
+                  />
+                </Flex>
+              )}
+            </Flex>
             <>
               {setting && (
                 <article>

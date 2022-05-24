@@ -28,7 +28,7 @@ export const MainComponent = () => {
           <>
             <Btn
               type="create"
-              btnName="Create Board"
+              btnName="보드 만들기"
               onClick={() =>
                 router.push(`/user/${loggedInUser?.id}/board/create`)
               }

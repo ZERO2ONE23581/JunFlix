@@ -22,7 +22,13 @@ export const Input = (props: IInputProps) => {
       ) : (
         <InputCont>
           <label htmlFor={props.name}>{props.label}</label>
-          <Textarea {...props.register} name={props.name} cols={10} rows={10} />
+          <Textarea
+            {...props.register}
+            name={props.name}
+            cols={10}
+            rows={10}
+            disabled={props.disabled}
+          />
           {props.errMsg && <ErrMsg>{props.errMsg}</ErrMsg>}
         </InputCont>
       )}

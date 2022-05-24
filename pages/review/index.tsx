@@ -22,7 +22,7 @@ const allReview: NextPage = () => {
       <ReviewPageCont>
         <Btn
           type="create"
-          btnName="Create Review"
+          btnName="리뷰 작성하기"
           onClick={() => {
             router.push(`/review/create`);
           }}

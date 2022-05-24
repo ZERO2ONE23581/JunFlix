@@ -1,16 +1,16 @@
 import {
+  BtnAbsolute,
   BtnCont,
+  BtnContBig,
   BtnContDel,
   BtnContInv,
   BtnContInvDel,
-  BtnContRevSetup,
-  CreateBtn,
-  EditBoardBtn,
-  IdCheck,
+  ReviewSetupBtn,
+  BtnContSmall,
   Logout,
   Theme,
   Toggle,
-  YesOrNo,
+  ReviewBackBtn,
 } from '../../styles/components/btn';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,11 +18,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 interface IBtnProps {
   onClick?: any;
   btnName?: string;
+  className?: string;
   type?: string;
   loading?: boolean;
 }
 
-export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
+export const Btn = ({
+  className,
+  loading,
+  onClick,
+  btnName,
+  type,
+}: IBtnProps) => {
   //
   return (
     <>
@@ -31,55 +38,58 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
           {loading ? 'Loading...' : btnName}
         </BtnCont>
       )}
-      {type === 'edit-setting' && (
-        <BtnContRevSetup onClick={onClick} type="button">
+      {type === 'register' && (
+        <BtnContBig onClick={onClick} type="submit">
           {loading ? 'Loading...' : btnName}
-        </BtnContRevSetup>
+        </BtnContBig>
       )}
-      {type === 'edit-review' && (
+      {type === 'idCheck' && (
+        <BtnContBig type="button" onClick={onClick}>
+          {btnName}
+        </BtnContBig>
+      )}
+      {type === 'edit-setting' && (
+        <ReviewSetupBtn onClick={onClick} type="button">
+          {loading ? 'Loading...' : btnName}
+        </ReviewSetupBtn>
+      )}
+      {(type === 'edit-review' || type === 'edit-post') && (
         <BtnContInv onClick={onClick} type="button">
           {loading ? 'Loading...' : btnName}
         </BtnContInv>
       )}
-      {type === 'delete-review' && (
+      {(type === 'delete-review' || type === 'delete-post') && (
         <BtnContInvDel onClick={onClick} type="button">
           {loading ? 'Loading...' : btnName}
         </BtnContInvDel>
       )}
-      {type === 'move-to-created-board' && (
-        <CreateBtn onClick={onClick} type="button">
-          {loading ? 'Loading...' : btnName}
-        </CreateBtn>
+      {type === 'back' && (
+        <BtnContSmall onClick={onClick} type="button">
+          {btnName}
+        </BtnContSmall>
       )}
-      {(type === 'board-setting' ||
+      {type === 'review-back-btn' && (
+        <ReviewBackBtn onClick={onClick} type="button">
+          {btnName}
+        </ReviewBackBtn>
+      )}
+      {(type === 'move-to-created-board' ||
+        type === 'board-setting' ||
         type === 'board-edit' ||
         type === 'board-delete' ||
         type === 'post-setting' ||
         type === 'post-edit' ||
-        type === 'post-delete') && (
-        <EditBoardBtn onClick={onClick} type="button">
+        type === 'post-delete' ||
+        type === 'create' ||
+        type === 'yesOrno') && (
+        <BtnContSmall onClick={onClick} type="button">
           {loading ? 'Loading...' : btnName}
-        </EditBoardBtn>
-      )}
-      {type === 'create' && (
-        <CreateBtn onClick={onClick} type="button">
-          {loading ? 'Loading...' : btnName}
-        </CreateBtn>
+        </BtnContSmall>
       )}
       {type === 'button' && (
         <BtnCont type="button" onClick={onClick}>
           {btnName}
         </BtnCont>
-      )}
-      {type === 'idCheck' && (
-        <IdCheck type="button" onClick={onClick}>
-          {btnName}
-        </IdCheck>
-      )}
-      {type === 'yesOrno' && (
-        <YesOrNo type="button" onClick={onClick}>
-          {btnName}
-        </YesOrNo>
       )}
       {type === 'logout' && (
         <Logout type="button" onClick={onClick}>

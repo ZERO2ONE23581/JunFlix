@@ -40,26 +40,23 @@ export const BtnAbsolute = styled(BtnCont)`
   align-items: center;
   justify-content: center;
 `;
-export const BtnContRevSetup = styled(BtnAbsolute)`
-  width: 70px;
-  height: 35px;
-  top: 15px;
+export const ReviewBackBtn = styled(BtnAbsolute)`
+  top: 20px;
   right: 25px;
 `;
-export const IdCheck = styled(BtnCont)`
-  width: 100px;
+export const ReviewSetupBtn = styled(BtnAbsolute)`
+  top: 60px;
+  right: 25px;
+  width: 70px;
   height: 35px;
 `;
-export const EditBoardBtn = styled(BtnCont)`
-  width: 100px;
+export const BtnContBig = styled(BtnCont)`
+  margin: 5px auto;
+  width: 100%;
   height: 35px;
 `;
-export const CreateBtn = styled(BtnCont)`
-  width: 100px;
-  height: 35px;
-`;
-export const YesOrNo = styled(BtnCont)`
-  width: 100px;
+export const BtnContSmall = styled(BtnCont)`
+  width: 90px;
   height: 35px;
 `;
 export const LinkBtn = styled.div`
