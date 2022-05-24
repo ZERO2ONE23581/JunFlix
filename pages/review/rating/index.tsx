@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import { Flex } from '../../../styles/components/default';
 
 interface IGetAllRatings {
   ok: boolean;
@@ -25,26 +26,17 @@ const rating: NextPage = () => {
   return (
     <>
       {ok && allRatings && (
-        <ReviewList>
+        <RatingPage>
           {allRatings.map((rating) => (
-            <RatingArticle>
-              <Order>#{allRatings.length - allRatings.indexOf(rating)}</Order>
-              <Wrap>
-                <ReviewTitle>{rating.oneline}</ReviewTitle>
-                <Items>
-                  <ul>
-                    <li>
-                      <span>{rating.movieTitle}</span>
-                      <span> / </span>
-                    </li>
-                    <li>
-                      <span>작성자: </span>
-                      <span>{rating.user.username}</span>
-                    </li>
-                  </ul>
+            <>
+              <OneLine>
+                <article className="wrap">
+                  <Order>
+                    #{allRatings.length - allRatings.indexOf(rating)}
+                  </Order>
                   <Stars>
                     {[1, 2, 3, 4, 5].map((score) => (
-                      <span key={score}>
+                      <span>
                         {rating.score! >= score ? (
                           <FontAwesomeIcon
                             key={score}
@@ -57,76 +49,75 @@ const rating: NextPage = () => {
                       </span>
                     ))}
                   </Stars>
-                </Items>
-              </Wrap>
-            </RatingArticle>
+                  <MovieOneLine>{rating.oneline}</MovieOneLine>
+                  <User> - {rating.user.username}</User>
+                </article>
+                <MovieTitle>{rating.movieTitle.toUpperCase()}</MovieTitle>
+              </OneLine>
+            </>
           ))}
-        </ReviewList>
+        </RatingPage>
       )}
     </>
   );
 };
 export default rating;
-const Stars = styled.span`
-  font-size: 0.8rem;
+
+const OneLine = styled.article`
+  color: black;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: aliceblue;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  .wrap {
+    gap: 15px;
+    display: flex;
+    align-items: center;
+  }
 `;
 
+const MovieOneLine = styled.span`
+  font-size: 1rem;
+  font-weight: 400;
+`;
+const User = styled.span`
+  font-style: italic;
+`;
+const MovieTitle = styled.span`
+  background-color: bisque;
+  border-radius: 5px;
+  padding: 20px 10px;
+  width: 100px;
+  height: 30px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+const Stars = styled.span`
+  font-size: 1.4rem;
+`;
 const Order = styled.span`
   padding: 8px;
   font-size: 0.8rem;
   border-radius: 100%;
-  color: ${(p) => p.theme.color.bg};
-  background-color: ${(p) => p.theme.color.font};
+  color: white;
+  background-color: black;
 `;
 
-const RatingArticle = styled.article`
-  gap: 5px;
-  display: flex;
-  align-items: center;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-  border: ${(p) => p.theme.border};
-  color: ${(p) => p.theme.color.font};
-  box-shadow: ${(p) => p.theme.boxShadow.input};
-  background-color: ${(p) => p.theme.color.bg};
-`;
-
-const ReviewList = styled.article`
+const RatingPage = styled.article`
   width: 100%;
-  padding: 20px;
+  padding: 20px 40px;
   border-radius: 8px;
   border: ${(p) => p.theme.border};
   color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
-`;
-const ReviewTitle = styled.h1`
-  font-size: 1.3rem;
-  font-weight: 500;
-`;
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 0 15px;
-`;
-const Items = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  ul {
-    gap: 5px;
-    display: flex;
-    align-items: center;
-    li {
-      span {
-        font-size: 1rem;
-        font-style: italic;
-        color: ${(p) => p.theme.color.logo};
-      }
-    }
-  }
 `;
