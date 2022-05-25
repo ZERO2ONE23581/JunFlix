@@ -8,7 +8,7 @@ import { Btn } from '../../../../../src/components/Btn';
 import { MutationRes } from '../../../../../src/types/mutation';
 import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
-import { AllPosts } from '../../../../../src/components/Post/AllPost';
+import { AllPostsWithBoard } from '../../../../../src/components/Post/AllPostsWithBoard';
 import { IBoardRes, IEditBoardForm } from '../../../../../src/types/board';
 import { DeleteModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
 import {
@@ -166,7 +166,7 @@ const myBoard: NextPage = () => {
             </form>
           </BoardCont>
         )}
-        <AllPosts userId={userId} boardId={boardId} />
+        <AllPostsWithBoard userId={userId} boardId={boardId} />
       </PageSectionWide>
     </>
   );

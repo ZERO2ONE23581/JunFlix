@@ -3,17 +3,20 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { PageCont } from '../../../styles/components/default';
 import { IAllPostsProps, IGetAllPosts } from '../../types/post';
+import { ItemCont } from './AllPosts';
 
-export const AllPosts = ({ userId, boardId }: IAllPostsProps) => {
-  const { data } = useSWR<IGetAllPosts>(
+export const AllPostsWithBoard = ({ userId, boardId }: IAllPostsProps) => {
+  const { data: posts } = useSWR<IGetAllPosts>(
     `/api/user/${userId}/board/${boardId}/post/all_posts`
   );
+  const postOk = posts?.ok;
+  const postsWithBoard = posts?.allPosts;
   //
   return (
     <PageCont>
-      {data?.ok && data.allPosts && (
+      {postOk && postsWithBoard && (
         <ItemCont>
-          {data.allPosts.map((post) => (
+          {postsWithBoard.map((post) => (
             <Link
               key={post.id}
               href={`/user/${post.UserID}/board/${post.BoardID}/post/${post.id}`}
@@ -32,12 +35,7 @@ export const AllPosts = ({ userId, boardId }: IAllPostsProps) => {
     </PageCont>
   );
 };
-const ItemCont = styled.article`
-  margin-top: 15px;
-  gap: 15px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-`;
+
 const Item = styled.div`
   border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};

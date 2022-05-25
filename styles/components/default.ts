@@ -1,5 +1,12 @@
 import styled from '@emotion/styled';
 
+export const H1 = styled.h1`
+  font-weight: 700;
+  font-size: 2.5rem;
+  text-align: center;
+  font-style: italic;
+`;
+
 export const BodyBg = styled.div`
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => p.theme.color.font};
@@ -8,6 +15,9 @@ export const BodyBg = styled.div`
   left: 0;
   z-index: -999;
   width: 100vw;
+  height: 100vh;
+`;
+export const Fullheight = styled.section`
   height: 100vh;
 `;
 export const PageCont = styled.section`
@@ -85,12 +95,6 @@ export const Form = styled.form`
 `;
 export const ReviewForm = styled(Form)`
   width: 100%;
-`;
-export const H1 = styled.h1`
-  span {
-    font-weight: 500;
-    font-style: italic;
-  }
 `;
 export const Flex = styled.div`
   position: relative;
