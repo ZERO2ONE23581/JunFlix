@@ -15,7 +15,7 @@ export const NavModal = ({ username }: INavModalProps) => {
     <>
       {loggedInUser && (
         <NavCont>
-          <Wrapper>
+          <NavWrapper>
             <li>
               <Link href="/mypage">
                 <a>{username}'s page</a>
@@ -33,14 +33,14 @@ export const NavModal = ({ username }: INavModalProps) => {
                 onClick={() => router.replace('/api/user/logout')}
               />
             </li>
-          </Wrapper>
+          </NavWrapper>
         </NavCont>
       )}
     </>
   );
 };
 
-const Wrapper = styled.ul`
+export const NavWrapper = styled.ul`
   padding: 5px 0;
   display: flex;
   flex-direction: column;
@@ -60,14 +60,9 @@ const Wrapper = styled.ul`
     color: ${(p) => p.theme.color.font};
     &:hover {
       background-color: ${(p) => p.theme.color.font};
-      color: ${(p) => p.theme.color.bg};
-      a,
-      button {
-        color: ${(p) => p.theme.color.logo};
-      }
+      color: ${(p) => p.theme.color.logo};
     }
-    a,
-    button {
+    span {
       font-size: 1rem;
     }
   }

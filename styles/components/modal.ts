@@ -41,5 +41,5 @@ export const ModalClose = styled.article`
   left: 0;
 `;
 export const NavModalClose = styled(ModalClose)`
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.3);
 `;

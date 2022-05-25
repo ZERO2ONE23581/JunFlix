@@ -4,15 +4,16 @@ import styled from '@emotion/styled';
 import { LogoSvg } from '../../Svg/Logo';
 import { NavModal } from '../../Modal/NavModal';
 import useUser from '../../../libs/client/loggedInUser';
+import { NavCreateModal } from '../../Modal/NavCreateModal';
+import { NavBoardModal } from '../../Modal/NavBoardModal';
 import { NavModalClose } from '../../../../styles/components/modal';
 
 export const Header = () => {
   const { loggedInUser, isloggedIn, loggedInUserId } = useUser();
   const username = loggedInUser?.username;
   const [open, setOpen] = useState(false);
-  const toggleModal = () => {
-    setOpen((p) => !p);
-  };
+  const [openCreate, setOpenCreate] = useState(false);
+  const [openBoard, setOpenBoard] = useState(false);
   //
   return (
     <Cont>
@@ -27,28 +28,33 @@ export const Header = () => {
           </Logo>
           <LinkStyle>
             <Link href={`/`}>
-              <a>Home</a>
+              <Anchor>Home</Anchor>
             </Link>
             <Link href={`/movie/info`}>
-              <a>Movies</a>
+              <Anchor>Movies</Anchor>
             </Link>
+            <AnchorBtn onClick={() => setOpenBoard((p) => !p)}>
+              Board
+              {openBoard && <NavBoardModal loggedInUserId={loggedInUserId} />}
+            </AnchorBtn>
             <Link href={`/boards`}>
-              <a>Boards</a>
+              <Anchor>Posts</Anchor>
             </Link>
             <Link href={`/review`}>
-              <a>Review</a>
+              <Anchor>Review</Anchor>
             </Link>
             <Link href={`/review/rating`}>
-              <a>Rating</a>
+              <Anchor>Rating</Anchor>
             </Link>
-            <Link href={`/user/${loggedInUser?.id}/board/create`}>
-              <a>Create</a>
-            </Link>
+            <AnchorBtn onClick={() => setOpenCreate((p) => !p)}>
+              Create
+              {openCreate && <NavCreateModal loggedInUserId={loggedInUserId} />}
+            </AnchorBtn>
           </LinkStyle>
         </LeftWrap>
 
         {isloggedIn ? (
-          <Profile onClick={toggleModal}>
+          <Profile onClick={() => setOpen((p) => !p)}>
             {open && <NavModal username={username} />}
           </Profile>
         ) : (
@@ -62,7 +68,13 @@ export const Header = () => {
           </div>
         )}
       </NavBar>
-      {open && <NavModalClose onClick={() => setOpen(false)} />}
+      {open ? (
+        <NavModalClose onClick={() => setOpen(false)} />
+      ) : openCreate ? (
+        <NavModalClose onClick={() => setOpenCreate(false)} />
+      ) : (
+        openBoard && <NavModalClose onClick={() => setOpenBoard(false)} />
+      )}
     </Cont>
   );
 };
@@ -71,6 +83,26 @@ const LeftWrap = styled.article`
   gap: 50px;
   display: flex;
   align-content: center;
+`;
+export const AnchorBtn = styled.span`
+  cursor: pointer;
+  position: relative;
+  background: none;
+  border: none;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-underline-offset: 8px;
+`;
+const Anchor = styled.a`
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: ${(p) => p.theme.color.font};
+  text-underline-offset: 8px;
+  &:hover {
+    color: ${(p) => p.theme.color.logo};
+    text-decoration: solid underline 3px ${(p) => p.theme.color.logo};
+  }
 `;
 const LinkStyle = styled.div`
   width: 100%;
