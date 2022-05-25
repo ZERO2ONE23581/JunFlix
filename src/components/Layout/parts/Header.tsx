@@ -9,15 +9,17 @@ import { NavBoardModal } from '../../Modal/NavBoardModal';
 import { NavModalClose } from '../../../../styles/components/modal';
 import { NavPostModal } from '../../Modal/NavPostModal';
 import { NavReviewModal } from '../../Modal/NavReviewModal';
+import { NavMovieModal } from '../../Modal/NavMovieModal';
 
 export const Header = () => {
   const { loggedInUser, isloggedIn, loggedInUserId } = useUser();
   const username = loggedInUser?.username;
   const [open, setOpen] = useState(false);
-  const [openCreate, setOpenCreate] = useState(false);
+  const [openMovie, setOpenMovie] = useState(false);
   const [openBoard, setOpenBoard] = useState(false);
   const [openPost, setOpenPost] = useState(false);
   const [openReview, setOpenReview] = useState(false);
+  const [openCreate, setOpenCreate] = useState(false);
   //
   return (
     <Cont>
@@ -31,12 +33,10 @@ export const Header = () => {
             </Link>
           </Logo>
           <LinkStyle>
-            <Link href={`/`}>
-              <Anchor>Home</Anchor>
-            </Link>
-            <Link href={`/movie/info`}>
-              <Anchor>Movies</Anchor>
-            </Link>
+            <AnchorBtn onClick={() => setOpenMovie((p) => !p)}>
+              Movies
+              {openMovie && <NavMovieModal loggedInUserId={loggedInUserId} />}
+            </AnchorBtn>
             <AnchorBtn onClick={() => setOpenBoard((p) => !p)}>
               Board
               {openBoard && <NavBoardModal loggedInUserId={loggedInUserId} />}
@@ -49,9 +49,6 @@ export const Header = () => {
               Review
               {openReview && <NavReviewModal loggedInUserId={loggedInUserId} />}
             </AnchorBtn>
-            <Link href={`/review/rating`}>
-              <Anchor>Rating</Anchor>
-            </Link>
             <AnchorBtn onClick={() => setOpenCreate((p) => !p)}>
               Create
               {openCreate && <NavCreateModal loggedInUserId={loggedInUserId} />}
@@ -84,6 +81,8 @@ export const Header = () => {
         <NavModalClose onClick={() => setOpenPost(false)} />
       ) : openReview ? (
         <NavModalClose onClick={() => setOpenReview(false)} />
+      ) : openMovie ? (
+        <NavModalClose onClick={() => setOpenMovie(false)} />
       ) : null}
     </Cont>
   );
@@ -94,7 +93,7 @@ const LeftWrap = styled.article`
   display: flex;
   align-content: center;
 `;
-export const AnchorBtn = styled.span`
+export const AnchorBtn = styled.button`
   cursor: pointer;
   position: relative;
   background: none;
@@ -119,7 +118,7 @@ const LinkStyle = styled.div`
   gap: 40px;
   display: flex;
   align-items: center;
-  a {
+  button {
     font-weight: 700;
     font-size: 1.2rem;
     color: ${(p) => p.theme.color.font};

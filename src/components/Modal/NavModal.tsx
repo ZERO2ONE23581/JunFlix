@@ -16,23 +16,27 @@ export const NavModal = ({ username }: INavModalProps) => {
       {loggedInUser && (
         <NavCont>
           <NavWrapper>
-            <li>
-              <Link href="/mypage">
-                <a>{username}'s page</a>
-              </Link>
-            </li>
-            <li>
-              <Link href={`/user/${loggedInUser.id}/edit`}>
-                <a>Edit Profile</a>
-              </Link>
-            </li>
-            <li>
-              <Btn
-                type="logout"
-                btnName="Sign Out"
-                onClick={() => router.replace('/api/user/logout')}
-              />
-            </li>
+            <Link href="/mypage">
+              <a>
+                <li>
+                  <span>{username}'s page</span>
+                </li>
+              </a>
+            </Link>
+            <Link href={`/user/${loggedInUser.id}/edit`}>
+              <a>
+                <li>
+                  <span>Edit Profile</span>
+                </li>
+              </a>
+            </Link>
+            <Link href={`/api/user/logout`}>
+              <a>
+                <li>
+                  <span>Sign Out</span>
+                </li>
+              </a>
+            </Link>
           </NavWrapper>
         </NavCont>
       )}
@@ -41,41 +45,40 @@ export const NavModal = ({ username }: INavModalProps) => {
 };
 
 export const NavWrapper = styled.ul`
-  padding: 5px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  li {
-    padding: 10px;
+  a {
     width: 100%;
-    height: 40px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: ${(p) => p.theme.color.bg};
-    color: ${(p) => p.theme.color.font};
-    &:hover {
-      background-color: ${(p) => p.theme.color.font};
-      color: ${(p) => p.theme.color.logo};
-    }
-    span {
-      font-size: 1rem;
+    padding: 5px 0;
+    li {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: ${(p) => p.theme.color.font};
+      background-color: ${(p) => p.theme.color.bg};
+      &:hover {
+        color: ${(p) => p.theme.color.logo};
+        background-color: ${(p) => p.theme.color.font};
+      }
+      span {
+        font-size: 1rem;
+      }
     }
   }
 `;
 
-const NavCont = styled.nav`
-  background-color: ${(p) => p.theme.color.bg};
-  color: ${(p) => p.theme.color.font};
+export const NavCont = styled.nav`
   z-index: 999;
-  position: absolute;
   top: 50px;
-  right: -20px;
-  width: 150px;
+  right: -40px;
+  position: absolute;
+  width: 130px;
   border-radius: 5px;
   padding-bottom: 3px;
+  background-color: ${(p) => p.theme.color.bg};
 `;
