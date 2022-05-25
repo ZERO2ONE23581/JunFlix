@@ -25,32 +25,28 @@ export const Header = () => {
               </a>
             </Link>
           </Logo>
-          <NavLink>
+          <LinkStyle>
             <Link href={`/`}>
               <a>Home</a>
             </Link>
-          </NavLink>
-          <NavLink>
-            <Link href={`/news`}>
-              <a>News</a>
+            <Link href={`/movie/info`}>
+              <a>Movies</a>
             </Link>
-          </NavLink>
-          <NavLink>
             <Link href={`/boards`}>
               <a>Boards</a>
             </Link>
-          </NavLink>
-          <NavLink>
             <Link href={`/review`}>
               <a>Review</a>
             </Link>
-          </NavLink>
-          <NavLink>
             <Link href={`/review/rating`}>
               <a>Rating</a>
             </Link>
-          </NavLink>
+            <Link href={`/user/${loggedInUser?.id}/board/create`}>
+              <a>Create</a>
+            </Link>
+          </LinkStyle>
         </LeftWrap>
+
         {isloggedIn ? (
           <Profile onClick={toggleModal}>
             {open && <NavModal username={username} />}
@@ -70,18 +66,25 @@ export const Header = () => {
     </Cont>
   );
 };
-const NavLink = styled.div`
+const LeftWrap = styled.article`
+  width: 800px;
+  gap: 50px;
   display: flex;
-  justify-content: center;
+  align-content: center;
+`;
+const LinkStyle = styled.div`
+  width: 100%;
+  gap: 40px;
+  display: flex;
   align-items: center;
   a {
-    background-color: ${(p) => p.theme.color.font};
-    color: ${(p) => p.theme.color.bg};
-    border-radius: 20px;
-    padding: 10px 15px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: ${(p) => p.theme.color.font};
+    text-underline-offset: 8px;
     &:hover {
-      background-color: ${(p) => p.theme.color.logo};
-      color: whitesmoke;
+      color: ${(p) => p.theme.color.logo};
+      text-decoration: solid underline 3px ${(p) => p.theme.color.logo};
     }
   }
 `;
@@ -93,12 +96,7 @@ const Logo = styled.div`
     }
   }
 `;
-const LeftWrap = styled.article`
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  gap: 20px;
-`;
+
 const Profile = styled.article`
   width: 40px;
   height: 40px;

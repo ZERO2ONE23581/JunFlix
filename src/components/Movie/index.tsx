@@ -48,37 +48,43 @@ export const MovieInfo = ({ type }: IMovieInfoProps) => {
         </h1>
         <Grid>
           {data &&
-            data.slice(0, 5).map((info: object | any) => (
-              <Item key={info.id}>
-                <MovieInfoWrap>
-                  <img
+            data
+              .slice(5, 10)
+              .reverse()
+              .map((info: object | any) => (
+                <Item key={info.id}>
+                  <MovieInfoWrap>
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${info.poster_path}`}
+                      alt="영화포스터1"
+                    />
+                    {/* <img
                     src={`https://image.tmdb.org/t/p/original${info.backdrop_path}`}
-                    // src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-                    alt="영화포스터"
-                  />
-                  <InfoList>
-                    {info.original_title && (
+                    alt="영화포스터2"
+                  /> */}
+                    <InfoList>
+                      {info.original_title && (
+                        <li>
+                          <h2>{info.original_title}</h2>
+                        </li>
+                      )}
+                      {info.original_name && (
+                        <li>
+                          <h2>{info.original_name}</h2>
+                        </li>
+                      )}
                       <li>
-                        <h2>{info.original_title}</h2>
+                        <span>Rating: </span>
+                        <Rating>{info.vote_average}</Rating>
                       </li>
-                    )}
-                    {info.original_name && (
                       <li>
-                        <h2>{info.original_name}</h2>
+                        <span>Overview: </span>
+                        {/* <p>{movie.overview}</p> */}
                       </li>
-                    )}
-                    <li>
-                      <span>Rating: </span>
-                      <Rating>{info.vote_average}</Rating>
-                    </li>
-                    <li>
-                      <span>Overview: </span>
-                      {/* <p>{movie.overview}</p> */}
-                    </li>
-                  </InfoList>
-                </MovieInfoWrap>
-              </Item>
-            ))}
+                    </InfoList>
+                  </MovieInfoWrap>
+                </Item>
+              ))}
         </Grid>
       </Cont>
     </>
@@ -116,7 +122,7 @@ const Grid = styled.article`
 const MovieInfoWrap = styled.div`
   img {
     width: 100%;
-    height: 200px;
+    height: 330px;
   }
 `;
 const Item = styled.article`

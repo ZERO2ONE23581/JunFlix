@@ -12,12 +12,14 @@ export const BodyBg = styled.div`
 `;
 
 export const PageCont = styled.section`
-  padding: 20px 5%;
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => p.theme.color.font};
-  width: 100vw;
-  height: 100vh;
+  /* border: 3px solid red; */
+  /* padding: 20px 5%; */
+  /* width: 100vw; */
+  /* height: 100vh; */
 `;
+export const BoardPageCont = styled(PageCont)``;
 
 export const PageSection = styled.section`
   background-color: ${(p) => p.theme.color.bg};
