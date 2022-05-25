@@ -7,6 +7,8 @@ import useUser from '../../../libs/client/loggedInUser';
 import { NavCreateModal } from '../../Modal/NavCreateModal';
 import { NavBoardModal } from '../../Modal/NavBoardModal';
 import { NavModalClose } from '../../../../styles/components/modal';
+import { NavPostModal } from '../../Modal/NavPostModal';
+import { NavReviewModal } from '../../Modal/NavReviewModal';
 
 export const Header = () => {
   const { loggedInUser, isloggedIn, loggedInUserId } = useUser();
@@ -14,6 +16,8 @@ export const Header = () => {
   const [open, setOpen] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
   const [openBoard, setOpenBoard] = useState(false);
+  const [openPost, setOpenPost] = useState(false);
+  const [openReview, setOpenReview] = useState(false);
   //
   return (
     <Cont>
@@ -37,12 +41,14 @@ export const Header = () => {
               Board
               {openBoard && <NavBoardModal loggedInUserId={loggedInUserId} />}
             </AnchorBtn>
-            <Link href={`/boards`}>
-              <Anchor>Posts</Anchor>
-            </Link>
-            <Link href={`/review`}>
-              <Anchor>Review</Anchor>
-            </Link>
+            <AnchorBtn onClick={() => setOpenPost((p) => !p)}>
+              Post
+              {openPost && <NavPostModal loggedInUserId={loggedInUserId} />}
+            </AnchorBtn>
+            <AnchorBtn onClick={() => setOpenReview((p) => !p)}>
+              Review
+              {openReview && <NavReviewModal loggedInUserId={loggedInUserId} />}
+            </AnchorBtn>
             <Link href={`/review/rating`}>
               <Anchor>Rating</Anchor>
             </Link>
@@ -72,9 +78,13 @@ export const Header = () => {
         <NavModalClose onClick={() => setOpen(false)} />
       ) : openCreate ? (
         <NavModalClose onClick={() => setOpenCreate(false)} />
-      ) : (
-        openBoard && <NavModalClose onClick={() => setOpenBoard(false)} />
-      )}
+      ) : openBoard ? (
+        <NavModalClose onClick={() => setOpenBoard(false)} />
+      ) : openPost ? (
+        <NavModalClose onClick={() => setOpenPost(false)} />
+      ) : openReview ? (
+        <NavModalClose onClick={() => setOpenReview(false)} />
+      ) : null}
     </Cont>
   );
 };
