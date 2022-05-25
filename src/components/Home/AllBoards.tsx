@@ -1,6 +1,10 @@
 import { Btn } from '../Btn';
 import styled from '@emotion/styled';
-import { HomeArticle, PageCont } from '../../../styles/components/default';
+import {
+  BoardPageCont,
+  HomeArticle,
+  PageCont,
+} from '../../../styles/components/default';
 import useSWR from 'swr';
 import { Board, User } from '@prisma/client';
 import Link from 'next/link';
@@ -15,27 +19,24 @@ interface IBoard extends Board {
   user: User;
 }
 
-export const MainComponent = () => {
+export const AllBoards = () => {
   const router = useRouter();
   const { isloggedIn, loggedInUser } = useUser();
   const { data } = useSWR<IGetAllBoards>(`/api/board/all_boards`);
   //
   return (
-    <PageCont>
-      <HomeArticle>
-        <h1>WELCOME TO JUNFLIX!</h1>
-        {isloggedIn && (
-          <>
-            <Btn
-              type="create"
-              btnName="보드 만들기"
-              onClick={() =>
-                router.push(`/user/${loggedInUser?.id}/board/create`)
-              }
-            />
-          </>
-        )}
-      </HomeArticle>
+    <BoardPageCont>
+      {isloggedIn && (
+        <>
+          <Btn
+            type="create"
+            btnName="보드 만들기"
+            onClick={() =>
+              router.push(`/user/${loggedInUser?.id}/board/create`)
+            }
+          />
+        </>
+      )}
       {data?.ok && data.allBoards && (
         <ItemCont>
           {data.allBoards.map((board) => (
@@ -68,7 +69,7 @@ export const MainComponent = () => {
           ))}
         </ItemCont>
       )}
-    </PageCont>
+    </BoardPageCont>
   );
 };
 const ItemCont = styled.article`
