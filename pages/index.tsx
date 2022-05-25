@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
-import { AllBoards } from '../src/components/Home/AllBoards';
+import { AllBoards } from '../src/components/Board';
 import { Title } from '../src/components/Layout/parts/Title';
 import { MovieInfo } from '../src/components/Movie';
 
@@ -9,20 +9,10 @@ const Home: NextPage = () => {
   return (
     <Cont>
       <Title title="홈" />
-      <h2>WELCOME TO JUNFLIX!</h2>
       <MovieInfo type="trending" />
       <AllBoards />
     </Cont>
   );
 };
 export default Home;
-const Cont = styled.section`
-  padding: 15px 100px;
-  h2 {
-    margin: 10px auto;
-    font-style: italic;
-    font-size: 2rem;
-    font-weight: bold;
-    color: ${(p) => p.theme.color.logo};
-  }
-`;
+const Cont = styled.section``;

@@ -1,11 +1,12 @@
 import type { NextPage } from 'next';
+import { AllBoards } from '../../src/components/Board';
 import { Title } from '../../src/components/Layout/parts/Title';
 
 const News: NextPage = () => {
   return (
     <>
-      <Title title="보드페이지" />
-      <h1>보드 페이지</h1>
+      <Title title="보드 둘러보기" />
+      <AllBoards />
     </>
   );
 };

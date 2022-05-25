@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { MoviePageCont } from '../../../styles/components/default';
 
 interface IMovieInfoProps {
   type?: string;
@@ -37,57 +38,55 @@ export const MovieInfo = ({ type }: IMovieInfoProps) => {
       setData(results);
   }, [trending, nowPlaying, upcoming, topRated, tvShows]);
   return (
-    <>
-      <Cont>
-        <h1>
-          {type === 'trending' && <span>TRENDING</span>}
-          {type === 'nowPlaying' && <span>NOW PLAYING</span>}
-          {type === 'tvShows' && <span>TV SHOWS</span>}
-          {type === 'upcoming' && <span>UPCOMING</span>}
-          {type === 'topRated' && <span>TOP RATED</span>}
-        </h1>
-        <Grid>
-          {data &&
-            data
-              .slice(5, 10)
-              .reverse()
-              .map((info: object | any) => (
-                <Item key={info.id}>
-                  <MovieInfoWrap>
-                    <img
-                      src={`https://image.tmdb.org/t/p/original${info.poster_path}`}
-                      alt="영화포스터1"
-                    />
-                    {/* <img
+    <MoviePageCont>
+      <h1>
+        {type === 'trending' && <span>TRENDING</span>}
+        {type === 'nowPlaying' && <span>NOW PLAYING</span>}
+        {type === 'tvShows' && <span>TV SHOWS</span>}
+        {type === 'upcoming' && <span>UPCOMING</span>}
+        {type === 'topRated' && <span>TOP RATED</span>}
+      </h1>
+      <Grid>
+        {data &&
+          data
+            .slice(5, 10)
+            .reverse()
+            .map((info: object | any) => (
+              <Item key={info.id}>
+                <MovieInfoWrap>
+                  <img
+                    src={`https://image.tmdb.org/t/p/original${info.poster_path}`}
+                    alt="영화포스터1"
+                  />
+                  {/* <img
                     src={`https://image.tmdb.org/t/p/original${info.backdrop_path}`}
                     alt="영화포스터2"
                   /> */}
-                    <InfoList>
-                      {info.original_title && (
-                        <li>
-                          <h2>{info.original_title}</h2>
-                        </li>
-                      )}
-                      {info.original_name && (
-                        <li>
-                          <h2>{info.original_name}</h2>
-                        </li>
-                      )}
+                  <InfoList>
+                    {info.original_title && (
                       <li>
-                        <span>Rating: </span>
-                        <Rating>{info.vote_average}</Rating>
+                        <h2>{info.original_title}</h2>
                       </li>
+                    )}
+                    {info.original_name && (
                       <li>
-                        <span>Overview: </span>
-                        {/* <p>{movie.overview}</p> */}
+                        <h2>{info.original_name}</h2>
                       </li>
-                    </InfoList>
-                  </MovieInfoWrap>
-                </Item>
-              ))}
-        </Grid>
-      </Cont>
-    </>
+                    )}
+                    <li>
+                      <span>Rating: </span>
+                      <Rating>{info.vote_average}</Rating>
+                    </li>
+                    <li>
+                      <span>Overview: </span>
+                      {/* <p>{movie.overview}</p> */}
+                    </li>
+                  </InfoList>
+                </MovieInfoWrap>
+              </Item>
+            ))}
+      </Grid>
+    </MoviePageCont>
   );
 };
 const Rating = styled.span`
@@ -129,16 +128,4 @@ const Item = styled.article`
   padding: 20px;
   border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-`;
-const Cont = styled.section`
-  padding: 20px 60px;
-  border: ${(p) => p.theme.border};
-  color: ${(p) => p.theme.color.font};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background-color: ${(p) => p.theme.color.bg};
-  h1 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-  }
 `;

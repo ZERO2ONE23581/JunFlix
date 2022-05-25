@@ -4,7 +4,7 @@ import { Title } from '../../src/components/Layout/parts/Title';
 const News: NextPage = () => {
   return (
     <>
-      <Title title="게시물 둘러보기" />
+      <Title title="포스트 둘러보기" />
       <h1>포스트 페이지</h1>
     </>
   );

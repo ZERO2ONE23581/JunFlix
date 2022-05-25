@@ -1,15 +1,11 @@
-import { Btn } from '../Btn';
-import styled from '@emotion/styled';
-import {
-  BoardPageCont,
-  HomeArticle,
-  PageCont,
-} from '../../../styles/components/default';
 import useSWR from 'swr';
-import { Board, User } from '@prisma/client';
+import { Btn } from '../Btn';
 import Link from 'next/link';
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { Board, User } from '@prisma/client';
 import useUser from '../../libs/client/loggedInUser';
+import { BoardPageCont, PageCont } from '../../../styles/components/default';
 
 interface IGetAllBoards {
   ok: boolean;
@@ -76,7 +72,7 @@ const ItemCont = styled.article`
   margin-top: 15px;
   gap: 15px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 `;
 const Item = styled.div`
   border: ${(p) => p.theme.border};

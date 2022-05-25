@@ -10,17 +10,21 @@ export const BodyBg = styled.div`
   width: 100vw;
   height: 100vh;
 `;
-
 export const PageCont = styled.section`
-  background-color: ${(p) => p.theme.color.bg};
+  padding: 20px 70px;
   color: ${(p) => p.theme.color.font};
-  /* border: 3px solid red; */
-  /* padding: 20px 5%; */
-  /* width: 100vw; */
-  /* height: 100vh; */
+  background-color: ${(p) => p.theme.color.bg};
 `;
-export const BoardPageCont = styled(PageCont)``;
-
+export const BoardPageCont = styled(PageCont)`
+  /* border: 3px solid red; */
+`;
+export const MoviePageCont = styled(PageCont)`
+  h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+`;
 export const PageSection = styled.section`
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => p.theme.color.font};
