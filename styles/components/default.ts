@@ -6,6 +6,13 @@ export const H1 = styled.h1`
   text-align: center;
   font-style: italic;
 `;
+export const H2 = styled.h2`
+  margin: 20px auto;
+  font-weight: 500;
+  font-size: 1.4rem;
+  text-align: center;
+  color: blue;
+`;
 
 export const BodyBg = styled.div`
   background-color: ${(p) => p.theme.color.bg};
@@ -26,7 +33,19 @@ export const PageCont = styled.section`
   background-color: ${(p) => p.theme.color.bg};
 `;
 export const BoardPageCont = styled(PageCont)`
-  /* border: 3px solid red; */
+  .wrap {
+    gap: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h2 {
+      font-weight: 700;
+      font-size: 1.5rem;
+      text-align: center;
+      font-style: italic;
+      color: ${(p) => p.theme.color.logo};
+    }
+  }
 `;
 export const MoviePageCont = styled(PageCont)`
   h1 {

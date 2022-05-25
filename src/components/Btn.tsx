@@ -63,7 +63,7 @@ export const Btn = ({
           {loading ? 'Loading...' : btnName}
         </BtnContInvDel>
       )}
-      {type === 'back' && (
+      {(type === 'back' || type === 'login') && (
         <BtnContSmall onClick={onClick} type="button">
           {btnName}
         </BtnContSmall>

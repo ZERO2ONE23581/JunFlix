@@ -14,6 +14,6 @@ async function handler(
   const { user } = req.session;
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   await req.session.destroy();
-  return res.redirect('/login');
+  return res.redirect('/user/login');
 }
 export default withApiSession(withHandler({ methods: ['GET'], handler }));
