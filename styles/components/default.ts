@@ -55,9 +55,9 @@ export const MoviePageCont = styled(PageCont)`
   }
 `;
 export const PageSection = styled.section`
+  padding: 100px 200px;
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => p.theme.color.font};
-  padding: 100px 200px;
   display: flex;
   flex-direction: column;
   justify-content: center;

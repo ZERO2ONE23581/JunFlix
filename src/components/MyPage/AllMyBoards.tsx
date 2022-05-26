@@ -16,7 +16,7 @@ interface IBoard extends Board {
   user: User;
 }
 
-export const MyBoards = () => {
+export const AllMyBoards = () => {
   const router = useRouter();
   const { isloggedIn, loggedInUser, loggedInUserId } = useUser();
   const { data: boards } = useSWR<IGetAllBoards>(

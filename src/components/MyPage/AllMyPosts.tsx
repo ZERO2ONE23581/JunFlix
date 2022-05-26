@@ -7,23 +7,23 @@ import { Board, Post, User } from '@prisma/client';
 interface IGetAllPosts {
   ok: boolean;
   error?: string;
-  allPosts?: IPostWithUserNBoard[];
+  allMyPosts?: IPostWithUserNBoard[];
 }
 interface IPostWithUserNBoard extends Post {
   user: User;
   board: Board;
 }
 
-export const AllPosts = () => {
-  const { data: posts } = useSWR<IGetAllPosts>(`/api/post/all_posts`);
+export const AllMyPosts = () => {
+  const { data: posts } = useSWR<IGetAllPosts>(`/api/post/my_posts`);
   const postOk = posts?.ok;
-  const allPosts = posts?.allPosts;
+  const myPosts = posts?.allMyPosts;
   //
   return (
     <PageCont>
-      {postOk && allPosts && (
+      {postOk && myPosts && (
         <ItemCont>
-          {allPosts.map((post) => (
+          {myPosts.map((post) => (
             <Link
               key={post.id}
               href={`/user/${post.UserID}/board/${post.BoardID}/post/${post.id}`}

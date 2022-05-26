@@ -16,6 +16,7 @@ export interface IGetMyReview {
 export interface IGetAllReviews {
   ok?: true;
   allReviews?: IReviewWithUser[];
+  allMyReviews?: IReviewWithUser[];
 }
 export interface IReviewWithUser extends Review {
   user: User;
