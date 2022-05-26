@@ -1,54 +1,49 @@
-import styled from '@emotion/styled';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { AnchorBtn } from '../Layout/parts/Header';
+import styled from '@emotion/styled';
 import { NavWrapper } from './NavModal';
 
-interface INavModalProps {
-  loggedInUserId?: number;
-}
-export const NavMovieModal = ({ loggedInUserId }: INavModalProps) => {
+export const NavMovieModal = () => {
   //
   return (
     <>
       <NavCont>
         <NavWrapper>
-          <Link href={`/movie/info`}>
+          <Link href={`/movie/all`}>
             <a>
               <li>
                 <span>All</span>
               </li>
             </a>
           </Link>
-          <Link href={`/movie/info`}>
+          <Link href={`/movie/trends`}>
             <a>
               <li>
                 <span>Trends</span>
               </li>
             </a>
           </Link>
-          <Link href={`/movie/info`}>
+          <Link href={`/movie/now-playing`}>
             <a>
               <li>
                 <span>Now Playing</span>
               </li>
             </a>
           </Link>
-          <Link href={`/movie/info`}>
+          <Link href={`/movie/tv-shows`}>
             <a>
               <li>
                 <span>Tv Shows</span>
               </li>
             </a>
           </Link>
-          <Link href={`/movie/info`}>
+          <Link href={`/movie/upcoming`}>
             <a>
               <li>
                 <span>Upcoming</span>
               </li>
             </a>
           </Link>
-          <Link href={`/movie/info`}>
+          <Link href={`/movie/top-rated`}>
             <a>
               <li>
                 <span>Top Rated</span>

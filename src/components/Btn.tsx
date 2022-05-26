@@ -1,5 +1,4 @@
 import {
-  BtnAbsolute,
   BtnCont,
   BtnContBig,
   BtnContDel,
@@ -23,13 +22,7 @@ interface IBtnProps {
   loading?: boolean;
 }
 
-export const Btn = ({
-  className,
-  loading,
-  onClick,
-  btnName,
-  type,
-}: IBtnProps) => {
+export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
   //
   return (
     <>
@@ -97,9 +90,12 @@ export const Btn = ({
         </Logout>
       )}
       {type === 'theme' && (
-        <Theme type="button" onClick={onClick}>
+        <BtnContSmall type="button" onClick={onClick}>
           {btnName}
-        </Theme>
+        </BtnContSmall>
+        // <Theme type="button" onClick={onClick}>
+        //   {btnName}
+        // </Theme>
       )}
       {type === 'delete' && (
         <BtnContDel type="button" onClick={onClick}>

@@ -10,8 +10,9 @@ import { NavModalClose } from '../../../../styles/components/modal';
 import { NavPostModal } from '../../Modal/NavPostModal';
 import { NavReviewModal } from '../../Modal/NavReviewModal';
 import { NavMovieModal } from '../../Modal/NavMovieModal';
+import { Btn } from '../../Btn';
 
-export const Header = () => {
+export const Header = ({ onClick, btnName }: any) => {
   const { loggedInUser, isloggedIn, loggedInUserId } = useUser();
   const username = loggedInUser?.username;
   const [open, setOpen] = useState(false);
@@ -24,7 +25,7 @@ export const Header = () => {
   return (
     <Cont>
       <NavBar>
-        <LeftWrap>
+        <MainNav>
           <Logo>
             <Link href="/">
               <a>
@@ -35,7 +36,7 @@ export const Header = () => {
           <LinkStyle>
             <AnchorBtn onClick={() => setOpenMovie((p) => !p)}>
               Movies
-              {openMovie && <NavMovieModal loggedInUserId={loggedInUserId} />}
+              {openMovie && <NavMovieModal />}
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenBoard((p) => !p)}>
               Board
@@ -54,40 +55,52 @@ export const Header = () => {
               {openCreate && <NavCreateModal loggedInUserId={loggedInUserId} />}
             </AnchorBtn>
           </LinkStyle>
-        </LeftWrap>
-
-        {isloggedIn ? (
-          <Profile onClick={() => setOpen((p) => !p)}>
-            {open && <NavModal username={username} />}
-          </Profile>
-        ) : (
-          <div className="unloggedIn">
-            <Link href="/user/join">
-              <a>Join</a>
-            </Link>
-            <Link href="/user/login">
-              <a>Login</a>
-            </Link>
-          </div>
-        )}
+        </MainNav>
+        <MyNav>
+          {isloggedIn ? (
+            <Profile onClick={() => setOpen((p) => !p)}>
+              {open && <NavModal />}
+            </Profile>
+          ) : (
+            <UnloggedIn>
+              <LinkStyle>
+                <Link href="/user/join">
+                  <a>Join</a>
+                </Link>
+                <Link href="/user/login">
+                  <a>Login</a>
+                </Link>
+              </LinkStyle>
+            </UnloggedIn>
+          )}
+          <Btn type="theme" btnName={btnName} onClick={onClick} />
+        </MyNav>
       </NavBar>
-      {open ? (
-        <NavModalClose onClick={() => setOpen(false)} />
-      ) : openCreate ? (
-        <NavModalClose onClick={() => setOpenCreate(false)} />
-      ) : openBoard ? (
-        <NavModalClose onClick={() => setOpenBoard(false)} />
-      ) : openPost ? (
-        <NavModalClose onClick={() => setOpenPost(false)} />
-      ) : openReview ? (
-        <NavModalClose onClick={() => setOpenReview(false)} />
-      ) : openMovie ? (
-        <NavModalClose onClick={() => setOpenMovie(false)} />
-      ) : null}
+
+      <>
+        {open ? (
+          <NavModalClose onClick={() => setOpen(false)} />
+        ) : openCreate ? (
+          <NavModalClose onClick={() => setOpenCreate(false)} />
+        ) : openBoard ? (
+          <NavModalClose onClick={() => setOpenBoard(false)} />
+        ) : openPost ? (
+          <NavModalClose onClick={() => setOpenPost(false)} />
+        ) : openReview ? (
+          <NavModalClose onClick={() => setOpenReview(false)} />
+        ) : openMovie ? (
+          <NavModalClose onClick={() => setOpenMovie(false)} />
+        ) : null}
+      </>
     </Cont>
   );
 };
-const LeftWrap = styled.article`
+const MyNav = styled.article`
+  display: flex;
+  align-items: center;
+  gap: 50px;
+`;
+const MainNav = styled.article`
   width: 800px;
   gap: 50px;
   display: flex;
@@ -107,6 +120,7 @@ const LinkStyle = styled.div`
   gap: 40px;
   display: flex;
   align-items: center;
+  a,
   button {
     font-weight: 700;
     font-size: 1.2rem;
@@ -136,18 +150,19 @@ const Profile = styled.article`
   background: url('/img/profile.svg') center / contain no-repeat;
 `;
 
+const UnloggedIn = styled.article`
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  a {
+  }
+`;
+
 const NavBar = styled.nav`
   height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .unloggedIn {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    a {
-    }
-  }
 `;
 const Cont = styled.section`
   background-color: ${(p) => p.theme.color.bg};

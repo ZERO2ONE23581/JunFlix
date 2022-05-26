@@ -1,25 +1,19 @@
-import styled from '@emotion/styled';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import styled from '@emotion/styled';
 import useUser from '../../libs/client/loggedInUser';
-import { Btn } from '../Btn';
 
-interface INavModalProps {
-  username?: string;
-}
-export const NavModal = ({ username }: INavModalProps) => {
-  const router = useRouter();
-  const { loggedInUser } = useUser();
+export const NavModal = () => {
+  const { isloggedIn, loggedInUser, loggedInUserId } = useUser();
   //
   return (
     <>
-      {loggedInUser && (
+      {isloggedIn && loggedInUser && (
         <NavCont>
           <NavWrapper>
-            <Link href="/mypage">
+            <Link href={`/user/${loggedInUserId}/mypage`}>
               <a>
                 <li>
-                  <span>{username}'s page</span>
+                  <span>{loggedInUser.username}'s page</span>
                 </li>
               </a>
             </Link>

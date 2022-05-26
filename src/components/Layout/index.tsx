@@ -7,8 +7,8 @@ export const Layout = ({ children, onClick, btnName }: any) => {
   //
   return (
     <>
-      <Header />
-      <Btn type="theme" btnName={btnName} onClick={onClick} />
+      <Header btnName={btnName} onClick={onClick} />
+      {/* <Btn type="theme" /> */}
       {children}
       <Footer />
     </>
