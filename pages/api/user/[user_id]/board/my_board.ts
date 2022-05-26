@@ -4,7 +4,7 @@ import withHandler from '../../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  conszt { user } = req.session;
+  const { user } = req.session;
   const { user_id } = req.query;
   //error handling
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN' });

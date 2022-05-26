@@ -102,17 +102,6 @@ export const AnchorBtn = styled.button`
   font-size: 1.2rem;
   text-underline-offset: 8px;
 `;
-const Anchor = styled.a`
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 1.2rem;
-  color: ${(p) => p.theme.color.font};
-  text-underline-offset: 8px;
-  &:hover {
-    color: ${(p) => p.theme.color.logo};
-    text-decoration: solid underline 3px ${(p) => p.theme.color.logo};
-  }
-`;
 const LinkStyle = styled.div`
   width: 100%;
   gap: 40px;

@@ -22,11 +22,9 @@ export const MyBoards = () => {
   const { data: boards } = useSWR<IGetAllBoards>(
     `/api/user/${loggedInUserId}/board/my_board`
   );
-  console.log(boards);
   const boardOk = boards?.ok;
   const noBoardFound = boards?.error;
   const allMyBoards = boards?.myBoards;
-  console.log(boardOk, Boolean(allMyBoards));
   //
   return (
     <BoardPageCont>
@@ -57,10 +55,10 @@ export const MyBoards = () => {
           ) : (
             <>
               <ItemCont>
-                {allMyBoards.map((board) => (
+                {allMyBoards?.map((board) => (
                   <Link
                     key={board.id}
-                    href={`/user/${board.UserID}/board/${board.id}`}
+                    href={`/user/${board.UserID}/board/${board.id}/post/create`}
                   >
                     <a>
                       <Item>

@@ -58,12 +58,11 @@ const allReview: NextPage = () => {
                             <span key={score}>
                               {review.score! >= score ? (
                                 <FontAwesomeIcon
-                                  key={score}
                                   icon={faStar}
                                   style={{ color: 'red' }}
                                 />
                               ) : (
-                                <FontAwesomeIcon key={score} icon={faStar} />
+                                <FontAwesomeIcon icon={faStar} />
                               )}
                             </span>
                           ))}

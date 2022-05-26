@@ -7,6 +7,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //Get all reviews -> all ratings
   const allRatings = await client.review.findMany({
     select: {
+      id: true,
       score: true,
       oneline: true,
       recommend: true,

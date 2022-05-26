@@ -4,8 +4,7 @@ import { Review, User } from '@prisma/client';
 import styled from '@emotion/styled';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Link from 'next/link';
-import { Flex } from '../../../styles/components/default';
+import { H1 } from '../../../styles/components/default';
 
 interface IGetAllRatings {
   ok: boolean;
@@ -22,39 +21,50 @@ const rating: NextPage = () => {
   );
   const ok = rating?.ok;
   const allRatings = rating?.allRatings;
+  console.log(allRatings);
   //
   return (
     <>
       {ok && allRatings && (
         <RatingPage>
           {allRatings.map((rating) => (
-            <>
-              <OneLine>
-                <article className="wrap">
+            <OneLine key={rating.id}>
+              <article className="layer">
+                <article className="flex">
                   <Order>
                     #{allRatings.length - allRatings.indexOf(rating)}
                   </Order>
+                  <Title>{rating.movieTitle.toUpperCase()}</Title>
+                </article>
+              </article>
+              <article className="layer2">
+                <article className="flex">
                   <Stars>
                     {[1, 2, 3, 4, 5].map((score) => (
-                      <span>
+                      <span key={score}>
                         {rating.score! >= score ? (
                           <FontAwesomeIcon
-                            key={score}
                             icon={faStar}
                             style={{ color: 'red' }}
                           />
                         ) : (
-                          <FontAwesomeIcon key={score} icon={faStar} />
+                          <FontAwesomeIcon icon={faStar} />
                         )}
                       </span>
                     ))}
                   </Stars>
-                  <MovieOneLine>{rating.oneline}</MovieOneLine>
+                  <ThumsUp>
+                    {rating.recommend ? (
+                      <span className="yes">'추천해요!'</span>
+                    ) : (
+                      <span className="no">'비추해요!'</span>
+                    )}
+                  </ThumsUp>
+                  <MovieOneLine>"{rating.oneline}"</MovieOneLine>
                   <User> - {rating.user.username}</User>
                 </article>
-                <MovieTitle>{rating.movieTitle.toUpperCase()}</MovieTitle>
-              </OneLine>
-            </>
+              </article>
+            </OneLine>
           ))}
         </RatingPage>
       )}
@@ -63,58 +73,85 @@ const rating: NextPage = () => {
 };
 export default rating;
 
+const Title = styled.h1`
+  font-weight: 700;
+`;
+
+const ThumsUp = styled.div`
+  margin-right: 30px;
+  font-weight: 600;
+  font-style: italic;
+  .yes {
+    color: blue;
+  }
+  .no {
+    color: red;
+  }
+`;
+
 const OneLine = styled.article`
-  color: black;
-  padding: 10px 15px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  background-color: aliceblue;
+  width: 80%;
+  margin: 10px auto;
+  padding: 20px 80px;
+  gap: 10px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  .wrap {
-    gap: 15px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 8px;
+  color: black;
+  background-color: #ffeaa7;
+  .layer,
+  .layer2 {
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    .flex {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+  }
+  .layer {
+    .flex {
+      font-size: 1.3rem;
+    }
+  }
+  .layer2 {
+    padding-left: 50px;
   }
 `;
 
 const MovieOneLine = styled.span`
-  font-size: 1rem;
-  font-weight: 400;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-style: italic;
 `;
 const User = styled.span`
   font-style: italic;
-`;
-const MovieTitle = styled.span`
-  background-color: bisque;
-  border-radius: 5px;
-  padding: 20px 10px;
-  width: 100px;
-  height: 30px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 `;
 
 const Stars = styled.span`
   font-size: 1.4rem;
 `;
-const Order = styled.span`
-  padding: 8px;
-  font-size: 0.8rem;
-  border-radius: 100%;
+const Order = styled.div`
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
   color: white;
+  border-radius: 100%;
   background-color: black;
 `;
 
 const RatingPage = styled.article`
   width: 100%;
-  padding: 20px 40px;
+  padding: 20px 100px;
   border-radius: 8px;
   border: ${(p) => p.theme.border};
   color: ${(p) => p.theme.color.font};
