@@ -22,11 +22,13 @@ const EditProfile: NextPage = () => {
 export default EditProfile;
 
 const Wrap = styled.article`
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: space-between;
 `;
 export const EditPageCont = styled(PageCont)`
+  padding: 20px 200px;
   display: flex;
   flex-direction: column;
   justify-content: center;

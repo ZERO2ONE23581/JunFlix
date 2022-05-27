@@ -53,11 +53,4 @@ export const DeleteModalCont = styled(ModalCont)`
     text-align: center;
     font-size: 0.9em;
   }
-  &:hover {
-    background-color: ${(p) => p.theme.color.logo};
-    color: ${(p) => p.theme.color.bg};
-    p {
-      color: ${(p) => p.theme.color.bg};
-    }
-  }
 `;

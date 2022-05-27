@@ -6,7 +6,7 @@ import useUser from '../../../libs/client/loggedInUser';
 import useMutation from '../../../libs/client/useMutation';
 import { ErrMsg, Form, OkMsg } from '../../../../styles/components/default';
 
-interface IEditUserId {
+interface IEditUserIdForm {
   userId?: string;
   email?: string;
   method?: string;
@@ -29,10 +29,10 @@ export const Edit_UserId = () => {
     setError,
     setValue,
     watch,
-  } = useForm<IEditUserId>({ mode: 'onSubmit' });
+  } = useForm<IEditUserIdForm>({ mode: 'onSubmit' });
 
   const selectMethod = watch('method');
-  const onValid = ({ userId, email }: IEditUserId) => {
+  const onValid = ({ userId, email }: IEditUserIdForm) => {
     if (!selectMethod)
       setError('method', { message: '아이디 또는 이메일을 선택해주세요.' });
     if (loading) return;

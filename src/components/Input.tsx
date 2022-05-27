@@ -62,7 +62,9 @@ export const Select = ({
     <>
       {name !== 'genre' ? (
         <InputCont>
-          <label htmlFor={name}>{label}</label>
+          <label id={name} htmlFor={name}>
+            {label}
+          </label>
           <select {...register} name={name} id={name}>
             <option value="">{placeholder}</option>
             <option value="Male">{options[0]}</option>

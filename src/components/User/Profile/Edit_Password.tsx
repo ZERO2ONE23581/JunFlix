@@ -6,7 +6,7 @@ import useUser from '../../../libs/client/loggedInUser';
 import useMutation from '../../../libs/client/useMutation';
 import { ErrMsg, Form, OkMsg } from '../../../../styles/components/default';
 
-interface IEditPassword {
+interface IEditPasswordForm {
   currentPassword?: string;
   password?: string;
   passwordConfirm?: string;
@@ -26,13 +26,13 @@ export const Edit_Password = () => {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<IEditPassword>({ mode: 'onSubmit' });
+  } = useForm<IEditPasswordForm>({ mode: 'onSubmit' });
 
   const onValid = ({
     currentPassword,
     password,
     passwordConfirm,
-  }: IEditPassword) => {
+  }: IEditPasswordForm) => {
     if (password !== passwordConfirm)
       return setError('passwordConfirm', {
         message: '비밀번호가 일치하지 않습니다.',

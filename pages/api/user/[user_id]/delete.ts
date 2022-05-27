@@ -12,7 +12,10 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const { user } = req.session;
-  if (!user) return res.json({ ok: false, error: 'YOU MUST SIGN IN!' });
+  const { user_id } = req.query;
+  if (user?.id !== Number(user_id))
+    return res.json({ ok: false, error: 'INVALID USERID QUERY' });
+  if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
 
   const deleteConfirm = req.body;
   if (!deleteConfirm)

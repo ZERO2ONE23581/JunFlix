@@ -5,27 +5,52 @@ import { Input, Select } from '../../Input';
 import useUser from '../../../libs/client/loggedInUser';
 import useMutation from '../../../libs/client/useMutation';
 import { IProfileEditForm, IProfileEditRes } from '../../../types/edit-profile';
-import { Form, InputWrap } from '../../../../styles/components/default';
+import {
+  ErrMsg,
+  Form,
+  InputWrap,
+  OkMsg,
+} from '../../../../styles/components/default';
+
+interface IEditUserInfoForm {
+  username?: string;
+  name?: string;
+  birth?: string;
+  gender?: string;
+  location?: string;
+  NoInputError?: string;
+}
+interface IEditUserIdRes {
+  ok: boolean;
+  error?: string;
+}
 
 export const Edit_UserInfo = () => {
   const { loggedInUser, loggedInUserId } = useUser();
   //POST
-  const [editUserInfo, { loading: userInfoLoading, data: userInfoData }] =
-    useMutation<IProfileEditRes>(
-      `/api/user/${loggedInUserId}/edit/profile/userinfo`
-    );
+  const [editUserInfo, { loading, data }] = useMutation<IEditUserIdRes>(
+    `/api/user/${loggedInUserId}/edit/profile/userInfo`
+  );
   //Form
   const {
     register,
+    setValue,
+    setError,
     handleSubmit,
     formState: { errors },
-    setError,
-    setValue,
-    reset,
-  } = useForm<IProfileEditForm>({ mode: 'onSubmit' });
+  } = useForm<IEditUserInfoForm>({ mode: 'onSubmit' });
   //
-  const onValid = ({ userId }: IProfileEditForm) => {
-    console.log(userId);
+  const onValid = ({
+    username,
+    name,
+    birth,
+    gender,
+    location,
+  }: IEditUserInfoForm) => {
+    if (Boolean(!username && !name && !birth && !gender && !location))
+      return setError('NoInputError', { message: '수정할 항목이 없습니다.' });
+    if (loading) return;
+    editUserInfo({ username, name, birth, gender, location });
   };
 
   //Set up
@@ -35,56 +60,75 @@ export const Edit_UserInfo = () => {
     if (loggedInUser?.birth) setValue('birth', loggedInUser?.birth);
     if (loggedInUser?.gender) setValue('gender', loggedInUser?.gender);
     if (loggedInUser?.location) setValue('location', loggedInUser?.location);
-  }, [loggedInUser]);
+    if (data?.ok) {
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
+    }
+  }, [loggedInUser, data]);
   //
   return (
     <Form onSubmit={handleSubmit(onValid)}>
+      <>
+        {data && (
+          <>
+            {data.ok && <OkMsg>프로필 정보가 수정되었습니다.</OkMsg>}
+            {data.error && <ErrMsg>{data.error}</ErrMsg>}
+          </>
+        )}
+        {errors.NoInputError && <ErrMsg>{errors.NoInputError.message}</ErrMsg>}
+      </>
       <InputWrap>
-        <Input
-          label="Username"
-          type="text"
-          name="username"
-          errMsg={errors.username?.message}
-          placeholder="새로운 닉네임을 입력해주세요."
-          register={register('username')}
+        <input
+          {...register('NoInputError')}
+          disabled
+          style={{ display: 'none' }}
         />
         <Input
-          label="Name"
+          type="text"
+          name="username"
+          label="Username"
+          placeholder="새로운 닉네임을 입력해주세요."
+          register={register('username')}
+          errMsg={errors.username?.message}
+        />
+        <Input
           type="text"
           name="name"
-          errMsg={errors.name?.message}
+          label="Name"
           placeholder="이름을 입력해주세요."
           register={register('name')}
+          errMsg={errors.name?.message}
         />
       </InputWrap>
       <InputWrap>
         <Input
-          label="Birth"
           type="date"
           name="birth"
-          errMsg={errors.birth?.message}
+          label="Birth"
           placeholder="생년월일을 입력해주세요."
           register={register('birth')}
+          errMsg={errors.birth?.message}
         />
         <Select
-          options={['남', '여']}
-          label="Gender"
           name="gender"
-          errMsg={errors.gender?.message}
+          label="Gender"
+          options={['남', '여']}
           placeholder="성별을 선택해주세요."
           register={register('gender')}
+          errMsg={errors.gender?.message}
         />
       </InputWrap>
       <Input
-        label="Location"
         type="text"
         name="location"
-        errMsg={errors.location?.message}
+        label="Location"
         placeholder="거주지역을 입력해주세요."
         register={register('location')}
+        errMsg={errors.location?.message}
       />
 
-      <Btn type="submit" loading={userInfoLoading} btnName="SAVE" />
+      <Btn type="submit" loading={loading} btnName="SAVE" />
     </Form>
   );
 };
