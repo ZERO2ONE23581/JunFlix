@@ -4,8 +4,9 @@ import { Input } from '../../Input';
 import { useForm } from 'react-hook-form';
 import useUser from '../../../libs/client/loggedInUser';
 import useMutation from '../../../libs/client/useMutation';
-import { ErrMsg, Form, OkMsg } from '../../../../styles/components/default';
+import { Form, OkMsg } from '../../../../styles/components/default';
 import styled from '@emotion/styled';
+import useSWR from 'swr';
 
 interface IEditAvatarForm {
   avatar?: FileList;
@@ -16,70 +17,83 @@ interface IEditAvatarRes {
 }
 
 export const Edit_Avatar = () => {
-  const { loggedInUser, loggedInUserId } = useUser();
+  const { loggedInUserId, profile_avatar } = useUser();
   const [uploadAvatar, { loading, data }] = useMutation<IEditAvatarRes>(
     `/api/user/${loggedInUserId}/edit/profile/avatar`
   );
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    setError,
-    setValue,
     watch,
+    formState: { errors },
   } = useForm<IEditAvatarForm>({ mode: 'onSubmit' });
   const avatar = watch('avatar');
-
   const onValid = async ({ avatar }: IEditAvatarForm) => {
-    if (avatar && avatar.length > 0) {
+    if (avatar && avatar.length > 0 && loggedInUserId) {
       //1. Get empty url from cf
-      const emptyUrl = await (await fetch(`/api/files`)).json();
-      console.log(emptyUrl);
+      const { uploadURL } = await (await fetch(`/api/file`)).json();
+
       //2. upload file to cf
-      return;
-      //uploadAvatar(avatarUrl);
+      const form = new FormData();
+      form.append('file', avatar[0], loggedInUserId.toString());
+      const {
+        result: { id },
+      } = await (
+        await fetch(uploadURL, {
+          method: 'POST',
+          body: form,
+        })
+      ).json();
+      uploadAvatar({ avatar: id });
     }
   };
+  //Preview
   const [avatarPreview, setAvatarPreview] = useState('');
-
   useEffect(() => {
     if (avatar && avatar.length > 0) {
       const file = avatar[0];
       setAvatarPreview(URL.createObjectURL(file));
     }
-  }, [avatar, watch]);
+    if (data?.ok) {
+      if (data?.ok) {
+        setTimeout(() => {
+          location.reload();
+        }, 2000);
+      }
+    }
+  }, [avatar, watch, data]);
   //
   return (
-    <Form onSubmit={handleSubmit(onValid)}>
-      <>
-        {avatarPreview ? (
-          <Avatar src={avatarPreview} alt="프로필 사진 프리뷰" />
-        ) : (
-          <Avatar src={`/img/profile.svg`} alt="프로필 사진 프리뷰" />
-        )}
-      </>
+    <>
+      <Form onSubmit={handleSubmit(onValid)}>
+        {data?.ok && <OkMsg>프로필 사진을 업데이트 합니다.</OkMsg>}
+        <>
+          {avatarPreview ? (
+            <Avatar url={avatarPreview} />
+          ) : profile_avatar ? (
+            <Avatar url={profile_avatar} />
+          ) : (
+            <Avatar url={`/img/profile.svg`} />
+          )}
+        </>
 
-      <Input
-        type="file"
-        name="avatar"
-        label="Profile Image"
-        register={register('avatar')}
-        errMsg={errors.avatar?.message}
-      />
-      <Btn type="submit" loading={loading} btnName="SAVE" />
-    </Form>
+        <Input
+          type="file"
+          name="avatar"
+          label="Profile Image"
+          register={register('avatar')}
+          errMsg={errors.avatar?.message}
+        />
+        <Btn type="submit" loading={loading} btnName="SAVE" />
+      </Form>
+    </>
   );
 };
-const Avatar = styled.img`
-  width: 80px;
-  height: 80px;
-  border-radius: 100%;
+
+const Avatar = styled.div<{ url: string }>`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
   border: ${(p) => p.theme.border};
-`;
-const NoAvatar = styled.div`
-  width: 80px;
-  height: 80px;
-  border-radius: 100%;
-  border: ${(p) => p.theme.border};
-  background: url('/img/profile.svg') center / contain no-repeat;
+  background: ${(p) => `url(${p.url}) center / cover no-repeat`};
 `;
