@@ -6,9 +6,9 @@ export interface IProfileEditRes {
   error?: string;
 }
 export interface IProfileEditForm {
-  fetchError?: string;
-  //
   userId?: string | null;
+  email?: string;
+  //
   oldPassword: string;
   newPassword: string;
   newPasswordConfirm: string;
@@ -19,5 +19,4 @@ export interface IProfileEditForm {
   birth?: string;
   gender?: string;
   location?: string;
-  email?: string;
 }

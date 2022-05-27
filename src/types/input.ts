@@ -1,6 +1,7 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface IInputProps {
+  id?: string;
   type?: string;
   disabled?: boolean;
   label?: string;

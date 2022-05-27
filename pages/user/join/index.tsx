@@ -1,12 +1,6 @@
 import type { NextPage } from 'next';
-import {
-  ErrMsg,
-  Form,
-  Layer,
-  PageSection,
-} from '../../../styles/components/default';
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import { Btn } from '../../../src/components/Btn';
 import { Input } from '../../../src/components/Input';
 import { IJoinForm, IJoinRes } from '../../../src/types/join';
@@ -15,6 +9,12 @@ import { Title } from '../../../src/components/Layout/parts/Title';
 import { LoginLink } from '../../../src/components/Login/LoginLink';
 import { JoinConfirmModal } from '../../../src/components/Modal/JoinConfirmModal';
 import { UserIdCheckModal } from '../../../src/components/Modal/UserIdCheckModal';
+import {
+  ErrMsg,
+  Form,
+  Layer,
+  PageSection,
+} from '../../../styles/components/default';
 
 const Join: NextPage = () => {
   //Post api
@@ -45,6 +45,7 @@ const Join: NextPage = () => {
     email,
     password,
     confirmPw,
+    avatar,
   }: IJoinForm) => {
     if (!confirm) {
       return setError('userIdCheckErr', {

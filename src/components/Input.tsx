@@ -9,13 +9,26 @@ export const Input = (props: IInputProps) => {
         <InputCont>
           <label htmlFor={props.name}>{props.label}</label>
           <input
+            id={props.name}
+            name={props.name}
             min={props.min}
             max={props.max}
-            name={props.name}
             type={props.type}
             {...props.register}
             disabled={props.disabled}
             placeholder={props.placeholder}
+          />
+          {props.errMsg && <ErrMsg>{props.errMsg}</ErrMsg>}
+        </InputCont>
+      ) : props.type === 'file' ? (
+        <InputCont>
+          <label htmlFor={props.name}>{props.label}</label>
+          <FileInput
+            accept="image/*"
+            id={props.name}
+            name={props.name}
+            type={props.type}
+            {...props.register}
           />
           {props.errMsg && <ErrMsg>{props.errMsg}</ErrMsg>}
         </InputCont>
@@ -79,6 +92,10 @@ export const Select = ({
     </>
   );
 };
+
+const FileInput = styled.input`
+  background-color: red;
+`;
 
 const Textarea = styled.textarea`
   padding: 20px;

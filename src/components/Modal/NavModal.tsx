@@ -17,7 +17,7 @@ export const NavModal = () => {
                 </li>
               </a>
             </Link>
-            <Link href={`/user/${loggedInUser.id}/edit`}>
+            <Link href={`/user/${loggedInUser.id}/edit/profile`}>
               <a>
                 <li>
                   <span>Edit Profile</span>

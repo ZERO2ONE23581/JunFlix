@@ -18,7 +18,7 @@ const Mypage: NextPage = () => {
       <H1>MY REVIEWS</H1>
       <AllMyReviews />
       <H1>Likes</H1>
-      <H1>Questions</H1>
+      <H1>Comments</H1>
     </PageCont>
   );
 };

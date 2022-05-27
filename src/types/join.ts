@@ -1,4 +1,5 @@
 export interface IJoinForm {
+  avatar?: string;
   username?: string;
   userId?: string;
   email?: string;
