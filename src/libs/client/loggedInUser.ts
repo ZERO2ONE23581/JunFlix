@@ -19,7 +19,7 @@ export default function useUser() {
   };
   const { data, error } = useSWR<ProfileResponse>('/api/user/login');
   useEffect(() => {
-    if (data?.ok) {
+    if (data?.loggedInUser?.avatar) {
       imageUrl(data?.loggedInUser?.avatar);
     }
   }, [data, imageUrl]);

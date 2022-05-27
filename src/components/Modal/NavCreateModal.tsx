@@ -1,7 +1,4 @@
-import styled from '@emotion/styled';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { AnchorBtn } from '../Layout/parts/Header';
 import { NavCont, NavWrapper } from './NavModal';
 
 interface INavModalProps {

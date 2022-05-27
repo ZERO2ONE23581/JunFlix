@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { LogoSvg } from '../../Svg/Logo';
 import { NavModal } from '../../Modal/NavModal';
@@ -13,14 +13,17 @@ import { NavMovieModal } from '../../Modal/NavMovieModal';
 import { Btn } from '../../Btn';
 
 export const Header = ({ onClick, btnName }: any) => {
-  const { loggedInUser, isloggedIn, loggedInUserId } = useUser();
-  const username = loggedInUser?.username;
+  const { isloggedIn, loggedInUserId, profile_avatar } = useUser();
+  const [avatarUrl, setAvatarUrl] = useState('/img/profile.svg');
   const [open, setOpen] = useState(false);
   const [openMovie, setOpenMovie] = useState(false);
   const [openBoard, setOpenBoard] = useState(false);
   const [openPost, setOpenPost] = useState(false);
   const [openReview, setOpenReview] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
+  useEffect(() => {
+    if (profile_avatar) setAvatarUrl(profile_avatar);
+  }, [useUser, profile_avatar]);
   //
   return (
     <Cont>
@@ -44,11 +47,11 @@ export const Header = ({ onClick, btnName }: any) => {
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenPost((p) => !p)}>
               Post
-              {openPost && <NavPostModal loggedInUserId={loggedInUserId} />}
+              {openPost && <NavPostModal />}
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenReview((p) => !p)}>
               Review
-              {openReview && <NavReviewModal loggedInUserId={loggedInUserId} />}
+              {openReview && <NavReviewModal />}
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenCreate((p) => !p)}>
               Create
@@ -58,9 +61,11 @@ export const Header = ({ onClick, btnName }: any) => {
         </MainNav>
         <MyNav>
           {isloggedIn ? (
-            <Profile onClick={() => setOpen((p) => !p)}>
-              {open && <NavModal />}
-            </Profile>
+            <>
+              <Avatar url={avatarUrl} onClick={() => setOpen((p) => !p)}>
+                {open && <NavModal />}
+              </Avatar>
+            </>
           ) : (
             <UnloggedIn>
               <LinkStyle>
@@ -140,22 +145,28 @@ const Logo = styled.div`
     }
   }
 `;
-
-const Profile = styled.article`
+const Avatar = styled.div<{ url: string }>`
+  position: relative;
   width: 40px;
   height: 40px;
-  position: relative;
-  border-radius: 100%;
+  border-radius: 50%;
   border: ${(p) => p.theme.border};
-  background: url('/img/profile.svg') center / contain no-repeat;
+  background: ${(p) => `url(${p.url}) center / cover no-repeat`};
+  /* background: ${(p) => `url(img/profile.svg) center / cover no-repeat`}; */
 `;
+// const Profile = styled.article`
+//   width: 40px;
+//   height: 40px;
+//   position: relative;
+//   border-radius: 100%;
+//   border: ${(p) => p.theme.border};
+//   background: url('/img/profile.svg') center / contain no-repeat;
+// `;
 
 const UnloggedIn = styled.article`
   display: flex;
   align-items: center;
   gap: 30px;
-  a {
-  }
 `;
 
 const NavBar = styled.nav`

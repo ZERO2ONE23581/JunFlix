@@ -1,12 +1,7 @@
-import styled from '@emotion/styled';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { NavCont, NavWrapper } from './NavModal';
 
-interface INavModalProps {
-  loggedInUserId?: number;
-}
-export const NavPostModal = ({ loggedInUserId }: INavModalProps) => {
+export const NavPostModal = () => {
   //
   return (
     <>

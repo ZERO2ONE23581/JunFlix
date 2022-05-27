@@ -1,12 +1,11 @@
 import { Btn } from '../../Btn';
-import { useEffect, useState } from 'react';
 import { Input } from '../../Input';
+import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useUser from '../../../libs/client/loggedInUser';
 import useMutation from '../../../libs/client/useMutation';
 import { Form, OkMsg } from '../../../../styles/components/default';
-import styled from '@emotion/styled';
-import useSWR from 'swr';
 
 interface IEditAvatarForm {
   avatar?: FileList;
