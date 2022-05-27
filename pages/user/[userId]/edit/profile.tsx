@@ -5,12 +5,14 @@ import { Edit_Password } from '../../../../src/components/User/Profile/Edit_Pass
 import { Delete_Account } from '../../../../src/components/User/Profile/Delete_Account';
 import { PageCont } from '../../../../styles/components/default';
 import styled from '@emotion/styled';
+import { Edit_Avatar } from '../../../../src/components/User/Profile/Edit_Avatar';
 
 const EditProfile: NextPage = () => {
   //
   return (
     <EditPageCont>
       <Wrap>
+        <Edit_Avatar />
         <Edit_UserId />
         <Edit_Password />
         <Edit_UserInfo />
