@@ -1,71 +1,100 @@
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { Btn } from '../../Btn';
+import { useEffect } from 'react';
 import { Input } from '../../Input';
+import { useForm } from 'react-hook-form';
 import useUser from '../../../libs/client/loggedInUser';
 import useMutation from '../../../libs/client/useMutation';
-import { IProfileEditForm, IProfileEditRes } from '../../../types/edit-profile';
-import { Form } from '../../../../styles/components/default';
+import { ErrMsg, Form, OkMsg } from '../../../../styles/components/default';
+
+interface IEditPassword {
+  currentPassword?: string;
+  password?: string;
+  passwordConfirm?: string;
+}
+interface IEditPasswordRes {
+  ok: boolean;
+  error?: string;
+}
 
 export const Edit_Password = () => {
-  const { loggedInUser, loggedInUserId } = useUser();
-  //POST
-  const [editPassword, { loading: passwordLoading, data: passwordData }] =
-    useMutation<IProfileEditRes>(
-      `/api/user/${loggedInUserId}/edit/profile/password`
-    );
-  //Form
+  const { loggedInUserId } = useUser();
+  const [editPassword, { loading, data }] = useMutation<IEditPasswordRes>(
+    `/api/user/${loggedInUserId}/edit/profile/password`
+  );
   const {
     register,
     handleSubmit,
     formState: { errors },
     setError,
-    setValue,
-    reset,
-  } = useForm<IProfileEditForm>({ mode: 'onSubmit' });
-  //
-  const onValid = ({ userId }: IProfileEditForm) => {
-    console.log(userId);
+  } = useForm<IEditPassword>({ mode: 'onSubmit' });
+
+  const onValid = ({
+    currentPassword,
+    password,
+    passwordConfirm,
+  }: IEditPassword) => {
+    if (password !== passwordConfirm)
+      return setError('passwordConfirm', {
+        message: '비밀번호가 일치하지 않습니다.',
+      });
+    if (loading) return;
+    editPassword({ currentPassword, password, passwordConfirm });
   };
   //Set up
   useEffect(() => {
-    if (loggedInUser?.userId) setValue('userId', loggedInUser?.userId);
-  }, [loggedInUser]);
+    if (data?.ok) {
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
+    }
+  }, [data]);
   //
   return (
     <>
       <Form onSubmit={handleSubmit(onValid)}>
+        <>
+          {data && (
+            <>
+              {data.ok && <OkMsg>비밀번호가 수정되었습니다.</OkMsg>}
+              {data.error && <ErrMsg>{data.error}</ErrMsg>}
+            </>
+          )}
+          {errors.passwordConfirm && (
+            <ErrMsg>{errors.passwordConfirm.message}</ErrMsg>
+          )}
+        </>
+
         <Input
-          label="Old Password"
           type="password"
-          name="oldPassword"
-          errMsg={errors.oldPassword?.message}
+          name="currentPassword"
+          label="Current Password"
           placeholder="현재 비밀번호를 입력해주세요."
-          register={register('oldPassword', {
+          register={register('currentPassword', {
             required: '현재 비밀번호를 입력해주세요.',
           })}
+          errMsg={errors.currentPassword?.message}
         />
         <Input
-          label="Password"
           type="password"
-          name="newPassword"
-          errMsg={errors.newPassword?.message}
+          name="password"
+          label="New Password"
           placeholder="새로운 비밀번호를 입력해주세요."
-          register={register('newPassword', {
+          register={register('password', {
             required: '새로운 비밀번호를 입력해주세요.',
           })}
+          errMsg={errors.password?.message}
         />
         <Input
-          label="Password Confirm"
           type="password"
-          name="newPasswordConfirm"
-          errMsg={errors.newPasswordConfirm?.message}
+          name="passwordConfirm"
+          label="New Password Confirm"
           placeholder="새로운 비밀번호를 재입력해주세요."
-          register={register('newPasswordConfirm', {
+          register={register('passwordConfirm', {
             required: '새로운 비밀번호를 재입력해주세요.',
           })}
+          errMsg={errors.passwordConfirm?.message}
         />
-        <Btn type="submit" loading={passwordLoading} btnName="SAVE" />
+        <Btn type="submit" loading={loading} btnName="SAVE" />
       </Form>
     </>
   );
