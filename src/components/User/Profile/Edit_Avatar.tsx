@@ -17,7 +17,7 @@ interface IEditAvatarRes {
 
 export const Edit_Avatar = () => {
   const { loggedInUser, loggedInUserId } = useUser();
-  const [editAvatar, { loading, data }] = useMutation<IEditAvatarRes>(
+  const [uploadAvatar, { loading, data }] = useMutation<IEditAvatarRes>(
     `/api/user/${loggedInUserId}/edit/profile/avatar`
   );
   const {
@@ -28,12 +28,20 @@ export const Edit_Avatar = () => {
     setValue,
     watch,
   } = useForm<IEditAvatarForm>({ mode: 'onSubmit' });
+  const avatar = watch('avatar');
 
-  const onValid = ({ avatar }: IEditAvatarForm) => {
-    console.log(avatar);
+  const onValid = async ({ avatar }: IEditAvatarForm) => {
+    if (avatar && avatar.length > 0) {
+      //1. Get empty url from cf
+      const emptyUrl = await (await fetch(`/api/files`)).json();
+      console.log(emptyUrl);
+      //2. upload file to cf
+      return;
+      //uploadAvatar(avatarUrl);
+    }
   };
   const [avatarPreview, setAvatarPreview] = useState('');
-  const avatar = watch('avatar');
+
   useEffect(() => {
     if (avatar && avatar.length > 0) {
       const file = avatar[0];

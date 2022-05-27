@@ -10,7 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (info_type === 'trending') {
     const trendingData = await (
       await fetch(
-        `${BASE_URL}/trending/akk/day?api_key=${process.env.THEMOVIEDB_APIKEY}`
+        `${BASE_URL}/trending/akk/day?api_key=${process.env.THE_MOVIE_DB_API_KEY}`
       )
     ).json();
     return res.json({ ok: true, trendingData });
@@ -18,7 +18,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (info_type === 'now_playing') {
     const nowPlayingMovies = await (
       await fetch(
-        `${BASE_URL}/movie/now_playing?api_key=${process.env.THEMOVIEDB_APIKEY}&${LANGUAGE}`
+        `${BASE_URL}/movie/now_playing?api_key=${process.env.THE_MOVIE_DB_API_KEY}&${LANGUAGE}`
       )
     ).json();
     return res.json({ ok: true, nowPlayingMovies });
@@ -26,7 +26,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (info_type === 'popular_tv') {
     const popularTvShows = await (
       await fetch(
-        `${BASE_URL}/tv/popular?api_key=${process.env.THEMOVIEDB_APIKEY}&${LANGUAGE}`
+        `${BASE_URL}/tv/popular?api_key=${process.env.THE_MOVIE_DB_API_KEY}&${LANGUAGE}`
       )
     ).json();
     return res.json({ ok: true, popularTvShows });
@@ -34,7 +34,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (info_type === 'upcoming') {
     const upcomingMovies = await (
       await fetch(
-        ` ${BASE_URL}/movie/upcoming?api_key=${process.env.THEMOVIEDB_APIKEY}&${LANGUAGE}`
+        ` ${BASE_URL}/movie/upcoming?api_key=${process.env.THE_MOVIE_DB_API_KEY}&${LANGUAGE}`
       )
     ).json();
     return res.json({ ok: true, upcomingMovies });
@@ -42,7 +42,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (info_type === 'top_rated') {
     const topRatedMovies = await (
       await fetch(
-        ` ${BASE_URL}/movie/top_rated?api_key=${process.env.THEMOVIEDB_APIKEY}&${LANGUAGE}`
+        ` ${BASE_URL}/movie/top_rated?api_key=${process.env.THE_MOVIE_DB_API_KEY}&${LANGUAGE}`
       )
     ).json();
     return res.json({ ok: true, topRatedMovies });
