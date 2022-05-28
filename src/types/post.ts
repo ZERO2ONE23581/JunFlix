@@ -6,9 +6,10 @@ export interface IEditPostForm extends IPostForm {
 export interface IPostForm {
   title?: string;
   content?: string;
-  avatar?: string;
+  avatar?: FileList;
 }
 export interface IPostRes {
+  ok: boolean;
   post: Post;
 }
 export interface IGetAllPosts {

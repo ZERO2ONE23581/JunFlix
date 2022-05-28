@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { LogoSvg } from '../../Svg/Logo';
 import { NavModal } from '../../Modal/NavModal';
-import useUser from '../../../libs/client/loggedInUser';
+import useUser from '../../../libs/client/useUser';
 import { NavCreateModal } from '../../Modal/NavCreateModal';
 import { NavBoardModal } from '../../Modal/NavBoardModal';
 import { NavModalClose } from '../../../../styles/components/modal';
@@ -11,10 +11,12 @@ import { NavPostModal } from '../../Modal/NavPostModal';
 import { NavReviewModal } from '../../Modal/NavReviewModal';
 import { NavMovieModal } from '../../Modal/NavMovieModal';
 import { Btn } from '../../Btn';
+import useAvatar from '../../../libs/client/useAvatar';
 
 export const Header = ({ onClick, btnName }: any) => {
-  const { isloggedIn, loggedInUserId, profile_avatar } = useUser();
+  const { isloggedIn, loggedInUserId, loggedInUser } = useUser();
   const [avatarUrl, setAvatarUrl] = useState('/img/profile.svg');
+  //
   const [open, setOpen] = useState(false);
   const [openMovie, setOpenMovie] = useState(false);
   const [openBoard, setOpenBoard] = useState(false);
@@ -22,8 +24,8 @@ export const Header = ({ onClick, btnName }: any) => {
   const [openReview, setOpenReview] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
   useEffect(() => {
-    if (profile_avatar) setAvatarUrl(profile_avatar);
-  }, [useUser, profile_avatar]);
+    if (isloggedIn) setAvatarUrl(useAvatar(loggedInUser?.avatar));
+  }, [useUser, loggedInUser]);
   //
   return (
     <Cont>

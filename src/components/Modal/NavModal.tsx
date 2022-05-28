@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import useUser from '../../libs/client/loggedInUser';
+import useUser from '../../libs/client/useUser';
 
 export const NavModal = () => {
   const { isloggedIn, loggedInUser, loggedInUserId } = useUser();

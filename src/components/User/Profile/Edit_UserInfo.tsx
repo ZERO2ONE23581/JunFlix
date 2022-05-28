@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../Btn';
 import { Input, Select } from '../../Input';
-import useUser from '../../../libs/client/loggedInUser';
+import useUser from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';
 import { IProfileEditForm, IProfileEditRes } from '../../../types/edit-profile';
 import {

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { Btn } from '../../../src/components/Btn';
 import { IGetMyReview } from '../../../src/types/review';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import useUser from '../../../src/libs/client/loggedInUser';
+import useUser from '../../../src/libs/client/useUser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DeleteModal } from '../../../src/components/Modal/board/settting/delete/modal';
 import {

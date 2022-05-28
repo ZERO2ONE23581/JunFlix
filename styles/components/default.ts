@@ -31,6 +31,23 @@ export const PageCont = styled.section`
   padding: 20px 70px;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
+  section {
+    margin: 0 auto;
+  }
+  .create-post-cont {
+    width: 500px;
+  }
+  .read-post-cont {
+    width: 500px;
+    .btn-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 13px;
+      width: 200px;
+    }
+  }
 `;
 export const BoardPageCont = styled(PageCont)`
   .wrap {

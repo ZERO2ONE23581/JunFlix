@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useMutation from '../../../libs/client/useMutation';
 import { ModalClose } from '../../../../styles/components/modal';
-import useUser from '../../../libs/client/loggedInUser';
+import useUser from '../../../libs/client/useUser';
 import styled from '@emotion/styled';
 import {
   DeleteModalCont,

@@ -29,6 +29,7 @@ export const Input = (props: IInputProps) => {
             name={props.name}
             type={props.type}
             {...props.register}
+            disabled={props.disabled}
           />
           {props.errMsg && <ErrMsg>{props.errMsg}</ErrMsg>}
         </InputCont>

@@ -3,6 +3,8 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { PageCont } from '../../../styles/components/default';
 import { Board, Post, User } from '@prisma/client';
+import useAvatar from '../../libs/client/useAvatar';
+import { ThumNail } from '../Post/AllPostsWithBoard';
 
 interface IGetAllPosts {
   ok: boolean;
@@ -31,7 +33,14 @@ export const AllMyPosts = () => {
               <a>
                 <Item>
                   <ThumNail>
-                    <img src="/img/post_thum.svg" alt="썸네일 이미지" />
+                    {post.avatar ? (
+                      <img
+                        src={`${useAvatar(post.avatar)}`}
+                        alt="썸네일 이미지"
+                      />
+                    ) : (
+                      <img src="/img/post_thum.svg" alt="썸네일 이미지" />
+                    )}
                   </ThumNail>
                   <ul>
                     <li>
@@ -77,16 +86,5 @@ const Item = styled.div`
         font-size: 1rem;
       }
     }
-  }
-`;
-const ThumNail = styled.div`
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  border-radius: 5px;
-  width: 100%;
-  padding: 5px 0;
-  height: 200px;
-  img {
-    width: 100%;
-    height: 100%;
   }
 `;

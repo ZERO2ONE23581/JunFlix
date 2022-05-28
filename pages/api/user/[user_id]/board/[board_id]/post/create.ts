@@ -5,7 +5,7 @@ import { withApiSession } from '../../../../../../../src/libs/server/withSession
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { title, content } = req.body;
+  const { title, content, avatar } = req.body;
   const { user_id, board_id } = req.query;
   const noQuery = !Boolean(user_id && board_id);
 
@@ -25,6 +25,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   await client.post.create({
     data: {
+      avatar,
       title,
       content,
       UserID: currentBoard.UserID,

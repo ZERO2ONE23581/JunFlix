@@ -5,10 +5,9 @@ import { withApiSession } from '../../../../../../../../src/libs/server/withSess
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { title, content } = req.body;
+  const { avatar, title, content } = req.body;
   const { user_id, board_id, post_id } = req.query;
   const noQuery = !Boolean(board_id && post_id);
-
   //error handling
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (noQuery) return res.json({ ok: false, error: 'QUERY ERROR!' });
@@ -30,7 +29,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //Edit Post
   await client.post.update({
     where: { id: foundPost.id },
-    data: { title, content },
+    data: { avatar, title, content },
   });
   //
   return res.json({ ok: true, message: '게시물이 수정되었습니다.' });

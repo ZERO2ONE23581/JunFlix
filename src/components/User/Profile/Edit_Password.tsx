@@ -2,7 +2,7 @@ import { Btn } from '../../Btn';
 import { useEffect } from 'react';
 import { Input } from '../../Input';
 import { useForm } from 'react-hook-form';
-import useUser from '../../../libs/client/loggedInUser';
+import useUser from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';
 import { ErrMsg, Form, OkMsg } from '../../../../styles/components/default';
 

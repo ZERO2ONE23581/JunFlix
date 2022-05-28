@@ -4,8 +4,9 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Board, User } from '@prisma/client';
-import useUser from '../../libs/client/loggedInUser';
+import useUser from '../../libs/client/useUser';
 import { BoardPageCont, PageCont } from '../../../styles/components/default';
+import { ThumNail } from '../Post/AllPostsWithBoard';
 
 interface IGetAllBoards {
   ok: boolean;
@@ -95,16 +96,5 @@ const Item = styled.div`
         font-size: 1rem;
       }
     }
-  }
-`;
-const ThumNail = styled.div`
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  border-radius: 5px;
-  width: 100%;
-  padding: 5px 0;
-  height: 200px;
-  img {
-    width: 100%;
-    height: 100%;
   }
 `;

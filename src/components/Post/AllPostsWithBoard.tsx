@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { PageCont } from '../../../styles/components/default';
 import { IAllPostsProps, IGetAllPosts } from '../../types/post';
 import { ItemCont } from './AllPosts';
+import useAvatar from '../../libs/client/useAvatar';
 
 export const AllPostsWithBoard = ({ userId, boardId }: IAllPostsProps) => {
   const { data: posts } = useSWR<IGetAllPosts>(
@@ -24,7 +25,14 @@ export const AllPostsWithBoard = ({ userId, boardId }: IAllPostsProps) => {
               <a>
                 <Item>
                   <ThumNail>
-                    <img src="/img/post_thum.svg" alt="썸네일 이미지" />
+                    {post.avatar ? (
+                      <img
+                        src={`${useAvatar(post.avatar)}`}
+                        alt="썸네일 이미지"
+                      />
+                    ) : (
+                      <img src="/img/post_thum.svg" alt="썸네일 이미지" />
+                    )}
                   </ThumNail>
                 </Item>
               </a>
@@ -59,14 +67,21 @@ const Item = styled.div`
     }
   }
 `;
-const ThumNail = styled.div`
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  border-radius: 5px;
-  width: 100%;
-  padding: 5px 0;
-  height: 200px;
+export const ThumNail = styled.article`
+  .noimage {
+    width: 50px;
+    height: 50px;
+  }
   img {
     width: 100%;
     height: 100%;
   }
+  width: 100%;
+  height: 200px;
+  border-radius: 5px;
+  border: ${(p) => p.theme.border};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

@@ -3,9 +3,10 @@ import { Input } from '../../Input';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useUser from '../../../libs/client/loggedInUser';
+import useUser from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';
 import { Form, OkMsg } from '../../../../styles/components/default';
+import useAvatar from '../../../libs/client/useAvatar';
 
 interface IEditAvatarForm {
   avatar?: FileList;
@@ -16,7 +17,7 @@ interface IEditAvatarRes {
 }
 
 export const Edit_Avatar = () => {
-  const { loggedInUserId, profile_avatar } = useUser();
+  const { loggedInUserId, loggedInUser } = useUser();
   const [uploadAvatar, { loading, data }] = useMutation<IEditAvatarRes>(
     `/api/user/${loggedInUserId}/edit/profile/avatar`
   );
@@ -69,8 +70,8 @@ export const Edit_Avatar = () => {
         <>
           {avatarPreview ? (
             <Avatar url={avatarPreview} />
-          ) : profile_avatar ? (
-            <Avatar url={profile_avatar} />
+          ) : loggedInUser?.avatar ? (
+            <Avatar url={useAvatar(loggedInUser.avatar)} />
           ) : (
             <Avatar url={`/img/profile.svg`} />
           )}

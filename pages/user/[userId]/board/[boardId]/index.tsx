@@ -18,7 +18,7 @@ import {
   Flex,
   OkMsg,
 } from '../../../../../styles/components/default';
-import useUser from '../../../../../src/libs/client/loggedInUser';
+import useUser from '../../../../../src/libs/client/useUser';
 
 const myBoard: NextPage = () => {
   const router = useRouter();

@@ -17,139 +17,165 @@ import {
   Article,
   PageSectionWide,
   FlexAbsPost,
+  PageCont,
 } from '../../../../../../../styles/components/default';
-import useUser from '../../../../../../../src/libs/client/loggedInUser';
+import useUser from '../../../../../../../src/libs/client/useUser';
+import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithBoard';
+import useAvatar from '../../../../../../../src/libs/client/useAvatar';
 
 const myPost: NextPage = () => {
   const router = useRouter();
   const { isloggedIn, loggedInUserId } = useUser();
   const { userId, boardId, postId } = router.query;
-  const { data: postData } = useSWR<IPostRes>(
+  const { data: swrData } = useSWR<IPostRes>(
     `/api/user/${userId}/board/${boardId}/post/${postId}`
   );
-  const post = postData?.post;
-  const loginConfirmed = Boolean(isloggedIn && loggedInUserId === post?.UserID);
-  const manageAllowed = Boolean(
-    loginConfirmed &&
-      Number(userId) === post?.UserID &&
-      Number(boardId) === post?.BoardID &&
-      Number(postId) === post?.id
-  );
-
-  const [editPost, { data: editedData, loading }] = useMutation<MutationRes>(
+  const [editPost, { data, loading }] = useMutation<MutationRes>(
     `/api/user/${userId}/board/${boardId}/post/${postId}/edit`
   );
   const {
+    watch,
+    setValue,
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<IEditPostForm>({ mode: 'onSubmit' });
-
-  const onValid = ({ title, content }: IEditPostForm) => {
+  const avatar = watch('avatar');
+  const onValid = async ({ avatar, title, content }: IEditPostForm) => {
     if (loading) return;
-    editPost({ title, content });
+    if (avatar && avatar.length > 0) {
+      //GET from CF for url
+      const { uploadURL } = await (await fetch(`/api/file`)).json();
+      const form = new FormData();
+      form.append('file', avatar[0]);
+      //POST to CF with the url
+      const {
+        result: { id },
+      } = await (
+        await fetch(uploadURL, {
+          method: 'POST',
+          body: form,
+        })
+      ).json();
+      editPost({ title, content, avatar: id });
+    } else {
+      editPost({ title, content });
+    }
   };
-
-  //Set up
+  //
   const [edit, setEdit] = useState(false);
   const [delModal, setDelModal] = useState(false);
   const [openSetup, setOpenSetup] = useState(false);
+  const [preview, setPreview] = useState('');
   useEffect(() => {
-    if (post) {
-      if (post.title) setValue('title', post.title);
-      if (post.content) setValue('content', post.content);
-      if (post.createdAt) setValue('createdAt', post.createdAt);
+    if (avatar && avatar.length > 0) {
+      const file = avatar[0];
+      setPreview(URL.createObjectURL(file));
     }
-    if (editedData?.ok)
+    if (swrData && swrData.post && swrData?.ok) {
+      if (swrData.post.title) setValue('title', swrData.post.title);
+      if (swrData.post.content) setValue('content', swrData.post.content);
+      if (swrData.post.createdAt) setValue('createdAt', swrData.post.createdAt);
+    }
+    if (data?.ok)
       setTimeout(() => {
         router.reload();
       }, 1000);
-  }, [setValue, postData, editedData]);
+  }, [avatar, setValue, swrData, data]);
   //
   return (
-    <>
-      <PageSectionWide>
-        {postData && (
-          <BoardCont>
-            <Flex>
+    <PageCont>
+      {delModal && (
+        <DeleteModal
+          userId={userId}
+          postId={postId}
+          boardId={boardId}
+          deleteClick={() => setDelModal((p) => !p)}
+        />
+      )}
+      <section className="read-post-cont">
+        <article className="btn-wrap">
+          <Btn
+            type="back"
+            btnName="Back"
+            onClick={() => router.push(`/user/${userId}/board/${boardId}`)}
+          />
+          <>
+            {isloggedIn && loggedInUserId === Number(userId) && (
               <Btn
-                type="back"
-                btnName="Back"
-                onClick={() => router.push(`/user/${userId}/board/${boardId}`)}
+                type="board-setting"
+                onClick={() => setOpenSetup((p) => !p)}
+                btnName="Setting"
               />
+            )}
+          </>
+          <FlexAbsPost>
+            {openSetup && (
               <>
-                {manageAllowed && (
-                  <Btn
-                    type="board-setting"
-                    onClick={() => setOpenSetup((p) => !p)}
-                    btnName="Setting"
-                  />
-                )}
-              </>
-              <FlexAbsPost>
-                {openSetup && (
-                  <>
-                    <Btn
-                      type="edit-post"
-                      onClick={() => setEdit((p) => !p)}
-                      btnName={edit ? 'Back' : 'Edit Post'}
-                    />
-                    <Btn
-                      type="delete-post"
-                      onClick={() => setDelModal((p) => !p)}
-                      btnName="Delete"
-                    />
-                  </>
-                )}
-              </FlexAbsPost>
-            </Flex>
-            <>
-              {delModal && (
-                <DeleteModal
-                  userId={userId}
-                  postId={postId}
-                  boardId={boardId}
-                  deleteClick={() => setDelModal((p) => !p)}
+                <Btn
+                  type="edit-post"
+                  onClick={() => setEdit((p) => !p)}
+                  btnName={edit ? 'Back' : 'Edit Post'}
                 />
-              )}
-            </>
-            <>
-              {editedData?.message && <OkMsg>{editedData?.message}</OkMsg>}
-              {editedData?.error && <ErrMsg>{editedData?.error}</ErrMsg>}
-            </>
-            <form onSubmit={handleSubmit(onValid)}>
-              <Input
-                errMsg={errors.title?.message}
-                type="text"
-                name="title"
-                disabled={!edit && true}
-                placeholder="게시물의 제목을 입력하세요."
-                register={register('title', {
-                  required: '게시물의 제목을 입력하세요.',
-                })}
+                <Btn
+                  type="delete-post"
+                  onClick={() => setDelModal((p) => !p)}
+                  btnName="Delete"
+                />
+              </>
+            )}
+          </FlexAbsPost>
+        </article>
+        <form onSubmit={handleSubmit(onValid)}>
+          {data?.message && <OkMsg>{data?.message}</OkMsg>}
+          {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
+          <ThumNail>
+            {swrData?.post?.avatar ? (
+              <img
+                src={`${useAvatar(swrData?.post.avatar)}`}
+                alt="포스트 썸네일 이미지"
               />
-              <Input
-                errMsg={errors.content?.message}
-                type="text"
-                name="content"
-                disabled={!edit && true}
-                placeholder="게시물의 내용을 작성해 주세요."
-                register={register('content', {
-                  maxLength: 50,
-                })}
-              />
-              <Input
-                name="createdAt"
-                disabled={true}
-                register={register('createdAt')}
-              />
-              {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
-            </form>
-          </BoardCont>
-        )}
-      </PageSectionWide>
-    </>
+            ) : preview ? (
+              <img src={`${preview}`} alt="포스트 썸네일 이미지" />
+            ) : (
+              <img src="/img/post_thum.svg" alt="포스트 썸네일 이미지" />
+            )}
+          </ThumNail>
+          <Input
+            type="file"
+            name="avatar"
+            label="Post Image"
+            disabled={!edit && true}
+            register={register('avatar')}
+            errMsg={errors.avatar?.message}
+          />
+          <Input
+            type="text"
+            name="title"
+            disabled={!edit && true}
+            placeholder="게시물의 제목을 입력하세요."
+            register={register('title', {
+              required: '게시물의 제목을 입력하세요.',
+            })}
+            errMsg={errors.title?.message}
+          />
+          <Input
+            type="text"
+            name="content"
+            disabled={!edit && true}
+            placeholder="게시물의 내용을 작성해 주세요."
+            register={register('content')}
+            errMsg={errors.content?.message}
+          />
+          <Input
+            name="createdAt"
+            disabled={true}
+            register={register('createdAt')}
+          />
+          {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
+        </form>
+      </section>
+    </PageCont>
   );
 };
 export default myPost;

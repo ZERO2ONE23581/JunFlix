@@ -4,7 +4,7 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Board, User } from '@prisma/client';
-import useUser from '../../libs/client/loggedInUser';
+import useUser from '../../libs/client/useUser';
 import { BoardPageCont, PageCont } from '../../../styles/components/default';
 
 interface IGetAllBoards {
