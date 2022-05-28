@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { PageCont } from '../../../styles/components/default';
+import { H1, PageCont } from '../../../styles/components/default';
 import { Board, Post, User } from '@prisma/client';
 import useAvatar from '../../libs/client/useAvatar';
 import { ThumNail } from '../Post/AllPostsWithBoard';
@@ -23,39 +23,42 @@ export const AllMyPosts = () => {
   //
   return (
     <PageCont>
-      {postOk && myPosts && (
-        <ItemCont>
-          {myPosts.map((post) => (
-            <Link
-              key={post.id}
-              href={`/user/${post.UserID}/board/${post.BoardID}/post/${post.id}`}
-            >
-              <a>
-                <Item>
-                  <ThumNail>
-                    {post.avatar ? (
-                      <img
-                        src={`${useAvatar(post.avatar)}`}
-                        alt="썸네일 이미지"
-                      />
-                    ) : (
-                      <img src="/img/post_thum.svg" alt="썸네일 이미지" />
-                    )}
-                  </ThumNail>
-                  <ul>
-                    <li>
-                      <span>{post.title}</span>
-                    </li>
-                    <li>
-                      <span>{post.content}</span>
-                    </li>
-                  </ul>
-                </Item>
-              </a>
-            </Link>
-          ))}
-        </ItemCont>
-      )}
+      <>
+        <H1>MY POSTS</H1>
+        {postOk && myPosts && (
+          <ItemCont>
+            {myPosts.map((post) => (
+              <Link
+                key={post.id}
+                href={`/user/${post.UserID}/board/${post.BoardID}/post/${post.id}`}
+              >
+                <a>
+                  <Item>
+                    <ThumNail>
+                      {post.avatar ? (
+                        <img
+                          src={`${useAvatar(post.avatar)}`}
+                          alt="썸네일 이미지"
+                        />
+                      ) : (
+                        <img src="/img/post_thum.svg" alt="썸네일 이미지" />
+                      )}
+                    </ThumNail>
+                    <ul>
+                      <li>
+                        <span>{post.title}</span>
+                      </li>
+                      <li>
+                        <span>{post.content}</span>
+                      </li>
+                    </ul>
+                  </Item>
+                </a>
+              </Link>
+            ))}
+          </ItemCont>
+        )}
+      </>
     </PageCont>
   );
 };

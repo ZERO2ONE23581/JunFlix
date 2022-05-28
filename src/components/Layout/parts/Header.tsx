@@ -45,15 +45,30 @@ export const Header = ({ onClick, btnName }: any) => {
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenBoard((p) => !p)}>
               Board
-              {openBoard && <NavBoardModal loggedInUserId={loggedInUserId} />}
+              {openBoard && (
+                <NavBoardModal
+                  isloggedIn={isloggedIn}
+                  loggedInUserId={loggedInUserId}
+                />
+              )}
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenPost((p) => !p)}>
               Post
-              {openPost && <NavPostModal />}
+              {openPost && (
+                <NavPostModal
+                  isloggedIn={isloggedIn}
+                  loggedInUserId={loggedInUserId}
+                />
+              )}
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenReview((p) => !p)}>
               Review
-              {openReview && <NavReviewModal />}
+              {openReview && (
+                <NavReviewModal
+                  isloggedIn={isloggedIn}
+                  loggedInUserId={loggedInUserId}
+                />
+              )}
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenCreate((p) => !p)}>
               Create

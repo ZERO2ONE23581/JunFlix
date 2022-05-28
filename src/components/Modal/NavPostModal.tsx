@@ -1,12 +1,24 @@
 import Link from 'next/link';
+import { INavModalProps } from './NavBoardModal';
 import { NavCont, NavWrapper } from './NavModal';
 
-export const NavPostModal = () => {
-  //
+export const NavPostModal = ({
+  isloggedIn,
+  loggedInUserId,
+}: INavModalProps) => {
   return (
     <>
       <NavCont>
         <NavWrapper>
+          {isloggedIn && (
+            <Link href={`/user/${loggedInUserId}/post`}>
+              <a>
+                <li>
+                  <span>My Posts</span>
+                </li>
+              </a>
+            </Link>
+          )}
           <Link href={`/post`}>
             <a>
               <li>

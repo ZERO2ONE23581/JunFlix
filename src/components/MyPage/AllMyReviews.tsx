@@ -3,7 +3,11 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { IGetAllReviews } from '../../types/review';
-import { PageCont, PageSectionWide } from '../../../styles/components/default';
+import {
+  H1,
+  PageCont,
+  PageSectionWide,
+} from '../../../styles/components/default';
 import { Btn } from '../Btn';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +21,7 @@ export const AllMyReviews = () => {
   return (
     <>
       <PageCont>
+        <H1>MY REVIEWS</H1>
         <Btn
           type="create"
           btnName="리뷰 작성하기"

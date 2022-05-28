@@ -17,6 +17,7 @@ import {
   ErrMsg,
   Flex,
   OkMsg,
+  PageCont,
 } from '../../../../../styles/components/default';
 import useUser from '../../../../../src/libs/client/useUser';
 
@@ -24,34 +25,33 @@ const myBoard: NextPage = () => {
   const router = useRouter();
   const { userId, boardId } = router.query;
   const { isloggedIn, loggedInUser } = useUser();
-  const { data: boardData } = useSWR<IBoardRes>(
+  const { data: swrData } = useSWR<IBoardRes>(
     `/api/user/${userId}/board/${boardId}`
   );
-  const okBoard = boardData?.ok;
-  const board = boardData?.board;
-  //Post
+  const board = swrData?.board;
+  const btnShow = Boolean(isloggedIn && loggedInUser?.id === board?.UserID);
   const [editBoard, { data, loading }] = useMutation<MutationRes>(
     `/api/user/${userId}/board/${boardId}/edit`
   );
-  //Edit Form
+  //
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<IEditBoardForm>({ mode: 'onSubmit' });
+
   const onValid = ({ title, genre, intro }: IEditBoardForm) => {
     if (loading) return;
     const Title = title?.toUpperCase();
     editBoard({ Title, genre, intro });
   };
-
-  //Set up
+  //
   const [edit, setEdit] = useState(false);
   const [setting, setSetting] = useState(false);
   const [delModal, setDelModal] = useState(false);
   useEffect(() => {
-    if (okBoard && board) {
+    if (swrData?.ok && board) {
       if (board.title) setValue('title', board.title.toUpperCase());
       if (board.genre) setValue('genre', board.genre);
       if (board.intro) setValue('intro', board.intro);
@@ -60,21 +60,28 @@ const myBoard: NextPage = () => {
       setTimeout(() => {
         router.reload();
       }, 1000);
-  }, [setValue, boardData, data]);
+  }, [setValue, swrData, data]);
   //
   return (
     <>
-      <PageSectionWide>
-        {okBoard && board && (
-          <BoardCont>
-            <Flex>
+      <PageCont>
+        {delModal && (
+          <DeleteModal
+            userId={userId}
+            boardId={boardId}
+            deleteClick={() => setDelModal((p) => !p)}
+          />
+        )}
+        {swrData?.ok && board && (
+          <section className="read-board-cont">
+            <article className="btn-wrap">
               <Btn
                 type="back"
-                btnName="Back"
-                onClick={() => router.push(`/`)}
+                btnName="My Boards"
+                onClick={() => router.push(`/user/${userId}/mypage`)}
               />
-              {isloggedIn && loggedInUser?.id === board?.UserID && (
-                <Flex>
+              {btnShow && (
+                <article className="btn-wrap">
                   <Btn
                     type="create"
                     onClick={() => {
@@ -89,41 +96,28 @@ const myBoard: NextPage = () => {
                     onClick={() => setSetting((p) => !p)}
                     btnName="Setting"
                   />
-                </Flex>
-              )}
-            </Flex>
-            <>
-              {setting && (
-                <article>
-                  <Btn
-                    type="board-edit"
-                    onClick={() => setEdit((p) => !p)}
-                    btnName={edit ? 'Back' : 'Edit Board'}
-                  />
-                  <Btn
-                    type="board-delete"
-                    onClick={() => setDelModal((p) => !p)}
-                    btnName="Delete"
-                  />
                 </article>
               )}
-              {delModal && (
-                <DeleteModal
-                  userId={userId}
-                  boardId={boardId}
-                  deleteClick={() => setDelModal((p) => !p)}
+            </article>
+            {setting && (
+              <article>
+                <Btn
+                  type="board-edit"
+                  onClick={() => setEdit((p) => !p)}
+                  btnName={edit ? 'Back' : 'Edit Board'}
                 />
-              )}
-            </>
-            <>
+                <Btn
+                  type="board-delete"
+                  onClick={() => setDelModal((p) => !p)}
+                  btnName="Delete"
+                />
+              </article>
+            )}
+            <form onSubmit={handleSubmit(onValid)}>
               {data?.message && <OkMsg>{data?.message}</OkMsg>}
               {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
-            </>
-            <article>
               <span>{board.user?.username}</span>
               <span>'s board</span>
-            </article>
-            <form onSubmit={handleSubmit(onValid)}>
               <Input
                 errMsg={errors.title?.message}
                 type="text"
@@ -164,10 +158,10 @@ const myBoard: NextPage = () => {
               />
               {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
             </form>
-          </BoardCont>
+            <AllPostsWithBoard userId={userId} boardId={boardId} />
+          </section>
         )}
-        <AllPostsWithBoard userId={userId} boardId={boardId} />
-      </PageSectionWide>
+      </PageCont>
     </>
   );
 };

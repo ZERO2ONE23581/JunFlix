@@ -11,23 +11,12 @@ const Mypage: NextPage = () => {
   return (
     <PageCont>
       <Title title="마이페이지" />
-      <H1>MY BOARDS</H1>
       <AllMyBoards />
-      <H1>MY POSTS</H1>
       <AllMyPosts />
-      <H1>MY REVIEWS</H1>
       <AllMyReviews />
-      <H1>Likes</H1>
-      <H1>Comments</H1>
+      {/* <H1>Likes</H1>
+      <H1>Comments</H1> */}
     </PageCont>
   );
 };
 export default Mypage;
-
-const H1 = styled.h1`
-  font-size: 2rem;
-  font-weight: 700;
-  font-style: italic;
-  margin-left: 70px;
-  margin-top: 20px;
-`;

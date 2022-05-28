@@ -1,15 +1,28 @@
 import Link from 'next/link';
 import { NavCont, NavWrapper } from './NavModal';
 
-interface INavModalProps {
+export interface INavModalProps {
+  isloggedIn?: boolean;
   loggedInUserId?: number;
 }
-export const NavBoardModal = ({ loggedInUserId }: INavModalProps) => {
+export const NavBoardModal = ({
+  isloggedIn,
+  loggedInUserId,
+}: INavModalProps) => {
   //
   return (
     <>
       <NavCont>
         <NavWrapper>
+          {isloggedIn && (
+            <Link href={`/user/${loggedInUserId}/board/my`}>
+              <a>
+                <li>
+                  <span>My Boards</span>
+                </li>
+              </a>
+            </Link>
+          )}
           <Link href={`/board`}>
             <a>
               <li>

@@ -5,7 +5,11 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Board, User } from '@prisma/client';
 import useUser from '../../libs/client/useUser';
-import { BoardPageCont, PageCont } from '../../../styles/components/default';
+import {
+  BoardPageCont,
+  H1,
+  PageCont,
+} from '../../../styles/components/default';
 
 interface IGetAllBoards {
   ok: boolean;
@@ -39,6 +43,7 @@ export const AllMyBoards = () => {
         </article>
       ) : (
         <>
+          <H1>MY BOARDS</H1>
           {!Boolean(boardOk && allMyBoards) ? (
             <article className="wrap">
               <NoFound>
@@ -58,7 +63,7 @@ export const AllMyBoards = () => {
                 {allMyBoards?.map((board) => (
                   <Link
                     key={board.id}
-                    href={`/user/${board.UserID}/board/${board.id}/post/create`}
+                    href={`/user/${board.UserID}/board/${board.id}/`}
                   >
                     <a>
                       <Item>

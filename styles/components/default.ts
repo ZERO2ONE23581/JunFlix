@@ -1,32 +1,5 @@
 import styled from '@emotion/styled';
 
-export const H1 = styled.h1`
-  font-weight: 700;
-  font-size: 2.5rem;
-  text-align: center;
-  font-style: italic;
-`;
-export const H2 = styled.h2`
-  margin: 20px auto;
-  font-weight: 500;
-  font-size: 1.4rem;
-  text-align: center;
-  color: blue;
-`;
-
-export const BodyBg = styled.div`
-  background-color: ${(p) => p.theme.color.bg};
-  color: ${(p) => p.theme.color.font};
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -999;
-  width: 100vw;
-  height: 100vh;
-`;
-export const Fullheight = styled.section`
-  height: 100vh;
-`;
 export const PageCont = styled.section`
   padding: 20px 70px;
   color: ${(p) => p.theme.color.font};
@@ -36,6 +9,14 @@ export const PageCont = styled.section`
   }
   .create-post-cont {
     width: 500px;
+  }
+  .read-board-cont {
+    border: 3px solid red;
+    margin: 0 100px;
+    .btn-wrap {
+      display: flex;
+      gap: 8px;
+    }
   }
   .read-post-cont {
     width: 500px;
@@ -60,6 +41,32 @@ export const PageCont = styled.section`
     border: ${(p) => p.theme.border};
     box-shadow: ${(p) => p.theme.boxShadow.nav};
   }
+`;
+export const H1 = styled.h1`
+  font-size: 2rem;
+  font-weight: 700;
+  font-style: italic;
+`;
+export const H2 = styled.h2`
+  margin: 20px auto;
+  font-weight: 500;
+  font-size: 1.4rem;
+  text-align: center;
+  color: blue;
+`;
+
+export const BodyBg = styled.div`
+  background-color: ${(p) => p.theme.color.bg};
+  color: ${(p) => p.theme.color.font};
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -999;
+  width: 100vw;
+  height: 100vh;
+`;
+export const Fullheight = styled.section`
+  height: 100vh;
 `;
 export const BoardPageCont = styled(PageCont)`
   .wrap {
