@@ -6,8 +6,16 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { review_id } = req.query;
-  const { Title, movieTitle, genre, content, score, oneline, recommend } =
-    req.body;
+  const {
+    avatar,
+    Title,
+    movieTitle,
+    genre,
+    content,
+    score,
+    oneline,
+    recommend,
+  } = req.body;
   const mustData = Boolean(Title && movieTitle && genre);
 
   //ERR
@@ -19,6 +27,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const updatedReview = await client.review.update({
     where: { id: +review_id },
     data: {
+      avatar,
       title: Title,
       movieTitle,
       genre,

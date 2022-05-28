@@ -6,7 +6,6 @@ import { Fullheight, H1, PageCont } from '../../styles/components/default';
 
 const AllPostsPage: NextPage = () => {
   const { data: posts } = useSWR(`/api/post/all_posts`);
-  console.log(posts);
   return (
     <>
       <Title title="포스트 둘러보기" />

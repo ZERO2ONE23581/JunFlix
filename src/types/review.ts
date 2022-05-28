@@ -4,6 +4,7 @@ export interface IReviewForm {
   title: string;
   movieTitle: string;
   genre: string;
+  avatar?: FileList;
   content?: string;
   score?: number;
   oneline?: string;
@@ -11,6 +12,7 @@ export interface IReviewForm {
 }
 export interface IGetMyReview {
   ok: boolean;
+  error?: string;
   foundReview?: IReviewWithUser;
 }
 export interface IGetAllReviews {

@@ -32,6 +32,7 @@ const CreatePost: NextPage = () => {
 
   const avatar = watch('avatar');
   const onValid = async ({ avatar, title, content }: IPostForm) => {
+    if (loading) return;
     if (avatar && avatar.length > 0) {
       const { uploadURL } = await (await fetch(`/api/file`)).json(); //GET
       const form = new FormData();
@@ -45,16 +46,18 @@ const CreatePost: NextPage = () => {
           body: form,
         })
       ).json();
-      if (loading) return;
+
       createPost({ title, content, avatar: id });
+    } else {
+      createPost({ title, content });
     }
   };
   //Preview
-  const [thumNailPreview, setThumnNailPreview] = useState('');
+  const [preview, setPreview] = useState('');
   useEffect(() => {
     if (avatar && avatar.length > 0) {
       const file = avatar[0];
-      setThumnNailPreview(URL.createObjectURL(file));
+      setPreview(URL.createObjectURL(file));
     }
     if (postData?.ok) {
       if (postData?.ok) {
@@ -71,8 +74,8 @@ const CreatePost: NextPage = () => {
         <form onSubmit={handleSubmit(onValid)}>
           {postData?.error && <ErrMsg>{postData?.error}</ErrMsg>}
           <ThumNail>
-            {thumNailPreview ? (
-              <img src={`${thumNailPreview}`} alt="파일 업로드" />
+            {preview ? (
+              <img src={`${preview}`} alt="파일 업로드" />
             ) : (
               <img
                 className="noimage"

@@ -1,3 +1,10 @@
+import {
+  OkMsg,
+  ErrMsg,
+  Article,
+  FlexAbsPost,
+  PageCont,
+} from '../../../../../../../styles/components/default';
 import useSWR from 'swr';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
@@ -6,22 +13,13 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../../../../../../src/components/Btn';
 import { Input } from '../../../../../../../src/components/Input';
+import useUser from '../../../../../../../src/libs/client/useUser';
 import { MutationRes } from '../../../../../../../src/types/mutation';
+import useAvatar from '../../../../../../../src/libs/client/useAvatar';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm, IPostRes } from '../../../../../../../src/types/post';
-import { DeleteModal } from '../../../../../../../src/components/Modal/board/settting/delete/modal';
-import {
-  Flex,
-  OkMsg,
-  ErrMsg,
-  Article,
-  PageSectionWide,
-  FlexAbsPost,
-  PageCont,
-} from '../../../../../../../styles/components/default';
-import useUser from '../../../../../../../src/libs/client/useUser';
 import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithBoard';
-import useAvatar from '../../../../../../../src/libs/client/useAvatar';
+import { DeleteModal } from '../../../../../../../src/components/Modal/board/settting/delete/modal';
 
 const myPost: NextPage = () => {
   const router = useRouter();
@@ -40,15 +38,14 @@ const myPost: NextPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IEditPostForm>({ mode: 'onSubmit' });
+
   const avatar = watch('avatar');
   const onValid = async ({ avatar, title, content }: IEditPostForm) => {
     if (loading) return;
     if (avatar && avatar.length > 0) {
-      //GET from CF for url
       const { uploadURL } = await (await fetch(`/api/file`)).json();
       const form = new FormData();
       form.append('file', avatar[0]);
-      //POST to CF with the url
       const {
         result: { id },
       } = await (
@@ -130,13 +127,13 @@ const myPost: NextPage = () => {
           {data?.message && <OkMsg>{data?.message}</OkMsg>}
           {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
           <ThumNail>
-            {swrData?.post?.avatar ? (
+            {preview ? (
+              <img src={`${preview}`} alt="포스트 썸네일 이미지" />
+            ) : swrData?.post?.avatar ? (
               <img
                 src={`${useAvatar(swrData?.post.avatar)}`}
                 alt="포스트 썸네일 이미지"
               />
-            ) : preview ? (
-              <img src={`${preview}`} alt="포스트 썸네일 이미지" />
             ) : (
               <img src="/img/post_thum.svg" alt="포스트 썸네일 이미지" />
             )}

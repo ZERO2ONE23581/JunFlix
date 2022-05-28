@@ -9,12 +9,9 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import useUser from '../../../src/libs/client/useUser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DeleteModal } from '../../../src/components/Modal/board/settting/delete/modal';
-import {
-  Flex,
-  FlexAbsolute,
-  ReviewArticle,
-  PageSectionWide,
-} from '../../../styles/components/default';
+import { FlexAbsolute, PageCont } from '../../../styles/components/default';
+import { ThumNail } from '../../../src/components/Post/AllPostsWithBoard';
+import useAvatar from '../../../src/libs/client/useAvatar';
 
 const myReview: NextPage = () => {
   const router = useRouter();
@@ -38,8 +35,8 @@ const myReview: NextPage = () => {
       )}
 
       {ok && review && (
-        <PageSectionWide>
-          <ReviewArticle>
+        <PageCont>
+          <section className="read-review-cont">
             <Btn
               btnName="Back"
               type="review-back-btn"
@@ -99,23 +96,31 @@ const myReview: NextPage = () => {
               </li>
               <li>
                 <span>한줄평: </span>
-                <input
-                  disabled
-                  type="text"
-                  placeholder="I recommend this movie!"
-                />
+                {review.oneline && <Oneline>"{review.oneline}"</Oneline>}
               </li>
+              <ThumNail>
+                {review.avatar ? (
+                  <img src={`${useAvatar(review.avatar)}`} alt="리뷰 이미지" />
+                ) : (
+                  <img src="/img/post_thum.svg" alt="파일 업로드" />
+                )}
+              </ThumNail>
               <li>
                 <p>{review.content}</p>
               </li>
             </ReviewList>
-          </ReviewArticle>
-        </PageSectionWide>
+          </section>
+        </PageCont>
       )}
     </>
   );
 };
 export default myReview;
+
+const Oneline = styled.span`
+  font-style: italic;
+  font-weight: 500;
+`;
 
 const ReviewList = styled.ul`
   h1 {

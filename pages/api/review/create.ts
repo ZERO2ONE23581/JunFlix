@@ -24,6 +24,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //Create review
   await client.review.create({
     data: {
+      avatar,
       title: Title,
       movieTitle,
       genre,

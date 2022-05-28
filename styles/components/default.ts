@@ -48,6 +48,18 @@ export const PageCont = styled.section`
       width: 200px;
     }
   }
+  .create-review-cont,
+  .read-review-cont,
+  .edit-review-cont {
+    width: 700px;
+  }
+  .read-review-cont {
+    padding: 30px 40px;
+    width: 900px;
+    position: relative;
+    border: ${(p) => p.theme.border};
+    box-shadow: ${(p) => p.theme.boxShadow.nav};
+  }
 `;
 export const BoardPageCont = styled(PageCont)`
   .wrap {
@@ -95,8 +107,8 @@ export const PageSectionWide = styled(PageCont)`
 
 export const Article = styled.article`
   background-color: ${(p) => p.theme.color.bg};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
   color: ${(p) => p.theme.color.font};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
   border: ${(p) => p.theme.border};
   justify-content: center;
   align-content: center;
