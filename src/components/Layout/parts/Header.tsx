@@ -15,17 +15,12 @@ import useAvatar from '../../../libs/client/useAvatar';
 
 export const Header = ({ onClick, btnName }: any) => {
   const { isloggedIn, loggedInUserId, loggedInUser } = useUser();
-  const [avatarUrl, setAvatarUrl] = useState('/img/profile.svg');
-  //
-  const [open, setOpen] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
   const [openMovie, setOpenMovie] = useState(false);
   const [openBoard, setOpenBoard] = useState(false);
   const [openPost, setOpenPost] = useState(false);
   const [openReview, setOpenReview] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
-  useEffect(() => {
-    if (isloggedIn) setAvatarUrl(useAvatar(loggedInUser?.avatar));
-  }, [useUser, loggedInUser]);
   //
   return (
     <Cont>
@@ -78,11 +73,17 @@ export const Header = ({ onClick, btnName }: any) => {
         </MainNav>
         <MyNav>
           {isloggedIn ? (
-            <>
-              <Avatar url={avatarUrl} onClick={() => setOpen((p) => !p)}>
-                {open && <NavModal />}
-              </Avatar>
-            </>
+            <Avatar onClick={() => setOpenProfile((p) => !p)}>
+              {loggedInUser?.avatar ? (
+                <img
+                  src={`${useAvatar(loggedInUser?.avatar)}`}
+                  alt="프로필 이미지"
+                />
+              ) : (
+                <img src="/img/profile.svg" alt="프로필 이미지" />
+              )}
+              {openProfile && <NavModal />}
+            </Avatar>
           ) : (
             <UnloggedIn>
               <LinkStyle>
@@ -100,8 +101,8 @@ export const Header = ({ onClick, btnName }: any) => {
       </NavBar>
 
       <>
-        {open ? (
-          <NavModalClose onClick={() => setOpen(false)} />
+        {openProfile ? (
+          <NavModalClose onClick={() => setOpenProfile(false)} />
         ) : openCreate ? (
           <NavModalClose onClick={() => setOpenCreate(false)} />
         ) : openBoard ? (
@@ -162,23 +163,17 @@ const Logo = styled.div`
     }
   }
 `;
-const Avatar = styled.div<{ url: string }>`
-  position: relative;
+const Avatar = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  position: relative;
   border: ${(p) => p.theme.border};
-  background: ${(p) => `url(${p.url}) center / cover no-repeat`};
-  /* background: ${(p) => `url(img/profile.svg) center / cover no-repeat`}; */
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
-// const Profile = styled.article`
-//   width: 40px;
-//   height: 40px;
-//   position: relative;
-//   border-radius: 100%;
-//   border: ${(p) => p.theme.border};
-//   background: url('/img/profile.svg') center / contain no-repeat;
-// `;
 
 const UnloggedIn = styled.article`
   display: flex;

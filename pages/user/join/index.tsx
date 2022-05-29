@@ -1,3 +1,9 @@
+import {
+  ErrMsg,
+  Form,
+  Layer,
+  PageSection,
+} from '../../../styles/components/default';
 import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
@@ -9,12 +15,6 @@ import { Title } from '../../../src/components/Layout/parts/Title';
 import { LoginLink } from '../../../src/components/Login/LoginLink';
 import { JoinConfirmModal } from '../../../src/components/Modal/JoinConfirmModal';
 import { UserIdCheckModal } from '../../../src/components/Modal/UserIdCheckModal';
-import {
-  ErrMsg,
-  Form,
-  Layer,
-  PageSection,
-} from '../../../styles/components/default';
 
 const Join: NextPage = () => {
   //Post api
@@ -45,7 +45,6 @@ const Join: NextPage = () => {
     email,
     password,
     confirmPw,
-    avatar,
   }: IJoinForm) => {
     if (!confirm) {
       return setError('userIdCheckErr', {
@@ -130,6 +129,10 @@ const Join: NextPage = () => {
           label="Username"
           register={register('username', {
             required: '닉네임을 입력해주세요.',
+            maxLength: {
+              value: 25,
+              message: '사용하실 닉네임은 25자를 초과할수 없습니다.',
+            },
           })}
           name="username"
           type="text"
@@ -144,6 +147,11 @@ const Join: NextPage = () => {
               label="ID"
               register={register('userId', {
                 required: '아이디를 입력해주세요.',
+                pattern: {
+                  value: /^[a-z]+[a-z0-9]{5,19}$/g,
+                  message:
+                    '아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.',
+                },
               })}
               name="userId"
               type="text"
@@ -170,6 +178,20 @@ const Join: NextPage = () => {
                   label="Password"
                   register={register('password', {
                     required: '비밀번호를 입력해주세요.',
+                    minLength: {
+                      value: 8,
+                      message: '비밀번호는 최소 8자리여야 합니다.',
+                    },
+                    maxLength: {
+                      value: 16,
+                      message: '비밀번호는 최대 16자리여야 합니다.',
+                    },
+                    pattern: {
+                      value:
+                        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
+                      message:
+                        '비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야 합니다.',
+                    },
                   })}
                   name="password"
                   type="password"
@@ -200,6 +222,10 @@ const Join: NextPage = () => {
                   label="Email"
                   register={register('email', {
                     required: '이메일을 입력해주세요.',
+                    pattern: {
+                      value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                      message: '이메일 형식이 올바르지 않습니다.',
+                    },
                   })}
                   name="email"
                   type="email"

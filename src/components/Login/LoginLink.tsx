@@ -8,17 +8,17 @@ export const LoginLink = ({ findId, findPassword, join, joined }: any) => {
       {!joined ? (
         <Nav as={'nav'}>
           {!findId && (
-            <Link href="/login/find_id">
+            <Link href="/user/login/find_id">
               <a>아이디 찾기</a>
             </Link>
           )}
           {!findPassword && (
-            <Link href="/login/find_pw">
+            <Link href="/user/login/find_pw">
               <a>비밀번호 찾기</a>
             </Link>
           )}
           {!join && (
-            <Link href="/join">
+            <Link href="/user/join">
               <a>회원가입</a>
             </Link>
           )}
@@ -26,7 +26,7 @@ export const LoginLink = ({ findId, findPassword, join, joined }: any) => {
       ) : (
         <AlreadyJoined>
           <span>이미 회원이십니까? &rarr; </span>
-          <Link href="/login">
+          <Link href="/user/login">
             <a>로그인</a>
           </Link>
         </AlreadyJoined>

@@ -21,11 +21,11 @@ const Find_Pw: NextPage = () => {
 
   //Form
   const {
+    reset,
+    setError,
     register,
     handleSubmit,
     formState: { errors },
-    setError,
-    reset,
   } = useForm<IFindForm>({ mode: 'onSubmit' });
 
   const onValid = ({ userId }: IFindForm) => {
@@ -40,7 +40,6 @@ const Find_Pw: NextPage = () => {
       return postToken(tokenNum);
     }
   };
-  // const oldPassword = tokenData?.foundUser?.password;
   const id = tokenData?.foundUser?.id;
   const onPasswordValid = ({ newPassword, confirmPassword }: IFindForm) => {
     if (newPassword !== confirmPassword)
@@ -99,37 +98,35 @@ const Find_Pw: NextPage = () => {
           )}
         </>
       ) : (
-        <>
-          <Form onSubmit={handleSubmit(onPasswordValid)}>
-            {paswordUpdated?.error && <ErrMsg>{paswordUpdated?.error}</ErrMsg>}
+        <Form onSubmit={handleSubmit(onPasswordValid)}>
+          {paswordUpdated?.error && <ErrMsg>{paswordUpdated?.error}</ErrMsg>}
 
-            <Input
-              label="Password"
-              type="password"
-              name="newPassword"
-              errMsg={errors.newPassword?.message}
-              placeholder="새 비밀번호 입력하세요."
-              register={register('newPassword', {
-                required: '새 비밀번호 입력하세요.',
-              })}
-            />
-            <Input
-              label="Confirm Password"
-              type="password"
-              name="confirmPassword"
-              errMsg={errors.confirmPassword?.message}
-              placeholder="새 비밀번호 재입력하세요."
-              register={register('confirmPassword', {
-                required: '새 비밀번호 재입력하세요.',
-              })}
-            />
-            <Btn
-              type="submit"
-              btnName="새로운 비밀번호 만들기"
-              loading={newLoading}
-            />
-          </Form>
-        </>
+          <Input
+            label="Password"
+            type="password"
+            name="newPassword"
+            errMsg={errors.newPassword?.message}
+            placeholder="새 비밀번호 입력하세요."
+            register={register('newPassword', {
+              required: '새 비밀번호 입력하세요.',
+            })}
+          />
+          <Input
+            label="Confirm Password"
+            type="password"
+            name="confirmPassword"
+            errMsg={errors.confirmPassword?.message}
+            placeholder="새 비밀번호 재입력하세요."
+            register={register('confirmPassword', {
+              required: '새 비밀번호 재입력하세요.',
+            })}
+          />
+          <Btn
+            type="submit"
+            btnName="새로운 비밀번호 만들기"
+            loading={newLoading}
+          />
+        </Form>
       )}
 
       <LoginLink findPassword={true} />

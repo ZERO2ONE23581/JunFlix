@@ -16,7 +16,7 @@ export const FindConfirmModal = ({ userId }: any) => {
           <h2>로그인 페이지로 이동하시겠습니까?</h2>
           <Flex>
             <LinkBtn>
-              <Link href="/login">
+              <Link href="/user/login">
                 <a>YES</a>
               </Link>
             </LinkBtn>
