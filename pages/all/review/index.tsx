@@ -1,41 +1,39 @@
 import useSWR from 'swr';
-import { Btn } from '../Btn';
 import Link from 'next/link';
 import styled from '@emotion/styled';
+import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { IGetAllReviews } from '../../types/review';
-import { H1, PageCont } from '../../../styles/components/default';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Btn } from '../../../src/components/Btn';
+import { IGetAllReviews } from '../../../src/types/review';
+import { PageCont } from '../../../styles/components/default';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import useUser from '../../libs/client/useUser';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export const AllMyReviews = () => {
+const allReview: NextPage = () => {
   const router = useRouter();
-  const { isloggedIn, loggedInUser } = useUser();
-  const { data } = useSWR<IGetAllReviews>(`/api/review/my_reviews`);
+  const { data: reviewData } = useSWR<IGetAllReviews>(
+    `/api/review/all_reviews`
+  );
+  const ok = reviewData?.ok;
+  const allReviews = reviewData?.allReviews;
   //
   return (
     <PageCont>
-      <H1>MY REVIEWS</H1>
       <Btn
         type="create"
         btnName="리뷰 작성하기"
         onClick={() => {
-          isloggedIn
-            ? router.push(`/user/${loggedInUser?.id}/review/create`)
-            : alert(`로그인이 필요합니다.`);
+          router.push(`/review/create`);
         }}
       />
-      {isloggedIn && data?.ok && data.allMyReviews && (
+      {ok && allReviews && (
         <ReviewList>
-          {data.allMyReviews.map((review) => (
+          {allReviews.map((review) => (
             <Link href={`/review/${review.id}`} key={review.id}>
               <a>
                 <Review>
                   <Order>
-                    #
-                    {data.allMyReviews!.length -
-                      data.allMyReviews!.indexOf(review)}
+                    #{allReviews.length - allReviews.indexOf(review)}
                   </Order>
                   <Wrap>
                     <ReviewTitle>{review.title}</ReviewTitle>
@@ -79,6 +77,7 @@ export const AllMyReviews = () => {
     </PageCont>
   );
 };
+export default allReview;
 
 const Stars = styled.span`
   font-size: 0.8rem;
@@ -107,17 +106,16 @@ const Review = styled.article`
 
 const ReviewList = styled.article`
   width: 100%;
-  padding: 20px 30px;
+  padding: 20px;
   border-radius: 8px;
   border: ${(p) => p.theme.border};
   color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
-  background-color: red;
 `;
-const ReviewTitle = styled.h2`
+const ReviewTitle = styled.h1`
   font-size: 1.3rem;
-  font-weight: 700;
+  font-weight: 500;
 `;
 const Wrap = styled.div`
   display: flex;

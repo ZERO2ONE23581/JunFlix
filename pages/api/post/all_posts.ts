@@ -17,6 +17,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       user: { select: { username: true } },
       board: { select: { title: true } },
     },
+    orderBy: {
+      id: 'desc',
+    },
   });
   //
   return res.json({ ok: true, allPosts });

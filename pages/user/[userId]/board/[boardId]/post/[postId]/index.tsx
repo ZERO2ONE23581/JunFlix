@@ -139,29 +139,33 @@ const myPost: NextPage = () => {
             )}
           </ThumNail>
           <Input
+            register={register('avatar')}
             type="file"
             name="avatar"
             label="Post Image"
             disabled={!edit && true}
-            register={register('avatar')}
             errMsg={errors.avatar?.message}
           />
           <Input
+            register={register('title', {
+              required: '포스트 제목을 입력해주세요.',
+              maxLength: {
+                value: 30,
+                message: '포스트 제목은 30자 이내여야 합니다.',
+              },
+            })}
             type="text"
             name="title"
             disabled={!edit && true}
             placeholder="게시물의 제목을 입력하세요."
-            register={register('title', {
-              required: '게시물의 제목을 입력하세요.',
-            })}
             errMsg={errors.title?.message}
           />
           <Input
+            register={register('content')}
             type="text"
             name="content"
             disabled={!edit && true}
             placeholder="게시물의 내용을 작성해 주세요."
-            register={register('content')}
             errMsg={errors.content?.message}
           />
           <Input

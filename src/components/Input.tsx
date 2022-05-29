@@ -68,8 +68,8 @@ export const Select = ({
           </label>
           <select {...register} name={name} id={name}>
             <option value="">{placeholder}</option>
-            <option value="Male">{options[0]}</option>
-            <option value="Female">{options[1]}</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
           </select>
           {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
         </InputCont>
@@ -78,16 +78,16 @@ export const Select = ({
           <label htmlFor={name}>{label}</label>
           <select disabled={disabled} {...register} name={name} id={name}>
             <option value="">{placeholder}</option>
-            <option value="SF">{options[0]}</option>
-            <option value="Drama">{options[1]}</option>
-            <option value="Horror">{options[2]}</option>
-            <option value="Comedy">{options[3]}</option>
-            <option value="Fantasy">{options[4]}</option>
-            <option value="Romance">{options[5]}</option>
-            <option value="Action">{options[6]}</option>
-            <option value="Mystery">{options[7]}</option>
-            <option value="Thriller">{options[8]}</option>
-            <option value="Others">{options[9]}</option>
+            <option value="SF">SF</option>
+            <option value="Drama">Drama</option>
+            <option value="Horror">Horror</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Romance">Romance</option>
+            <option value="Action">Action</option>
+            <option value="Mystery">Mystery</option>
+            <option value="Thriller">Thriller</option>
+            <option value="none">none</option>
           </select>
           {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
         </InputCont>

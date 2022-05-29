@@ -5,11 +5,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Board, User } from '@prisma/client';
 import useUser from '../../libs/client/useUser';
-import {
-  BoardPageCont,
-  H1,
-  PageCont,
-} from '../../../styles/components/default';
+import { H1, PageCont } from '../../../styles/components/default';
 
 interface IGetAllBoards {
   ok: boolean;
@@ -20,7 +16,7 @@ interface IBoard extends Board {
   user: User;
 }
 
-export const AllMyBoards = () => {
+export const SelectBoard = () => {
   const router = useRouter();
   const { isloggedIn, loggedInUser, loggedInUserId } = useUser();
   const { data: boards } = useSWR<IGetAllBoards>(
@@ -44,7 +40,7 @@ export const AllMyBoards = () => {
           </article>
         ) : (
           <>
-            <H1>MY BOARDS</H1>
+            <H1>Select Board to Create Post</H1>
             {!Boolean(boardOk && allMyBoards) ? (
               <article className="btn-wrap">
                 <NoFound>
@@ -64,7 +60,7 @@ export const AllMyBoards = () => {
                   {allMyBoards?.map((board) => (
                     <Link
                       key={board.id}
-                      href={`/user/${board.UserID}/board/${board.id}/`}
+                      href={`/user/${board.UserID}/board/${board.id}/post/create`}
                     >
                       <a>
                         <Item>

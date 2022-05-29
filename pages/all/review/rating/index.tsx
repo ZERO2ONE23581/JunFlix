@@ -4,7 +4,7 @@ import { Review, User } from '@prisma/client';
 import styled from '@emotion/styled';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { H1 } from '../../../styles/components/default';
+import { H1, PageCont } from '../../../../styles/components/default';
 
 interface IGetAllRatings {
   ok: boolean;
@@ -24,9 +24,9 @@ const rating: NextPage = () => {
   console.log(allRatings);
   //
   return (
-    <>
+    <PageCont>
       {ok && allRatings && (
-        <RatingPage>
+        <>
           {allRatings.map((rating) => (
             <OneLine key={rating.id}>
               <article className="layer">
@@ -66,9 +66,9 @@ const rating: NextPage = () => {
               </article>
             </OneLine>
           ))}
-        </RatingPage>
+        </>
       )}
-    </>
+    </PageCont>
   );
 };
 export default rating;
@@ -90,7 +90,7 @@ const ThumsUp = styled.div`
 `;
 
 const OneLine = styled.article`
-  width: 80%;
+  /* width: 80%; */
   margin: 10px auto;
   padding: 20px 80px;
   gap: 10px;

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const PageCont = styled.section`
-  padding: 20px 70px;
+  padding: 50px 100px;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
   section {
@@ -10,13 +10,16 @@ export const PageCont = styled.section`
   .create-post-cont {
     width: 500px;
   }
+  .read-myboard-cont,
   .read-board-cont {
     border: 3px solid red;
-    margin: 0 100px;
     .btn-wrap {
       display: flex;
       gap: 8px;
     }
+  }
+  .read-board-cont {
+    margin: 0 100px;
   }
   .read-post-cont {
     width: 500px;

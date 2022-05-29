@@ -7,41 +7,39 @@ export const NavReviewModal = ({
   loggedInUserId,
 }: INavModalProps) => {
   return (
-    <>
-      <NavCont>
-        <NavWrapper>
-          {isloggedIn && (
-            <Link href={`/user/${loggedInUserId}/review`}>
-              <a>
-                <li>
-                  <span>My Reviews</span>
-                </li>
-              </a>
-            </Link>
-          )}
-          <Link href={`/review`}>
+    <NavCont>
+      <NavWrapper>
+        <Link href={`/all/review`}>
+          <a>
+            <li>
+              <span>All Reviews</span>
+            </li>
+          </a>
+        </Link>
+        {isloggedIn && (
+          <Link href={`/user/${loggedInUserId}/review/my_review`}>
             <a>
               <li>
-                <span>All Reviews</span>
+                <span>My Reviews</span>
               </li>
             </a>
           </Link>
-          <Link href={`/review/rating`}>
-            <a>
-              <li>
-                <span>Rating</span>
-              </li>
-            </a>
-          </Link>
-          <Link href={`/review/create`}>
-            <a>
-              <li>
-                <span>Create</span>
-              </li>
-            </a>
-          </Link>
-        </NavWrapper>
-      </NavCont>
-    </>
+        )}
+        <Link href={`/all/review/rating`}>
+          <a>
+            <li>
+              <span>Rating</span>
+            </li>
+          </a>
+        </Link>
+        <Link href={`/user/${loggedInUserId}/review/create`}>
+          <a>
+            <li>
+              <span>Create</span>
+            </li>
+          </a>
+        </Link>
+      </NavWrapper>
+    </NavCont>
   );
 };

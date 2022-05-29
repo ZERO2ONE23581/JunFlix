@@ -1,38 +1,69 @@
-import Link from 'next/link';
-import { NavCont, NavWrapper } from './NavModal';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { NavCont } from './NavModal';
 
 interface INavModalProps {
+  isloggedIn?: boolean;
   loggedInUserId?: number;
 }
-export const NavCreateModal = ({ loggedInUserId }: INavModalProps) => {
+export const NavCreateModal = ({
+  isloggedIn,
+  loggedInUserId,
+}: INavModalProps) => {
+  const router = useRouter();
+  const create = (type: string) => {
+    if (type === 'board')
+      return router.push(`/user/${loggedInUserId}/board/create`);
+    if (type === 'post')
+      return router.push(`/user/${loggedInUserId}/board/my_board/select`);
+    if (type === 'review')
+      return router.push(`/user/${loggedInUserId}/review/create`);
+  };
+  const mustLogin = () => {
+    alert('로그인이 필요합니다.');
+    router.push('/user/login');
+  };
   //
   return (
     <>
       <NavCont>
-        <NavWrapper>
-          <Link href={`/user/${loggedInUserId}/board/create`}>
-            <a>
-              <li>
-                <span>Board</span>
-              </li>
-            </a>
-          </Link>
-          <Link href={`/board/select`}>
-            <a>
-              <li>
-                <span>Post</span>
-              </li>
-            </a>
-          </Link>
-          <Link href={`/review/create`}>
-            <a>
-              <li>
-                <span>Review</span>
-              </li>
-            </a>
-          </Link>
-        </NavWrapper>
+        <Wrap>
+          <article
+            className="btn"
+            onClick={isloggedIn ? () => create('board') : mustLogin}
+          >
+            <span>Board</span>
+          </article>
+          <article
+            className="btn"
+            onClick={isloggedIn ? () => create('post') : mustLogin}
+          >
+            <span>Post</span>
+          </article>
+          <article
+            className="btn"
+            onClick={isloggedIn ? () => create('review') : mustLogin}
+          >
+            <span>Review</span>
+          </article>
+        </Wrap>
       </NavCont>
     </>
   );
 };
+const Wrap = styled.article`
+  padding: 5px 0;
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  .btn {
+    padding: 5px;
+    color: ${(p) => p.theme.color.font};
+    background-color: ${(p) => p.theme.color.bg};
+    &:hover {
+      color: ${(p) => p.theme.color.logo};
+      background-color: ${(p) => p.theme.color.font};
+    }
+    span {
+      font-size: 1rem;
+    }
+  }
+`;

@@ -131,8 +131,8 @@ const myBoard: NextPage = () => {
                 register={register('title', {
                   required: '수정할 보드의 제목을 입력하세요.',
                   maxLength: {
-                    value: 10,
-                    message: '보드제목은 10자 이내여야 합니다.',
+                    value: 30,
+                    message: '보드제목은 30자 이내여야 합니다.',
                   },
                 })}
                 type="text"

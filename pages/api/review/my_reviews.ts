@@ -14,7 +14,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       id: 'desc',
     },
   });
-  if (!allMyReviews) return res.json({ ok: false, error: 'NO REVIEWS!' });
+  if (allMyReviews.length === 0)
+    return res.json({ ok: false, error: 'NO REVIEWS!' });
   //
   return res.json({ ok: true, allMyReviews });
 }

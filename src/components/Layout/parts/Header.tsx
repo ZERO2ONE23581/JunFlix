@@ -67,7 +67,12 @@ export const Header = ({ onClick, btnName }: any) => {
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenCreate((p) => !p)}>
               Create
-              {openCreate && <NavCreateModal loggedInUserId={loggedInUserId} />}
+              {openCreate && (
+                <NavCreateModal
+                  isloggedIn={isloggedIn}
+                  loggedInUserId={loggedInUserId}
+                />
+              )}
             </AnchorBtn>
           </LinkStyle>
         </MainNav>
@@ -164,11 +169,12 @@ const Logo = styled.div`
   }
 `;
 const Avatar = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   position: relative;
   border: ${(p) => p.theme.border};
+  overflow: hidden;
   img {
     width: 100%;
     height: 100%;

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
-import { AllBoards } from '../../src/components/Board/AllBoards';
-import { Title } from '../../src/components/Layout/parts/Title';
-import { Fullheight } from '../../styles/components/default';
+import { AllBoards } from '../../../src/components/Board/AllBoards';
+import { Title } from '../../../src/components/Layout/parts/Title';
+import { Fullheight } from '../../../styles/components/default';
 
 const News: NextPage = () => {
   return (

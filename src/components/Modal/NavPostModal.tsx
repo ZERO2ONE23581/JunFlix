@@ -7,34 +7,32 @@ export const NavPostModal = ({
   loggedInUserId,
 }: INavModalProps) => {
   return (
-    <>
-      <NavCont>
-        <NavWrapper>
-          {isloggedIn && (
-            <Link href={`/user/${loggedInUserId}/post`}>
-              <a>
-                <li>
-                  <span>My Posts</span>
-                </li>
-              </a>
-            </Link>
-          )}
-          <Link href={`/post`}>
+    <NavCont>
+      <NavWrapper>
+        <Link href={`/all/post`}>
+          <a>
+            <li>
+              <span>All Posts</span>
+            </li>
+          </a>
+        </Link>
+        {isloggedIn && (
+          <Link href={`/user/${loggedInUserId}/post/my_posts`}>
             <a>
               <li>
-                <span>All Posts</span>
+                <span>My Posts</span>
               </li>
             </a>
           </Link>
-          <Link href={`/board/select`}>
-            <a>
-              <li>
-                <span>Create</span>
-              </li>
-            </a>
-          </Link>
-        </NavWrapper>
-      </NavCont>
-    </>
+        )}
+        <Link href={`/user/${loggedInUserId}/board/my_board/select`}>
+          <a>
+            <li>
+              <span>Create</span>
+            </li>
+          </a>
+        </Link>
+      </NavWrapper>
+    </NavCont>
   );
 };

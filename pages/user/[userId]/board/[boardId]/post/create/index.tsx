@@ -16,13 +16,9 @@ import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithB
 const CreatePost: NextPage = () => {
   const router = useRouter();
   const { userId, boardId } = router.query;
-
-  //Post
   const [createPost, { data: postData, loading }] = useMutation<MutationRes>(
     `/api/user/${userId}/board/${boardId}/post/create`
   );
-
-  //Form
   const {
     watch,
     register,
@@ -34,10 +30,9 @@ const CreatePost: NextPage = () => {
   const onValid = async ({ avatar, title, content }: IPostForm) => {
     if (loading) return;
     if (avatar && avatar.length > 0) {
-      const { uploadURL } = await (await fetch(`/api/file`)).json(); //GET
+      const { uploadURL } = await (await fetch(`/api/file`)).json();
       const form = new FormData();
       form.append('file', avatar[0]);
-      //POST
       const {
         result: { id },
       } = await (
@@ -46,13 +41,12 @@ const CreatePost: NextPage = () => {
           body: form,
         })
       ).json();
-
-      createPost({ title, content, avatar: id });
+      return createPost({ title, content, avatar: id });
     } else {
-      createPost({ title, content });
+      return createPost({ title, content });
     }
   };
-  //Preview
+  //
   const [preview, setPreview] = useState('');
   useEffect(() => {
     if (avatar && avatar.length > 0) {
@@ -66,7 +60,6 @@ const CreatePost: NextPage = () => {
       }
     }
   }, [avatar, watch, postData, router]);
-
   //
   return (
     <PageCont>
@@ -85,27 +78,31 @@ const CreatePost: NextPage = () => {
             )}
           </ThumNail>
           <Input
+            register={register('avatar')}
             type="file"
             name="avatar"
             label="Post Image"
-            register={register('avatar')}
             errMsg={errors.avatar?.message}
           />
           <Input
-            errMsg={errors.title?.message}
+            register={register('title', {
+              required: '포스트 제목을 입력해주세요.',
+              maxLength: {
+                value: 30,
+                message: '포스트 제목은 30자 이내여야 합니다.',
+              },
+            })}
             type="text"
             name="title"
             placeholder="게시물의 제목을 입력해주세요."
-            register={register('title', {
-              required: '게시물의 제목을 입력해주세요.',
-            })}
+            errMsg={errors.title?.message}
           />
           <Input
-            errMsg={errors.content?.message}
+            register={register('content')}
             type="text"
             name="content"
             placeholder="게시물의 내용을 입력해주세요."
-            register={register('content')}
+            errMsg={errors.content?.message}
           />
           <Btn type="submit" btnName="Create Post" loading={loading} />
         </form>

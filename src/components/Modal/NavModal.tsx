@@ -45,6 +45,7 @@ export const NavWrapper = styled.ul`
   align-items: center;
   border-radius: 5px;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
+  article,
   a {
     width: 100%;
     padding: 5px 0;
