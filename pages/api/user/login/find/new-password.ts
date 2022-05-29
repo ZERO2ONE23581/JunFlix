@@ -1,29 +1,33 @@
+import bcrypt from 'bcrypt';
 import { NextApiRequest, NextApiResponse } from 'next';
 import client from '../../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { newPassword, id } = req.body;
-  const mustData = Boolean(newPassword && id);
   const { user } = req.session;
+  const { newPassword, foundUserId } = req.body;
+  const mustData = Boolean(newPassword && foundUserId);
   if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
   if (!mustData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
   //
   const foundUser = await client.user.findUnique({
-    where: { id },
+    where: { id: foundUserId },
     select: { password: true },
   });
-  if (newPassword === foundUser?.password)
-    return res.json({
-      ok: false,
-      error: '이전 비밀번호는 사용하실수 없습니다.',
-    });
+  if (!foundUser) return res.json({ ok: false, error: 'NO USER FOUND' });
 
-  //업데이트
-  await client.user.update({
-    where: { id },
-    data: { password: newPassword },
+  //PASSWORD CHECK
+  const passwordMatch = await bcrypt.compare(newPassword, foundUser.password!);
+  if (passwordMatch) return res.json({ ok: false, error: 'SAME PASSWORD' });
+
+  //HASH NEW PASSWORD -> UPDATE
+  bcrypt.hash(newPassword, 10, async function (err, hasedPassword) {
+    if (err) return console.log('HASH PASSWORD FAIL');
+    await client.user.update({
+      where: { id: foundUserId },
+      data: { password: hasedPassword },
+    });
   });
   //
   return res.json({ ok: true });

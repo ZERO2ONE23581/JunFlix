@@ -33,7 +33,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //Hash Password -> Create User
   hash(password, 10, async function (err, hasedPassword) {
     if (err) return console.log('HASH PASSWORD FAIL');
-    //유저생성
     await client.user.create({
       data: {
         username,

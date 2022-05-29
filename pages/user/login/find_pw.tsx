@@ -17,7 +17,7 @@ const Find_Pw: NextPage = () => {
     useMutation<IFindPostRes>(`/api/user/login/find/token-confirm`);
 
   const [postCreateNewPw, { loading: newLoading, data: paswordUpdated }] =
-    useMutation<IFindPostRes>(`/api/user/login/find/create-new-password`);
+    useMutation<IFindPostRes>(`/api/user/login/find/new-password`);
 
   //Form
   const {
@@ -40,7 +40,7 @@ const Find_Pw: NextPage = () => {
       return postToken(tokenNum);
     }
   };
-  const id = tokenData?.foundUser?.id;
+  const foundUserId = tokenData?.foundUser?.id;
   const onPasswordValid = ({ newPassword, confirmPassword }: IFindForm) => {
     if (newPassword !== confirmPassword)
       return setError('confirmPassword', {
@@ -48,7 +48,7 @@ const Find_Pw: NextPage = () => {
       });
     if (tokenData?.ok) {
       if (newLoading) return;
-      return postCreateNewPw({ newPassword, id });
+      return postCreateNewPw({ newPassword, foundUserId });
     }
   };
   //
@@ -102,17 +102,31 @@ const Find_Pw: NextPage = () => {
           {paswordUpdated?.error && <ErrMsg>{paswordUpdated?.error}</ErrMsg>}
 
           <Input
-            label="Password"
+            label="New Password"
             type="password"
             name="newPassword"
             errMsg={errors.newPassword?.message}
             placeholder="새 비밀번호 입력하세요."
             register={register('newPassword', {
               required: '새 비밀번호 입력하세요.',
+              minLength: {
+                value: 8,
+                message: '비밀번호는 최소 8자리여야 합니다.',
+              },
+              maxLength: {
+                value: 16,
+                message: '비밀번호는 최대 16자리여야 합니다.',
+              },
+              pattern: {
+                value:
+                  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
+                message:
+                  '비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야 합니다.',
+              },
             })}
           />
           <Input
-            label="Confirm Password"
+            label="Confirm New Password"
             type="password"
             name="confirmPassword"
             errMsg={errors.confirmPassword?.message}

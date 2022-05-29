@@ -9,7 +9,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
   if (!userId) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
   const tokenNum = Math.floor(Math.random() * 90000) + 10000; //6 random digits
-  //
+
+  //UserId check
   const foundUser = await client.user.findUnique({
     where: { userId },
     select: { id: true, userId: true },
@@ -17,7 +18,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!foundUser)
     return res.json({ ok: false, error: '존재하지 않는 아이디 입니다.' });
 
-  //토큰생성
+  //Create Token
   const token = await client.token.create({
     data: {
       tokenNum,

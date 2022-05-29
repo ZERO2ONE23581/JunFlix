@@ -4,7 +4,6 @@ import { Btn } from '../../Btn';
 import { Input, Select } from '../../Input';
 import useUser from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';
-import { IProfileEditForm, IProfileEditRes } from '../../../types/edit-profile';
 import {
   ErrMsg,
   Form,
