@@ -12,7 +12,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //ERR
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (!review_id) return res.json({ ok: false, error: 'QUERY ERROR' });
-  if (!mustData) return res.json({ ok: false, error: 'MUST DATA REQUIRED!' });
+  if (!mustData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED!' });
   if (userId !== user.id)
     return res.json({ ok: false, error: 'INVALID USER!' });
   if (reviewId !== +review_id)

@@ -8,7 +8,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const mustData = Boolean(newPassword && id);
   const { user } = req.session;
   if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
-  if (!mustData) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
+  if (!mustData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
   //
   const foundUser = await client.user.findUnique({
     where: { id },

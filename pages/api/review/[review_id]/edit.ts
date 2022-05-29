@@ -21,7 +21,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //ERR
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (!review_id) return res.json({ ok: false, error: 'QUERY ERROR' });
-  if (!mustData) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
+  if (!mustData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
 
   //Update review
   const updatedReview = await client.review.update({

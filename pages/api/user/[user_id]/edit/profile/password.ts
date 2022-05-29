@@ -11,7 +11,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   if (user?.id !== Number(user_id))
     return res.json({ ok: false, error: 'INVALID USERID QUERY' });
-  if (!mustData) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
+  if (!mustData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
   const currentUser = await client.user.findUnique({
     where: { id: user.id },
   });

@@ -19,7 +19,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   //error handling
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN' });
-  if (!mustData) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
+  if (!mustData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
 
   //Create review
   await client.review.create({

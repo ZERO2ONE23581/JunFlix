@@ -3,7 +3,7 @@ export interface IJoinForm {
   userId?: string;
   email?: string;
   password?: string;
-  confirmPw?: string;
+  passwordConfirm?: string;
   userIdCheckErr?: string;
 }
 export interface IJoinRes {

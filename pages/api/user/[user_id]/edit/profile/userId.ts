@@ -10,7 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const mustData = Boolean(userId || email);
   //
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
-  if (!mustData) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
+  if (!mustData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
   if (user?.id !== Number(user_id))
     return res.json({ ok: false, error: 'INVALID USERID QUERY' });
   const currentUser = await client.user.findUnique({

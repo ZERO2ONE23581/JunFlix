@@ -44,7 +44,7 @@ const Join: NextPage = () => {
     userId,
     email,
     password,
-    confirmPw,
+    passwordConfirm,
   }: IJoinForm) => {
     if (!confirm) {
       return setError('userIdCheckErr', {
@@ -52,14 +52,14 @@ const Join: NextPage = () => {
         message: '아이디 중복확인이 필요합니다!',
       });
     }
-    if (password !== confirmPw) {
-      return setError('confirmPw', {
+    if (password !== passwordConfirm) {
+      return setError('passwordConfirm', {
         message: '비밀번호가 일치하지 않습니다.',
       });
     }
     if (loading) return;
     const userID = userId!.toUpperCase();
-    postJoin({ username, userID, email, password, confirmPw });
+    postJoin({ username, userID, email, password, passwordConfirm });
   };
 
   //Modals
@@ -94,7 +94,10 @@ const Join: NextPage = () => {
     setState((prev) => ({ ...prev, layerOne: Boolean(watch('username')) }));
     setState((prev) => ({ ...prev, layerTwo: Boolean(watch('userId')) }));
     setState((prev) => ({ ...prev, layerThree: Boolean(watch('password')) }));
-    setState((prev) => ({ ...prev, layerFour: Boolean(watch('confirmPw')) }));
+    setState((prev) => ({
+      ...prev,
+      layerFour: Boolean(watch('passwordConfirm')),
+    }));
     setState((prev) => ({ ...prev, layerFive: Boolean(watch('email')) }));
     if (data?.ok) {
       setModal(true);
@@ -103,7 +106,7 @@ const Join: NextPage = () => {
     watch('username'),
     watch('userId'),
     watch('password'),
-    watch('confirmPw'),
+    watch('passwordConfirm'),
     watch('email'),
     data,
   ]);
@@ -204,14 +207,14 @@ const Join: NextPage = () => {
             {state.layerThree && (
               <Layer>
                 <Input
-                  label="Confirm Password"
-                  register={register('confirmPw', {
+                  register={register('passwordConfirm', {
                     required: '비번호를 재입력해주세요.',
                   })}
-                  name="confirmPw"
                   type="password"
+                  name="passwordConfirm"
+                  label="Confirm Password"
                   placeholder="비밀번호를 재입력해주세요."
-                  errMsg={errors.confirmPw?.message}
+                  errMsg={errors.passwordConfirm?.message}
                 />
               </Layer>
             )}

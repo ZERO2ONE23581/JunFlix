@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const mustData = Boolean(tokenNum);
   //
   if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
-  if (!mustData) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
+  if (!mustData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
 
   //토큰인증
   const foundToken = await client.token.findUnique({

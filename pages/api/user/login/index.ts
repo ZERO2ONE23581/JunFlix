@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { NextApiRequest, NextApiResponse } from 'next';
 import client from '../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../src/libs/server/withHandler';
@@ -5,13 +6,12 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userID, password } = req.body;
+  const msutData = Boolean(userID && password);
 
   if (req.method === 'POST') {
-    //
-    if (!Boolean(userID && password))
-      return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
+    if (!msutData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
 
-    //일치하는 유저찾기
+    //UserId check
     const foundUser = await client.user.findUnique({
       where: { userId: userID.toString() },
       select: { id: true, userId: true, password: true },
@@ -19,17 +19,19 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!foundUser)
       return res.json({ ok: false, error: '아이디가 일치하지 않습니다.' });
 
-    if (foundUser?.password !== password)
+    //Password Check
+    const passwordMatch = await bcrypt.compare(password, foundUser.password!);
+    if (!passwordMatch)
       return res.json({ ok: false, error: '비밀번호가 일치하지 않습니다.' });
 
-    //쿠키저장
+    //Save Cookie
     req.session.user = {
       id: foundUser?.id,
     };
     await req.session.save();
     return res.json({ ok: true });
   }
-  //
+
   if (req.method === 'GET') {
     const { user } = req.session;
     if (user) {

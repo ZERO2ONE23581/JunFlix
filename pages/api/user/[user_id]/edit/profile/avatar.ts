@@ -14,7 +14,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     where: { id: user.id },
   });
   if (!currentUser) return res.json({ ok: false, error: 'MUST LOGIN' });
-  if (!avatar) return res.json({ ok: false, error: 'MUST DATA REQUIRED' });
+  if (!avatar) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
 
   //Update
   await client.user.update({

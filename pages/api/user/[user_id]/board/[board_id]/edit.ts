@@ -11,7 +11,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //error handling
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (!board_id) return res.json({ ok: false, error: 'QUERY ERROR!' });
-  if (!Title) return res.json({ ok: false, error: 'MUST DATA REQUIRED!' });
+  if (!Title) return res.json({ ok: false, error: 'INPUT DATA REQUIRED!' });
   if (user?.id !== +user_id)
     return res.json({ ok: false, error: 'UNAUTHORIZED!' });
 
