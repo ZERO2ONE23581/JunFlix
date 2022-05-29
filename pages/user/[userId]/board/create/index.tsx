@@ -1,3 +1,8 @@
+import {
+  ErrMsg,
+  Form,
+  PageSection,
+} from '../../../../../styles/components/default';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -7,11 +12,6 @@ import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
 import { CreateBoardResponse } from '../../../../../src/types/mutation';
 import { CreateBoardModal } from '../../../../../src/components/Modal/CreateBoardModal';
-import {
-  ErrMsg,
-  Form,
-  PageSection,
-} from '../../../../../styles/components/default';
 
 const CreateBoard: NextPage = () => {
   const router = useRouter();
@@ -21,11 +21,26 @@ const CreateBoard: NextPage = () => {
     `/api/user/${userId}/board/create`
   );
   //Form
-  const { register, handleSubmit } = useForm<BoardForm>({ mode: 'onSubmit' });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<BoardForm>({ mode: 'onSubmit' });
   const onValid = ({ title, intro, genre, avatar, follow }: BoardForm) => {
     if (loading) return;
     createBoard({ title, intro, genre });
   };
+  const movieGenre = [
+    'SF',
+    'Drama',
+    'Horror',
+    'Comedy',
+    'Fantasy',
+    'Romance',
+    'Action',
+    'Mystery',
+    'Thriller',
+  ];
   //
   return (
     <>
@@ -40,44 +55,39 @@ const CreateBoard: NextPage = () => {
         <Form onSubmit={handleSubmit(onValid)}>
           {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
           <Input
+            register={register('title', {
+              required: '생성하실 보드의 제목을 입력하세요.',
+              maxLength: {
+                value: 10,
+                message: '보드제목은 10자 이내여야 합니다.',
+              },
+            })}
             type="text"
             label="Title"
             name="title"
-            errMsg=""
+            errMsg={errors.title?.message}
             placeholder="생성하실 보드의 제목을 입력하세요."
-            register={register('title', {
-              required: '생성하실 보드의 제목을 입력하세요.',
-            })}
           />
           <Input
-            type="text"
-            label="Intro"
-            name="intro"
-            errMsg=""
-            placeholder="보드의 소개글을 작성해 보세요."
             register={register('intro', {
-              maxLength: 50,
+              maxLength: {
+                value: 50,
+                message: '소개글은 50자 이내여야 합니다.',
+              },
             })}
+            type="text"
+            name="intro"
+            label="Intro"
+            errMsg={errors.intro?.message}
+            placeholder="보드의 소개글을 작성해 보세요."
           />
           <Select
+            register={register('genre')}
             name="genre"
             label="Movie Genre"
-            errMsg=""
-            options={[
-              'SF',
-              'Drama',
-              'Horror',
-              'Comedy',
-              'Fantasy',
-              'Romance',
-              'Action',
-              'Mystery',
-              'Thriller',
-            ]}
+            options={[...movieGenre]}
             placeholder="최애 장르를 선택해주세요."
-            register={register('genre')}
           />
-
           <Btn type="submit" btnName="나의 보드 만들기" loading={loading} />
         </Form>
       </PageSection>

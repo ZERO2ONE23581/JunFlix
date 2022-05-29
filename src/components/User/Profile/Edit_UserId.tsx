@@ -95,6 +95,10 @@ export const Edit_UserId = () => {
           placeholder="새로운 이메일을 입력해주세요."
           register={register('email', {
             required: '새로운 이메일을 입력해주세요.',
+            pattern: {
+              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              message: '이메일 형식이 올바르지 않습니다.',
+            },
           })}
         />
       )}

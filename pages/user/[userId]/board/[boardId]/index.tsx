@@ -1,3 +1,9 @@
+import {
+  Article,
+  ErrMsg,
+  OkMsg,
+  PageCont,
+} from '../../../../../styles/components/default';
 import useSWR from 'swr';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
@@ -5,21 +11,13 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../../../../src/components/Btn';
+import useUser from '../../../../../src/libs/client/useUser';
 import { MutationRes } from '../../../../../src/types/mutation';
 import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
-import { AllPostsWithBoard } from '../../../../../src/components/Post/AllPostsWithBoard';
 import { IBoardRes, IEditBoardForm } from '../../../../../src/types/board';
+import { AllPostsWithBoard } from '../../../../../src/components/Post/AllPostsWithBoard';
 import { DeleteModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
-import {
-  Article,
-  PageSectionWide,
-  ErrMsg,
-  Flex,
-  OkMsg,
-  PageCont,
-} from '../../../../../styles/components/default';
-import useUser from '../../../../../src/libs/client/useUser';
 
 const myBoard: NextPage = () => {
   const router = useRouter();
@@ -46,6 +44,17 @@ const myBoard: NextPage = () => {
     const Title = title?.toUpperCase();
     editBoard({ Title, genre, intro });
   };
+  const movieGenre = [
+    'SF',
+    'Drama',
+    'Horror',
+    'Comedy',
+    'Fantasy',
+    'Romance',
+    'Action',
+    'Mystery',
+    'Thriller',
+  ];
   //
   const [edit, setEdit] = useState(false);
   const [setting, setSetting] = useState(false);
@@ -119,42 +128,39 @@ const myBoard: NextPage = () => {
               <span>{board.user?.username}</span>
               <span>'s board</span>
               <Input
-                errMsg={errors.title?.message}
+                register={register('title', {
+                  required: '수정할 보드의 제목을 입력하세요.',
+                  maxLength: {
+                    value: 10,
+                    message: '보드제목은 10자 이내여야 합니다.',
+                  },
+                })}
                 type="text"
                 name="title"
                 disabled={!edit && true}
                 placeholder="수정할 보드의 제목을 입력하세요."
-                register={register('title', {
-                  required: '수정할 보드의 제목을 입력하세요.',
-                })}
+                errMsg={errors.title?.message}
               />
               <Input
-                errMsg={errors.intro?.message}
+                register={register('intro', {
+                  maxLength: {
+                    value: 50,
+                    message: '소개글은 50자 이내여야 합니다.',
+                  },
+                })}
                 type="text"
                 name="intro"
                 disabled={!edit && true}
                 placeholder="수정할 보드의 소개글을 작성해 주세요."
-                register={register('intro', {
-                  maxLength: 50,
-                })}
+                errMsg={errors.intro?.message}
               />
               <Select
-                errMsg={errors.genre?.message}
+                register={register('genre')}
                 name="genre"
                 disabled={!edit && true}
                 placeholder="수정할 장르를 선택해주세요."
-                register={register('genre')}
-                options={[
-                  'SF',
-                  'Drama',
-                  'Horror',
-                  'Comedy',
-                  'Fantasy',
-                  'Romance',
-                  'Action',
-                  'Mystery',
-                  'Thriller',
-                ]}
+                options={[...movieGenre]}
+                errMsg={errors.genre?.message}
               />
               {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
             </form>
