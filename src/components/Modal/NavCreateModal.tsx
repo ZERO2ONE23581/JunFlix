@@ -25,30 +25,28 @@ export const NavCreateModal = ({
   };
   //
   return (
-    <>
-      <NavCont>
-        <Wrap>
-          <article
-            className="btn"
-            onClick={isloggedIn ? () => create('board') : mustLogin}
-          >
-            <span>Board</span>
-          </article>
-          <article
-            className="btn"
-            onClick={isloggedIn ? () => create('post') : mustLogin}
-          >
-            <span>Post</span>
-          </article>
-          <article
-            className="btn"
-            onClick={isloggedIn ? () => create('review') : mustLogin}
-          >
-            <span>Review</span>
-          </article>
-        </Wrap>
-      </NavCont>
-    </>
+    <NavCont>
+      <Wrap>
+        <article
+          className="btn"
+          onClick={isloggedIn ? () => create('board') : mustLogin}
+        >
+          <span>Board</span>
+        </article>
+        <article
+          className="btn"
+          onClick={isloggedIn ? () => create('post') : mustLogin}
+        >
+          <span>Post</span>
+        </article>
+        <article
+          className="btn"
+          onClick={isloggedIn ? () => create('review') : mustLogin}
+        >
+          <span>Review</span>
+        </article>
+      </Wrap>
+    </NavCont>
   );
 };
 const Wrap = styled.article`

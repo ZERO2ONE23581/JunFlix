@@ -93,9 +93,6 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
         <BtnContSmall type="button" onClick={onClick}>
           {btnName}
         </BtnContSmall>
-        // <Theme type="button" onClick={onClick}>
-        //   {btnName}
-        // </Theme>
       )}
       {type === 'delete' && (
         <BtnContDel type="button" onClick={onClick}>

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { LogoSvg } from '../../Svg/Logo';
 import { NavModal } from '../../Modal/NavModal';
@@ -35,11 +35,11 @@ export const Header = ({ onClick, btnName }: any) => {
           </Logo>
           <LinkStyle>
             <AnchorBtn onClick={() => setOpenMovie((p) => !p)}>
-              Movies
+              <span className="hover">Movies</span>
               {openMovie && <NavMovieModal />}
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenBoard((p) => !p)}>
-              Board
+              <span className="hover">Board</span>
               {openBoard && (
                 <NavBoardModal
                   isloggedIn={isloggedIn}
@@ -48,7 +48,7 @@ export const Header = ({ onClick, btnName }: any) => {
               )}
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenPost((p) => !p)}>
-              Post
+              <span className="hover">Post</span>
               {openPost && (
                 <NavPostModal
                   isloggedIn={isloggedIn}
@@ -57,7 +57,7 @@ export const Header = ({ onClick, btnName }: any) => {
               )}
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenReview((p) => !p)}>
-              Review
+              <span className="hover">Review</span>
               {openReview && (
                 <NavReviewModal
                   isloggedIn={isloggedIn}
@@ -66,7 +66,7 @@ export const Header = ({ onClick, btnName }: any) => {
               )}
             </AnchorBtn>
             <AnchorBtn onClick={() => setOpenCreate((p) => !p)}>
-              Create
+              <span className="hover">Create</span>
               {openCreate && (
                 <NavCreateModal
                   isloggedIn={isloggedIn}
@@ -77,6 +77,7 @@ export const Header = ({ onClick, btnName }: any) => {
           </LinkStyle>
         </MainNav>
         <MyNav>
+          {openProfile && <NavModal closeModal={() => setOpenProfile(false)} />}
           {isloggedIn ? (
             <Avatar onClick={() => setOpenProfile((p) => !p)}>
               {loggedInUser?.avatar ? (
@@ -87,16 +88,19 @@ export const Header = ({ onClick, btnName }: any) => {
               ) : (
                 <img src="/img/profile.svg" alt="프로필 이미지" />
               )}
-              {openProfile && <NavModal />}
             </Avatar>
           ) : (
             <UnloggedIn>
               <LinkStyle>
                 <Link href="/user/join">
-                  <a>Join</a>
+                  <a>
+                    <span className="hover">Join</span>
+                  </a>
                 </Link>
                 <Link href="/user/login">
-                  <a>Login</a>
+                  <a>
+                    <span className="hover">Login</span>
+                  </a>
                 </Link>
               </LinkStyle>
             </UnloggedIn>
@@ -104,7 +108,6 @@ export const Header = ({ onClick, btnName }: any) => {
           <Btn type="theme" btnName={btnName} onClick={onClick} />
         </MyNav>
       </NavBar>
-
       <>
         {openProfile ? (
           <NavModalClose onClick={() => setOpenProfile(false)} />
@@ -124,6 +127,7 @@ export const Header = ({ onClick, btnName }: any) => {
   );
 };
 const MyNav = styled.article`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 50px;
@@ -145,18 +149,19 @@ export const AnchorBtn = styled.button`
 `;
 const LinkStyle = styled.div`
   width: 100%;
-  gap: 40px;
   display: flex;
   align-items: center;
-  a,
-  button {
+  gap: 40px;
+  > a,
+  > button {
     font-weight: 700;
     font-size: 1.2rem;
-    color: ${(p) => p.theme.color.font};
     text-underline-offset: 8px;
-    &:hover {
-      color: ${(p) => p.theme.color.logo};
-      text-decoration: solid underline 3px ${(p) => p.theme.color.logo};
+    .hover {
+      &:hover {
+        color: ${(p) => p.theme.color.logo};
+        text-decoration: solid underline 3px ${(p) => p.theme.color.logo};
+      }
     }
   }
 `;
@@ -194,9 +199,9 @@ const NavBar = styled.nav`
   align-items: center;
 `;
 const Cont = styled.section`
-  background-color: ${(p) => p.theme.color.bg};
-  color: ${(p) => p.theme.color.font};
   padding: 15px 12%;
   margin-bottom: 5px;
+  color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background-color: ${(p) => p.theme.color.bg};
 `;
