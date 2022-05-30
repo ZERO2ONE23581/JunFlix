@@ -4,22 +4,20 @@ export interface IReviewForm {
   title: string;
   movieTitle: string;
   genre: string;
-  avatar?: FileList;
   content?: string;
   score?: number;
   oneline?: string;
   recommend?: boolean;
+  avatar?: FileList;
 }
-export interface IGetMyReview {
+export interface IGetReview {
   ok: boolean;
   error?: string;
-  foundReview?: IReviewWithUser;
+  review?: ReviewWithUser;
 }
-export interface IGetAllReviews {
-  ok?: true;
-  allReviews?: IReviewWithUser[];
-  allMyReviews?: IReviewWithUser[];
+export interface IGetReviews extends IGetReview {
+  reviews?: ReviewWithUser[];
 }
-export interface IReviewWithUser extends Review {
+export interface ReviewWithUser extends Review {
   user: User;
 }

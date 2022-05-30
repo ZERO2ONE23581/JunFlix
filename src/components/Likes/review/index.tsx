@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { Post, Review, User } from '@prisma/client';
 import { useState } from 'react';
 import useSWR from 'swr';
-import { Icons } from '../../../styles/svg';
-import useMutation from '../../libs/client/useMutation';
+import { Icons } from '../../../../styles/svg';
+import useMutation from '../../../libs/client/useMutation';
 
 interface IGetReview {
   ok: boolean;
@@ -19,9 +19,9 @@ interface ReviewWithUser extends Review {
 }
 
 export const ReviewLikes = ({ userId, reviewId }: any) => {
-  const queryData = Boolean(userId && reviewId);
+  const urlData = Boolean(userId && reviewId);
   const { data: ReviewData, mutate: ReviewMutate } = useSWR<IGetReview>(
-    queryData && `/api/user/${userId}/review/${reviewId}`
+    urlData && `/api/user/${userId}/review/${reviewId}`
   );
   const likesCount = ReviewData?.review?._count.likes;
   const [createLikes] = useMutation(

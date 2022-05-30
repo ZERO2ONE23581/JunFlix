@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useUser from '../../../../../src/libs/client/useUser';
-import { IGetMyReview } from '../../../../../src/types/review';
+import { IGetReview } from '../../../../../src/types/review';
 import { DeleteModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
 import {
   FlexAbsolute,
@@ -17,30 +17,29 @@ import { ThumNail } from '../../../../../src/components/Post/AllPostsWithBoard';
 import useAvatar from '../../../../../src/libs/client/useAvatar';
 import { ReviewLikes } from '../../../../../src/components/Likes/review';
 
-const myReview: NextPage = () => {
+const Review_Detail: NextPage = () => {
   const router = useRouter();
   const { reviewId } = router.query;
   const { isloggedIn, loggedInUser } = useUser();
-  const { data: reviewData } = useSWR<IGetMyReview>(
-    reviewId && `/api/review/${reviewId}`
+  const urlData = loggedInUser && reviewId;
+  const { data } = useSWR<IGetReview>(
+    urlData && `/api/user/${loggedInUser.id}/review/${reviewId}`
   );
-  const ok = reviewData?.ok;
-  const review = reviewData?.foundReview;
   //
   const [openSetup, setOpenSetup] = useState(false);
   const [delModal, setDelModal] = useState(false);
   //
   return (
     <>
-      {ok && review && delModal && (
+      {data && data.ok && data.review && delModal && (
         <DeleteModal
-          reviewId={review.id}
-          userId={review.UserID}
+          reviewId={data.review.id}
+          userId={data.review.UserID}
           deleteClick={() => setDelModal((p) => !p)}
         />
       )}
 
-      {ok && review && (
+      {data && data.ok && data.review && (
         <PageCont>
           <section className="read-review-cont">
             <Btn
@@ -49,7 +48,7 @@ const myReview: NextPage = () => {
               onClick={() => router.push(`/review`)}
             />
 
-            {isloggedIn && review.UserID === loggedInUser?.id && (
+            {isloggedIn && data.review.UserID === loggedInUser?.id && (
               <>
                 <Btn
                   type="edit-setting"
@@ -63,7 +62,7 @@ const myReview: NextPage = () => {
                       btnName="리뷰 수정"
                       onClick={() =>
                         router.push(
-                          `/user/${review.UserID}/review/${reviewId}/edit`
+                          `/user/${data.review?.UserID}/review/${data.review?.id}/edit`
                         )
                       }
                     />
@@ -77,21 +76,21 @@ const myReview: NextPage = () => {
               </>
             )}
             <ReviewList>
-              <h1>{review.title}</h1>
+              <h1>{data.review.title}</h1>
               <li>
                 <span>Movie: </span>
-                <span>{review.movieTitle}</span>
+                <span>{data.review.movieTitle}</span>
               </li>
               <li>
                 <span>Genre: </span>
-                <span>{review.genre}</span>
+                <span>{data.review.genre}</span>
               </li>
               <li>
                 <span>별점: </span>
                 <>
                   {[1, 2, 3, 4, 5].map((score) => (
                     <span key={score}>
-                      {review.score! >= score ? (
+                      {data.review?.score! >= score ? (
                         <FontAwesomeIcon
                           key={score}
                           icon={faStar}
@@ -106,27 +105,32 @@ const myReview: NextPage = () => {
               </li>
               <li>
                 <span>한줄평: </span>
-                {review.oneline && <Oneline>"{review.oneline}"</Oneline>}
+                {data.review.oneline && (
+                  <Oneline>"{data.review.oneline}"</Oneline>
+                )}
               </li>
               <ThumNail>
-                {review.avatar ? (
-                  <img src={`${useAvatar(review.avatar)}`} alt="리뷰 이미지" />
+                {data.review.avatar ? (
+                  <img
+                    src={`${useAvatar(data.review.avatar)}`}
+                    alt="리뷰 이미지"
+                  />
                 ) : (
                   <img src="/img/post_thum.svg" alt="파일 업로드" />
                 )}
               </ThumNail>
               <li>
-                <p>{review.content}</p>
+                <p>{data.review.content}</p>
               </li>
             </ReviewList>
           </section>
-          <ReviewLikes userId={loggedInUser?.id} reviewId={review.id} />
+          <ReviewLikes userId={loggedInUser?.id} reviewId={data.review.id} />
         </PageCont>
       )}
     </>
   );
 };
-export default myReview;
+export default Review_Detail;
 
 const Oneline = styled.span`
   font-style: italic;

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Title } from '../../../../src/components/Layout/parts/Title';
 import { AllMyPosts } from '../../../../src/components/MyPage/AllMyPosts';
 import { AllMyBoards } from '../../../../src/components/MyPage/AllMyBoards';
-import { AllMyReviews } from '../../../../src/components/MyPage/AllMyReviews';
+import { AllMyReviews } from '../../../../src/components/Review/AllMyReviews';
 import { PageCont } from '../../../../styles/components/default';
 
 const Mypage: NextPage = () => {
@@ -14,8 +14,6 @@ const Mypage: NextPage = () => {
       <AllMyBoards />
       <AllMyPosts />
       <AllMyReviews />
-      {/* <H1>Likes</H1>
-      <H1>Comments</H1> */}
     </PageCont>
   );
 };

@@ -19,9 +19,9 @@ interface PostWithUser extends Post {
 }
 
 export const PostLikes = ({ userId, boardId, postId }: any) => {
-  const queryData = Boolean(userId && boardId && postId);
+  const urlData = Boolean(userId && boardId && postId);
   const { data: PostData, mutate: PostMutate } = useSWR<IGetPost>(
-    queryData && `/api/user/${userId}/board/${boardId}/post/${postId}`
+    urlData && `/api/user/${userId}/board/${boardId}/post/${postId}`
   );
   const likesCount = PostData?.post?._count.likes;
   const [createLikes] = useMutation(

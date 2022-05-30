@@ -1,11 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import client from '../../../../src/libs/server/prisma_client';
-import withHandler from '../../../../src/libs/server/withHandler';
-import { withApiSession } from '../../../../src/libs/server/withSession';
+import client from '../../../../../src/libs/server/prisma_client';
+import withHandler from '../../../../../src/libs/server/withHandler';
+import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  //Get all reviews -> all ratings
-  const allRatings = await client.review.findMany({
+  const ratings = await client.review.findMany({
     select: {
       id: true,
       score: true,
@@ -18,9 +17,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       id: 'desc',
     },
   });
-  if (!allRatings) return res.json({ ok: false, error: 'NO RATINGS!' });
-  //
-  return res.json({ ok: true, allRatings });
+  if (!ratings) return res.json({ ok: false, error: 'NO RATINGS FOUND' });
+  return res.json({ ok: true, ratings });
 }
 export default withApiSession(
   withHandler({ methods: ['GET'], handler, isPrivate: false })

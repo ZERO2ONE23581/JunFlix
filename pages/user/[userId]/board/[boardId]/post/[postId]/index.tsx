@@ -29,9 +29,9 @@ const myPost: NextPage = () => {
   const router = useRouter();
   const { isloggedIn, loggedInUserId } = useUser();
   const { userId, boardId, postId } = router.query;
-  const queryData = Boolean(userId && boardId && postId);
+  const urlData = Boolean(userId && boardId && postId);
   const { data: swrData } = useSWR<IPostRes>(
-    queryData && `/api/user/${userId}/board/${boardId}/post/${postId}`
+    urlData && `/api/user/${userId}/board/${boardId}/post/${postId}`
   );
   const [editPost, { data, loading }] = useMutation<MutationRes>(
     `/api/user/${userId}/board/${boardId}/post/${postId}/edit`

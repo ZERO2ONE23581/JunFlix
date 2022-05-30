@@ -2,20 +2,20 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import useMutation from '../../../../../src/libs/client/useMutation';
-import { MutationRes } from '../../../../../src/types/mutation';
-import { IReviewForm } from '../../../../../src/types/review';
-import { ErrMsg, PageCont } from '../../../../../styles/components/default';
-import { Input, Select } from '../../../../../src/components/Input';
-import { ThumNail } from '../../../../../src/components/Post/AllPostsWithBoard';
-import { Btn } from '../../../../../src/components/Btn';
+import useMutation from '../../../../src/libs/client/useMutation';
+import { MutationRes } from '../../../../src/types/mutation';
+import { IReviewForm } from '../../../../src/types/review';
+import { ErrMsg, PageCont } from '../../../../styles/components/default';
+import { Input, Select } from '../../../../src/components/Input';
+import { ThumNail } from '../../../../src/components/Post/AllPostsWithBoard';
+import { Btn } from '../../../../src/components/Btn';
 
-const CreateReview: NextPage = () => {
+const Create_Review: NextPage = () => {
   const router = useRouter();
-  //Post
-  const [createReview, { loading, data }] =
-    useMutation<MutationRes>(`/api/review/create`);
-  //Form
+  const { userId } = router.query;
+  const [createReview, { loading, data }] = useMutation<MutationRes>(
+    `/api/user/${userId}/review/create`
+  );
   const {
     watch,
     register,
@@ -187,4 +187,4 @@ const CreateReview: NextPage = () => {
   );
 };
 
-export default CreateReview;
+export default Create_Review;

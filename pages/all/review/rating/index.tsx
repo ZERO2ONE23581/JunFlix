@@ -6,35 +6,30 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { H1, PageCont } from '../../../../styles/components/default';
 
-interface IGetAllRatings {
+interface IGetRatings {
   ok: boolean;
   error?: string;
-  allRatings?: RatingWithUser[];
+  ratings?: RatingWithUser[];
 }
 interface RatingWithUser extends Review {
   user: User;
 }
 
 const rating: NextPage = () => {
-  const { data: rating } = useSWR<IGetAllRatings>(
-    `/api/review/rating/all_ratings`
-  );
-  const ok = rating?.ok;
-  const allRatings = rating?.allRatings;
-  console.log(allRatings);
+  const { data } = useSWR<IGetRatings>(`/api/all/review/rating`);
   //
   return (
     <PageCont>
-      {ok && allRatings && (
+      {data && data.ok && data.ratings && (
         <>
-          {allRatings.map((rating) => (
-            <OneLine key={rating.id}>
+          {data.ratings.map((info) => (
+            <OneLine key={info.id}>
               <article className="layer">
                 <article className="flex">
                   <Order>
-                    #{allRatings.length - allRatings.indexOf(rating)}
+                    #{data.ratings!.length - data.ratings!.indexOf(info)}
                   </Order>
-                  <Title>{rating.movieTitle.toUpperCase()}</Title>
+                  <Title>{info.movieTitle.toUpperCase()}</Title>
                 </article>
               </article>
               <article className="layer2">
@@ -42,7 +37,7 @@ const rating: NextPage = () => {
                   <Stars>
                     {[1, 2, 3, 4, 5].map((score) => (
                       <span key={score}>
-                        {rating.score! >= score ? (
+                        {info.score! >= score ? (
                           <FontAwesomeIcon
                             icon={faStar}
                             style={{ color: 'red' }}
@@ -54,14 +49,14 @@ const rating: NextPage = () => {
                     ))}
                   </Stars>
                   <ThumsUp>
-                    {rating.recommend ? (
+                    {info.recommend ? (
                       <span className="yes">'추천해요!'</span>
                     ) : (
                       <span className="no">'비추해요!'</span>
                     )}
                   </ThumsUp>
-                  <MovieOneLine>"{rating.oneline}"</MovieOneLine>
-                  <User> - {rating.user.username}</User>
+                  <MovieOneLine>"{info.oneline}"</MovieOneLine>
+                  <User> - {info.user.username}</User>
                 </article>
               </article>
             </OneLine>

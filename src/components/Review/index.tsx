@@ -1,18 +1,25 @@
-import useSWR from 'swr';
 import { Btn } from '../Btn';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { IGetAllReviews } from '../../types/review';
 import { H1, PageCont } from '../../../styles/components/default';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import useUser from '../../libs/client/useUser';
+import { User } from '@prisma/client';
+import { ReviewWithUser } from '../../types/review';
+import { ReviewLikes } from '../Likes/review';
 
-export const AllMyReviews = () => {
+interface IReviewListProps {
+  isloggedIn?: boolean;
+  loggedInUser?: User;
+  reviews?: ReviewWithUser[] | undefined;
+}
+export const ReviewList = ({
+  isloggedIn,
+  loggedInUser,
+  reviews,
+}: IReviewListProps) => {
   const router = useRouter();
-  const { isloggedIn, loggedInUser } = useUser();
-  const { data } = useSWR<IGetAllReviews>(`/api/review/my_reviews`);
   //
   return (
     <PageCont>
@@ -26,41 +33,34 @@ export const AllMyReviews = () => {
             : alert(`로그인이 필요합니다.`);
         }}
       />
-      {isloggedIn && data?.ok && data.allMyReviews && (
-        <ReviewList>
-          {data.allMyReviews.map((review) => (
-            <Link
-              href={`/user/${review.UserID}/review/${review.id}`}
-              key={review.id}
-            >
+      <List>
+        {reviews?.map((info) => (
+          <article key={info.id}>
+            <Link href={`/user/${info.UserID}/review/${info.id}`}>
               <a>
-                <Review>
-                  <Order>
-                    #
-                    {data.allMyReviews!.length -
-                      data.allMyReviews!.indexOf(review)}
-                  </Order>
+                <Item>
+                  <Order>#{reviews.length - reviews.indexOf(info)}</Order>
                   <Wrap>
-                    <ReviewTitle>{review.title}</ReviewTitle>
+                    <ReviewTitle>{info.title}</ReviewTitle>
                     <Items>
                       <ul>
                         <li>
-                          <span>{review.movieTitle}</span>
+                          <span>{info.movieTitle}</span>
                           <span> / </span>
                         </li>
                         <li>
-                          <span>{review.genre}</span>
+                          <span>{info.genre}</span>
                           <span> / </span>
                         </li>
                         <li>
                           <span>작성자: </span>
-                          <span>{review.user.username}</span>
+                          <span>{info.user.username}</span>
                         </li>
                       </ul>
                       <Stars>
                         {[1, 2, 3, 4, 5].map((score) => (
                           <span key={score}>
-                            {review.score! >= score ? (
+                            {info.score! >= score ? (
                               <FontAwesomeIcon
                                 icon={faStar}
                                 style={{ color: 'red' }}
@@ -73,12 +73,13 @@ export const AllMyReviews = () => {
                       </Stars>
                     </Items>
                   </Wrap>
-                </Review>
+                </Item>
               </a>
             </Link>
-          ))}
-        </ReviewList>
-      )}
+            <ReviewLikes userId={info.UserID} reviewId={info.id} />
+          </article>
+        ))}
+      </List>
     </PageCont>
   );
 };
@@ -95,7 +96,7 @@ const Order = styled.span`
   background-color: ${(p) => p.theme.color.font};
 `;
 
-const Review = styled.article`
+const Item = styled.article`
   gap: 5px;
   display: flex;
   align-items: center;
@@ -108,7 +109,7 @@ const Review = styled.article`
   background-color: ${(p) => p.theme.color.bg};
 `;
 
-const ReviewList = styled.article`
+const List = styled.article`
   width: 100%;
   padding: 20px 30px;
   border-radius: 8px;
@@ -116,7 +117,6 @@ const ReviewList = styled.article`
   color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
-  background-color: red;
 `;
 const ReviewTitle = styled.h2`
   font-size: 1.3rem;
