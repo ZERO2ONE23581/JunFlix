@@ -6,11 +6,9 @@ import { withApiSession } from '../../../../../../../../src/libs/server/withSess
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user_id, board_id, post_id } = req.query;
   const noQuery = !Boolean(user_id && board_id && post_id);
-
-  //error handling
   if (noQuery) return res.json({ ok: false, error: 'QUERY ERROR!' });
 
-  //Select board -> with Valid User + Board
+  //FIND POST
   const post = await client.post.findUnique({
     where: { id: +post_id.toString() },
   });
@@ -18,8 +16,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: 'INVALID USER!' });
   if (post?.BoardID !== +board_id)
     return res.json({ ok: false, error: 'INVALID BOARD!' });
+
+  //FIND LIKES
+  const isLiked = Boolean(
+    await client.likes.findFirst({
+      where: { UserID: post.UserID, PostID: post.id },
+    })
+  );
   //
-  return res.json({ ok: true, post });
+  return res.json({ ok: true, post, isLiked });
 }
 export default withApiSession(
   withHandler({ methods: ['GET'], handler, isPrivate: false })
