@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import type { NextPage } from 'next';
 import { BoardList } from '../../../src/components/Board/BoardList';
-import { Title } from '../../../src/components/Layout/parts/Title';
+import { Title } from '../../../src/components/Layout/Title';
 import useUser from '../../../src/libs/client/useUser';
 import { IGetExistingBoards } from '../../../src/types/board';
 

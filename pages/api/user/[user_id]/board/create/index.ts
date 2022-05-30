@@ -7,11 +7,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { user_id } = req.query;
   const { title, intro, genre } = req.body;
-  //
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN' });
   if (!title) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
   if (user.id !== +user_id)
-    return res.json({ ok: false, error: 'UNAUTHORIZED!' });
+    return res.json({ ok: false, error: 'QUERY ERROR!' });
   //
   const dupData = Boolean(
     await client.board.findUnique({
@@ -19,21 +18,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     })
   );
   if (dupData)
-    return res.json({ ok: false, error: '이미 쓰고있는 제목입니다.' });
+    return res.json({ ok: false, error: '이미 사용중인 제목입니다.' });
   //
-  const newBoard = await client.board.create({
+  const board = await client.board.create({
     data: {
       title,
       intro,
       genre,
       user: { connect: { id: user.id } },
     },
-    select: { id: true, user: true, title: true },
   });
-  const boardId = newBoard.id;
-  const boardTitle = newBoard.title;
-  const creatorId = newBoard.user.id;
   //
-  return res.json({ ok: true, boardId, boardTitle, creatorId });
+  return res.json({ ok: true, board });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { SelectBoard } from '../../../src/components/Board/SelectBoard';
-import { Title } from '../../../src/components/Layout/parts/Title';
+import { Title } from '../../../src/components/Layout/Title';
 
 const MyBoards: NextPage = () => {
   return (

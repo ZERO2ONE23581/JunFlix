@@ -54,7 +54,6 @@ export const Select = ({
   name,
   label,
   errMsg,
-  options,
   register,
   placeholder,
   disabled,

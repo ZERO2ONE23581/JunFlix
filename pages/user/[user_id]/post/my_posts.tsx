@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { Title } from '../../../../src/components/Layout/parts/Title';
+import { Title } from '../../../../src/components/Layout/Title';
 import { AllMyPosts } from '../../../../src/components/Post/AllMyPosts';
 
 const MyPosts: NextPage = () => {

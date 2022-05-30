@@ -20,7 +20,7 @@ interface IEditUserIdRes {
 }
 
 export const Edit_UserInfo = () => {
-  const { loggedInUser, loggedInUserId } = useUser();
+  const { loggedInUser } = useUser();
   //POST
   const [editUserInfo, { loading, data }] = useMutation<IEditUserIdRes>(
     `/api/user/${loggedInUser?.id}/edit/userInfo`

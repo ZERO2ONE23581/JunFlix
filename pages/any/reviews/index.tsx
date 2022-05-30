@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import useSWR from 'swr';
-import { Title } from '../../../../src/components/Layout/parts/Title';
+import { Title } from '../../../../src/components/Layout/Title';
 import { ReviewList } from '../../../../src/components/Review';
 import { IGetReviews } from '../../../../src/types/review';
 

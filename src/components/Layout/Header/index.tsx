@@ -14,7 +14,7 @@ import { NavReviewModal } from '../../Modal/Nav/Review';
 import { NavModalClose } from '../../../../styles/modal';
 
 export const Header = ({ onClick, btnName }: any) => {
-  const { isloggedIn, loggedInUserId, loggedInUser } = useUser();
+  const { isloggedIn, loggedInUser } = useUser();
   const [openProfile, setOpenProfile] = useState(false);
   const [openMovie, setOpenMovie] = useState(false);
   const [openBoard, setOpenBoard] = useState(false);
@@ -43,7 +43,7 @@ export const Header = ({ onClick, btnName }: any) => {
               {openBoard && (
                 <NavBoardModal
                   isloggedIn={isloggedIn}
-                  loggedInUserId={loggedInUserId}
+                  loggedInUserId={loggedInUser?.id}
                 />
               )}
             </AnchorBtn>
@@ -52,7 +52,7 @@ export const Header = ({ onClick, btnName }: any) => {
               {openPost && (
                 <NavPostModal
                   isloggedIn={isloggedIn}
-                  loggedInUserId={loggedInUserId}
+                  loggedInUserId={loggedInUser?.id}
                 />
               )}
             </AnchorBtn>
@@ -61,7 +61,7 @@ export const Header = ({ onClick, btnName }: any) => {
               {openReview && (
                 <NavReviewModal
                   isloggedIn={isloggedIn}
-                  loggedInUserId={loggedInUserId}
+                  loggedInUserId={loggedInUser?.id}
                 />
               )}
             </AnchorBtn>
@@ -70,7 +70,7 @@ export const Header = ({ onClick, btnName }: any) => {
               {openCreate && (
                 <NavCreateModal
                   isloggedIn={isloggedIn}
-                  loggedInUserId={loggedInUserId}
+                  loggedInUserId={loggedInUser?.id}
                 />
               )}
             </AnchorBtn>

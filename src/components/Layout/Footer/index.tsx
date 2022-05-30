@@ -9,7 +9,6 @@ export const Footer = () => {
 };
 
 const Cont = styled.footer`
-  /* border: 1px solid blue; */
   width: 100%;
   padding: 20px;
   margin-top: 20px;

@@ -25,7 +25,7 @@ export const NavPostModal = ({
             </a>
           </Link>
         )}
-        <Link href={`/user/${loggedInUserId}/board/my_board/select`}>
+        <Link href={`/user/${loggedInUserId}/board/my_board/`}>
           <a>
             <li>
               <span>Create</span>

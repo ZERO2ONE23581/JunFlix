@@ -127,18 +127,6 @@ const EditReview: NextPage = () => {
             name="genre"
             label="Movie Genre"
             errMsg={errors.genre?.message}
-            options={[
-              'SF',
-              'Drama',
-              'Horror',
-              'Comedy',
-              'Fantasy',
-              'Romance',
-              'Action',
-              'Mystery',
-              'Thriller',
-              'Others',
-            ]}
             placeholder="영화의 장르를 선택해주세요."
             register={register('genre', {
               required: '영화의 장르를 선택해주세요.',

@@ -6,7 +6,7 @@ import { Btn } from '../../../src/components/Button';
 import { Input } from '../../../src/components/Input';
 import { IJoinForm, IJoinRes } from '../../../src/types/join';
 import useMutation from '../../../src/libs/client/useMutation';
-import { Title } from '../../../src/components/Layout/parts/Title';
+import { Title } from '../../../src/components/Layout/Title';
 import { LoginLink } from '../../../src/components/Login/LoginLink';
 import { JoinConfirmModal } from '../../../src/components/Modal/Join/Confirm';
 import { UserIdCheckModal } from '../../../src/components/Modal/Join/DupCheck';

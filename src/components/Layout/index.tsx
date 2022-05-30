@@ -1,8 +1,7 @@
-import { Footer } from './parts/Footer';
-import { Header } from './parts/Header';
+import { Footer } from './Footer';
+import { Header } from './Header';
 
 export const Layout = ({ children, onClick, btnName }: any) => {
-  //
   return (
     <>
       <Header btnName={btnName} onClick={onClick} />
