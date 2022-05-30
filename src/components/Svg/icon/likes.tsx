@@ -13,7 +13,7 @@ interface IGetPost {
 }
 
 export const Likes = ({ userId, boardId, postId }: any) => {
-  const { data: swrData } = useSWR<IGetPost>(
+  const { data: swrData, mutate } = useSWR<IGetPost>(
     `/api/user/${userId}/board/${boardId}/post/${postId}`
   );
   const [createLikes] = useMutation(
@@ -22,6 +22,7 @@ export const Likes = ({ userId, boardId, postId }: any) => {
   const [comments, setComments] = useState(false);
   const handleClick = (type: string) => {
     if (!swrData) return;
+    mutate((prev) => prev && { ...prev, isLiked: !swrData.isLiked }, false);
     if (type === 'comments') {
       setComments((p) => !p);
     }
