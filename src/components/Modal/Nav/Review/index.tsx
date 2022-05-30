@@ -9,7 +9,7 @@ export const NavReviewModal = ({
   return (
     <NavCont>
       <NavWrapper>
-        <Link href={`/all/review`}>
+        <Link href={`/watch/all/review`}>
           <a>
             <li>
               <span>All Reviews</span>
@@ -17,7 +17,7 @@ export const NavReviewModal = ({
           </a>
         </Link>
         {isloggedIn && (
-          <Link href={`/user/${loggedInUserId}/review/my_review`}>
+          <Link href={`/watch/my/review`}>
             <a>
               <li>
                 <span>My Reviews</span>
@@ -25,7 +25,7 @@ export const NavReviewModal = ({
             </a>
           </Link>
         )}
-        <Link href={`/all/review/rating`}>
+        <Link href={`/watch/all/review/rating`}>
           <a>
             <li>
               <span>Rating</span>

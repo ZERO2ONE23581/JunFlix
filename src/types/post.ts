@@ -16,7 +16,6 @@ export interface IGetAllPosts {
   ok: boolean;
   allPosts?: Post[];
 }
-export interface IAllPostsProps {
-  userId?: string | string[];
-  boardId?: string | string[];
+export interface IPostListProps {
+  posts?: Post[];
 }

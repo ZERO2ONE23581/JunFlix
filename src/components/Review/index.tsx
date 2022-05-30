@@ -36,7 +36,7 @@ export const ReviewList = ({
       <List>
         {reviews?.map((info) => (
           <article key={info.id}>
-            <Link href={`/user/${info.UserID}/review/${info.id}`}>
+            <Link href={`/user/${info.UserID}/review/${info.id}/detail`}>
               <a>
                 <Item>
                   <Order>#{reviews.length - reviews.indexOf(info)}</Order>

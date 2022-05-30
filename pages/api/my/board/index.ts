@@ -5,17 +5,15 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { user_id } = req.query;
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN' });
-  if (!user_id) return res.json({ ok: false, error: 'QUERY ERROR' });
-
-  const myBoards = await client.board.findMany({
+  //
+  const boards = await client.board.findMany({
     where: { UserID: user.id },
     include: { user: true },
   });
-  if (myBoards.length === 0)
+  if (boards.length === 0)
     return res.json({ ok: false, error: 'NO BOARDS FOUND!' });
   //
-  return res.json({ ok: true, myBoards });
+  return res.json({ ok: true, boards });
 }
 export default withApiSession(withHandler({ methods: ['GET'], handler }));

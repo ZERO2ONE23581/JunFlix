@@ -1,16 +1,15 @@
 import type { NextPage } from 'next';
 import useSWR from 'swr';
-import { Title } from '../../../../../src/components/Layout/parts/Title';
-import { ReviewList } from '../../../../../src/components/Review';
-import useUser from '../../../../../src/libs/client/useUser';
-import { IGetReviews } from '../../../../../src/types/review';
+import { Title } from '../../../../src/components/Layout/parts/Title';
+import { ReviewList } from '../../../../src/components/Review';
+import useUser from '../../../../src/libs/client/useUser';
+import { IGetReviews } from '../../../../src/types/review';
 
 const My_Reviews: NextPage = () => {
   const { isloggedIn, loggedInUser } = useUser();
   const urlData = isloggedIn && loggedInUser;
-  const { data } = useSWR<IGetReviews>(
-    urlData && `/api/user/${loggedInUser.id}/review/my_reviews`
-  );
+  const { data } = useSWR<IGetReviews>(isloggedIn && `/api/my/review`);
+  console.log(data);
   return (
     <>
       <Title title="나의 리뷰" />

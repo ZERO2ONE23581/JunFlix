@@ -5,9 +5,7 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { user_id } = req.query;
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
-  if (!user_id) return res.json({ ok: false, error: 'QUERY ERROR!' });
   //
   const reviews = await client.review.findMany({
     where: { UserID: user.id },

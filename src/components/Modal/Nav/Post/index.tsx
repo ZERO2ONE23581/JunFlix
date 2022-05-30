@@ -9,7 +9,7 @@ export const NavPostModal = ({
   return (
     <NavCont>
       <NavWrapper>
-        <Link href={`/all/post`}>
+        <Link href={`/watch/all/post`}>
           <a>
             <li>
               <span>All Posts</span>

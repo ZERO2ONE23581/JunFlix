@@ -22,7 +22,7 @@ import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithB
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
 import { PostLikes } from '../../../../../../../src/components/Likes/post';
 
-const myPost: NextPage = () => {
+const Post_Detail: NextPage = () => {
   const router = useRouter();
   const { isloggedIn, loggedInUserId } = useUser();
   const { userId, boardId, postId } = router.query;
@@ -182,7 +182,7 @@ const myPost: NextPage = () => {
     </PageCont>
   );
 };
-export default myPost;
+export default Post_Detail;
 
 export const BoardCont = styled(Article)`
   flex-direction: column;

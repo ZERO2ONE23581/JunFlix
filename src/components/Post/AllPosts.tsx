@@ -1,10 +1,10 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { H1, PageCont } from '../../../styles/components/default';
 import { Board, Post, User } from '@prisma/client';
 import useAvatar from '../../libs/client/useAvatar';
 import { ThumNail } from './AllPostsWithBoard';
+import { H1, PageCont } from '../../../styles/default';
 
 interface IGetAllPosts {
   ok: boolean;
@@ -17,7 +17,7 @@ interface IPostWithUserNBoard extends Post {
 }
 
 export const AllPosts = () => {
-  const { data: posts } = useSWR<IGetAllPosts>(`/api/post/all_posts`);
+  const { data: posts } = useSWR<IGetAllPosts>(`/api/all/post`);
   const postOk = posts?.ok;
   const allPosts = posts?.allPosts;
   //

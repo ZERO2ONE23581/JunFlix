@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { MoviePageCont } from '../../../styles/components/default';
+import { MoviePageCont } from '../../../styles/default';
 
 interface IMovieInfoProps {
   type?: string;

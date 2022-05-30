@@ -14,8 +14,7 @@ export const NavCreateModal = ({
   const create = (type: string) => {
     if (type === 'board')
       return router.push(`/user/${loggedInUserId}/board/create`);
-    if (type === 'post')
-      return router.push(`/user/${loggedInUserId}/board/my_board/select`);
+    if (type === 'post') return router.push(`/watch/my/board/select`);
     if (type === 'review')
       return router.push(`/user/${loggedInUserId}/review/create`);
   };

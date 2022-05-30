@@ -1,34 +1,26 @@
-import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-
-import { IAllPostsProps, IGetAllPosts } from '../../types/post';
 import { ItemCont } from './AllPosts';
 import useAvatar from '../../libs/client/useAvatar';
 import { PageCont } from '../../../styles/default';
+import { IPostListProps } from '../../types/post';
 
-export const AllPostsWithBoard = ({ userId, boardId }: IAllPostsProps) => {
-  const { data: posts } = useSWR<IGetAllPosts>(
-    `/api/user/${userId}/board/${boardId}/post/all_posts`
-  );
-  const postOk = posts?.ok;
-  const postsWithBoard = posts?.allPosts;
-  //
+export const PostList = ({ posts }: IPostListProps) => {
   return (
     <PageCont>
-      {postOk && postsWithBoard && (
+      {posts && (
         <ItemCont>
-          {postsWithBoard.map((post) => (
+          {posts.map((info) => (
             <Link
-              key={post.id}
-              href={`/user/${post.UserID}/board/${post.BoardID}/post/${post.id}`}
+              key={info.id}
+              href={`/user/${info.UserID}/board/${info.BoardID}/post/${info.id}`}
             >
               <a>
                 <Item>
                   <ThumNail>
-                    {post.avatar ? (
+                    {info.avatar ? (
                       <img
-                        src={`${useAvatar(post.avatar)}`}
+                        src={`${useAvatar(info.avatar)}`}
                         alt="썸네일 이미지"
                       />
                     ) : (

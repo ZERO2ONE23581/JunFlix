@@ -1,45 +1,28 @@
-import useSWR from 'swr';
-import { Btn } from '../Button';
 import Link from 'next/link';
+import { Btn } from '../Button';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Board, User } from '@prisma/client';
-import useUser from '../../libs/client/useUser';
-import { ThumNail } from '../Post/AllPostsWithBoard';
-import { BoardPageCont } from '../../../styles/default';
+import { H1, PageCont } from '../../../styles/default';
+import { User } from '@prisma/client';
+import { BoardWithUser } from '../../types/board';
 
-interface IGetAllBoards {
-  ok: boolean;
-  allBoards?: IBoard[];
-}
-interface IBoard extends Board {
-  user: User;
+export interface IBoardListProps {
+  loggedInUser?: User;
+  boards?: BoardWithUser[];
 }
 
-export const AllBoards = () => {
+export const BoardList = ({ loggedInUser, boards }: IBoardListProps) => {
   const router = useRouter();
-  const { isloggedIn, loggedInUser } = useUser();
-  const { data } = useSWR<IGetAllBoards>(`/api/all/board`);
   //
   return (
-    <BoardPageCont>
-      {isloggedIn && (
-        <>
-          <Btn
-            type="create"
-            btnName="보드 만들기"
-            onClick={() =>
-              router.push(`/user/${loggedInUser?.id}/board/create`)
-            }
-          />
-        </>
-      )}
-      {data?.ok && data.allBoards && (
-        <ItemCont>
-          {data.allBoards.map((board) => (
+    <PageCont>
+      <H1>MY BOARDS</H1>
+      <ItemCont>
+        {boards &&
+          boards?.map((info) => (
             <Link
-              key={board.id}
-              href={`/user/${board.UserID}/board/${board.id}`}
+              key={info.id}
+              href={`/user/${info.UserID}/board/${info.id}/detail`}
             >
               <a>
                 <Item>
@@ -49,26 +32,38 @@ export const AllBoards = () => {
                   <ul>
                     <li>
                       <span>Title: </span>
-                      <span> {board.title.toUpperCase()}</span>
+                      <span> {info.title.toUpperCase()}</span>
                     </li>
                     <li>
                       <span>Genre: </span>
-                      <span> {board.genre}</span>
+                      <span> {info.genre}</span>
                     </li>
                     <li>
                       <span>Made by: </span>
-                      <span> {board.user.username}</span>
+                      <span> {info.user.username}</span>
                     </li>
                   </ul>
                 </Item>
               </a>
             </Link>
           ))}
-        </ItemCont>
-      )}
-    </BoardPageCont>
+      </ItemCont>
+      <Btn
+        type="create"
+        btnName="보드 만들기"
+        onClick={() => router.push(`/user/${loggedInUser?.id}/board/create`)}
+      />
+    </PageCont>
   );
 };
+const NoFound = styled.span`
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-align: center;
+  font-style: italic;
+  color: ${(p) => p.theme.color.logo};
+`;
 const ItemCont = styled.article`
   margin-top: 15px;
   gap: 15px;
@@ -96,5 +91,16 @@ const Item = styled.div`
         font-size: 1rem;
       }
     }
+  }
+`;
+const ThumNail = styled.div`
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  border-radius: 5px;
+  width: 100%;
+  padding: 5px 0;
+  height: 200px;
+  img {
+    width: 100%;
+    height: 100%;
   }
 `;

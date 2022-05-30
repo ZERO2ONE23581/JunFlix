@@ -23,7 +23,7 @@ export const Edit_UserInfo = () => {
   const { loggedInUser, loggedInUserId } = useUser();
   //POST
   const [editUserInfo, { loading, data }] = useMutation<IEditUserIdRes>(
-    `/api/user/${loggedInUserId}/edit/profile/userInfo`
+    `/api/user/${loggedInUser?.id}/edit/userInfo`
   );
   //Form
   const {
@@ -33,7 +33,7 @@ export const Edit_UserInfo = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IEditUserInfoForm>({ mode: 'onSubmit' });
-  //
+
   const onValid = ({
     username,
     name,

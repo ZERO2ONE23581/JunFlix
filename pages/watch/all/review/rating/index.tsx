@@ -4,7 +4,7 @@ import { Review, User } from '@prisma/client';
 import styled from '@emotion/styled';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { H1, PageCont } from '../../../../styles/components/default';
+import { PageCont } from '../../../../../styles/default';
 
 interface IGetRatings {
   ok: boolean;

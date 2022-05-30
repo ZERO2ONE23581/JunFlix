@@ -1,7 +1,6 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-
 import { Board, Post, User } from '@prisma/client';
 import useAvatar from '../../libs/client/useAvatar';
 import { ThumNail } from './AllPostsWithBoard';
@@ -18,7 +17,7 @@ interface IPostWithUserNBoard extends Post {
 }
 
 export const AllMyPosts = () => {
-  const { data: posts } = useSWR<IGetAllPosts>(`/api/post/my_posts`);
+  const { data: posts } = useSWR<IGetAllPosts>(`/api/post/my/post`);
   const postOk = posts?.ok;
   const myPosts = posts?.allMyPosts;
   //

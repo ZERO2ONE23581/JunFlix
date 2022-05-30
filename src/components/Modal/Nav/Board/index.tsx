@@ -14,7 +14,7 @@ export const NavBoardModal = ({
     <>
       <NavCont>
         <NavWrapper>
-          <Link href={`/all/board`}>
+          <Link href={`/watch/all/board`}>
             <a>
               <li>
                 <span>All Boards</span>
@@ -22,7 +22,7 @@ export const NavBoardModal = ({
             </a>
           </Link>
           {isloggedIn && (
-            <Link href={`/user/${loggedInUserId}/board/my_board`}>
+            <Link href={`/watch/my/board`}>
               <a>
                 <li>
                   <span>My Boards</span>

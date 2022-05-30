@@ -3,16 +3,16 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import useUser from '../../../../../src/libs/client/useUser';
-import { IGetReview } from '../../../../../src/types/review';
-import { DeleteModal } from '../../../../../src/components/Modal/Board/Delete';
-import { FlexAbsolute, PageCont } from '../../../../../styles/default';
-import { Btn } from '../../../../../src/components/Button';
+import useUser from '../../../../../../src/libs/client/useUser';
+import { IGetReview } from '../../../../../../src/types/review';
+import { DeleteModal } from '../../../../../../src/components/Modal/Board/Delete';
+import { FlexAbsolute, PageCont } from '../../../../../../styles/default';
+import { Btn } from '../../../../../../src/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { ThumNail } from '../../../../../src/components/Post/AllPostsWithBoard';
-import useAvatar from '../../../../../src/libs/client/useAvatar';
-import { ReviewLikes } from '../../../../../src/components/Likes/review';
+import { ThumNail } from '../../../../../../src/components/Post/AllPostsWithBoard';
+import useAvatar from '../../../../../../src/libs/client/useAvatar';
+import { ReviewLikes } from '../../../../../../src/components/Likes/review';
 
 const Review_Detail: NextPage = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const Review_Detail: NextPage = () => {
   const { isloggedIn, loggedInUser } = useUser();
   const urlData = loggedInUser && reviewId;
   const { data } = useSWR<IGetReview>(
-    urlData && `/api/user/${loggedInUser.id}/review/${reviewId}`
+    urlData && `/api/user/${loggedInUser.id}/review/${reviewId}/detail`
   );
   //
   const [openSetup, setOpenSetup] = useState(false);

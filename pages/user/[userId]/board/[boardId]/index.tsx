@@ -15,20 +15,21 @@ import useUser from '../../../../../src/libs/client/useUser';
 import { MutationRes } from '../../../../../src/types/mutation';
 import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
-import { IBoardRes, IEditBoardForm } from '../../../../../src/types/board';
-import { AllPostsWithBoard } from '../../../../../src/components/Post/AllPostsWithBoard';
+import {
+  IEditBoardForm,
+  IGetBoardDetail,
+} from '../../../../../src/types/board';
 import { DeleteModal } from '../../../../../src/components/Modal/Board/Delete';
+import { PostList } from '../../../../../src/components/Post/PostList';
 
-const myBoard: NextPage = () => {
+const Board_Detail: NextPage = () => {
   const router = useRouter();
   const { userId, boardId } = router.query;
   const { isloggedIn, loggedInUser } = useUser();
-  const { data: swrData } = useSWR<IBoardRes>(
-    `/api/user/${userId}/board/${boardId}`
+  const { data } = useSWR<IGetBoardDetail>(
+    userId && boardId && `/api/user/${userId}/board/${boardId}`
   );
-  const board = swrData?.board;
-  const btnShow = Boolean(isloggedIn && loggedInUser?.id === board?.UserID);
-  const [editBoard, { data, loading }] = useMutation<MutationRes>(
+  const [editBoard, { data: dataRes, loading }] = useMutation<MutationRes>(
     `/api/user/${userId}/board/${boardId}/edit`
   );
   //
@@ -38,140 +39,123 @@ const myBoard: NextPage = () => {
     setValue,
     formState: { errors },
   } = useForm<IEditBoardForm>({ mode: 'onSubmit' });
-
   const onValid = ({ title, genre, intro }: IEditBoardForm) => {
     if (loading) return;
     const Title = title?.toUpperCase();
     editBoard({ Title, genre, intro });
   };
-  const movieGenre = [
-    'SF',
-    'Drama',
-    'Horror',
-    'Comedy',
-    'Fantasy',
-    'Romance',
-    'Action',
-    'Mystery',
-    'Thriller',
-  ];
   //
   const [edit, setEdit] = useState(false);
   const [setting, setSetting] = useState(false);
   const [delModal, setDelModal] = useState(false);
   useEffect(() => {
-    if (swrData?.ok && board) {
-      if (board.title) setValue('title', board.title.toUpperCase());
-      if (board.genre) setValue('genre', board.genre);
-      if (board.intro) setValue('intro', board.intro);
+    if (data && data?.ok && data?.board) {
+      if (data.board.title) setValue('title', data.board.title.toUpperCase());
+      if (data.board.genre) setValue('genre', data.board.genre);
+      if (data.board.intro) setValue('intro', data.board.intro);
     }
-    if (data?.ok)
+    if (dataRes?.ok)
       setTimeout(() => {
         router.reload();
       }, 1000);
-  }, [setValue, swrData, data]);
+  }, [setValue, data, dataRes]);
   //
   return (
-    <>
-      <PageCont>
-        {delModal && (
-          <DeleteModal
-            userId={userId}
-            boardId={boardId}
-            deleteClick={() => setDelModal((p) => !p)}
-          />
-        )}
-        {swrData?.ok && board && (
-          <section className="read-board-cont">
-            <article className="btn-wrap">
-              <Btn
-                type="back"
-                btnName="My Boards"
-                onClick={() => router.push(`/user/${userId}/mypage`)}
-              />
-              {btnShow && (
-                <article className="btn-wrap">
-                  <Btn
-                    type="create"
-                    onClick={() => {
-                      router.push(
-                        `/user/${userId}/board/${boardId}/post/create`
-                      );
-                    }}
-                    btnName="Create Post"
-                  />
-                  <Btn
-                    type="board-setting"
-                    onClick={() => setSetting((p) => !p)}
-                    btnName="Setting"
-                  />
-                </article>
-              )}
-            </article>
-            {setting && (
-              <article>
+    <PageCont>
+      {delModal && (
+        <DeleteModal
+          userId={userId}
+          boardId={boardId}
+          deleteClick={() => setDelModal((p) => !p)}
+        />
+      )}
+      {data?.ok && data.board && (
+        <section className="read-board-cont">
+          <article className="btn-wrap">
+            <Btn
+              type="back"
+              btnName="My Boards"
+              onClick={() => router.push(`/user/${userId}/mypage`)}
+            />
+            {isloggedIn && loggedInUser?.id === data?.board?.UserID && (
+              <article className="btn-wrap">
                 <Btn
-                  type="board-edit"
-                  onClick={() => setEdit((p) => !p)}
-                  btnName={edit ? 'Back' : 'Edit Board'}
+                  type="create"
+                  onClick={() => {
+                    router.push(`/user/${userId}/board/${boardId}/post/create`);
+                  }}
+                  btnName="Create Post"
                 />
                 <Btn
-                  type="board-delete"
-                  onClick={() => setDelModal((p) => !p)}
-                  btnName="Delete"
+                  type="board-setting"
+                  onClick={() => setSetting((p) => !p)}
+                  btnName="Setting"
                 />
               </article>
             )}
-            <form onSubmit={handleSubmit(onValid)}>
-              {data?.message && <OkMsg>{data?.message}</OkMsg>}
-              {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
-              <span>{board.user?.username}</span>
-              <span>'s board</span>
-              <Input
-                register={register('title', {
-                  required: '수정할 보드의 제목을 입력하세요.',
-                  maxLength: {
-                    value: 30,
-                    message: '보드제목은 30자 이내여야 합니다.',
-                  },
-                })}
-                type="text"
-                name="title"
-                disabled={!edit && true}
-                placeholder="수정할 보드의 제목을 입력하세요."
-                errMsg={errors.title?.message}
+          </article>
+          {setting && (
+            <article>
+              <Btn
+                type="board-edit"
+                onClick={() => setEdit((p) => !p)}
+                btnName={edit ? 'Back' : 'Edit Board'}
               />
-              <Input
-                register={register('intro', {
-                  maxLength: {
-                    value: 50,
-                    message: '소개글은 50자 이내여야 합니다.',
-                  },
-                })}
-                type="text"
-                name="intro"
-                disabled={!edit && true}
-                placeholder="수정할 보드의 소개글을 작성해 주세요."
-                errMsg={errors.intro?.message}
+              <Btn
+                type="board-delete"
+                onClick={() => setDelModal((p) => !p)}
+                btnName="Delete"
               />
-              <Select
-                register={register('genre')}
-                name="genre"
-                disabled={!edit && true}
-                placeholder="수정할 장르를 선택해주세요."
-                options={[...movieGenre]}
-                errMsg={errors.genre?.message}
-              />
-              {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
-            </form>
-            <AllPostsWithBoard userId={userId} boardId={boardId} />
-          </section>
-        )}
-      </PageCont>
-    </>
+            </article>
+          )}
+          <form onSubmit={handleSubmit(onValid)}>
+            {dataRes?.message && <OkMsg>{dataRes?.message}</OkMsg>}
+            {dataRes?.error && <ErrMsg>{dataRes?.error}</ErrMsg>}
+            <span>{data.board.user?.username}</span>
+            <span>'s board</span>
+            <Input
+              register={register('title', {
+                required: '수정할 보드의 제목을 입력하세요.',
+                maxLength: {
+                  value: 30,
+                  message: '보드제목은 30자 이내여야 합니다.',
+                },
+              })}
+              type="text"
+              name="title"
+              disabled={!edit && true}
+              placeholder="수정할 보드의 제목을 입력하세요."
+              errMsg={errors.title?.message}
+            />
+            <Input
+              register={register('intro', {
+                maxLength: {
+                  value: 50,
+                  message: '소개글은 50자 이내여야 합니다.',
+                },
+              })}
+              type="text"
+              name="intro"
+              disabled={!edit && true}
+              placeholder="수정할 보드의 소개글을 작성해 주세요."
+              errMsg={errors.intro?.message}
+            />
+            <Select
+              register={register('genre')}
+              name="genre"
+              disabled={!edit && true}
+              placeholder="수정할 장르를 선택해주세요."
+              errMsg={errors.genre?.message}
+            />
+            {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
+          </form>
+          <PostList posts={data?.board?.post} />
+        </section>
+      )}
+    </PageCont>
   );
 };
-export default myBoard;
+export default Board_Detail;
 
 export const BoardCont = styled(Article)`
   flex-direction: column;

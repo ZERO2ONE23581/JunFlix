@@ -19,9 +19,7 @@ interface IBoard extends Board {
 export const SelectBoard = () => {
   const router = useRouter();
   const { isloggedIn, loggedInUser, loggedInUserId } = useUser();
-  const { data: boards } = useSWR<IGetAllBoards>(
-    `/api/user/${loggedInUserId}/board/my_board`
-  );
+  const { data: boards } = useSWR<IGetAllBoards>(isloggedIn && `/api/my/board`);
   const boardOk = boards?.ok;
   const noBoardFound = boards?.error;
   const allMyBoards = boards?.myBoards;
