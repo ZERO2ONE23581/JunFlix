@@ -4,6 +4,7 @@ import client from '../../../../../../../../src/libs/server/prisma_client';
 import { withApiSession } from '../../../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { user } = req.session;
   const { user_id, board_id, post_id } = req.query;
   const noQuery = !Boolean(user_id && board_id && post_id);
   if (noQuery) return res.json({ ok: false, error: 'QUERY ERROR!' });
@@ -11,16 +12,19 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //FIND POST
   const post = await client.post.findUnique({
     where: { id: +post_id.toString() },
+    include: {
+      _count: { select: { likes: true } },
+    },
   });
   if (post?.UserID !== +user_id)
     return res.json({ ok: false, error: 'INVALID USER!' });
   if (post?.BoardID !== +board_id)
     return res.json({ ok: false, error: 'INVALID BOARD!' });
 
-  //FIND LIKES
+  //FIND LIKES (내가 누른 좋아요)
   const isLiked = Boolean(
     await client.likes.findFirst({
-      where: { UserID: post.UserID, PostID: post.id },
+      where: { UserID: user?.id, PostID: post.id },
     })
   );
   //
