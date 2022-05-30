@@ -4,14 +4,14 @@ import {
   Article,
   FlexAbsPost,
   PageCont,
-} from '../../../../../../../styles/components/default';
+} from '../../../../../../../styles/default';
 import useSWR from 'swr';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../../../../../../src/components/Btn';
+import { Btn } from '../../../../../../../src/components/Button';
 import { Input } from '../../../../../../../src/components/Input';
 import useUser from '../../../../../../../src/libs/client/useUser';
 import { MutationRes } from '../../../../../../../src/types/mutation';
@@ -19,11 +19,8 @@ import useAvatar from '../../../../../../../src/libs/client/useAvatar';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm, IPostRes } from '../../../../../../../src/types/post';
 import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithBoard';
-import { DeleteModal } from '../../../../../../../src/components/Modal/board/settting/delete/modal';
-import {
-  Likes,
-  PostLikes,
-} from '../../../../../../../src/components/Likes/post';
+import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
+import { PostLikes } from '../../../../../../../src/components/Likes/post';
 
 const myPost: NextPage = () => {
   const router = useRouter();

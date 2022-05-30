@@ -1,17 +1,14 @@
-import {
-  ErrMsg,
-  PageCont,
-} from '../../../../../../../styles/components/default';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../../../../../../src/components/Btn';
+import { Btn } from '../../../../../../../src/components/Button';
 import { IPostForm } from '../../../../../../../src/types/post';
 import { Input } from '../../../../../../../src/components/Input';
 import { MutationRes } from '../../../../../../../src/types/mutation';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithBoard';
+import { ErrMsg, PageCont } from '../../../../../../../styles/default';
 
 const CreatePost: NextPage = () => {
   const router = useRouter();

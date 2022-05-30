@@ -5,10 +5,11 @@ import { useEffect, useState } from 'react';
 import useMutation from '../../../../src/libs/client/useMutation';
 import { MutationRes } from '../../../../src/types/mutation';
 import { IReviewForm } from '../../../../src/types/review';
-import { ErrMsg, PageCont } from '../../../../styles/components/default';
+
 import { Input, Select } from '../../../../src/components/Input';
 import { ThumNail } from '../../../../src/components/Post/AllPostsWithBoard';
-import { Btn } from '../../../../src/components/Btn';
+import { Btn } from '../../../../src/components/Button';
+import { ErrMsg, PageCont } from '../../../../styles/default';
 
 const Create_Review: NextPage = () => {
   const router = useRouter();

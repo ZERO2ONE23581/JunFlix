@@ -5,14 +5,12 @@ import { Title } from '../src/components/Layout/parts/Title';
 import { MovieInfo } from '../src/components/Movie';
 
 const Home: NextPage = () => {
-  //
   return (
-    <Cont>
+    <>
       <Title title="홈" />
       <MovieInfo type="trending" />
       <AllBoards />
-    </Cont>
+    </>
   );
 };
 export default Home;
-const Cont = styled.section``;

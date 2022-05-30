@@ -1,20 +1,15 @@
-import {
-  ErrMsg,
-  Form,
-  Layer,
-  PageSection,
-} from '../../../styles/components/default';
+import { ErrMsg, Form, Layer, PageSection } from '../../../styles/default';
 import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../../src/components/Btn';
+import { Btn } from '../../../src/components/Button';
 import { Input } from '../../../src/components/Input';
 import { IJoinForm, IJoinRes } from '../../../src/types/join';
 import useMutation from '../../../src/libs/client/useMutation';
 import { Title } from '../../../src/components/Layout/parts/Title';
 import { LoginLink } from '../../../src/components/Login/LoginLink';
-import { JoinConfirmModal } from '../../../src/components/Modal/JoinConfirmModal';
-import { UserIdCheckModal } from '../../../src/components/Modal/UserIdCheckModal';
+import { JoinConfirmModal } from '../../../src/components/Modal/Join/Confirm';
+import { UserIdCheckModal } from '../../../src/components/Modal/Join/DupCheck';
 
 const Join: NextPage = () => {
   //Post api

@@ -1,17 +1,13 @@
-import {
-  ErrMsg,
-  Form,
-  PageSection,
-} from '../../../../../styles/components/default';
+import { ErrMsg, Form, PageSection } from '../../../../../styles/default';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../../../src/components/Btn';
+import { Btn } from '../../../../../src/components/Button';
 import { BoardForm } from '../../../../../src/types/board';
 import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
 import { CreateBoardResponse } from '../../../../../src/types/mutation';
-import { CreateBoardModal } from '../../../../../src/components/Modal/CreateBoardModal';
+import { CreateBoardModal } from '../../../../../src/components/Modal/Board/Create';
 
 const CreateBoard: NextPage = () => {
   const router = useRouter();

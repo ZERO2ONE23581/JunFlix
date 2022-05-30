@@ -5,12 +5,9 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useUser from '../../../../../src/libs/client/useUser';
 import { IGetReview } from '../../../../../src/types/review';
-import { DeleteModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
-import {
-  FlexAbsolute,
-  PageCont,
-} from '../../../../../styles/components/default';
-import { Btn } from '../../../../../src/components/Btn';
+import { DeleteModal } from '../../../../../src/components/Modal/Board/Delete';
+import { FlexAbsolute, PageCont } from '../../../../../styles/default';
+import { Btn } from '../../../../../src/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { ThumNail } from '../../../../../src/components/Post/AllPostsWithBoard';

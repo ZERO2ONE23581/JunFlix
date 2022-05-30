@@ -1,12 +1,12 @@
 import useSWR from 'swr';
-import { Btn } from '../Btn';
+import { Btn } from '../Button';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Board, User } from '@prisma/client';
 import useUser from '../../libs/client/useUser';
-import { BoardPageCont, PageCont } from '../../../styles/components/default';
 import { ThumNail } from '../Post/AllPostsWithBoard';
+import { BoardPageCont } from '../../../styles/default';
 
 interface IGetAllBoards {
   ok: boolean;

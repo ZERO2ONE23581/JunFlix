@@ -1,13 +1,13 @@
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { darkTheme, lightTheme } from '../styles/theme';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import { BodyBg } from '../styles/components/default';
 import { Layout } from '../src/components/Layout';
 import { ThemeProvider } from '@emotion/react';
 import type { AppProps } from 'next/app';
 import { useState } from 'react';
 import { SWRConfig } from 'swr';
 import '../styles/globals.css';
+import { BodyBg } from '../styles/default';
 config.autoAddCss = false;
 
 function MyApp({ Component, pageProps }: AppProps) {

@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
-import { Edit_UserId } from '../../../../src/components/User/Profile/Edit_UserId';
-import { Edit_UserInfo } from '../../../../src/components/User/Profile/Edit_UserInfo';
-import { Edit_Password } from '../../../../src/components/User/Profile/Edit_Password';
-import { Delete_Account } from '../../../../src/components/User/Profile/Delete_Account';
-import { PageCont } from '../../../../styles/components/default';
 import styled from '@emotion/styled';
-import { Edit_Avatar } from '../../../../src/components/User/Profile/Edit_Avatar';
+import { Edit_Avatar } from '../../../../src/components/User/Edit/Avatar';
+import { Edit_UserId } from '../../../../src/components/User/Edit/UserId';
+import { Edit_Password } from '../../../../src/components/User/Edit/Password';
+import { Edit_UserInfo } from '../../../../src/components/User/Edit/UserInfo';
+import { Delete_Account } from '../../../../src/components/User/Delete';
+import { PageCont } from '../../../../styles/default';
 
 const EditProfile: NextPage = () => {
   //

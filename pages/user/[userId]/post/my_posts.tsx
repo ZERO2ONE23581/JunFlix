@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { Title } from '../../../../src/components/Layout/parts/Title';
-import { AllMyPosts } from '../../../../src/components/MyPage/AllMyPosts';
+import { AllMyPosts } from '../../../../src/components/Post/AllMyPosts';
 
 const MyPosts: NextPage = () => {
   return (

@@ -3,21 +3,21 @@ import {
   ErrMsg,
   OkMsg,
   PageCont,
-} from '../../../../../styles/components/default';
+} from '../../../../../styles/default';
 import useSWR from 'swr';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../../../../src/components/Btn';
+import { Btn } from '../../../../../src/components/Button';
 import useUser from '../../../../../src/libs/client/useUser';
 import { MutationRes } from '../../../../../src/types/mutation';
 import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
 import { IBoardRes, IEditBoardForm } from '../../../../../src/types/board';
 import { AllPostsWithBoard } from '../../../../../src/components/Post/AllPostsWithBoard';
-import { DeleteModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
+import { DeleteModal } from '../../../../../src/components/Modal/Board/Delete';
 
 const myBoard: NextPage = () => {
   const router = useRouter();

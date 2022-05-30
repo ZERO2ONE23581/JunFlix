@@ -2,16 +2,16 @@ import Link from 'next/link';
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { LogoSvg } from '../../Svg/Logo';
-import { NavModal } from '../../Modal/NavModal';
+import { NavModal } from '../../Modal/Nav';
 import useUser from '../../../libs/client/useUser';
-import { NavCreateModal } from '../../Modal/NavCreateModal';
-import { NavBoardModal } from '../../Modal/NavBoardModal';
-import { NavModalClose } from '../../../../styles/components/modal';
-import { NavPostModal } from '../../Modal/NavPostModal';
-import { NavReviewModal } from '../../Modal/NavReviewModal';
-import { NavMovieModal } from '../../Modal/NavMovieModal';
-import { Btn } from '../../Btn';
+import { NavCreateModal } from '../../Modal/Nav/Create';
+import { NavBoardModal } from '../../Modal/Nav/Board';
+import { NavPostModal } from '../../Modal/Nav/Post';
+import { NavMovieModal } from '../../Modal/Nav/Movie';
+import { Btn } from '../../Button';
 import useAvatar from '../../../libs/client/useAvatar';
+import { NavReviewModal } from '../../Modal/Nav/Review';
+import { NavModalClose } from '../../../../styles/modal';
 
 export const Header = ({ onClick, btnName }: any) => {
   const { isloggedIn, loggedInUserId, loggedInUser } = useUser();

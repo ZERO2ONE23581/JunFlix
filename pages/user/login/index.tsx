@@ -2,13 +2,13 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../src/components/Btn';
+import { Btn } from '../../../src/components/Button';
 import { Input } from '../../../src/components/Input';
 import { Title } from '../../../src/components/Layout/parts/Title';
 import { LoginLink } from '../../../src/components/Login/LoginLink';
 import useMutation from '../../../src/libs/client/useMutation';
 import { ILoginForm, ILoginRes } from '../../../src/types/login';
-import { ErrMsg, Form, PageSection } from '../../../styles/components/default';
+import { ErrMsg, Form, PageSection } from '../../../styles/default';
 
 const Login: NextPage = () => {
   const router = useRouter();

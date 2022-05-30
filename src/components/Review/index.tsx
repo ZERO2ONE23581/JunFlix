@@ -1,13 +1,13 @@
-import { Btn } from '../Btn';
+import { Btn } from '../Button';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { H1, PageCont } from '../../../styles/components/default';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { User } from '@prisma/client';
 import { ReviewWithUser } from '../../types/review';
 import { ReviewLikes } from '../Likes/review';
+import { H1, PageCont } from '../../../styles/default';
 
 interface IReviewListProps {
   isloggedIn?: boolean;
