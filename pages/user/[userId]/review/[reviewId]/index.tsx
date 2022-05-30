@@ -3,21 +3,27 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { Btn } from '../../../../src/components/Btn';
-import { IGetMyReview } from '../../../../src/types/review';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import useUser from '../../../../src/libs/client/useUser';
+import useUser from '../../../../../src/libs/client/useUser';
+import { IGetMyReview } from '../../../../../src/types/review';
+import { DeleteModal } from '../../../../../src/components/Modal/board/settting/delete/modal';
+import {
+  FlexAbsolute,
+  PageCont,
+} from '../../../../../styles/components/default';
+import { Btn } from '../../../../../src/components/Btn';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DeleteModal } from '../../../../src/components/Modal/board/settting/delete/modal';
-import { FlexAbsolute, PageCont } from '../../../../styles/components/default';
-import { ThumNail } from '../../../../src/components/Post/AllPostsWithBoard';
-import useAvatar from '../../../../src/libs/client/useAvatar';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { ThumNail } from '../../../../../src/components/Post/AllPostsWithBoard';
+import useAvatar from '../../../../../src/libs/client/useAvatar';
+import { ReviewLikes } from '../../../../../src/components/Likes/review';
 
 const myReview: NextPage = () => {
   const router = useRouter();
   const { reviewId } = router.query;
   const { isloggedIn, loggedInUser } = useUser();
-  const { data: reviewData } = useSWR<IGetMyReview>(`/api/review/${reviewId}`);
+  const { data: reviewData } = useSWR<IGetMyReview>(
+    reviewId && `/api/review/${reviewId}`
+  );
   const ok = reviewData?.ok;
   const review = reviewData?.foundReview;
   //
@@ -55,7 +61,11 @@ const myReview: NextPage = () => {
                     <Btn
                       type="edit-review"
                       btnName="리뷰 수정"
-                      onClick={() => router.push(`/review/${reviewId}/edit`)}
+                      onClick={() =>
+                        router.push(
+                          `/user/${review.UserID}/review/${reviewId}/edit`
+                        )
+                      }
                     />
                     <Btn
                       type="delete-review"
@@ -110,6 +120,7 @@ const myReview: NextPage = () => {
               </li>
             </ReviewList>
           </section>
+          <ReviewLikes userId={loggedInUser?.id} reviewId={review.id} />
         </PageCont>
       )}
     </>

@@ -20,15 +20,18 @@ import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm, IPostRes } from '../../../../../../../src/types/post';
 import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithBoard';
 import { DeleteModal } from '../../../../../../../src/components/Modal/board/settting/delete/modal';
-import { Icons } from '../../../../../../../styles/svg';
-import { Likes } from '../../../../../../../src/components/Svg/icon/likes';
+import {
+  Likes,
+  PostLikes,
+} from '../../../../../../../src/components/Likes/post';
 
 const myPost: NextPage = () => {
   const router = useRouter();
   const { isloggedIn, loggedInUserId } = useUser();
   const { userId, boardId, postId } = router.query;
+  const queryData = Boolean(userId && boardId && postId);
   const { data: swrData } = useSWR<IPostRes>(
-    `/api/user/${userId}/board/${boardId}/post/${postId}`
+    queryData && `/api/user/${userId}/board/${boardId}/post/${postId}`
   );
   const [editPost, { data, loading }] = useMutation<MutationRes>(
     `/api/user/${userId}/board/${boardId}/post/${postId}/edit`
@@ -177,7 +180,7 @@ const myPost: NextPage = () => {
           />
           {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
         </form>
-        <Likes userId={userId} boardId={boardId} postId={postId} />
+        <PostLikes userId={userId} boardId={boardId} postId={postId} />
       </section>
     </PageCont>
   );

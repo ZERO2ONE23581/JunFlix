@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { Post, User } from '@prisma/client';
 import { useState } from 'react';
 import useSWR from 'swr';
-import { Icons } from '../../../../styles/svg';
-import useMutation from '../../../libs/client/useMutation';
+import { Icons } from '../../../styles/svg';
+import useMutation from '../../libs/client/useMutation';
 
 interface IGetPost {
   ok: boolean;
@@ -18,28 +18,29 @@ interface PostWithUser extends Post {
   };
 }
 
-export const Likes = ({ userId, boardId, postId }: any) => {
-  const { data, mutate } = useSWR<IGetPost>(
-    `/api/user/${userId}/board/${boardId}/post/${postId}`
+export const PostLikes = ({ userId, boardId, postId }: any) => {
+  const queryData = Boolean(userId && boardId && postId);
+  const { data: PostData, mutate: PostMutate } = useSWR<IGetPost>(
+    queryData && `/api/user/${userId}/board/${boardId}/post/${postId}`
   );
-  const likesCount = data?.post?._count.likes;
+  const likesCount = PostData?.post?._count.likes;
   const [createLikes] = useMutation(
     `/api/user/${userId}/board/${boardId}/post/${postId}/likes/create`
   );
   const [comments, setComments] = useState(false);
   const handleClick = (type: string) => {
-    if (!data) return;
-    mutate(
+    if (!PostData) return;
+    PostMutate(
       {
-        ...data,
-        isLiked: !data.isLiked,
+        ...PostData,
+        isLiked: !PostData.isLiked,
         post: {
-          ...data.post,
+          ...PostData.post,
           _count: {
-            ...data.post._count,
-            likes: data.isLiked
-              ? data.post._count.likes - 1
-              : data.post._count.likes + 1,
+            ...PostData.post._count,
+            likes: PostData.isLiked
+              ? PostData.post._count.likes - 1
+              : PostData.post._count.likes + 1,
           },
         },
       },
@@ -51,12 +52,11 @@ export const Likes = ({ userId, boardId, postId }: any) => {
     createLikes({});
   };
   //
-  console.log(data?.isLiked);
   return (
     <>
       <BtnWrap>
         <Btn onClick={() => handleClick('likes')}>
-          {!data?.isLiked ? (
+          {!PostData?.isLiked ? (
             <Icons name="likes" type="empty" />
           ) : (
             <Icons name="likes" type="solid" />

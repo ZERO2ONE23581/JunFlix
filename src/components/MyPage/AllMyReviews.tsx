@@ -29,7 +29,10 @@ export const AllMyReviews = () => {
       {isloggedIn && data?.ok && data.allMyReviews && (
         <ReviewList>
           {data.allMyReviews.map((review) => (
-            <Link href={`/review/${review.id}`} key={review.id}>
+            <Link
+              href={`/user/${review.UserID}/review/${review.id}`}
+              key={review.id}
+            >
               <a>
                 <Review>
                   <Order>

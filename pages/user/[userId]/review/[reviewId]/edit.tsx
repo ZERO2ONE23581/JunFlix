@@ -94,7 +94,7 @@ const EditReview: NextPage = () => {
     }
     if (data?.ok) {
       alert('리뷰를 수정했습니다.');
-      router.push('/review');
+      router.push('/all/review');
     }
   }, [setValue, avatar, watch, data, swrData]);
   //

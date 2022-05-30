@@ -7,11 +7,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const delConfirm = req.body;
   const { board_id, post_id } = req.query;
-  const noQuery = !Boolean(board_id && post_id);
-
-  //error handling
+  const queryExists = Boolean(board_id && post_id);
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
-  if (noQuery) return res.json({ ok: false, error: 'QUERY ERROR!' });
+  if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
   if (!delConfirm) return res.json({ ok: false, error: 'DELETE UNCONFIRMED!' });
   //
   const foundPost = await client.post.findUnique({

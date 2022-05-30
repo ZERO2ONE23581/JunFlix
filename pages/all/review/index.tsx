@@ -29,7 +29,10 @@ const allReview: NextPage = () => {
       {ok && allReviews && (
         <ReviewList>
           {allReviews.map((review) => (
-            <Link href={`/review/${review.id}`} key={review.id}>
+            <Link
+              href={`/user/${review.UserID}/review/${review.id}`}
+              key={review.id}
+            >
               <a>
                 <Review>
                   <Order>
