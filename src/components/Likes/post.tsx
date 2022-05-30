@@ -71,7 +71,10 @@ export const PostLikes = ({ userId, boardId, postId }: any) => {
         </Btn>
       </BtnWrap>
       <CountsWrap className="btnWithCounts">
-        {likesCount && <Counts>{likesCount} Likes</Counts>}
+        <Counts>
+          <span>{likesCount ? likesCount : '0'}</span>
+          <span> Likes</span>
+        </Counts>
       </CountsWrap>
     </>
   );

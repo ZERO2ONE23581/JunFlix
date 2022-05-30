@@ -16,12 +16,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       _count: { select: { likes: true } },
     },
   });
-  if (post?.UserID !== +user_id)
-    return res.json({ ok: false, error: 'INVALID USER!' });
-  if (post?.BoardID !== +board_id)
-    return res.json({ ok: false, error: 'INVALID BOARD!' });
+  if (!post) return res.json({ ok: false, error: 'NO POST FOUND!' });
 
-  //FIND LIKES (내가 누른 좋아요)
+  //로그인한 현재유저가 누른 포스트의 좋아요
   const isLiked = Boolean(
     await client.likes.findFirst({
       where: { UserID: user?.id, PostID: post.id },
@@ -32,5 +29,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 export default withApiSession(
   withHandler({ methods: ['GET'], handler, isPrivate: false })
-  //public can read any posts!
 );

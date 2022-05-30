@@ -17,18 +17,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       _count: { select: { likes: true } },
     },
   });
-  //ERROR HANDLING
   if (!review) return res.json({ ok: false, error: 'NO REVIEW FOUND!' });
-  if (review?.UserID !== +user_id.toString())
-    return res.json({ ok: false, error: 'INVALID USER!' });
 
-  //FIND LIKES (로그인한 현재유저가 누른 리뷰의 좋아요)
+  //로그인한 현재유저가 누른 리뷰의 좋아요
   const isLiked = Boolean(
     await client.likes.findFirst({
       where: { UserID: user?.id, ReviewID: review.id },
     })
   );
-  //
   return res.json({ ok: true, review, isLiked });
 }
 export default withApiSession(withHandler({ methods: ['GET'], handler }));

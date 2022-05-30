@@ -1,23 +1,17 @@
 import styled from '@emotion/styled';
-import { Post, User } from '@prisma/client';
+import { Post, Review, User } from '@prisma/client';
 import { useState } from 'react';
 import useSWR from 'swr';
 import { Icons } from '../../../styles/svg';
 import useMutation from '../../libs/client/useMutation';
 
-interface IGetPost {
-  ok: boolean;
-  error?: string;
-  isLiked?: boolean;
-  post: PostWithUser;
-}
 interface IGetReview {
   ok: boolean;
   error?: string;
   isLiked?: boolean;
-  // post: PostWithUser;
+  review: ReviewWithUser;
 }
-interface PostWithUser extends Post {
+interface ReviewWithUser extends Review {
   user: User;
   _count: {
     likes: number;
@@ -29,29 +23,29 @@ export const ReviewLikes = ({ userId, reviewId }: any) => {
   const { data: ReviewData, mutate: ReviewMutate } = useSWR<IGetReview>(
     queryData && `/api/user/${userId}/review/${reviewId}`
   );
-  // const likesCount = ReviewData?.post?._count.likes;
+  const likesCount = ReviewData?.review?._count.likes;
   const [createLikes] = useMutation(
     `/api/user/${userId}/review/${reviewId}/likes/create`
   );
   const [comments, setComments] = useState(false);
   const handleClick = (type: string) => {
     if (!ReviewData) return;
-    // ReviewMutate(
-    //   {
-    //     ...ReviewData,
-    //     isLiked: !ReviewData.isLiked,
-    //     post: {
-    //       ...ReviewData.post,
-    //       _count: {
-    //         ...ReviewData.post._count,
-    //         likes: ReviewData.isLiked
-    //           ? ReviewData.post._count.likes - 1
-    //           : ReviewData.post._count.likes + 1,
-    //       },
-    //     },
-    //   },
-    //   false
-    // );
+    ReviewMutate(
+      {
+        ...ReviewData,
+        isLiked: !ReviewData.isLiked,
+        review: {
+          ...ReviewData.review,
+          _count: {
+            ...ReviewData.review?._count,
+            likes: ReviewData.isLiked
+              ? ReviewData.review?._count.likes - 1
+              : ReviewData.review?._count.likes + 1,
+          },
+        },
+      },
+      false
+    );
     if (type === 'comments') {
       setComments((p) => !p);
     }
@@ -77,12 +71,15 @@ export const ReviewLikes = ({ userId, reviewId }: any) => {
         </Btn>
       </BtnWrap>
       <CountsWrap className="btnWithCounts">
-        {/* {likesCount && <Counts>{likesCount} Likes</Counts>} */}
+        <Counts>
+          <span>{likesCount ? likesCount : '0'}</span>
+          <span> Likes</span>
+        </Counts>
       </CountsWrap>
     </>
   );
 };
-const Counts = styled.span`
+const Counts = styled.article`
   text-align: center;
   font-weight: 500;
 `;
