@@ -20,6 +20,8 @@ import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm, IPostRes } from '../../../../../../../src/types/post';
 import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithBoard';
 import { DeleteModal } from '../../../../../../../src/components/Modal/board/settting/delete/modal';
+import { Icons } from '../../../../../../../styles/svg';
+import { Likes } from '../../../../../../../src/components/Svg/icon/likes';
 
 const myPost: NextPage = () => {
   const router = useRouter();
@@ -175,6 +177,7 @@ const myPost: NextPage = () => {
           />
           {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
         </form>
+        <Likes userId={userId} boardId={boardId} postId={postId} />
       </section>
     </PageCont>
   );

@@ -27,6 +27,7 @@ model User {
   boards      Board[]
   posts       Post[]
   reviews     Review[]  
+  likes       Likes[]  
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -63,7 +64,8 @@ model Post {
   user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID       Int   
   board        Board        @relation(fields: [BoardID], references: [id], onDelete: Cascade)
-  BoardID      Int   
+  BoardID      Int
+  likes        Likes[]  
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }
@@ -79,6 +81,18 @@ model Review {
   recommend    Boolean?    @default(true)
   user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID       Int
+  likes        Likes[]  
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+model Likes {
+  id           Int         @id @default(autoincrement()) 
+  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
+  UserID       Int
+  post         Post        @relation(fields: [PostID], references: [id], onDelete: Cascade)
+  PostID       Int
+  review       Review        @relation(fields: [ReviewID], references: [id], onDelete: Cascade)
+  ReviewID     Int
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }
