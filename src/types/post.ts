@@ -14,7 +14,7 @@ export interface IPostRes {
 }
 export interface IGetAllPosts {
   ok: boolean;
-  allPosts?: Post[];
+  posts?: Post[];
 }
 export interface IPostListProps {
   posts?: Post[];

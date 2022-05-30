@@ -32,3 +32,8 @@ export interface IGetBoards {
 export interface BoardWithUser extends Board {
   user: User;
 }
+export interface IGetExistingBoards {
+  ok: boolean;
+  error?: string;
+  boards?: BoardWithUser[];
+}

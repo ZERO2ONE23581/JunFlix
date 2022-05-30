@@ -19,28 +19,30 @@ interface PostWithUser extends Post {
 }
 
 export const PostLikes = ({ userId, boardId, postId }: any) => {
-  const urlData = Boolean(userId && boardId && postId);
-  const { data: PostData, mutate: PostMutate } = useSWR<IGetPost>(
-    urlData && `/api/user/${userId}/board/${boardId}/post/${postId}`
+  const isQueryId = Boolean(userId && boardId && postId);
+  const [comments, setComments] = useState(false);
+  //
+  const { data, mutate } = useSWR<IGetPost>(
+    isQueryId && `/api/user/${userId}/board/${boardId}/post/${postId}`
   );
-  const likesCount = PostData?.post?._count.likes;
+  const likesCount = data?.post?._count.likes;
   const [createLikes] = useMutation(
     `/api/user/${userId}/board/${boardId}/post/${postId}/likes/create`
   );
-  const [comments, setComments] = useState(false);
+  //
   const handleClick = (type: string) => {
-    if (!PostData) return;
-    PostMutate(
+    if (!data) return;
+    mutate(
       {
-        ...PostData,
-        isLiked: !PostData.isLiked,
+        ...data,
+        isLiked: !data.isLiked,
         post: {
-          ...PostData.post,
+          ...data.post,
           _count: {
-            ...PostData.post._count,
-            likes: PostData.isLiked
-              ? PostData.post._count.likes - 1
-              : PostData.post._count.likes + 1,
+            ...data.post._count,
+            likes: data.isLiked
+              ? data.post._count.likes - 1
+              : data.post._count.likes + 1,
           },
         },
       },
@@ -56,7 +58,7 @@ export const PostLikes = ({ userId, boardId, postId }: any) => {
     <>
       <BtnWrap>
         <Btn onClick={() => handleClick('likes')}>
-          {!PostData?.isLiked ? (
+          {!data?.isLiked ? (
             <Icons name="likes" type="empty" />
           ) : (
             <Icons name="likes" type="solid" />

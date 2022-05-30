@@ -9,20 +9,32 @@ import { BoardWithUser } from '../../types/board';
 export interface IBoardListProps {
   loggedInUser?: User;
   boards?: BoardWithUser[];
+  selectBoard?: boolean;
+  allBoards?: boolean;
 }
 
-export const BoardList = ({ loggedInUser, boards }: IBoardListProps) => {
+export const BoardList = ({
+  loggedInUser,
+  boards,
+  selectBoard,
+  allBoards,
+}: IBoardListProps) => {
   const router = useRouter();
   //
   return (
     <PageCont>
-      <H1>MY BOARDS</H1>
+      {allBoards && <H1>ALL BOARDS</H1>}
+      {loggedInUser && selectBoard && <H1>Select one of your Boards!</H1>}
       <ItemCont>
         {boards &&
           boards?.map((info) => (
             <Link
               key={info.id}
-              href={`/user/${info.UserID}/board/${info.id}/detail`}
+              href={
+                selectBoard
+                  ? `/user/${info.UserID}/board/${info.id}/post/create`
+                  : `/user/${info.UserID}/board/${info.id}`
+              }
             >
               <a>
                 <Item>
@@ -48,22 +60,17 @@ export const BoardList = ({ loggedInUser, boards }: IBoardListProps) => {
             </Link>
           ))}
       </ItemCont>
-      <Btn
-        type="create"
-        btnName="보드 만들기"
-        onClick={() => router.push(`/user/${loggedInUser?.id}/board/create`)}
-      />
+      {loggedInUser && (
+        <Btn
+          type="create"
+          btnName="보드 만들기"
+          onClick={() => router.push(`/user/${loggedInUser.id}/board/create`)}
+        />
+      )}
     </PageCont>
   );
 };
-const NoFound = styled.span`
-  text-align: center;
-  font-weight: 700;
-  font-size: 1.5rem;
-  text-align: center;
-  font-style: italic;
-  color: ${(p) => p.theme.color.logo};
-`;
+
 const ItemCont = styled.article`
   margin-top: 15px;
   gap: 15px;
