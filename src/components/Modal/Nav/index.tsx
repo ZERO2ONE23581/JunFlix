@@ -9,7 +9,7 @@ export const NavModal = ({ closeModal }: any) => {
     closeModal();
     if (isloggedIn && loggedInUser) {
       if (type === 'my-page') {
-        router.push(`/user/${loggedInUser.id}/mypage`);
+        router.push(`/user/${loggedInUser.id}/my-page`);
       }
       if (type === 'edit-profile') {
         router.push(`/user/${loggedInUser.id}/edit/profile`);
@@ -66,6 +66,7 @@ export const NavWrapper = styled.ul`
       display: flex;
       align-items: center;
       justify-content: center;
+      color: ${(p) => p.theme.color.font};
       &:hover {
         color: ${(p) => p.theme.color.logo};
         background-color: ${(p) => p.theme.color.font};

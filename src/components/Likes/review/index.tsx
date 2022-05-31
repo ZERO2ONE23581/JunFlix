@@ -21,7 +21,7 @@ interface ReviewWithUser extends Review {
 export const ReviewLikes = ({ userId, reviewId }: any) => {
   const isQueryId = Boolean(userId && reviewId);
   const { data: ReviewData, mutate: ReviewMutate } = useSWR<IGetReview>(
-    isQueryId && `/api/user/${userId}/review/${reviewId}/detail`
+    isQueryId && `/api/user/${userId}/review/${reviewId}`
   );
   const likesCount = ReviewData?.review?._count.likes;
   const [createLikes] = useMutation(

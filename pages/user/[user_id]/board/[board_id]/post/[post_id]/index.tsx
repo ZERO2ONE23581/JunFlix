@@ -24,7 +24,7 @@ import { PostLikes } from '../../../../../../../src/components/Likes/post';
 
 const Post_Detail: NextPage = () => {
   const router = useRouter();
-  const { isloggedIn, loggedInUserId } = useUser();
+  const { isloggedIn, loggedInUser } = useUser();
   const { user_id, board_id, post_id } = router.query;
   const isQueryId = Boolean(user_id && board_id && post_id);
   //
@@ -101,7 +101,7 @@ const Post_Detail: NextPage = () => {
             onClick={() => router.push(`/user/${user_id}/board/${board_id}`)}
           />
           <>
-            {isloggedIn && loggedInUserId === Number(user_id) && (
+            {isloggedIn && loggedInUser?.id === Number(user_id) && (
               <Btn
                 type="board-setting"
                 onClick={() => setOpenSetup((p) => !p)}

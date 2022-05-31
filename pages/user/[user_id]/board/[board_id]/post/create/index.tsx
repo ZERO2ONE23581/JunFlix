@@ -5,16 +5,22 @@ import { useEffect, useState } from 'react';
 import { Btn } from '../../../../../../../src/components/Button';
 import { IPostForm } from '../../../../../../../src/types/post';
 import { Input } from '../../../../../../../src/components/Input';
-import { MutationRes } from '../../../../../../../src/types/mutation';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithBoard';
 import { ErrMsg, PageCont } from '../../../../../../../styles/default';
+import { Post } from '@prisma/client';
+
+interface ICreatePostRes {
+  ok: boolean;
+  error?: string;
+  post?: Post;
+}
 
 const CreatePost: NextPage = () => {
   const router = useRouter();
-  const { userId, boardId } = router.query;
-  const [createPost, { data: postData, loading }] = useMutation<MutationRes>(
-    `/api/user/${userId}/board/${boardId}/post/create`
+  const { user_id, board_id } = router.query;
+  const [createPost, { data: dataRes, loading }] = useMutation<ICreatePostRes>(
+    `/api/user/${user_id}/board/${board_id}/post/create`
   );
   const {
     watch,
@@ -50,19 +56,21 @@ const CreatePost: NextPage = () => {
       const file = avatar[0];
       setPreview(URL.createObjectURL(file));
     }
-    if (postData?.ok) {
-      if (postData?.ok) {
-        alert('새로운 게시물이 생성되었습니다.');
-        router.replace(`/user/${userId}/board/${boardId}`);
+    if (dataRes?.ok) {
+      if (dataRes?.ok && dataRes.post) {
+        alert('새로운 게시물이 생성되었습니다. 게시물로 이동합니다.');
+        router.replace(
+          `/user/${dataRes.post.UserID}/board/${dataRes.post?.BoardID}/post/${dataRes.post.id}`
+        );
       }
     }
-  }, [avatar, watch, postData, router]);
+  }, [avatar, watch, dataRes, router]);
   //
   return (
     <PageCont>
       <section className="create-post-cont">
         <form onSubmit={handleSubmit(onValid)}>
-          {postData?.error && <ErrMsg>{postData?.error}</ErrMsg>}
+          {dataRes?.error && <ErrMsg>{dataRes?.error}</ErrMsg>}
           <ThumNail>
             {preview ? (
               <img src={`${preview}`} alt="파일 업로드" />

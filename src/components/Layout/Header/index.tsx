@@ -12,6 +12,7 @@ import { Btn } from '../../Button';
 import useAvatar from '../../../libs/client/useAvatar';
 import { NavReviewModal } from '../../Modal/Nav/Review';
 import { NavModalClose } from '../../../../styles/modal';
+import { useRouter } from 'next/router';
 
 export const Header = ({ onClick, btnName }: any) => {
   const { isloggedIn, loggedInUser } = useUser();
@@ -21,6 +22,12 @@ export const Header = ({ onClick, btnName }: any) => {
   const [openPost, setOpenPost] = useState(false);
   const [openReview, setOpenReview] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
+  //
+  const router = useRouter();
+  const needLoginClick = () => {
+    alert('로그인이 필요합니다.');
+    router.push(`/user/login`);
+  };
   //
   return (
     <Cont>
@@ -42,6 +49,7 @@ export const Header = ({ onClick, btnName }: any) => {
               <span className="hover">Board</span>
               {openBoard && (
                 <NavBoardModal
+                  handleClick={needLoginClick}
                   isloggedIn={isloggedIn}
                   loggedInUserId={loggedInUser?.id}
                 />
@@ -51,6 +59,7 @@ export const Header = ({ onClick, btnName }: any) => {
               <span className="hover">Post</span>
               {openPost && (
                 <NavPostModal
+                  handleClick={needLoginClick}
                   isloggedIn={isloggedIn}
                   loggedInUserId={loggedInUser?.id}
                 />
@@ -60,6 +69,7 @@ export const Header = ({ onClick, btnName }: any) => {
               <span className="hover">Review</span>
               {openReview && (
                 <NavReviewModal
+                  handleClick={needLoginClick}
                   isloggedIn={isloggedIn}
                   loggedInUserId={loggedInUser?.id}
                 />
@@ -69,6 +79,7 @@ export const Header = ({ onClick, btnName }: any) => {
               <span className="hover">Create</span>
               {openCreate && (
                 <NavCreateModal
+                  handleClick={needLoginClick}
                   isloggedIn={isloggedIn}
                   loggedInUserId={loggedInUser?.id}
                 />

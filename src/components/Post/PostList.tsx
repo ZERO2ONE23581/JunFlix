@@ -2,12 +2,14 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { ItemCont } from './AllPosts';
 import useAvatar from '../../libs/client/useAvatar';
-import { PageCont } from '../../../styles/default';
+import { H1, PageCont } from '../../../styles/default';
 import { IPostListProps } from '../../types/post';
 
-export const PostList = ({ posts }: IPostListProps) => {
+export const PostList = ({ posts, allPosts, myPosts }: IPostListProps) => {
   return (
     <PageCont>
+      {allPosts && <H1>ALL POSTS</H1>}
+      {myPosts && <H1>MY POSTS</H1>}
       {posts && (
         <ItemCont>
           {posts.map((info) => (

@@ -13,15 +13,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!title) return res.json({ ok: false, error: 'INPUT DATA REQUIRED!' });
   if (user?.id !== +user_id)
     return res.json({ ok: false, error: 'UNAUTHORIZED!' });
-
-  //Select Board -> Create Post on the board
+  //
   const currentBoard = await client.board.findUnique({
     where: { id: +board_id },
     select: { id: true, UserID: true },
   });
   if (!currentBoard) return res.json({ ok: false, error: 'NO BOARD FOUND!' });
   //
-  await client.post.create({
+  const post = await client.post.create({
     data: {
       avatar,
       title,
@@ -29,7 +28,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       UserID: currentBoard.UserID,
       BoardID: currentBoard.id,
     },
+    select: { UserID: true, BoardID: true, id: true },
   });
-  return res.json({ ok: true });
+  return res.json({ ok: true, post });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

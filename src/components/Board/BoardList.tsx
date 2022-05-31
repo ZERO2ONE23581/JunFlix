@@ -9,21 +9,22 @@ import { BoardWithUser } from '../../types/board';
 export interface IBoardListProps {
   loggedInUser?: User;
   boards?: BoardWithUser[];
-  selectBoard?: boolean;
+  myBoards?: boolean;
   allBoards?: boolean;
+  selectBoard?: boolean;
 }
-
 export const BoardList = ({
   loggedInUser,
   boards,
-  selectBoard,
+  myBoards,
   allBoards,
+  selectBoard,
 }: IBoardListProps) => {
   const router = useRouter();
-  //
   return (
     <PageCont>
       {allBoards && <H1>ALL BOARDS</H1>}
+      {myBoards && <H1>MY BOARDS</H1>}
       {loggedInUser && selectBoard && <H1>Select one of your Boards!</H1>}
       <ItemCont>
         {boards &&

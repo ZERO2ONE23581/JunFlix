@@ -15,7 +15,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     },
   });
   if (!boards) return res.json({ ok: false, error: 'NO BOARDS FOUND' });
-  //
   return res.json({ ok: true, boards });
 }
 export default withApiSession(

@@ -10,11 +10,15 @@ import { ReviewLikes } from '../Likes/review';
 import { H1, PageCont } from '../../../styles/default';
 
 interface IReviewListProps {
+  allReviews?: boolean;
+  myReview?: boolean;
   isloggedIn?: boolean;
   loggedInUser?: User;
   reviews?: ReviewWithUser[] | undefined;
 }
 export const ReviewList = ({
+  myReview,
+  allReviews,
   isloggedIn,
   loggedInUser,
   reviews,
@@ -23,7 +27,8 @@ export const ReviewList = ({
   //
   return (
     <PageCont>
-      <H1>MY REVIEWS</H1>
+      {allReviews && <H1>ALL REVIEWS</H1>}
+      {myReview && <H1>MY REVIEWS</H1>}
       <Btn
         type="create"
         btnName="리뷰 작성하기"
@@ -36,7 +41,7 @@ export const ReviewList = ({
       <List>
         {reviews?.map((info) => (
           <article key={info.id}>
-            <Link href={`/user/${info.UserID}/review/${info.id}/detail`}>
+            <Link href={`/user/${info.UserID}/review/${info.id}`}>
               <a>
                 <Item>
                   <Order>#{reviews.length - reviews.indexOf(info)}</Order>

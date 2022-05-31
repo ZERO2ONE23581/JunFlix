@@ -1,15 +1,16 @@
 import Link from 'next/link';
 import { NavCont, NavWrapper } from '..';
-import { INavModalProps } from '../Board';
+import { INavModalProps, MustLoginBtn } from '../Board';
 
 export const NavReviewModal = ({
+  handleClick,
   isloggedIn,
   loggedInUserId,
 }: INavModalProps) => {
   return (
     <NavCont>
       <NavWrapper>
-        <Link href={`/watch/all/review`}>
+        <Link href={`/all/reviews`}>
           <a>
             <li>
               <span>All Reviews</span>
@@ -17,7 +18,7 @@ export const NavReviewModal = ({
           </a>
         </Link>
         {isloggedIn && (
-          <Link href={`/watch/my/review`}>
+          <Link href={`/user/${loggedInUserId}/review/my-reviews`}>
             <a>
               <li>
                 <span>My Reviews</span>
@@ -25,20 +26,24 @@ export const NavReviewModal = ({
             </a>
           </Link>
         )}
-        <Link href={`/watch/all/review/rating`}>
+        <Link href={`/all/reviews/ratings`}>
           <a>
             <li>
               <span>Rating</span>
             </li>
           </a>
         </Link>
-        <Link href={`/user/${loggedInUserId}/review/create`}>
-          <a>
-            <li>
-              <span>Create</span>
-            </li>
-          </a>
-        </Link>
+        {isloggedIn ? (
+          <Link href={`/user/${loggedInUserId}/review/create`}>
+            <a>
+              <li>
+                <span>Create</span>
+              </li>
+            </a>
+          </Link>
+        ) : (
+          <MustLoginBtn onClick={handleClick}>Create</MustLoginBtn>
+        )}
       </NavWrapper>
     </NavCont>
   );

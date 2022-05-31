@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { Article } from '../../../styles/components/default';
+import { Article } from '../../../styles/default';
 
 export const LoginLink = ({ findId, findPassword, join, joined }: any) => {
   return (
@@ -8,12 +8,12 @@ export const LoginLink = ({ findId, findPassword, join, joined }: any) => {
       {!joined ? (
         <Nav as={'nav'}>
           {!findId && (
-            <Link href="/user/login/find_id">
+            <Link href="/user/login/find/id">
               <a>아이디 찾기</a>
             </Link>
           )}
           {!findPassword && (
-            <Link href="/user/login/find_pw">
+            <Link href="/user/login/find/password">
               <a>비밀번호 찾기</a>
             </Link>
           )}
