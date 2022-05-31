@@ -21,6 +21,7 @@ import {
 } from '../../../../../src/types/board';
 import { DeleteModal } from '../../../../../src/components/Modal/Board/Delete';
 import { PostList } from '../../../../../src/components/Post/PostList';
+import { FollowBoard } from '../../../../../src/components/Button/Follow/Board';
 
 const Board_Detail: NextPage = () => {
   const router = useRouter();
@@ -70,7 +71,8 @@ const Board_Detail: NextPage = () => {
         />
       )}
       {data?.ok && data.board && (
-        <section className="read-board-cont">
+        <>
+          <FollowBoard userId={data.board.UserID} boardId={data.board.id} />
           <article className="btn-wrap">
             <Btn
               type="back"
@@ -152,7 +154,7 @@ const Board_Detail: NextPage = () => {
             {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
           </form>
           <PostList posts={data?.board?.post} />
-        </section>
+        </>
       )}
     </PageCont>
   );

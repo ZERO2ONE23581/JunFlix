@@ -1,46 +1,48 @@
 import styled from '@emotion/styled';
-import { Post, Review, User } from '@prisma/client';
+import { Post, User } from '@prisma/client';
 import { useState } from 'react';
 import useSWR from 'swr';
-import { Icons } from '../../../../styles/svg';
-import useMutation from '../../../libs/client/useMutation';
+import { Icons } from '../../../../../styles/svg';
+import useMutation from '../../../../libs/client/useMutation';
 
-interface IGetReview {
+interface IGetPost {
   ok: boolean;
   error?: string;
   isLiked?: boolean;
-  review: ReviewWithUser;
+  post: PostWithUser;
 }
-interface ReviewWithUser extends Review {
+interface PostWithUser extends Post {
   user: User;
   _count: {
     likes: number;
   };
 }
 
-export const ReviewLikes = ({ userId, reviewId }: any) => {
-  const isQueryId = Boolean(userId && reviewId);
-  const { data: ReviewData, mutate: ReviewMutate } = useSWR<IGetReview>(
-    isQueryId && `/api/user/${userId}/review/${reviewId}`
-  );
-  const likesCount = ReviewData?.review?._count.likes;
-  const [createLikes] = useMutation(
-    `/api/user/${userId}/review/${reviewId}/likes/create`
-  );
+export const PostLikes = ({ userId, boardId, postId }: any) => {
+  const isQueryId = Boolean(userId && boardId && postId);
   const [comments, setComments] = useState(false);
+  //
+  const { data, mutate } = useSWR<IGetPost>(
+    isQueryId && `/api/user/${userId}/board/${boardId}/post/${postId}`
+  );
+  const likesCount = data?.post?._count.likes;
+  const [createLikes] = useMutation(
+    `/api/user/${userId}/board/${boardId}/post/${postId}/likes/create`
+  );
+  //
   const handleClick = (type: string) => {
-    if (!ReviewData) return;
-    ReviewMutate(
+    if (!data) return;
+    mutate(
       {
-        ...ReviewData,
-        isLiked: !ReviewData.isLiked,
-        review: {
-          ...ReviewData.review,
+        ...data,
+        isLiked: !data.isLiked,
+        post: {
+          ...data.post,
           _count: {
-            ...ReviewData.review?._count,
-            likes: ReviewData.isLiked
-              ? ReviewData.review?._count.likes - 1
-              : ReviewData.review?._count.likes + 1,
+            ...data.post._count,
+            likes: data.isLiked
+              ? data.post._count.likes - 1
+              : data.post._count.likes + 1,
           },
         },
       },
@@ -56,7 +58,7 @@ export const ReviewLikes = ({ userId, reviewId }: any) => {
     <>
       <BtnWrap>
         <Btn onClick={() => handleClick('likes')}>
-          {!ReviewData?.isLiked ? (
+          {!data?.isLiked ? (
             <Icons name="likes" type="empty" />
           ) : (
             <Icons name="likes" type="solid" />
@@ -79,7 +81,7 @@ export const ReviewLikes = ({ userId, reviewId }: any) => {
     </>
   );
 };
-const Counts = styled.article`
+const Counts = styled.span`
   text-align: center;
   font-weight: 500;
 `;

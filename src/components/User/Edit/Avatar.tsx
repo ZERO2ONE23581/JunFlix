@@ -17,9 +17,9 @@ interface IEditAvatarRes {
 }
 
 export const Edit_Avatar = () => {
-  const { loggedInUserId, loggedInUser } = useUser();
+  const { loggedInUser } = useUser();
   const [uploadAvatar, { loading, data }] = useMutation<IEditAvatarRes>(
-    `/api/user/${loggedInUserId}/edit/profile/avatar`
+    `/api/user/${loggedInUser?.id}/edit/avatar`
   );
   const {
     register,
@@ -29,13 +29,13 @@ export const Edit_Avatar = () => {
   } = useForm<IEditAvatarForm>({ mode: 'onSubmit' });
   const avatar = watch('avatar');
   const onValid = async ({ avatar }: IEditAvatarForm) => {
-    if (avatar && avatar.length > 0 && loggedInUserId) {
+    if (avatar && avatar.length > 0 && loggedInUser?.id) {
       //1. Get empty url from cf
       const { uploadURL } = await (await fetch(`/api/file`)).json();
 
       //2. upload file to cf
       const form = new FormData();
-      form.append('file', avatar[0], loggedInUserId.toString());
+      form.append('file', avatar[0], loggedInUser?.id.toString());
       const {
         result: { id },
       } = await (

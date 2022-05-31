@@ -13,23 +13,24 @@ datasource db {
 
 }
 model User {
-  id          Int         @id @default(autoincrement())
-  username    String
-  userId      String?     @unique
-  password    String? 
-  email       String?     @unique
-  name        String?
-  birth       String?
-  gender      String?
-  location    String?
-  avatar      String?
-  tokens      Token[]
-  boards      Board[]
-  posts       Post[]
-  reviews     Review[]  
-  likes       Likes[]  
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id           Int          @id @default(autoincrement())
+  username     String 
+  userId       String?      @unique
+  password     String?  
+  email        String?      @unique
+  name         String?
+  birth        String?
+  gender       String?
+  location     String?
+  avatar       String?
+  tokens       Token[]  
+  boards       Board[]     
+  posts        Post[]
+  reviews      Review[]  
+  likes        Likes[]  
+  following    Following[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 }
 
 model Token {
@@ -42,19 +43,27 @@ model Token {
 }
 
 model Board {
-  id           Int         @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   title        String     @unique
   intro        String
   genre        String
-  avatar       String?
-  follow       String?
-  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
-  UserID       Int   
+  avatar       String?  
+  user         User       @relation(fields: [UserID], references: [id], onDelete: Cascade)
+  UserID       Int  
+  following    Following[]
   post         Post[]
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }
-
+model Following {
+  id           Int         @id @default(autoincrement()) 
+  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
+  UserID       Int
+  board        Board       @relation(fields: [BoardID], references: [id], onDelete: Cascade)
+  BoardID      Int
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
 model Post {
   id           Int         @id @default(autoincrement())
   title        String     

@@ -22,7 +22,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!mustData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
 
   //Create review
-  await client.review.create({
+  const review = await client.review.create({
     data: {
       avatar,
       title: Title,
@@ -34,8 +34,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       recommend,
       UserID: user.id,
     },
+    select: { UserID: true, id: true },
   });
   //
-  return res.json({ ok: true });
+  return res.json({ ok: true, review });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

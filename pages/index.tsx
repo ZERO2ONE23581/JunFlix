@@ -13,11 +13,13 @@ const Home: NextPage = () => {
     <>
       <Title title="홈" />
       <MovieInfo type="trending" />
-      <BoardList
-        allBoards={true}
-        loggedInUser={loggedInUser}
-        boards={data?.boards}
-      />
+      {loggedInUser && data?.boards && (
+        <BoardList
+          allBoards={true}
+          loggedInUser={loggedInUser}
+          boards={data?.boards}
+        />
+      )}
     </>
   );
 };

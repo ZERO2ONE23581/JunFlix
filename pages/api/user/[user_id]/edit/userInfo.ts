@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import client from '../../../../../../src/libs/server/prisma_client';
-import withHandler from '../../../../../../src/libs/server/withHandler';
-import { withApiSession } from '../../../../../../src/libs/server/withSession';
+import client from '../../../../../src/libs/server/prisma_client';
+import withHandler from '../../../../../src/libs/server/withHandler';
+import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
@@ -16,8 +16,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     where: { id: user.id },
   });
   if (!currentUser) return res.json({ ok: false, error: 'MUST LOGIN!' });
-
-  //Update
+  //
   await client.user.update({
     where: { id: currentUser.id },
     data: { username, name, birth, gender, location },

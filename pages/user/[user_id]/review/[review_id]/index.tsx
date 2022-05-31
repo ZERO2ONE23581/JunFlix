@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { ThumNail } from '../../../../../src/components/Post/AllPostsWithBoard';
 import useAvatar from '../../../../../src/libs/client/useAvatar';
-import { ReviewLikes } from '../../../../../src/components/Likes/review';
+import { ReviewLikes } from '../../../../../src/components/Button/Likes/review';
 
 const Review_Detail: NextPage = () => {
   const router = useRouter();
