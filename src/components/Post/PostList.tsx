@@ -7,7 +7,7 @@ import { IPostListProps } from '../../types/post';
 
 export const PostList = ({ posts, allPosts, myPosts }: IPostListProps) => {
   return (
-    <PageCont>
+    <>
       {allPosts && <H1>ALL POSTS</H1>}
       {myPosts && <H1>MY POSTS</H1>}
       {posts && (
@@ -35,7 +35,7 @@ export const PostList = ({ posts, allPosts, myPosts }: IPostListProps) => {
           ))}
         </ItemCont>
       )}
-    </PageCont>
+    </>
   );
 };
 

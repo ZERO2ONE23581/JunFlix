@@ -6,20 +6,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { User } from '@prisma/client';
 import { ReviewWithUser } from '../../types/review';
-import { ReviewLikes } from '../Likes/review';
+import { ReviewLikes } from '../Button/Likes/review';
 import { H1, PageCont } from '../../../styles/default';
 
 interface IReviewListProps {
   allReviews?: boolean;
   myReview?: boolean;
-  isloggedIn?: boolean;
   loggedInUser?: User;
   reviews?: ReviewWithUser[] | undefined;
 }
 export const ReviewList = ({
   myReview,
   allReviews,
-  isloggedIn,
   loggedInUser,
   reviews,
 }: IReviewListProps) => {
@@ -33,8 +31,8 @@ export const ReviewList = ({
         type="create"
         btnName="리뷰 작성하기"
         onClick={() => {
-          isloggedIn
-            ? router.push(`/user/${loggedInUser?.id}/review/create`)
+          loggedInUser
+            ? router.push(`/user/${loggedInUser.id}/review/create`)
             : alert(`로그인이 필요합니다.`);
         }}
       />

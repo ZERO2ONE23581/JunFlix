@@ -18,11 +18,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     },
   });
 
-  //DELETE LIKES
+  //TOGGLE LIKES
   if (alreadyExists) {
     await client.likes.delete({ where: { id: alreadyExists.id } });
   } else {
-    //CREATE LIKES
     await client.likes.create({
       data: {
         user: { connect: { id: user?.id } },

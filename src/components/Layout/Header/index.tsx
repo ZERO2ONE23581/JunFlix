@@ -149,7 +149,7 @@ const MainNav = styled.article`
   display: flex;
   align-content: center;
 `;
-export const AnchorBtn = styled.button`
+export const AnchorBtn = styled.div`
   cursor: pointer;
   position: relative;
   background: none;

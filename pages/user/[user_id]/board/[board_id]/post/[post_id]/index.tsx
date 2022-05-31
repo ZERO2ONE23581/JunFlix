@@ -20,7 +20,8 @@ import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm, IPostRes } from '../../../../../../../src/types/post';
 import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithBoard';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
-import { PostLikes } from '../../../../../../../src/components/Likes/post';
+import { PostLikes } from '../../../../../../../src/components/Button/Likes/post';
+import { FollowBoard } from '../../../../../../../src/components/Button/Follow';
 
 const Post_Detail: NextPage = () => {
   const router = useRouter();

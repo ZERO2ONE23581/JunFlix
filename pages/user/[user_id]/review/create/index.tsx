@@ -2,18 +2,24 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import useMutation from '../../../../../src/libs/client/useMutation';
-import { MutationRes } from '../../../../../src/types/mutation';
 import { IReviewForm } from '../../../../../src/types/review';
 import { Input, Select } from '../../../../../src/components/Input';
+import useMutation from '../../../../../src/libs/client/useMutation';
 import { ThumNail } from '../../../../../src/components/Post/AllPostsWithBoard';
 import { Btn } from '../../../../../src/components/Button';
 import { ErrMsg, PageCont } from '../../../../../styles/default';
+import { Review } from '@prisma/client';
+
+interface ICreateReviewRes {
+  ok: boolean;
+  error?: string;
+  review?: Review;
+}
 
 const Create_Review: NextPage = () => {
   const router = useRouter();
   const { userId } = router.query;
-  const [createReview, { loading, data }] = useMutation<MutationRes>(
+  const [createReview, { loading, data }] = useMutation<ICreateReviewRes>(
     `/api/user/${userId}/review/create`
   );
   const {
@@ -79,8 +85,8 @@ const Create_Review: NextPage = () => {
       setPreview(URL.createObjectURL(file));
     }
     if (data?.ok) {
-      alert('새로운 리뷰를 생성하였습니다.');
-      router.push('/all/review');
+      alert('새로운 리뷰를 생성하였습니다. 생성한 리뷰로 이동합니다.');
+      router.push(`/user/${data.review?.UserID}/review/${data.review?.id}`);
     }
   }, [data, avatar, watch, router]);
   //
