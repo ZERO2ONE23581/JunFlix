@@ -50,8 +50,8 @@ model Board {
   avatar       String?  
   user         User       @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID       Int  
-  following    Following[]
-  post         Post[]
+  followers    Following[]
+  posts        Post[]
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }

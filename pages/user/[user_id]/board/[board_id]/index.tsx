@@ -21,12 +21,13 @@ import {
 } from '../../../../../src/types/board';
 import { DeleteModal } from '../../../../../src/components/Modal/Board/Delete';
 import { PostList } from '../../../../../src/components/Post/PostList';
-import { FollowBoard } from '../../../../../src/components/Button/Follow/Board';
+import { FollowBoard } from '../../../../../src/components/Button/Follow';
 
 const Board_Detail: NextPage = () => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const { isloggedIn, loggedInUser } = useUser();
+  const isBoardOwner = Boolean(Number(user_id) === loggedInUser?.id);
   const { data } = useSWR<IGetBoardDetail>(
     user_id && board_id && `/api/user/${user_id}/board/${board_id}`
   );
@@ -72,7 +73,13 @@ const Board_Detail: NextPage = () => {
       )}
       {data?.ok && data.board && (
         <>
-          <FollowBoard userId={data.board.UserID} boardId={data.board.id} />
+          {!isBoardOwner && (
+            <FollowBoard
+              isBoardOwner={isBoardOwner}
+              user_id={data.board.UserID}
+              board_id={data.board.id}
+            />
+          )}
           <article className="btn-wrap">
             <Btn
               type="back"
@@ -153,7 +160,7 @@ const Board_Detail: NextPage = () => {
             />
             {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
           </form>
-          <PostList posts={data?.board?.post} />
+          <PostList posts={data?.board?.posts} />
         </>
       )}
     </PageCont>
