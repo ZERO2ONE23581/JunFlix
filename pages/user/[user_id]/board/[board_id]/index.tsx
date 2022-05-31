@@ -27,6 +27,7 @@ const Board_Detail: NextPage = () => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const { isloggedIn, loggedInUser } = useUser();
+  const isBoardOwner = Boolean(Number(user_id) === loggedInUser?.id);
   const { data } = useSWR<IGetBoardDetail>(
     user_id && board_id && `/api/user/${user_id}/board/${board_id}`
   );
@@ -72,7 +73,13 @@ const Board_Detail: NextPage = () => {
       )}
       {data?.ok && data.board && (
         <>
-          <FollowBoard user_id={data.board.UserID} board_id={data.board.id} />
+          {!isBoardOwner && (
+            <FollowBoard
+              isBoardOwner={isBoardOwner}
+              user_id={data.board.UserID}
+              board_id={data.board.id}
+            />
+          )}
           <article className="btn-wrap">
             <Btn
               type="back"
@@ -153,7 +160,7 @@ const Board_Detail: NextPage = () => {
             />
             {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
           </form>
-          <PostList posts={data?.board?.post} />
+          <PostList posts={data?.board?.posts} />
         </>
       )}
     </PageCont>

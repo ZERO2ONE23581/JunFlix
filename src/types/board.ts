@@ -14,7 +14,7 @@ export interface IGetBoardDetail {
 }
 export interface BoardWithUserAndPost extends Board {
   user: User;
-  post: Post[];
+  posts: Post[];
 }
 export interface IPostListProps {
   posts: Post[];

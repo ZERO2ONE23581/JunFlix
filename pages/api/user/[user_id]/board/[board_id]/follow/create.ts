@@ -10,6 +10,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
 
+  //YOU CAN'T FOLLOW YOUR BOARD
+  if (user?.id === +user_id)
+    return res.json({ ok: false, error: 'BOARD OWNER' });
+
   //FIND FOLLOW
   const alreadyExists = await client.following.findFirst({
     where: {

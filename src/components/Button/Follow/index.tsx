@@ -20,15 +20,30 @@ interface BoardWithRecords extends Board {
     posts: number;
   };
 }
+interface IFollowBoardRes {
+  ok: boolean;
+  error?: string;
+}
 
-export const FollowBoard = ({ user_id, board_id }: any) => {
+interface IFollowBoardProps {
+  isBoardOwner?: boolean;
+  user_id?: number | null;
+  board_id?: number | null;
+}
+
+export const FollowBoard = ({
+  isBoardOwner,
+  user_id,
+  board_id,
+}: IFollowBoardProps) => {
   const { data, mutate } = useSWR<IGetFollowingBoard>(
-    user_id && board_id && `/api/user/${user_id}/board/${board_id}`
+    `/api/user/${user_id}/board/${board_id}`
   );
-  const [followBoard] = useMutation(
+  const [followBoard] = useMutation<IFollowBoardRes>(
     `/api/user/${user_id}/board/${board_id}/follow/create`
   );
   const handleClick = () => {
+    if (isBoardOwner) return;
     if (!data) return;
     mutate(
       {
@@ -61,7 +76,7 @@ export const FollowBoard = ({ user_id, board_id }: any) => {
           <span>Followers</span>
         </Counts>
         <Btn isFollowing={data?.isFollowing} onClick={handleClick}>
-          {data?.isFollowing ? 'Following...' : 'Follow'}
+          {data?.isFollowing ? 'Following' : 'Follow'}
         </Btn>
       </Wrap>
     </Cont>
