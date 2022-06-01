@@ -109,7 +109,8 @@ model Likes {
   updatedAt    DateTime    @updatedAt
 }
 model Comments {
-  id           Int         @id @default(autoincrement()) 
+  id           Int         @id @default(autoincrement())
+  content      String 
   user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID       Int
   post         Post?       @relation(fields: [PostID], references: [id], onDelete: Cascade)

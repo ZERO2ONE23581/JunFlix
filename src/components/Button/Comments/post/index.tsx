@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Post, User } from '@prisma/client';
+import { Comments, Post, User } from '@prisma/client';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
@@ -14,16 +14,18 @@ interface IGetPost {
   ok: boolean;
   error?: string;
   isComments?: boolean;
-  post: PostWithUser;
+  post: PostWithComments;
 }
-interface PostWithUser extends Post {
-  user: User;
+interface PostWithComments extends Post {
+  comments: CommentsWithUser[];
   _count: {
-    likes: number;
+    comments: number;
   };
 }
-
-interface ICommentsForm {
+interface CommentsWithUser extends Comments {
+  user: User;
+}
+interface IPostCommentsForm {
   comments: string;
 }
 
@@ -62,11 +64,12 @@ export const PostComments = ({ userId, boardId, postId }: any) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ICommentsForm>({ mode: 'onSubmit' });
-  const onValid = ({ comments }: ICommentsForm) => {
+  } = useForm<IPostCommentsForm>({ mode: 'onSubmit' });
+  const onValid = ({ comments }: IPostCommentsForm) => {
     if (loading) return;
     createComments({ comments });
   };
+
   //
   return (
     <>
@@ -83,6 +86,16 @@ export const PostComments = ({ userId, boardId, postId }: any) => {
             <span>{commentsCount ? commentsCount : '0'}</span>
             <span>Comments</span>
           </Counts>
+          <>
+            <CommentsWrap>
+              {data?.post.comments.map((info) => (
+                <article key={info.id}>
+                  <span>{info.user.username}</span>
+                  <span>{info.content}</span>
+                </article>
+              ))}
+            </CommentsWrap>
+          </>
           {openForm && (
             <Form onSubmit={handleSubmit(onValid)}>
               <Input
@@ -104,3 +117,12 @@ export const PostComments = ({ userId, boardId, postId }: any) => {
     </>
   );
 };
+const CommentsWrap = styled.article`
+  border: 2px solid blueviolet;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  span {
+    border: 2px solid red;
+  }
+`;
