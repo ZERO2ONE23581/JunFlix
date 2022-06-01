@@ -22,6 +22,7 @@ import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithB
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
 import { PostLikes } from '../../../../../../../src/components/Button/Likes/post';
 import { FollowBoard } from '../../../../../../../src/components/Button/Follow';
+import { PostComments } from '../../../../../../../src/components/Button/Comments/post';
 
 const Post_Detail: NextPage = () => {
   const router = useRouter();
@@ -179,12 +180,21 @@ const Post_Detail: NextPage = () => {
           />
           {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
         </form>
-        <PostLikes userId={user_id} boardId={board_id} postId={post_id} />
+        <LikesCommentsWrap>
+          <PostLikes userId={user_id} boardId={board_id} postId={post_id} />
+          <PostComments userId={user_id} boardId={board_id} postId={post_id} />
+        </LikesCommentsWrap>
       </section>
     </PageCont>
   );
 };
 export default Post_Detail;
+
+const LikesCommentsWrap = styled.article`
+  gap: 20px;
+  display: flex;
+  align-items: center;
+`;
 
 export const BoardCont = styled(Article)`
   flex-direction: column;

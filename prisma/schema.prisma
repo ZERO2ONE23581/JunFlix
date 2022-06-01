@@ -13,24 +13,25 @@ datasource db {
 
 }
 model User {
-  id           Int          @id @default(autoincrement())
-  username     String 
-  userId       String?      @unique
-  password     String?  
-  email        String?      @unique
-  name         String?
-  birth        String?
-  gender       String?
-  location     String?
-  avatar       String?
-  tokens       Token[]  
-  boards       Board[]     
-  posts        Post[]
-  reviews      Review[]  
-  likes        Likes[]  
-  following    Following[]
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  id                  Int          @id @default(autoincrement())
+  username            String 
+  userId              String?      @unique
+  password            String?  
+  email               String?      @unique
+  name                String?
+  birth               String?
+  gender              String?
+  location            String?
+  avatar              String?
+  tokens              Token[]  
+  boards              Board[]     
+  followingBoards     Following[]
+  posts               Post[]
+  reviews             Review[]  
+  likes               Likes[]  
+  comments            Comments[]  
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
 }
 
 model Token {
@@ -75,6 +76,7 @@ model Post {
   board        Board        @relation(fields: [BoardID], references: [id], onDelete: Cascade)
   BoardID      Int
   likes        Likes[]  
+  comments     Comments[]  
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }
@@ -91,6 +93,7 @@ model Review {
   user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID       Int
   likes        Likes[]  
+  comments     Comments[]  
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }
@@ -98,9 +101,20 @@ model Likes {
   id           Int         @id @default(autoincrement()) 
   user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID       Int
-  post         Post?        @relation(fields: [PostID], references: [id], onDelete: Cascade)
+  post         Post?       @relation(fields: [PostID], references: [id], onDelete: Cascade)
   PostID       Int?
-  review       Review?        @relation(fields: [ReviewID], references: [id], onDelete: Cascade)
+  review       Review?     @relation(fields: [ReviewID], references: [id], onDelete: Cascade)
+  ReviewID     Int?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+model Comments {
+  id           Int         @id @default(autoincrement()) 
+  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
+  UserID       Int
+  post         Post?       @relation(fields: [PostID], references: [id], onDelete: Cascade)
+  PostID       Int?
+  review       Review?     @relation(fields: [ReviewID], references: [id], onDelete: Cascade)
   ReviewID     Int?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt

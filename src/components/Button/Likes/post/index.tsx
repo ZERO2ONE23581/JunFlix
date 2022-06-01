@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Post, User } from '@prisma/client';
-import { useState } from 'react';
 import useSWR from 'swr';
 import { Icons } from '../../../../../styles/svg';
 import useMutation from '../../../../libs/client/useMutation';
@@ -20,17 +19,15 @@ interface PostWithUser extends Post {
 
 export const PostLikes = ({ userId, boardId, postId }: any) => {
   const isQueryId = Boolean(userId && boardId && postId);
-  const [comments, setComments] = useState(false);
-  //
   const { data, mutate } = useSWR<IGetPost>(
     isQueryId && `/api/user/${userId}/board/${boardId}/post/${postId}`
   );
   const likesCount = data?.post?._count.likes;
   const [createLikes] = useMutation(
-    `/api/user/${userId}/board/${boardId}/post/${postId}/likes/create`
+    `/api/user/${userId}/board/${boardId}/post/${postId}/create/likes`
   );
   //
-  const handleClick = (type: string) => {
+  const handleClick = () => {
     if (!data) return;
     mutate(
       {
@@ -48,54 +45,57 @@ export const PostLikes = ({ userId, boardId, postId }: any) => {
       },
       false
     );
-    if (type === 'comments') {
-      setComments((p) => !p);
-    }
     createLikes({});
   };
   //
   return (
     <>
-      <BtnWrap>
-        <Btn onClick={() => handleClick('likes')}>
-          {!data?.isLiked ? (
-            <Icons name="likes" type="empty" />
-          ) : (
-            <Icons name="likes" type="solid" />
-          )}
-        </Btn>
-        <Btn onClick={() => handleClick('comments')}>
-          {!comments ? (
-            <Icons name="comments" type="empty" />
-          ) : (
-            <Icons name="comments" type="solid" />
-          )}
-        </Btn>
-      </BtnWrap>
-      <CountsWrap className="btnWithCounts">
-        <Counts>
-          <span>{likesCount ? likesCount : '0'}</span>
-          <span> Likes</span>
-        </Counts>
-      </CountsWrap>
+      <Cont>
+        <Wrap>
+          <IconBtn onClick={handleClick}>
+            {!data?.isLiked ? (
+              <Icons name="likes" type="empty" />
+            ) : (
+              <Icons name="likes" type="solid" />
+            )}
+          </IconBtn>
+          <Counts>
+            <span>{likesCount ? likesCount : '0'}</span>
+            <span> Likes</span>
+          </Counts>
+        </Wrap>
+      </Cont>
     </>
   );
 };
-const Counts = styled.span`
-  text-align: center;
-  font-weight: 500;
+export const Cont = styled.article`
+  /* border: 1px solid blueviolet; */
+  /* width: 100px; */
 `;
-const Btn = styled.button`
+export const Wrap = styled.article`
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+export const IconBtn = styled.button`
+  /* border: 1px solid red; */
   border: none;
   background-color: inherit;
+  svg {
+    width: 30px;
+    height: 30px;
+  }
 `;
-const BtnWrap = styled.article`
-  border: 2px solid red;
-  padding: 0 10px;
-  gap: 20px;
+export const Counts = styled.article`
+  /* border: 1px solid red; */
   display: flex;
+  justify-content: center;
   align-items: center;
-`;
-const CountsWrap = styled(BtnWrap)`
-  border: 2px solid blue;
+  gap: 10px;
+  span {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
 `;
