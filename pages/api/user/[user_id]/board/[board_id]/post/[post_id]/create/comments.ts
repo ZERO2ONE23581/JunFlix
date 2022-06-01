@@ -18,7 +18,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       user: { connect: { id: user?.id } },
       post: { connect: { id: +post_id.toString() } },
     },
-    select: { id: true, content: true },
+    include: { user: { select: { username: true } } },
   });
   return res.json({ ok: true, comment });
 }

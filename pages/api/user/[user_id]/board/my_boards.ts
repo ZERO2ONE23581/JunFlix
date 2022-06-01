@@ -10,6 +10,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const boards = await client.board.findMany({
     where: { UserID: user.id },
     include: { user: true },
+    orderBy: {
+      id: 'desc',
+    },
   });
   if (boards.length === 0)
     return res.json({ ok: false, error: 'NO BOARDS FOUND!' });

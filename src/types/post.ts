@@ -1,4 +1,4 @@
-import { Post } from '@prisma/client';
+import { Comments, Post, User } from '@prisma/client';
 
 export interface IEditPostForm extends IPostForm {
   createdAt?: Date;
@@ -7,10 +7,6 @@ export interface IPostForm {
   title?: string;
   content?: string;
   avatar?: FileList;
-}
-export interface IPostRes {
-  ok: boolean;
-  post: Post;
 }
 export interface IGetAllPosts {
   ok: boolean;

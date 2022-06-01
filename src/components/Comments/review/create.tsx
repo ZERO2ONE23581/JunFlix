@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { Post, Review, User } from '@prisma/client';
 import { useState } from 'react';
 import useSWR from 'swr';
-import { Icons } from '../../../../../styles/svg';
-import useMutation from '../../../../libs/client/useMutation';
+import { Icons } from '../../../../styles/svg';
+import useMutation from '../../../libs/client/useMutation';
 
 interface IGetReview {
   ok: boolean;

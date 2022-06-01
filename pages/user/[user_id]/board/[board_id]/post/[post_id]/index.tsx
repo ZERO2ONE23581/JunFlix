@@ -17,20 +17,19 @@ import useUser from '../../../../../../../src/libs/client/useUser';
 import { MutationRes } from '../../../../../../../src/types/mutation';
 import useAvatar from '../../../../../../../src/libs/client/useAvatar';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
-import { IEditPostForm, IPostRes } from '../../../../../../../src/types/post';
+import { IEditPostForm } from '../../../../../../../src/types/post';
 import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithBoard';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
 import { PostLikes } from '../../../../../../../src/components/Button/Likes/post';
-import { FollowBoard } from '../../../../../../../src/components/Button/Follow';
-import { PostComments } from '../../../../../../../src/components/Button/Comments/post';
+import { PostComments } from '../../../../../../../src/components/Comments/post/create';
+import { IGetPostInfo } from '../../../../../../../src/types/comments';
 
 const Post_Detail: NextPage = () => {
   const router = useRouter();
   const { isloggedIn, loggedInUser } = useUser();
   const { user_id, board_id, post_id } = router.query;
   const isQueryId = Boolean(user_id && board_id && post_id);
-  //
-  const { data } = useSWR<IPostRes>(
+  const { data } = useSWR<IGetPostInfo>(
     isQueryId && `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
   const [editPost, { data: dataRes, loading }] = useMutation<MutationRes>(
@@ -180,17 +179,17 @@ const Post_Detail: NextPage = () => {
           />
           {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
         </form>
-        <LikesCommentsWrap>
-          <PostLikes userId={user_id} boardId={board_id} postId={post_id} />
+        <PostLikes userId={user_id} boardId={board_id} postId={post_id} />
+        <IconWrap>
           <PostComments userId={user_id} boardId={board_id} postId={post_id} />
-        </LikesCommentsWrap>
+        </IconWrap>
       </section>
     </PageCont>
   );
 };
 export default Post_Detail;
 
-const LikesCommentsWrap = styled.article`
+const IconWrap = styled.article`
   gap: 20px;
   display: flex;
   align-items: center;

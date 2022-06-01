@@ -69,8 +69,8 @@ export const PostLikes = ({ userId, boardId, postId }: any) => {
   );
 };
 export const Cont = styled.article`
-  /* border: 1px solid blueviolet; */
-  /* width: 100px; */
+  border: 1px solid blueviolet;
+  width: 100%;
 `;
 export const Wrap = styled.article`
   gap: 5px;

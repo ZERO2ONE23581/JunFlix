@@ -19,6 +19,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           user: { select: { username: true } },
           content: true,
         },
+        orderBy: {
+          id: 'desc',
+        },
       },
       _count: { select: { likes: true, comments: true } },
     },
