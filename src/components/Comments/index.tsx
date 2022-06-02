@@ -1,11 +1,10 @@
+import { Btn } from '../Button';
+import { Input } from '../Input';
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form } from '../../../styles/default';
 import useMutation from '../../libs/client/useMutation';
 import { CommentsWithUser, IPostCommentsForm } from '../../types/comments';
-import { Btn } from '../Button';
-import { Input } from '../Input';
 
 interface ICommentsListProps {
   comments?: CommentsWithUser[];
@@ -71,7 +70,9 @@ export const CommentsWrap = styled.article`
     align-items: center;
     justify-content: space-between;
     .span-wrap {
-      border: 2px solid red;
+      span {
+        border: 2px solid red;
+      }
       font-style: italic;
       .username {
         font-weight: 700;

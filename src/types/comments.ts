@@ -17,4 +17,6 @@ export interface CommentsWithUser extends Comments {
 }
 export interface IPostCommentsForm {
   comments: string;
+  newComments: string;
+  comment_id: string;
 }
