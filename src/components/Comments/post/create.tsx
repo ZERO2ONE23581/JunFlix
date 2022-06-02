@@ -15,6 +15,7 @@ import {
   IPostCommentsForm,
 } from '../../../types/comments';
 import { Router, useRouter } from 'next/router';
+import { ModalClose } from '../../../../styles/modal';
 
 export interface ICreateCommentsRes {
   ok: boolean;
@@ -76,6 +77,25 @@ export const CreatePostComment = ({
     editComments({ comment_id, newComments });
     setOpenEditForm(false);
   };
+  //delete
+  const [delCommentId, setDelCommentId] = useState(0);
+  const [openDelModal, setOpenDelModal] = useState(false);
+  const [deleteComment, { loading: delLoading, data: delResponse }] =
+    useMutation<ICreateCommentsRes>(
+      `/api/user/${userId}/board/${boardId}/post/${postId}/comments/delete`
+    );
+  const clickDeleteBtn = (commentId: any) => {
+    setOpenDelModal(true);
+    setDelCommentId(Number(commentId));
+  };
+  const cancelDelete = () => {
+    setCommentId(0);
+    setOpenDelModal(false);
+  };
+  const postDelete = () => {
+    setOpenDelModal(false);
+    deleteComment(delCommentId);
+  };
   //read
   const { data } = useSWR<IGetPostInfo>(
     isQueryId && `/api/user/${userId}/board/${boardId}/post/${postId}`
@@ -88,7 +108,19 @@ export const CreatePostComment = ({
   }, [response, editResponse, router]);
   //
   return (
-    <Cont>
+    <Container>
+      {openDelModal && (
+        <>
+          <DelModal>
+            <div>정말로 삭제하시겠습니까?</div>
+            <div>
+              <button onClick={postDelete}>Yes</button>
+              <button onClick={cancelDelete}>No</button>
+            </div>
+          </DelModal>
+          <BgDisabled />
+        </>
+      )}
       <Wrap>
         <IconBtn onClick={() => setOpenForm((p) => !p)}>
           {data?.isComments ? (
@@ -145,7 +177,7 @@ export const CreatePostComment = ({
                 <CommentsInfo>
                   <span>{info.content}</span>
                   <span className="user-span">
-                    {/* <span>written by</span> */}
+                    <span>written by</span>
                     <span className="username">{info.UserID}</span>
                     <span className="username">{info.user.username}</span>
                   </span>
@@ -154,14 +186,21 @@ export const CreatePostComment = ({
               {loggedInUser?.id === info.UserID && (
                 <>
                   {!openEditForm ? (
-                    <SelectCommentBtn
-                      type="button"
-                      onClick={() => handleSelect(info.id)}
-                    >
-                      Edit
-                    </SelectCommentBtn>
+                    <>
+                      <SelectCommentBtn
+                        type="button"
+                        onClick={() => handleSelect(info.id)}
+                      >
+                        Edit
+                      </SelectCommentBtn>
+                      <button onClick={() => clickDeleteBtn(info.id)}>
+                        delete
+                      </button>
+                    </>
                   ) : (
-                    <button onClick={cancelSelect}>Cancel</button>
+                    commentId === info.id && (
+                      <button onClick={cancelSelect}>Cancel</button>
+                    )
                   )}
                 </>
               )}
@@ -169,7 +208,7 @@ export const CreatePostComment = ({
           ))}
         </CommentsWrap>
       </Wrap>
-    </Cont>
+    </Container>
   );
 };
 const CommentsInfo = styled.article`
@@ -215,4 +254,31 @@ const CommentsWrap = styled.article`
       }
     }
   }
+`;
+const DelModal = styled.article`
+  border: 3px solid red;
+  width: 300px;
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: whitesmoke;
+`;
+const Container = styled.article`
+  border: 5px solid cornflowerblue;
+  width: 100%;
+  position: relative;
+`;
+const BgDisabled = styled.article`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
 `;
