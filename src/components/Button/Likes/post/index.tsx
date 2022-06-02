@@ -16,8 +16,13 @@ interface PostWithUser extends Post {
     likes: number;
   };
 }
+interface IPostLikesProps {
+  userId?: string | string[];
+  boardId?: string | string[];
+  postId?: string | string[];
+}
 
-export const PostLikes = ({ userId, boardId, postId }: any) => {
+export const PostLikes = ({ userId, boardId, postId }: IPostLikesProps) => {
   const isQueryId = Boolean(userId && boardId && postId);
   const { data, mutate } = useSWR<IGetPost>(
     isQueryId && `/api/user/${userId}/board/${boardId}/post/${postId}`

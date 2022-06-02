@@ -13,11 +13,18 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!mustData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED!' });
   if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
   //
-  const newComment = await client.comments.update({
+  const foundComment = await client.comments.findUnique({
     where: { id: +comment_id },
+  });
+  if (!foundComment) return res.json({ ok: false, error: 'NO COMMENT FOUND' });
+  if (foundComment.UserID !== user.id)
+    return res.json({ ok: false, error: 'INVALID USER' });
+  //
+  await client.comments.update({
+    where: { id: foundComment.id },
     data: { content: newComments },
   });
   //
-  return res.json({ ok: true, newComment });
+  return res.json({ ok: true });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

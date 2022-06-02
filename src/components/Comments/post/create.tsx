@@ -21,79 +21,84 @@ export interface ICreateCommentsRes {
   error?: string;
   comment: CommentsWithUser;
 }
+export interface IUpdateCommentsRes {
+  ok: boolean;
+  error?: string;
+}
+interface ICreatePostCommentProps {
+  userId?: string | string[];
+  boardId?: string | string[];
+  postId?: string | string[];
+  loggedInUser?: User;
+}
 
 export const CreatePostComment = ({
   loggedInUser,
   userId,
   boardId,
   postId,
-}: any) => {
+}: ICreatePostCommentProps) => {
   const router = useRouter();
   const [openForm, setOpenForm] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [openEditForm, setOpenEditForm] = useState(false);
   const isQueryId = Boolean(userId && boardId && postId);
-  const { data } = useSWR<IGetPostInfo>(
-    isQueryId && `/api/user/${userId}/board/${boardId}/post/${postId}`
-  );
+  //create
   const [createComments, { loading, data: response }] =
     useMutation<ICreateCommentsRes>(
       `/api/user/${userId}/board/${boardId}/post/${postId}/comments/create`
     );
-  const [editComments, { loading: editLoading, data: editResponse }] =
-    useMutation<ICreateCommentsRes>(
-      `/api/user/${userId}/board/${boardId}/post/${postId}/comments/edit`
-    );
-  console.log(editResponse);
-  const commentsCount = data?.post?._count.comments;
-  const createCommentClick = () => {
-    setOpenForm((p) => !p);
-    if (!data) return;
-  };
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IPostCommentsForm>({ mode: 'onSubmit' });
-  //
   const onValid = ({ comments }: IPostCommentsForm) => {
     setOpenForm((p) => !p);
     if (loading) return;
     createComments({ comments });
   };
-  //
-  const [commentId, setCommentId] = useState('');
-  const selectComment = (commentId: any) => {
-    setEdit((p) => !p);
-    setCommentId(commentId);
+  //update
+  const [editComments, { loading: editLoading, data: editResponse }] =
+    useMutation<ICreateCommentsRes>(
+      `/api/user/${userId}/board/${boardId}/post/${postId}/comments/edit`
+    );
+  const [commentId, setCommentId] = useState(0);
+  const handleSelect = (commentId: any) => {
+    setCommentId(Number(commentId));
+    setOpenEditForm(true);
   };
-  //
-  const onValidEdit = ({ comment_id, newComments }: IPostCommentsForm) => {
-    setOpenForm((p) => !p);
+  const cancelSelect = () => {
+    setCommentId(0);
+    setOpenEditForm(false);
+  };
+  const onEditValid = ({ comment_id, newComments }: IPostCommentsForm) => {
     if (editResponse) return;
     editComments({ comment_id, newComments });
+    setOpenEditForm(false);
   };
+  //read
+  const { data } = useSWR<IGetPostInfo>(
+    isQueryId && `/api/user/${userId}/board/${boardId}/post/${postId}`
+  );
+  const commentsCount = data?.post?._count.comments;
   useEffect(() => {
-    if (editResponse?.ok) {
+    if (response?.ok || editResponse?.ok) {
       router.reload();
     }
-  }, [editResponse, router]);
+  }, [response, editResponse, router]);
   //
   return (
     <Cont>
       <Wrap>
-        <IconBtn onClick={createCommentClick}>
-          {data?.isComments || response?.ok ? (
+        <IconBtn onClick={() => setOpenForm((p) => !p)}>
+          {data?.isComments ? (
             <Icons name="comments" type="solid" />
           ) : (
             <Icons name="comments" type="empty" />
           )}
         </IconBtn>
         <Counts>
-          {response?.ok ? (
-            <span>{commentsCount! + 1}</span>
-          ) : (
-            <span>{commentsCount ? commentsCount : '0'}</span>
-          )}
+          <span>{commentsCount ? commentsCount : '0'}</span>
           <span>Comments</span>
         </Counts>
         {openForm && (
@@ -113,21 +118,8 @@ export const CreatePostComment = ({
           </Form>
         )}
         <CommentsWrap>
-          {response?.comment && (
-            <article className="wrap">
-              <p>{response?.comment.content}</p>
-              <span className="span-wrap">
-                <span>written by</span>
-                <span className="username">
-                  {response?.comment.user.username}
-                </span>
-              </span>
-            </article>
-          )}
-
-          {/* 댓글수정 폼태그 */}
-          {edit && (
-            <EditForm onSubmit={handleSubmit(onValidEdit)}>
+          {openEditForm && (
+            <EditForm onSubmit={handleSubmit(onEditValid)}>
               <input
                 className="hidden"
                 value={commentId}
@@ -148,18 +140,31 @@ export const CreatePostComment = ({
           {data?.post?.comments?.map((info) => (
             <article key={info.id} className="wrap">
               <span>{info.id}</span>
-              {Number(commentId) !== info.id && (
-                <>
-                  <p>{info.content}</p>
-                  <span className="span-wrap">
-                    <span>written by</span>
+              {loggedInUser?.id === info.UserID &&
+              commentId === info.id ? null : (
+                <CommentsInfo>
+                  <span>{info.content}</span>
+                  <span className="user-span">
+                    {/* <span>written by</span> */}
+                    <span className="username">{info.UserID}</span>
                     <span className="username">{info.user.username}</span>
                   </span>
+                </CommentsInfo>
+              )}
+              {loggedInUser?.id === info.UserID && (
+                <>
+                  {!openEditForm ? (
+                    <SelectCommentBtn
+                      type="button"
+                      onClick={() => handleSelect(info.id)}
+                    >
+                      Edit
+                    </SelectCommentBtn>
+                  ) : (
+                    <button onClick={cancelSelect}>Cancel</button>
+                  )}
                 </>
               )}
-              <button type="button" onClick={() => selectComment(info.id)}>
-                {edit ? 'back' : 'edit'}
-              </button>
             </article>
           ))}
         </CommentsWrap>
@@ -167,17 +172,23 @@ export const CreatePostComment = ({
     </Cont>
   );
 };
+const CommentsInfo = styled.article`
+  border: 2px solid blueviolet;
+  span {
+    margin-right: 5px;
+  }
+`;
 const EditForm = styled.form`
   .hidden {
     display: none;
   }
 `;
 
-const EditBtn = styled.span`
+const SelectCommentBtn = styled.button`
   background-color: cornflowerblue;
-  cursor: pointer;
   text-align: center;
   color: white;
+  border: none;
   padding: 5px;
 `;
 const EditInput = styled.input`
@@ -193,9 +204,10 @@ const CommentsWrap = styled.article`
   .wrap {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     border: 2px solid red;
-    .span-wrap {
+    .user-span {
+      color: blue;
       font-style: italic;
       .username {
         font-weight: 700;
