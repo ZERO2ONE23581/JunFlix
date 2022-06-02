@@ -74,7 +74,6 @@ export const PostLikes = ({ userId, boardId, postId }: IPostLikesProps) => {
   );
 };
 export const Cont = styled.article`
-  border: 1px solid blueviolet;
   width: 100%;
 `;
 export const Wrap = styled.article`

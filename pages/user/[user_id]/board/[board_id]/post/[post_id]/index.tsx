@@ -23,8 +23,9 @@ import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Del
 import { PostLikes } from '../../../../../../../src/components/Button/Likes/post';
 import {
   CreatePostComment,
+  PostComment,
   PostComments,
-} from '../../../../../../../src/components/Comments/post/create';
+} from '../../../../../../../src/components/Post/Comments';
 import { IGetPostInfo } from '../../../../../../../src/types/comments';
 
 const Post_Detail: NextPage = () => {
@@ -183,7 +184,7 @@ const Post_Detail: NextPage = () => {
           {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
         </form> */}
         <PostLikes userId={user_id} boardId={board_id} postId={post_id} />
-        <CreatePostComment
+        <PostComment
           loggedInUser={loggedInUser}
           userId={user_id}
           boardId={board_id}
