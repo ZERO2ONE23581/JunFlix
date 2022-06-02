@@ -1,6 +1,6 @@
+import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { Post, User } from '@prisma/client';
-import useSWR from 'swr';
 import { Icons } from '../../../../../styles/svg';
 import useMutation from '../../../../libs/client/useMutation';
 
@@ -22,7 +22,7 @@ interface IPostLikesProps {
   postId?: string | string[];
 }
 
-export const PostLikes = ({ userId, boardId, postId }: IPostLikesProps) => {
+export const LikesIcon = ({ userId, boardId, postId }: IPostLikesProps) => {
   const isQueryId = Boolean(userId && boardId && postId);
   const { data, mutate } = useSWR<IGetPost>(
     isQueryId && `/api/user/${userId}/board/${boardId}/post/${postId}`
@@ -31,7 +31,6 @@ export const PostLikes = ({ userId, boardId, postId }: IPostLikesProps) => {
   const [createLikes] = useMutation(
     `/api/user/${userId}/board/${boardId}/post/${postId}/create/likes`
   );
-  //
   const handleClick = () => {
     if (!data) return;
     mutate(
@@ -52,38 +51,32 @@ export const PostLikes = ({ userId, boardId, postId }: IPostLikesProps) => {
     );
     createLikes({});
   };
-  //
   return (
     <>
       <Cont>
-        <Wrap>
-          <IconBtn onClick={handleClick}>
-            {!data?.isLiked ? (
-              <Icons name="likes" type="empty" />
-            ) : (
-              <Icons name="likes" type="solid" />
-            )}
-          </IconBtn>
-          <Counts>
-            <span>{likesCount ? likesCount : '0'}</span>
-            <span> Likes</span>
-          </Counts>
-        </Wrap>
+        <IconBtn onClick={handleClick}>
+          {!data?.isLiked ? (
+            <Icons name="likes" type="empty" />
+          ) : (
+            <Icons name="likes" type="solid" />
+          )}
+        </IconBtn>
+        <Counts>
+          <span>{likesCount ? likesCount : '0'}</span>
+          <span> Likes</span>
+        </Counts>
       </Cont>
     </>
   );
 };
-export const Cont = styled.article`
-  width: 100%;
-`;
-export const Wrap = styled.article`
+const Cont = styled.article`
   gap: 5px;
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
 `;
-export const IconBtn = styled.button`
-  /* border: 1px solid red; */
+const IconBtn = styled.button`
   border: none;
   background-color: inherit;
   svg {
@@ -91,8 +84,7 @@ export const IconBtn = styled.button`
     height: 30px;
   }
 `;
-export const Counts = styled.article`
-  /* border: 1px solid red; */
+const Counts = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;

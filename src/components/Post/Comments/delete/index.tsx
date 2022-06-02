@@ -20,6 +20,7 @@ export const DeletePostComments = ({
   setCommentId,
   openDelete,
   setOpenDelete,
+  setKeepCont,
 }: any) => {
   const router = useRouter();
   const [deleteComment, { data, loading }] = useMutation<ICreateCommentsRes>(
@@ -27,6 +28,7 @@ export const DeletePostComments = ({
   );
   const clickCancelBtn = () => {
     setOpenDelete(false);
+    setKeepCont(false);
     setCommentId(0);
   };
   useEffect(() => {
@@ -51,14 +53,12 @@ export const DeletePostComments = ({
               </>
             )}
           </DelModal>
-          <BgDisabled />
         </>
       )}
     </>
   );
 };
 const DelModal = styled.article`
-  border: 3px solid red;
   width: 300px;
   height: 100px;
   position: absolute;
@@ -70,12 +70,4 @@ const DelModal = styled.article`
   justify-content: center;
   align-items: center;
   background-color: whitesmoke;
-`;
-const BgDisabled = styled.article`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
 `;

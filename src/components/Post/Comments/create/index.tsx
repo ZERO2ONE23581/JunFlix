@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { ICreateCommentsRes } from '..';
 import useMutation from '../../../../libs/client/useMutation';
@@ -43,7 +43,7 @@ export const CreatePostComments = ({
   return (
     <>
       {openCreate && (
-        <Form onSubmit={handleSubmit(onValid)}>
+        <form onSubmit={handleSubmit(onValid)}>
           <Input
             register={register('comments', {
               required: '댓글을 입력해주세요.',
@@ -55,36 +55,12 @@ export const CreatePostComments = ({
             placeholder="Add a comment..."
             errMsg={errors.comments?.message}
           />
-          <Btn type="submit" btnName="POST" loading={loading} />
-        </Form>
+          <BTN type="submit">{loading ? 'Loading...' : 'Post'}</BTN>
+        </form>
       )}
     </>
   );
 };
-const DelModal = styled.article`
-  border: 3px solid red;
-  width: 300px;
-  height: 100px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: whitesmoke;
-`;
-const BgDisabled = styled.article`
+const BTN = styled.button`
   width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-`;
-const Form = styled.form`
-  .hidden {
-    display: none;
-  }
 `;

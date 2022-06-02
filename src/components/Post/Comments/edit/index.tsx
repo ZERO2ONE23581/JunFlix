@@ -22,7 +22,6 @@ export const EditPostComments = ({
   postId,
   commentId,
   openEdit,
-  setOpenEdit,
 }: any) => {
   const router = useRouter();
   const {
@@ -30,7 +29,6 @@ export const EditPostComments = ({
     handleSubmit,
     formState: { errors },
   } = useForm<IPostCommentsForm>({ mode: 'onSubmit' });
-
   const [editComments, { data, loading }] = useMutation<ICreateCommentsRes>(
     `/api/user/${userId}/board/${boardId}/post/${postId}/comments/edit`
   );
@@ -56,40 +54,24 @@ export const EditPostComments = ({
             register={register('newComments')}
             type="text"
             disabled={false}
-            label="newComments"
             name="newComments"
-            placeholder="Add a comment..."
+            placeholder="Edit a comment..."
             errMsg={errors.comments?.message}
           />
-          <Btn type="submit" btnName="Post" loading={loading} />
+          <BTN type="submit">{loading ? 'Loading...' : 'Post'}</BTN>
         </Form>
       )}
     </>
   );
 };
-const DelModal = styled.article`
-  border: 3px solid red;
-  width: 300px;
-  height: 100px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: whitesmoke;
-`;
-const BgDisabled = styled.article`
+const BTN = styled.button`
   width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
 `;
 const Form = styled.form`
+  width: 100%;
+  input {
+    width: 100%;
+  }
   .hidden {
     display: none;
   }

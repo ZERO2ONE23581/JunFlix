@@ -1,25 +1,14 @@
-import styled from '@emotion/styled';
-import { Comments, Post, User } from '@prisma/client';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
-import { Btn } from '../../Button';
-import { Form } from '../../../../styles/default';
-import { Icons } from '../../../../styles/svg';
-import useMutation from '../../../libs/client/useMutation';
+import { useState } from 'react';
 import { Input } from '../../Input';
-import { Cont, Counts, IconBtn, Wrap } from '../../Button/Likes/post';
-import {
-  CommentsWithUser,
-  IGetPostInfo,
-  IPostCommentsForm,
-} from '../../../types/comments';
-import { Router, useRouter } from 'next/router';
-import { ModalClose } from '../../../../styles/modal';
-import { DeletePostCmtModal } from '../../Modal/Post/Comment/Delete';
-import { DeletePostComments } from './delete';
+import { CommentIcon } from './icon';
+import styled from '@emotion/styled';
+import { User } from '@prisma/client';
 import { EditPostComments } from './edit';
 import { CreatePostComments } from './create';
+import { DeletePostComments } from './delete';
+import { LikesIcon } from '../../Button/Likes/post';
+import { CommentsWithUser, IGetPostInfo } from '../../../types/comments';
 
 export interface ICreateCommentsRes {
   ok: boolean;
@@ -37,7 +26,7 @@ interface ICreatePostCommentProps {
   loggedInUser?: User;
 }
 
-export const PostComment = ({
+export const LikesAndComments = ({
   userId,
   boardId,
   postId,
@@ -48,6 +37,7 @@ export const PostComment = ({
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [commentId, setCommentId] = useState(0);
+  const [keepCont, setKeepCont] = useState(false);
   const handleClick = (id: number, type: string) => {
     if (type === 'edit') {
       setCommentId(id);
@@ -56,6 +46,7 @@ export const PostComment = ({
     if (type === 'delete') {
       setCommentId(id);
       setOpenDelete(true);
+      setKeepCont(true);
     }
     if (type === 'cancel') {
       setCommentId(0);
@@ -68,7 +59,7 @@ export const PostComment = ({
   const commentsCount = data?.post?._count.comments;
   //
   return (
-    <Container>
+    <>
       <DeletePostComments
         userId={userId}
         boardId={boardId}
@@ -77,19 +68,18 @@ export const PostComment = ({
         setCommentId={setCommentId}
         openDelete={openDelete}
         setOpenDelete={setOpenDelete}
+        setKeepCont={setKeepCont}
       />
-      <Wrap>
-        <IconBtn onClick={() => setOpenCreate((p) => !p)}>
-          {data?.isComments ? (
-            <Icons name="comments" type="solid" />
-          ) : (
-            <Icons name="comments" type="empty" />
-          )}
-        </IconBtn>
-        <Counts>
-          <span>{commentsCount ? commentsCount : '0'}</span>
-          <span>Comments</span>
-        </Counts>
+      {openDelete && <BgDisabled />}
+      <Cont>
+        <IconWrap>
+          <LikesIcon userId={userId} boardId={boardId} postId={postId} />
+          <CommentIcon
+            isComments={data?.isComments}
+            setOpenCreate={setOpenCreate}
+            commentsCount={commentsCount}
+          />
+        </IconWrap>
         {openCreate && (
           <CreatePostComments
             userId={userId}
@@ -98,91 +88,123 @@ export const PostComment = ({
             openCreate={openCreate}
           />
         )}
-        <CommentsWrap>
+        <CommentList>
           {data?.post?.comments?.map((info) => (
-            <CommentsItemWrap key={info.id}>
-              {loggedInUser?.id === info.UserID && commentId === info.id ? (
-                <EditPostComments
-                  userId={userId}
-                  boardId={boardId}
-                  postId={postId}
-                  commentId={commentId}
-                  openEdit={openEdit}
-                  setOpenEdit={setOpenEdit}
-                />
-              ) : (
-                <CommentsInfo>
-                  <span>{info.content}</span>
-                  <WrittenBy>
-                    <span>written by</span>
-                    <span className="username">{info.user.username}</span>
-                  </WrittenBy>
-                </CommentsInfo>
-              )}
-              {loggedInUser?.id === info.UserID && (
-                <>
-                  {!openEdit ? (
-                    <BtnWrap>
-                      <button
-                        type="button"
+            <Map key={info.id}>
+              <Wrap>
+                <Author>{info.user.username}</Author>
+                <BtnWrap>
+                  {openEdit && commentId === info.id && (
+                    <Btn onClick={() => handleClick(info.id, 'cancel')}>
+                      Cancel
+                    </Btn>
+                  )}
+                  {loggedInUser?.id === info.UserID && !openEdit && (
+                    <>
+                      <Btn
+                        disabled={openDelete}
                         onClick={() => handleClick(info.id, 'edit')}
                       >
                         Edit
-                      </button>
-                      <button
-                        type="button"
+                      </Btn>
+                      <Btn
+                        disabled={openDelete}
                         onClick={() => handleClick(info.id, 'delete')}
                       >
-                        delete
-                      </button>
-                    </BtnWrap>
-                  ) : (
-                    commentId === info.id && (
-                      <button
-                        type="button"
-                        onClick={() => handleClick(info.id, 'cancel')}
-                      >
-                        back
-                      </button>
-                    )
+                        Delete
+                      </Btn>
+                    </>
                   )}
-                </>
-              )}
-            </CommentsItemWrap>
+                </BtnWrap>
+              </Wrap>
+              <Detail>
+                {loggedInUser?.id === info.UserID &&
+                commentId === info.id &&
+                !keepCont ? (
+                  <EditPostComments
+                    userId={userId}
+                    boardId={boardId}
+                    postId={postId}
+                    commentId={commentId}
+                    openEdit={openEdit}
+                    setOpenEdit={setOpenEdit}
+                  />
+                ) : (
+                  <input disabled={true} value={info.content} />
+                )}
+              </Detail>
+            </Map>
           ))}
-        </CommentsWrap>
-      </Wrap>
-    </Container>
+        </CommentList>
+      </Cont>
+    </>
   );
 };
-const WrittenBy = styled.span`
-  color: blue;
-  font-style: italic;
-  .username {
-    font-weight: 700;
-  }
-`;
-const CommentsItemWrap = styled.article`
+const IconWrap = styled.article`
+  gap: 10px;
   display: flex;
   align-items: center;
-  border: 2px solid red;
-  padding: 10px;
 `;
-const BtnWrap = styled.article``;
-const CommentsInfo = styled.article`
-  span {
-    margin-right: 5px;
+const Author = styled.div`
+  color: blue;
+  font-style: italic;
+  font-weight: 700;
+`;
+const Detail = styled.article`
+  input {
+    margin-top: 5px;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    background-color: bisque;
+    color: ${(p) => p.theme.color.font};
+    border: ${(p) => p.theme.border};
+    box-shadow: ${(p) => p.theme.boxShadow.input};
   }
 `;
-const CommentsWrap = styled.article`
+const Map = styled.article`
+  border: ${(p) => p.theme.border};
+  box-shadow: ${(p) => p.theme.boxShadow};
+`;
+const BtnWrap = styled.article`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
+const Wrap = styled.article`
+  gap: 5px;
+  display: flex;
+  padding: 8px 14px;
+  align-items: center;
+  justify-content: space-between;
+  border: ${(p) => p.theme.border};
+  box-shadow: ${(p) => p.theme.boxShadow.input};
+`;
+const CommentList = styled.article`
+  gap: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
 `;
-
-const Container = styled.article`
-  border: 5px solid cornflowerblue;
+const Cont = styled.article`
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  border: ${(p) => p.theme.border};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
+`;
+const Btn = styled.button`
+  padding: 3px 10px;
+`;
+const BgDisabled = styled.article`
   width: 100%;
-  position: relative;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
 `;

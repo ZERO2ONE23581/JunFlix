@@ -9,6 +9,7 @@ export const Input = (props: IInputProps) => {
         <InputCont>
           <label htmlFor={props.name}>{props.label}</label>
           <input
+            value={props.value}
             id={props.name}
             name={props.name}
             min={props.min}

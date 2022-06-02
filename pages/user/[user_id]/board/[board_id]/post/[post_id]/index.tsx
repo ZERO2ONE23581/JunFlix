@@ -23,6 +23,7 @@ import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Del
 import { PostLikes } from '../../../../../../../src/components/Button/Likes/post';
 import {
   CreatePostComment,
+  LikesAndComments,
   PostComment,
   PostComments,
 } from '../../../../../../../src/components/Post/Comments';
@@ -183,14 +184,12 @@ const Post_Detail: NextPage = () => {
           />
           {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
         </form> */}
-        <PostLikes userId={user_id} boardId={board_id} postId={post_id} />
-        <PostComment
+        <LikesAndComments
           loggedInUser={loggedInUser}
           userId={user_id}
           boardId={board_id}
           postId={post_id}
         />
-        <IconWrap></IconWrap>
       </section>
     </PageCont>
   );

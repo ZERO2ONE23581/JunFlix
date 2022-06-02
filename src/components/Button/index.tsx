@@ -7,12 +7,12 @@ import {
   ReviewSetupBtn,
   BtnContSmall,
   Logout,
-  Theme,
   Toggle,
   ReviewBackBtn,
 } from '../../../styles/btn';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styled from '@emotion/styled';
 
 interface IBtnProps {
   onClick?: any;
@@ -26,6 +26,11 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
   //
   return (
     <>
+      {type === 'small' && (
+        <PostCmtsBtn onClick={onClick} type="button">
+          {btnName}
+        </PostCmtsBtn>
+      )}
       {type === 'submit' && (
         <BtnCont onClick={onClick} type="submit">
           {loading ? 'Loading...' : btnName}
@@ -107,3 +112,6 @@ export const Btn = ({ loading, onClick, btnName, type }: IBtnProps) => {
     </>
   );
 };
+const PostCmtsBtn = styled(BtnCont)`
+  width: 60px;
+`;
