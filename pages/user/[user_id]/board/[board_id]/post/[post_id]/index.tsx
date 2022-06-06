@@ -17,20 +17,18 @@ import useUser from '../../../../../../../src/libs/client/useUser';
 import { MutationRes } from '../../../../../../../src/types/mutation';
 import useAvatar from '../../../../../../../src/libs/client/useAvatar';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
-import { IEditPostForm, IPostRes } from '../../../../../../../src/types/post';
-import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithBoard';
+import { IEditPostForm } from '../../../../../../../src/types/post';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
-import { PostLikes } from '../../../../../../../src/components/Button/Likes/post';
-import { FollowBoard } from '../../../../../../../src/components/Button/Follow';
-import { PostComments } from '../../../../../../../src/components/Button/Comments/post';
+import { IGetPostInfo } from '../../../../../../../src/types/comments';
+import { ThumNail } from '../../../../../../../src/components/Post/PostList';
+import { LikeComment } from '../../../../../../../src/components/LikeComment';
 
 const Post_Detail: NextPage = () => {
   const router = useRouter();
   const { isloggedIn, loggedInUser } = useUser();
   const { user_id, board_id, post_id } = router.query;
   const isQueryId = Boolean(user_id && board_id && post_id);
-  //
-  const { data } = useSWR<IPostRes>(
+  const { data } = useSWR<IGetPostInfo>(
     isQueryId && `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
   const [editPost, { data: dataRes, loading }] = useMutation<MutationRes>(
@@ -87,14 +85,7 @@ const Post_Detail: NextPage = () => {
   //
   return (
     <PageCont>
-      {delModal && (
-        <DeleteModal
-          userId={user_id}
-          postId={post_id}
-          boardId={board_id}
-          deleteClick={() => setDelModal((p) => !p)}
-        />
-      )}
+      <LikeComment />
       <section className="read-post-cont">
         <article className="btn-wrap">
           <Btn
@@ -180,21 +171,19 @@ const Post_Detail: NextPage = () => {
           />
           {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
         </form>
-        <LikesCommentsWrap>
-          <PostLikes userId={user_id} boardId={board_id} postId={post_id} />
-          <PostComments userId={user_id} boardId={board_id} postId={post_id} />
-        </LikesCommentsWrap>
       </section>
+      {delModal && (
+        <DeleteModal
+          userId={user_id}
+          postId={post_id}
+          boardId={board_id}
+          deleteClick={() => setDelModal((p) => !p)}
+        />
+      )}
     </PageCont>
   );
 };
 export default Post_Detail;
-
-const LikesCommentsWrap = styled.article`
-  gap: 20px;
-  display: flex;
-  align-items: center;
-`;
 
 export const BoardCont = styled(Article)`
   flex-direction: column;

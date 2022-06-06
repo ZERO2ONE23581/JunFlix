@@ -1,8 +1,8 @@
+import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { Post, User } from '@prisma/client';
-import useSWR from 'swr';
-import { Icons } from '../../../../../styles/svg';
-import useMutation from '../../../../libs/client/useMutation';
+import { Icons } from '../../../../styles/svg';
+import useMutation from '../../../libs/client/useMutation';
 
 interface IGetPost {
   ok: boolean;
@@ -16,8 +16,13 @@ interface PostWithUser extends Post {
     likes: number;
   };
 }
+interface IPostLikesProps {
+  userId?: string | string[];
+  boardId?: string | string[];
+  postId?: string | string[];
+}
 
-export const PostLikes = ({ userId, boardId, postId }: any) => {
+export const LikesIcon = ({ userId, boardId, postId }: IPostLikesProps) => {
   const isQueryId = Boolean(userId && boardId && postId);
   const { data, mutate } = useSWR<IGetPost>(
     isQueryId && `/api/user/${userId}/board/${boardId}/post/${postId}`
@@ -26,7 +31,6 @@ export const PostLikes = ({ userId, boardId, postId }: any) => {
   const [createLikes] = useMutation(
     `/api/user/${userId}/board/${boardId}/post/${postId}/create/likes`
   );
-  //
   const handleClick = () => {
     if (!data) return;
     mutate(
@@ -34,12 +38,12 @@ export const PostLikes = ({ userId, boardId, postId }: any) => {
         ...data,
         isLiked: !data.isLiked,
         post: {
-          ...data.post,
+          ...data?.post,
           _count: {
-            ...data.post._count,
+            ...data.post?._count,
             likes: data.isLiked
-              ? data.post._count.likes - 1
-              : data.post._count.likes + 1,
+              ? data.post?._count.likes - 1
+              : data.post?._count.likes + 1,
           },
         },
       },
@@ -47,39 +51,32 @@ export const PostLikes = ({ userId, boardId, postId }: any) => {
     );
     createLikes({});
   };
-  //
   return (
     <>
       <Cont>
-        <Wrap>
-          <IconBtn onClick={handleClick}>
-            {!data?.isLiked ? (
-              <Icons name="likes" type="empty" />
-            ) : (
-              <Icons name="likes" type="solid" />
-            )}
-          </IconBtn>
-          <Counts>
-            <span>{likesCount ? likesCount : '0'}</span>
-            <span> Likes</span>
-          </Counts>
-        </Wrap>
+        <IconBtn onClick={handleClick}>
+          {!data?.isLiked ? (
+            <Icons name="likes" type="empty" />
+          ) : (
+            <Icons name="likes" type="solid" />
+          )}
+        </IconBtn>
+        <Counts>
+          <span>{likesCount ? likesCount : '0'}</span>
+          <span> Likes</span>
+        </Counts>
       </Cont>
     </>
   );
 };
-export const Cont = styled.article`
-  /* border: 1px solid blueviolet; */
-  /* width: 100px; */
-`;
-export const Wrap = styled.article`
+const Cont = styled.article`
   gap: 5px;
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
 `;
-export const IconBtn = styled.button`
-  /* border: 1px solid red; */
+const IconBtn = styled.button`
   border: none;
   background-color: inherit;
   svg {
@@ -87,8 +84,7 @@ export const IconBtn = styled.button`
     height: 30px;
   }
 `;
-export const Counts = styled.article`
-  /* border: 1px solid red; */
+const Counts = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;

@@ -20,6 +20,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           BoardID: true,
           user: { select: { id: true, username: true } },
         },
+        orderBy: {
+          id: 'desc',
+        },
       },
       posts: {
         select: {
@@ -28,6 +31,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           UserID: true,
           BoardID: true,
           avatar: true,
+        },
+        orderBy: {
+          id: 'desc',
         },
       },
       _count: { select: { followers: true, posts: true } },
