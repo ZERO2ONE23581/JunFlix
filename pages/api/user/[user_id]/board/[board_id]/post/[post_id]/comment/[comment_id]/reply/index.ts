@@ -4,19 +4,15 @@ import withHandler from '../../../../../../../../../../../src/libs/server/withHa
 import { withApiSession } from '../../../../../../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { user } = req.session;
-  const { user_id, board_id, post_id, reply_id } = req.query;
+  const { user_id, board_id, post_id, comment_id } = req.query;
   const queryExists = Boolean(user_id && board_id && post_id);
-  if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
-  //
-  const foundComment = await client.comments.findFirst({
-    where: { ReplyID: +reply_id },
-    include: { replies: true },
+  const reply = await client.comment.findFirst({
+    where: { ReplyID: +comment_id },
   });
   //
-  return res.json({ ok: true, foundComment });
+  return res.json({ ok: true, reply });
 }
 export default withApiSession(
-  withHandler({ methods: ['GET', 'POST'], handler })
+  withHandler({ methods: ['GET'], handler, isPrivate: false })
 );

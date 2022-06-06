@@ -4,7 +4,7 @@ import { LikesIcon } from './Likes';
 import { CommentIcon } from './Comment/icon';
 import { useRouter } from 'next/router';
 import { CreateComments } from './Comment/create';
-import { CommentList } from './Comment/created/CommentList';
+import { CommentList } from './Comment/created/Comment_List';
 
 export const LikeComment = () => {
   const router = useRouter();

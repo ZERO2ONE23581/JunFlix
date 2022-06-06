@@ -10,7 +10,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const comment = await client.comment.findUnique({
     where: { id: +comment_id },
   });
-  console.log(comment);
   //
   return res.json({ ok: true, comment });
 }
