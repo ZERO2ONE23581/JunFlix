@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import useSWR from 'swr';
+import { ToggleBtn } from '../../../../Button/toggle';
+import { ReplyForm } from '../../Reply';
 import { ReplyInfo } from '../Reply_Info';
 
 export const CommentInfo = ({ id, parentId }: any) => {
@@ -18,6 +21,8 @@ export const CommentInfo = ({ id, parentId }: any) => {
       `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/${parentId}/reply`
   );
   const reply = replyData?.reply;
+  const [openReply, setOpenReply] = useState(false);
+  const [saveId, setSaveId] = useState(0);
   //
   return (
     <>
@@ -36,6 +41,13 @@ export const CommentInfo = ({ id, parentId }: any) => {
       )}
       {reply && (
         <Cont>
+          <ToggleBtn
+            id={reply.id}
+            open={openReply}
+            setOpen={setOpenReply}
+            saveId={saveId}
+            setSaveId={setSaveId}
+          />
           <ul>
             <li>
               <span className="cmt-id">#{reply.id}</span>
@@ -43,6 +55,9 @@ export const CommentInfo = ({ id, parentId }: any) => {
               <span>
                 <ReplyInfo parentId={reply.id} />
               </span>
+              {openReply && saveId === reply.id && (
+                <ReplyForm replyTo={reply.id} />
+              )}
             </li>
           </ul>
         </Cont>
