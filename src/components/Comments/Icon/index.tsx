@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Post, User } from '@prisma/client';
-import { Icons } from '../../../../../styles/svg';
+import { Icons } from '../../../../styles/svg';
 
 interface IGetPost {
   ok: boolean;

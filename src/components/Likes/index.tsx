@@ -1,8 +1,8 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { Post, User } from '@prisma/client';
-import { Icons } from '../../../../styles/svg';
-import useMutation from '../../../libs/client/useMutation';
+import { Icons } from '../../../styles/svg';
+import useMutation from '../../libs/client/useMutation';
 
 interface IGetPost {
   ok: boolean;

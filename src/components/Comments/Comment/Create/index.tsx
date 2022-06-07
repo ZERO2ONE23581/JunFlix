@@ -61,7 +61,10 @@ export const CreateComment = ({ parentId }: any) => {
           )}
         </AvatarLogo>
         <form onSubmit={handleSubmit(onValid)}>
-          {errors.content && <ErrMsg>{errors.content?.message}</ErrMsg>}
+          <>
+            {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
+            {errors.content && <ErrMsg>{errors.content?.message}</ErrMsg>}
+          </>
           <Textarea
             {...register('content', { required: '댓글을 입력해주세요.' })}
             id="content"

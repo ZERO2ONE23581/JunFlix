@@ -1,10 +1,10 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import { LikesIcon } from './Likes';
+import { LikesIcon } from '../../Likes';
 import { useRouter } from 'next/router';
-import { CreateComment } from './\bComments/Create';
-import { Comments } from './\bComments';
-import { CommentIcon } from './\bComments/Icon';
+import { CommentIcon } from '../../\bComments/Icon';
+import { CreateComment } from '../../\bComments/Comment/Create';
+import { Comments } from '../../\bComments';
 
 export const LikesAndComments = () => {
   const router = useRouter();

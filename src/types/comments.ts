@@ -12,7 +12,9 @@ export interface PostWithComments extends Post {
     comments: number;
   };
 }
-
+export interface CommentsWithAttributes extends Comment {
+  user: User;
+}
 export interface ICreateCommentsRes {
   ok: boolean;
   error?: string;

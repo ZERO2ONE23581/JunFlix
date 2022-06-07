@@ -21,7 +21,7 @@ import { IEditPostForm } from '../../../../../../../src/types/post';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
 import { IGetPostInfo } from '../../../../../../../src/types/comments';
 import { ThumNail } from '../../../../../../../src/components/Post/PostList';
-import { LikesAndComments } from '../../../../../../../src/components/LikesAndComments';
+import { LikesAndComments } from '../../../../../../../src/components/Post/Icon';
 
 const Post_Detail: NextPage = () => {
   const router = useRouter();

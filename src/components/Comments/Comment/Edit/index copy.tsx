@@ -14,7 +14,7 @@ export interface IEditPostCommentsRes {
   ok: boolean;
   error?: string;
 }
-export const EditPostComments = ({
+export const EditComments = ({
   userId,
   boardId,
   postId,
