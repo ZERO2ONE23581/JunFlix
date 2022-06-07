@@ -9,30 +9,45 @@ import { ICreateCommentsRes } from '../../../../types/comments';
 interface IPostCommentsForm {
   content?: string;
 }
-export const CreateComments = () => {
+export const CreateComment = ({ parentId }: any) => {
   const router = useRouter();
   const { user_id, board_id, post_id } = router.query;
+
+  //create comment
+  const [createComments, { loading, data }] = useMutation<ICreateCommentsRes>(
+    `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/create`
+  );
+  //create reply
+  const [createReply, { loading: replyLoading, data: replyResponse }] =
+    useMutation(
+      `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/${parentId}/create`
+    );
+  //
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IPostCommentsForm>({ mode: 'onSubmit' });
-  const [createComments, { loading, data }] = useMutation<ICreateCommentsRes>(
-    `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/create`
-  );
+
   const onValid = ({ content }: IPostCommentsForm) => {
-    if (loading) return;
-    createComments({ content });
+    if (parentId) {
+      if (replyLoading) return;
+      return createReply({ content });
+    } else {
+      if (loading) return;
+      return createComments({ content });
+    }
   };
   useEffect(() => {
-    if (data?.ok) {
+    if (data?.ok || replyResponse?.ok) {
       router.reload();
     }
-  }, [router, data]);
+  }, [router, data, replyResponse]);
   //
   return (
     <Cont>
-      <Form onSubmit={handleSubmit(onValid)}>
+      <h1>Create Comment</h1>
+      <form onSubmit={handleSubmit(onValid)}>
         {errors.content && <ErrMsg>{errors.content?.message}</ErrMsg>}
         <Textarea
           {...register('content', { required: '댓글을 입력해주세요.' })}
@@ -40,8 +55,10 @@ export const CreateComments = () => {
           name="content"
           placeholder="Add a comment..."
         />
-        <Button type="submit">{loading ? 'Loading...' : 'Post'}</Button>
-      </Form>
+        <Button type="submit">
+          {loading ? 'Loading...' : replyLoading ? 'Loading...' : 'Post'}
+        </Button>
+      </form>
     </Cont>
   );
 };
@@ -59,12 +76,14 @@ const Button = styled.button`
   height: 40px;
   font-size: 1rem;
 `;
-const Form = styled.form`
-  .hidden {
-    display: none;
-  }
-`;
-const Cont = styled.section`
-  border: 2px solid red;
+const Cont = styled.article`
   padding: 20px;
+  border-radius: 5px;
+  border: 3px solid #16a085;
+  h1 {
+    color: #16a085;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
 `;

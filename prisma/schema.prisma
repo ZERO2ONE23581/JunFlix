@@ -111,22 +111,13 @@ model Likes {
 model Comment {
   id                  Int         @id @default(autoincrement())
   content             String  
-  ReplyID             Int?        @default(0)
+  ReplyID             Int?        @default(0)      
   user                User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID              Int
   post                Post?       @relation(fields: [PostID], references: [id], onDelete: Cascade)
   PostID              Int?
   review              Review?     @relation(fields: [ReviewID], references: [id], onDelete: Cascade)
-  ReviewID            Int?
-  replies             Replies[]
-  createdAt           DateTime    @default(now())
-  updatedAt           DateTime    @updatedAt
-}
-model Replies {
-  id                  Int         @id @default(autoincrement())
-  content             String
-  comment             Comment    @relation(fields: [CommentID], references: [id], onDelete: Cascade)
-  CommentID           Int
+  ReviewID            Int?  
   createdAt           DateTime    @default(now())
   updatedAt           DateTime    @updatedAt
 }

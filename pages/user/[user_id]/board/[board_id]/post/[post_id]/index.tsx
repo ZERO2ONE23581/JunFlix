@@ -21,7 +21,7 @@ import { IEditPostForm } from '../../../../../../../src/types/post';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
 import { IGetPostInfo } from '../../../../../../../src/types/comments';
 import { ThumNail } from '../../../../../../../src/components/Post/PostList';
-import { LikeComment } from '../../../../../../../src/components/LikeComment';
+import { LikesAndComments } from '../../../../../../../src/components/LikesAndComments';
 
 const Post_Detail: NextPage = () => {
   const router = useRouter();
@@ -85,7 +85,7 @@ const Post_Detail: NextPage = () => {
   //
   return (
     <PageCont>
-      <LikeComment />
+      <LikesAndComments />
       <section className="read-post-cont">
         <article className="btn-wrap">
           <Btn

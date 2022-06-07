@@ -1,12 +1,12 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { LikesIcon } from './Likes';
-import { CommentIcon } from './Comment/icon';
 import { useRouter } from 'next/router';
-import { CreateComments } from './Comment/create';
-import { CommentList } from './Comment/created/Comment_List';
+import { CreateComment } from './\bComments/Create';
+import { Comments } from './\bComments';
+import { CommentIcon } from './\bComments/Icon';
 
-export const LikeComment = () => {
+export const LikesAndComments = () => {
   const router = useRouter();
   const { user_id, board_id, post_id } = router.query;
   const query_id = user_id && board_id && post_id;
@@ -24,14 +24,14 @@ export const LikeComment = () => {
           commentsCount={commentsCount}
         />
       </article>
-      <CreateComments />
-      <CommentList />
+      <CreateComment />
+      <Comments />
     </Cont>
   );
 };
 const Cont = styled.section`
   padding: 20px;
-  border: 3px solid black;
+  border: 10px solid black;
   .icons-wrap {
     border: 2px solid blue;
     display: flex;

@@ -20,7 +20,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           ReplyID: true,
           content: true,
           user: { select: { id: true, username: true } },
-          replies: true,
         },
         orderBy: {
           id: 'desc',
