@@ -1,5 +1,11 @@
-import { Comments, Post, User } from '@prisma/client';
+import { Post } from '@prisma/client';
 
+export interface IGetPost {
+  ok: boolean;
+  error?: string;
+  isComments?: boolean;
+  post: Post;
+}
 export interface IEditPostForm extends IPostForm {
   createdAt?: Date;
 }

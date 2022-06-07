@@ -17,9 +17,8 @@ import useUser from '../../../../../../../src/libs/client/useUser';
 import { MutationRes } from '../../../../../../../src/types/mutation';
 import useAvatar from '../../../../../../../src/libs/client/useAvatar';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
-import { IEditPostForm } from '../../../../../../../src/types/post';
+import { IEditPostForm, IGetPost } from '../../../../../../../src/types/post';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
-import { IGetPostInfo } from '../../../../../../../src/types/comments';
 import { ThumNail } from '../../../../../../../src/components/Post/PostList';
 import { LikesAndComments } from '../../../../../../../src/components/Post/Icon';
 
@@ -28,7 +27,7 @@ const Post_Detail: NextPage = () => {
   const { isloggedIn, loggedInUser } = useUser();
   const { user_id, board_id, post_id } = router.query;
   const isQueryId = Boolean(user_id && board_id && post_id);
-  const { data } = useSWR<IGetPostInfo>(
+  const { data } = useSWR<IGetPost>(
     isQueryId && `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
   const [editPost, { data: dataRes, loading }] = useMutation<MutationRes>(

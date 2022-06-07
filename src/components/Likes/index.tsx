@@ -3,33 +3,31 @@ import styled from '@emotion/styled';
 import { Post, User } from '@prisma/client';
 import { Icons } from '../../../styles/svg';
 import useMutation from '../../libs/client/useMutation';
+import { useRouter } from 'next/router';
 
-interface IGetPost {
+interface IGetPostWithCounts {
   ok: boolean;
   error?: string;
   isLiked?: boolean;
-  post: PostWithUser;
+  isComments?: boolean;
+  post: CountsInPost;
 }
-interface PostWithUser extends Post {
-  user: User;
+interface CountsInPost extends Post {
   _count: {
     likes: number;
+    comments: number;
   };
 }
-interface IPostLikesProps {
-  userId?: string | string[];
-  boardId?: string | string[];
-  postId?: string | string[];
-}
-
-export const LikesIcon = ({ userId, boardId, postId }: IPostLikesProps) => {
-  const isQueryId = Boolean(userId && boardId && postId);
-  const { data, mutate } = useSWR<IGetPost>(
-    isQueryId && `/api/user/${userId}/board/${boardId}/post/${postId}`
+export const LikesIcon = () => {
+  const router = useRouter();
+  const { user_id, board_id, post_id } = router.query;
+  const query_id = user_id && board_id && post_id;
+  const { data, mutate } = useSWR<IGetPostWithCounts>(
+    query_id && `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
   const likesCount = data?.post?._count.likes;
   const [createLikes] = useMutation(
-    `/api/user/${userId}/board/${boardId}/post/${postId}/create/likes`
+    `/api/user/${user_id}/board/${board_id}/post/${post_id}/create/likes`
   );
   const handleClick = () => {
     if (!data) return;

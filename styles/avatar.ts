@@ -11,8 +11,3 @@ export const AvatarLogo = styled.div`
     height: 100%;
   }
 `;
-export const CmtAvatarLogo = styled(AvatarLogo)`
-  position: absolute;
-  top: 45px;
-  left: 5px;
-`;
