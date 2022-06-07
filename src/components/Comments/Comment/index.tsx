@@ -3,11 +3,12 @@ import { Comment, User } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { AvatarLogo } from '../../../../styles/avatar';
+import { CmtAvatarLogo } from '../../../../styles/avatar';
 import useAvatar from '../../../libs/client/useAvatar';
-import { ReplyBtn } from '../Button';
+import { CommentBtnWrap } from '../Button';
 import { Replies } from './Replies';
 import { CreateComment } from './Create';
+import { EditComment } from './Edit';
 
 interface IEachCommentProps {
   commentId: number | any;
@@ -28,6 +29,9 @@ export const CommentInfo = ({ commentId }: IEachCommentProps) => {
   );
   const comment = data?.comment;
   const [saveId, setSaveId] = useState(0);
+  const [openReply, setOpenReply] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  //
   const [date, setDate] = useState('');
   useEffect(() => {
     if (comment) {
@@ -43,7 +47,7 @@ export const CommentInfo = ({ commentId }: IEachCommentProps) => {
       {comment && (
         <>
           <div className="avatar-desc-wrap">
-            <AvatarLogo>
+            <CmtAvatarLogo>
               {comment.user.avatar ? (
                 <img
                   src={`${useAvatar(comment.user.avatar)}`}
@@ -52,30 +56,44 @@ export const CommentInfo = ({ commentId }: IEachCommentProps) => {
               ) : (
                 <img src="/img/profile.svg" alt="프로필 이미지" />
               )}
-            </AvatarLogo>
-            <Description>
-              <InfoBtnWrap>
-                <div className="info">
+            </CmtAvatarLogo>
+            <CmtDesc>
+              <DescWrap>
+                <CmtInfo>
                   <span className="id">#{comment.id}</span>
                   <span className="username">{comment.user.username}</span>
                   <span className="date">created at {date}</span>
-                </div>
-                <ReplyBtn
+                </CmtInfo>
+                <CommentBtnWrap
                   id={comment.id}
                   saveId={saveId}
                   setSaveId={setSaveId}
+                  setOpenReply={setOpenReply}
+                  setOpenEdit={setOpenEdit}
                 />
-              </InfoBtnWrap>
-              <p>{comment.content}</p>
-            </Description>
+              </DescWrap>
+              {openEdit && saveId === comment.id ? (
+                <EditComment parentId={comment.id} />
+              ) : (
+                <Content>{comment.content}</Content>
+              )}
+            </CmtDesc>
           </div>
-          {saveId === comment.id && <CreateComment parentId={comment.id} />}
+          {openReply && saveId === comment.id && (
+            <CreateComment parentId={comment.id} />
+          )}
           <Replies parentId={comment.id} />
         </>
       )}
     </Cont>
   );
 };
+const Content = styled.article`
+  margin-bottom: 15px;
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
+`;
 const Cont = styled.article`
   padding: 10px;
   margin: 10px 0;
@@ -85,37 +103,40 @@ const Cont = styled.article`
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
   .avatar-desc-wrap {
-    gap: 10px;
+    position: relative;
+    gap: 20px;
     display: flex;
     align-items: center;
   }
 `;
-const Description = styled.article`
+const CmtDesc = styled.article`
   width: 100%;
   font-size: 1.2rem;
-  padding: 10px 20px;
+  padding: 10px 0;
+  padding-left: 75px;
+  padding-right: 20px;
   border-radius: 5px;
 `;
-const InfoBtnWrap = styled.div`
+const CmtInfo = styled.article`
+  gap: 5px;
+  display: flex;
+  align-items: center;
+  .id {
+    font-weight: bold;
+  }
+  .username {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  .date {
+    opacity: 0.8;
+    font-size: 1rem;
+    font-style: italic;
+  }
+`;
+const DescWrap = styled.article`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 5px;
-  .info {
-    gap: 5px;
-    display: flex;
-    align-items: center;
-    .id {
-      font-weight: bold;
-    }
-    .username {
-      font-weight: bold;
-      font-size: 1.1rem;
-    }
-    .date {
-      opacity: 0.8;
-      font-size: 1rem;
-      font-style: italic;
-    }
-  }
 `;

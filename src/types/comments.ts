@@ -1,4 +1,4 @@
-import { Comments, Post, Replies, User } from '@prisma/client';
+import { Comment, Post, User } from '@prisma/client';
 
 export interface IGetPostInfo {
   ok: boolean;
@@ -12,9 +12,8 @@ export interface PostWithComments extends Post {
     comments: number;
   };
 }
-export interface CommentsWithAttributes extends Comments {
+export interface CommentsWithAttributes extends Comment {
   user: User;
-  replies: Replies[];
 }
 export interface ICreateCommentsRes {
   ok: boolean;

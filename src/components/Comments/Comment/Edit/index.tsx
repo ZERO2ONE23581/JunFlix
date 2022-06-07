@@ -1,85 +1,72 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { Btn } from '../../../../../styles/btn';
 import { ErrMsg } from '../../../../../styles/default';
 import useMutation from '../../../../libs/client/useMutation';
-import { Input } from '../../../Input';
 
-export interface IEditPostCommentsForm {
-  content?: string;
-  comment_id?: string;
-}
-export interface IEditPostCommentsRes {
+import { IEditPostCommentsForm } from './index copy';
+
+interface IEditCommentRes {
   ok: boolean;
   error?: string;
 }
-export const EditPostComments = ({
-  userId,
-  boardId,
-  postId,
-  comment_id,
-  openEditForm,
-  content,
-}: any) => {
+
+export const EditComment = ({ parentId }: any) => {
   const router = useRouter();
-  const [editComments, { data, loading }] = useMutation<IEditPostCommentsRes>(
-    `/api/user/${userId}/board/${boardId}/post/${postId}/comments/edit`
+  const { user_id, board_id, post_id } = router.query;
+  const [editComment, { loading, data }] = useMutation<IEditCommentRes>(
+    `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/${parentId}/edit`
   );
+  //
   const {
-    setValue,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IEditPostCommentsForm>({ mode: 'onSubmit' });
-  const onValid = ({ comment_id, content }: IEditPostCommentsForm) => {
-    if (data) return;
-    editComments({ comment_id, content });
+  const onValid = ({ content }: IEditPostCommentsForm) => {
+    if (loading) return;
+    editComment({ content });
   };
+  //
   useEffect(() => {
-    if (content) setValue('content', content);
     if (data?.ok) {
       router.reload();
     }
-  }, [router, data, setValue, content]);
+  }, [router, data]);
+  //
   return (
     <>
-      {errors.content && <ErrMsg>{errors.content?.message}</ErrMsg>}
-      {openEditForm && (
-        <Form onSubmit={handleSubmit(onValid)}>
-          <input
-            className="hidden"
-            value={comment_id}
-            {...register('comment_id')}
-          />
-          <Textarea
-            {...register('content', { required: 'Edit a comment...' })}
-            rows={5}
-            id="content"
-            name="content"
-            placeholder="Edit a comment..."
-          />
-          <Button type="submit">{loading ? 'Loading...' : 'Post'}</Button>
-        </Form>
-      )}
+      <form onSubmit={handleSubmit(onValid)}>
+        <>
+          {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
+          {errors.content && <ErrMsg>{errors.content?.message}</ErrMsg>}
+        </>
+        <Textarea
+          {...register('content', { required: '댓글을 입력해주세요.' })}
+          id="content"
+          name="content"
+          placeholder="Add a comment..."
+        />
+        <CommentBtn type="submit">{loading ? 'Loading...' : 'Edit'}</CommentBtn>
+      </form>
     </>
   );
 };
-export const Textarea = styled.textarea`
-  border: 3px solid blue;
+
+const Textarea = styled.textarea`
+  margin-bottom: 15px;
+  width: 100%;
+  height: 100px;
   padding: 20px;
   font-size: 1.1rem;
-  width: 100%;
+  border-radius: 5px;
+  border: ${(p) => p.theme.border};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background-color: ${(p) => p.theme.color.bg};
 `;
-export const Button = styled.button`
-  width: 100%;
-`;
-const Form = styled.form`
-  width: 100%;
-  input {
-    width: 100%;
-  }
-  .hidden {
-    display: none;
-  }
+const CommentBtn = styled(Btn)`
+  font-size: 1rem;
+  padding: 10px 20px;
 `;
