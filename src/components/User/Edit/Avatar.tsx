@@ -93,7 +93,8 @@ export const Edit_Avatar = () => {
 const Avatar = styled.div<{ url: string }>`
   width: 100px;
   height: 100px;
-  border-radius: 50%;
+  border-radius: 100%;
+  overflow: hidden;
   border: ${(p) => p.theme.border};
   background: ${(p) => `url(${p.url}) center / cover no-repeat`};
 `;

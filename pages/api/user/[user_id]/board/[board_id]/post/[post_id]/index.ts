@@ -17,8 +17,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         select: {
           id: true,
           UserID: true,
-          user: { select: { id: true, username: true } },
+          ReplyID: true,
           content: true,
+          user: { select: { id: true, username: true } },
         },
         orderBy: {
           id: 'desc',
@@ -36,7 +37,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     })
   );
   const isComments = Boolean(
-    await client.comments.findFirst({
+    await client.comment.findFirst({
       where: { UserID: user?.id, PostID: post.id },
     })
   );

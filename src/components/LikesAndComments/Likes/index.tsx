@@ -1,8 +1,8 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { Post, User } from '@prisma/client';
-import { Icons } from '../../../../../styles/svg';
-import useMutation from '../../../../libs/client/useMutation';
+import { Icons } from '../../../../styles/svg';
+import useMutation from '../../../libs/client/useMutation';
 
 interface IGetPost {
   ok: boolean;
@@ -38,12 +38,12 @@ export const LikesIcon = ({ userId, boardId, postId }: IPostLikesProps) => {
         ...data,
         isLiked: !data.isLiked,
         post: {
-          ...data.post,
+          ...data?.post,
           _count: {
-            ...data.post._count,
+            ...data.post?._count,
             likes: data.isLiked
-              ? data.post._count.likes - 1
-              : data.post._count.likes + 1,
+              ? data.post?._count.likes - 1
+              : data.post?._count.likes + 1,
           },
         },
       },

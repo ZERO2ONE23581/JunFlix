@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { ItemCont } from './AllPosts';
 import useAvatar from '../../libs/client/useAvatar';
 import { H1 } from '../../../styles/default';
 import { IPostListProps } from '../../types/post';
+import { ItemCont } from '../Board/BoardList';
 
 export const PostList = ({ posts, allPosts, myPosts }: IPostListProps) => {
   return (

@@ -1,5 +1,16 @@
 import styled from '@emotion/styled';
 
+export const Btn = styled.button`
+  border: none;
+  border-radius: 5px;
+  color: ${(p) => p.theme.color.bg};
+  background-color: ${(p) => p.theme.color.font};
+  &:hover {
+    color: whitesmoke;
+    background-color: ${(p) => p.theme.color.logo};
+  }
+`;
+
 export const BtnCont = styled.button`
   padding: 8px;
   border: none;

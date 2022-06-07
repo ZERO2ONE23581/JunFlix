@@ -6,9 +6,9 @@ import { Btn } from '../../../../../../../src/components/Button';
 import { IPostForm } from '../../../../../../../src/types/post';
 import { Input } from '../../../../../../../src/components/Input';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
-import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithBoard';
 import { ErrMsg, PageCont } from '../../../../../../../styles/default';
 import { Post } from '@prisma/client';
+import { ThumNail } from '../../../../../../../src/components/Post/PostList';
 
 interface ICreatePostRes {
   ok: boolean;

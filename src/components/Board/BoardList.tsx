@@ -72,7 +72,7 @@ export const BoardList = ({
   );
 };
 
-const ItemCont = styled.article`
+export const ItemCont = styled.article`
   margin-top: 15px;
   gap: 15px;
   display: grid;

@@ -18,16 +18,10 @@ import { MutationRes } from '../../../../../../../src/types/mutation';
 import useAvatar from '../../../../../../../src/libs/client/useAvatar';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm } from '../../../../../../../src/types/post';
-import { ThumNail } from '../../../../../../../src/components/Post/AllPostsWithBoard';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
-import { PostLikes } from '../../../../../../../src/components/Button/Likes/post';
-import {
-  CreatePostComment,
-  LikesAndComments,
-  PostComment,
-  PostComments,
-} from '../../../../../../../src/components/Post/Comments';
 import { IGetPostInfo } from '../../../../../../../src/types/comments';
+import { ThumNail } from '../../../../../../../src/components/Post/PostList';
+import { LikesAndComments } from '../../../../../../../src/components/LikesAndComments';
 
 const Post_Detail: NextPage = () => {
   const router = useRouter();
@@ -91,14 +85,7 @@ const Post_Detail: NextPage = () => {
   //
   return (
     <PageCont>
-      {delModal && (
-        <DeleteModal
-          userId={user_id}
-          postId={post_id}
-          boardId={board_id}
-          deleteClick={() => setDelModal((p) => !p)}
-        />
-      )}
+      <LikesAndComments />
       <section className="read-post-cont">
         <article className="btn-wrap">
           <Btn
@@ -132,7 +119,7 @@ const Post_Detail: NextPage = () => {
             )}
           </FlexAbsPost>
         </article>
-        {/* <form onSubmit={handleSubmit(onValid)}>
+        <form onSubmit={handleSubmit(onValid)}>
           {dataRes?.message && <OkMsg>{dataRes?.message}</OkMsg>}
           {dataRes?.error && <ErrMsg>{dataRes?.error}</ErrMsg>}
           <ThumNail>
@@ -183,24 +170,20 @@ const Post_Detail: NextPage = () => {
             register={register('createdAt')}
           />
           {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
-        </form> */}
-        <LikesAndComments
-          loggedInUser={loggedInUser}
-          userId={user_id}
-          boardId={board_id}
-          postId={post_id}
-        />
+        </form>
       </section>
+      {delModal && (
+        <DeleteModal
+          userId={user_id}
+          postId={post_id}
+          boardId={board_id}
+          deleteClick={() => setDelModal((p) => !p)}
+        />
+      )}
     </PageCont>
   );
 };
 export default Post_Detail;
-
-const IconWrap = styled.article`
-  gap: 20px;
-  display: flex;
-  align-items: center;
-`;
 
 export const BoardCont = styled(Article)`
   flex-direction: column;
