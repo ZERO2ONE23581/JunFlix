@@ -14,11 +14,6 @@ interface IDeleteModalProps {
   deleteClick?: any;
 }
 
-interface IIdInfo {
-  userId: number;
-  reviewId: number;
-}
-
 export const DeleteModal = ({
   userId,
   postId,

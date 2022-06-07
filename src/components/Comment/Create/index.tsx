@@ -2,17 +2,18 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { AvatarLogo } from '../../../../../styles/avatar';
-import { Btn } from '../../../../../styles/btn';
-import { ErrMsg } from '../../../../../styles/default';
-import useAvatar from '../../../../libs/client/useAvatar';
-import useMutation from '../../../../libs/client/useMutation';
-import useUser from '../../../../libs/client/useUser';
-import { ICreateCommentsRes } from '../../../../types/comments';
+import { AvatarLogo } from '../../../../styles/avatar';
+import { Btn } from '../../../../styles/btn';
+import { ErrMsg } from '../../../../styles/default';
+import useAvatar from '../../../libs/client/useAvatar';
+import useMutation from '../../../libs/client/useMutation';
+import useUser from '../../../libs/client/useUser';
+import {
+  ICreateCommentsForm,
+  ICreateCommentsRes,
+  ICreateReplyRes,
+} from '../../../types/comments';
 
-interface IPostCommentsForm {
-  content?: string;
-}
 export const CreateComment = ({ parentId }: any) => {
   const { loggedInUser } = useUser();
   const router = useRouter();
@@ -21,8 +22,8 @@ export const CreateComment = ({ parentId }: any) => {
   const [createComments, { loading, data }] = useMutation<ICreateCommentsRes>(
     `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/create`
   );
-  const [createReply, { loading: replyLoading, data: replyResponse }] =
-    useMutation(
+  const [createReply, { loading: replyLoading, data: replyData }] =
+    useMutation<ICreateReplyRes>(
       `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/${parentId}/create`
     );
   //
@@ -30,8 +31,8 @@ export const CreateComment = ({ parentId }: any) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IPostCommentsForm>({ mode: 'onSubmit' });
-  const onValid = ({ content }: IPostCommentsForm) => {
+  } = useForm<ICreateCommentsForm>({ mode: 'onSubmit' });
+  const onValid = ({ content }: ICreateCommentsForm) => {
     if (parentId) {
       if (replyLoading) return;
       return createReply({ content });
@@ -42,10 +43,10 @@ export const CreateComment = ({ parentId }: any) => {
   };
   //
   useEffect(() => {
-    if (data?.ok || replyResponse?.ok) {
+    if (data?.ok || replyData?.ok) {
       router.reload();
     }
-  }, [router, data, replyResponse]);
+  }, [router, data, replyData]);
   //
   return (
     <Cont>

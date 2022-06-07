@@ -1,20 +1,15 @@
-import {
-  ModalClose,
-  ModalCont,
-  SmallModalCont,
-} from '../../../../../styles/modal';
+import { ModalCont } from '../../../../../styles/modal';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import useMutation from '../../../../libs/client/useMutation';
-import { MutationRes } from '../../../../types/mutation';
-import { ErrMsg } from '../../../../../styles/default';
 import styled from '@emotion/styled';
 import { Btn } from '../../../../../styles/btn';
+import { ICommentPostRes } from '../../../../types/comments';
 
-export const CmtDeleteModal = ({ id, setSaveId, setOpenDelete }: any) => {
+export const CommentDeleteModal = ({ id, setSaveId, setOpenDelete }: any) => {
   const router = useRouter();
   const { user_id, board_id, post_id } = router.query;
-  const [deleteComment, { loading, data }] = useMutation(
+  const [deleteComment, { loading, data }] = useMutation<ICommentPostRes>(
     `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/${id}/delete`
   );
   const clickCancel = () => {
