@@ -3,11 +3,11 @@ import { Comment, User } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { AvatarLogo } from '../../../../../styles/avatar';
-import useAvatar from '../../../../libs/client/useAvatar';
-import { ReplyBtn } from '../../../Button/Comment/Reply';
-import { CreateComment } from '../Create';
-import { Replies } from '../Replies';
+import { AvatarLogo } from '../../../../styles/avatar';
+import useAvatar from '../../../libs/client/useAvatar';
+import { ReplyBtn } from '../Button';
+import { Replies } from './Replies';
+import { CreateComment } from './Create';
 
 interface IEachCommentProps {
   commentId: number | any;
@@ -18,7 +18,7 @@ interface IGetCommentInfo {
 interface CommentWithUser extends Comment {
   user: User;
 }
-export const EachComment = ({ commentId }: IEachCommentProps) => {
+export const CommentInfo = ({ commentId }: IEachCommentProps) => {
   const router = useRouter();
   const { user_id, board_id, post_id } = router.query;
   const queryForComment = user_id && board_id && post_id && commentId;

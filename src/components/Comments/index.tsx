@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Comment, User } from '@prisma/client';
-import { EachComment } from './Comment/EachComment';
+import { CommentInfo } from './Comment';
 
 interface IGetAllComments {
   ok: boolean;
@@ -25,7 +25,7 @@ export const Comments = () => {
   return (
     <Cont>
       {array?.map((comment) => (
-        <EachComment key={comment.id} commentId={comment.id} />
+        <CommentInfo key={comment.id} commentId={comment.id} />
       ))}
     </Cont>
   );

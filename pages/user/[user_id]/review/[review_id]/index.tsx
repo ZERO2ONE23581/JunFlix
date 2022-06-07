@@ -10,9 +10,9 @@ import { FlexAbsolute, PageCont } from '../../../../../styles/default';
 import { Btn } from '../../../../../src/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { ThumNail } from '../../../../../src/components/Post/AllPostsWithBoard';
 import useAvatar from '../../../../../src/libs/client/useAvatar';
-import { ReviewLikes } from '../../../../../src/components/Button/Likes/review';
+import { ReviewLikes } from '../../../../../src/components/Button/Likes';
+import { ThumNail } from '../../../../../src/components/Post/PostList';
 
 const Review_Detail: NextPage = () => {
   const router = useRouter();

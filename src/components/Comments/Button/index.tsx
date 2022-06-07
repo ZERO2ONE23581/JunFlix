@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../../../../styles/btn';
+import { Btn } from '../../../../styles/btn';
 
 export const ReplyBtn = ({ id, saveId, setSaveId }: any) => {
   //

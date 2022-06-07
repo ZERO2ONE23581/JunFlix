@@ -1,8 +1,8 @@
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { Comment } from '@prisma/client';
-import { EachComment } from '../Comment/EachComment';
 import styled from '@emotion/styled';
+import { CommentInfo } from '..';
 
 interface IGetReplies {
   replies: Comment[];
@@ -20,7 +20,7 @@ export const Replies = ({ parentId }: any) => {
   return (
     <Cont>
       {replies?.map((reply) => (
-        <EachComment key={reply.id} commentId={reply.id} />
+        <CommentInfo key={reply.id} commentId={reply.id} />
       ))}
     </Cont>
   );

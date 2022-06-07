@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { User } from '@prisma/client';
 import { ReviewWithUser } from '../../types/review';
-import { ReviewLikes } from '../Button/Likes/review';
+import { ReviewLikes } from '../Button/Likes';
 import { H1, PageCont } from '../../../styles/default';
 
 interface IReviewListProps {
