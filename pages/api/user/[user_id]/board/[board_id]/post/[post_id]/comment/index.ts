@@ -10,6 +10,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   const allComments = await client.comment.findMany({
     include: { user: { select: { id: true, username: true, avatar: true } } },
+    orderBy: {
+      id: 'desc',
+    },
   });
   if (allComments.length === 0)
     return res.json({ ok: false, error: 'NO COMMENTS FOUND' });

@@ -32,6 +32,4 @@ export const Comments = () => {
 };
 const Cont = styled.article`
   padding: 20px;
-  margin: 10px auto;
-  border: 7px solid hotpink;
 `;

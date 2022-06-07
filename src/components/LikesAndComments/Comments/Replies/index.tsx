@@ -2,6 +2,7 @@ import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { Comment } from '@prisma/client';
 import { EachComment } from '../Comment/EachComment';
+import styled from '@emotion/styled';
 
 interface IGetReplies {
   replies: Comment[];
@@ -17,12 +18,13 @@ export const Replies = ({ parentId }: any) => {
   const replies = data?.replies;
   //
   return (
-    <>
+    <Cont>
       {replies?.map((reply) => (
-        <article className="comment-wrap" key={reply.id}>
-          <EachComment commentId={reply.id} />
-        </article>
+        <EachComment key={reply.id} commentId={reply.id} />
       ))}
-    </>
+    </Cont>
   );
 };
+const Cont = styled.article`
+  padding-left: 10%;
+`;
