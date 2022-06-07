@@ -1,25 +1,31 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../../../styles/btn';
 
-export const CommentBtnWrap = ({
+export const CmtBtnWrap = ({
   id,
   saveId,
   setSaveId,
   setOpenReply,
   setOpenEdit,
+  setOpenDelete,
 }: any) => {
   const clickReply = (id: number) => {
     setSaveId(id);
     setOpenReply((p: boolean) => !p);
   };
+  const clickEdit = (id: number) => {
+    setSaveId(id);
+    setOpenEdit((p: boolean) => !p);
+  };
+  const clickDelete = (id: number) => {
+    setSaveId(id);
+    setOpenDelete((p: boolean) => !p);
+  };
   const clickCancel = () => {
     setSaveId(0);
     setOpenReply(false);
     setOpenEdit(false);
-  };
-  const clickEdit = (id: number) => {
-    setSaveId(id);
-    setOpenEdit((p: boolean) => !p);
+    setOpenDelete(false);
   };
   //
   return (
@@ -32,6 +38,9 @@ export const CommentBtnWrap = ({
       </ReplyButton>
       <ReplyButton disabled={saveId !== 0} onClick={() => clickEdit(id)}>
         Edit
+      </ReplyButton>
+      <ReplyButton disabled={saveId !== 0} onClick={() => clickDelete(id)}>
+        Delete
       </ReplyButton>
     </Cont>
   );

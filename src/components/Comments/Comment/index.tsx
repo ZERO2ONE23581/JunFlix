@@ -5,10 +5,11 @@ import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { CmtAvatarLogo } from '../../../../styles/avatar';
 import useAvatar from '../../../libs/client/useAvatar';
-import { CommentBtnWrap } from '../Button';
+import { CmtBtnWrap, CommentBtnWrap } from '../Button';
 import { Replies } from './Replies';
 import { CreateComment } from './Create';
 import { EditComment } from './Edit';
+import { CmtDeleteModal } from '../../Modal/Comment/Delete';
 
 interface IEachCommentProps {
   commentId: number | any;
@@ -31,6 +32,7 @@ export const CommentInfo = ({ commentId }: IEachCommentProps) => {
   const [saveId, setSaveId] = useState(0);
   const [openReply, setOpenReply] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   //
   const [date, setDate] = useState('');
   useEffect(() => {
@@ -64,12 +66,13 @@ export const CommentInfo = ({ commentId }: IEachCommentProps) => {
                   <span className="username">{comment.user.username}</span>
                   <span className="date">created at {date}</span>
                 </CmtInfo>
-                <CommentBtnWrap
+                <CmtBtnWrap
                   id={comment.id}
                   saveId={saveId}
                   setSaveId={setSaveId}
                   setOpenReply={setOpenReply}
                   setOpenEdit={setOpenEdit}
+                  setOpenDelete={setOpenDelete}
                 />
               </DescWrap>
               {openEdit && saveId === comment.id ? (
@@ -85,16 +88,19 @@ export const CommentInfo = ({ commentId }: IEachCommentProps) => {
           <Replies parentId={comment.id} />
         </>
       )}
+      {openDelete && (
+        <CmtDeleteModal
+          id={comment?.id}
+          setSaveId={setSaveId}
+          setOpenDelete={setOpenDelete}
+        />
+      )}
     </Cont>
   );
 };
-const Content = styled.article`
-  margin-bottom: 15px;
-  width: 100%;
-  padding: 15px;
-  font-size: 1.1rem;
-`;
+
 const Cont = styled.article`
+  position: relative;
   padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
@@ -139,4 +145,10 @@ const DescWrap = styled.article`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 5px;
+`;
+const Content = styled.article`
+  margin-bottom: 15px;
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
 `;
