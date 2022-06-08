@@ -114,7 +114,7 @@ const Review_Detail: NextPage = () => {
               </li>
             </ReviewList>
           </section>
-          <LikesAndComments />
+          <LikesAndComments type="review" />
         </PageCont>
       )}
       {data && data.ok && data.review && delModal && (

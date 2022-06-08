@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import { Post, User } from '@prisma/client';
+import { Post, Review, User } from '@prisma/client';
 import { Icons } from '../../../styles/svg';
 import useMutation from '../../libs/client/useMutation';
 import { useRouter } from 'next/router';
@@ -18,23 +18,55 @@ interface CountsInPost extends Post {
     comments: number;
   };
 }
+interface IGetReviewWithCounts {
+  ok: boolean;
+  error?: string;
+  isLiked?: boolean;
+  isComments?: boolean;
+  review: CountsInReview;
+}
+interface CountsInReview extends Review {
+  _count: {
+    likes: number;
+    comments: number;
+  };
+}
 export const LikesIcon = ({ type }: any) => {
   const router = useRouter();
-  const { user_id, board_id, post_id } = router.query;
-  const query_id = user_id && board_id && post_id;
-  const postType = Boolean(type === 'post');
+  const { user_id, board_id, post_id, review_id } = router.query;
+  const queryPost = board_id && post_id;
+  const queryReview = review_id;
+  const isPost = Boolean(type === 'post');
+  const isReivew = Boolean(type === 'post');
+
+  //Post
   const { data, mutate } = useSWR<IGetPostWithCounts>(
-    postType &&
-      query_id &&
+    isPost &&
+      user_id &&
+      queryPost &&
       `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
-  const likesCount = data?.post?._count.likes;
+  const likesCountInPost = data?.post?._count.likes;
   const [createLikesInPost] = useMutation(
     `/api/user/${user_id}/board/${board_id}/post/${post_id}/create/likes`
   );
+
+  //Review
+  const { data: reviewData, mutate: reivewMutate } =
+    useSWR<IGetReviewWithCounts>(
+      isReivew &&
+        user_id &&
+        queryReview &&
+        `/api/user/${user_id}/board/${board_id}/review/${review_id}`
+    );
+  const likesCountInReview = reviewData?.review?._count.likes;
+  const [createLikesInReview] = useMutation(
+    `/api/user/${user_id}/${review_id}/create/likes`
+  );
+  //
   const handleClick = () => {
-    if (!data) return;
-    if (postType) {
+    if (isPost) {
+      if (!data) return;
       mutate(
         {
           ...data,
@@ -53,7 +85,28 @@ export const LikesIcon = ({ type }: any) => {
       );
       createLikesInPost({});
     }
+    if (isReivew) {
+      if (!reviewData) return;
+      // mutate(
+      //   {
+      //     ...reviewData,
+      //     isLiked: !reviewData.isLiked,
+      //     review: {
+      //       ...reviewData.review,
+      //       _count: {
+      //         ...reviewData.review?._count,
+      //         likes: reviewData.isLiked
+      //           ? reviewData.review?._count.likes - 1
+      //           : reviewData.review?._count.likes + 1,
+      //       },
+      //     },
+      //   },
+      //   false
+      // );
+      createLikesInReview({});
+    }
   };
+  //
   return (
     <>
       <Cont>
@@ -65,7 +118,10 @@ export const LikesIcon = ({ type }: any) => {
           )}
         </IconBtn>
         <Counts>
-          <span>{likesCount ? likesCount : '0'}</span>
+          {isPost && <span>{likesCountInPost ? likesCountInPost : '0'}</span>}
+          {isReivew && (
+            <span>{likesCountInReview ? likesCountInReview : '0'}</span>
+          )}
           <span> Likes</span>
         </Counts>
       </Cont>
