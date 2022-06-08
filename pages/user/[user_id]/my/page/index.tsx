@@ -1,15 +1,15 @@
 import type { NextPage } from 'next';
 import useSWR from 'swr';
-import { BoardList } from '../../../../src/components/Board/BoardList';
-import { Title } from '../../../../src/components/Layout/Title';
-import { PostList } from '../../../../src/components/Post/PostList';
-import { ReviewList } from '../../../../src/components/Review';
-import useUser from '../../../../src/libs/client/useUser';
-import { IGetBoards } from '../../../../src/types/board';
-import { IGetAllPosts } from '../../../../src/types/post';
-import { IGetReviews } from '../../../../src/types/review';
+import { BoardList } from '../../../../../src/components/Board/BoardList';
+import { Title } from '../../../../../src/components/Layout/Title';
+import { PostList } from '../../../../../src/components/Post/PostList';
+import { ReviewList } from '../../../../../src/components/Review';
+import useUser from '../../../../../src/libs/client/useUser';
+import { IGetBoards } from '../../../../../src/types/board';
+import { IGetAllPosts } from '../../../../../src/types/post';
+import { IGetReviews } from '../../../../../src/types/review';
 
-const My_Page: NextPage = () => {
+const MyPage: NextPage = () => {
   const { isloggedIn, loggedInUser } = useUser();
   const { data: BoardsData } = useSWR<IGetBoards>(
     loggedInUser && `/api/user/${loggedInUser.id}/board/my_boards`
@@ -49,4 +49,4 @@ const My_Page: NextPage = () => {
     </>
   );
 };
-export default My_Page;
+export default MyPage;

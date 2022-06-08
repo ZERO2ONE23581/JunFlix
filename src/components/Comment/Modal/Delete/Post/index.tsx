@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import { Btn } from '../../../../../../styles/btn';
 import { ICommentRes } from '../../../../../types/comments';
 
-export const ReviewCommentDeleteModal = ({
+export const PostCommentDeleteModal = ({
   id,
   setSaveId,
   setOpenDelete,

@@ -9,8 +9,8 @@ import { ManageCommentBtn } from '../../Button';
 import { ICommentInfoProps, IGetCommentInfo } from '../../../../types/comments';
 import { CreateCommentOnReview } from '../../Create/Review';
 import { ReviewReplies } from '../../Replies/Review';
-import { ReviewCommentDeleteModal } from '../../Modal/Delete/Post';
 import { ReviewEditComment } from '../../Edit/Review';
+import { ReviewCommentDeleteModal } from '../../Modal/Delete/Review';
 
 export const ReviewCommentInfo = ({ commentId }: ICommentInfoProps) => {
   const router = useRouter();

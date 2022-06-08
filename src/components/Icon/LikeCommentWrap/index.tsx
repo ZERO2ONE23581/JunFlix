@@ -3,6 +3,7 @@ import { CommentIcon } from '../Comment';
 import { LikesIcon } from '../Likes';
 
 export const LikeCommentWrap = ({ type, userId, reviewId }: any) => {
+  console.log(`check==`, type, userId, reviewId);
   return (
     <Cont>
       <IconWrap>
@@ -14,14 +15,8 @@ export const LikeCommentWrap = ({ type, userId, reviewId }: any) => {
         )}
         {type === 'review' && (
           <>
-            <LikesIcon type="review" />
-            <CommentIcon type="review" />
-          </>
-        )}
-        {type === 'allReview' && (
-          <>
-            <LikesIcon type="allReview" userId={userId} reviewId={reviewId} />
-            <CommentIcon type="allReview" userId={userId} reviewId={reviewId} />
+            <LikesIcon type="review" userId={userId} reviewId={reviewId} />
+            <CommentIcon type="review" userId={userId} reviewId={reviewId} />
           </>
         )}
       </IconWrap>

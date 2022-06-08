@@ -6,15 +6,15 @@ import styled from '@emotion/styled';
 import { Btn } from '../../../../../../styles/btn';
 import { ICommentRes } from '../../../../../types/comments';
 
-export const PostCommentDeleteModal = ({
+export const ReviewCommentDeleteModal = ({
   id,
   setSaveId,
   setOpenDelete,
 }: any) => {
   const router = useRouter();
-  const { user_id, board_id, post_id } = router.query;
+  const { user_id, review_id } = router.query;
   const [deleteComment, { loading, data }] = useMutation<ICommentRes>(
-    `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/${id}/delete`
+    `/api/user/${user_id}/review/${review_id}/comment/${id}/delete`
   );
   const clickCancel = () => {
     setSaveId(0);

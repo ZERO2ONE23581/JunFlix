@@ -30,13 +30,13 @@ interface CountsInReview extends Review {
     comments: number;
   };
 }
-export const CommentIcon = ({ type }: any) => {
+export const CommentIcon = ({ type, userId, reviewId }: any) => {
   const router = useRouter();
   const { user_id, board_id, post_id, review_id } = router.query;
   const queryPost = user_id && board_id && post_id;
-  const queryReview = user_id && review_id;
   const isPost = Boolean(type === 'post') && queryPost;
-  const isReivew = Boolean(type === 'review') && queryReview;
+  const isReivew = Boolean(type === 'review') && user_id && review_id;
+  const isAllReivew = Boolean(type === 'review') && userId && reviewId;
 
   //Post
   const { data: postData } = useSWR<IGetPostWithCounts>(
@@ -46,7 +46,11 @@ export const CommentIcon = ({ type }: any) => {
 
   //Review
   const { data: reviewData } = useSWR<IGetReviewWithCounts>(
-    isReivew && `/api/user/${user_id}/review/${review_id}`
+    isReivew
+      ? `/api/user/${user_id}/review/${review_id}`
+      : isAllReivew
+      ? `/api/user/${userId}/review/${reviewId}`
+      : null
   );
   const ReviewCounts = reviewData?.review?._count.comments;
   //

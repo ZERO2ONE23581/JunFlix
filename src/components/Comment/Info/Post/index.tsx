@@ -9,7 +9,7 @@ import { ICommentInfoProps, IGetCommentInfo } from '../../../../types/comments';
 import { ManageCommentBtn } from '../../Button';
 import { CreateCommentOnPost } from '../../Create/Post';
 import { PostEditComment } from '../../Edit/Post';
-import { PostCommentDeleteModal } from '../../Modal/Delete/Review';
+import { PostCommentDeleteModal } from '../../Modal/Delete/Post';
 import { PostReplies } from '../../Replies/Post';
 
 export const PostCommentInfo = ({ commentId }: ICommentInfoProps) => {

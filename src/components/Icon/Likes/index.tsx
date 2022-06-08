@@ -34,41 +34,35 @@ interface CountsInReview extends Review {
 export const LikesIcon = ({ type, userId, reviewId }: any) => {
   const router = useRouter();
   const { user_id, board_id, post_id, review_id } = router.query;
-  const queryPost = user_id && board_id && post_id;
-  const queryReview = user_id && review_id;
-  const isPost = Boolean(type === 'post');
-  const isReivew = Boolean(type === 'review');
-  const isAllReivew = Boolean(type === 'allReview') && userId && reviewId;
+  const isPost = Boolean(type === 'post') && user_id && board_id && post_id;
+  const isReivew = Boolean(type === 'review') && user_id && review_id;
+  const isAllReivew = Boolean(type === 'review') && userId && reviewId;
 
   //Post
   const { data, mutate } = useSWR<IGetPostWithCounts>(
-    isPost &&
-      queryPost &&
-      `/api/user/${user_id}/board/${board_id}/post/${post_id}`
+    isPost && `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
-  const likesCountInPost = data?.post?._count.likes;
-  const [createLikesInPost] = useMutation(
+  const PostCounts = data?.post?._count.likes;
+  const [createOnPost] = useMutation(
     `/api/user/${user_id}/board/${board_id}/post/${post_id}/create/likes`
   );
 
   //Review
   const { data: reviewData, mutate: reivewMutate } =
     useSWR<IGetReviewWithCounts>(
-      isReivew && queryReview && `/api/user/${user_id}/review/${review_id}`
+      isReivew
+        ? `/api/user/${user_id}/review/${review_id}`
+        : isAllReivew
+        ? `/api/user/${userId}/review/${reviewId}`
+        : null
     );
-  const likesCountInReview = reviewData?.review?._count.likes;
-  const [createLikesInReview] = useMutation(
+  const ReviewCounts = reviewData?.review?._count.likes;
+  const [createOnReview] = useMutation(
     `/api/user/${user_id}/review/${review_id}/create/likes`
   );
-  const { data: allReviewData, mutate: allReviewMutate } =
-    useSWR<IGetReviewWithCounts>(
-      isAllReivew && `/api/user/${userId}/review/${reviewId}`
-    );
-  const likesCountInAllReview = allReviewData?.review?._count.likes;
-  const [createLikesInAllReview] = useMutation(
+  const [createOnAllReivew] = useMutation(
     `/api/user/${userId}/review/${reviewId}/create/likes`
   );
-  //
   const handleClick = () => {
     if (isPost) {
       if (!data) return;
@@ -88,9 +82,9 @@ export const LikesIcon = ({ type, userId, reviewId }: any) => {
         },
         false
       );
-      createLikesInPost({});
+      createOnPost({});
     }
-    if (isReivew) {
+    if (isReivew || isAllReivew) {
       if (!reviewData) return;
       reivewMutate(
         {
@@ -108,48 +102,27 @@ export const LikesIcon = ({ type, userId, reviewId }: any) => {
         },
         false
       );
-      createLikesInReview({});
-    }
-    if (isAllReivew) {
-      if (!allReviewData) return;
-      allReviewMutate(
-        {
-          ...allReviewData,
-          isLiked: !allReviewData.isLiked,
-          review: {
-            ...allReviewData.review,
-            _count: {
-              ...allReviewData.review?._count,
-              likes: allReviewData.isLiked
-                ? allReviewData.review?._count.likes - 1
-                : allReviewData.review?._count.likes + 1,
-            },
-          },
-        },
-        false
-      );
-      createLikesInAllReview({});
+      if (isReivew) return createOnReview({});
+      if (isAllReivew) return createOnAllReivew({});
     }
   };
   //
   return (
     <>
       <Cont>
-        <IconBtn onClick={handleClick} allReviewData={allReviewData?.ok}>
-          {data?.isLiked || reviewData?.isLiked || allReviewData?.isLiked ? (
+        <IconBtn onClick={handleClick} isAllReivew={isAllReivew}>
+          {data?.isLiked || reviewData?.isLiked ? (
             <Icons name="likes" type="solid" />
           ) : (
             <Icons name="likes" type="empty" />
           )}
         </IconBtn>
         <Counts>
-          {isPost && <span>{likesCountInPost ? likesCountInPost : '0'}</span>}
-          {isReivew && (
-            <span>{likesCountInReview ? likesCountInReview : '0'}</span>
+          {isPost && <span>{PostCounts ? PostCounts : '0'}</span>}
+          {(isReivew || isAllReivew) && (
+            <span>{ReviewCounts ? ReviewCounts : '0'}</span>
           )}
-          {isAllReivew && (
-            <span>{likesCountInAllReview ? likesCountInAllReview : '0'}</span>
-          )}
+
           <span> Likes</span>
         </Counts>
       </Cont>
@@ -163,12 +136,12 @@ const Cont = styled.article`
   flex-direction: column;
   justify-content: center;
 `;
-const IconBtn = styled.button<{ allReviewData: boolean | undefined }>`
+const IconBtn = styled.button<{ isAllReivew: boolean | undefined }>`
   border: none;
   background-color: inherit;
   svg {
-    width: ${(p) => (p.allReviewData ? '25px' : '30px')};
-    height: ${(p) => (p.allReviewData ? '25px' : '30px')};
+    width: ${(p) => (p.isAllReivew ? '25px' : '30px')};
+    height: ${(p) => (p.isAllReivew ? '25px' : '30px')};
   }
 `;
 const Counts = styled.article`

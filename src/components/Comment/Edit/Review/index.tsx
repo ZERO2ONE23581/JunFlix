@@ -9,9 +9,9 @@ import { ICommentRes, IEditCommentForm } from '../../../../types/comments';
 
 export const ReviewEditComment = ({ parentId, ogContent }: any) => {
   const router = useRouter();
-  const { user_id, board_id, post_id } = router.query;
+  const { user_id, review_id } = router.query;
   const [editComment, { loading, data }] = useMutation<ICommentRes>(
-    `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/${parentId}/edit`
+    `/api/user/${user_id}/review/${review_id}/comment/${parentId}/edit`
   );
   //
   const {

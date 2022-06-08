@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
 import useSWR from 'swr';
-import { Title } from '../../../../src/components/Layout/Title';
-import { PostList } from '../../../../src/components/Post/PostList';
-import useUser from '../../../../src/libs/client/useUser';
-import { IGetAllPosts } from '../../../../src/types/post';
+import { Title } from '../../../../../src/components/Layout/Title';
+import { PostList } from '../../../../../src/components/Post/PostList';
+import useUser from '../../../../../src/libs/client/useUser';
+import { IGetAllPosts } from '../../../../../src/types/post';
 
-const My_Posts: NextPage = () => {
+const MyPosts: NextPage = () => {
   const { isloggedIn, loggedInUser } = useUser();
   const { data } = useSWR<IGetAllPosts>(
     loggedInUser && `/api//user/${loggedInUser.id}/post/my_posts`
@@ -17,4 +17,4 @@ const My_Posts: NextPage = () => {
     </>
   );
 };
-export default My_Posts;
+export default MyPosts;

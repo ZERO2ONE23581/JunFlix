@@ -80,7 +80,7 @@ export const ReviewList = ({
               </a>
             </Link>
             <LikeCommentWrap
-              type="allReview"
+              type="review"
               userId={review.UserID}
               reviewId={review.id}
             />
