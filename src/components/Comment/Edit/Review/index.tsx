@@ -2,15 +2,15 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../../styles/btn';
-import { ErrMsg } from '../../../../styles/default';
-import useMutation from '../../../libs/client/useMutation';
-import { IEditCommentForm, IEditCommentRes } from '../../../types/comments';
+import { Btn } from '../../../../../styles/btn';
+import { ErrMsg } from '../../../../../styles/default';
+import useMutation from '../../../../libs/client/useMutation';
+import { ICommentRes, IEditCommentForm } from '../../../../types/comments';
 
-export const EditComment = ({ parentId, ogContent }: any) => {
+export const ReviewEditComment = ({ parentId, ogContent }: any) => {
   const router = useRouter();
   const { user_id, board_id, post_id } = router.query;
-  const [editComment, { loading, data }] = useMutation<IEditCommentRes>(
+  const [editComment, { loading, data }] = useMutation<ICommentRes>(
     `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/${parentId}/edit`
   );
   //

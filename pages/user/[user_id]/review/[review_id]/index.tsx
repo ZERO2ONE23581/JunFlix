@@ -11,7 +11,11 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import useAvatar from '../../../../../src/libs/client/useAvatar';
 import { Btn } from '../../../../../styles/btn';
 import { ThumNail } from '../../../../../styles/image';
-import { IconWithCommentList } from '../../../../../src/components/Icon/WithCommentList';
+import { LikeAndComments } from '../../board/[board_id]/post/[post_id]';
+import { LikeCommentWrap } from '../../../../../src/components/Icon/LikeCommentWrap';
+import { CreateCommentOnPost } from '../../../../../src/components/Comment/Create/Post';
+import { AllComments } from '../../../../../src/components/Comment/AllComments';
+import { CreateCommentOnReview } from '../../../../../src/components/Comment/Create/Review';
 
 const Review_Detail: NextPage = () => {
   const router = useRouter();
@@ -107,7 +111,12 @@ const Review_Detail: NextPage = () => {
             </li>
           </ul>
         </ReviewList>
-        <IconWithCommentList type="review" />
+        <LikeAndComments>
+          <LikeCommentWrap type="review" reviewId={null} userId={null} />
+          <h1>해당 리뷰에 댓글 남기기</h1>
+          <CreateCommentOnReview />
+          <AllComments type="review" />
+        </LikeAndComments>
       </Cont>
       {data && data.ok && data.review && delModal && (
         <DeleteModal

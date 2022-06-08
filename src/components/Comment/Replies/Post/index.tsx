@@ -1,10 +1,10 @@
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { CommentInfo } from '..';
-import { IGetReplies, IRepliesProps } from '../../../types/comments';
+import { IGetReplies, IRepliesProps } from '../../../../types/comments';
+import { PostCommentInfo } from '../../Info/Post';
 
-export const Replies = ({ parentId }: IRepliesProps) => {
+export const PostReplies = ({ parentId }: IRepliesProps) => {
   const router = useRouter();
   const { user_id, board_id, post_id } = router.query;
   const query_id = user_id && board_id && post_id && parentId;
@@ -17,7 +17,7 @@ export const Replies = ({ parentId }: IRepliesProps) => {
   return (
     <Cont>
       {replies?.map((reply) => (
-        <CommentInfo key={reply.id} commentId={reply.id} />
+        <PostCommentInfo key={reply.id} commentId={reply.id} />
       ))}
     </Cont>
   );

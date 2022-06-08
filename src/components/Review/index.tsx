@@ -6,9 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { User } from '@prisma/client';
 import { ReviewWithUser } from '../../types/review';
-import { ReviewLikes } from '../Button/Likes';
 import { H1, PageCont } from '../../../styles/default';
-import { LikesAndComments } from '../Icon/LikesAndComments';
+import { LikeCommentWrap } from '../Icon/LikeCommentWrap';
 
 interface IReviewListProps {
   allReviews?: boolean;
@@ -80,7 +79,7 @@ export const ReviewList = ({
                 </Item>
               </a>
             </Link>
-            <LikesAndComments
+            <LikeCommentWrap
               type="allReview"
               userId={review.UserID}
               reviewId={review.id}

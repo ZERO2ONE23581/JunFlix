@@ -1,25 +1,23 @@
 import styled from '@emotion/styled';
-import { Comment, User } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { AvatarLogo } from '../../../styles/image';
-import useAvatar from '../../libs/client/useAvatar';
-import { Replies } from './Replies';
-import { CreateComment } from './Create';
-import { EditComment } from './Edit';
-import { ErrMsg } from '../../../styles/default';
-import { ManageCommentBtn } from './Button';
-import { CommentDeleteModal } from '../Modal/Comment/Delete';
-import { ICommentInfoProps, IGetCommentInfo } from '../../types/comments';
+import { AvatarLogo } from '../../../../../styles/image';
+import useAvatar from '../../../../libs/client/useAvatar';
+import { ErrMsg } from '../../../../../styles/default';
+import { ManageCommentBtn } from '../../Button';
+import { ICommentInfoProps, IGetCommentInfo } from '../../../../types/comments';
+import { CreateCommentOnReview } from '../../Create/Review';
+import { ReviewReplies } from '../../Replies/Review';
+import { ReviewCommentDeleteModal } from '../../Modal/Delete/Post';
+import { ReviewEditComment } from '../../Edit/Review';
 
-export const CommentInfo = ({ commentId }: ICommentInfoProps) => {
+export const ReviewCommentInfo = ({ commentId }: ICommentInfoProps) => {
   const router = useRouter();
-  const { user_id, board_id, post_id } = router.query;
-  const queryId = user_id && board_id && post_id && commentId;
+  const { user_id, review_id } = router.query;
+  const queryId = user_id && review_id && commentId;
   const { data } = useSWR<IGetCommentInfo>(
-    queryId &&
-      `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/${commentId}`
+    queryId && `/api/user/${user_id}/review/${review_id}/comment/${commentId}`
   );
   const comment = data?.comment;
   const [saveId, setSaveId] = useState(0);
@@ -70,7 +68,7 @@ export const CommentInfo = ({ commentId }: ICommentInfoProps) => {
               />
             </DescWrap>
             {openEdit && saveId === comment?.id ? (
-              <EditComment
+              <ReviewEditComment
                 parentId={comment?.id}
                 ogContent={comment?.content}
               />
@@ -80,11 +78,11 @@ export const CommentInfo = ({ commentId }: ICommentInfoProps) => {
           </Desc>
         </Wrap>
         {openReply && saveId === comment?.id && (
-          <CreateComment parentId={comment?.id} />
+          <CreateCommentOnReview parentId={comment?.id} />
         )}
-        <Replies parentId={comment?.id} />
+        <ReviewReplies parentId={comment?.id} />
         {openDelete && (
-          <CommentDeleteModal
+          <ReviewCommentDeleteModal
             id={comment?.id}
             setSaveId={setSaveId}
             setOpenDelete={setOpenDelete}

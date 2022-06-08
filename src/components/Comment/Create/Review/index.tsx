@@ -2,29 +2,25 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { AvatarLogo } from '../../../../styles/image';
-import { Btn } from '../../../../styles/btn';
-import { ErrMsg } from '../../../../styles/default';
-import useAvatar from '../../../libs/client/useAvatar';
-import useMutation from '../../../libs/client/useMutation';
-import useUser from '../../../libs/client/useUser';
-import {
-  ICreateCommentsForm,
-  ICreateCommentsRes,
-  ICreateReplyRes,
-} from '../../../types/comments';
+import { AvatarLogo } from '../../../../../styles/image';
+import { Btn } from '../../../../../styles/btn';
+import { ErrMsg } from '../../../../../styles/default';
+import useAvatar from '../../../../libs/client/useAvatar';
+import useMutation from '../../../../libs/client/useMutation';
+import useUser from '../../../../libs/client/useUser';
+import { ICommentRes, ICreateCommentsForm } from '../../../../types/comments';
 
-export const CreateComment = ({ parentId }: any) => {
+export const CreateCommentOnReview = ({ parentId }: any) => {
   const { loggedInUser } = useUser();
   const router = useRouter();
-  const { user_id, board_id, post_id } = router.query;
+  const { user_id, review_id } = router.query;
   //
-  const [createComments, { loading, data }] = useMutation<ICreateCommentsRes>(
-    `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/create`
+  const [createComments, { loading, data }] = useMutation<ICommentRes>(
+    `/api/user/${user_id}/review/${review_id}/comment/create`
   );
   const [createReply, { loading: replyLoading, data: replyData }] =
-    useMutation<ICreateReplyRes>(
-      `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/${parentId}/create`
+    useMutation<ICommentRes>(
+      `/api/user/${user_id}/review/${review_id}/comment/${parentId}/create`
     );
   //
   const {

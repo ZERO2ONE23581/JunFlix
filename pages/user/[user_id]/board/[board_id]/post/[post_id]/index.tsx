@@ -14,7 +14,9 @@ import { IEditPostForm, IGetPost } from '../../../../../../../src/types/post';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
 import { Btn } from '../../../../../../../styles/btn';
 import { ThumNail } from '../../../../../../../styles/image';
-import { IconWithCommentList } from '../../../../../../../src/components/Icon/WithCommentList';
+import { LikeCommentWrap } from '../../../../../../../src/components/Icon/LikeCommentWrap';
+import { CreateCommentOnPost } from '../../../../../../../src/components/Comment/Create/Post';
+import { AllComments } from '../../../../../../../src/components/Comment/AllComments';
 
 const Post_Detail: NextPage = () => {
   const router = useRouter();
@@ -171,7 +173,12 @@ const Post_Detail: NextPage = () => {
             </Button>
           )}
         </form>
-        <IconWithCommentList type="post" />
+        <LikeAndComments>
+          <LikeCommentWrap type="post" reviewId={null} userId={null} />
+          <h1>해당 포스트에 댓글 남기기</h1>
+          <CreateCommentOnPost />
+          <AllComments type="post" />
+        </LikeAndComments>
       </Cont>
       {delModal && (
         <DeleteModal
@@ -185,6 +192,18 @@ const Post_Detail: NextPage = () => {
   );
 };
 export default Post_Detail;
+
+export const LikeAndComments = styled.section`
+  padding: 20px;
+  border: 10px solid black;
+  h1 {
+    margin-top: 20px;
+    padding-left: 20px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: ${(p) => p.theme.color.font};
+  }
+`;
 
 const Cont = styled.section`
   padding: 20px 20%;

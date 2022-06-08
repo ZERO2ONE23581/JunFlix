@@ -21,19 +21,7 @@ export interface CommentWithUser extends Comment {
 export interface ICreateCommentsForm {
   content?: string;
 }
-export interface ICommentPostRes {
-  ok: boolean;
-  error?: string;
-}
-export interface ICreateCommentsRes {
-  ok: boolean;
-  error?: string;
-}
-export interface ICreateReplyRes {
-  ok: boolean;
-  error?: string;
-}
-export interface IEditCommentRes {
+export interface ICommentRes {
   ok: boolean;
   error?: string;
 }

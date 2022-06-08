@@ -1,22 +1,42 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { CommentInfo } from '..';
 import { IGetAllComments } from '../../../types/comments';
+import { ReviewCommentInfo } from '../Info/Review';
+import { PostCommentInfo } from '../Info/Post';
 
-export const AllComments = () => {
+export const AllComments = ({ type }: any) => {
   const router = useRouter();
-  const { user_id, board_id, post_id } = router.query;
-  const query_id = user_id && board_id && post_id;
+  const { user_id, board_id, post_id, review_id } = router.query;
+  const queryPost = user_id && board_id && post_id;
+  const queryReview = user_id && review_id;
+  const isPost = Boolean(type === 'post') && queryPost;
+  const isReview = Boolean(type === 'review') && queryReview;
+
+  //Post
   const { data } = useSWR<IGetAllComments>(
-    query_id && `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment`
+    isPost && `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment`
   );
-  const array = data?.allComments?.filter((comment) => !comment.ReplyID);
+  const ArrayOnPost = data?.allComments?.filter((comment) => !comment.ReplyID);
+
+  //Review
+  const { data: ReviewData } = useSWR<IGetAllComments>(
+    isReview && `/api/user/${user_id}/review/${review_id}/comment`
+  );
+  const ArrayOnReview = ReviewData?.allComments?.filter(
+    (comment) => !comment.ReplyID
+  );
+  //
   return (
     <Cont>
-      {array?.map((comment) => (
-        <CommentInfo key={comment.id} commentId={comment.id} />
-      ))}
+      {isPost &&
+        ArrayOnPost?.map((comment) => (
+          <PostCommentInfo key={comment.id} commentId={comment.id} />
+        ))}
+      {isReview &&
+        ArrayOnReview?.map((comment) => (
+          <ReviewCommentInfo key={comment.id} commentId={comment.id} />
+        ))}
     </Cont>
   );
 };

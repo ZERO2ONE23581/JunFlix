@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { CommentIcon } from '../Comment';
 import { LikesIcon } from '../Likes';
 
-export const LikesAndComments = ({ type, userId, reviewId }: any) => {
+export const LikeCommentWrap = ({ type, userId, reviewId }: any) => {
   return (
     <Cont>
       <IconWrap>
