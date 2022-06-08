@@ -7,18 +7,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { user_id, board_id, post_id } = req.query;
   const queryExists = Boolean(user_id && board_id && post_id);
-  if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
-
-  //FIND POST
+  if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR' });
+  //
   const post = await client.post.findUnique({
     where: { id: +post_id.toString() },
     include: {
       comments: {
-        select: {
-          id: true,
-          UserID: true,
-          ReplyID: true,
-          content: true,
+        include: {
           user: { select: { id: true, username: true } },
         },
         orderBy: {
@@ -28,9 +23,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       _count: { select: { likes: true, comments: true } },
     },
   });
-  if (!post) return res.json({ ok: false, error: 'NO POST FOUND!' });
-
-  //로그인한 현재유저가 누른 포스트의 좋아요 + 댓글
+  if (!post) return res.json({ ok: false, error: 'NO POST FOUND' });
+  //
   const isLiked = Boolean(
     await client.likes.findFirst({
       where: { UserID: user?.id, PostID: post.id },
@@ -41,7 +35,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       where: { UserID: user?.id, PostID: post.id },
     })
   );
-  //
   return res.json({ ok: true, post, isLiked, isComments });
 }
 export default withApiSession(

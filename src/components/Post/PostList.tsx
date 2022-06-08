@@ -4,6 +4,7 @@ import useAvatar from '../../libs/client/useAvatar';
 import { H1 } from '../../../styles/default';
 import { IPostListProps } from '../../types/post';
 import { ItemCont } from '../Board/BoardList';
+import { ThumNail } from '../../../styles/image';
 
 export const PostList = ({ posts, allPosts, myPosts }: IPostListProps) => {
   return (
@@ -61,22 +62,4 @@ const Item = styled.div`
       }
     }
   }
-`;
-export const ThumNail = styled.article`
-  .noimage {
-    width: 50px;
-    height: 50px;
-  }
-  img {
-    width: 100%;
-    height: 100%;
-  }
-  width: 100%;
-  height: 200px;
-  border-radius: 5px;
-  border: ${(p) => p.theme.border};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

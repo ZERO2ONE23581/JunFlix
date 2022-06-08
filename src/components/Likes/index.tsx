@@ -34,15 +34,14 @@ interface CountsInReview extends Review {
 export const LikesIcon = ({ type }: any) => {
   const router = useRouter();
   const { user_id, board_id, post_id, review_id } = router.query;
-  const queryPost = board_id && post_id;
-  const queryReview = review_id;
+  const queryPost = user_id && board_id && post_id;
+  const queryReview = user_id && review_id;
   const isPost = Boolean(type === 'post');
-  const isReivew = Boolean(type === 'post');
+  const isReivew = Boolean(type === 'review');
 
   //Post
   const { data, mutate } = useSWR<IGetPostWithCounts>(
     isPost &&
-      user_id &&
       queryPost &&
       `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
@@ -54,14 +53,11 @@ export const LikesIcon = ({ type }: any) => {
   //Review
   const { data: reviewData, mutate: reivewMutate } =
     useSWR<IGetReviewWithCounts>(
-      isReivew &&
-        user_id &&
-        queryReview &&
-        `/api/user/${user_id}/board/${board_id}/review/${review_id}`
+      isReivew && queryReview && `/api/user/${user_id}/review/${review_id}`
     );
   const likesCountInReview = reviewData?.review?._count.likes;
-  const [createLikesInReview] = useMutation(
-    `/api/user/${user_id}/${review_id}/create/likes`
+  const [createLikesInReview, { data: response }] = useMutation(
+    `/api/user/${user_id}/review/${review_id}/create/likes`
   );
   //
   const handleClick = () => {
@@ -87,34 +83,35 @@ export const LikesIcon = ({ type }: any) => {
     }
     if (isReivew) {
       if (!reviewData) return;
-      // mutate(
-      //   {
-      //     ...reviewData,
-      //     isLiked: !reviewData.isLiked,
-      //     review: {
-      //       ...reviewData.review,
-      //       _count: {
-      //         ...reviewData.review?._count,
-      //         likes: reviewData.isLiked
-      //           ? reviewData.review?._count.likes - 1
-      //           : reviewData.review?._count.likes + 1,
-      //       },
-      //     },
-      //   },
-      //   false
-      // );
+      reivewMutate(
+        {
+          ...reviewData,
+          isLiked: !reviewData.isLiked,
+          review: {
+            ...reviewData.review,
+            _count: {
+              ...reviewData.review?._count,
+              likes: reviewData.isLiked
+                ? reviewData.review?._count.likes - 1
+                : reviewData.review?._count.likes + 1,
+            },
+          },
+        },
+        false
+      );
       createLikesInReview({});
     }
   };
   //
+  console.log(response);
   return (
     <>
       <Cont>
         <IconBtn onClick={handleClick}>
-          {!data?.isLiked ? (
-            <Icons name="likes" type="empty" />
-          ) : (
+          {data?.isLiked || reviewData?.isLiked ? (
             <Icons name="likes" type="solid" />
+          ) : (
+            <Icons name="likes" type="empty" />
           )}
         </IconBtn>
         <Counts>

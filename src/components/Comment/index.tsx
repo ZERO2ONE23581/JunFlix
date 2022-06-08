@@ -3,7 +3,7 @@ import { Comment, User } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { AvatarLogo } from '../../../styles/avatar';
+import { AvatarLogo } from '../../../styles/image';
 import useAvatar from '../../libs/client/useAvatar';
 import { Replies } from './Replies';
 import { CreateComment } from './Create';

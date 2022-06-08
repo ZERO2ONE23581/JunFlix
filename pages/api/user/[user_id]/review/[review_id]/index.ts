@@ -9,22 +9,33 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const queryExists = Boolean(user_id && review_id);
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
-
+  //
   const review = await client.review.findUnique({
     where: { id: +review_id.toString() },
     include: {
-      user: { select: { username: true } },
-      _count: { select: { likes: true } },
+      comments: {
+        include: {
+          user: { select: { id: true, username: true } },
+        },
+        orderBy: {
+          id: 'desc',
+        },
+      },
+      _count: { select: { likes: true, comments: true } },
     },
   });
-  if (!review) return res.json({ ok: false, error: 'NO REVIEW FOUND!' });
-
-  //로그인한 현재유저가 누른 리뷰의 좋아요
+  if (!review) return res.json({ ok: false, error: 'NO REVIEW FOUND' });
+  //
   const isLiked = Boolean(
     await client.likes.findFirst({
       where: { UserID: user?.id, ReviewID: review.id },
     })
   );
-  return res.json({ ok: true, review, isLiked });
+  const isComments = Boolean(
+    await client.comment.findFirst({
+      where: { UserID: user?.id, ReviewID: review.id },
+    })
+  );
+  return res.json({ ok: true, review, isLiked, isComments });
 }
 export default withApiSession(withHandler({ methods: ['GET'], handler }));

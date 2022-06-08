@@ -1,10 +1,4 @@
-import {
-  OkMsg,
-  ErrMsg,
-  Article,
-  FlexAbsPost,
-  PageCont,
-} from '../../../../../../../styles/default';
+import { OkMsg, ErrMsg, Article } from '../../../../../../../styles/default';
 import useSWR from 'swr';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
@@ -18,9 +12,9 @@ import useAvatar from '../../../../../../../src/libs/client/useAvatar';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm, IGetPost } from '../../../../../../../src/types/post';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
-import { ThumNail } from '../../../../../../../src/components/Post/PostList';
 import { LikesAndComments } from '../../../../../../../src/components/Post/Icon';
 import { Btn } from '../../../../../../../styles/btn';
+import { ThumNail } from '../../../../../../../styles/image';
 
 const Post_Detail: NextPage = () => {
   const router = useRouter();

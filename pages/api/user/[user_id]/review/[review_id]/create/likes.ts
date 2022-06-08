@@ -9,20 +9,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const queryExists = Boolean(user_id && review_id);
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
   if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
-
-  //FIND LIKES
+  //
   const alreadyExists = await client.likes.findFirst({
     where: {
       UserID: user?.id,
       ReviewID: +review_id.toString(),
     },
   });
-
-  //DELETE LIKES
+  //
   if (alreadyExists) {
     await client.likes.delete({ where: { id: alreadyExists.id } });
   } else {
-    //CREATE LIKES
     await client.likes.create({
       data: {
         user: { connect: { id: user?.id } },

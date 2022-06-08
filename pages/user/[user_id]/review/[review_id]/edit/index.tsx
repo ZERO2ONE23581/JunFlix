@@ -6,11 +6,11 @@ import { useForm } from 'react-hook-form';
 import { MutationRes } from '../../../../../../src/types/mutation';
 import useMutation from '../../../../../../src/libs/client/useMutation';
 import { Input, Select } from '../../../../../../src/components/Input';
-import { ThumNail } from '../../../../../../src/components/Post/AllPostsWithBoard';
 import useAvatar from '../../../../../../src/libs/client/useAvatar';
 import { Btn } from '../../../../../../src/components/Button';
 import { IGetReview, IReviewForm } from '../../../../../../src/types/review';
 import { ErrMsg, PageCont } from '../../../../../../styles/default';
+import { ThumNail } from '../../../../../../styles/image';
 
 const EditReview: NextPage = () => {
   const router = useRouter();

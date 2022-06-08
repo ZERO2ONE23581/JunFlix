@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { AvatarLogo } from '../../../../styles/avatar';
+import { AvatarLogo } from '../../../../styles/image';
 import { Btn } from '../../../../styles/btn';
 import { ErrMsg } from '../../../../styles/default';
 import useAvatar from '../../../libs/client/useAvatar';
