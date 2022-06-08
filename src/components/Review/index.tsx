@@ -8,6 +8,7 @@ import { User } from '@prisma/client';
 import { ReviewWithUser } from '../../types/review';
 import { ReviewLikes } from '../Button/Likes';
 import { H1, PageCont } from '../../../styles/default';
+import { LikesAndComments } from '../Icon/LikesAndComments';
 
 interface IReviewListProps {
   allReviews?: boolean;
@@ -37,33 +38,33 @@ export const ReviewList = ({
         }}
       />
       <List>
-        {reviews?.map((info) => (
-          <article key={info.id}>
-            <Link href={`/user/${info.UserID}/review/${info.id}`}>
+        {reviews?.map((review) => (
+          <Desc key={review.id}>
+            <Link href={`/user/${review.UserID}/review/${review.id}`}>
               <a>
                 <Item>
-                  <Order>#{reviews.length - reviews.indexOf(info)}</Order>
+                  <Order>#{reviews.length - reviews.indexOf(review)}</Order>
                   <Wrap>
-                    <ReviewTitle>{info.title}</ReviewTitle>
+                    <ReviewTitle>{review.title}</ReviewTitle>
                     <Items>
                       <ul>
                         <li>
-                          <span>{info.movieTitle}</span>
+                          <span>{review.movieTitle}</span>
                           <span> / </span>
                         </li>
                         <li>
-                          <span>{info.genre}</span>
+                          <span>{review.genre}</span>
                           <span> / </span>
                         </li>
                         <li>
                           <span>작성자: </span>
-                          <span>{info.user.username}</span>
+                          <span>{review.user.username}</span>
                         </li>
                       </ul>
                       <Stars>
                         {[1, 2, 3, 4, 5].map((score) => (
                           <span key={score}>
-                            {info.score! >= score ? (
+                            {review.score! >= score ? (
                               <FontAwesomeIcon
                                 icon={faStar}
                                 style={{ color: 'red' }}
@@ -79,13 +80,27 @@ export const ReviewList = ({
                 </Item>
               </a>
             </Link>
-            <ReviewLikes userId={info.UserID} reviewId={info.id} />
-          </article>
+            <LikesAndComments
+              type="allReview"
+              userId={review.UserID}
+              reviewId={review.id}
+            />
+          </Desc>
         ))}
       </List>
     </PageCont>
   );
 };
+
+const Desc = styled.article`
+  padding: 20px;
+  margin-bottom: 20px;
+  border: ${(p) => p.theme.border};
+  color: ${(p) => p.theme.color.font};
+  box-shadow: ${(p) => p.theme.boxShadow.input};
+  background-color: ${(p) => p.theme.color.bg};
+  border: 5px solid hotpink;
+`;
 
 const Stars = styled.span`
   font-size: 0.8rem;
@@ -104,12 +119,7 @@ const Item = styled.article`
   display: flex;
   align-items: center;
   border-radius: 8px;
-  padding: 15px;
   margin-bottom: 15px;
-  border: ${(p) => p.theme.border};
-  color: ${(p) => p.theme.color.font};
-  box-shadow: ${(p) => p.theme.boxShadow.input};
-  background-color: ${(p) => p.theme.color.bg};
 `;
 
 const List = styled.article`

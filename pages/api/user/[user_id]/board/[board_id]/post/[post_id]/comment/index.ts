@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
   //
   const allComments = await client.comment.findMany({
-    where: { UserID: +user_id, PostID: +post_id },
+    where: { PostID: +post_id },
     include: { user: { select: { id: true, username: true, avatar: true } } },
     orderBy: {
       id: 'desc',

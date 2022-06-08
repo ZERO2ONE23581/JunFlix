@@ -1,8 +1,8 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { Post, Review, User } from '@prisma/client';
-import { Icons } from '../../../styles/svg';
-import useMutation from '../../libs/client/useMutation';
+import { Icons } from '../../../../styles/svg';
+import useMutation from '../../../libs/client/useMutation';
 import { useRouter } from 'next/router';
 
 interface IGetPostWithCounts {
@@ -31,13 +31,14 @@ interface CountsInReview extends Review {
     comments: number;
   };
 }
-export const LikesIcon = ({ type }: any) => {
+export const LikesIcon = ({ type, userId, reviewId }: any) => {
   const router = useRouter();
   const { user_id, board_id, post_id, review_id } = router.query;
   const queryPost = user_id && board_id && post_id;
   const queryReview = user_id && review_id;
   const isPost = Boolean(type === 'post');
   const isReivew = Boolean(type === 'review');
+  const isAllReivew = Boolean(type === 'allReview') && userId && reviewId;
 
   //Post
   const { data, mutate } = useSWR<IGetPostWithCounts>(
@@ -56,8 +57,16 @@ export const LikesIcon = ({ type }: any) => {
       isReivew && queryReview && `/api/user/${user_id}/review/${review_id}`
     );
   const likesCountInReview = reviewData?.review?._count.likes;
-  const [createLikesInReview, { data: response }] = useMutation(
+  const [createLikesInReview] = useMutation(
     `/api/user/${user_id}/review/${review_id}/create/likes`
+  );
+  const { data: allReviewData, mutate: allReviewMutate } =
+    useSWR<IGetReviewWithCounts>(
+      isAllReivew && `/api/user/${userId}/review/${reviewId}`
+    );
+  const likesCountInAllReview = allReviewData?.review?._count.likes;
+  const [createLikesInAllReview] = useMutation(
+    `/api/user/${userId}/review/${reviewId}/create/likes`
   );
   //
   const handleClick = () => {
@@ -101,14 +110,33 @@ export const LikesIcon = ({ type }: any) => {
       );
       createLikesInReview({});
     }
+    if (isAllReivew) {
+      if (!allReviewData) return;
+      allReviewMutate(
+        {
+          ...allReviewData,
+          isLiked: !allReviewData.isLiked,
+          review: {
+            ...allReviewData.review,
+            _count: {
+              ...allReviewData.review?._count,
+              likes: allReviewData.isLiked
+                ? allReviewData.review?._count.likes - 1
+                : allReviewData.review?._count.likes + 1,
+            },
+          },
+        },
+        false
+      );
+      createLikesInAllReview({});
+    }
   };
   //
-  console.log(response);
   return (
     <>
       <Cont>
-        <IconBtn onClick={handleClick}>
-          {data?.isLiked || reviewData?.isLiked ? (
+        <IconBtn onClick={handleClick} allReviewData={allReviewData?.ok}>
+          {data?.isLiked || reviewData?.isLiked || allReviewData?.isLiked ? (
             <Icons name="likes" type="solid" />
           ) : (
             <Icons name="likes" type="empty" />
@@ -118,6 +146,9 @@ export const LikesIcon = ({ type }: any) => {
           {isPost && <span>{likesCountInPost ? likesCountInPost : '0'}</span>}
           {isReivew && (
             <span>{likesCountInReview ? likesCountInReview : '0'}</span>
+          )}
+          {isAllReivew && (
+            <span>{likesCountInAllReview ? likesCountInAllReview : '0'}</span>
           )}
           <span> Likes</span>
         </Counts>
@@ -132,12 +163,12 @@ const Cont = styled.article`
   flex-direction: column;
   justify-content: center;
 `;
-const IconBtn = styled.button`
+const IconBtn = styled.button<{ allReviewData: boolean | undefined }>`
   border: none;
   background-color: inherit;
   svg {
-    width: 30px;
-    height: 30px;
+    width: ${(p) => (p.allReviewData ? '25px' : '30px')};
+    height: ${(p) => (p.allReviewData ? '25px' : '30px')};
   }
 `;
 const Counts = styled.article`

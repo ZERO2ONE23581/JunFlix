@@ -39,6 +39,10 @@ export const Svg = styled.svg`
   width: 30px;
   height: 30px;
 `;
+const SvgAllReview = styled(Svg)`
+  width: 15px;
+  height: 15px;
+`;
 export const SvgComments = styled.svg`
   width: 30px;
   height: 30px;

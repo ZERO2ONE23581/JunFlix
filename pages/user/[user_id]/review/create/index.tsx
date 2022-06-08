@@ -8,7 +8,7 @@ import useMutation from '../../../../../src/libs/client/useMutation';
 import { Btn } from '../../../../../src/components/Button';
 import { ErrMsg, PageCont } from '../../../../../styles/default';
 import { Review } from '@prisma/client';
-import { ThumNail } from '../../../../../src/components/Post/PostList';
+import { ThumNail } from '../../../../../styles/image';
 
 interface ICreateReviewRes {
   ok: boolean;

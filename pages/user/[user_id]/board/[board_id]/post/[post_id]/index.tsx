@@ -12,9 +12,9 @@ import useAvatar from '../../../../../../../src/libs/client/useAvatar';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm, IGetPost } from '../../../../../../../src/types/post';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
-import { LikesAndComments } from '../../../../../../../src/components/Post/Icon';
 import { Btn } from '../../../../../../../styles/btn';
 import { ThumNail } from '../../../../../../../styles/image';
+import { IconWithCommentList } from '../../../../../../../src/components/Icon/WithCommentList';
 
 const Post_Detail: NextPage = () => {
   const router = useRouter();
@@ -171,7 +171,7 @@ const Post_Detail: NextPage = () => {
             </Button>
           )}
         </form>
-        <LikesAndComments type="post" />
+        <IconWithCommentList type="post" />
       </Cont>
       {delModal && (
         <DeleteModal

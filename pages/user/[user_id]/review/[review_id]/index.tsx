@@ -9,9 +9,9 @@ import { DeleteModal } from '../../../../../src/components/Modal/Board/Delete';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import useAvatar from '../../../../../src/libs/client/useAvatar';
-import { LikesAndComments } from '../../../../../src/components/Post/Icon';
 import { Btn } from '../../../../../styles/btn';
 import { ThumNail } from '../../../../../styles/image';
+import { IconWithCommentList } from '../../../../../src/components/Icon/WithCommentList';
 
 const Review_Detail: NextPage = () => {
   const router = useRouter();
@@ -107,7 +107,7 @@ const Review_Detail: NextPage = () => {
             </li>
           </ul>
         </ReviewList>
-        <LikesAndComments type="review" />
+        <IconWithCommentList type="review" />
       </Cont>
       {data && data.ok && data.review && delModal && (
         <DeleteModal

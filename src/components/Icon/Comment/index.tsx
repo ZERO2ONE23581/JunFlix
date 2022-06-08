@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Post, User } from '@prisma/client';
+import { Post, Review, User } from '@prisma/client';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { Icons } from '../../../../styles/svg';
@@ -17,28 +17,52 @@ interface CountsInPost extends Post {
     comments: number;
   };
 }
+interface IGetReviewWithCounts {
+  ok: boolean;
+  error?: string;
+  isLiked?: boolean;
+  isComments?: boolean;
+  review: CountsInReview;
+}
+interface CountsInReview extends Review {
+  _count: {
+    likes: number;
+    comments: number;
+  };
+}
 export const CommentIcon = ({ type }: any) => {
   const router = useRouter();
-  const { user_id, board_id, post_id } = router.query;
-  const query_id = user_id && board_id && post_id;
-  const { data } = useSWR<IGetPostWithCounts>(
-    type === 'post' &&
-      query_id &&
-      `/api/user/${user_id}/board/${board_id}/post/${post_id}`
+  const { user_id, board_id, post_id, review_id } = router.query;
+  const queryPost = user_id && board_id && post_id;
+  const queryReview = user_id && review_id;
+  const isPost = Boolean(type === 'post') && queryPost;
+  const isReivew = Boolean(type === 'review') && queryReview;
+
+  //Post
+  const { data: postData } = useSWR<IGetPostWithCounts>(
+    isPost && `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
-  const Count = data?.post?._count.comments;
+  const PostCounts = postData?.post?._count.comments;
+
+  //Review
+  const { data: reviewData } = useSWR<IGetReviewWithCounts>(
+    isReivew && `/api/user/${user_id}/review/${review_id}`
+  );
+  const ReviewCounts = reviewData?.review?._count.comments;
   //
   return (
     <Cont>
       <Icon>
-        {data?.isComments ? (
+        {postData?.isComments || reviewData?.isComments ? (
           <Icons name="comments" type="solid" />
         ) : (
           <Icons name="comments" type="empty" />
         )}
       </Icon>
       <Counts>
-        <span>{Count ? Count : '0'}</span>
+        <span>
+          {PostCounts ? PostCounts : ReviewCounts ? ReviewCounts : '0'}
+        </span>
         <span>Comments</span>
       </Counts>
     </Cont>
