@@ -17,12 +17,14 @@ interface CountsInPost extends Post {
     comments: number;
   };
 }
-export const CommentIcon = () => {
+export const CommentIcon = ({ type }: any) => {
   const router = useRouter();
   const { user_id, board_id, post_id } = router.query;
   const query_id = user_id && board_id && post_id;
   const { data } = useSWR<IGetPostWithCounts>(
-    query_id && `/api/user/${user_id}/board/${board_id}/post/${post_id}`
+    type === 'post' &&
+      query_id &&
+      `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
   const Count = data?.post?._count.comments;
   //

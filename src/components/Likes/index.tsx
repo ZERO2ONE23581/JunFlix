@@ -18,36 +18,41 @@ interface CountsInPost extends Post {
     comments: number;
   };
 }
-export const LikesIcon = () => {
+export const LikesIcon = ({ type }: any) => {
   const router = useRouter();
   const { user_id, board_id, post_id } = router.query;
   const query_id = user_id && board_id && post_id;
+  const postType = Boolean(type === 'post');
   const { data, mutate } = useSWR<IGetPostWithCounts>(
-    query_id && `/api/user/${user_id}/board/${board_id}/post/${post_id}`
+    postType &&
+      query_id &&
+      `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
   const likesCount = data?.post?._count.likes;
-  const [createLikes] = useMutation(
+  const [createLikesInPost] = useMutation(
     `/api/user/${user_id}/board/${board_id}/post/${post_id}/create/likes`
   );
   const handleClick = () => {
     if (!data) return;
-    mutate(
-      {
-        ...data,
-        isLiked: !data.isLiked,
-        post: {
-          ...data?.post,
-          _count: {
-            ...data.post?._count,
-            likes: data.isLiked
-              ? data.post?._count.likes - 1
-              : data.post?._count.likes + 1,
+    if (postType) {
+      mutate(
+        {
+          ...data,
+          isLiked: !data.isLiked,
+          post: {
+            ...data?.post,
+            _count: {
+              ...data.post?._count,
+              likes: data.isLiked
+                ? data.post?._count.likes - 1
+                : data.post?._count.likes + 1,
+            },
           },
         },
-      },
-      false
-    );
-    createLikes({});
+        false
+      );
+      createLikesInPost({});
+    }
   };
   return (
     <>

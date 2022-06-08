@@ -11,7 +11,6 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../../../../../../src/components/Button';
 import { Input } from '../../../../../../../src/components/Input';
 import useUser from '../../../../../../../src/libs/client/useUser';
 import { MutationRes } from '../../../../../../../src/types/mutation';
@@ -21,6 +20,7 @@ import { IEditPostForm, IGetPost } from '../../../../../../../src/types/post';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
 import { ThumNail } from '../../../../../../../src/components/Post/PostList';
 import { LikesAndComments } from '../../../../../../../src/components/Post/Icon';
+import { Btn } from '../../../../../../../styles/btn';
 
 const Post_Detail: NextPage = () => {
   const router = useRouter();
@@ -83,41 +83,44 @@ const Post_Detail: NextPage = () => {
   }, [avatar, setValue, data, dataRes]);
   //
   return (
-    <PageCont>
-      <LikesAndComments />
-      <section className="read-post-cont">
-        <article className="btn-wrap">
-          <Btn
-            type="back"
-            btnName="Back"
+    <>
+      <Cont>
+        <BtnWrap>
+          <Button
+            typeEdit={false}
+            type="button"
             onClick={() => router.push(`/user/${user_id}/board/${board_id}`)}
-          />
-          <>
-            {isloggedIn && loggedInUser?.id === Number(user_id) && (
-              <Btn
-                type="board-setting"
-                onClick={() => setOpenSetup((p) => !p)}
-                btnName="Setting"
-              />
-            )}
-          </>
-          <FlexAbsPost>
-            {openSetup && (
-              <>
-                <Btn
-                  type="edit-post"
-                  onClick={() => setEdit((p) => !p)}
-                  btnName={edit ? 'Back' : 'Edit Post'}
-                />
-                <Btn
-                  type="delete-post"
-                  onClick={() => setDelModal((p) => !p)}
-                  btnName="Delete"
-                />
-              </>
-            )}
-          </FlexAbsPost>
-        </article>
+          >
+            {loading ? 'Loading...' : 'Board'}
+          </Button>
+          {isloggedIn && loggedInUser?.id === Number(user_id) && (
+            <Button
+              typeEdit={false}
+              type="button"
+              onClick={() => setOpenSetup((p) => !p)}
+            >
+              {loading ? 'Loading...' : openSetup ? 'Back' : 'Set up'}
+            </Button>
+          )}
+          {openSetup && (
+            <BtnWrap>
+              <Button
+                typeEdit={false}
+                type="button"
+                onClick={() => setEdit((p) => !p)}
+              >
+                {loading ? 'Loading...' : edit ? 'Cancel' : 'Edit'}
+              </Button>
+              <Button
+                typeEdit={false}
+                type="button"
+                onClick={() => setDelModal((p) => !p)}
+              >
+                {loading ? 'Loading...' : 'Delete'}
+              </Button>
+            </BtnWrap>
+          )}
+        </BtnWrap>
         <form onSubmit={handleSubmit(onValid)}>
           {dataRes?.message && <OkMsg>{dataRes?.message}</OkMsg>}
           {dataRes?.error && <ErrMsg>{dataRes?.error}</ErrMsg>}
@@ -168,9 +171,14 @@ const Post_Detail: NextPage = () => {
             disabled={true}
             register={register('createdAt')}
           />
-          {edit && <Btn type="submit" btnName="Edit" loading={loading} />}
+          {edit && (
+            <Button typeEdit={true} type="submit">
+              {loading ? 'Loading...' : 'Edit Post'}
+            </Button>
+          )}
         </form>
-      </section>
+        <LikesAndComments type="post" />
+      </Cont>
       {delModal && (
         <DeleteModal
           userId={user_id}
@@ -179,11 +187,26 @@ const Post_Detail: NextPage = () => {
           deleteClick={() => setDelModal((p) => !p)}
         />
       )}
-    </PageCont>
+    </>
   );
 };
 export default Post_Detail;
 
+const Cont = styled.section`
+  padding: 20px 20%;
+`;
+
+const BtnWrap = styled.div`
+  gap: 6px;
+  display: flex;
+  align-items: center;
+`;
+
+const Button = styled(Btn)<{ typeEdit: boolean }>`
+  font-size: ${(p) => (p.typeEdit ? '1.2rem' : '1rem')};
+  width: ${(p) => (p.typeEdit ? '150px' : '90px')};
+  height: ${(p) => (p.typeEdit ? '50px' : '40px')};
+`;
 export const BoardCont = styled(Article)`
   flex-direction: column;
   justify-content: center;

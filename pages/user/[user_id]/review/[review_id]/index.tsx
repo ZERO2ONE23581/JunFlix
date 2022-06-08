@@ -13,6 +13,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import useAvatar from '../../../../../src/libs/client/useAvatar';
 import { ReviewLikes } from '../../../../../src/components/Button/Likes';
 import { ThumNail } from '../../../../../src/components/Post/PostList';
+import { LikesAndComments } from '../../../../../src/components/Post/Icon';
 
 const Review_Detail: NextPage = () => {
   const router = useRouter();
@@ -28,14 +29,6 @@ const Review_Detail: NextPage = () => {
   //
   return (
     <>
-      {data && data.ok && data.review && delModal && (
-        <DeleteModal
-          reviewId={data.review.id}
-          userId={data.review.UserID}
-          deleteClick={() => setDelModal((p) => !p)}
-        />
-      )}
-
       {data && data.ok && data.review && (
         <PageCont>
           <section className="read-review-cont">
@@ -121,8 +114,15 @@ const Review_Detail: NextPage = () => {
               </li>
             </ReviewList>
           </section>
-          <ReviewLikes userId={loggedInUser?.id} reviewId={data.review.id} />
+          <LikesAndComments />
         </PageCont>
+      )}
+      {data && data.ok && data.review && delModal && (
+        <DeleteModal
+          reviewId={data.review.id}
+          userId={data.review.UserID}
+          deleteClick={() => setDelModal((p) => !p)}
+        />
       )}
     </>
   );

@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react';
 import { IReviewForm } from '../../../../../src/types/review';
 import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
-import { ThumNail } from '../../../../../src/components/Post/AllPostsWithBoard';
 import { Btn } from '../../../../../src/components/Button';
 import { ErrMsg, PageCont } from '../../../../../styles/default';
 import { Review } from '@prisma/client';
+import { ThumNail } from '../../../../../src/components/Post/PostList';
 
 interface ICreateReviewRes {
   ok: boolean;
