@@ -16,7 +16,6 @@ export const UserInfo = ({ user }: IUserInfoProps) => {
   //
   return (
     <>
-      <h1>{user?.username}'s Dashboard</h1>
       <Info>
         <div className="avatar-desc-wrap">
           <Avatar

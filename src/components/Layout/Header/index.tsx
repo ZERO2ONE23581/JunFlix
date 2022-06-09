@@ -41,11 +41,11 @@ export const Header = ({ onClick, btnName }: any) => {
             </Link>
           </Logo>
           <LinkStyle>
-            <AnchorBtn onClick={() => setOpenMovie((p) => !p)}>
+            <MenuItem onClick={() => setOpenMovie((p) => !p)}>
               <span className="hover">Movies</span>
               {openMovie && <NavMovieModal />}
-            </AnchorBtn>
-            <AnchorBtn onClick={() => setOpenBoard((p) => !p)}>
+            </MenuItem>
+            <MenuItem onClick={() => setOpenBoard((p) => !p)}>
               <span className="hover">Board</span>
               {openBoard && (
                 <NavBoardModal
@@ -54,8 +54,8 @@ export const Header = ({ onClick, btnName }: any) => {
                   loggedInUserId={loggedInUser?.id}
                 />
               )}
-            </AnchorBtn>
-            <AnchorBtn onClick={() => setOpenPost((p) => !p)}>
+            </MenuItem>
+            <MenuItem onClick={() => setOpenPost((p) => !p)}>
               <span className="hover">Post</span>
               {openPost && (
                 <NavPostModal
@@ -64,8 +64,8 @@ export const Header = ({ onClick, btnName }: any) => {
                   loggedInUserId={loggedInUser?.id}
                 />
               )}
-            </AnchorBtn>
-            <AnchorBtn onClick={() => setOpenReview((p) => !p)}>
+            </MenuItem>
+            <MenuItem onClick={() => setOpenReview((p) => !p)}>
               <span className="hover">Review</span>
               {openReview && (
                 <NavReviewModal
@@ -74,8 +74,8 @@ export const Header = ({ onClick, btnName }: any) => {
                   loggedInUserId={loggedInUser?.id}
                 />
               )}
-            </AnchorBtn>
-            <AnchorBtn onClick={() => setOpenCreate((p) => !p)}>
+            </MenuItem>
+            <MenuItem onClick={() => setOpenCreate((p) => !p)}>
               <span className="hover">Create</span>
               {openCreate && (
                 <NavCreateModal
@@ -84,7 +84,7 @@ export const Header = ({ onClick, btnName }: any) => {
                   loggedInUserId={loggedInUser?.id}
                 />
               )}
-            </AnchorBtn>
+            </MenuItem>
           </LinkStyle>
         </MainNav>
         <MyNav>
@@ -149,7 +149,7 @@ const MainNav = styled.article`
   display: flex;
   align-content: center;
 `;
-export const AnchorBtn = styled.div`
+export const MenuItem = styled.div`
   cursor: pointer;
   position: relative;
   background: none;

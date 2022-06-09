@@ -1,112 +1,86 @@
-import { Btn } from '../Button';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { User } from '@prisma/client';
-import { ReviewWithUser } from '../../types/review';
-import { H1 } from '../../../styles/default';
+import { IGetReviews } from '../../types/review';
 import { LikeCommentWrap } from '../Icon/LikeCommentWrap';
-import useAvatar from '../../libs/client/useAvatar';
-import { AvatarLogo } from '../../../styles/image';
 import { Avatar } from '../Avatar';
+import useSWR from 'swr';
 
 interface IReviewListProps {
-  allReviews?: boolean;
-  myReview?: boolean;
-  loggedInUser?: User;
-  reviews?: ReviewWithUser[] | undefined;
+  isAllReviews?: boolean;
+  isMyReview?: boolean;
 }
-export const ReviewList = ({
-  myReview,
-  allReviews,
-  loggedInUser,
-  reviews,
-}: IReviewListProps) => {
-  const router = useRouter();
-  //
+export const ReviewList = ({ isAllReviews, isMyReview }: IReviewListProps) => {
+  const { data } = useSWR<IGetReviews>(
+    isAllReviews ? `/api/all/reviews` : isMyReview ? `/api/my/reviews` : null
+  );
+  const reviews = data?.reviews;
   return (
-    <Cont>
-      {allReviews && <H1>ALL REVIEWS</H1>}
-      {myReview && <H1>MY REVIEWS</H1>}
-      <Btn
-        type="create"
-        btnName="리뷰 작성하기"
-        onClick={() => {
-          loggedInUser
-            ? router.push(`/user/${loggedInUser.id}/review/create`)
-            : alert(`로그인이 필요합니다.`);
-        }}
-      />
-      <List>
-        {reviews?.map((review) => (
-          <Desc key={review.id}>
-            <Link href={`/user/${review.UserID}/review/${review.id}`}>
-              <a>
-                <Item>
-                  <Order>#{reviews.length - reviews.indexOf(review)}</Order>
-                  <Avatar
-                    isAvatar={Boolean(review?.user.avatar)}
-                    url={review?.user?.avatar}
-                    size={60}
-                  />
-                  <Wrap>
-                    <ReviewTitle>{review.title}</ReviewTitle>
-                    <Items>
-                      <ul>
-                        <li>
-                          <span>{review.movieTitle}</span>
-                          <span> / </span>
-                        </li>
-                        <li>
-                          <span>{review.genre}</span>
-                          <span> / </span>
-                        </li>
-                        <li>
-                          <span>작성자: </span>
-                          <span>{review.user.username}</span>
-                        </li>
-                      </ul>
-                      <Stars>
-                        {[1, 2, 3, 4, 5].map((score) => (
-                          <span key={score}>
-                            {review.score! >= score ? (
-                              <FontAwesomeIcon
-                                icon={faStar}
-                                style={{ color: 'red' }}
-                              />
-                            ) : (
-                              <FontAwesomeIcon icon={faStar} />
-                            )}
-                          </span>
-                        ))}
-                      </Stars>
-                    </Items>
-                  </Wrap>
-                </Item>
-              </a>
-            </Link>
-            <LikeCommentWrap
-              type="review"
-              userId={review.UserID}
-              reviewId={review.id}
-            />
-          </Desc>
-        ))}
-      </List>
-    </Cont>
+    <>
+      {reviews?.map((review) => (
+        <Desc key={review.id}>
+          <Link href={`/user/${review.UserID}/review/${review.id}`}>
+            <a>
+              <Item>
+                <Order>#{reviews.length - reviews.indexOf(review)}</Order>
+                <Avatar
+                  isAvatar={Boolean(review?.user.avatar)}
+                  url={review?.user?.avatar}
+                  size={60}
+                />
+                <Wrap>
+                  <ReviewTitle>{review.title}</ReviewTitle>
+                  <Items>
+                    <ul>
+                      <li>
+                        <span>{review.movieTitle}</span>
+                        <span> / </span>
+                      </li>
+                      <li>
+                        <span>{review.genre}</span>
+                        <span> / </span>
+                      </li>
+                      <li>
+                        <span>작성자: </span>
+                        <span>{review.user.username}</span>
+                      </li>
+                    </ul>
+                    <Stars>
+                      {[1, 2, 3, 4, 5].map((score) => (
+                        <span key={score}>
+                          {review.score! >= score ? (
+                            <FontAwesomeIcon
+                              icon={faStar}
+                              style={{ color: 'red' }}
+                            />
+                          ) : (
+                            <FontAwesomeIcon icon={faStar} />
+                          )}
+                        </span>
+                      ))}
+                    </Stars>
+                  </Items>
+                </Wrap>
+              </Item>
+            </a>
+          </Link>
+          <LikeCommentWrap
+            type="review"
+            userId={review.UserID}
+            reviewId={review.id}
+          />
+        </Desc>
+      ))}
+    </>
   );
 };
-const Cont = styled.section``;
 const Desc = styled.article`
   padding: 20px;
   margin-bottom: 20px;
+  border-radius: 5px;
   border: ${(p) => p.theme.border};
-  color: ${(p) => p.theme.color.font};
-  box-shadow: ${(p) => p.theme.boxShadow.input};
-  background-color: ${(p) => p.theme.color.bg};
-  border: 5px solid hotpink;
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
 `;
 
 const Stars = styled.span`
@@ -129,15 +103,6 @@ const Item = styled.article`
   margin-bottom: 15px;
 `;
 
-const List = styled.article`
-  width: 100%;
-  padding: 20px 30px;
-  border-radius: 8px;
-  border: ${(p) => p.theme.border};
-  color: ${(p) => p.theme.color.font};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background-color: ${(p) => p.theme.color.bg};
-`;
 const ReviewTitle = styled.h2`
   font-size: 1.3rem;
   font-weight: 700;

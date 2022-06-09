@@ -1,45 +1,45 @@
+import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import useAvatar from '../../libs/client/useAvatar';
-import { H1 } from '../../../styles/default';
-import { IPostListProps } from '../../types/post';
-import { ItemCont } from '../Board/BoardList';
+import { IGetAllPosts, IPostListProps } from '../../types/post';
 import { ThumNail } from '../../../styles/image';
 
-export const PostList = ({ posts, allPosts, myPosts }: IPostListProps) => {
+export const PostList = ({ isAllPosts, isMyPosts }: IPostListProps) => {
+  const { data } = useSWR<IGetAllPosts>(
+    isAllPosts ? `/api/all/posts` : isMyPosts ? `/api/my/posts` : null
+  );
+  const posts = data?.posts;
+  //
   return (
-    <>
-      {allPosts && <H1>ALL POSTS</H1>}
-      {myPosts && <H1>MY POSTS</H1>}
-      {posts && (
-        <ItemCont>
-          {posts.map((info) => (
-            <Link
-              key={info.id}
-              href={`/user/${info.UserID}/board/${info.BoardID}/post/${info.id}`}
-            >
-              <a>
-                <Item>
-                  <ThumNail>
-                    {info.avatar ? (
-                      <img
-                        src={`${useAvatar(info.avatar)}`}
-                        alt="썸네일 이미지"
-                      />
-                    ) : (
-                      <img src="/img/post_thum.svg" alt="썸네일 이미지" />
-                    )}
-                  </ThumNail>
-                </Item>
-              </a>
-            </Link>
-          ))}
-        </ItemCont>
-      )}
-    </>
+    <Grid>
+      {posts?.map((info) => (
+        <Link
+          key={info.id}
+          href={`/user/${info.UserID}/board/${info.BoardID}/post/${info.id}`}
+        >
+          <a>
+            <Item>
+              <ThumNail>
+                {info.avatar ? (
+                  <img src={`${useAvatar(info.avatar)}`} alt="썸네일 이미지" />
+                ) : (
+                  <img src="/img/post_thum.svg" alt="썸네일 이미지" />
+                )}
+              </ThumNail>
+            </Item>
+          </a>
+        </Link>
+      ))}
+    </Grid>
   );
 };
-
+const Grid = styled.article`
+  margin-top: 15px;
+  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+`;
 const Item = styled.div`
   border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};

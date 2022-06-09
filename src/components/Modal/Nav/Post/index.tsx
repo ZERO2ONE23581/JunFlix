@@ -27,7 +27,7 @@ export const NavPostModal = ({
           </Link>
         )}
         {isloggedIn ? (
-          <Link href={`/user/${loggedInUserId}/board/my-boards/select`}>
+          <Link href={`/my/boards/select`}>
             <a>
               <li>
                 <span>Create</span>

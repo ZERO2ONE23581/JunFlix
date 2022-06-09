@@ -19,7 +19,7 @@ export interface IGetAllPosts {
   posts?: Post[];
 }
 export interface IPostListProps {
-  allPosts?: boolean;
-  myPosts?: boolean;
+  isAllPosts?: boolean;
+  isMyPosts?: boolean;
   posts?: Post[];
 }

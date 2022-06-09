@@ -15,7 +15,7 @@ export interface IGetReview {
   error?: string;
   review?: ReviewWithUser;
 }
-export interface IGetReviews extends IGetReview {
+export interface IGetReviews {
   reviews?: ReviewWithUser[];
 }
 export interface ReviewWithUser extends Review {

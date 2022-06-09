@@ -1,80 +1,57 @@
+import useSWR from 'swr';
 import Link from 'next/link';
-import { Btn } from '../Button';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { H1, PageCont } from '../../../styles/default';
-import { User } from '@prisma/client';
-import { BoardWithUser } from '../../types/board';
+import { IGetBoards } from '../../types/board';
 
 export interface IBoardListProps {
-  loggedInUser?: User;
-  boards?: BoardWithUser[];
-  myBoards?: boolean;
-  allBoards?: boolean;
-  selectBoard?: boolean;
+  isAllBoards?: boolean;
+  isMyBoards?: boolean;
+  isSelect?: boolean;
 }
 export const BoardList = ({
-  loggedInUser,
-  boards,
-  myBoards,
-  allBoards,
-  selectBoard,
+  isAllBoards,
+  isMyBoards,
+  isSelect,
 }: IBoardListProps) => {
-  const router = useRouter();
+  const { data } = useSWR<IGetBoards>(
+    isAllBoards ? `/api/all/boards` : isMyBoards ? `/api/my/boards` : null
+  );
+  const boards = data?.boards;
+  const BoardLink = (userId: number, boardId: number) => {
+    if (isSelect) return `/user/${userId}/board/${boardId}/post/create`;
+    return `/user/${userId}/board/${boardId}`;
+  };
   return (
-    <Cont>
-      {allBoards && <H1>ALL BOARDS</H1>}
-      {myBoards && <H1>MY BOARDS</H1>}
-      {loggedInUser && selectBoard && <H1>Select one of your Boards!</H1>}
-      <ItemCont>
-        {boards &&
-          boards?.map((info) => (
-            <Link
-              key={info.id}
-              href={
-                selectBoard
-                  ? `/user/${info.UserID}/board/${info.id}/post/create`
-                  : `/user/${info.UserID}/board/${info.id}`
-              }
-            >
-              <a>
-                <Item>
-                  <ThumNail>
-                    <img src="/img/clapper.svg" alt="썸네일 이미지" />
-                  </ThumNail>
-                  <ul>
-                    <li>
-                      <span>Title: </span>
-                      <span> {info.title.toUpperCase()}</span>
-                    </li>
-                    <li>
-                      <span>Genre: </span>
-                      <span> {info.genre}</span>
-                    </li>
-                    <li>
-                      <span>Made by: </span>
-                      <span> {info.user.username}</span>
-                    </li>
-                  </ul>
-                </Item>
-              </a>
-            </Link>
-          ))}
-      </ItemCont>
-      {loggedInUser && (
-        <Btn
-          type="create"
-          btnName="보드 만들기"
-          onClick={() => router.push(`/user/${loggedInUser.id}/board/create`)}
-        />
-      )}
-    </Cont>
+    <Grid>
+      {boards?.map((board) => (
+        <Link key={board.id} href={`${BoardLink(board.UserID, board.id)}`}>
+          <a>
+            <Item>
+              <ThumNail>
+                <img src="/img/clapper.svg" alt="썸네일 이미지" />
+              </ThumNail>
+              <ul>
+                <li>
+                  <span>Title: </span>
+                  <span> {board.title.toUpperCase()}</span>
+                </li>
+                <li>
+                  <span>Genre: </span>
+                  <span> {board.genre}</span>
+                </li>
+                <li>
+                  <span>Made by: </span>
+                  <span> {board.user.username}</span>
+                </li>
+              </ul>
+            </Item>
+          </a>
+        </Link>
+      ))}
+    </Grid>
   );
 };
-
-const Cont = styled.section``;
-
-export const ItemCont = styled.article`
+const Grid = styled.article`
   margin-top: 15px;
   gap: 15px;
   display: grid;

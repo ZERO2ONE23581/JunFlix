@@ -3,7 +3,6 @@ import { CommentIcon } from '../Comment';
 import { LikesIcon } from '../Likes';
 
 export const LikeCommentWrap = ({ type, userId, reviewId }: any) => {
-  console.log(`check==`, type, userId, reviewId);
   return (
     <Cont>
       <IconWrap>
