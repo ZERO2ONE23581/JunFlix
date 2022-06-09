@@ -18,7 +18,7 @@ export const NavReviewModal = ({
           </a>
         </Link>
         {isloggedIn && (
-          <Link href={`/user/${loggedInUserId}/review/my-reviews`}>
+          <Link href={`/my/reviews`}>
             <a>
               <li>
                 <span>My Reviews</span>

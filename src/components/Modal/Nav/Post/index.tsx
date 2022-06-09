@@ -18,7 +18,7 @@ export const NavPostModal = ({
           </a>
         </Link>
         {isloggedIn && (
-          <Link href={`/user/${loggedInUserId}/post/my-posts`}>
+          <Link href={`/my/posts`}>
             <a>
               <li>
                 <span>My Posts</span>

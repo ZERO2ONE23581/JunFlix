@@ -9,7 +9,7 @@ export const NavModal = ({ closeModal }: any) => {
     closeModal();
     if (isloggedIn && loggedInUser) {
       if (type === 'my-page') {
-        router.push(`/user/${loggedInUser.id}/my-page`);
+        router.push(`/my/page`);
       }
       if (type === 'edit-profile') {
         router.push(`/user/${loggedInUser.id}/edit/profile`);

@@ -22,7 +22,7 @@ export const BoardList = ({
 }: IBoardListProps) => {
   const router = useRouter();
   return (
-    <PageCont>
+    <Cont>
       {allBoards && <H1>ALL BOARDS</H1>}
       {myBoards && <H1>MY BOARDS</H1>}
       {loggedInUser && selectBoard && <H1>Select one of your Boards!</H1>}
@@ -68,9 +68,11 @@ export const BoardList = ({
           onClick={() => router.push(`/user/${loggedInUser.id}/board/create`)}
         />
       )}
-    </PageCont>
+    </Cont>
   );
 };
+
+const Cont = styled.section``;
 
 export const ItemCont = styled.article`
   margin-top: 15px;

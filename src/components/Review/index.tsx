@@ -6,8 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { User } from '@prisma/client';
 import { ReviewWithUser } from '../../types/review';
-import { H1, PageCont } from '../../../styles/default';
+import { H1 } from '../../../styles/default';
 import { LikeCommentWrap } from '../Icon/LikeCommentWrap';
+import useAvatar from '../../libs/client/useAvatar';
+import { AvatarLogo } from '../../../styles/image';
 
 interface IReviewListProps {
   allReviews?: boolean;
@@ -24,7 +26,7 @@ export const ReviewList = ({
   const router = useRouter();
   //
   return (
-    <PageCont>
+    <Cont>
       {allReviews && <H1>ALL REVIEWS</H1>}
       {myReview && <H1>MY REVIEWS</H1>}
       <Btn
@@ -43,6 +45,16 @@ export const ReviewList = ({
               <a>
                 <Item>
                   <Order>#{reviews.length - reviews.indexOf(review)}</Order>
+                  <AvatarLogo>
+                    {review?.user.avatar ? (
+                      <img
+                        src={`${useAvatar(review?.user.avatar)}`}
+                        alt="프로필 이미지"
+                      />
+                    ) : (
+                      <img src="/img/profile.svg" alt="프로필 이미지" />
+                    )}
+                  </AvatarLogo>
                   <Wrap>
                     <ReviewTitle>{review.title}</ReviewTitle>
                     <Items>
@@ -87,10 +99,10 @@ export const ReviewList = ({
           </Desc>
         ))}
       </List>
-    </PageCont>
+    </Cont>
   );
 };
-
+const Cont = styled.section``;
 const Desc = styled.article`
   padding: 20px;
   margin-bottom: 20px;

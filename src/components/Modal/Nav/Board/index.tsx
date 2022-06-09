@@ -24,7 +24,7 @@ export const NavBoardModal = ({
           </a>
         </Link>
         {isloggedIn && (
-          <Link href={`/user/${loggedInUserId}/board/my-boards`}>
+          <Link href={`/my/boards`}>
             <a>
               <li>
                 <span>My Boards</span>

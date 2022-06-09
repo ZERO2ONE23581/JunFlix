@@ -1,7 +1,7 @@
-import client from '../../../../../src/libs/server/prisma_client';
+import client from '../../../../src/libs/server/prisma_client';
 import { NextApiRequest, NextApiResponse } from 'next';
-import withHandler from '../../../../../src/libs/server/withHandler';
-import { withApiSession } from '../../../../../src/libs/server/withSession';
+import withHandler from '../../../../src/libs/server/withHandler';
+import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   const reviews = await client.review.findMany({
     where: { UserID: user.id },
-    include: { user: { select: { username: true } } },
+    include: { user: { select: { username: true, avatar: true } } },
     orderBy: {
       id: 'desc',
     },

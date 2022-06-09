@@ -5,7 +5,7 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const reviews = await client.review.findMany({
-    include: { user: { select: { username: true } } },
+    include: { user: { select: { username: true, avatar: true } } },
     orderBy: {
       id: 'desc',
     },
