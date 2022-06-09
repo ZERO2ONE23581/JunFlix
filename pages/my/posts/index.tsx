@@ -11,7 +11,7 @@ const MyPosts: NextPage = () => {
   return (
     <>
       <Title title="나의 포스트" />
-      <PostList myPosts={true} posts={data?.posts} />
+      <PostList isMyPosts={true} posts={data?.posts} />
     </>
   );
 };

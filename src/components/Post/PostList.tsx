@@ -4,25 +4,53 @@ import styled from '@emotion/styled';
 import useAvatar from '../../libs/client/useAvatar';
 import { IGetAllPosts, IPostListProps } from '../../types/post';
 import { ThumNail } from '../../../styles/image';
+import { IGetLikes } from '../../types/likes';
 
-export const PostList = ({ isAllPosts, isMyPosts }: IPostListProps) => {
+export const PostList = ({
+  isAllPosts,
+  isMyPosts,
+  findLikes,
+}: IPostListProps) => {
   const { data } = useSWR<IGetAllPosts>(
-    isAllPosts ? `/api/all/posts` : isMyPosts ? `/api/my/posts` : null
+    isAllPosts ? `/api/all/posts` : isMyPosts && `/api/my/posts`
   );
+  const { data: LikeData } = useSWR<IGetLikes>(findLikes && `/api/my/likes`);
   const posts = data?.posts;
+  const likes = LikeData?.postlikes;
   //
   return (
     <Grid>
-      {posts?.map((info) => (
+      {posts?.map((post) => (
         <Link
-          key={info.id}
-          href={`/user/${info.UserID}/board/${info.BoardID}/post/${info.id}`}
+          key={post.id}
+          href={`/user/${post.UserID}/board/${post.BoardID}/post/${post.id}`}
         >
           <a>
             <Item>
               <ThumNail>
-                {info.avatar ? (
-                  <img src={`${useAvatar(info.avatar)}`} alt="썸네일 이미지" />
+                {post.avatar ? (
+                  <img src={`${useAvatar(post.avatar)}`} alt="썸네일 이미지" />
+                ) : (
+                  <img src="/img/post_thum.svg" alt="썸네일 이미지" />
+                )}
+              </ThumNail>
+            </Item>
+          </a>
+        </Link>
+      ))}
+      {likes?.map((like) => (
+        <Link
+          key={like.id}
+          href={`/user/${like.post.UserID}/board/${like.post.BoardID}/post/${like.post.id}`}
+        >
+          <a>
+            <Item>
+              <ThumNail>
+                {like.post.avatar ? (
+                  <img
+                    src={`${useAvatar(like.post.avatar)}`}
+                    alt="썸네일 이미지"
+                  />
                 ) : (
                   <img src="/img/post_thum.svg" alt="썸네일 이미지" />
                 )}

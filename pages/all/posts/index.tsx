@@ -9,7 +9,7 @@ const All_Posts: NextPage = () => {
   return (
     <>
       <Title title="모든 포스트 둘러보기" />
-      <PostList allPosts={true} posts={data?.posts} />
+      <PostList isAllPosts={true} posts={data?.posts} />
     </>
   );
 };

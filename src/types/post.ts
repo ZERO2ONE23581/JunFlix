@@ -21,5 +21,6 @@ export interface IGetAllPosts {
 export interface IPostListProps {
   isAllPosts?: boolean;
   isMyPosts?: boolean;
+  findLikes?: boolean;
   posts?: Post[];
 }

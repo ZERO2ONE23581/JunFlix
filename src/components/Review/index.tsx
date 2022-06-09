@@ -6,16 +6,24 @@ import { IGetReviews } from '../../types/review';
 import { LikeCommentWrap } from '../Icon/LikeCommentWrap';
 import { Avatar } from '../Avatar';
 import useSWR from 'swr';
+import { IGetLikes } from '../../types/likes';
 
 interface IReviewListProps {
   isAllReviews?: boolean;
   isMyReview?: boolean;
+  findLikes?: boolean;
 }
-export const ReviewList = ({ isAllReviews, isMyReview }: IReviewListProps) => {
+export const ReviewList = ({
+  isAllReviews,
+  isMyReview,
+  findLikes,
+}: IReviewListProps) => {
   const { data } = useSWR<IGetReviews>(
     isAllReviews ? `/api/all/reviews` : isMyReview ? `/api/my/reviews` : null
   );
+  const { data: LikeData } = useSWR<IGetLikes>(findLikes && `/api/my/likes`);
   const reviews = data?.reviews;
+  const likes = LikeData?.reviewLikes;
   return (
     <>
       {reviews?.map((review) => (
@@ -30,7 +38,7 @@ export const ReviewList = ({ isAllReviews, isMyReview }: IReviewListProps) => {
                   size={60}
                 />
                 <Wrap>
-                  <ReviewTitle>{review.title}</ReviewTitle>
+                  <Title>{review.title}</Title>
                   <Items>
                     <ul>
                       <li>
@@ -72,6 +80,60 @@ export const ReviewList = ({ isAllReviews, isMyReview }: IReviewListProps) => {
           />
         </Desc>
       ))}
+      {likes?.map((like) => (
+        <Desc key={like.id}>
+          <Link href={`/user/${like.review.UserID}/review/${like.review.id}`}>
+            <a>
+              <Item>
+                <Order>#{likes.length - likes.indexOf(like)}</Order>
+                <Avatar
+                  isAvatar={Boolean(like?.review.user?.avatar)}
+                  url={like?.review.user?.avatar}
+                  size={60}
+                />
+                <Wrap>
+                  <Title>{like.review.title}</Title>
+                  <Items>
+                    <ul>
+                      <li>
+                        <span>{like.review.movieTitle}</span>
+                        <span> / </span>
+                      </li>
+                      <li>
+                        <span>{like.review.genre}</span>
+                        <span> / </span>
+                      </li>
+                      <li>
+                        <span>작성자: </span>
+                        <span>{like.review.user?.username}</span>
+                      </li>
+                    </ul>
+                    <Stars>
+                      {[1, 2, 3, 4, 5].map((score) => (
+                        <span key={score}>
+                          {like.review.score! >= score ? (
+                            <FontAwesomeIcon
+                              icon={faStar}
+                              style={{ color: 'red' }}
+                            />
+                          ) : (
+                            <FontAwesomeIcon icon={faStar} />
+                          )}
+                        </span>
+                      ))}
+                    </Stars>
+                  </Items>
+                </Wrap>
+              </Item>
+            </a>
+          </Link>
+          <LikeCommentWrap
+            type="like"
+            userId={like.review.UserID}
+            likeId={like.review.id}
+          />
+        </Desc>
+      ))}
     </>
   );
 };
@@ -103,7 +165,7 @@ const Item = styled.article`
   margin-bottom: 15px;
 `;
 
-const ReviewTitle = styled.h2`
+const Title = styled.h2`
   font-size: 1.3rem;
   font-weight: 700;
 `;
