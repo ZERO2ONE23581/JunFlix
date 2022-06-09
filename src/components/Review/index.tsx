@@ -10,6 +10,7 @@ import { H1 } from '../../../styles/default';
 import { LikeCommentWrap } from '../Icon/LikeCommentWrap';
 import useAvatar from '../../libs/client/useAvatar';
 import { AvatarLogo } from '../../../styles/image';
+import { Avatar } from '../Avatar';
 
 interface IReviewListProps {
   allReviews?: boolean;
@@ -45,16 +46,11 @@ export const ReviewList = ({
               <a>
                 <Item>
                   <Order>#{reviews.length - reviews.indexOf(review)}</Order>
-                  <AvatarLogo>
-                    {review?.user.avatar ? (
-                      <img
-                        src={`${useAvatar(review?.user.avatar)}`}
-                        alt="프로필 이미지"
-                      />
-                    ) : (
-                      <img src="/img/profile.svg" alt="프로필 이미지" />
-                    )}
-                  </AvatarLogo>
+                  <Avatar
+                    isAvatar={Boolean(review?.user.avatar)}
+                    url={review?.user?.avatar}
+                    size={60}
+                  />
                   <Wrap>
                     <ReviewTitle>{review.title}</ReviewTitle>
                     <Items>

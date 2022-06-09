@@ -9,6 +9,10 @@ import { IGetAllPosts } from '../../../src/types/post';
 import { ReviewList } from '../../../src/components/Review';
 import { IGetReviews } from '../../../src/types/review';
 import styled from '@emotion/styled';
+import { Avatar } from '../../../src/components/Avatar';
+import { useRouter } from 'next/router';
+import { Btn } from '../../../styles/btn';
+import { UserInfo } from '../../../src/components/User/Info';
 
 const MyPage: NextPage = () => {
   const { isloggedIn, loggedInUser } = useUser();
@@ -19,11 +23,12 @@ const MyPage: NextPage = () => {
   const { data: ReviewData } = useSWR<IGetReviews>(
     isloggedIn && `/api/my/reviews`
   );
+  //
   return (
     <>
       <Title title="마이페이지" />
       <Cont>
-        <h1>마이페이지</h1>
+        <UserInfo user={loggedInUser} />
         <BoardList
           myBoards={true}
           loggedInUser={loggedInUser}
@@ -43,10 +48,12 @@ export default MyPage;
 
 const Cont = styled.section`
   border: 10px solid red;
-  padding: 20px 200px;
   gap: 20px;
   display: flex;
   flex-direction: column;
+  padding: 20px 200px;
+  color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
   h1 {
     font-size: 2rem;
     font-weight: 700;
