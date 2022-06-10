@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PageCont } from '../../../../styles/default';
+import { ProfileAvatar } from '../../../../src/components/Avatar/Profile';
 
 interface IGetRatings {
   ok: boolean;
@@ -24,6 +25,7 @@ const rating: NextPage = () => {
         <>
           {data.ratings.map((info) => (
             <OneLine key={info.id}>
+              <ProfileAvatar url={info.user.avatar} />
               <article className="layer">
                 <article className="flex">
                   <Order>

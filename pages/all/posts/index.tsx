@@ -3,13 +3,16 @@ import useSWR from 'swr';
 import { Title } from '../../../src/components/Layout/Title';
 import { PostList } from '../../../src/components/Post/List';
 import { IGetAllPosts } from '../../../src/types/post';
+import { Page } from '../../my/boards';
 
 const AllPosts: NextPage = () => {
-  const { data } = useSWR<IGetAllPosts>(`/api/all/posts`);
   return (
     <>
       <Title title="모든 포스트 둘러보기" />
-      <PostList isAllPosts={true} posts={data?.posts} />
+      <Page>
+        <h1>All Posts</h1>
+        <PostList isAllPosts={true} />
+      </Page>
     </>
   );
 };

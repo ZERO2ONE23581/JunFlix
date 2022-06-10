@@ -1,11 +1,11 @@
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import useUser from '../../../libs/client/useUser';
-import { MutationRes } from '../../../types/mutation';
-import useMutation from '../../../libs/client/useMutation';
-import { Btn } from '../../../../styles/btn';
-import { useEffect } from 'react';
+import { Btn } from '../../../../../styles/btn';
+import useUser from '../../../../libs/client/useUser';
+import { MutationRes } from '../../../../types/mutation';
+import useMutation from '../../../../libs/client/useMutation';
 
 interface IEditAvatarForm {
   avatar?: FileList;

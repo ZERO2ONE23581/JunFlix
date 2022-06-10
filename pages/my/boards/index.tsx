@@ -10,9 +10,7 @@ const MyBoards: NextPage = () => {
     <>
       <Title title="나의 보드" />
       <Page>
-        <h1>
-          <span>{loggedInUser?.username}'s Boards</span>
-        </h1>
+        <h1>{loggedInUser?.username}'s Boards</h1>
         <BoardList isMyBoards={Boolean(loggedInUser)} />
       </Page>
     </>

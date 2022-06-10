@@ -9,9 +9,7 @@ const AllBoards: NextPage = () => {
     <>
       <Title title="모든보드 둘러보기" />
       <Page>
-        <h1>
-          <span>All Boards</span>
-        </h1>
+        <h1>All Boards</h1>
         <BoardList isAllBoards={true} />
       </Page>
     </>

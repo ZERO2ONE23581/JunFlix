@@ -1,15 +1,15 @@
-import { ErrMsg } from '../../../../../styles/default';
 import type { NextPage } from 'next';
+import styled from '@emotion/styled';
+import { Board } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { ErrMsg } from '../../../../../styles/default';
 import { Btn } from '../../../../../src/components/Button';
 import { BoardForm } from '../../../../../src/types/board';
 import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
-import { useEffect, useState } from 'react';
-import { Board } from '@prisma/client';
-import styled from '@emotion/styled';
-import { BoardBackground } from '../../../../../src/components/Avatar/\bBoard/Background';
+import { BackGroundAvatar } from '../../../../../src/components/Avatar/Background';
 
 interface ICreateBoardRes {
   ok: boolean;
@@ -63,7 +63,7 @@ const CreateBoard: NextPage = () => {
   }, [data, router, avatar]);
   return (
     <>
-      <BoardBackground preview={preview} url={true} />
+      <BackGroundAvatar preview={preview} url={true} />
       <Cont>
         <h1>Create Board</h1>
         <Form onSubmit={handleSubmit(onValid)}>

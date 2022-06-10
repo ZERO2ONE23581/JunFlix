@@ -8,15 +8,14 @@ import { useEffect, useState } from 'react';
 import { Input } from '../../../../../../../src/components/Input';
 import useUser from '../../../../../../../src/libs/client/useUser';
 import { MutationRes } from '../../../../../../../src/types/mutation';
-import useAvatar from '../../../../../../../src/libs/client/useAvatar';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm, IGetPost } from '../../../../../../../src/types/post';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
 import { Btn } from '../../../../../../../styles/btn';
-import { ThumNail } from '../../../../../../../styles/image';
 import { LikeCommentWrap } from '../../../../../../../src/components/Icon/LikeCommentWrap';
 import { CreateCommentOnPost } from '../../../../../../../src/components/Comment/Create/Post';
 import { AllComments } from '../../../../../../../src/components/Comment/AllComments';
+import { Avatar } from '../../../../../../../src/components/Avatar';
 
 const PostInfo: NextPage = () => {
   const router = useRouter();
@@ -117,10 +116,15 @@ const PostInfo: NextPage = () => {
             </BtnWrap>
           )}
         </BtnWrap>
+
         <form onSubmit={handleSubmit(onValid)}>
-          {dataRes?.message && <OkMsg>{dataRes?.message}</OkMsg>}
-          {dataRes?.error && <ErrMsg>{dataRes?.error}</ErrMsg>}
+          <>
+            {dataRes?.message && <OkMsg>{dataRes?.message}</OkMsg>}
+            {dataRes?.error && <ErrMsg>{dataRes?.error}</ErrMsg>}
+          </>
+
           <Avatar url={data?.post.avatar} preview={preview} />
+
           <Input
             register={register('avatar')}
             type="file"
@@ -162,6 +166,7 @@ const PostInfo: NextPage = () => {
             </Button>
           )}
         </form>
+
         <LikeAndComments>
           <LikeCommentWrap type="post" reviewId={null} userId={null} />
           <h1>해당 포스트에 댓글 남기기</h1>
@@ -169,14 +174,11 @@ const PostInfo: NextPage = () => {
           <AllComments type="post" />
         </LikeAndComments>
       </Cont>
-      {delModal && (
-        <DeleteModal
-          userId={user_id}
-          postId={post_id}
-          boardId={board_id}
-          deleteClick={() => setDelModal((p) => !p)}
-        />
-      )}
+
+      <DeleteModal
+        delModal={delModal}
+        deleteClick={() => setDelModal((p) => !p)}
+      />
     </>
   );
 };

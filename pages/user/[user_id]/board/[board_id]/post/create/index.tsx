@@ -1,14 +1,14 @@
 import type { NextPage } from 'next';
+import { Post } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../../../../../../src/components/Button';
 import { IPostForm } from '../../../../../../../src/types/post';
+import { Btn } from '../../../../../../../src/components/Button';
 import { Input } from '../../../../../../../src/components/Input';
-import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { ErrMsg, PageCont } from '../../../../../../../styles/default';
-import { Post } from '@prisma/client';
-import { Avatar } from '../../../../../../../src/components/Avatar/Board/Background';
+import useMutation from '../../../../../../../src/libs/client/useMutation';
+import { Avatar } from '../../../../../../../src/components/Avatar';
 
 interface ICreatePostRes {
   ok: boolean;

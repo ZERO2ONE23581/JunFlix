@@ -4,7 +4,7 @@ interface IAvatarProps {
   url?: string | null;
   preview?: string;
 }
-export const BoardAvatar = ({ url, preview }: IAvatarProps) => {
+export const Avatar = ({ url, preview }: IAvatarProps) => {
   const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
   const variant = 'public';
   return (
@@ -33,12 +33,5 @@ const Cont = styled.div<{ isImage: boolean }>`
   img {
     width: ${(p) => (p.isImage ? '100%' : '50px')};
     height: ${(p) => (p.isImage ? '100%' : '50px')};
-  }
-`;
-const NoImageCont = styled(Cont)<{ isBg: boolean }>`
-  height: ${(p) => p.isBg && '100vh'};
-  img {
-    width: 50px;
-    height: 50px;
   }
 `;

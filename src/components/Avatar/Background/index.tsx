@@ -4,7 +4,7 @@ interface IAvatarProps {
   url?: string | null | boolean;
   preview?: string;
 }
-export const BoardBackground = ({ url, preview }: IAvatarProps) => {
+export const BackGroundAvatar = ({ url, preview }: IAvatarProps) => {
   const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
   const variant = 'public';
   return (

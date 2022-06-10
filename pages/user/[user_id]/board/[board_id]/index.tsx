@@ -1,15 +1,15 @@
 import useSWR from 'swr';
-import type { NextPage } from 'next';
-import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
+import styled from '@emotion/styled';
+import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { Btn } from '../../../../../styles/btn';
+import useUser from '../../../../../src/libs/client/useUser';
+import { BoardInfo } from '../../../../../src/components/Board';
 import { IGetBoardDetail } from '../../../../../src/types/board';
 import { DeleteModal } from '../../../../../src/components/Modal/Board/Delete';
-import { EditBgAvatar } from '../../../../../src/components/Board/BgAvatar';
-import { Btn } from '../../../../../styles/btn';
-import { BoardInfo } from '../../../../../src/components/Board';
-import { BoardBackground } from '../../../../../src/components/Avatar/\bBoard/Background';
-import useUser from '../../../../../src/libs/client/useUser';
+import { EditBgAvatar } from '../../../../../src/components/Avatar/Background/Edit';
+import { BackGroundAvatar } from '../../../../../src/components/Avatar/Background';
 
 const Board: NextPage = () => {
   const router = useRouter();
@@ -26,7 +26,7 @@ const Board: NextPage = () => {
   const [isEditAvatar, setIsEditAvatar] = useState(false);
   return (
     <Page>
-      <BoardBackground preview={preview} url={board?.avatar} />
+      <BackGroundAvatar preview={preview} url={board?.avatar} />
       {isOwner && (
         <Button
           clicked={isEditAvatar}

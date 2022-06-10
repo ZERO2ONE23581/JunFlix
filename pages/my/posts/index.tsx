@@ -4,14 +4,17 @@ import { Title } from '../../../src/components/Layout/Title';
 import { PostList } from '../../../src/components/Post/List';
 import useUser from '../../../src/libs/client/useUser';
 import { IGetAllPosts } from '../../../src/types/post';
+import { Page } from '../boards';
 
 const MyPosts: NextPage = () => {
-  const { isloggedIn } = useUser();
-  const { data } = useSWR<IGetAllPosts>(isloggedIn && `/api/my/posts`);
+  const { loggedInUser } = useUser();
   return (
     <>
       <Title title="나의 포스트" />
-      <PostList isMyPosts={true} posts={data?.posts} />
+      <Page>
+        <h1>{loggedInUser?.username}'s Posts</h1>
+        <PostList isMyPosts={Boolean(loggedInUser)} />
+      </Page>
     </>
   );
 };

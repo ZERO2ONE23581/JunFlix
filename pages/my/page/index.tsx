@@ -82,7 +82,7 @@ const MyPage: NextPage = () => {
 export default MyPage;
 
 const Cont = styled.section`
-  border: 10px solid red;
+  height: 100vh;
   gap: 20px;
   display: flex;
   flex-direction: column;
