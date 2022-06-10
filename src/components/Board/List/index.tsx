@@ -28,7 +28,7 @@ export const BoardList = ({
         <Link key={board.id} href={`${BoardLink(board.UserID, board.id)}`}>
           <a>
             <Item>
-              <Avatar avatarURL={board.avatar} />
+              <Avatar url={board.avatar} />
               <ul>
                 <li>
                   <span>Title: </span>

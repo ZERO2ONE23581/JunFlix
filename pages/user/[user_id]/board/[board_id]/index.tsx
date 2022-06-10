@@ -17,6 +17,7 @@ import { DeleteModal } from '../../../../../src/components/Modal/Board/Delete';
 import { PostList } from '../../../../../src/components/Post/List';
 import { Avatar } from '../../../../../src/components/Avatar';
 import { Btn } from '../../../../../styles/btn';
+import { EditBgAvatar } from '../../../../../src/components/Board/Edit/BgAvatar';
 
 const BoardInfo: NextPage = () => {
   const router = useRouter();
@@ -46,8 +47,11 @@ const BoardInfo: NextPage = () => {
   };
   //
   const [edit, setEdit] = useState(false);
+  const [editBg, setEditBg] = useState(false);
   const [setting, setSetting] = useState(false);
   const [delModal, setDelModal] = useState(false);
+  const [preview, setPreview] = useState('');
+  //
   useEffect(() => {
     if (data && data?.ok && board) {
       if (board.title) setValue('title', board.title.toUpperCase());
@@ -62,7 +66,11 @@ const BoardInfo: NextPage = () => {
   //
   return (
     <>
-      <Avatar bg={true} url={board?.avatar} />
+      {editBg && <EditBgAvatar setPreview={setPreview} />}
+      <Avatar isBg boardBgPreview={preview} bgUrl={board?.avatar} />
+      <EditBgBtn clicked={editBg} onClick={() => setEditBg((p) => !p)}>
+        Background
+      </EditBgBtn>
       <Board>
         <H1>{board?.user?.username}'s board</H1>
         <BtnWrap>
@@ -150,7 +158,7 @@ const BoardInfo: NextPage = () => {
             errMsg={errors.genre?.message}
           />
           {edit && (
-            <Button type="submit">
+            <Button clicked={false} type="submit">
               {loading ? 'Loading...' : 'Edit Board'}
             </Button>
           )}
@@ -194,8 +202,9 @@ const Button = styled(Btn)<{ clicked: boolean }>`
   background-color: ${(p) => p.clicked && p.theme.color.logo};
 `;
 const EditBgBtn = styled(Button)`
-  /* width: 80px;
-  height: 40px; */
+  position: absolute;
+  top: 20%;
+  right: 10%;
 `;
 const H1 = styled.h1`
   font-size: 2rem;

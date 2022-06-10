@@ -140,7 +140,7 @@ export const HomeArticle = styled(Article)`
 `;
 
 export const Form = styled.form`
-  margin: 30px auto;
+  margin: 0 auto;
   padding: 20px 40px;
   display: flex;
   flex-direction: column;

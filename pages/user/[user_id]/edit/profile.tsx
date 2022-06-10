@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Edit_Avatar } from '../../../../src/components/User/Edit/Avatar';
+import { Edit_Avatar } from '../../../../src/components/User/Edit/Edit_Avatar';
 import { Edit_UserId } from '../../../../src/components/User/Edit/UserId';
 import { Edit_Password } from '../../../../src/components/User/Edit/Password';
 import { Edit_UserInfo } from '../../../../src/components/User/Edit/UserInfo';

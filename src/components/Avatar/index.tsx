@@ -1,35 +1,44 @@
 import styled from '@emotion/styled';
 
 interface IAvatarProps {
+  isBg?: boolean;
   url?: string | null;
+  bgUrl?: string | null;
   preview?: string;
+  boardBgPreview?: string;
   children?: any;
-  bg?: boolean;
 }
-export const Avatar = ({ url, bg, children, preview }: IAvatarProps) => {
+export const Avatar = ({
+  isBg,
+  url,
+  bgUrl,
+  preview,
+  boardBgPreview,
+  children,
+}: IAvatarProps) => {
   const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
   const variant = 'public';
-  const isPreview = Boolean(preview);
-  const isAvatar = Boolean(url) && !bg;
-  const isAvatarBg = Boolean(url) && bg;
-  const isNoImage = Boolean(!preview && !url);
+  const isNoImage = Boolean(!url && !bgUrl && !preview && !boardBgPreview);
   return (
     <>
-      {isAvatar && (
+      {url && (
         <Cont>
           <img src={`${`${base}/${url}/${variant}`}`} alt="프로필 이미지" />
         </Cont>
       )}
-      {isAvatarBg && (
-        <Background bg={`${base}/${url}/${variant}`}>{children}</Background>
+      {boardBgPreview && (
+        <Background bg={`${boardBgPreview}`}>{children}</Background>
       )}
-      {isPreview && (
+      {bgUrl && (
+        <Background bg={`${base}/${bgUrl}/${variant}`}>{children}</Background>
+      )}
+      {preview && (
         <Cont>
           <img src={`${preview}`} alt="파일 업로드" />
         </Cont>
       )}
-      {isNoImage && (
-        <NoImageCont>
+      {isNoImage && isBg && (
+        <NoImageCont isBg={isBg}>
           <img src="/img/noimage.svg" alt="포스트 이미지" />
         </NoImageCont>
       )}
@@ -41,7 +50,6 @@ const Background = styled.section<{ bg: string }>`
   z-index: -1;
   opacity: 0.9;
   width: 100%;
-  height: 400px;
   height: 100vh;
   position: relative;
   background: ${(p) => `url(${p.bg})  no-repeat center / cover`};
@@ -62,7 +70,8 @@ const Cont = styled.div`
     height: 100%;
   }
 `;
-const NoImageCont = styled(Cont)`
+const NoImageCont = styled(Cont)<{ isBg: boolean }>`
+  height: ${(p) => p.isBg && '100vh'};
   img {
     width: 50px;
     height: 50px;
