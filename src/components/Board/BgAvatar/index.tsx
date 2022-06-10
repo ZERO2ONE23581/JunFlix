@@ -1,16 +1,16 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import useUser from '../../../../libs/client/useUser';
-import { MutationRes } from '../../../../types/mutation';
-import useMutation from '../../../../libs/client/useMutation';
-import { Btn } from '../../../../../styles/btn';
+import useUser from '../../../libs/client/useUser';
+import { MutationRes } from '../../../types/mutation';
+import useMutation from '../../../libs/client/useMutation';
+import { Btn } from '../../../../styles/btn';
 import { useEffect } from 'react';
 
 interface IEditAvatarForm {
   avatar?: FileList;
 }
-export const EditBgAvatar = ({ setPreview }: any) => {
+export const EditBgAvatar = ({ setPreview, isEditAvatar }: any) => {
   const { loggedInUser } = useUser();
   const router = useRouter();
   const { user_id, board_id } = router.query;
@@ -46,12 +46,16 @@ export const EditBgAvatar = ({ setPreview }: any) => {
   }, [data, router, avatar]);
   //
   return (
-    <Cont>
-      <form onSubmit={handleSubmit(onValid)}>
-        <input {...register('avatar')} type="file" name="avatar" />
-        <Button>{loading ? 'Loading...' : 'SAVE'}</Button>
-      </form>
-    </Cont>
+    <>
+      {isEditAvatar && (
+        <Cont>
+          <form onSubmit={handleSubmit(onValid)}>
+            <input {...register('avatar')} type="file" name="avatar" />
+            <Button>{loading ? 'Loading...' : 'SAVE'}</Button>
+          </form>
+        </Cont>
+      )}
+    </>
   );
 };
 const Cont = styled.article`

@@ -8,7 +8,7 @@ import { Input } from '../../../../../../../src/components/Input';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { ErrMsg, PageCont } from '../../../../../../../styles/default';
 import { Post } from '@prisma/client';
-import { Avatar } from '../../../../../../../src/components/Avatar';
+import { Avatar } from '../../../../../../../src/components/Avatar/Board/Background';
 
 interface ICreatePostRes {
   ok: boolean;

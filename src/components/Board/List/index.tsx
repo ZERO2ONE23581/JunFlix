@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import { IGetBoards } from '../../../types/board';
-import { Avatar } from '../../Avatar';
+import { BoardAvatar } from '../../Avatar/\bBoard/Thumnail';
 
 export interface IBoardListProps {
   isAllBoards?: boolean;
@@ -28,7 +28,7 @@ export const BoardList = ({
         <Link key={board.id} href={`${BoardLink(board.UserID, board.id)}`}>
           <a>
             <Item>
-              <Avatar url={board.avatar} />
+              <BoardAvatar url={board.avatar} />
               <ul>
                 <li>
                   <span>Title: </span>
@@ -51,24 +51,16 @@ export const BoardList = ({
   );
 };
 const Grid = styled.article`
-  margin-top: 15px;
   gap: 15px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 `;
 const Item = styled.div`
+  border-radius: 5px;
   border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  width: 100%;
   ul {
-    width: 100%;
-    padding: 10px 20px;
+    padding: 8px 20px;
     li {
       border-bottom: 1px dotted ${(p) => p.theme.color.font};
       padding-bottom: 2px;

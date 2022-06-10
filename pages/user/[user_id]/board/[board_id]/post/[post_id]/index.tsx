@@ -17,7 +17,6 @@ import { ThumNail } from '../../../../../../../styles/image';
 import { LikeCommentWrap } from '../../../../../../../src/components/Icon/LikeCommentWrap';
 import { CreateCommentOnPost } from '../../../../../../../src/components/Comment/Create/Post';
 import { AllComments } from '../../../../../../../src/components/Comment/AllComments';
-import { Avatar } from '../../../../../../../src/components/Avatar';
 
 const PostInfo: NextPage = () => {
   const router = useRouter();

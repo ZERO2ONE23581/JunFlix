@@ -3,7 +3,6 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { IGetAllPosts, IPostListProps } from '../../../types/post';
 import { IGetLikes } from '../../../types/likes';
-import { Avatar } from '../../Avatar';
 
 export const PostList = ({
   isAllPosts,
@@ -33,9 +32,7 @@ export const PostList = ({
           key={like.id}
           href={`/user/${like.post.UserID}/board/${like.post.BoardID}/post/${like.post.id}`}
         >
-          <a>
-            <Avatar url={like.post.avatar} size={300} />
-          </a>
+          <a>{/* <Avatar url={like.post.avatar} size={300} /> */}</a>
         </Link>
       ))}
     </Grid>
