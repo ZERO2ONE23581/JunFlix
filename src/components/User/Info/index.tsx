@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { User } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { Btn } from '../../../../styles/btn';
-import { Avatar } from '../../Avatar';
+import { ProfileAvatar } from '../../Avatar/Profile';
 
 interface IUserInfoProps {
   user?: User;
@@ -13,16 +13,11 @@ export const UserInfo = ({ user }: IUserInfoProps) => {
   const clickBtn = (type: string) => {
     if (type === 'edit') return router.push(`/user/${user?.id}/edit/profile`);
   };
-  //
   return (
     <>
       <Info>
         <div className="avatar-desc-wrap">
-          <Avatar
-            isAvatar={Boolean(user?.avatar)}
-            url={user?.avatar}
-            size={90}
-          />
+          <ProfileAvatar size={90} url={user?.avatar} />
           <UserDesc>
             <li className="name-list">
               <span>Name</span>

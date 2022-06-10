@@ -140,16 +140,17 @@ export const HomeArticle = styled(Article)`
 `;
 
 export const Form = styled.form`
-  background-color: ${(p) => p.theme.color.bg};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border};
-  justify-content: center;
-  flex-direction: column;
-  border-radius: 10px;
-  padding: 20px 25px;
+  margin: 30px auto;
+  padding: 20px 40px;
   display: flex;
-  width: 330px;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+  color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
+  border-radius: 8px;
+  border: ${(p) => p.theme.border};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
 `;
 export const ReviewForm = styled(Form)`
   width: 100%;

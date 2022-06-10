@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Board, Following, Post, User } from '@prisma/client';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useSWR from 'swr';
 import { Icons } from '../../../../styles/svg';
@@ -26,24 +27,23 @@ interface IFollowBoardRes {
 }
 
 interface IFollowBoardProps {
-  isBoardOwner?: boolean;
+  isOwner?: boolean;
   user_id?: number | null;
   board_id?: number | null;
 }
 
-export const FollowBoard = ({
-  isBoardOwner,
-  user_id,
-  board_id,
-}: IFollowBoardProps) => {
+export const Follow = ({ isOwner }: IFollowBoardProps) => {
+  const router = useRouter();
+  const { user_id, board_id } = router.query;
+  const queryId = user_id && board_id;
   const { data, mutate } = useSWR<IGetFollowingBoard>(
-    `/api/user/${user_id}/board/${board_id}`
+    queryId && `/api/user/${user_id}/board/${board_id}`
   );
   const [followBoard] = useMutation<IFollowBoardRes>(
     `/api/user/${user_id}/board/${board_id}/follow/create`
   );
   const handleClick = () => {
-    if (isBoardOwner) return;
+    if (isOwner) return;
     if (!data) return;
     mutate(
       {
@@ -69,8 +69,8 @@ export const FollowBoard = ({
       <Wrap>
         <Counts>
           <span>
-            {data?.board._count?.followers
-              ? data?.board._count?.followers
+            {data?.board?._count?.followers
+              ? data?.board?._count?.followers
               : '0'}
           </span>
           <span>Followers</span>

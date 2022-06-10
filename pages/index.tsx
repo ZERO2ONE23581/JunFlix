@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { BoardList } from '../src/components/Board/BoardList';
+import { BoardList } from '../src/components/Board/List';
 import { Title } from '../src/components/Layout/Title';
 import { MovieInfo } from '../src/components/Movie';
 

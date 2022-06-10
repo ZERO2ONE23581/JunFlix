@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { IGetReviews } from '../../types/review';
 import { LikeCommentWrap } from '../Icon/LikeCommentWrap';
-import { Avatar } from '../Avatar';
 import useSWR from 'swr';
 import { IGetLikes } from '../../types/likes';
+import { ProfileAvatar } from '../Avatar/Profile';
 
 interface IReviewListProps {
   isAllReviews?: boolean;
@@ -32,11 +32,7 @@ export const ReviewList = ({
             <a>
               <Item>
                 <Order>#{reviews.length - reviews.indexOf(review)}</Order>
-                <Avatar
-                  isAvatar={Boolean(review?.user.avatar)}
-                  url={review?.user?.avatar}
-                  size={60}
-                />
+                <ProfileAvatar url={review?.user?.avatar} size={60} />
                 <Wrap>
                   <Title>{review.title}</Title>
                   <Items>
@@ -86,11 +82,7 @@ export const ReviewList = ({
             <a>
               <Item>
                 <Order>#{likes.length - likes.indexOf(like)}</Order>
-                <Avatar
-                  isAvatar={Boolean(like?.review.user?.avatar)}
-                  url={like?.review.user?.avatar}
-                  size={60}
-                />
+                <ProfileAvatar size={60} url={like?.review.user?.avatar} />
                 <Wrap>
                   <Title>{like.review.title}</Title>
                   <Items>

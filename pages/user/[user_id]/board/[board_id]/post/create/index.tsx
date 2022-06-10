@@ -8,7 +8,7 @@ import { Input } from '../../../../../../../src/components/Input';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { ErrMsg, PageCont } from '../../../../../../../styles/default';
 import { Post } from '@prisma/client';
-import { ThumNail } from '../../../../../../../styles/image';
+import { Avatar } from '../../../../../../../src/components/Avatar';
 
 interface ICreatePostRes {
   ok: boolean;
@@ -28,7 +28,6 @@ const CreatePost: NextPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IPostForm>({ mode: 'onSubmit' });
-
   const avatar = watch('avatar');
   const onValid = async ({ avatar, title, content }: IPostForm) => {
     if (loading) return;
@@ -65,23 +64,12 @@ const CreatePost: NextPage = () => {
       }
     }
   }, [avatar, watch, dataRes, router]);
-  //
   return (
     <PageCont>
       <section className="create-post-cont">
         <form onSubmit={handleSubmit(onValid)}>
           {dataRes?.error && <ErrMsg>{dataRes?.error}</ErrMsg>}
-          <ThumNail>
-            {preview ? (
-              <img src={`${preview}`} alt="파일 업로드" />
-            ) : (
-              <img
-                className="noimage"
-                src="/img/noimage.svg"
-                alt="파일 업로드"
-              />
-            )}
-          </ThumNail>
+          <Avatar preview={preview} />
           <Input
             register={register('avatar')}
             type="file"

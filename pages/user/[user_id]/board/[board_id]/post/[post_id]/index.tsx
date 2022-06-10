@@ -17,8 +17,9 @@ import { ThumNail } from '../../../../../../../styles/image';
 import { LikeCommentWrap } from '../../../../../../../src/components/Icon/LikeCommentWrap';
 import { CreateCommentOnPost } from '../../../../../../../src/components/Comment/Create/Post';
 import { AllComments } from '../../../../../../../src/components/Comment/AllComments';
+import { Avatar } from '../../../../../../../src/components/Avatar';
 
-const Post_Detail: NextPage = () => {
+const PostInfo: NextPage = () => {
   const router = useRouter();
   const { isloggedIn, loggedInUser } = useUser();
   const { user_id, board_id, post_id } = router.query;
@@ -120,18 +121,7 @@ const Post_Detail: NextPage = () => {
         <form onSubmit={handleSubmit(onValid)}>
           {dataRes?.message && <OkMsg>{dataRes?.message}</OkMsg>}
           {dataRes?.error && <ErrMsg>{dataRes?.error}</ErrMsg>}
-          <ThumNail>
-            {preview ? (
-              <img src={`${preview}`} alt="포스트 썸네일 이미지" />
-            ) : data?.post?.avatar ? (
-              <img
-                src={`${useAvatar(data?.post.avatar)}`}
-                alt="포스트 썸네일 이미지"
-              />
-            ) : (
-              <img src="/img/post_thum.svg" alt="포스트 썸네일 이미지" />
-            )}
-          </ThumNail>
+          <Avatar url={data?.post.avatar} preview={preview} />
           <Input
             register={register('avatar')}
             type="file"
@@ -191,7 +181,7 @@ const Post_Detail: NextPage = () => {
     </>
   );
 };
-export default Post_Detail;
+export default PostInfo;
 
 export const LikeAndComments = styled.section`
   padding: 20px;

@@ -6,8 +6,10 @@ import { Btn } from '../../../../../src/components/Button';
 import { BoardForm } from '../../../../../src/types/board';
 import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Board } from '@prisma/client';
+import { Avatar } from '../../../../../src/components/Avatar';
+import styled from '@emotion/styled';
 
 interface ICreateBoardRes {
   ok: boolean;
@@ -22,26 +24,56 @@ const CreateBoard: NextPage = () => {
   );
   //
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<BoardForm>({ mode: 'onSubmit' });
-  const onValid = ({ title, intro, genre, avatar, follow }: BoardForm) => {
+  const avatar = watch('avatar');
+  const onValid = async ({ title, intro, genre, avatar }: BoardForm) => {
     if (loading) return;
-    createBoard({ title, intro, genre });
+    if (avatar && avatar.length > 0) {
+      const { uploadURL } = await (await fetch(`/api/file`)).json();
+      const form = new FormData();
+      form.append('file', avatar[0]);
+      const {
+        result: { id },
+      } = await (
+        await fetch(uploadURL, {
+          method: 'POST',
+          body: form,
+        })
+      ).json();
+      return createBoard({ title, intro, genre, avatar: id });
+    } else {
+      return createBoard({ title, intro, genre });
+    }
   };
   //
+  const [preview, setPreview] = useState('');
   useEffect(() => {
+    if (avatar && avatar.length > 0) {
+      const file = avatar[0];
+      setPreview(URL.createObjectURL(file));
+    }
     if (data?.ok) {
       alert('보드를 생성하였습니다. 생성한 보드로 이동합니다.');
       router.replace(`/user/${data.board.UserID}/board/${data.board.id}`);
     }
-  }, [data, router]);
+  }, [data, router, avatar]);
   //
   return (
-    <PageSection>
+    <Cont>
       <Form onSubmit={handleSubmit(onValid)}>
         {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
+        <Avatar preview={preview} />
+        <Input
+          register={register('avatar')}
+          type="file"
+          name="avatar"
+          label="Post Image"
+          errMsg={errors.avatar?.message}
+        />
         <Input
           register={register('title', {
             required: '생성하실 보드의 제목을 입력하세요.',
@@ -77,7 +109,8 @@ const CreateBoard: NextPage = () => {
         />
         <Btn type="submit" btnName="나의 보드 만들기" loading={loading} />
       </Form>
-    </PageSection>
+    </Cont>
   );
 };
 export default CreateBoard;
+const Cont = styled.section``;

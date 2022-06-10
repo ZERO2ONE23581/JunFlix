@@ -6,7 +6,7 @@ import { withApiSession } from '../../../../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { user_id } = req.query;
-  const { title, intro, genre } = req.body;
+  const { title, intro, genre, avatar } = req.body;
   if (!user) return res.json({ ok: false, error: 'MUST LOGIN' });
   if (!title) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
   if (user.id !== +user_id)
@@ -25,6 +25,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       title,
       intro,
       genre,
+      avatar,
       user: { connect: { id: user.id } },
     },
   });

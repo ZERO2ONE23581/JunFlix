@@ -13,6 +13,7 @@ import useAvatar from '../../../libs/client/useAvatar';
 import { NavReviewModal } from '../../Modal/Nav/Review';
 import { NavModalClose } from '../../../../styles/modal';
 import { useRouter } from 'next/router';
+import { ProfileAvatar } from '../../Avatar/Profile';
 
 export const Header = ({ onClick, btnName }: any) => {
   const { isloggedIn, loggedInUser } = useUser();
@@ -89,18 +90,12 @@ export const Header = ({ onClick, btnName }: any) => {
         </MainNav>
         <MyNav>
           {openProfile && <NavModal closeModal={() => setOpenProfile(false)} />}
-          {isloggedIn ? (
-            <Avatar onClick={() => setOpenProfile((p) => !p)}>
-              {loggedInUser?.avatar ? (
-                <img
-                  src={`${useAvatar(loggedInUser?.avatar)}`}
-                  alt="프로필 이미지"
-                />
-              ) : (
-                <img src="/img/profile.svg" alt="프로필 이미지" />
-              )}
-            </Avatar>
-          ) : (
+          {isloggedIn && (
+            <div onClick={() => setOpenProfile((p) => !p)}>
+              <ProfileAvatar url={loggedInUser?.avatar} />
+            </div>
+          )}
+          {!isloggedIn && (
             <UnloggedIn>
               <LinkStyle>
                 <Link href="/user/join">

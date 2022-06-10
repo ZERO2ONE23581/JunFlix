@@ -13,13 +13,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       id: true,
       post: { select: { id: true, UserID: true, BoardID: true, avatar: true } },
       review: {
-        select: {
-          id: true,
-          UserID: true,
-          avatar: true,
-          score: true,
-          user: { select: { username: true, avatar: true } },
-        },
+        include: { user: { select: { username: true, avatar: true } } },
       },
     },
     orderBy: {

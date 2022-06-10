@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 import useSWR from 'swr';
 import { Title } from '../../../src/components/Layout/Title';
-import { PostList } from '../../../src/components/Post/PostList';
+import { PostList } from '../../../src/components/Post/List';
 import { IGetAllPosts } from '../../../src/types/post';
 
-const All_Posts: NextPage = () => {
+const AllPosts: NextPage = () => {
   const { data } = useSWR<IGetAllPosts>(`/api/all/posts`);
   return (
     <>
@@ -13,4 +13,4 @@ const All_Posts: NextPage = () => {
     </>
   );
 };
-export default All_Posts;
+export default AllPosts;

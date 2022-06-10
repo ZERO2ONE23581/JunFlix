@@ -1,7 +1,8 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { IGetBoards } from '../../types/board';
+import { IGetBoards } from '../../../types/board';
+import { Avatar } from '../../Avatar';
 
 export interface IBoardListProps {
   isAllBoards?: boolean;
@@ -27,9 +28,7 @@ export const BoardList = ({
         <Link key={board.id} href={`${BoardLink(board.UserID, board.id)}`}>
           <a>
             <Item>
-              <ThumNail>
-                <img src="/img/clapper.svg" alt="썸네일 이미지" />
-              </ThumNail>
+              <Avatar avatarURL={board.avatar} />
               <ul>
                 <li>
                   <span>Title: </span>
@@ -78,16 +77,5 @@ const Item = styled.div`
         font-size: 1rem;
       }
     }
-  }
-`;
-const ThumNail = styled.div`
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  border-radius: 5px;
-  width: 100%;
-  padding: 5px 0;
-  height: 200px;
-  img {
-    width: 100%;
-    height: 100%;
   }
 `;
