@@ -36,7 +36,7 @@ const Board: NextPage = () => {
         </Button>
       )}
       <EditBgAvatar setPreview={setPreview} isEditAvatar={isEditAvatar} />
-      <BoardInfo board={board} setDelModal={setDelModal} />
+      <BoardInfo board={board} setDelModal={setDelModal} isOwner={isOwner} />
       <DeleteModal
         delModal={delModal}
         deleteClick={() => setDelModal((p) => !p)}

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { User } from '@prisma/client';
 import { useRouter } from 'next/router';
-import { Btn } from '../../../../styles/btn';
-import { ProfileAvatar } from '../../Avatar/Profile';
+import { Btn } from '../../../../../styles/btn';
+import { ProfileAvatar } from '../../../Avatar/Profile';
 
 interface IUserInfoProps {
   user?: User;

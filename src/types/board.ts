@@ -1,4 +1,4 @@
-import { Board, Post, User } from '@prisma/client';
+import { Board, Following, Post, User } from '@prisma/client';
 
 export interface BoardForm {
   title: string;
@@ -29,6 +29,10 @@ export interface IGetBoards {
   boards?: BoardWithUser[];
 }
 export interface BoardWithUser extends Board {
+  user: User;
+  followers: FollowingWithUser[];
+}
+interface FollowingWithUser extends Following {
   user: User;
 }
 export interface IGetExistingBoards {

@@ -1,15 +1,19 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { BoardFollow } from '../Follow/board';
 import { PostList } from '../Post/List';
 import { BtnWrap } from './Button';
 import { BoardForm } from './Form';
 
-export const BoardInfo = ({ board, setDelModal }: any) => {
+export const BoardInfo = ({ board, setDelModal, isOwner }: any) => {
   const [isEdit, setIsEdit] = useState(false);
   return (
     <>
       <Board>
-        <h1>{board?.user?.username}'s board</h1>
+        <article className="h1-follow-wrap">
+          <h1>{board?.user?.username}'s board</h1>
+          <BoardFollow isOwner={isOwner} />
+        </article>
         <BtnWrap
           board={board}
           isEdit={isEdit}
@@ -24,7 +28,7 @@ export const BoardInfo = ({ board, setDelModal }: any) => {
 };
 const Board = styled.article`
   width: 50%;
-  padding: 20px;
+  padding: 20px 40px;
   top: 70%;
   left: 50%;
   position: absolute;
@@ -33,8 +37,13 @@ const Board = styled.article`
   border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
-  h1 {
-    font-size: 2rem;
-    font-weight: 700;
+  .h1-follow-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+    }
   }
 `;

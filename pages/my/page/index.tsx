@@ -5,9 +5,10 @@ import useUser from '../../../src/libs/client/useUser';
 import { PostList } from '../../../src/components/Post/List';
 import { ReviewList } from '../../../src/components/Review/list';
 import styled from '@emotion/styled';
-import { UserInfo } from '../../../src/components/User/Info';
+import { UserInfo } from '../../../src/components/User/mypage/Info';
 import { useState } from 'react';
 import { Btn } from '../../../styles/btn';
+import { MyPageFollow } from '../../../src/components/User/mypage/follow';
 
 const MyPage: NextPage = () => {
   const { isloggedIn, loggedInUser } = useUser();
@@ -21,10 +22,12 @@ const MyPage: NextPage = () => {
   return (
     <>
       <Title title="마이페이지" />
-
       <Cont>
         <h1>{loggedInUser?.username}'s DashBoard</h1>
-        <UserInfo user={loggedInUser} />
+        <article className="userinfo-follow-wrap">
+          <UserInfo user={loggedInUser} />
+          <MyPageFollow />
+        </article>
         <BtnWrap>
           <Button onClick={() => hadleClick('board', '')}>My Boards</Button>
           <Button onClick={() => hadleClick('post', '')}>My Posts</Button>
@@ -92,6 +95,11 @@ const Cont = styled.section`
   h1 {
     font-size: 2rem;
     font-weight: 700;
+  }
+  .userinfo-follow-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 `;
 const BtnWrap = styled.article`

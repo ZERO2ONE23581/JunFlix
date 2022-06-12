@@ -1,45 +1,18 @@
-import styled from '@emotion/styled';
-import { Board, Following, Post, User } from '@prisma/client';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
 import useSWR from 'swr';
-import { Icons } from '../../../../styles/svg';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import useMutation from '../../../libs/client/useMutation';
+import { MutationRes } from '../../../types/mutation';
+import { IFollowBoardProps, IGetFollowingBoard } from '../../../types/follow';
 
-interface IGetFollowingBoard {
-  ok: boolean;
-  error?: string;
-  isFollowing?: boolean;
-  board: BoardWithRecords;
-}
-interface BoardWithRecords extends Board {
-  user: User;
-  followers?: Following[];
-  post?: Post[];
-  _count: {
-    followers: number;
-    posts: number;
-  };
-}
-interface IFollowBoardRes {
-  ok: boolean;
-  error?: string;
-}
-
-interface IFollowBoardProps {
-  isOwner?: boolean;
-  user_id?: number | null;
-  board_id?: number | null;
-}
-
-export const Follow = ({ isOwner }: IFollowBoardProps) => {
+export const BoardFollow = ({ isOwner }: IFollowBoardProps) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const queryId = user_id && board_id;
   const { data, mutate } = useSWR<IGetFollowingBoard>(
     queryId && `/api/user/${user_id}/board/${board_id}`
   );
-  const [followBoard] = useMutation<IFollowBoardRes>(
+  const [followBoard] = useMutation<MutationRes>(
     `/api/user/${user_id}/board/${board_id}/follow/create`
   );
   const handleClick = () => {
@@ -63,35 +36,32 @@ export const Follow = ({ isOwner }: IFollowBoardProps) => {
     );
     followBoard({});
   };
-  //
+  const isFollower = data?.board?._count?.followers;
   return (
     <Cont>
-      <Wrap>
+      {isOwner ? (
         <Counts>
+          <span>{isFollower === 1 ? 'Follower: ' : 'Followers: '}</span>
           <span>
             {data?.board?._count?.followers
               ? data?.board?._count?.followers
               : '0'}
           </span>
-          <span>Followers</span>
         </Counts>
+      ) : (
         <Btn isFollowing={data?.isFollowing} onClick={handleClick}>
           {data?.isFollowing ? 'Following' : 'Follow'}
         </Btn>
-      </Wrap>
+      )}
     </Cont>
   );
 };
 
 const Cont = styled.article`
-  /* border: 2px solid blueviolet; */
   margin: 10px 0;
-`;
-const Wrap = styled.article`
-  width: 200px;
   gap: 10px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
 `;
 const Btn = styled.button<{ isFollowing: boolean | undefined }>`

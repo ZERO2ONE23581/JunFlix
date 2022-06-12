@@ -157,7 +157,6 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 500px;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
   border-radius: 8px;
