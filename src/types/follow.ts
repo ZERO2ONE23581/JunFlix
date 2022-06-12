@@ -20,3 +20,11 @@ export interface IFollowBoardProps {
   user_id?: number | null;
   board_id?: number | null;
 }
+export interface IGetFollowInfo {
+  ok: boolean;
+  error?: string;
+  following?: FollowingWithBoards[];
+}
+export interface FollowingWithBoards extends Following {
+  board: Board;
+}

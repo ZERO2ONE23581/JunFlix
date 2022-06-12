@@ -8,7 +8,7 @@ import styled from '@emotion/styled';
 import { UserInfo } from '../../../src/components/User/mypage/Info';
 import { useState } from 'react';
 import { Btn } from '../../../styles/btn';
-import { MyPageFollow } from '../../../src/components/User/mypage/follow';
+import { FollowingBoards } from '../../../src/components/User/mypage/follow';
 
 const MyPage: NextPage = () => {
   const { isloggedIn, loggedInUser } = useUser();
@@ -23,10 +23,9 @@ const MyPage: NextPage = () => {
     <>
       <Title title="마이페이지" />
       <Cont>
-        <h1>{loggedInUser?.username}'s DashBoard</h1>
         <article className="userinfo-follow-wrap">
           <UserInfo user={loggedInUser} />
-          <MyPageFollow />
+          <FollowingBoards />
         </article>
         <BtnWrap>
           <Button onClick={() => hadleClick('board', '')}>My Boards</Button>
@@ -85,7 +84,9 @@ const MyPage: NextPage = () => {
 export default MyPage;
 
 const Cont = styled.section`
-  height: 100vh;
+  border: 10px solid red;
+  width: 80%;
+  margin: 0 auto;
   gap: 20px;
   display: flex;
   flex-direction: column;
@@ -97,8 +98,9 @@ const Cont = styled.section`
     font-weight: 700;
   }
   .userinfo-follow-wrap {
+    width: 100%;
+    margin: 0 auto;
     display: flex;
-    align-items: center;
     justify-content: space-between;
   }
 `;

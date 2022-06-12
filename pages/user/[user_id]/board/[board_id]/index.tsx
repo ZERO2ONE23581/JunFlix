@@ -47,7 +47,7 @@ const Board: NextPage = () => {
 export default Board;
 
 const Page = styled.section`
-  height: 100vh;
+  height: 100%;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
