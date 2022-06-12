@@ -1,4 +1,9 @@
-import { OkMsg, ErrMsg, Article } from '../../../../../../../styles/default';
+import {
+  OkMsg,
+  ErrMsg,
+  Article,
+  IconWrap,
+} from '../../../../../../../styles/default';
 import useSWR from 'swr';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
@@ -167,12 +172,12 @@ const PostInfo: NextPage = () => {
           )}
         </form>
 
-        <LikeAndComments>
+        <IconWrap>
           <LikeCommentWrap type="post" reviewId={null} userId={null} />
           <h1>해당 포스트에 댓글 남기기</h1>
           <CreateCommentOnPost />
           <AllComments type="post" />
-        </LikeAndComments>
+        </IconWrap>
       </Cont>
 
       <DeleteModal
@@ -183,18 +188,6 @@ const PostInfo: NextPage = () => {
   );
 };
 export default PostInfo;
-
-export const LikeAndComments = styled.section`
-  padding: 20px;
-  border: 10px solid black;
-  h1 {
-    margin-top: 20px;
-    padding-left: 20px;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: ${(p) => p.theme.color.font};
-  }
-`;
 
 const Cont = styled.section`
   padding: 20px 20%;

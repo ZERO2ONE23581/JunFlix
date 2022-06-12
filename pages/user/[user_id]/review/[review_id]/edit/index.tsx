@@ -6,20 +6,22 @@ import { useForm } from 'react-hook-form';
 import { MutationRes } from '../../../../../../src/types/mutation';
 import useMutation from '../../../../../../src/libs/client/useMutation';
 import { Input, Select } from '../../../../../../src/components/Input';
-import useAvatar from '../../../../../../src/libs/client/useAvatar';
 import { Btn } from '../../../../../../src/components/Button';
 import { IGetReview, IReviewForm } from '../../../../../../src/types/review';
 import { ErrMsg, PageCont } from '../../../../../../styles/default';
-import { ThumNail } from '../../../../../../styles/image';
+import { Avatar } from '../../../../../../src/components/Avatar';
 
 const EditReview: NextPage = () => {
   const router = useRouter();
-  const { reviewId } = router.query;
-  const { data } = useSWR<IGetReview>(`/api/review/${reviewId}`);
-  const [editReview, { loading, data: dataRes }] = useMutation<MutationRes>(
-    `/api/review/${data?.review?.id}/edit`
+  const { user_id, review_id } = router.query;
+  const queryId = user_id && review_id;
+  const { data } = useSWR<IGetReview>(
+    queryId && `/api/user/${user_id}/review/${review_id}`
   );
   const review = data?.review;
+  const [editReview, { loading, data: response }] = useMutation<MutationRes>(
+    `/api/user/${user_id}/review/${review?.id}/edit`
+  );
   const {
     watch,
     register,
@@ -78,31 +80,30 @@ const EditReview: NextPage = () => {
   //
   const [preview, setPreview] = useState('');
   useEffect(() => {
-    if (data && data.ok && data?.review) {
-      if (data.review.title) setValue('title', data.review.title);
-      if (data.review.movieTitle)
-        setValue('movieTitle', data.review.movieTitle);
-      if (data.review.genre) setValue('genre', data.review.genre);
-      if (data.review.content) setValue('content', data.review.content);
-      if (data.review.score) setValue('score', data.review.score);
-      if (data.review.oneline) setValue('oneline', data.review.oneline);
-      if (data.review.recommend) setValue('recommend', data.review.recommend);
+    if (data?.ok && review) {
+      if (review.title) setValue('title', review.title);
+      if (review.movieTitle) setValue('movieTitle', review.movieTitle);
+      if (review.genre) setValue('genre', review.genre);
+      if (review.content) setValue('content', review.content);
+      if (review.score) setValue('score', review.score);
+      if (review.oneline) setValue('oneline', review.oneline);
+      if (review.recommend) setValue('recommend', review.recommend);
     }
     if (avatar && avatar.length > 0) {
       const file = avatar[0];
       setPreview(URL.createObjectURL(file));
     }
-    if (dataRes?.ok) {
+    if (response?.ok) {
       alert('리뷰를 수정했습니다.');
-      router.push('/all/review');
+      router.push('/all/reviews');
     }
-  }, [setValue, avatar, watch, data, dataRes]);
+  }, [setValue, avatar, watch, data, response]);
   //
   return (
     <PageCont>
       <section className="edit-review-cont">
         <form onSubmit={handleSubmit(onValid)}>
-          {dataRes?.error && <ErrMsg>{dataRes?.error}</ErrMsg>}
+          {response?.error && <ErrMsg>{response?.error}</ErrMsg>}
           <Input
             type="text"
             label="Title"
@@ -132,22 +133,7 @@ const EditReview: NextPage = () => {
               required: '영화의 장르를 선택해주세요.',
             })}
           />
-          <ThumNail>
-            {preview ? (
-              <img src={`${preview}`} alt="파일 업로드" />
-            ) : data?.review?.avatar ? (
-              <img
-                src={`${useAvatar(data?.review.avatar)}`}
-                alt="리뷰 이미지"
-              />
-            ) : (
-              <img
-                className="noimage"
-                src="/img/noimage.svg"
-                alt="파일 업로드"
-              />
-            )}
-          </ThumNail>
+          <Avatar preview={preview} url={review?.avatar} />
           <Input
             type="file"
             name="avatar"

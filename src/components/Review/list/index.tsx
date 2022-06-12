@@ -2,11 +2,12 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { IGetReviews } from '../../types/review';
-import { LikeCommentWrap } from '../Icon/LikeCommentWrap';
+import { IGetReviews } from '../../../types/review';
+import { LikeCommentWrap } from '../../Icon/LikeCommentWrap';
 import useSWR from 'swr';
-import { IGetLikes } from '../../types/likes';
-import { ProfileAvatar } from '../Avatar/Profile';
+import { IGetLikes } from '../../../types/likes';
+import { ProfileAvatar } from '../../Avatar/Profile';
+import { BackGroundAvatar, CF_BASE, CF_VAR } from '../../Avatar/Background';
 
 interface IReviewListProps {
   isAllReviews?: boolean;
@@ -27,10 +28,10 @@ export const ReviewList = ({
   return (
     <>
       {reviews?.map((review) => (
-        <Desc key={review.id}>
-          <Link href={`/user/${review.UserID}/review/${review.id}`}>
-            <a>
-              <Item>
+        <Desc key={review.id} BgUrl={`${CF_BASE}/${review.avatar}/${CF_VAR}`}>
+          <Item>
+            <Link href={`/user/${review.UserID}/review/${review.id}`}>
+              <a>
                 <Order>#{reviews.length - reviews.indexOf(review)}</Order>
                 <ProfileAvatar url={review?.user?.avatar} size={60} />
                 <Wrap>
@@ -66,18 +67,21 @@ export const ReviewList = ({
                     </Stars>
                   </Items>
                 </Wrap>
-              </Item>
-            </a>
-          </Link>
-          <LikeCommentWrap
-            type="review"
-            userId={review.UserID}
-            reviewId={review.id}
-          />
+              </a>
+            </Link>
+            <LikeCommentWrap
+              type="review"
+              userId={review.UserID}
+              reviewId={review.id}
+            />
+          </Item>
         </Desc>
       ))}
       {likes?.map((like) => (
-        <Desc key={like.id}>
+        <Desc
+          key={like.id}
+          BgUrl={`${CF_BASE}/${like.review.avatar}/${CF_VAR}`}
+        >
           <Link href={`/user/${like.review.UserID}/review/${like.review.id}`}>
             <a>
               <Item>
@@ -129,12 +133,13 @@ export const ReviewList = ({
     </>
   );
 };
-const Desc = styled.article`
-  padding: 20px;
+const Desc = styled.article<{ BgUrl: string | null | undefined }>`
   margin-bottom: 20px;
+  padding: 20px;
   border-radius: 5px;
   border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background: ${(p) => p.BgUrl && `url(${p.BgUrl})  no-repeat center / cover`};
 `;
 
 const Stars = styled.span`
@@ -142,19 +147,32 @@ const Stars = styled.span`
 `;
 
 const Order = styled.span`
-  padding: 8px;
+  width: 40px;
+  height: 40px;
   font-size: 0.8rem;
-  border-radius: 100%;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: ${(p) => p.theme.color.bg};
   background-color: ${(p) => p.theme.color.font};
 `;
 
 const Item = styled.article`
-  gap: 5px;
+  padding: 10px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  justify-content: space-between;
+  box-shadow: ${(p) => p.theme.boxShadow.input};
+  color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const Title = styled.h2`

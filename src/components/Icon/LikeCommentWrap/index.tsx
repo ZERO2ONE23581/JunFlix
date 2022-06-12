@@ -22,7 +22,9 @@ export const LikeCommentWrap = ({ type, userId, reviewId }: any) => {
     </Cont>
   );
 };
-const Cont = styled.section``;
+const Cont = styled.section`
+  margin-top: 15px;
+`;
 const IconWrap = styled.article`
   gap: 20px;
   display: flex;

@@ -1,5 +1,17 @@
 import styled from '@emotion/styled';
 
+export const IconWrap = styled.section`
+  padding: 20px;
+  border: 10px solid black;
+  h1 {
+    margin-top: 20px;
+    padding-left: 20px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: ${(p) => p.theme.color.font};
+  }
+`;
+
 export const PageCont = styled.section`
   padding: 50px 100px;
   color: ${(p) => p.theme.color.font};

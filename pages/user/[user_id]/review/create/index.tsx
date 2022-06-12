@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import { Review } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
@@ -7,8 +8,7 @@ import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
 import { Btn } from '../../../../../src/components/Button';
 import { ErrMsg, PageCont } from '../../../../../styles/default';
-import { Review } from '@prisma/client';
-import { ThumNail } from '../../../../../styles/image';
+import { Avatar } from '../../../../../src/components/Avatar';
 
 interface ICreateReviewRes {
   ok: boolean;
@@ -124,24 +124,8 @@ const Create_Review: NextPage = () => {
             errMsg={errors.genre?.message}
             placeholder="영화의 장르를 선택해주세요."
           />
-          <ThumNail>
-            {preview ? (
-              <img src={`${preview}`} alt="파일 업로드" />
-            ) : (
-              <img
-                className="noimage"
-                src="/img/noimage.svg"
-                alt="파일 업로드"
-              />
-            )}
-          </ThumNail>
-          <Input
-            register={register('avatar')}
-            type="file"
-            name="avatar"
-            label="Review Image"
-            errMsg={errors.avatar?.message}
-          />
+          <Avatar preview={preview} />
+          <input type="file" {...register('avatar')} />
           <Input
             register={register('content', {
               required: '영화리뷰를 작성해 주세요.',

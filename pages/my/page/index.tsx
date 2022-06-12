@@ -3,7 +3,7 @@ import { Title } from '../../../src/components/Layout/Title';
 import { BoardList } from '../../../src/components/Board/List';
 import useUser from '../../../src/libs/client/useUser';
 import { PostList } from '../../../src/components/Post/List';
-import { ReviewList } from '../../../src/components/Review';
+import { ReviewList } from '../../../src/components/Review/list';
 import styled from '@emotion/styled';
 import { UserInfo } from '../../../src/components/User/Info';
 import { useState } from 'react';

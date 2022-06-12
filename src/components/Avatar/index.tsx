@@ -1,20 +1,21 @@
 import styled from '@emotion/styled';
 
 interface IAvatarProps {
-  url?: string | null;
+  url?: string | null | boolean;
   preview?: string;
 }
 export const Avatar = ({ url, preview }: IAvatarProps) => {
   const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
   const variant = 'public';
+  //
   return (
     <>
-      <Cont isImage={Boolean(url)}>
-        {url ? (
-          <img src={`${`${base}/${url}/${variant}`}`} alt="보드이미지" />
-        ) : (
-          <img src="/img/noimage.svg" alt="보드 이미지 없음" />
+      <Cont isImage={Boolean(url || preview)}>
+        {url && !preview && (
+          <img src={`${`${base}/${url}/${variant}`}`} alt="이미지" />
         )}
+        {Boolean(preview) && <img src={preview} alt="프리뷰 이미지" />}
+        {!url && !preview && <img src="/img/noimage.svg" alt="이미지 없음" />}
       </Cont>
     </>
   );

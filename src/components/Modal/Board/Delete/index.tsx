@@ -8,7 +8,7 @@ import { ErrMsg } from '../../../../../styles/default';
 
 interface IDeleteModalProps {
   deleteClick?: any;
-  delModal: boolean;
+  delModal?: boolean;
 }
 
 export const DeleteModal = ({ deleteClick, delModal }: IDeleteModalProps) => {
@@ -27,7 +27,7 @@ export const DeleteModal = ({ deleteClick, delModal }: IDeleteModalProps) => {
   const onClick = () => {
     if (review_id) {
       if (reviewLoading) return;
-      return deleteReview({ user_id, review_id });
+      return deleteReview({});
     }
     if (post_id) {
       if (postLoading) return;
@@ -48,7 +48,7 @@ export const DeleteModal = ({ deleteClick, delModal }: IDeleteModalProps) => {
     }
     if (reviewData?.ok) {
       alert('해당 리뷰가 삭제되었습니다.');
-      router.replace(`/review`);
+      router.replace(`/all/reviews`);
     }
   }, [boardData, postData, reviewData, router]);
 

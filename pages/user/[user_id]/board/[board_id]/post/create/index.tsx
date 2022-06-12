@@ -69,7 +69,7 @@ const CreatePost: NextPage = () => {
       <section className="create-post-cont">
         <form onSubmit={handleSubmit(onValid)}>
           {dataRes?.error && <ErrMsg>{dataRes?.error}</ErrMsg>}
-          <Avatar preview={preview} />
+          <Avatar preview={preview} url={Boolean(preview)} />
           <Input
             register={register('avatar')}
             type="file"
