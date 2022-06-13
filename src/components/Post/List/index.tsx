@@ -4,6 +4,10 @@ import styled from '@emotion/styled';
 import { IGetAllPosts, IPostListProps } from '../../../types/post';
 import { IGetLikes } from '../../../types/likes';
 import { Avatar } from '../../Avatar';
+import { IsMyPost } from '../IsMyPost';
+import { IsLikedPost } from '../IsLikedPost';
+import { IsComment } from '../IsComment';
+import { IconWrap } from '../IconsWrap';
 
 export const PostList = ({
   isAllPosts,
@@ -25,6 +29,11 @@ export const PostList = ({
         >
           <a>
             <Avatar url={post.avatar} />
+            <IconWrap
+              user_id={post.UserID}
+              board_id={post.BoardID}
+              post_id={post.id}
+            />
           </a>
         </Link>
       ))}
@@ -43,7 +52,10 @@ export const PostList = ({
 };
 const Grid = styled.article`
   margin-top: 15px;
-  gap: 15px;
+  gap: 20px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  a {
+    position: relative;
+  }
 `;
