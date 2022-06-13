@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { IGetBoards } from '../../../types/board';
 import { Avatar } from '../../Avatar';
+import { IsFollowBoard } from '../../Follow/board-list';
 
 export interface IBoardListProps {
   isAllBoards?: boolean;
@@ -25,27 +26,30 @@ export const BoardList = ({
   return (
     <Grid>
       {boards?.map((board) => (
-        <Link key={board.id} href={`${BoardLink(board.UserID, board.id)}`}>
-          <a>
-            <Item>
-              <Avatar url={board.avatar} />
-              <ul>
-                <li>
-                  <span>Title: </span>
-                  <span> {board.title.toUpperCase()}</span>
-                </li>
-                <li>
-                  <span>Genre: </span>
-                  <span> {board.genre}</span>
-                </li>
-                <li>
-                  <span>Made by: </span>
-                  <span> {board.user.username}</span>
-                </li>
-              </ul>
-            </Item>
-          </a>
-        </Link>
+        <article key={board.id}>
+          <Link href={`${BoardLink(board.UserID, board.id)}`}>
+            <a>
+              <Item>
+                <Avatar url={board.avatar} />
+                <ul>
+                  <li>
+                    <span>Title: </span>
+                    <span> {board.title.toUpperCase()}</span>
+                  </li>
+                  <li>
+                    <span>Genre: </span>
+                    <span> {board.genre}</span>
+                  </li>
+                  <li>
+                    <span>Made by: </span>
+                    <span> {board.user.username}</span>
+                  </li>
+                </ul>
+              </Item>
+            </a>
+          </Link>
+          <IsFollowBoard user_id={board.UserID} board_id={board.id} />
+        </article>
       ))}
     </Grid>
   );

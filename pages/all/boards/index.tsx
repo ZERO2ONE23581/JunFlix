@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { BoardList } from '../../../src/components/Board/List';
 import { Title } from '../../../src/components/Layout/Title';
-import { Page } from '../../my/boards';
+import { Page } from '../../../styles/default';
 
 const AllBoards: NextPage = () => {
   return (

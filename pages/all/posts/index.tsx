@@ -1,9 +1,7 @@
 import type { NextPage } from 'next';
-import useSWR from 'swr';
 import { Title } from '../../../src/components/Layout/Title';
 import { PostList } from '../../../src/components/Post/List';
-import { IGetAllPosts } from '../../../src/types/post';
-import { Page } from '../../my/boards';
+import { Page } from '../../../styles/default';
 
 const AllPosts: NextPage = () => {
   return (

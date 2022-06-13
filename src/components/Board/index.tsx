@@ -1,9 +1,9 @@
-import styled from '@emotion/styled';
 import { useState } from 'react';
-import { BoardFollow } from '../Follow/board';
-import { PostList } from '../Post/List';
 import { BtnWrap } from './Button';
 import { BoardForm } from './Form';
+import styled from '@emotion/styled';
+import { PostList } from '../Post/List';
+import { FollowBoard } from '../Follow/board';
 
 export const BoardInfo = ({ board, setDelModal, isOwner }: any) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -12,7 +12,7 @@ export const BoardInfo = ({ board, setDelModal, isOwner }: any) => {
       <Board>
         <article className="h1-follow-wrap">
           <h1>{board?.user?.username}'s board</h1>
-          <BoardFollow isOwner={isOwner} />
+          <FollowBoard isOwner={isOwner} />
         </article>
         <BtnWrap
           board={board}
