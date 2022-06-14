@@ -2,13 +2,13 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../src/components/Button';
-import { Input } from '../../../src/components/Input';
-import { Title } from '../../../src/components/Layout/Title';
-import { LoginLink } from '../../../src/components/Login/LoginLink';
-import useMutation from '../../../src/libs/client/useMutation';
-import { ILoginForm, ILoginRes } from '../../../src/types/login';
-import { ErrMsg, Form, PageSection } from '../../../styles/default';
+import { Btn } from '../../src/components/Button/def';
+import { Input } from '../../src/components/Input';
+import { Title } from '../../src/components/Layout/Title';
+import { LoginLink } from '../../src/components/Login/LoginLink';
+import useMutation from '../../src/libs/client/useMutation';
+import { ILoginForm, ILoginRes } from '../../src/types/login';
+import { Errors, Form, Page } from '../../styles/global';
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -39,9 +39,9 @@ const Login: NextPage = () => {
   return (
     <>
       <Title title="로그인" />
-      <PageSection>
+      <Page>
         <Form onSubmit={handleSubmit(onValid)}>
-          {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
+          {data?.error && <Errors>{data?.error}</Errors>}
           <Input
             register={register('userId', {
               required: '아이디를 입력해주세요.',
@@ -62,11 +62,10 @@ const Login: NextPage = () => {
             placeholder="비밀번호를 입력해주세요."
             errMsg={errors.password?.message}
           />
-          <Btn type="submit" btnName={loading ? 'Loading...' : '로그인'} />
+          <Btn type="submit" name={loading ? 'Loading...' : '로그인'} />
         </Form>
-
         <LoginLink />
-      </PageSection>
+      </Page>
     </>
   );
 };

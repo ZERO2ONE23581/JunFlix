@@ -9,7 +9,6 @@ import { NavBoardModal } from '../../Modal/Nav/Board';
 import { NavPostModal } from '../../Modal/Nav/Post';
 import { NavMovieModal } from '../../Modal/Nav/Movie';
 import { Btn } from '../../Button';
-import useAvatar from '../../../libs/client/useAvatar';
 import { NavReviewModal } from '../../Modal/Nav/Review';
 import { NavModalClose } from '../../../../styles/modal';
 import { useRouter } from 'next/router';
@@ -98,12 +97,12 @@ export const Header = ({ onClick, btnName }: any) => {
           {!isloggedIn && (
             <UnloggedIn>
               <LinkStyle>
-                <Link href="/user/join">
+                <Link href="/join">
                   <a>
                     <span className="hover">Join</span>
                   </a>
                 </Link>
-                <Link href="/user/login">
+                <Link href="/login">
                   <a>
                     <span className="hover">Login</span>
                   </a>

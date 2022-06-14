@@ -18,7 +18,7 @@ interface IEditUserIdRes {
 }
 
 export const Edit_UserId = () => {
-  const { loggedInUser, loggedInUserId } = useUser();
+  const { loggedInUser } = useUser();
   const [editLoginID, { loading, data }] = useMutation<IEditUserIdRes>(
     `/api/user/${loggedInUserId}/edit/profile/userId`
   );

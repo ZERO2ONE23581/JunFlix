@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { Article } from '../../../styles/default';
 
 export const LoginLink = ({ findId, findPassword, join, joined }: any) => {
   return (
     <>
       {!joined ? (
-        <Nav as={'nav'}>
+        <Cont>
           {!findId && (
             <Link href="/user/login/find/id">
               <a>아이디 찾기</a>
@@ -22,32 +21,41 @@ export const LoginLink = ({ findId, findPassword, join, joined }: any) => {
               <a>회원가입</a>
             </Link>
           )}
-        </Nav>
+        </Cont>
       ) : (
-        <AlreadyJoined>
-          <span>이미 회원이십니까? &rarr; </span>
+        <Cont>
+          <span>이미 회원이십니까?</span>
+          <span>&rarr;</span>
           <Link href="/user/login">
             <a>로그인</a>
           </Link>
-        </AlreadyJoined>
+        </Cont>
       )}
     </>
   );
 };
-const Nav = styled(Article)`
-  gap: 20px;
+const Cont = styled.nav`
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  margin: 10px auto;
   padding: 12px 20px;
-  font-size: 0.7rem;
-  width: 330px;
+  border-radius: 5px;
+  border: ${(p) => p.theme.border};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  color: ${(p) => p.theme.color.bg};
+  background-color: ${(p) => p.theme.color.font};
+  span {
+    font-style: italic;
+    margin-right: 10px;
+  }
   a {
+    font-size: 1rem;
+    font-style: normal;
     &:hover {
       color: ${(p) => p.theme.color.logo};
     }
-  }
-`;
-const AlreadyJoined = styled(Nav)`
-  span {
-    color: ${(p) => p.theme.color.logo};
-    font-style: italic;
   }
 `;

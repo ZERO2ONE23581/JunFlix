@@ -1,21 +1,19 @@
-import { ErrMsg, Form, Layer, PageSection } from '../../../styles/default';
+import { ErrMsg, Form, Layer } from '../../styles/default';
 import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../../src/components/Button';
-import { Input } from '../../../src/components/Input';
-import { IJoinForm, IJoinRes } from '../../../src/types/join';
-import useMutation from '../../../src/libs/client/useMutation';
-import { Title } from '../../../src/components/Layout/Title';
-import { LoginLink } from '../../../src/components/Login/LoginLink';
-import { JoinConfirmModal } from '../../../src/components/Modal/Join/Confirm';
-import { UserIdCheckModal } from '../../../src/components/Modal/Join/DupCheck';
+import { Btn } from '../../src/components/Button';
+import { Input } from '../../src/components/Input';
+import { IJoinForm, IJoinRes } from '../../src/types/join';
+import useMutation from '../../src/libs/client/useMutation';
+import { Title } from '../../src/components/Layout/Title';
+import { LoginLink } from '../../src/components/Login/LoginLink';
+import { JoinConfirmModal } from '../../src/components/Modal/Join/Confirm';
+import { UserIdCheckModal } from '../../src/components/Modal/Join/DupCheck';
 
 const Join: NextPage = () => {
-  //Post api
-  const [postJoin, { loading, data }] = useMutation<IJoinRes>('/api/user/join');
-
-  //Form
+  const [createUser, { loading, data }] =
+    useMutation<IJoinRes>('/api/user/join');
   const {
     register,
     handleSubmit,
@@ -26,14 +24,12 @@ const Join: NextPage = () => {
     setValue,
     getValues,
   } = useForm<IJoinForm>({ mode: 'onBlur' });
-
-  //중복아이디 방지
+  //
   const [confirm, setConfirm] = useState(false);
   const confirmClick = () => {
     setConfirm(true);
     return setCheckModal((value) => !value);
   };
-
   const onValid = ({
     username,
     userId,
@@ -54,17 +50,15 @@ const Join: NextPage = () => {
     }
     if (loading) return;
     const userID = userId!.toUpperCase();
-    postJoin({ username, userID, email, password, passwordConfirm });
+    createUser({ username, userID, email, password, passwordConfirm });
   };
-
-  //Modals
+  //
   const [modal, setModal] = useState(false);
   const [checkModal, setCheckModal] = useState(false);
   const toggleCheckModal = () => {
     return setCheckModal((value) => !value);
   };
-
-  //Confirmation
+  //
   const [verifiedID, setVerifiedID] = useState('');
   const handleData = (data: any) => {
     setVerifiedID(data);
@@ -73,8 +67,7 @@ const Join: NextPage = () => {
     setValue('userId', verifiedID);
     if (verifiedID) clearErrors('userIdCheckErr');
   }, [verifiedID]);
-
-  //UI
+  //
   const [state, setState] = useState({
     openBtn: false,
     layerOne: false,
@@ -105,7 +98,6 @@ const Join: NextPage = () => {
     watch('email'),
     data,
   ]);
-
   //
   return (
     <PageSection>

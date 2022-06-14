@@ -4,20 +4,15 @@ import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const userId = req.body;
-  //데이터 미입력 체크
-  if (!userId)
-    return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
-
-  //중복체크
-  const dupData = await client.user.findUnique({
+  const { userId } = req.body;
+  if (!userId) return res.json({ ok: false, error: 'NO INPUT DATA REQUIRED' });
+  const UserIdExists = await client.user.findUnique({
     where: { userId },
   });
-  if (dupData)
-    return res.json({ ok: false, error: '이미 가입한 아이디 입니다.', userId });
-  //
+  if (UserIdExists)
+    return res.json({ ok: false, error: '이미 가입된 아이디 입니다.' });
   return res.json({ ok: true, userId });
 }
 export default withApiSession(
-  withHandler({ methods: ['GET', 'POST'], handler, isPrivate: false })
+  withHandler({ methods: ['POST'], handler, isPrivate: false })
 );
