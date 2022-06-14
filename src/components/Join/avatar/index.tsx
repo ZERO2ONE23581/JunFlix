@@ -1,13 +1,12 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../Button/def';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { ProfileAvatar } from '../../Avatar/profile';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
-import { Errors, Form } from '../../../../styles/global';
-import { JoinFormCont } from '../idCheck';
-import { useEffect, useState } from 'react';
-import { ProfileAvatar } from '../../Avatar/Profile/create';
-import { useRouter } from 'next/router';
+import { Errors, Form, FormCont } from '../../../../styles/global';
 
 interface ICreateProfileAvatarProps {
   joinSuccess: boolean;
@@ -24,12 +23,19 @@ export const JoinAvatar = ({
   const [createAvatar, { loading, data }] = useMutation<MutationRes>(
     '/api/user/create/avatar'
   );
-  const { watch, register, handleSubmit } = useForm<ICreateProfileAvatar>({
+  const {
+    watch,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ICreateProfileAvatar>({
     mode: 'onSubmit',
   });
   const avatar = watch('avatar');
+  const [avatarLoading, setAvatarLoading] = useState(false);
   const onValid = async ({ avatar }: ICreateProfileAvatar) => {
     if (loading) return;
+    setAvatarLoading((p) => !p);
     if (!createdID) return router.replace('/login');
     if (avatar && avatar.length > 0 && createdID) {
       const { uploadURL } = await (await fetch(`/api/file`)).json();
@@ -53,12 +59,13 @@ export const JoinAvatar = ({
       setPreview(URL.createObjectURL(file));
     }
     if (data?.ok) {
+      setAvatarLoading((p) => !p);
       alert(
         `회원가입을 성공적으로 완료하였습니다. 로그인 페이지로 이동합니다.`
       );
       router.replace('/login');
     }
-  }, [avatar, watch, data, router]);
+  }, [avatar, watch, data, router, setAvatarLoading]);
   return (
     <>
       {joinSuccess && (
@@ -71,17 +78,20 @@ export const JoinAvatar = ({
             </label>
             <input
               className="avatar-input"
-              {...register('avatar')}
+              {...register('avatar', {
+                required: '프로필 사진 파일을 업로드해주세요.',
+              })}
               type="file"
               accept="image/*"
               id="avatar"
               name="avatar"
             />
+            {errors.avatar && <Errors>{errors.avatar.message}</Errors>}
             <span className="info">
               * 프로필 사진은 추후에 수정 가능합니다.
             </span>
             <div className="flex btn-wrap">
-              <Btn type="submit" name="사진 저장" loading={loading} />
+              <Btn type="submit" name="사진 저장" loading={avatarLoading} />
               <Btn
                 type="button"
                 name="나중에 설정"
@@ -95,11 +105,8 @@ export const JoinAvatar = ({
     </>
   );
 };
-const Container = styled(JoinFormCont)`
+const Container = styled(FormCont)`
   form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     .avatar-label {
       display: block;
       display: flex;

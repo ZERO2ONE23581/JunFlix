@@ -1,18 +1,18 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
-import { UserIdCheck } from '../../src/components/Join/idCheck';
 import { Title } from '../../src/components/Layout/Title';
-import { LoginLink } from '../../src/components/Login/LoginLink';
 import { JoinForm } from '../../src/components/Join/form';
-import { useState } from 'react';
 import { JoinAvatar } from '../../src/components/Join/avatar';
+import { LoginLink } from '../../src/components/Login/LoginLink';
+import { UserIdCheck } from '../../src/components/Join/userIdCheck';
 
 const Join: NextPage = () => {
-  const [confirmId, setConfirmId] = useState(false);
   const [UserId, setUserId] = useState('');
-  const [joinSuccess, setJoinSuccess] = useState(false);
   const [createdID, setCreatedID] = useState(0);
+  const [confirmId, setConfirmId] = useState(false);
+  const [joinSuccess, setJoinSuccess] = useState(false);
   return (
     <>
       <Title title="회원가입" />
@@ -40,9 +40,7 @@ const Join: NextPage = () => {
 export default Join;
 
 const JoinPage = styled(Page)`
-  height: 100%;
   .wrap {
-    margin: 0 auto;
-    width: 440px;
+    width: 420px;
   }
 `;

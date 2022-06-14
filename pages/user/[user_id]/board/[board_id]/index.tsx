@@ -8,8 +8,8 @@ import useUser from '../../../../../src/libs/client/useUser';
 import { BoardInfo } from '../../../../../src/components/Board';
 import { IGetBoardDetail } from '../../../../../src/types/board';
 import { DeleteModal } from '../../../../../src/components/Modal/Board/Delete';
-import { EditBgAvatar } from '../../../../../src/components/Avatar/Background/Edit';
-import { BackGroundAvatar } from '../../../../../src/components/Avatar/Background';
+import { EditBgAvatar } from '../../../../../src/components/Avatar/background/edit';
+import { BackGroundAvatar } from '../../../../../src/components/Avatar/background';
 
 const Board: NextPage = () => {
   const router = useRouter();

@@ -8,8 +8,7 @@ import useMutation from '../../../../../../src/libs/client/useMutation';
 import { Input, Select } from '../../../../../../src/components/Input';
 import { Btn } from '../../../../../../src/components/Button';
 import { IGetReview, IReviewForm } from '../../../../../../src/types/review';
-import { ErrMsg, PageCont } from '../../../../../../styles/default';
-import { Avatar } from '../../../../../../src/components/Avatar';
+import { Errors, Page } from '../../../../../../styles/global';
 
 const EditReview: NextPage = () => {
   const router = useRouter();
@@ -100,10 +99,10 @@ const EditReview: NextPage = () => {
   }, [setValue, avatar, watch, data, response]);
   //
   return (
-    <PageCont>
+    <Page>
       <section className="edit-review-cont">
         <form onSubmit={handleSubmit(onValid)}>
-          {response?.error && <ErrMsg>{response?.error}</ErrMsg>}
+          {response?.error && <Errors>{response?.error}</Errors>}
           <Input
             type="text"
             label="Title"
@@ -180,7 +179,7 @@ const EditReview: NextPage = () => {
           <Btn type="submit" btnName="리뷰 수정하기" loading={loading} />
         </form>
       </section>
-    </PageCont>
+    </Page>
   );
 };
 

@@ -9,7 +9,7 @@ import { Btn } from '../../../../../src/components/Button';
 import { BoardForm } from '../../../../../src/types/board';
 import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
-import { BackGroundAvatar } from '../../../../../src/components/Avatar/Background';
+import { BackGroundAvatar } from '../../../../../src/components/Avatar/background';
 
 interface ICreateBoardRes {
   ok: boolean;

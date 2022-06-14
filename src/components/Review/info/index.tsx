@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { Avatar } from '../../Avatar';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ThumAvatar } from '../../Avatar/thumnail';
 
 export const ReviewInfo = ({ data }: any) => {
   return (
@@ -38,7 +38,7 @@ export const ReviewInfo = ({ data }: any) => {
             <Oneline>"{data?.review?.oneline}"</Oneline>
           )}
         </li>
-        <Avatar url={data?.review?.avatar} />
+        <ThumAvatar url={data?.review?.avatar} />
         <li>
           <Content>{data?.review?.content}</Content>
         </li>

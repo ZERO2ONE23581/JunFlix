@@ -12,7 +12,7 @@ import { Btn } from '../../Button';
 import { NavReviewModal } from '../../Modal/Nav/Review';
 import { NavModalClose } from '../../../../styles/modal';
 import { useRouter } from 'next/router';
-import { ProfileAvatar } from '../../Avatar/Profile';
+import { ProfileAvatar } from '../../Avatar/profile';
 
 export const Header = ({ onClick, btnName }: any) => {
   const { isloggedIn, loggedInUser } = useUser();
@@ -178,19 +178,6 @@ const Logo = styled.div`
     }
   }
 `;
-const Avatar = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  position: relative;
-  border: ${(p) => p.theme.border};
-  overflow: hidden;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-`;
-
 const UnloggedIn = styled.article`
   display: flex;
   align-items: center;

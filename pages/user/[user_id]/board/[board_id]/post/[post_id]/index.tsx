@@ -1,9 +1,3 @@
-import {
-  OkMsg,
-  ErrMsg,
-  Article,
-  IconWrap,
-} from '../../../../../../../styles/default';
 import useSWR from 'swr';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
@@ -16,11 +10,14 @@ import { MutationRes } from '../../../../../../../src/types/mutation';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm, IGetPost } from '../../../../../../../src/types/post';
 import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
-import { Btn } from '../../../../../../../styles/btn';
 import { LikeCommentWrap } from '../../../../../../../src/components/Icon/LikeCommentWrap';
 import { CreateCommentOnPost } from '../../../../../../../src/components/Comment/Create/Post';
 import { AllComments } from '../../../../../../../src/components/Comment/AllComments';
-import { Avatar } from '../../../../../../../src/components/Avatar';
+import { IconWrap } from '../../../../../../../src/components/Post/IconsWrap';
+import { Errors } from '../../../../../../../styles/global';
+import { ThumAvatar } from '../../../../../../../src/components/Avatar/thumnail';
+import { Page } from '../../../../../../../styles/default';
+import { Btn } from '../../../../../../../src/components/Button/def';
 
 const PostInfo: NextPage = () => {
   const router = useRouter();
@@ -84,7 +81,7 @@ const PostInfo: NextPage = () => {
   //
   return (
     <>
-      <Cont>
+      <Page>
         <BtnWrap>
           <Button
             typeEdit={false}
@@ -123,13 +120,7 @@ const PostInfo: NextPage = () => {
         </BtnWrap>
 
         <form onSubmit={handleSubmit(onValid)}>
-          <>
-            {dataRes?.message && <OkMsg>{dataRes?.message}</OkMsg>}
-            {dataRes?.error && <ErrMsg>{dataRes?.error}</ErrMsg>}
-          </>
-
-          <Avatar url={data?.post.avatar} preview={preview} />
-
+          <ThumAvatar url={data?.post.avatar} preview={preview} />
           <Input
             register={register('avatar')}
             type="file"
@@ -165,21 +156,21 @@ const PostInfo: NextPage = () => {
             disabled={true}
             register={register('createdAt')}
           />
+          {dataRes?.message && <Errors>{dataRes?.message}</Errors>}
+          {dataRes?.error && <Errors>{dataRes?.error}</Errors>}
           {edit && (
             <Button typeEdit={true} type="submit">
               {loading ? 'Loading...' : 'Edit Post'}
             </Button>
           )}
         </form>
-
-        <IconWrap>
+        <section>
           <LikeCommentWrap type="post" reviewId={null} userId={null} />
           <h1>해당 포스트에 댓글 남기기</h1>
           <CreateCommentOnPost />
           <AllComments type="post" />
-        </IconWrap>
-      </Cont>
-
+        </section>
+      </Page>
       <DeleteModal
         delModal={delModal}
         deleteClick={() => setDelModal((p) => !p)}
@@ -188,11 +179,6 @@ const PostInfo: NextPage = () => {
   );
 };
 export default PostInfo;
-
-const Cont = styled.section`
-  padding: 20px 20%;
-`;
-
 const BtnWrap = styled.div`
   gap: 6px;
   display: flex;
@@ -203,22 +189,4 @@ const Button = styled(Btn)<{ typeEdit: boolean }>`
   font-size: ${(p) => (p.typeEdit ? '1.2rem' : '1rem')};
   width: ${(p) => (p.typeEdit ? '150px' : '90px')};
   height: ${(p) => (p.typeEdit ? '50px' : '40px')};
-`;
-export const BoardCont = styled(Article)`
-  flex-direction: column;
-  justify-content: center;
-  padding: 20px 100px;
-  width: 100%;
-  h1 {
-    font-weight: 600;
-    font-size: 1.5rem;
-    text-align: start;
-  }
-  h2 {
-    text-align: end;
-  }
-  h3 {
-    text-align: start;
-    font-size: 1rem;
-  }
 `;

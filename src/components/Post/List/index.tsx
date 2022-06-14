@@ -1,13 +1,10 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { IGetAllPosts, IPostListProps } from '../../../types/post';
-import { IGetLikes } from '../../../types/likes';
-import { Avatar } from '../../Avatar';
-import { IsMyPost } from '../IsMyPost';
-import { IsLikedPost } from '../IsLikedPost';
-import { IsComment } from '../IsComment';
 import { IconWrap } from '../IconsWrap';
+import { IGetLikes } from '../../../types/likes';
+import { IGetAllPosts, IPostListProps } from '../../../types/post';
+import { ThumAvatar } from '../../Avatar/thumnail';
 
 export const PostList = ({
   isAllPosts,
@@ -28,7 +25,7 @@ export const PostList = ({
           href={`/user/${post.UserID}/board/${post.BoardID}/post/${post.id}`}
         >
           <a>
-            <Avatar url={post.avatar} />
+            <ThumAvatar url={post.avatar} />
             <IconWrap
               user_id={post.UserID}
               board_id={post.BoardID}
@@ -43,7 +40,7 @@ export const PostList = ({
           href={`/user/${like.post.UserID}/board/${like.post.BoardID}/post/${like.post.id}`}
         >
           <a>
-            <Avatar url={like.post.avatar} />
+            <ThumAvatar url={like.post.avatar} />
           </a>
         </Link>
       ))}

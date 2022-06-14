@@ -2,8 +2,8 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import { IGetBoards } from '../../../types/board';
-import { Avatar } from '../../Avatar';
 import { IsFollowBoard } from '../../Follow/board-list';
+import { ThumAvatar } from '../../Avatar/thumnail';
 
 export interface IBoardListProps {
   isAllBoards?: boolean;
@@ -30,7 +30,7 @@ export const BoardList = ({
           <Link href={`${BoardLink(board.UserID, board.id)}`}>
             <a>
               <Item>
-                <Avatar url={board.avatar} />
+                <ThumAvatar url={board.avatar} />
                 <ul>
                   <li>
                     <span>Title: </span>

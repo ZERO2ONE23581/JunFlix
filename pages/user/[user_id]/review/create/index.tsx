@@ -7,9 +7,8 @@ import { IReviewForm } from '../../../../../src/types/review';
 import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
 import { Btn } from '../../../../../src/components/Button';
-import { ErrMsg, PageCont } from '../../../../../styles/default';
-import { Avatar } from '../../../../../src/components/Avatar';
-
+import { Errors, Page } from '../../../../../styles/global';
+import { ThumAvatar } from '../../../../../src/components/Avatar/thumnail';
 interface ICreateReviewRes {
   ok: boolean;
   error?: string;
@@ -91,10 +90,10 @@ const Create_Review: NextPage = () => {
   }, [data, avatar, watch, router]);
   //
   return (
-    <PageCont>
+    <Page>
       <section className="create-review-cont">
         <form onSubmit={handleSubmit(onValid)}>
-          {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
+          {data?.error && <Errors>{data?.error}</Errors>}
           <Input
             type="text"
             label="Title"
@@ -124,7 +123,7 @@ const Create_Review: NextPage = () => {
             errMsg={errors.genre?.message}
             placeholder="영화의 장르를 선택해주세요."
           />
-          <Avatar preview={preview} />
+          <ThumAvatar preview={preview} />
           <input type="file" {...register('avatar')} />
           <Input
             register={register('content', {
@@ -173,7 +172,7 @@ const Create_Review: NextPage = () => {
           <Btn type="submit" btnName="리뷰 작성하기" loading={loading} />
         </form>
       </section>
-    </PageCont>
+    </Page>
   );
 };
 

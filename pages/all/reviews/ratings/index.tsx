@@ -4,8 +4,8 @@ import { Review, User } from '@prisma/client';
 import styled from '@emotion/styled';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PageCont } from '../../../../styles/default';
-import { ProfileAvatar } from '../../../../src/components/Avatar/Profile';
+import { ProfileAvatar } from '../../../../src/components/Avatar/profile';
+import { Page } from '../../../../styles/global';
 
 interface IGetRatings {
   ok: boolean;
@@ -20,7 +20,7 @@ const rating: NextPage = () => {
   const { data } = useSWR<IGetRatings>(`/api/all/reviews/ratings`);
   //
   return (
-    <PageCont>
+    <Page>
       {data && data.ok && data.ratings && (
         <>
           {data.ratings.map((info) => (
@@ -65,7 +65,7 @@ const rating: NextPage = () => {
           ))}
         </>
       )}
-    </PageCont>
+    </Page>
   );
 };
 export default rating;

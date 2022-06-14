@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import { Btn } from '../../Button/def';
 import { useForm } from 'react-hook-form';
-import { JoinFormCont } from '../idCheck';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
-import { Errors, Form, Input } from '../../../../styles/global';
+import { Errors, Form, FormCont, Input } from '../../../../styles/global';
 
 interface IJoinFormProps {
   confirmId: boolean;
@@ -64,10 +63,11 @@ export const JoinForm = ({
       setCreatedID(data.createdID);
     }
   }, [UserId, setJoinSuccess, setValue, data, setCreatedID]);
+  //
   return (
     <>
       {confirmId && !joinSuccess && (
-        <JoinFormCont>
+        <FormCont>
           <h1>Create Your Account</h1>
           <h2>Step 2</h2>
           <Form onSubmit={handleSubmit(onValid)}>
@@ -171,7 +171,7 @@ export const JoinForm = ({
             <Btn type="submit" name="회원가입" loading={loading} />
             {data?.error && <Errors>{data?.error}</Errors>}
           </Form>
-        </JoinFormCont>
+        </FormCont>
       )}
     </>
   );

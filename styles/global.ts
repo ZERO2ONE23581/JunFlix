@@ -1,24 +1,36 @@
 import styled from '@emotion/styled';
 
-export const Page = styled.section`
-  margin: 0 auto;
-  height: 100vh;
-  padding: 20% 10%;
+export const DefaultContainer = styled.section`
   font-size: 1.3rem;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
+
+export const Page = styled.section`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 export const FormCont = styled.section`
   padding: 20px 25px;
   border-radius: 8px;
+  background-color: inherit;
   border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
-  h1 {
+  h1,
+  h2 {
+    margin-bottom: 10px;
     font-size: 1.4rem;
     font-weight: 700;
-    margin-bottom: 10px;
+  }
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 `;
 export const Form = styled.form`
@@ -37,6 +49,15 @@ export const Form = styled.form`
     font-size: 0.9rem;
     font-style: italic;
     color: ${(p) => p.theme.color.logo};
+  }
+  .flex {
+    gap: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    input {
+      width: 80%;
+    }
   }
 `;
 export const Input = styled.input`
@@ -60,5 +81,12 @@ export const Errors = styled.div`
   font-size: 1rem;
   font-weight: 600;
   font-style: italic;
+  text-align: center;
   background-color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  span {
+    display: block;
+    margin-bottom: 5px;
+  }
 `;

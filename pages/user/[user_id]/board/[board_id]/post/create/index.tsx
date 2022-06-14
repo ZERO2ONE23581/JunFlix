@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react';
 import { IPostForm } from '../../../../../../../src/types/post';
 import { Btn } from '../../../../../../../src/components/Button';
 import { Input } from '../../../../../../../src/components/Input';
-import { ErrMsg } from '../../../../../../../styles/default';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
-import { Avatar } from '../../../../../../../src/components/Avatar';
+import { ThumAvatar } from '../../../../../../../src/components/Avatar/thumnail';
+import { Errors } from '../../../../../../../styles/global';
 
 interface ICreatePostRes {
   ok: boolean;
@@ -67,8 +67,8 @@ const CreatePost: NextPage = () => {
   return (
     <section className="create-post-cont">
       <form onSubmit={handleSubmit(onValid)}>
-        {dataRes?.error && <ErrMsg>{dataRes?.error}</ErrMsg>}
-        <Avatar preview={preview} url={Boolean(preview)} />
+        {dataRes?.error && <Errors>{dataRes?.error}</Errors>}
+        <ThumAvatar preview={preview} url={Boolean(preview)} />
         <Input
           register={register('avatar')}
           type="file"

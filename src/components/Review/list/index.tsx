@@ -1,13 +1,13 @@
+import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { IGetReviews } from '../../../types/review';
-import { LikeCommentWrap } from '../../Icon/LikeCommentWrap';
-import useSWR from 'swr';
 import { IGetLikes } from '../../../types/likes';
-import { ProfileAvatar } from '../../Avatar/Profile';
-import { BackGroundAvatar, CF_BASE, CF_VAR } from '../../Avatar/Background';
+import { IGetReviews } from '../../../types/review';
+import { ProfileAvatar } from '../../Avatar/profile';
+import { CF_BASE, CF_VAR } from '../../Avatar/background';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { LikeCommentWrap } from '../../Icon/LikeCommentWrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IReviewListProps {
   isAllReviews?: boolean;
