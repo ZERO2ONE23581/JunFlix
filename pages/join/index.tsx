@@ -31,7 +31,7 @@ const Join: NextPage = () => {
             setCreatedID={setCreatedID}
           />
           <JoinAvatar joinSuccess={joinSuccess} createdID={createdID} />
-          <LoginLink joined={true} />
+          <LoginLink join />
         </div>
       </JoinPage>
     </>

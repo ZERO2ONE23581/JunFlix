@@ -20,7 +20,7 @@ export const FormCont = styled.section`
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   h1,
   h2 {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     font-size: 1.4rem;
     font-weight: 700;
   }

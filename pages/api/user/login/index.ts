@@ -1,37 +1,33 @@
 import bcrypt from 'bcrypt';
 import { NextApiRequest, NextApiResponse } from 'next';
-import client from '../../../src/libs/server/prisma_client';
-import withHandler from '../../../src/libs/server/withHandler';
-import { withApiSession } from '../../../src/libs/server/withSession';
+import client from '../../../../src/libs/server/prisma_client';
+import withHandler from '../../../../src/libs/server/withHandler';
+import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userID, password } = req.body;
-  const msutData = Boolean(userID && password);
-
+  const inputData = Boolean(userID && password);
   if (req.method === 'POST') {
-    if (!msutData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
-
-    //UserId check
-    const foundUser = await client.user.findUnique({
-      where: { userId: userID.toString() },
+    if (!inputData)
+      return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
+    const user = await client.user.findUnique({
+      where: { userId: userID },
       select: { id: true, userId: true, password: true },
     });
-    if (!foundUser)
-      return res.json({ ok: false, error: '아이디가 일치하지 않습니다.' });
-
-    //Password Check
-    const passwordMatch = await bcrypt.compare(password, foundUser.password!);
-    if (!passwordMatch)
+    //
+    if (!user)
+      return res.json({ ok: false, error: '존재하지 않는 아이디 입니다.' });
+    //
+    const isCorrectPassword = await bcrypt.compare(password, user.password!);
+    if (!isCorrectPassword)
       return res.json({ ok: false, error: '비밀번호가 일치하지 않습니다.' });
-
-    //Save Cookie
+    //
     req.session.user = {
-      id: foundUser?.id,
+      id: user?.id,
     };
     await req.session.save();
     return res.json({ ok: true });
   }
-
   if (req.method === 'GET') {
     const { user } = req.session;
     if (user) {

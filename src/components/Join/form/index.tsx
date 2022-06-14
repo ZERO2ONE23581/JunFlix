@@ -1,27 +1,10 @@
 import { useEffect } from 'react';
 import { Btn } from '../../Button/def';
 import { useForm } from 'react-hook-form';
-import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
 import { Errors, Form, FormCont, Input } from '../../../../styles/global';
+import { IJoinForm, IJoinFormProps, IJoinFormRes } from '../../../types/join';
 
-interface IJoinFormProps {
-  confirmId: boolean;
-  joinSuccess: boolean;
-  UserId: string;
-  setJoinSuccess: any;
-  setCreatedID: any;
-}
-interface IJoinForm {
-  userId: string;
-  password: string;
-  confirmPassword: string;
-  username?: string;
-  email?: string;
-}
-interface IJoinFormRes extends MutationRes {
-  createdID: number;
-}
 export const JoinForm = ({
   setCreatedID,
   UserId,
@@ -29,8 +12,9 @@ export const JoinForm = ({
   joinSuccess,
   setJoinSuccess,
 }: IJoinFormProps) => {
-  const [createUser, { loading, data }] =
-    useMutation<IJoinFormRes>('/api/user/create');
+  const [createUser, { loading, data }] = useMutation<IJoinFormRes>(
+    '/api/user/join/create'
+  );
   const {
     setError,
     setValue,

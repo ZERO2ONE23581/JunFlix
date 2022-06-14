@@ -2,27 +2,21 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../Button/def';
 import useMutation from '../../../libs/client/useMutation';
-import { MutationRes } from '../../../types/mutation';
 import { Errors, Form, FormCont, Input } from '../../../../styles/global';
+import {
+  IUserIdCheckForm,
+  IUserIdCheckProps,
+  IUserIdCheckRes,
+} from '../../../types/join';
 
-interface IUserIdCheckForm {
-  userId: string;
-}
-interface IUserIdCheckProps {
-  confirmId: boolean;
-  setConfirmId: any;
-  setUserId: any;
-}
-interface IUserIdCheckRes extends MutationRes {
-  userId?: string;
-}
 export const UserIdCheck = ({
   confirmId,
   setConfirmId,
   setUserId,
 }: IUserIdCheckProps) => {
-  const [checkUserId, { loading, data }] =
-    useMutation<IUserIdCheckRes>('/api/join/id_check');
+  const [checkUserId, { loading, data }] = useMutation<IUserIdCheckRes>(
+    '/api/user/join/id_check'
+  );
   const {
     register,
     handleSubmit,

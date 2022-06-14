@@ -7,21 +7,18 @@ import { ProfileAvatar } from '../../Avatar/profile';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
 import { Errors, Form, FormCont } from '../../../../styles/global';
+import {
+  ICreateProfileAvatar,
+  ICreateProfileAvatarProps,
+} from '../../../types/join';
 
-interface ICreateProfileAvatarProps {
-  joinSuccess: boolean;
-  createdID: number;
-}
-interface ICreateProfileAvatar {
-  avatar?: FileList;
-}
 export const JoinAvatar = ({
   joinSuccess,
   createdID,
 }: ICreateProfileAvatarProps) => {
   const router = useRouter();
   const [createAvatar, { loading, data }] = useMutation<MutationRes>(
-    '/api/user/create/avatar'
+    '/api/user/join/create/avatar'
   );
   const {
     watch,

@@ -1,8 +1,8 @@
 import { hash } from 'bcrypt';
 import { NextApiRequest, NextApiResponse } from 'next';
-import client from '../../../../src/libs/server/prisma_client';
-import withHandler from '../../../../src/libs/server/withHandler';
-import { withApiSession } from '../../../../src/libs/server/withSession';
+import client from '../../../../../src/libs/server/prisma_client';
+import withHandler from '../../../../../src/libs/server/withHandler';
+import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { username, userID, password, confirmPassword, email } = req.body;
@@ -23,12 +23,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   hash(password, 10, async function (err, hasedPassword) {
     if (err) return console.log('HASH PASSWORD FAIL');
-    if (!username || !email) {
+    if (!username) {
       const user = await client.user.create({
         data: {
           username: 'Anonymous',
           userId: userID,
           password: hasedPassword,
+          email,
         },
         select: { id: true },
       });
