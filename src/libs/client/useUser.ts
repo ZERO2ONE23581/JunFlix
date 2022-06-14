@@ -8,9 +8,9 @@ interface ProfileResponse {
 }
 
 export default function useUser() {
-  const { data } = useSWR<ProfileResponse>('/api/login');
+  const { data } = useSWR<ProfileResponse>('/api/user/login');
   return {
-    isloggedIn: data?.ok,
+    isLoggedIn: data?.ok,
     loggedInUser: data?.loggedInUser,
   };
 }

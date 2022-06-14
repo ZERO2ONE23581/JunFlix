@@ -1,12 +1,10 @@
 import Link from 'next/link';
-import { INavModalProps, MustLoginBtn } from '../Board';
-import { NavCont, NavWrapper } from '..';
+import { NavCont, NavWrapper } from '../profile';
+import useUser from '../../../../libs/client/useUser';
+import { INavModalProps } from '../../../Layout/Header/nav';
 
-export const NavPostModal = ({
-  handleClick,
-  isloggedIn,
-  loggedInUserId,
-}: INavModalProps) => {
+export const NavPostModal = ({ onClick }: INavModalProps) => {
+  const { isLoggedIn } = useUser();
   return (
     <NavCont>
       <NavWrapper>
@@ -17,7 +15,7 @@ export const NavPostModal = ({
             </li>
           </a>
         </Link>
-        {isloggedIn && (
+        {isLoggedIn && (
           <Link href={`/my/posts`}>
             <a>
               <li>
@@ -26,7 +24,7 @@ export const NavPostModal = ({
             </a>
           </Link>
         )}
-        {isloggedIn ? (
+        {isLoggedIn ? (
           <Link href={`/my/boards/select`}>
             <a>
               <li>
@@ -35,7 +33,9 @@ export const NavPostModal = ({
             </a>
           </Link>
         ) : (
-          <MustLoginBtn onClick={handleClick}>Create</MustLoginBtn>
+          <li>
+            <span>Create</span>
+          </li>
         )}
       </NavWrapper>
     </NavCont>

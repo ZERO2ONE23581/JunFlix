@@ -3,12 +3,12 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import { Btn } from '../../src/components/Button';
 import { ILoginForm } from '../../src/types/login';
-import { Btn } from '../../src/components/Button/def';
+import { LinkWrap } from '../../src/components/Link';
 import { MutationRes } from '../../src/types/mutation';
 import { Title } from '../../src/components/Layout/Title';
 import useMutation from '../../src/libs/client/useMutation';
-import { LoginLink } from '../../src/components/Login/LoginLink';
 import { Errors, Form, FormCont, Page, Input } from '../../styles/global';
 
 const Login: NextPage = () => {
@@ -34,12 +34,11 @@ const Login: NextPage = () => {
   return (
     <>
       <Title title="로그인" />
-      <LoginPage>
-        <div className="wrap">
+      <Page>
+        <section className="form-wrap">
           <FormCont>
             <h1>Login</h1>
             <Form onSubmit={handleSubmit(onValid)}>
-              {data?.error && <Errors>{data?.error}</Errors>}
               <label htmlFor="userId" />
               <Input
                 {...register('userId', {
@@ -68,18 +67,16 @@ const Login: NextPage = () => {
                 * 아이디는 영어 소문자 대문자를 구분하지 않습니다.
               </span>
               {data?.error && <Errors>{data?.error}</Errors>}
-              <Btn type="submit" name="로그인" loading={loading} />
+
+              <div className="btn-flex">
+                <Btn type="submit" name="로그인" loading={loading} />
+              </div>
             </Form>
           </FormCont>
-          <LoginLink login />
-        </div>
-      </LoginPage>
+          <LinkWrap login />
+        </section>
+      </Page>
     </>
   );
 };
 export default Login;
-const LoginPage = styled(Page)`
-  .wrap {
-    width: 420px;
-  }
-`;

@@ -11,7 +11,7 @@ import { Btn } from '../../../styles/btn';
 import { FollowingBoards } from '../../../src/components/User/mypage/follow';
 
 const MyPage: NextPage = () => {
-  const { isloggedIn, loggedInUser } = useUser();
+  const { isLoggedIn, loggedInUser } = useUser();
   const [tab, setTab] = useState('board');
   const [likes, setLikes] = useState('likesPost');
   const hadleClick = (type: string, likesType: string) => {
@@ -37,20 +37,20 @@ const MyPage: NextPage = () => {
         {tab === 'board' && (
           <>
             <h1>{loggedInUser?.username}'s Boards</h1>
-            <BoardList isMyBoards={isloggedIn} />
+            <BoardList isMyBoards={isLoggedIn} />
           </>
         )}
 
         {tab === 'post' && (
           <>
             <h1>{loggedInUser?.username}'s Posts</h1>
-            <PostList isMyPosts={isloggedIn} />
+            <PostList isMyPosts={isLoggedIn} />
           </>
         )}
         {tab === 'review' && (
           <>
             <h1>{loggedInUser?.username}'s Review's</h1>
-            <ReviewList isMyReview={isloggedIn} />
+            <ReviewList isMyReview={isLoggedIn} />
           </>
         )}
         {tab === 'likes' && (

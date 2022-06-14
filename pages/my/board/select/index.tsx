@@ -4,11 +4,11 @@ import useUser from '../../../../src/libs/client/useUser';
 import { Title } from '../../../../src/components/Layout/Title';
 
 const BoardSelect: NextPage = () => {
-  const { isloggedIn } = useUser();
+  const { isLoggedIn } = useUser();
   return (
     <>
       <Title title="보드 선택하기" />
-      <BoardList isMyBoards={isloggedIn} isSelect={true} />
+      <BoardList isMyBoards={isLoggedIn} isSelect={true} />
     </>
   );
 };

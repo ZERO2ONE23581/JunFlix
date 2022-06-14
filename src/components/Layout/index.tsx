@@ -1,14 +1,13 @@
-import styled from '@emotion/styled';
-import { DefaultContainer } from '../../../styles/global';
-import { Footer } from './Footer';
 import { Header } from './Header';
+import { Footer } from './Footer';
+import { Default } from '../../../styles/global';
 
 export const Layout = ({ children, onClick, btnName }: any) => {
   return (
-    <DefaultContainer>
-      <Header btnName={btnName} onClick={onClick} />
+    <Default>
+      <Header theme={btnName} themeClick={onClick} />
       {children}
       <Footer />
-    </DefaultContainer>
+    </Default>
   );
 };

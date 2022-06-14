@@ -1,21 +1,21 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { NavCont, NavWrapper } from '..';
+import { NavCont, NavWrapper } from '../profile';
 
 export interface INavModalProps {
   handleClick: any;
-  isloggedIn?: boolean;
+  isLoggedIn?: boolean;
   loggedInUserId?: number;
 }
 export const NavCreateModal = ({
   handleClick,
-  isloggedIn,
+  isLoggedIn,
   loggedInUserId,
 }: INavModalProps) => {
   return (
     <NavCont>
       <NavWrapper>
-        {isloggedIn ? (
+        {isLoggedIn ? (
           <Link href={`/user/${loggedInUserId}/board/create`}>
             <a>
               <li>
@@ -26,7 +26,7 @@ export const NavCreateModal = ({
         ) : (
           <MustLoginBtn onClick={handleClick}>Board</MustLoginBtn>
         )}
-        {isloggedIn ? (
+        {isLoggedIn ? (
           <Link href={`/user/${loggedInUserId}/board/my-boards/select`}>
             <a>
               <li>
@@ -37,7 +37,7 @@ export const NavCreateModal = ({
         ) : (
           <MustLoginBtn onClick={handleClick}>Posts</MustLoginBtn>
         )}
-        {isloggedIn ? (
+        {isLoggedIn ? (
           <Link href={`/user/${loggedInUserId}/review/create`}>
             <a>
               <li>

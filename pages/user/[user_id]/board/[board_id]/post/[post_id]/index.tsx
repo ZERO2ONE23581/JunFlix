@@ -17,11 +17,11 @@ import { IconWrap } from '../../../../../../../src/components/Post/IconsWrap';
 import { Errors } from '../../../../../../../styles/global';
 import { ThumAvatar } from '../../../../../../../src/components/Avatar/thumnail';
 import { Page } from '../../../../../../../styles/default';
-import { Btn } from '../../../../../../../src/components/Button/def';
+import { Btn } from '../../../../../../../src/components/Button';
 
 const PostInfo: NextPage = () => {
   const router = useRouter();
-  const { isloggedIn, loggedInUser } = useUser();
+  const { isLoggedIn, loggedInUser } = useUser();
   const { user_id, board_id, post_id } = router.query;
   const isQueryId = Boolean(user_id && board_id && post_id);
   const { data } = useSWR<IGetPost>(
@@ -90,7 +90,7 @@ const PostInfo: NextPage = () => {
           >
             {loading ? 'Loading...' : 'Board'}
           </Button>
-          {isloggedIn && loggedInUser?.id === Number(user_id) && (
+          {isLoggedIn && loggedInUser?.id === Number(user_id) && (
             <Button
               typeEdit={false}
               type="button"

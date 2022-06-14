@@ -1,9 +1,8 @@
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { Page } from '../../../styles/global';
+import useUser from '../../../src/libs/client/useUser';
 import { Title } from '../../../src/components/Layout/Title';
 import { ReviewList } from '../../../src/components/Review/list';
-import useUser from '../../../src/libs/client/useUser';
-import { Page } from '../boards';
 
 const MyReviews: NextPage = () => {
   const { loggedInUser } = useUser();

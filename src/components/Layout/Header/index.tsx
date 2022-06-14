@@ -1,119 +1,26 @@
-import Link from 'next/link';
+import { NavBar } from './nav';
 import { useState } from 'react';
-import styled from '@emotion/styled';
-import { LogoSvg } from '../../Svg/Logo';
-import { NavModal } from '../../Modal/Nav';
-import useUser from '../../../libs/client/useUser';
-import { NavCreateModal } from '../../Modal/Nav/Create';
-import { NavBoardModal } from '../../Modal/Nav/Board';
-import { NavPostModal } from '../../Modal/Nav/Post';
-import { NavMovieModal } from '../../Modal/Nav/Movie';
+import { UserNav } from './user';
 import { Btn } from '../../Button';
-import { NavReviewModal } from '../../Modal/Nav/Review';
-import { NavModalClose } from '../../../../styles/modal';
-import { useRouter } from 'next/router';
-import { ProfileAvatar } from '../../Avatar/profile';
+import styled from '@emotion/styled';
 
-export const Header = ({ onClick, btnName }: any) => {
-  const { isloggedIn, loggedInUser } = useUser();
+export const Header = ({ theme, themeClick }: any) => {
   const [openProfile, setOpenProfile] = useState(false);
-  const [openMovie, setOpenMovie] = useState(false);
-  const [openBoard, setOpenBoard] = useState(false);
-  const [openPost, setOpenPost] = useState(false);
-  const [openReview, setOpenReview] = useState(false);
-  const [openCreate, setOpenCreate] = useState(false);
-  //
-  const router = useRouter();
-  const needLoginClick = () => {
-    alert('로그인이 필요합니다.');
-    router.push(`/user/login`);
-  };
-  //
   return (
     <Cont>
-      <NavBar>
-        <MainNav>
-          <Logo>
-            <Link href="/">
-              <a>
-                <LogoSvg />
-              </a>
-            </Link>
-          </Logo>
-          <LinkStyle>
-            <MenuItem onClick={() => setOpenMovie((p) => !p)}>
-              <span className="hover">Movies</span>
-              {openMovie && <NavMovieModal />}
-            </MenuItem>
-            <MenuItem onClick={() => setOpenBoard((p) => !p)}>
-              <span className="hover">Board</span>
-              {openBoard && (
-                <NavBoardModal
-                  handleClick={needLoginClick}
-                  isloggedIn={isloggedIn}
-                  loggedInUserId={loggedInUser?.id}
-                />
-              )}
-            </MenuItem>
-            <MenuItem onClick={() => setOpenPost((p) => !p)}>
-              <span className="hover">Post</span>
-              {openPost && (
-                <NavPostModal
-                  handleClick={needLoginClick}
-                  isloggedIn={isloggedIn}
-                  loggedInUserId={loggedInUser?.id}
-                />
-              )}
-            </MenuItem>
-            <MenuItem onClick={() => setOpenReview((p) => !p)}>
-              <span className="hover">Review</span>
-              {openReview && (
-                <NavReviewModal
-                  handleClick={needLoginClick}
-                  isloggedIn={isloggedIn}
-                  loggedInUserId={loggedInUser?.id}
-                />
-              )}
-            </MenuItem>
-            <MenuItem onClick={() => setOpenCreate((p) => !p)}>
-              <span className="hover">Create</span>
-              {openCreate && (
-                <NavCreateModal
-                  handleClick={needLoginClick}
-                  isloggedIn={isloggedIn}
-                  loggedInUserId={loggedInUser?.id}
-                />
-              )}
-            </MenuItem>
-          </LinkStyle>
-        </MainNav>
-        <MyNav>
-          {openProfile && <NavModal closeModal={() => setOpenProfile(false)} />}
-          {isloggedIn && (
-            <div onClick={() => setOpenProfile((p) => !p)}>
-              <ProfileAvatar url={loggedInUser?.avatar} />
-            </div>
-          )}
-          {!isloggedIn && (
-            <UnloggedIn>
-              <LinkStyle>
-                <Link href="/join">
-                  <a>
-                    <span className="hover">Join</span>
-                  </a>
-                </Link>
-                <Link href="/login">
-                  <a>
-                    <span className="hover">Login</span>
-                  </a>
-                </Link>
-              </LinkStyle>
-            </UnloggedIn>
-          )}
-          <Btn type="theme" btnName={btnName} onClick={onClick} />
-        </MyNav>
-      </NavBar>
-      <>
+      <div className="flex">
+        <NavBar />
+        <div className="usernav-bar-wrap">
+          <UserNav
+            theme={theme}
+            themeClick={themeClick}
+            openProfile={openProfile}
+            setOpenProfile={setOpenProfile}
+          />
+          <Btn type="button" name={theme} onClick={themeClick} />
+        </div>
+      </div>
+      {/* <>
         {openProfile ? (
           <NavModalClose onClick={() => setOpenProfile(false)} />
         ) : openCreate ? (
@@ -127,73 +34,23 @@ export const Header = ({ onClick, btnName }: any) => {
         ) : openMovie ? (
           <NavModalClose onClick={() => setOpenMovie(false)} />
         ) : null}
-      </>
+      </> */}
     </Cont>
   );
 };
-const MyNav = styled.article`
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 50px;
-`;
-const MainNav = styled.article`
-  width: 800px;
-  gap: 50px;
-  display: flex;
-  align-content: center;
-`;
-export const MenuItem = styled.div`
-  cursor: pointer;
-  position: relative;
-  background: none;
-  border: none;
-  font-weight: 700;
-  font-size: 1.2rem;
-  text-underline-offset: 8px;
-`;
-const LinkStyle = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  > a,
-  > button {
-    font-weight: 700;
-    font-size: 1.2rem;
-    text-underline-offset: 8px;
-    .hover {
-      &:hover {
-        color: ${(p) => p.theme.color.logo};
-        text-decoration: solid underline 3px ${(p) => p.theme.color.logo};
-      }
-    }
-  }
-`;
-const Logo = styled.div`
-  a {
-    img {
-      width: 100px;
-      height: 100px;
-    }
-  }
-`;
-const UnloggedIn = styled.article`
-  display: flex;
-  align-items: center;
-  gap: 30px;
-`;
-
-const NavBar = styled.nav`
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
 const Cont = styled.section`
-  padding: 15px 12%;
+  padding: 10px 20%;
   margin-bottom: 5px;
-  color: ${(p) => p.theme.color.font};
+  border-bottom: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background-color: ${(p) => p.theme.color.bg};
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .usernav-bar-wrap {
+      gap: 40px;
+      display: flex;
+      align-items: center;
+    }
+  }
 `;

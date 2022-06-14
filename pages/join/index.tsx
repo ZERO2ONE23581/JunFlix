@@ -5,8 +5,8 @@ import { Page } from '../../styles/global';
 import { Title } from '../../src/components/Layout/Title';
 import { JoinForm } from '../../src/components/Join/form';
 import { JoinAvatar } from '../../src/components/Join/avatar';
-import { LoginLink } from '../../src/components/Login/LoginLink';
 import { UserIdCheck } from '../../src/components/Join/userIdCheck';
+import { LinkWrap } from '../../src/components/Link';
 
 const Join: NextPage = () => {
   const [UserId, setUserId] = useState('');
@@ -31,7 +31,7 @@ const Join: NextPage = () => {
             setCreatedID={setCreatedID}
           />
           <JoinAvatar joinSuccess={joinSuccess} createdID={createdID} />
-          <LoginLink join />
+          <LinkWrap join />
         </div>
       </JoinPage>
     </>

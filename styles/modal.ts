@@ -39,7 +39,5 @@ export const ModalClose = styled.article`
   height: 100%;
   top: 0;
   left: 0;
-`;
-export const NavModalClose = styled(ModalClose)`
-  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 111;
 `;

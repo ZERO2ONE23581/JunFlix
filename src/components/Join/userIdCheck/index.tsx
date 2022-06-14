@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../Button/def';
+import { Btn } from '../../Button';
 import useMutation from '../../../libs/client/useMutation';
 import { Errors, Form, FormCont, Input } from '../../../../styles/global';
 import {

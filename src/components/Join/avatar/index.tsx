@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../Button/def';
+import { Btn } from '../../Button';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';

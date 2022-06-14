@@ -1,7 +1,6 @@
 import useSWR from 'swr';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { MoviePageCont } from '../../../styles/default';
 
 interface IMovieInfoProps {
   type?: string;
@@ -38,7 +37,7 @@ export const MovieInfo = ({ type }: IMovieInfoProps) => {
       setData(results);
   }, [trending, nowPlaying, upcoming, topRated, tvShows]);
   return (
-    <MoviePageCont>
+    <>
       <h1>
         {type === 'trending' && <span>TRENDING</span>}
         {type === 'nowPlaying' && <span>NOW PLAYING</span>}
@@ -86,7 +85,7 @@ export const MovieInfo = ({ type }: IMovieInfoProps) => {
               </Item>
             ))}
       </Grid>
-    </MoviePageCont>
+    </>
   );
 };
 const Rating = styled.span`

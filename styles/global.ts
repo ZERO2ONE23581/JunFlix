@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const DefaultContainer = styled.section`
+export const Default = styled.section`
   font-size: 1.3rem;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
@@ -11,6 +11,9 @@ export const Page = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  .form-wrap {
+    width: 420px;
+  }
 `;
 export const FormCont = styled.section`
   padding: 20px 25px;
@@ -31,6 +34,11 @@ export const FormCont = styled.section`
   h3 {
     font-size: 0.9rem;
     font-weight: 600;
+  }
+  .btn-flex {
+    display: flex;
+    align-items: center;
+    justify-content: end;
   }
 `;
 export const Form = styled.form`

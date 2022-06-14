@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Btn } from '../../Button/def';
+import { Btn } from '../../Button';
 import { useForm } from 'react-hook-form';
 import useMutation from '../../../libs/client/useMutation';
 import { Errors, Form, FormCont, Input } from '../../../../styles/global';
@@ -152,7 +152,9 @@ export const JoinForm = ({
               <span>이름은 추후에 수정 가능합니다.</span>
             </span>
 
-            <Btn type="submit" name="회원가입" loading={loading} />
+            <div className="btn-flex">
+              <Btn type="submit" name="회원가입" loading={loading} />
+            </div>
             {data?.error && <Errors>{data?.error}</Errors>}
           </Form>
         </FormCont>

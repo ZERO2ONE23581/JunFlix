@@ -1,10 +1,13 @@
 import Link from 'next/link';
-import { NavCont, NavWrapper } from '..';
-import { INavModalProps, MustLoginBtn } from '../Board';
+import { NavCont, NavWrapper } from '../profile';
+import {
+  INavModalProps,
+  MustLoginBtn,
+} from '../../../Layout/Header/nav/tab/detail';
 
 export const NavReviewModal = ({
   handleClick,
-  isloggedIn,
+  isLoggedIn,
   loggedInUserId,
 }: INavModalProps) => {
   return (
@@ -17,7 +20,7 @@ export const NavReviewModal = ({
             </li>
           </a>
         </Link>
-        {isloggedIn && (
+        {isLoggedIn && (
           <Link href={`/my/reviews`}>
             <a>
               <li>
@@ -33,7 +36,7 @@ export const NavReviewModal = ({
             </li>
           </a>
         </Link>
-        {isloggedIn ? (
+        {isLoggedIn ? (
           <Link href={`/user/${loggedInUserId}/review/create`}>
             <a>
               <li>

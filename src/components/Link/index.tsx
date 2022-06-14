@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
-export const LoginLink = ({ join, login }: any) => {
+export const LinkWrap = ({ join, login }: any) => {
   return (
     <Cont>
       {join && (

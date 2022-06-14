@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { NavCont } from '..';
+import { NavCont } from '../profile';
 
 interface INavModalProps {
-  isloggedIn?: boolean;
+  isLoggedIn?: boolean;
   loggedInUserId?: number;
 }
 export const NavCreateModal = ({
-  isloggedIn,
+  isLoggedIn,
   loggedInUserId,
 }: INavModalProps) => {
   const router = useRouter();
@@ -28,19 +28,19 @@ export const NavCreateModal = ({
       <Wrap>
         <article
           className="btn"
-          onClick={isloggedIn ? () => create('board') : mustLogin}
+          onClick={isLoggedIn ? () => create('board') : mustLogin}
         >
           <span>Board</span>
         </article>
         <article
           className="btn"
-          onClick={isloggedIn ? () => create('post') : mustLogin}
+          onClick={isLoggedIn ? () => create('post') : mustLogin}
         >
           <span>Post</span>
         </article>
         <article
           className="btn"
-          onClick={isloggedIn ? () => create('review') : mustLogin}
+          onClick={isLoggedIn ? () => create('review') : mustLogin}
         >
           <span>Review</span>
         </article>
