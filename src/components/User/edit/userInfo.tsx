@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { IEditProfileProps } from '../../../../pages/my/profile/edit';
+import { IEditProfileProps } from '../../../../pages/user/my/profile/edit';
 import {
   Errors,
   Form,

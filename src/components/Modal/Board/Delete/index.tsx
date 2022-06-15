@@ -4,7 +4,6 @@ import { Btn } from '../../../Button';
 import { useRouter } from 'next/router';
 import useMutation from '../../../../libs/client/useMutation';
 import { MutationRes } from '../../../../types/mutation';
-import { ErrMsg } from '../../../../../styles/default';
 
 interface IDeleteModalProps {
   deleteClick?: any;
@@ -57,13 +56,11 @@ export const DeleteModal = ({ deleteClick, delModal }: IDeleteModalProps) => {
       {delModal && (
         <>
           <SmallModalCont>
-            {boardData?.error && <ErrMsg>{boardData?.error}</ErrMsg>}
-            {postData?.error && <ErrMsg>{postData?.error}</ErrMsg>}
             <h1>정말로 삭제하시겠습니까?</h1>
             <p>삭제시 복구가 불가능 합니다.</p>
             <Btn
-              type="delete"
-              btnName="삭제 확인"
+              type="button"
+              name="삭제 확인"
               onClick={onClick}
               loading={
                 post_id ? postLoading : board_id ? boardLoading : reviewLoading

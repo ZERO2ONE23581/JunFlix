@@ -2,7 +2,15 @@ import { useEffect } from 'react';
 import { Btn } from '../../Button';
 import { useForm } from 'react-hook-form';
 import useMutation from '../../../libs/client/useMutation';
-import { Errors, Form, FormCont, Input } from '../../../../styles/global';
+import {
+  Errors,
+  Form,
+  FormCont,
+  H1,
+  H2,
+  H3,
+  Input,
+} from '../../../../styles/global';
 import { IJoinForm, IJoinFormProps, IJoinFormRes } from '../../../types/join';
 
 export const CreateUser = ({
@@ -52,8 +60,8 @@ export const CreateUser = ({
     <>
       {confirmId && !joinSuccess && (
         <FormCont>
-          <h1>Create Your Account</h1>
-          <h2>Step 2</h2>
+          <H1>Create Your Account</H1>
+          <H2>Step 2</H2>
           <Form onSubmit={handleSubmit(onValid)}>
             <label htmlFor="userId" />
             <Input
@@ -112,7 +120,7 @@ export const CreateUser = ({
               </div>
             )}
 
-            <h3>(Optional)</h3>
+            <H3>(Optional)</H3>
             <div className="flex">
               <label htmlFor="username" />
               <Input

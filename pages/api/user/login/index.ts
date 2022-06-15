@@ -10,21 +10,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     if (!isInputData)
       return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
-    //
     const user = await client.user.findUnique({
       where: { userId: userID },
       select: { id: true, userId: true, password: true },
     });
     if (!user)
       return res.json({ ok: false, error: '존재하지 않는 아이디 입니다.' });
-    //
     const isCorrectPassword = await bcrypt.compare(password, user.password!);
     if (!isCorrectPassword)
       return res.json({ ok: false, error: '비밀번호가 일치하지 않습니다.' });
-    //
     req.session.user = {
       id: user.id,
-      userId: user.userId!,
     };
     await req.session.save();
     return res.json({ ok: true });

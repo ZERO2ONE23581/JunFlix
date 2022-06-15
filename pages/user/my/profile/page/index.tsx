@@ -1,14 +1,14 @@
 import type { NextPage } from 'next';
-import { Title } from '../../../../src/components/Layout/Title';
-import { BoardList } from '../../../../src/components/Board/List';
-import useUser from '../../../../src/libs/client/useUser';
-import { PostList } from '../../../../src/components/Post/List';
-import { ReviewList } from '../../../../src/components/Review/list';
+import { Title } from '../../../../../src/components/Layout/Title';
+import { BoardList } from '../../../../../src/components/Board/List';
+import useUser from '../../../../../src/libs/client/useUser';
+import { PostList } from '../../../../../src/components/Post/List';
+import { ReviewList } from '../../../../../src/components/Review/list';
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import { FollowingBoards } from '../../../../src/components/User/Follow/following';
-import { UserInfo } from '../../../../src/components/User/Info';
-import { Btn } from '../../../../src/components/Button';
+import { FollowingBoards } from '../../../../../src/components/User/Follow/following';
+import { UserInfo } from '../../../../../src/components/User/Info';
+import { Btn } from '../../../../../src/components/Button';
 
 const MyPage: NextPage = () => {
   const { isLoggedIn, loggedInUser } = useUser();

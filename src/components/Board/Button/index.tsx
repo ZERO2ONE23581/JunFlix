@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { Btn } from '../../../../styles/btn';
 import useUser from '../../../libs/client/useUser';
+import { Btn } from '../../Button';
 
 export const BtnWrap = ({ board, isEdit, setIsEdit, setDelModal }: any) => {
   const router = useRouter();
@@ -12,49 +12,44 @@ export const BtnWrap = ({ board, isEdit, setIsEdit, setDelModal }: any) => {
   const [settingBtn, setSettingBtn] = useState(false);
   return (
     <Cont>
-      <Button
-        clicked={false}
+      <Btn
+        name="Boards"
         type="button"
-        onClick={() => router.push(`/all/boards`)}
-      >
-        Boards
-      </Button>
+        clicked={false}
+        onClick={() => router.push(`/user/all/boards`)}
+      />
       {isOwner && (
         <>
-          <Button
-            clicked={false}
+          <Btn
+            name="Create"
             type="button"
+            clicked={false}
             onClick={() => {
               router.push(`/user/${user_id}/board/${board_id}/post/create`);
             }}
-          >
-            Create
-          </Button>
-          <Button
-            clicked={settingBtn}
+          />
+          <Btn
+            name="Setting"
             type="button"
+            clicked={settingBtn}
             onClick={() => setSettingBtn((p) => !p)}
-          >
-            Setting
-          </Button>
+          />
         </>
       )}
       {settingBtn && (
         <>
-          <Button
+          <Btn
+            name="Edit"
+            type="button"
             clicked={isEdit}
-            type="button"
             onClick={() => setIsEdit((p: boolean) => !p)}
-          >
-            Edit
-          </Button>
-          <Button
-            clicked={false}
+          />
+          <Btn
+            name="Delete"
             type="button"
+            clicked={false}
             onClick={() => setDelModal((p: boolean) => !p)}
-          >
-            Delete
-          </Button>
+          />
         </>
       )}
     </Cont>
@@ -65,9 +60,4 @@ const Cont = styled.article`
   display: flex;
   align-items: center;
   gap: 5px;
-`;
-const Button = styled(Btn)<{ clicked: boolean }>`
-  width: 80px;
-  height: 40px;
-  background-color: ${(p) => p.clicked && p.theme.color.logo};
 `;

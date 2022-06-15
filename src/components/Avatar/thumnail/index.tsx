@@ -3,14 +3,15 @@ import styled from '@emotion/styled';
 interface IAvatarProps {
   url?: string | null | boolean;
   preview?: string;
+  isBoard?: boolean;
 }
-export const ThumAvatar = ({ url, preview }: IAvatarProps) => {
+export const ThumAvatar = ({ isBoard, url, preview }: IAvatarProps) => {
   const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
   const variant = 'public';
   //
   return (
     <>
-      <Cont isImage={Boolean(url || preview)}>
+      <Cont isBoard={isBoard} isImage={Boolean(url || preview)}>
         {url && !preview && (
           <img src={`${`${base}/${url}/${variant}`}`} alt="이미지" />
         )}
@@ -21,16 +22,18 @@ export const ThumAvatar = ({ url, preview }: IAvatarProps) => {
   );
 };
 
-const Cont = styled.div<{ isImage: boolean }>`
+const Cont = styled.div<{ isBoard?: boolean; isImage: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   border-radius: 8px;
+  border-bottom-left-radius: ${(p) => p.isBoard && 0};
+  border-bottom-right-radius: ${(p) => p.isBoard && 0};
   border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   width: 100%;
-  height: 300px;
+  height: 250px;
   img {
     width: ${(p) => (p.isImage ? '100%' : '50px')};
     height: ${(p) => (p.isImage ? '100%' : '50px')};

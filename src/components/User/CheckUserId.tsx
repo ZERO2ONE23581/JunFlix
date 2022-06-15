@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../Button';
 import useMutation from '../../libs/client/useMutation';
-import { Errors, Form, FormCont, Input } from '../../../styles/global';
+import { Errors, Form, FormCont, H1, H2, Input } from '../../../styles/global';
 import {
   IUserIdCheckForm,
   IUserIdCheckProps,
@@ -40,8 +40,8 @@ export const CheckUserId = ({
     <>
       {!confirmId && (
         <FormCont>
-          <h1>Create Your Account</h1>
-          <h2>Step 1</h2>
+          <H1>Create Your Account</H1>
+          <H2>Step 1</H2>
           <Form onSubmit={handleSubmit(onValid)}>
             <div className="flex">
               <label htmlFor="userId" />

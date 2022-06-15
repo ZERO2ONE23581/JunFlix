@@ -8,7 +8,16 @@ import { LinkWrap } from '../../src/components/Link';
 import { MutationRes } from '../../src/types/mutation';
 import { Title } from '../../src/components/Layout/Title';
 import useMutation from '../../src/libs/client/useMutation';
-import { Errors, Form, FormCont, Input, Page } from '../../styles/global';
+import {
+  Errors,
+  Form,
+  FormCont,
+  FullHeightPage,
+  H1,
+  Input,
+  Page,
+} from '../../styles/global';
+import styled from '@emotion/styled';
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -33,10 +42,10 @@ const Login: NextPage = () => {
   return (
     <>
       <Title title="로그인" />
-      <Page>
+      <FullHeightPage>
         <section className="form-wrap">
           <FormCont>
-            <h1>Login</h1>
+            <H1>Login</H1>
             <Form onSubmit={handleSubmit(onValid)}>
               <label htmlFor="userId" />
               <Input
@@ -74,7 +83,7 @@ const Login: NextPage = () => {
           </FormCont>
           <LinkWrap login />
         </section>
-      </Page>
+      </FullHeightPage>
     </>
   );
 };

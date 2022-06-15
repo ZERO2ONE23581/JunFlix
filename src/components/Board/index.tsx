@@ -5,14 +5,14 @@ import styled from '@emotion/styled';
 import { PostList } from '../Post/List';
 import { FollowBoard } from '../Follow/board';
 
-export const BoardInfo = ({ board, setDelModal, isOwner }: any) => {
+export const BoardInfo = ({ isLoggedIn, board, setDelModal, isOwner }: any) => {
   const [isEdit, setIsEdit] = useState(false);
   return (
     <>
       <Board>
         <article className="h1-follow-wrap">
           <h1>{board?.user?.username}'s board</h1>
-          <FollowBoard isOwner={isOwner} />
+          {isLoggedIn && <FollowBoard isOwner={isOwner} />}
         </article>
         <BtnWrap
           board={board}

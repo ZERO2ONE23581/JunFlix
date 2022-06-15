@@ -1,9 +1,8 @@
 import type { NextPage } from 'next';
-import useUser from '../../../src/libs/client/useUser';
-import { Title } from '../../../src/components/Layout/Title';
-import { BoardList } from '../../../src/components/Board/List';
-import styled from '@emotion/styled';
-import { Page } from '../../../styles/default';
+import useUser from '../../../../src/libs/client/useUser';
+import { Title } from '../../../../src/components/Layout/Title';
+import { BoardList } from '../../../../src/components/Board/List';
+import { Page } from '../../../../styles/global';
 
 const MyBoards: NextPage = () => {
   const { loggedInUser } = useUser();

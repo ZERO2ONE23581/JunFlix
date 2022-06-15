@@ -7,13 +7,28 @@ export const Default = styled.section`
 `;
 
 export const Page = styled.section`
+  padding: 10px 200px;
+  height: 100%;
+  .flex-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .flex-column {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .form-wrap {
+    width: 420px;
+  }
+`;
+export const FullHeightPage = styled(Page)`
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  .form-wrap {
-    width: 420px;
-  }
 `;
 export const FormCont = styled.section`
   padding: 20px 25px;
@@ -21,20 +36,6 @@ export const FormCont = styled.section`
   background-color: inherit;
   border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  h1,
-  h2 {
-    margin-bottom: 12px;
-    font-size: 1.4rem;
-    font-weight: 700;
-  }
-  h2 {
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-  h3 {
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
   .btn-flex {
     display: flex;
     align-items: center;
@@ -113,4 +114,20 @@ export const Errors = styled.div`
     display: block;
     margin-bottom: 5px;
   }
+`;
+export const H1 = styled.h1`
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  margin: 20px auto;
+`;
+export const H2 = styled.h2`
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+`;
+export const H3 = styled.h3`
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 12px;
 `;

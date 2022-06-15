@@ -2,12 +2,11 @@ import { useEffect } from 'react';
 import { Btn } from '../../Button';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import useUser from '../../../libs/client/useUser';
 import { MutationRes } from '../../../types/mutation';
 import { IEditUserIdForm } from '../../../types/user';
 import useMutation from '../../../libs/client/useMutation';
 import { Errors, Form, FormCont, Input } from '../../../../styles/global';
-import { IEditProfileProps } from '../../../../pages/my/profile/edit';
+import { IEditProfileProps } from '../../../../pages/user/my/profile/edit';
 
 export const EditUserId = ({ user }: IEditProfileProps) => {
   const router = useRouter();
@@ -22,7 +21,8 @@ export const EditUserId = ({ user }: IEditProfileProps) => {
   } = useForm<IEditUserIdForm>({ mode: 'onSubmit' });
   const onValid = ({ userId }: IEditUserIdForm) => {
     if (loading) return;
-    return editUserId({ userId });
+    const userID = userId?.toUpperCase();
+    return editUserId({ userID });
   };
   useEffect(() => {
     if (user?.userId) setValue('userId', user?.userId);
@@ -31,6 +31,7 @@ export const EditUserId = ({ user }: IEditProfileProps) => {
       router.reload();
     }
   }, [user, data, router]);
+  console.log(data);
   return (
     <FormCont>
       <h1>Edit ID</h1>
@@ -46,6 +47,7 @@ export const EditUserId = ({ user }: IEditProfileProps) => {
           placeholder="New User ID"
         />
         {errors.userId && <Errors>{errors.userId.message}</Errors>}
+        {data?.error && <Errors>{data.error}</Errors>}
         <div className="btn-flex">
           <Btn name="아이디 수정" type="submit" loading={loading} />
         </div>

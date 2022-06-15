@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
-import { Title } from '../../../src/components/Layout/Title';
-import { PostList } from '../../../src/components/Post/List';
-import useUser from '../../../src/libs/client/useUser';
-import { Page } from '../../../styles/global';
+import { Title } from '../../../../src/components/Layout/Title';
+import { PostList } from '../../../../src/components/Post/List';
+import useUser from '../../../../src/libs/client/useUser';
+import { Page } from '../../../../styles/global';
 
 const MyPosts: NextPage = () => {
   const { loggedInUser } = useUser();

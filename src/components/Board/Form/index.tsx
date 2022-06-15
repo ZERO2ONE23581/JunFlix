@@ -1,13 +1,18 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../../styles/btn';
-import { ErrMsg, Form, OkMsg } from '../../../../styles/default';
+import {
+  Errors,
+  Form,
+  FormCont,
+  Input,
+  Select,
+} from '../../../../styles/global';
 import useMutation from '../../../libs/client/useMutation';
 import { IEditBoardForm } from '../../../types/board';
 import { MutationRes } from '../../../types/mutation';
-import { Input, Select } from '../../Input';
+import { Btn } from '../../Button';
 
 export const BoardForm = ({ board, isEdit }: any) => {
   const router = useRouter();
@@ -41,53 +46,68 @@ export const BoardForm = ({ board, isEdit }: any) => {
   }, [setValue, data, board]);
   //
   return (
-    <Form onSubmit={handleSubmit(onValid)}>
-      {data?.message && <OkMsg>{data?.message}</OkMsg>}
-      {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
-      <Input
-        register={register('title', {
-          required: '수정할 보드의 제목을 입력하세요.',
-          maxLength: {
-            value: 30,
-            message: '보드제목은 30자 이내여야 합니다.',
-          },
-        })}
-        type="text"
-        name="title"
-        disabled={!isEdit && true}
-        placeholder="수정할 보드의 제목을 입력하세요."
-        errMsg={errors.title?.message}
-      />
-      <Input
-        register={register('intro', {
-          maxLength: {
-            value: 50,
-            message: '소개글은 50자 이내여야 합니다.',
-          },
-        })}
-        type="text"
-        name="intro"
-        disabled={!isEdit && true}
-        placeholder="수정할 보드의 소개글을 작성해 주세요."
-        errMsg={errors.intro?.message}
-      />
-      <Select
-        register={register('genre')}
-        name="genre"
-        disabled={!isEdit && true}
-        placeholder="수정할 장르를 선택해주세요."
-        errMsg={errors.genre?.message}
-      />
-      {isEdit && (
-        <Button clicked={false} type="submit">
-          {loading ? 'Loading...' : 'Edit Board'}
-        </Button>
-      )}
-    </Form>
+    <FormCont>
+      <Form onSubmit={handleSubmit(onValid)}>
+        <label htmlFor="title" />
+        <Input
+          {...register('title', {
+            required: '수정할 보드의 제목을 입력하세요.',
+            maxLength: {
+              value: 30,
+              message: '보드제목은 30자 이내여야 합니다.',
+            },
+          })}
+          type="text"
+          id="title"
+          name="title"
+          disabled={!isEdit && true}
+          placeholder="수정할 보드의 제목을 입력하세요."
+        />
+        {errors.title && <Errors>{errors.title.message}</Errors>}
+
+        <label htmlFor="intro" />
+        <Input
+          {...register('intro', {
+            maxLength: {
+              value: 50,
+              message: '소개글은 50자 이내여야 합니다.',
+            },
+          })}
+          type="text"
+          id="intro"
+          name="intro"
+          disabled={!isEdit && true}
+          placeholder="수정할 보드의 소개글을 작성해 주세요."
+        />
+        {errors.intro && <Errors>{errors.intro.message}</Errors>}
+
+        <label htmlFor="title" />
+        <Select
+          {...register('genre')}
+          id="genre"
+          name="genre"
+          disabled={!isEdit && true}
+        >
+          <option value="">수정할 장르를 선택해주세요.</option>
+          <option value="SF">SF</option>
+          <option value="Action">Action</option>
+          <option value="Drama">Drama</option>
+          <option value="Horror">Horror</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Thriller">Thriller</option>
+        </Select>
+        {errors.genre && <Errors>{errors.genre.message}</Errors>}
+
+        {isEdit && (
+          <Btn
+            clicked={false}
+            name="보드 수정"
+            type="submit"
+            loading={loading}
+          />
+        )}
+      </Form>
+    </FormCont>
   );
 };
-const Button = styled(Btn)<{ clicked: boolean }>`
-  width: 80px;
-  height: 40px;
-  background-color: ${(p) => p.clicked && p.theme.color.logo};
-`;

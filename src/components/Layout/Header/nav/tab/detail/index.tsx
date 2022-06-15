@@ -15,7 +15,7 @@ export const TabDetail = ({ title, type, setType }: any) => {
     <Cont movie={title === 'Movie'}>
       {title !== 'Movie' ? (
         <NavList>
-          <Link href={`/all/${type}s`}>
+          <Link href={`/user/all/${type}s`}>
             <a>
               <li onClick={() => setType('x')}>
                 <span>All </span>
@@ -35,7 +35,7 @@ export const TabDetail = ({ title, type, setType }: any) => {
           )}
           {isLoggedIn ? (
             title === 'Post' ? (
-              <Link href={`/my/board/select`}>
+              <Link href={`/user/my/board/select`}>
                 <a>
                   <li onClick={() => setType('x')}>
                     <span>Create</span>

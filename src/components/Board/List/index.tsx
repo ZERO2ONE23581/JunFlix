@@ -30,7 +30,7 @@ export const BoardList = ({
           <Link href={`${BoardLink(board.UserID, board.id)}`}>
             <a>
               <Item>
-                <ThumAvatar url={board.avatar} />
+                <ThumAvatar isBoard url={board.avatar} />
                 <ul>
                   <li>
                     <span>Title: </span>
@@ -55,7 +55,8 @@ export const BoardList = ({
   );
 };
 const Grid = styled.article`
-  gap: 15px;
+  width: 80%;
+  gap: 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 `;

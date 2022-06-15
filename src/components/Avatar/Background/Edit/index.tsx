@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../../../styles/btn';
 import useUser from '../../../../libs/client/useUser';
 import { MutationRes } from '../../../../types/mutation';
 import useMutation from '../../../../libs/client/useMutation';
+import { Btn } from '../../../Button';
 
 interface IEditAvatarForm {
   avatar?: FileList;
@@ -51,7 +51,7 @@ export const EditBgAvatar = ({ setPreview, isEditAvatar }: any) => {
         <Cont>
           <form onSubmit={handleSubmit(onValid)}>
             <input {...register('avatar')} type="file" name="avatar" />
-            <Button>{loading ? 'Loading...' : 'SAVE'}</Button>
+            <Btn type="submit" loading={loading} name="Save" />
           </form>
         </Cont>
       )}
@@ -65,13 +65,4 @@ const Cont = styled.article`
   position: absolute;
   top: 20%;
   left: 30%;
-  form {
-    input {
-      /* display: none; */
-    }
-  }
-`;
-const Button = styled(Btn)`
-  width: 80px;
-  height: 40px;
 `;

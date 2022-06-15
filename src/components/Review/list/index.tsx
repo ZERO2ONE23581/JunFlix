@@ -28,7 +28,7 @@ export const ReviewList = ({
   return (
     <>
       {reviews?.map((review) => (
-        <Desc key={review.id} BgUrl={`${CF_BASE}/${review.avatar}/${CF_VAR}`}>
+        <Cont key={review.id} BgUrl={`${CF_BASE}/${review.avatar}/${CF_VAR}`}>
           <Item>
             <Link href={`/user/${review.UserID}/review/${review.id}`}>
               <a>
@@ -75,10 +75,10 @@ export const ReviewList = ({
               reviewId={review.id}
             />
           </Item>
-        </Desc>
+        </Cont>
       ))}
       {likes?.map((like) => (
-        <Desc
+        <Cont
           key={like.id}
           BgUrl={`${CF_BASE}/${like.review.avatar}/${CF_VAR}`}
         >
@@ -128,12 +128,12 @@ export const ReviewList = ({
             userId={like.review.UserID}
             likeId={like.review.id}
           />
-        </Desc>
+        </Cont>
       ))}
     </>
   );
 };
-const Desc = styled.article<{ BgUrl: string | null | undefined }>`
+const Cont = styled.article<{ BgUrl: string | null | undefined }>`
   margin-bottom: 20px;
   padding: 20px;
   border-radius: 5px;
@@ -141,11 +141,21 @@ const Desc = styled.article<{ BgUrl: string | null | undefined }>`
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background: ${(p) => p.BgUrl && `url(${p.BgUrl})  no-repeat center / cover`};
 `;
-
+const Item = styled.article`
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: ${(p) => p.theme.boxShadow.input};
+  color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
 const Stars = styled.span`
   font-size: 0.8rem;
 `;
-
 const Order = styled.span`
   width: 40px;
   height: 40px;
@@ -159,33 +169,14 @@ const Order = styled.span`
   background-color: ${(p) => p.theme.color.font};
 `;
 
-const Item = styled.article`
-  padding: 10px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: ${(p) => p.theme.boxShadow.input};
-  color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
-  a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;
-
 const Title = styled.h2`
   font-size: 1.3rem;
   font-weight: 700;
 `;
 const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
   width: 100%;
   padding: 0 15px;
+  border: 1px solid red;
 `;
 const Items = styled.div`
   display: flex;

@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
-import { Page } from '../../../styles/global';
-import useUser from '../../../src/libs/client/useUser';
-import { Title } from '../../../src/components/Layout/Title';
-import { ReviewList } from '../../../src/components/Review/list';
+import { Page } from '../../../../styles/global';
+import useUser from '../../../../src/libs/client/useUser';
+import { Title } from '../../../../src/components/Layout/Title';
+import { ReviewList } from '../../../../src/components/Review/list';
 
 const MyReviews: NextPage = () => {
   const { loggedInUser } = useUser();

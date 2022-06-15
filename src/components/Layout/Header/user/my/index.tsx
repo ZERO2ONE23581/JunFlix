@@ -5,12 +5,12 @@ export const ProfileNavDetail = ({ user, setOpen }: any) => {
   return (
     <Cont onClick={() => setOpen(false)}>
       <NavList>
-        <Link href="/my/profile/page">
+        <Link href="/user/my/profile/page">
           <a>
             <li>{user?.username}'s page</li>
           </a>
         </Link>
-        <Link href="/my/profile/edit">
+        <Link href="/user/my/profile/edit">
           <a>
             <li>Edit Profile</li>
           </a>

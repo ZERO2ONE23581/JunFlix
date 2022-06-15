@@ -8,8 +8,7 @@ import { ProfileAvatar } from '../../Avatar/profile';
 import { IProfileAvatarForm } from '../../../types/avatar';
 import useMutation from '../../../libs/client/useMutation';
 import { Errors, Form, FormCont } from '../../../../styles/global';
-import { IEditProfileProps } from '../../../../pages/my/profile/edit';
-import { EditFormCont } from '../../../../styles/edit-profile';
+import { IEditProfileProps } from '../../../../pages/user/my/profile/edit';
 
 export const EditProfileAvatar = ({ user }: IEditProfileProps) => {
   const router = useRouter();

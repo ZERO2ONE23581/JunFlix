@@ -4,8 +4,8 @@ import { Review, User } from '@prisma/client';
 import styled from '@emotion/styled';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ProfileAvatar } from '../../../../src/components/Avatar/profile';
-import { Page } from '../../../../styles/global';
+import { ProfileAvatar } from '../../../../../src/components/Avatar/profile';
+import { Page } from '../../../../../styles/global';
 
 interface IGetRatings {
   ok: boolean;

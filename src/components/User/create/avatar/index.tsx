@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { ProfileAvatar } from '../../../Avatar/profile';
 import { MutationRes } from '../../../../types/mutation';
 import useMutation from '../../../../libs/client/useMutation';
-import { Errors, Form, FormCont } from '../../../../../styles/global';
+import { Errors, Form, FormCont, H1, H2 } from '../../../../../styles/global';
 import {
   ICreateProfileAvatarProps,
   IProfileAvatarForm,
@@ -18,7 +18,7 @@ export const CreateProfileAvatar = ({
 }: ICreateProfileAvatarProps) => {
   const router = useRouter();
   const [createAvatar, { loading, data }] = useMutation<MutationRes>(
-    '/api/user/join/create/avatar'
+    '/api/user/create/avatar'
   );
   const {
     watch,
@@ -67,8 +67,8 @@ export const CreateProfileAvatar = ({
     <>
       {joinSuccess && (
         <Container>
-          <h1>Profile Avatar</h1>
-          <h2>Step 3 (Optional)</h2>
+          <H1>Profile Avatar</H1>
+          <H2>Step 3 (Optional)</H2>
           <Form onSubmit={handleSubmit(onValid)}>
             <label className="avatar-label" htmlFor="avatar">
               <ProfileAvatar preview={preview} size={130} />

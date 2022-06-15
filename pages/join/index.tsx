@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import styled from '@emotion/styled';
 import type { NextPage } from 'next';
-import { Page } from '../../styles/global';
+import { FullHeightPage } from '../../styles/global';
 import { LinkWrap } from '../../src/components/Link';
 import { Title } from '../../src/components/Layout/Title';
 import { CreateUser } from '../../src/components/User/create';
@@ -16,8 +15,8 @@ const Join: NextPage = () => {
   return (
     <>
       <Title title="회원가입" />
-      <JoinPage>
-        <div className="wrap">
+      <FullHeightPage>
+        <div className="form-wrap">
           <CheckUserId
             confirmId={confirmId}
             setConfirmId={setConfirmId}
@@ -36,14 +35,8 @@ const Join: NextPage = () => {
           />
           <LinkWrap join />
         </div>
-      </JoinPage>
+      </FullHeightPage>
     </>
   );
 };
 export default Join;
-
-const JoinPage = styled(Page)`
-  .wrap {
-    width: 420px;
-  }
-`;
