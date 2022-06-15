@@ -2,16 +2,9 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import useUser from '../../../../libs/client/useUser';
 import { ProfileAvatar } from '../../../Avatar/profile';
-import { NavProfileModal } from '../../../Modal/Nav/profile';
+import { ProfileNavDetail } from './my';
 
-interface IUserNav {
-  openProfile: boolean;
-  setOpenProfile: any;
-  theme: any;
-  themeClick: any;
-}
-
-export const UserNav = ({ openProfile, setOpenProfile }: IUserNav) => {
+export const ProfileNav = ({ open, setOpen }: any) => {
   const { isLoggedIn, loggedInUser } = useUser();
   return (
     <Cont>
@@ -29,13 +22,11 @@ export const UserNav = ({ openProfile, setOpenProfile }: IUserNav) => {
           </Link>
         </nav>
       ) : (
-        <article onClick={() => setOpenProfile((p: boolean) => !p)}>
+        <article onClick={() => setOpen((p: boolean) => !p)}>
           <ProfileAvatar url={loggedInUser?.avatar} />
         </article>
       )}
-      {openProfile && (
-        <NavProfileModal closeModal={() => setOpenProfile(false)} />
-      )}
+      {open && <ProfileNavDetail user={loggedInUser} setOpen={setOpen} />}
     </Cont>
   );
 };
@@ -44,7 +35,6 @@ const Cont = styled.section`
   nav {
     a {
       margin-left: 40px;
-      font-weight: 700;
       font-size: 1.2rem;
       text-underline-offset: 8px;
       &:hover {

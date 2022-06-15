@@ -13,7 +13,6 @@ export const NavBar = () => {
   //
   return (
     <>
-      {isTabbed && <ModalClose onClick={() => setType('')} />}
       <Cont>
         <Logo>
           <Link href="/">
@@ -29,6 +28,7 @@ export const NavBar = () => {
           <Tab type={type} setType={setType} title={'review'} />
         </Nav>
       </Cont>
+      {isTabbed && <ModalClose onClick={() => setType('')} />}
     </>
   );
 };

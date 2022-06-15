@@ -23,7 +23,6 @@ export const Tab = ({ type, setType, title }: any) => {
 };
 const Cont = styled.div`
   position: relative;
-  font-weight: 700;
   .click {
     cursor: pointer;
     font-size: 1.2rem;
