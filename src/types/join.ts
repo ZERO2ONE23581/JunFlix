@@ -32,10 +32,3 @@ export interface IUserIdCheckProps {
 export interface IUserIdCheckRes extends MutationRes {
   userId?: string;
 }
-export interface ICreateProfileAvatarProps {
-  joinSuccess: boolean;
-  createdID: number;
-}
-export interface ICreateProfileAvatar {
-  avatar?: FileList;
-}

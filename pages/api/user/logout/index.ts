@@ -12,7 +12,8 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const { user } = req.session;
-  if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
+  if (!user)
+    return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
   await req.session.destroy();
   return res.redirect('/login');
 }

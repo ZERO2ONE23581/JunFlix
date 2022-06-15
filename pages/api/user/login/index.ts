@@ -10,11 +10,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     if (!inputData)
       return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
+    //
     const user = await client.user.findUnique({
       where: { userId: userID },
       select: { id: true, userId: true, password: true },
     });
-    //
     if (!user)
       return res.json({ ok: false, error: '존재하지 않는 아이디 입니다.' });
     //
@@ -23,7 +23,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.json({ ok: false, error: '비밀번호가 일치하지 않습니다.' });
     //
     req.session.user = {
-      id: user?.id,
+      id: user.id,
+      userId: user.userId!,
     };
     await req.session.save();
     return res.json({ ok: true });

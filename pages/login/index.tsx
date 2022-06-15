@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import type { NextPage } from 'next';
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Button';
@@ -9,7 +8,7 @@ import { LinkWrap } from '../../src/components/Link';
 import { MutationRes } from '../../src/types/mutation';
 import { Title } from '../../src/components/Layout/Title';
 import useMutation from '../../src/libs/client/useMutation';
-import { Errors, Form, FormCont, Page, Input } from '../../styles/global';
+import { Errors, Form, FormCont, Input, Page } from '../../styles/global';
 
 const Login: NextPage = () => {
   const router = useRouter();

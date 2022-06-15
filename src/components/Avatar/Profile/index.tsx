@@ -11,13 +11,11 @@ export const ProfileAvatar = ({ url, preview, size }: IAvatarProps) => {
   const variant = 'public';
   return (
     <Cont size={size}>
-      {Boolean(url) ? (
+      {preview && <img src={preview} alt="프로필 이미지" />}
+      {url && !preview && (
         <img src={`${`${base}/${url}/${variant}`}`} alt="프로필 이미지" />
-      ) : Boolean(preview) ? (
-        <img src={preview} alt="프로필 이미지" />
-      ) : (
-        <img src="/img/profile.svg" alt="프로필 이미지" />
       )}
+      {!url && !preview && <img src="/img/profile.svg" alt="프로필 이미지" />}
     </Cont>
   );
 };

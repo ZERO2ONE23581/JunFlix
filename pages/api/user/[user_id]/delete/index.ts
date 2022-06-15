@@ -15,7 +15,8 @@ async function handler(
   const { user_id } = req.query;
   if (user?.id !== Number(user_id))
     return res.json({ ok: false, error: 'INVALID USERID QUERY' });
-  if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
+  if (!user)
+    return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
 
   const deleteConfirm = req.body;
   if (!deleteConfirm)

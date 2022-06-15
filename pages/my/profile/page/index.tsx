@@ -5,10 +5,10 @@ import useUser from '../../../../src/libs/client/useUser';
 import { PostList } from '../../../../src/components/Post/List';
 import { ReviewList } from '../../../../src/components/Review/list';
 import styled from '@emotion/styled';
-import { UserInfo } from '../../../../src/components/User/mypage/Info';
 import { useState } from 'react';
 import { Btn } from '../../../../styles/btn';
-import { FollowingBoards } from '../../../../src/components/User/mypage/follow';
+import { FollowingBoards } from '../../../../src/components/User/Follow/following';
+import { UserInfo } from '../../../../src/components/User/Info';
 
 const MyPage: NextPage = () => {
   const { isLoggedIn, loggedInUser } = useUser();

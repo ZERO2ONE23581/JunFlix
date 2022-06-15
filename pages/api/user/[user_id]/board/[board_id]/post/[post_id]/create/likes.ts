@@ -7,7 +7,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { user_id, board_id, post_id } = req.query;
   const queryExists = Boolean(user_id && board_id && post_id);
-  if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
+  if (!user)
+    return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
   if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
   //
   const alreadyExists = await client.likes.findFirst({

@@ -7,7 +7,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { board_id } = req.query;
   const { avatar } = req.body;
-  if (!user) return res.json({ ok: false, error: 'MUST LOGIN!' });
+  if (!user)
+    return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
   if (!board_id) return res.json({ ok: false, error: 'QUERY ERROR!' });
   if (!avatar) return res.json({ ok: false, error: 'INPUT DATA REQUIRED!' });
   //

@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import styled from '@emotion/styled';
+import { ProfileNavDetail } from './my';
 import useUser from '../../../../libs/client/useUser';
 import { ProfileAvatar } from '../../../Avatar/profile';
-import { ProfileNavDetail } from './my';
 
 export const ProfileNav = ({ open, setOpen }: any) => {
   const { isLoggedIn, loggedInUser } = useUser();

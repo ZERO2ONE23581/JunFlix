@@ -5,7 +5,8 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  if (!user) return res.json({ ok: false, error: 'MUST LOGIN' });
+  if (!user)
+    return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
   //
   const posts = await client.post.findMany({
     where: { UserID: user.id },

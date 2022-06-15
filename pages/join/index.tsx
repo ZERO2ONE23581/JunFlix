@@ -2,11 +2,11 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
-import { Title } from '../../src/components/Layout/Title';
-import { JoinForm } from '../../src/components/Join/form';
-import { JoinAvatar } from '../../src/components/Join/avatar';
-import { UserIdCheck } from '../../src/components/Join/userIdCheck';
 import { LinkWrap } from '../../src/components/Link';
+import { Title } from '../../src/components/Layout/Title';
+import { CreateUser } from '../../src/components/User/create';
+import { CheckUserId } from '../../src/components/User/checkUserId';
+import { CreateProfileAvatar } from '../../src/components/User/create/avatar';
 
 const Join: NextPage = () => {
   const [UserId, setUserId] = useState('');
@@ -18,19 +18,22 @@ const Join: NextPage = () => {
       <Title title="회원가입" />
       <JoinPage>
         <div className="wrap">
-          <UserIdCheck
+          <CheckUserId
             confirmId={confirmId}
             setConfirmId={setConfirmId}
             setUserId={setUserId}
           />
-          <JoinForm
+          <CreateUser
             confirmId={confirmId}
             UserId={UserId}
             joinSuccess={joinSuccess}
             setJoinSuccess={setJoinSuccess}
             setCreatedID={setCreatedID}
           />
-          <JoinAvatar joinSuccess={joinSuccess} createdID={createdID} />
+          <CreateProfileAvatar
+            joinSuccess={joinSuccess}
+            createdID={createdID}
+          />
           <LinkWrap join />
         </div>
       </JoinPage>
