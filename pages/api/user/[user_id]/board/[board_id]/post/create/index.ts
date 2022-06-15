@@ -11,7 +11,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!user)
     return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
   if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
-  if (!title) return res.json({ ok: false, error: 'INPUT DATA REQUIRED!' });
+  if (!title)
+    return res.json({ ok: false, error: '데이터가 미입력 되었습니다.!' });
   if (user?.id !== +user_id)
     return res.json({ ok: false, error: 'UNAUTHORIZED!' });
   //

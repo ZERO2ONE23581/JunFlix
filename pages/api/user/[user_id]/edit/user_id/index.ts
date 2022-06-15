@@ -11,7 +11,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
   if (user.id !== +user_id)
     return res.json({ ok: false, error: '수정권한이 없습니다.' });
-  if (!userId) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
+  if (!userId)
+    return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
   if (user.userId === userId)
     return res.json({ ok: false, error: '현재 사용중인 아이디 입니다.' });
   const alredayExists = await client.user.findUnique({

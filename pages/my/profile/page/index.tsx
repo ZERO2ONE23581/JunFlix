@@ -6,9 +6,9 @@ import { PostList } from '../../../../src/components/Post/List';
 import { ReviewList } from '../../../../src/components/Review/list';
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import { Btn } from '../../../../styles/btn';
 import { FollowingBoards } from '../../../../src/components/User/Follow/following';
 import { UserInfo } from '../../../../src/components/User/Info';
+import { Btn } from '../../../../src/components/Button';
 
 const MyPage: NextPage = () => {
   const { isLoggedIn, loggedInUser } = useUser();
@@ -28,10 +28,26 @@ const MyPage: NextPage = () => {
           <FollowingBoards />
         </article>
         <BtnWrap>
-          <Button onClick={() => hadleClick('board', '')}>My Boards</Button>
-          <Button onClick={() => hadleClick('post', '')}>My Posts</Button>
-          <Button onClick={() => hadleClick('review', '')}>My Reviews</Button>
-          <Button onClick={() => hadleClick('likes', '')}>My Likes</Button>
+          <Btn
+            name="My Boards"
+            type="button"
+            onClick={() => hadleClick('board', '')}
+          />
+          <Btn
+            name="My Posts"
+            type="button"
+            onClick={() => hadleClick('post', '')}
+          />
+          <Btn
+            name="My Reviews"
+            type="button"
+            onClick={() => hadleClick('review', '')}
+          />
+          <Btn
+            name="My Likes"
+            type="button"
+            onClick={() => hadleClick('likes', '')}
+          />
         </BtnWrap>
 
         {tab === 'board' && (
@@ -56,12 +72,16 @@ const MyPage: NextPage = () => {
         {tab === 'likes' && (
           <>
             <BtnWrap>
-              <LikesTabBtn onClick={() => hadleClick('likes', 'likesPost')}>
-                Posts
-              </LikesTabBtn>
-              <LikesTabBtn onClick={() => hadleClick('likes', 'likesReview')}>
-                Reviews
-              </LikesTabBtn>
+              <Btn
+                name="Posts"
+                type="button"
+                onClick={() => hadleClick('likes', 'likesPost')}
+              />
+              <Btn
+                name="Reviews"
+                type="button"
+                onClick={() => hadleClick('likes', 'likesReview')}
+              />
             </BtnWrap>
             {likes === 'likesPost' && (
               <>
@@ -109,10 +129,4 @@ const BtnWrap = styled.article`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-const Button = styled(Btn)`
-  padding: 10px 20px;
-`;
-const LikesTabBtn = styled(Button)`
-  width: 100%;
 `;

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { User } from '@prisma/client';
 import { useRouter } from 'next/router';
-import { Btn } from '../../../../../../styles/btn';
-import { ProfileAvatar } from '../../../../Avatar/profile';
+import { ProfileAvatar } from '../../Avatar/profile';
+import { Btn } from '../../Button';
 
 interface IUserInfoProps {
   user?: User;
@@ -38,8 +38,16 @@ export const UserInfo = ({ user }: IUserInfoProps) => {
         </UserDesc>
       </div>
       <div className="btn-wrap">
-        <Button onClick={() => clickBtn('edit')}>Edit Profile</Button>
-        <Button onClick={() => clickBtn('edit')}>See Profile</Button>
+        <Btn
+          type="button"
+          name="프로파일 수정"
+          onClick={() => clickBtn('edit')}
+        />
+        <Btn
+          type="button"
+          name="프로파일 보기"
+          onClick={() => clickBtn('edit')}
+        />
       </div>
     </Cont>
   );
@@ -96,9 +104,4 @@ const UserDesc = styled.ul`
     align-items: center;
     justify-content: space-between;
   }
-`;
-const Button = styled(Btn)`
-  margin-top: 20px;
-  font-size: 1rem;
-  padding: 10px 20px;
 `;

@@ -6,8 +6,9 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { username, userID, password, confirmPassword, email } = req.body;
-  const inputData = Boolean(userID && password && confirmPassword);
-  if (!inputData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
+  const isInputData = Boolean(userID && password && confirmPassword);
+  if (!isInputData)
+    return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
   if (Boolean(password !== confirmPassword))
     return res.json({ ok: false, error: '비밀번호가 일치하지 않습니다.' });
   //

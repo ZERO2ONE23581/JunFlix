@@ -5,7 +5,7 @@ import { Page } from '../../styles/global';
 import { LinkWrap } from '../../src/components/Link';
 import { Title } from '../../src/components/Layout/Title';
 import { CreateUser } from '../../src/components/User/create';
-import { CheckUserId } from '../../src/components/User/checkUserId';
+import { CheckUserId } from '../../src/components/User/CheckUserId';
 import { CreateProfileAvatar } from '../../src/components/User/create/avatar';
 
 const Join: NextPage = () => {

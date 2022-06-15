@@ -7,9 +7,10 @@ import { withApiSession } from '../../../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { newPassword, foundUserId } = req.body;
-  const mustData = Boolean(newPassword && foundUserId);
+  const isInputData = Boolean(newPassword && foundUserId);
   if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
-  if (!mustData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
+  if (!isInputData)
+    return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
   //
   const foundUser = await client.user.findUnique({
     where: { id: foundUserId },

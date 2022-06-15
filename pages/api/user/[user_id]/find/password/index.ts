@@ -7,7 +7,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const userId = req.body;
   const { user } = req.session;
   if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
-  if (!userId) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
+  if (!userId)
+    return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
   const tokenNum = Math.floor(Math.random() * 90000) + 10000; //6 random digits
 
   //UserId check

@@ -84,6 +84,22 @@ export const Input = styled.input`
     outline: 2px solid ${(p) => p.theme.color.logo};
   }
 `;
+export const Select = styled.select`
+  color: black;
+  font-size: 1rem;
+  padding: 12px 20px;
+  border-radius: 5px;
+  border: ${(p) => p.theme.border};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  &::placeholder {
+    font-size: 1rem;
+    color: black;
+    font-style: italic;
+  }
+  &:focus {
+    outline: 2px solid ${(p) => p.theme.color.logo};
+  }
+`;
 export const Errors = styled.div`
   color: red;
   font-size: 1rem;

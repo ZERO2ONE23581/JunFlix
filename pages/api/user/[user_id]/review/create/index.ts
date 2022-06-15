@@ -15,12 +15,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     recommend,
     score,
   } = req.body;
-  const mustData = Boolean(Title && movieTitle && genre && content);
+  const isInputData = Boolean(Title && movieTitle && genre && content);
 
   //error handling
   if (!user)
     return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
-  if (!mustData) return res.json({ ok: false, error: 'INPUT DATA REQUIRED' });
+  if (!isInputData)
+    return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
 
   //Create review
   const review = await client.review.create({

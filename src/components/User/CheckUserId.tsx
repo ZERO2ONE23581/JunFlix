@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../Button';
-import useMutation from '../../../libs/client/useMutation';
-import { Errors, Form, FormCont, Input } from '../../../../styles/global';
+import { Btn } from '../Button';
+import useMutation from '../../libs/client/useMutation';
+import { Errors, Form, FormCont, Input } from '../../../styles/global';
 import {
   IUserIdCheckForm,
   IUserIdCheckProps,
   IUserIdCheckRes,
-} from '../../../types/join';
+} from '../../types/join';
 
 export const CheckUserId = ({
   confirmId,

@@ -119,8 +119,8 @@ export const CreateUser = ({
                 placeholder="Username"
                 {...register('username', {
                   maxLength: {
-                    value: 25,
-                    message: '사용하실 닉네임은 25자를 초과할수 없습니다.',
+                    value: 10,
+                    message: '사용하실 유저이름은 10자를 초과할수 없습니다.',
                   },
                 })}
                 id="username"

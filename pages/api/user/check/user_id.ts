@@ -5,7 +5,8 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = req.body;
-  if (!userId) return res.json({ ok: false, error: 'NO INPUT DATA REQUIRED' });
+  if (!userId)
+    return res.json({ ok: false, error: 'NO 데이터가 미입력 되었습니다.' });
   const UserIdExists = await client.user.findUnique({
     where: { userId },
   });

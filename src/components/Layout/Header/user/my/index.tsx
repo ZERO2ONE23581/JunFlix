@@ -27,7 +27,7 @@ export const ProfileNavDetail = ({ user, setOpen }: any) => {
 const Cont = styled.article`
   top: 110%;
   right: -50%;
-  width: 130px;
+  width: 150px;
   z-index: 999;
   position: absolute;
   border-radius: 5px;
