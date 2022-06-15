@@ -36,8 +36,8 @@ export const ModalClose = styled.article`
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 130vh;
   top: 0;
   left: 0;
-  z-index: 111;
+  z-index: 2;
 `;

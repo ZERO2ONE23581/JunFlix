@@ -13,15 +13,10 @@ async function handler(
 ) {
   const { user } = req.session;
   const { user_id } = req.query;
-  if (user?.id !== Number(user_id))
-    return res.json({ ok: false, error: 'INVALID USERID QUERY' });
   if (!user)
     return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
-
-  const deleteConfirm = req.body;
-  if (!deleteConfirm)
-    return res.json({ ok: false, error: 'YOU MUST CONFIRM TO DELETE!' });
-
+  if (user.id !== +user_id)
+    return res.json({ ok: false, error: '권한이 없습니다.' });
   await client.user.delete({
     where: {
       id: user.id,

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import type { NextPage } from 'next';
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../src/components/Button';
@@ -8,16 +9,7 @@ import { LinkWrap } from '../../src/components/Link';
 import { MutationRes } from '../../src/types/mutation';
 import { Title } from '../../src/components/Layout/Title';
 import useMutation from '../../src/libs/client/useMutation';
-import {
-  Errors,
-  Form,
-  FormCont,
-  FullHeightPage,
-  H1,
-  Input,
-  Page,
-} from '../../styles/global';
-import styled from '@emotion/styled';
+import { Errors, Form, FormCont, H1, Input, Page } from '../../styles/global';
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -42,7 +34,7 @@ const Login: NextPage = () => {
   return (
     <>
       <Title title="로그인" />
-      <FullHeightPage>
+      <Cont>
         <section className="form-wrap">
           <FormCont>
             <H1>Login</H1>
@@ -83,8 +75,14 @@ const Login: NextPage = () => {
           </FormCont>
           <LinkWrap login />
         </section>
-      </FullHeightPage>
+      </Cont>
     </>
   );
 };
 export default Login;
+const Cont = styled(Page)`
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

@@ -1,90 +1,35 @@
 import { Btn } from '../../Button';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import useMutation from '../../../libs/client/useMutation';
-import useUser from '../../../libs/client/useUser';
 import styled from '@emotion/styled';
-import { ModalClose } from '../../../../styles/modal';
-import { DeleteModalCont, Desc } from '../../../../styles/deleteAcct';
+import { H1, H2 } from '../../../../styles/global';
 
-export const Delete_Account = () => {
-  const router = useRouter();
-  const { loggedInUserId } = useUser();
-
-  //Post
-  const [deleteAcct, { data, loading }] = useMutation(
-    `/api/user/${loggedInUserId}/delete`
-  );
-
-  //Open Modal
-  const [openModal, setOpenModal] = useState(false);
-  const onClick = () => {
-    setOpenModal(true);
-  };
-
-  //Delete Confirm
-  const deleteConfirm = () => {
-    if (loading) return;
-    deleteAcct(true);
-  };
-
-  //UI
-  useEffect(() => {
-    if (data?.ok) {
-      alert('계정이 삭제되었습니다.');
-      router.push('/');
-    }
-  }, [data]);
-  //
+export const DeleteAccount = ({ setOpenDel }: any) => {
   return (
-    <>
-      <>
-        {openModal && (
-          <DeleteModalCont>
-            <article>
-              <h1>계정을 삭제할 경우에는 복구가 불가능합니다.</h1>
-              <p>(This is a permanent action and it can't be undone.</p>
-              <p>
-                After you delete your account no one will be able to recover
-                it.)
-              </p>
-            </article>
-            <Btn
-              type="delete"
-              onClick={deleteConfirm}
-              btnName={loading ? 'Loading...' : 'Confirm Delete'}
-            />
-          </DeleteModalCont>
-        )}
-      </>
-      <Cont>
-        <Desc>
-          <h1>DANGER ZONE ⚠</h1>
-          <span>"Action can't be undone after submit!"</span>
-        </Desc>
-        <Btn
-          onClick={onClick}
-          type="delete"
-          btnName="Delete Account"
-          loading={loading}
-        />
-      </Cont>
-      {openModal && <ModalClose onClick={() => setOpenModal(false)} />}
-    </>
+    <Cont>
+      <div className="flex">
+        <div>
+          <H1>Delete Account</H1>
+          <H2>* This action can't be undone after submit.</H2>
+        </div>
+        <Btn name="계정삭제" type="button" onClick={() => setOpenDel(true)} />
+      </div>
+    </Cont>
   );
 };
 const Cont = styled.section`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  width: 80%;
+  margin: 30px auto;
   border-radius: 5px;
   padding: 20px 100px;
   border: ${(p) => p.theme.border};
-  color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background-color: ${(p) => p.theme.color.bg};
-  h1 {
-    font-size: 1.3em;
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  h1,
+  h2 {
+    margin: 10px auto;
+    color: ${(p) => p.theme.color.logo};
   }
 `;

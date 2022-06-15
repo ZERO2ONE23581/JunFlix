@@ -44,7 +44,6 @@ export const EditProfileAvatar = ({ user }: IEditProfileProps) => {
   const [editAvatar, { loading, data }] = useMutation<MutationRes>(
     `/api/user/${user?.id}/edit/avatar`
   );
-  //
   useEffect(() => {
     if (avatar && avatar.length > 0) {
       const file = avatar[0];
@@ -55,7 +54,6 @@ export const EditProfileAvatar = ({ user }: IEditProfileProps) => {
       router.reload();
     }
   }, [avatar, data, router]);
-  //
   return (
     <Cont>
       <h1>Edit Profile Avatar</h1>
@@ -83,6 +81,10 @@ export const EditProfileAvatar = ({ user }: IEditProfileProps) => {
   );
 };
 const Cont = styled(FormCont)`
+  h1 {
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
   form {
     .avatar-label {
       display: flex;

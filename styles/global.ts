@@ -24,12 +24,7 @@ export const Page = styled.section`
     width: 420px;
   }
 `;
-export const FullHeightPage = styled(Page)`
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+
 export const FormCont = styled.section`
   padding: 20px 25px;
   border-radius: 8px;

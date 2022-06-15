@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -32,7 +33,6 @@ export const EditUserInfo = ({ user }: IEditProfileProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IEditUserInfoForm>({ mode: 'onBlur' });
-
   const onValid = (formData: IEditUserInfoForm) => {
     if (!formData)
       return setError('NoInputError', { message: '수정할 항목이 없습니다.' });
@@ -42,7 +42,6 @@ export const EditUserInfo = ({ user }: IEditProfileProps) => {
   const [editUserInfo, { loading, data }] = useMutation<MutationRes>(
     `/api/user/${user?.id}/edit/user_info`
   );
-  console.log(data);
   useEffect(() => {
     if (user?.username) setValue('username', user?.username);
     if (user?.email) setValue('email', user?.email);
@@ -56,7 +55,7 @@ export const EditUserInfo = ({ user }: IEditProfileProps) => {
     }
   }, [user, data, router]);
   return (
-    <FormCont>
+    <Cont>
       <h1>Edit User Information</h1>
       <Form onSubmit={handleSubmit(onValid)}>
         <label htmlFor="username" />
@@ -146,6 +145,12 @@ export const EditUserInfo = ({ user }: IEditProfileProps) => {
           <Btn name="유저정보 수정" type="submit" loading={loading} />
         </div>
       </Form>
-    </FormCont>
+    </Cont>
   );
 };
+const Cont = styled(FormCont)`
+  h1 {
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+`;

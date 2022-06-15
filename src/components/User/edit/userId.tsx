@@ -7,6 +7,7 @@ import { IEditUserIdForm } from '../../../types/user';
 import useMutation from '../../../libs/client/useMutation';
 import { Errors, Form, FormCont, Input } from '../../../../styles/global';
 import { IEditProfileProps } from '../../../../pages/user/my/profile/edit';
+import styled from '@emotion/styled';
 
 export const EditUserId = ({ user }: IEditProfileProps) => {
   const router = useRouter();
@@ -31,9 +32,8 @@ export const EditUserId = ({ user }: IEditProfileProps) => {
       router.reload();
     }
   }, [user, data, router]);
-  console.log(data);
   return (
-    <FormCont>
+    <EditCont>
       <h1>Edit ID</h1>
       <Form onSubmit={handleSubmit(onValid)}>
         <label htmlFor="userId" />
@@ -52,6 +52,12 @@ export const EditUserId = ({ user }: IEditProfileProps) => {
           <Btn name="아이디 수정" type="submit" loading={loading} />
         </div>
       </Form>
-    </FormCont>
+    </EditCont>
   );
 };
+export const EditCont = styled(FormCont)`
+  h1 {
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+`;
