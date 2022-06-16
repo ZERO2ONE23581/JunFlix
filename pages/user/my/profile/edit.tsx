@@ -1,23 +1,19 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { User } from '@prisma/client';
-import { Page } from '../../../../styles/global';
-import { ModalClose } from '../../../../styles/modal';
 import useUser from '../../../../src/libs/client/useUser';
-import { DeleteAccount } from '../../../../src/components/User/delete';
-import { EditUserId } from '../../../../src/components/User/edit/userId';
-import { EditUserInfo } from '../../../../src/components/User/edit/userInfo';
-import { EditProfileAvatar } from '../../../../src/components/User/edit/avatar';
-import { EditUserPassword } from '../../../../src/components/User/edit/password';
-import { DeleteAccountModal } from '../../../../src/components/User/delete/modal';
+import { ModalClose, Page } from '../../../../styles/global';
+import { EditUserId } from '../../../../src/components/User/Edit/EditUserId';
+import { EditUserInfo } from '../../../../src/components/User/Edit/EditUserInfo';
+import { DeleteAccount } from '../../../../src/components/User/Delete/DeleteAccount';
+import { EditUserPassword } from '../../../../src/components/User/Edit/EditUserPassword';
+import { DeleteAccountModal } from '../../../../src/components/User/Delete/DeleteAcctModal';
+import { EditProfileAvatar } from '../../../../src/components/User/Edit/EditProfileAvatar';
 
-export interface IEditProfileProps {
-  user?: User;
-}
 const EditProfile: NextPage = () => {
   const { loggedInUser } = useUser();
   const [openDel, setOpenDel] = useState(false);
+  console.log(openDel);
   return (
     <>
       <Cont>

@@ -4,12 +4,11 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useUser from '../../../../../src/libs/client/useUser';
-import { BoardInfo } from '../../../../../src/components/Board';
 import { IGetBoardDetail } from '../../../../../src/types/board';
-import { DeleteModal } from '../../../../../src/components/Modal/Board/Delete';
-import { EditBgAvatar } from '../../../../../src/components/Avatar/background/edit';
-import { BackGroundAvatar } from '../../../../../src/components/Avatar/background';
-import { Btn } from '../../../../../src/components/Button';
+import { Btn } from '../../../../../src/components/Style/Button';
+import { EditBgAvatar } from '../../../../../src/components/User/Board/Edit/EditBoardAvatar';
+import { BackGroundAvatar } from '../../../../../src/components/User/Avatar/BackgroundAvatar';
+import { BoardDetail } from '../../../../../src/components/User/Board/BoardDetail';
 
 const Board: NextPage = () => {
   const router = useRouter();
@@ -36,15 +35,11 @@ const Board: NextPage = () => {
         />
       )}
       <EditBgAvatar setPreview={setPreview} isEditAvatar={isEditAvatar} />
-      <BoardInfo
+      <BoardDetail
         isLoggedIn={isLoggedIn}
         board={board}
         setDelModal={setDelModal}
         isOwner={isOwner}
-      />
-      <DeleteModal
-        delModal={delModal}
-        deleteClick={() => setDelModal((p) => !p)}
       />
     </Page>
   );

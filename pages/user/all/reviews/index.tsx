@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { H1, Page } from '../../../../styles/global';
 import { Title } from '../../../../src/components/Layout/Title';
-import { ReviewList } from '../../../../src/components/Review/list';
+import { ReviewList } from '../../../../src/components/User/Review/ReviewList';
 
 const AllReviews: NextPage = () => {
   return (

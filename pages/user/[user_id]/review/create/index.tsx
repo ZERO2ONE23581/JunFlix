@@ -1,14 +1,21 @@
+import {
+  Errors,
+  Form,
+  FormCont,
+  Input,
+  Page,
+  Select,
+} from '../../../../../styles/global';
 import type { NextPage } from 'next';
 import { Review } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
+import { Btn } from '../../../../../src/components/Style/Button';
 import { IReviewForm } from '../../../../../src/types/review';
-import { Input, Select } from '../../../../../src/components/Input';
 import useMutation from '../../../../../src/libs/client/useMutation';
-import { Btn } from '../../../../../src/components/Button';
-import { Errors, Page } from '../../../../../styles/global';
-import { ThumAvatar } from '../../../../../src/components/Avatar/thumnail';
+import { ThumnailAvatar } from '../../../../../src/components/User/Avatar/ThumnailAvatar';
+
 interface ICreateReviewRes {
   ok: boolean;
   error?: string;
@@ -91,42 +98,59 @@ const Create_Review: NextPage = () => {
   //
   return (
     <Page>
-      <section className="create-review-cont">
-        <form onSubmit={handleSubmit(onValid)}>
-          {data?.error && <Errors>{data?.error}</Errors>}
+      <FormCont>
+        <h1>Create Review</h1>
+        <Form onSubmit={handleSubmit(onValid)}>
+          <label htmlFor="title" />
           <Input
-            type="text"
-            label="Title"
-            name="title"
-            errMsg={errors.title?.message}
-            placeholder="제목을 작성해 주세요."
-            register={register('title', {
+            {...register('title', {
               required: '제목을 작성해 주세요.',
             })}
-          />
-          <Input
             type="text"
-            label="Movie Title"
-            name="movieTitle"
-            errMsg={errors.movieTitle?.message}
-            placeholder="리뷰하는 영화제목을 작성해 주세요."
-            register={register('movieTitle', {
+            id="title"
+            name="title"
+            placeholder="Title"
+          />
+          {errors.title && <Errors>{errors.title?.message}</Errors>}
+
+          <label htmlFor="movieTitle" />
+          <Input
+            {...register('movieTitle', {
               required: '리뷰하는 영화제목을 작성해 주세요.',
             })}
+            type="text"
+            id="movieTitle"
+            name="movieTitle"
+            placeholder="Movie Title"
           />
+          {errors.movieTitle && <Errors>{errors.movieTitle?.message}</Errors>}
+
+          <label htmlFor="genre" />
           <Select
-            register={register('genre', {
+            {...register('genre', {
               required: '영화의 장르를 선택해주세요.',
             })}
+            id="genre"
             name="genre"
-            label="Movie Genre"
-            errMsg={errors.genre?.message}
-            placeholder="영화의 장르를 선택해주세요."
-          />
-          <ThumAvatar preview={preview} />
+            placeholder="Movie Title"
+          >
+            <option value="">장르를 선택해주세요.</option>
+            <option value="SF">SF</option>
+            <option value="Action">Action</option>
+            <option value="Drama">Drama</option>
+            <option value="Horror">Horror</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Thriller">Thriller</option>
+          </Select>
+          {errors.genre && <Errors>{errors.genre?.message}</Errors>}
+
+          <ThumnailAvatar preview={preview} />
           <input type="file" {...register('avatar')} />
+
+          <label htmlFor="content" />
           <Input
-            register={register('content', {
+            {...register('content', {
               required: '영화리뷰를 작성해 주세요.',
               minLength: {
                 value: 20,
@@ -134,46 +158,54 @@ const Create_Review: NextPage = () => {
               },
             })}
             type="text"
-            label="Review"
+            id="content"
             name="content"
-            placeholder="내용을 작성해 주세요."
-            errMsg={errors.content?.message}
+            placeholder="content"
           />
+          {errors.content && <Errors>{errors.content?.message}</Errors>}
+
+          <label htmlFor="oneline" />
           <Input
-            register={register('oneline', {
+            {...register('oneline', {
               maxLength: {
                 value: 30,
                 message: '한줄평은 30자 내외여야 합니다.',
               },
             })}
             type="text"
-            label="한줄평"
+            id="oneline"
             name="oneline"
-            placeholder="한줄평을 적어보세요."
-            errMsg={errors.oneline?.message}
+            placeholder="oneline"
           />
+          {errors.oneline && <Errors>{errors.oneline?.message}</Errors>}
+
+          <label htmlFor="score" />
           <Input
-            register={register('score')}
-            label="별점 (최대 별 5개)"
-            name="score"
+            {...register('score')}
             type="number"
             max={5}
             min={0}
-            errMsg={errors.oneline?.message}
-            placeholder="영화 별점을 기록해주세요."
+            id="score"
+            name="score"
+            placeholder="score"
           />
+          {errors.score && <Errors>{errors.score?.message}</Errors>}
+
+          <label htmlFor="recommend" />
           <Input
-            register={register('recommend')}
+            {...register('recommend')}
             type="checkbox"
+            id="recommend"
             name="recommend"
-            label="이 영화를 추천한다면 체크하세요!"
-            errMsg={errors.recommend?.message}
+            placeholder="recommend"
           />
-          <Btn type="submit" btnName="리뷰 작성하기" loading={loading} />
-        </form>
-      </section>
+          {errors.recommend && <Errors>{errors.recommend?.message}</Errors>}
+
+          <Btn type="submit" name="리뷰 작성하기" loading={loading} />
+          {data?.error && <Errors>{data?.error}</Errors>}
+        </Form>
+      </FormCont>
     </Page>
   );
 };
-
 export default Create_Review;

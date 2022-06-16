@@ -5,7 +5,6 @@ export const Default = styled.section`
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
-
 export const Page = styled.section`
   padding: 10px 200px;
   height: 100%;
@@ -125,4 +124,34 @@ export const H3 = styled.h3`
   font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: 12px;
+`;
+export const Modal = styled.article`
+  position: absolute;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  //
+  width: 300px;
+  height: 150px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  //
+  border-radius: 10px;
+  border: ${(p) => p.theme.border};
+  color: ${(p) => p.theme.color.font};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background-color: ${(p) => p.theme.color.bg};
+`;
+export const ModalClose = styled.article`
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  width: 100%;
+  height: 130vh;
+  top: 0;
+  left: 0;
+  z-index: 2;
 `;

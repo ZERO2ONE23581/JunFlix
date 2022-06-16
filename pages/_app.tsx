@@ -4,7 +4,7 @@ import { ThemeProvider } from '@emotion/react';
 import type { AppProps } from 'next/app';
 import { useState } from 'react';
 import { SWRConfig } from 'swr';
-import '../styles/globals.css';
+import '../styles/reset.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState(true);

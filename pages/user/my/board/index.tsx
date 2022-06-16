@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
+import { Page } from '../../../../styles/global';
 import useUser from '../../../../src/libs/client/useUser';
 import { Title } from '../../../../src/components/Layout/Title';
-import { BoardList } from '../../../../src/components/Board/List';
-import { Page } from '../../../../styles/global';
+import { BoardList } from '../../../../src/components/User/Board/BoardList';
 
 const MyBoards: NextPage = () => {
   const { loggedInUser } = useUser();

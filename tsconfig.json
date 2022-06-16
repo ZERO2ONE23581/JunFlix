@@ -20,7 +20,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/api/join/id_check copy"
+    "pages/api/join/id_check copy",
+    "src/components/User/Edit/EditProfileAvatart.sx"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
-import { BoardList } from '../../../../../src/components/Board/List';
 import useUser from '../../../../../src/libs/client/useUser';
 import { Title } from '../../../../../src/components/Layout/Title';
+import { BoardList } from '../../../../../src/components/User/Board/BoardList';
 
 const BoardSelect: NextPage = () => {
   const { isLoggedIn } = useUser();

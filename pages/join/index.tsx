@@ -2,11 +2,11 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../styles/global';
-import { LinkWrap } from '../../src/components/Link';
 import { Title } from '../../src/components/Layout/Title';
-import { CreateUser } from '../../src/components/User/create';
-import { CheckUserId } from '../../src/components/User/CheckUserId';
-import { CreateProfileAvatar } from '../../src/components/User/create/avatar';
+import { LinkWrap } from '../../src/components/Style/LinkWrap';
+import { CreateUser } from '../../src/components/User/Create/createuser';
+import { CheckUserId } from '../../src/components/User/Create/CheckUserId';
+import { CreateProfileAvatar } from '../../src/components/User/Create/createavatar';
 
 const Join: NextPage = () => {
   const [UserId, setUserId] = useState('');

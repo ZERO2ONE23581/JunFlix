@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { H1, Page } from '../../../../styles/global';
-import { BoardList } from '../../../../src/components/Board/List';
 import { Title } from '../../../../src/components/Layout/Title';
+import { BoardList } from '../../../../src/components/User/Board/BoardList';
 
 const AllBoards: NextPage = () => {
   return (

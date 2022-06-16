@@ -5,15 +5,14 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useUser from '../../../../../src/libs/client/useUser';
 import { IGetReview } from '../../../../../src/types/review';
-import { BtnWrap } from '../../../../../src/components/Review/button';
-import { AllComments } from '../../../../../src/components/Comment/AllComments';
-import { DeleteModal } from '../../../../../src/components/Modal/Board/Delete';
-import { LikeCommentWrap } from '../../../../../src/components/Icon/LikeCommentWrap';
-import { CreateCommentOnReview } from '../../../../../src/components/Comment/Create/Review';
-import { ReviewInfo } from '../../../../../src/components/Review/info';
-import { IconWrap } from '../../../../../styles/default';
+import { CommentList } from '../../../../../src/components/User/Comment/CommentList';
+import { ReviewDetail } from '../../../../../src/components/User/Review/ReviewDetail';
+import { ReviewBtnWrap } from '../../../../../src/components/User/Review/ReviewBtnWrap';
+import { LikeCommentWrap } from '../../../../../src/components/Style/Icon/LikeCommentWrap';
+import { CreateComments } from '../../../../../src/components/User/Comment/Create/CreateComments';
+import { DeleteCommentModal } from '../../../../../src/components/User/Comment/Delete/DeleteCommentModal';
 
-const ReviewDetail: NextPage = () => {
+const ReviewInfo: NextPage = () => {
   const router = useRouter();
   const { review_id } = router.query;
   const { loggedInUser } = useUser();
@@ -21,28 +20,30 @@ const ReviewDetail: NextPage = () => {
   const { data } = useSWR<IGetReview>(
     isQueryId && `/api/user/${loggedInUser.id}/review/${review_id}`
   );
-  const [delModal, setDelModal] = useState(false);
-  //
+  const [openDelModal, setOpenDelModal] = useState(false);
   return (
     <>
       <Cont>
-        <BtnWrap user={loggedInUser} data={data} setDelModal={setDelModal} />
-        <ReviewInfo data={data} />
-        <IconWrap>
+        <ReviewBtnWrap
+          user={loggedInUser}
+          data={data}
+          setDelModal={setOpenDelModal}
+        />
+        <ReviewDetail data={data} />
+        <div>
           <LikeCommentWrap type="review" reviewId={null} userId={null} />
           <h1>해당 리뷰에 댓글 남기기</h1>
-          <CreateCommentOnReview />
-          <AllComments type="review" />
-        </IconWrap>
+          <CreateComments type="review" />
+          <CommentList isReview />
+        </div>
       </Cont>
-      <DeleteModal
-        delModal={delModal}
-        deleteClick={() => setDelModal((p) => !p)}
-      />
+      {openDelModal && (
+        <DeleteCommentModal type="review" setOpenDelModal={setOpenDelModal} />
+      )}
     </>
   );
 };
-export default ReviewDetail;
+export default ReviewInfo;
 
 const Cont = styled.section`
   padding: 20px 20%;

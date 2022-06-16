@@ -4,20 +4,17 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Input } from '../../../../../../../src/components/Input';
 import useUser from '../../../../../../../src/libs/client/useUser';
 import { MutationRes } from '../../../../../../../src/types/mutation';
+import { Btn } from '../../../../../../../src/components/Style/Button';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm, IGetPost } from '../../../../../../../src/types/post';
-import { DeleteModal } from '../../../../../../../src/components/Modal/Board/Delete';
-import { LikeCommentWrap } from '../../../../../../../src/components/Icon/LikeCommentWrap';
-import { CreateCommentOnPost } from '../../../../../../../src/components/Comment/Create/Post';
-import { AllComments } from '../../../../../../../src/components/Comment/AllComments';
-import { IconWrap } from '../../../../../../../src/components/Post/IconsWrap';
-import { Errors } from '../../../../../../../styles/global';
-import { ThumAvatar } from '../../../../../../../src/components/Avatar/thumnail';
-import { Page } from '../../../../../../../styles/default';
-import { Btn } from '../../../../../../../src/components/Button';
+import { Errors, Form, Input, Page } from '../../../../../../../styles/global';
+import { CommentList } from '../../../../../../../src/components/User/Comment/CommentList';
+import { ThumnailAvatar } from '../../../../../../../src/components/User/Avatar/ThumnailAvatar';
+import { LikeCommentWrap } from '../../../../../../../src/components/Style/Icon/LikeCommentWrap';
+import { CreateComments } from '../../../../../../../src/components/User/Comment/Create/CreateComments';
+import { DeleteCommentModal } from '../../../../../../../src/components/User/Comment/Delete/DeleteCommentModal';
 
 const PostInfo: NextPage = () => {
   const router = useRouter();
@@ -60,7 +57,7 @@ const PostInfo: NextPage = () => {
   };
   //
   const [edit, setEdit] = useState(false);
-  const [delModal, setDelModal] = useState(false);
+  const [openDelModal, setOpenDelModal] = useState(false);
   const [openSetup, setOpenSetup] = useState(false);
   const [preview, setPreview] = useState('');
   useEffect(() => {
@@ -83,54 +80,53 @@ const PostInfo: NextPage = () => {
     <>
       <Page>
         <BtnWrap>
-          <Button
-            typeEdit={false}
+          <Btn
+            name="Board"
+            loading={loading}
             type="button"
             onClick={() => router.push(`/user/${user_id}/board/${board_id}`)}
-          >
-            {loading ? 'Loading...' : 'Board'}
-          </Button>
+          />
           {isLoggedIn && loggedInUser?.id === Number(user_id) && (
-            <Button
-              typeEdit={false}
+            <Btn
+              name={openSetup ? 'Back' : 'Set up'}
+              loading={loading}
               type="button"
               onClick={() => setOpenSetup((p) => !p)}
-            >
-              {loading ? 'Loading...' : openSetup ? 'Back' : 'Set up'}
-            </Button>
+            />
           )}
           {openSetup && (
             <BtnWrap>
-              <Button
-                typeEdit={false}
+              <Btn
+                loading={loading}
+                name={edit ? 'Cancel' : 'Edit'}
                 type="button"
                 onClick={() => setEdit((p) => !p)}
-              >
-                {loading ? 'Loading...' : edit ? 'Cancel' : 'Edit'}
-              </Button>
-              <Button
-                typeEdit={false}
+              />
+              <Btn
+                loading={loading}
+                name="Delete"
                 type="button"
-                onClick={() => setDelModal((p) => !p)}
-              >
-                {loading ? 'Loading...' : 'Delete'}
-              </Button>
+                onClick={() => setOpenDelModal((p) => !p)}
+              />
             </BtnWrap>
           )}
         </BtnWrap>
 
-        <form onSubmit={handleSubmit(onValid)}>
-          <ThumAvatar url={data?.post.avatar} preview={preview} />
+        <Form onSubmit={handleSubmit(onValid)}>
+          <ThumnailAvatar url={data?.post.avatar} preview={preview} />
+          <label htmlFor="avatar" />
           <Input
-            register={register('avatar')}
+            {...register('avatar')}
             type="file"
+            id="avatar"
             name="avatar"
-            label="Post Image"
             disabled={!edit && true}
-            errMsg={errors.avatar?.message}
           />
+          {errors.avatar && <Errors>{errors.avatar.message}</Errors>}
+
+          <label htmlFor="title" />
           <Input
-            register={register('title', {
+            {...register('title', {
               required: '포스트 제목을 입력해주세요.',
               maxLength: {
                 value: 30,
@@ -138,43 +134,49 @@ const PostInfo: NextPage = () => {
               },
             })}
             type="text"
+            id="title"
             name="title"
             disabled={!edit && true}
             placeholder="게시물의 제목을 입력하세요."
-            errMsg={errors.title?.message}
           />
+          {errors.avatar && <Errors>{errors.avatar.message}</Errors>}
+
+          <label htmlFor="content" />
           <Input
-            register={register('content')}
+            {...register('content')}
             type="text"
+            id="content"
             name="content"
             disabled={!edit && true}
             placeholder="게시물의 내용을 작성해 주세요."
-            errMsg={errors.content?.message}
           />
+          {errors.avatar && <Errors>{errors.avatar.message}</Errors>}
+
+          <label htmlFor="createdAt" />
           <Input
+            {...register('createdAt')}
+            id="createdAt"
             name="createdAt"
             disabled={true}
-            register={register('createdAt')}
           />
+
           {dataRes?.message && <Errors>{dataRes?.message}</Errors>}
           {dataRes?.error && <Errors>{dataRes?.error}</Errors>}
-          {edit && (
-            <Button typeEdit={true} type="submit">
-              {loading ? 'Loading...' : 'Edit Post'}
-            </Button>
-          )}
-        </form>
+
+          {edit && <Btn loading={loading} name="Edit Post" type="submit" />}
+        </Form>
+
         <section>
           <LikeCommentWrap type="post" reviewId={null} userId={null} />
           <h1>해당 포스트에 댓글 남기기</h1>
-          <CreateCommentOnPost />
-          <AllComments type="post" />
+          <CreateComments type="post" />
+          <CommentList isPost />
         </section>
       </Page>
-      <DeleteModal
-        delModal={delModal}
-        deleteClick={() => setDelModal((p) => !p)}
-      />
+
+      {openDelModal && (
+        <DeleteCommentModal type="post" setOpenDelModal={setOpenDelModal} />
+      )}
     </>
   );
 };
@@ -183,10 +185,4 @@ const BtnWrap = styled.div`
   gap: 6px;
   display: flex;
   align-items: center;
-`;
-
-const Button = styled(Btn)<{ typeEdit: boolean }>`
-  font-size: ${(p) => (p.typeEdit ? '1.2rem' : '1rem')};
-  width: ${(p) => (p.typeEdit ? '150px' : '90px')};
-  height: ${(p) => (p.typeEdit ? '50px' : '40px')};
 `;

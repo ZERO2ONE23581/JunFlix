@@ -1,3 +1,11 @@
+import {
+  Errors,
+  Form,
+  FormCont,
+  Input,
+  Page,
+  Select,
+} from '../../../../../../styles/global';
 import useSWR from 'swr';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -5,10 +13,9 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { MutationRes } from '../../../../../../src/types/mutation';
 import useMutation from '../../../../../../src/libs/client/useMutation';
-import { Input, Select } from '../../../../../../src/components/Input';
-import { Btn } from '../../../../../../src/components/Button';
+import { Btn } from '../../../../../../src/components/Style/Button';
 import { IGetReview, IReviewForm } from '../../../../../../src/types/review';
-import { Errors, Page } from '../../../../../../styles/global';
+import { ThumnailAvatar } from '../../../../../../src/components/User/Avatar/ThumnailAvatar';
 
 const EditReview: NextPage = () => {
   const router = useRouter();
@@ -97,88 +104,110 @@ const EditReview: NextPage = () => {
       router.push('/all/reviews');
     }
   }, [setValue, avatar, watch, data, response]);
-  //
   return (
     <Page>
-      <section className="edit-review-cont">
-        <form onSubmit={handleSubmit(onValid)}>
-          {response?.error && <Errors>{response?.error}</Errors>}
+      <FormCont>
+        <Form onSubmit={handleSubmit(onValid)}>
+          <label htmlFor="title" />
           <Input
-            type="text"
-            label="Title"
-            name="title"
-            errMsg={errors.title?.message}
-            placeholder="제목을 작성해 주세요."
-            register={register('title', {
+            {...register('title', {
               required: '제목을 작성해 주세요.',
             })}
-          />
-          <Input
             type="text"
-            label="Movie Title"
-            name="movieTitle"
-            errMsg={errors.movieTitle?.message}
-            placeholder="리뷰하는 영화제목을 작성해 주세요."
-            register={register('movieTitle', {
+            id="title"
+            name="title"
+            placeholder="제목을 작성해 주세요."
+          />
+          {errors.title && <Errors>{errors.title.message}</Errors>}
+
+          <label htmlFor="movieTitle" />
+          <Input
+            {...register('movieTitle', {
               required: '리뷰하는 영화제목을 작성해 주세요.',
             })}
+            type="text"
+            id="movieTitle"
+            name="movieTitle"
+            placeholder="리뷰하는 영화제목을 작성해 주세요."
           />
+          {errors.movieTitle && <Errors>{errors.movieTitle.message}</Errors>}
+
           <Select
-            name="genre"
-            label="Movie Genre"
-            errMsg={errors.genre?.message}
-            placeholder="영화의 장르를 선택해주세요."
-            register={register('genre', {
+            {...register('genre', {
               required: '영화의 장르를 선택해주세요.',
             })}
-          />
-          <Avatar preview={preview} url={review?.avatar} />
+            id="genre"
+            name="genre"
+            placeholder="Movie Title"
+          >
+            <option value="">장르를 선택해주세요.</option>
+            <option value="SF">SF</option>
+            <option value="Action">Action</option>
+            <option value="Drama">Drama</option>
+            <option value="Horror">Horror</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Thriller">Thriller</option>
+          </Select>
+          {errors.genre && <Errors>{errors.genre?.message}</Errors>}
+
+          <ThumnailAvatar preview={preview} url={review?.avatar} />
+          <label htmlFor="avatar" />
           <Input
+            {...register('avatar')}
             type="file"
+            id="avatar"
             name="avatar"
-            label="Review Image"
-            register={register('avatar')}
-            errMsg={errors.avatar?.message}
           />
+          {errors.avatar && <Errors>{errors.avatar.message}</Errors>}
+
+          <label htmlFor="content" />
           <Input
-            type="text"
-            label="Review"
-            name="content"
-            errMsg={errors.content?.message}
-            placeholder="내용을 작성해 주세요."
-            register={register('content', {
+            {...register('content', {
               required: '내용을 작성해 주세요.',
               minLength: 20,
             })}
-          />
-          <Input
             type="text"
-            label="한줄평"
+            id="content"
+            name="content"
+            placeholder="내용을 작성해 주세요."
+          />
+          {errors.content && <Errors>{errors.content.message}</Errors>}
+
+          <label htmlFor="oneline" />
+          <Input
+            {...register('oneline', { maxLength: 50 })}
+            type="text"
             name="oneline"
             placeholder="한줄평을 적어보세요."
-            errMsg={errors.oneline?.message}
-            register={register('oneline', { maxLength: 50 })}
           />
+          {errors.oneline && <Errors>{errors.oneline.message}</Errors>}
+
+          <label htmlFor="score" />
           <Input
-            label="별점 (최대 별 5개)"
+            {...register('score')}
+            id="score"
             name="score"
             type="number"
             max={5}
             min={0}
-            register={register('score')}
-            errMsg={errors.oneline?.message}
             placeholder="영화 별점을 기록해주세요."
           />
+          {errors.score && <Errors>{errors.score.message}</Errors>}
+
+          <label htmlFor="recommend" />
           <Input
+            {...register('recommend')}
             type="checkbox"
+            id="recommend"
             name="recommend"
-            register={register('recommend')}
-            label="이 영화를 추천한다면 체크하세요!"
-            errMsg={errors.recommend?.message}
           />
-          <Btn type="submit" btnName="리뷰 수정하기" loading={loading} />
-        </form>
-      </section>
+          {errors.recommend && <Errors>{errors.recommend.message}</Errors>}
+
+          {response?.error && <Errors>{response?.error}</Errors>}
+          <Btn type="submit" name="리뷰 수정하기" loading={loading} />
+        </Form>
+      </FormCont>
     </Page>
   );
 };

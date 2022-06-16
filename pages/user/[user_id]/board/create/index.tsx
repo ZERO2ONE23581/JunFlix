@@ -4,12 +4,11 @@ import { Board } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { ErrMsg } from '../../../../../styles/default';
-import { Btn } from '../../../../../src/components/Button';
 import { BoardForm } from '../../../../../src/types/board';
-import { Input, Select } from '../../../../../src/components/Input';
+import { Errors, Input } from '../../../../../styles/global';
+import { Btn } from '../../../../../src/components/Style/Button';
 import useMutation from '../../../../../src/libs/client/useMutation';
-import { BackGroundAvatar } from '../../../../../src/components/Avatar/background';
+import { BackGroundAvatar } from '../../../../../src/components/User/Avatar/BackgroundAvatar';
 
 interface ICreateBoardRes {
   ok: boolean;
@@ -67,16 +66,18 @@ const CreateBoard: NextPage = () => {
       <Cont>
         <h1>Create Board</h1>
         <Form onSubmit={handleSubmit(onValid)}>
-          {data?.error && <ErrMsg>{data?.error}</ErrMsg>}
+          <label htmlFor="avatar" />
           <Input
-            register={register('avatar')}
+            {...register('avatar')}
             type="file"
+            id="avatar"
             name="avatar"
-            label="Post Image"
-            errMsg={errors.avatar?.message}
           />
+          {errors.avatar && <Errors>{errors.avatar?.message}</Errors>}
+
+          <label htmlFor="title" />
           <Input
-            register={register('title', {
+            {...register('title', {
               required: '생성하실 보드의 제목을 입력하세요.',
               maxLength: {
                 value: 30,
@@ -84,31 +85,29 @@ const CreateBoard: NextPage = () => {
               },
             })}
             type="text"
-            label="Title"
+            id="title"
             name="title"
-            errMsg={errors.title?.message}
-            placeholder="생성하실 보드의 제목을 입력하세요."
+            placeholder="Title"
           />
+
+          <label htmlFor="intro" />
           <Input
-            register={register('intro', {
+            {...register('intro', {
               maxLength: {
                 value: 50,
                 message: '소개글은 50자 이내여야 합니다.',
               },
             })}
             type="text"
+            id="intro"
             name="intro"
-            label="Intro"
-            errMsg={errors.intro?.message}
-            placeholder="보드의 소개글을 작성해 보세요."
+            placeholder="Intro"
           />
-          <Select
-            register={register('genre')}
-            name="genre"
-            label="Movie Genre"
-            placeholder="최애 장르를 선택해주세요."
-          />
-          <Btn type="submit" btnName="나의 보드 만들기" loading={loading} />
+          {errors.intro && <Errors>{errors.intro?.message}</Errors>}
+
+          <label htmlFor="genre" />
+          {data?.error && <Errors>{data?.error}</Errors>}
+          <Btn type="submit" name="나의 보드 만들기" loading={loading} />
         </Form>
       </Cont>
     </>
