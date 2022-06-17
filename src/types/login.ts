@@ -12,12 +12,11 @@ export interface IFindForm {
   email?: string;
   userId?: string;
   tokenNum?: string;
-  newPassword?: string;
+  password?: string;
   confirmPassword?: string;
-  oldPassword?: string;
 }
 export interface IFindPostRes {
   ok?: boolean;
   error?: string;
-  foundUser: User;
+  FoundUserID?: string;
 }

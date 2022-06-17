@@ -2,19 +2,12 @@ import {
   IUserIdCheckForm,
   IUserIdCheckProps,
   IUserIdCheckRes,
-} from '../../../types/join';
+} from '../../../../types/join';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../Style/Button';
-import useMutation from '../../../libs/client/useMutation';
-import {
-  Errors,
-  Form,
-  FormCont,
-  H1,
-  H2,
-  Input,
-} from '../../../../styles/global';
+import { Btn } from '../../../Style/Button';
+import useMutation from '../../../../libs/client/useMutation';
+import { Errors, Form, FormCont, Input } from '../../../../../styles/global';
 
 export const CheckUserId = ({
   confirmId,
@@ -47,8 +40,8 @@ export const CheckUserId = ({
     <>
       {!confirmId && (
         <FormCont>
-          <H1>Create Your Account</H1>
-          <H2>Step 1</H2>
+          <h1>Create Your Account</h1>
+          <h2>Step 1</h2>
           <Form onSubmit={handleSubmit(onValid)}>
             <div className="flex">
               <label htmlFor="userId" />
@@ -69,15 +62,15 @@ export const CheckUserId = ({
             </div>
             {errors.userId && (
               <Errors>
-                <span>아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를</span>
-                <span>포함해야합니다!</span>
+                <span>아이디는 기호를 제외한 영문자 또는 6~20자리</span>
+                <span>숫자를 포함해야합니다!</span>
               </Errors>
             )}
             {data?.error && <Errors>{data?.error}</Errors>}
             <span className="info">
-              * 아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를
+              * 아이디는 기호를 제외한 영문자 또는 6~20자리
               <br />
-              포함해야합니다.
+              숫자를 포함해야합니다.
             </span>
           </Form>
         </FormCont>

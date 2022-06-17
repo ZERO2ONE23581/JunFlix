@@ -1,10 +1,15 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
-export const LinkWrap = ({ join, login }: any) => {
+interface ILinkWrap {
+  isJoin?: boolean;
+  isLogin?: boolean;
+}
+
+export const LinkWrap = ({ isJoin, isLogin }: ILinkWrap) => {
   return (
     <Cont>
-      {join && (
+      {isJoin && (
         <nav>
           <span className="question">이미 회원이십니까?</span>
           <span>&rarr;</span>
@@ -13,9 +18,9 @@ export const LinkWrap = ({ join, login }: any) => {
           </Link>
         </nav>
       )}
-      {login && (
+      {isLogin && (
         <nav>
-          <Link href="/user/login/find/id">
+          <Link href="/user/login/find/user_id">
             <a>아이디 찾기</a>
           </Link>
           <span>|</span>
@@ -33,7 +38,7 @@ export const LinkWrap = ({ join, login }: any) => {
 };
 const Cont = styled.article`
   opacity: 0.8;
-  padding: 12px;
+  padding: 15px;
   margin-top: 15px;
   font-size: 0.9rem;
   border-radius: 5px;

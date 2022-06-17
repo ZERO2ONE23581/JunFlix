@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
-import { H1, Page } from '../../../../styles/global';
+import { Page } from '../../../../styles/global';
 import { Title } from '../../../../src/components/Layout/Title';
-import { PostList } from '../../../../src/components/User/Post/postlist';
+import { PostList } from '../../../../src/components/User/Post/PostList';
 
 const AllPosts: NextPage = () => {
   return (
@@ -9,7 +9,7 @@ const AllPosts: NextPage = () => {
       <Title title="모든 포스트 둘러보기" />
       <Page>
         <section className="flex-column">
-          <H1>All Posts</H1>
+          <h1>All Posts</h1>
           <PostList isAllPosts={true} />
         </section>
       </Page>

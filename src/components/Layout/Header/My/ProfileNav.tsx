@@ -10,12 +10,12 @@ export const ProfileNav = ({ open, setOpen }: any) => {
     <Cont>
       {!isLoggedIn ? (
         <nav>
-          <Link href="/join">
+          <Link href="/user/join">
             <a>
               <span className="hover">Join</span>
             </a>
           </Link>
-          <Link href="/login">
+          <Link href="/user/login">
             <a>
               <span className="hover">Login</span>
             </a>

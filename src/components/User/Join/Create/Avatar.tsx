@@ -1,16 +1,16 @@
 import {
   ICreateProfileAvatarProps,
   IProfileAvatarForm,
-} from '../../../types/avatar';
+} from '../../../../types/avatar';
 import styled from '@emotion/styled';
-import { Btn } from '../../Style/Button';
+import { Btn } from '../../../Style/Button';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { MutationRes } from '../../../types/mutation';
-import { ProfileAvatar } from '../Avatar/ProfileAvatar';
-import useMutation from '../../../libs/client/useMutation';
-import { Errors, Form, FormCont, H1, H2 } from '../../../../styles/global';
+import { MutationRes } from '../../../../types/mutation';
+import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
+import useMutation from '../../../../libs/client/useMutation';
+import { Errors, Form, FormCont } from '../../../../../styles/global';
 
 export const CreateProfileAvatar = ({
   joinSuccess,
@@ -67,8 +67,8 @@ export const CreateProfileAvatar = ({
     <>
       {joinSuccess && (
         <Container>
-          <H1>Profile Avatar</H1>
-          <H2>Step 3 (Optional)</H2>
+          <h1>Profile Avatar</h1>
+          <h2>Step 3 (Optional)</h2>
           <Form onSubmit={handleSubmit(onValid)}>
             <label className="avatar-label" htmlFor="avatar">
               <ProfileAvatar preview={preview} size={130} />
@@ -92,7 +92,7 @@ export const CreateProfileAvatar = ({
               <Btn
                 type="button"
                 name="나중에 설정"
-                onClick={() => router.replace('/login')}
+                onClick={() => router.replace('/user/login')}
               />
             </div>
             {data?.error && <Errors>{data?.error}</Errors>}

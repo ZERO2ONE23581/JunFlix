@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Page } from '../../styles/global';
-import { Title } from '../../src/components/Layout/Title';
-import { LinkWrap } from '../../src/components/Style/LinkWrap';
-import { CreateUser } from '../../src/components/User/Create/createuser';
-import { CheckUserId } from '../../src/components/User/Create/CheckUserId';
-import { CreateProfileAvatar } from '../../src/components/User/Create/createavatar';
+import { Page } from '../../../styles/global';
+import { Title } from '../../../src/components/Layout/Title';
+import { LinkWrap } from '../../../src/components/Style/LinkWrap';
+import { CreateUser } from '../../../src/components/User/Join/Create/User';
+import { CheckUserId } from '../../../src/components/User/Join/Check/UserId';
+import { CreateProfileAvatar } from '../../../src/components/User/Join/Create/Avatar';
 
 const Join: NextPage = () => {
   const [UserId, setUserId] = useState('');
@@ -34,7 +34,7 @@ const Join: NextPage = () => {
             joinSuccess={joinSuccess}
             createdID={createdID}
           />
-          <LinkWrap join />
+          <LinkWrap isJoin />
         </div>
       </Cont>
     </>

@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import useUser from '../../../../../src/libs/client/useUser';
 import { Btn } from '../../../../../src/components/Style/Button';
 import { Title } from '../../../../../src/components/Layout/Title';
-import { PostList } from '../../../../../src/components/User/Post/postlist';
+import { PostList } from '../../../../../src/components/User/Post/PostList';
 import { BoardList } from '../../../../../src/components/User/Board/BoardList';
 import { ReviewList } from '../../../../../src/components/User/Review/ReviewList';
 import { UserProfileInfo } from '../../../../../src/components/User/Profile/UserProfileInfo';

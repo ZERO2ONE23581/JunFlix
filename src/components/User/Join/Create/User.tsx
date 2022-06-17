@@ -1,9 +1,13 @@
 import { useEffect } from 'react';
-import { Btn } from '../../Style/Button';
+import { Btn } from '../../../Style/Button';
 import { useForm } from 'react-hook-form';
-import useMutation from '../../../libs/client/useMutation';
-import { Errors, Form, FormCont, Input } from '../../../../styles/global';
-import { IJoinForm, IJoinFormProps, IJoinFormRes } from '../../../types/join';
+import useMutation from '../../../../libs/client/useMutation';
+import { Errors, Form, FormCont, Input } from '../../../../../styles/global';
+import {
+  IJoinForm,
+  IJoinFormProps,
+  IJoinFormRes,
+} from '../../../../types/join';
 
 export const CreateUser = ({
   setCreatedID,
@@ -138,7 +142,7 @@ export const CreateUser = ({
                 })}
                 id="email"
                 name="email"
-                type="text"
+                type="email"
               />
             </div>
             {(errors.username || errors.username) && (
@@ -152,10 +156,10 @@ export const CreateUser = ({
               <span>이름은 추후에 수정 가능합니다.</span>
             </span>
 
-            {data?.error && <Errors>{data?.error}</Errors>}
             <div className="btn-flex">
               <Btn type="submit" name="회원가입" loading={loading} />
             </div>
+            {data?.error && <Errors>{data?.error}</Errors>}
           </Form>
         </FormCont>
       )}

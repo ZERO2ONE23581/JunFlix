@@ -3,13 +3,13 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../src/components/Style/Button';
-import { ILoginForm } from '../../src/types/login';
-import { LinkWrap } from '../../src/components/Style/LinkWrap';
-import { MutationRes } from '../../src/types/mutation';
-import { Title } from '../../src/components/Layout/Title';
-import useMutation from '../../src/libs/client/useMutation';
-import { Errors, Form, FormCont, H1, Input, Page } from '../../styles/global';
+import { ILoginForm } from '../../../src/types/login';
+import { MutationRes } from '../../../src/types/mutation';
+import { Btn } from '../../../src/components/Style/Button';
+import { Title } from '../../../src/components/Layout/Title';
+import useMutation from '../../../src/libs/client/useMutation';
+import { LinkWrap } from '../../../src/components/Style/LinkWrap';
+import { Errors, Form, FormCont, Input, Page } from '../../../styles/global';
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -37,7 +37,7 @@ const Login: NextPage = () => {
       <Cont>
         <section className="form-wrap">
           <FormCont>
-            <H1>Login</H1>
+            <h1>Login</h1>
             <Form onSubmit={handleSubmit(onValid)}>
               <label htmlFor="userId" />
               <Input
@@ -73,7 +73,7 @@ const Login: NextPage = () => {
               </div>
             </Form>
           </FormCont>
-          <LinkWrap login />
+          <LinkWrap isLogin />
         </section>
       </Cont>
     </>
@@ -85,4 +85,9 @@ const Cont = styled(Page)`
   display: flex;
   align-items: center;
   justify-content: center;
+  .btn-flex {
+    button {
+      width: 100%;
+    }
+  }
 `;

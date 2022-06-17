@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { H1, Page } from '../../../../styles/global';
+import { Page } from '../../../../styles/global';
 import { Title } from '../../../../src/components/Layout/Title';
 import { BoardList } from '../../../../src/components/User/Board/BoardList';
 
@@ -9,7 +9,7 @@ const AllBoards: NextPage = () => {
       <Title title="모든보드 둘러보기" />
       <Page>
         <section className="flex-column">
-          <H1>All Boards</H1>
+          <h1>All Boards</h1>
           <BoardList isAllBoards={true} />
         </section>
       </Page>

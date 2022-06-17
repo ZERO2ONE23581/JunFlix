@@ -12,7 +12,11 @@ interface IIsMyPostProps {
   post_id: number;
 }
 
-export const IconWrap = ({ user_id, board_id, post_id }: IIsMyPostProps) => {
+export const PostListIconWrap = ({
+  user_id,
+  board_id,
+  post_id,
+}: IIsMyPostProps) => {
   const { loggedInUser } = useUser();
   const isOwner = Boolean(loggedInUser?.id === user_id);
   const { data } = useSWR(

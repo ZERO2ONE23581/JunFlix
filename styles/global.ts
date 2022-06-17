@@ -25,7 +25,7 @@ export const Page = styled.section`
 `;
 
 export const FormCont = styled.section`
-  padding: 20px 25px;
+  padding: 30px 40px;
   border-radius: 8px;
   background-color: inherit;
   border: ${(p) => p.theme.border};
@@ -34,6 +34,21 @@ export const FormCont = styled.section`
     display: flex;
     align-items: center;
     justify-content: end;
+  }
+  h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
   }
 `;
 export const Form = styled.form`
@@ -61,6 +76,11 @@ export const Form = styled.form`
     input {
       width: 80%;
     }
+  }
+  h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 10px auto;
   }
 `;
 export const Input = styled.input`
@@ -109,22 +129,6 @@ export const Errors = styled.div`
     margin-bottom: 5px;
   }
 `;
-export const H1 = styled.h1`
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  margin: 20px auto;
-`;
-export const H2 = styled.h2`
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 12px;
-`;
-export const H3 = styled.h3`
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 12px;
-`;
 export const Modal = styled.article`
   position: absolute;
   z-index: 999;
@@ -134,7 +138,7 @@ export const Modal = styled.article`
   //
   width: 300px;
   height: 150px;
-  gap: 10px;
+  gap: 15px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -145,6 +149,19 @@ export const Modal = styled.article`
   color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
+  h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .btn-wrap {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+  }
 `;
 export const ModalClose = styled.article`
   background-color: rgba(0, 0, 0, 0.6);

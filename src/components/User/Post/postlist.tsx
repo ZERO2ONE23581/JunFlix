@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { IconWrap } from './IconsWrap';
+import { PostListIconWrap } from './PostListIconWrap';
 import { IGetLikes } from '../../../types/likes';
 import { ThumnailAvatar } from '../Avatar/ThumnailAvatar';
 import { IGetAllPosts, IPostListProps } from '../../../types/post';
@@ -26,7 +26,7 @@ export const PostList = ({
         >
           <a>
             <ThumnailAvatar url={post.avatar} />
-            <IconWrap
+            <PostListIconWrap
               user_id={post.UserID}
               board_id={post.BoardID}
               post_id={post.id}

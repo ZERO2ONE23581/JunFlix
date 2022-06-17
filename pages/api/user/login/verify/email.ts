@@ -4,22 +4,18 @@ import withHandler from '../../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const userId = req.body;
+  const email = req.body;
   const { user } = req.session;
-  if (user) return res.json({ ok: false, error: 'YOU MUST SIGN OUT!' });
-  if (!userId)
+  if (user) return res.json({ ok: false, error: '로그아웃이 필요합니다.' });
+  if (!email)
     return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
-  const tokenNum = Math.floor(Math.random() * 90000) + 10000; //6 random digits
-
-  //UserId check
   const foundUser = await client.user.findUnique({
-    where: { userId },
-    select: { id: true, userId: true },
+    where: { email },
+    select: { id: true, email: true },
   });
   if (!foundUser)
-    return res.json({ ok: false, error: '존재하지 않는 아이디 입니다.' });
-
-  //Create Token
+    return res.json({ ok: false, error: '등록되지 않은 이메일 입니다.' });
+  const tokenNum = Math.floor(Math.random() * 90000) + 100000;
   const token = await client.token.create({
     data: {
       tokenNum,
@@ -28,11 +24,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     },
   });
-  if (!token) return res.json({ ok: false, error: 'FAIL TO CREATE TOKEN' });
-
-  //이메일로 토큰숫자 전달 (나중에 구현)
-
-  //
+  if (!token) return res.json({ ok: false, error: '토큰생성 실패' });
   return res.json({ ok: true });
 }
 

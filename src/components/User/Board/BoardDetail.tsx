@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { BtnWrap } from './BoardBtnWrap';
-import { PostList } from '../Post/postlist';
 import { EditBoardForm } from './Edit/EditBoardForm';
 import { FollowBtnInsideBoard } from './Follow/FollowBtnInsideBoard';
+import { PostList } from '../Post/PostList';
 
 export const BoardDetail = ({
   isLoggedIn,
