@@ -9,7 +9,7 @@ export const NavTabDetail = ({ title, type, setType }: any) => {
   const needLogin = () => {
     setType('x');
     alert('로그인이 필요합니다.');
-    router.push('/login');
+    router.push('/user/login');
   };
   return (
     <Cont movie={title === 'Movie'}>

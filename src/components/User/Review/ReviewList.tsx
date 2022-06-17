@@ -27,6 +27,7 @@ export const ReviewList = ({
   const likes = LikeData?.reviewLikes;
   return (
     <>
+      <h1>{isAllReviews ? 'All Reviews' : isMyReview ? 'My Reviews' : null}</h1>
       {reviews?.map((review) => (
         <Cont key={review.id} BgUrl={`${CF_BASE}/${review.avatar}/${CF_VAR}`}>
           <Item>

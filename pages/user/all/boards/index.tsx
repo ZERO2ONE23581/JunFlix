@@ -8,10 +8,7 @@ const AllBoards: NextPage = () => {
     <>
       <Title title="모든보드 둘러보기" />
       <Page>
-        <section className="flex-column">
-          <h1>All Boards</h1>
-          <BoardList isAllBoards={true} />
-        </section>
+        <BoardList isAllBoards />
       </Page>
     </>
   );

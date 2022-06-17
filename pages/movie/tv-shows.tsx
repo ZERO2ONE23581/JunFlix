@@ -1,13 +1,16 @@
 import type { NextPage } from 'next';
-import { Title } from '../../src/components/Layout/Title';
+import { Page } from '../../styles/global';
 import { MovieInfo } from '../../src/components/Movie';
+import { Title } from '../../src/components/Layout/Title';
 
-const News: NextPage = () => {
+const TvShows: NextPage = () => {
   return (
     <>
       <Title title="드라마 콘텐츠" />
-      <MovieInfo type="tvShows" />
+      <Page>
+        <MovieInfo type="tvShows" />
+      </Page>
     </>
   );
 };
-export default News;
+export default TvShows;

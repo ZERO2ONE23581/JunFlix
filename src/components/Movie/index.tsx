@@ -39,11 +39,11 @@ export const MovieInfo = ({ type }: IMovieInfoProps) => {
   return (
     <>
       <h1>
-        {type === 'trending' && <span>TRENDING</span>}
-        {type === 'nowPlaying' && <span>NOW PLAYING</span>}
-        {type === 'tvShows' && <span>TV SHOWS</span>}
-        {type === 'upcoming' && <span>UPCOMING</span>}
-        {type === 'topRated' && <span>TOP RATED</span>}
+        {type === 'trending' && <span>Trending</span>}
+        {type === 'nowPlaying' && <span>Now Playing</span>}
+        {type === 'tvShows' && <span>Tv Shows</span>}
+        {type === 'upcoming' && <span>Upcoming</span>}
+        {type === 'topRated' && <span>Top Rated</span>}
       </h1>
       <Grid>
         {data &&

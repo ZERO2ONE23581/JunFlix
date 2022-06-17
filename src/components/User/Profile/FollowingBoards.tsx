@@ -1,8 +1,8 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { IGetFollowInfo } from '../../../../types/follow';
-import { FollowingBoardAvatar } from '../../Avatar/FollowingBoardAvatar';
+import { IGetFollowInfo } from '../../../types/follow';
+import { FollowingBoardAvatar } from '../Avatar/FollowingBoardAvatar';
 
 export const FollowingBoards = () => {
   const { data } = useSWR<IGetFollowInfo>(`/api/my/follow`);

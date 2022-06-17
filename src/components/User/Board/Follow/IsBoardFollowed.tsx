@@ -3,14 +3,17 @@ import styled from '@emotion/styled';
 import useUser from '../../../../libs/client/useUser';
 import { MutationRes } from '../../../../types/mutation';
 import useMutation from '../../../../libs/client/useMutation';
-import { Btn } from '../../../Style/Button';
+import {
+  FollowedBoardIcon,
+  UnFollowedBoardIcon,
+} from '../../../Style/Svg/FollowBoard';
 
 interface IIsFollowBoardProps {
-  user_id: number;
-  board_id: number;
+  user_id?: number | null;
+  board_id?: number | null;
 }
 
-export const FollowBtn = ({ user_id, board_id }: IIsFollowBoardProps) => {
+export const IsBoardFollowed = ({ user_id, board_id }: IIsFollowBoardProps) => {
   const { data, mutate } = useSWR(`/api/user/${user_id}/board/${board_id}`);
   const { isLoggedIn, loggedInUser } = useUser();
   const isOwner = Boolean(loggedInUser?.id === user_id);
@@ -36,16 +39,23 @@ export const FollowBtn = ({ user_id, board_id }: IIsFollowBoardProps) => {
     <Cont>
       {isOwner && <IsOwnerTrue />}
       {isLoggedIn && (
-        <Btn
-          type="button"
-          name={data?.isFollowing ? 'Following' : 'Follow'}
-          clicked={data?.isFollowing}
-          onClick={handleClick}
-        />
+        <Button onClick={handleClick}>
+          {data?.isFollowing ? <FollowedBoardIcon /> : <UnFollowedBoardIcon />}
+        </Button>
       )}
     </Cont>
   );
 };
+const Cont = styled.article``;
+
+const Button = styled.button`
+  position: absolute;
+  right: 5px;
+  bottom: 110px;
+  border: none;
+  background-color: inherit;
+`;
+
 const IsOwnerTrue = styled.div`
   width: 40px;
   height: 40px;
@@ -54,12 +64,4 @@ const IsOwnerTrue = styled.div`
   bottom: 370px;
   right: -10px;
   background-color: #2ecc71;
-`;
-const Cont = styled.article`
-  position: relative;
-  margin: 10px 0;
-  gap: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;

@@ -21,8 +21,8 @@ export const Header = ({ theme, themeClick }: any) => {
   );
 };
 const Cont = styled.section`
+  padding: 10px 15%;
   font-weight: 700;
-  padding: 10px 20%;
   margin-bottom: 5px;
   border-bottom: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { BtnWrap } from './BoardBtnWrap';
 import { EditBoardForm } from './Edit/EditBoardForm';
-import { FollowBtnInsideBoard } from './Follow/FollowBtnInsideBoard';
+import { FollowBoard } from './Follow/FollowBoard';
 import { PostList } from '../Post/PostList';
 
 export const BoardDetail = ({
@@ -17,7 +17,7 @@ export const BoardDetail = ({
       <Board>
         <article className="h1-follow-wrap">
           <h1>{board?.user?.username}'s board</h1>
-          {isLoggedIn && <FollowBtnInsideBoard isOwner={isOwner} />}
+          {isLoggedIn && <FollowBoard isOwner={isOwner} />}
         </article>
         <BtnWrap
           board={board}

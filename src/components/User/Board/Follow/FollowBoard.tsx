@@ -8,7 +8,7 @@ import {
   IGetFollowingBoard,
 } from '../../../../types/follow';
 
-export const FollowBtnInsideBoard = ({ isOwner }: IFollowBoardProps) => {
+export const FollowBoard = ({ isOwner }: IFollowBoardProps) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const queryId = user_id && board_id;

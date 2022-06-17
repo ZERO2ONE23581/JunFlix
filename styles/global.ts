@@ -1,24 +1,8 @@
 import styled from '@emotion/styled';
 
-export const Default = styled.section`
-  font-size: 1.3rem;
-  color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
-`;
 export const Page = styled.section`
-  padding: 10px 200px;
-  height: 100%;
-  .flex-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .flex-column {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-  }
+  padding: 0 15%;
+  padding-bottom: 20px;
   .form-wrap {
     width: 420px;
   }

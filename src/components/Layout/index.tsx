@@ -1,13 +1,25 @@
-import { Header } from './Header/Header';
 import { Footer } from './Footer';
-import { Default } from '../../../styles/global';
+import styled from '@emotion/styled';
+import { Header } from './Header/Header';
 
 export const Layout = ({ children, onClick, btnName }: any) => {
   return (
-    <Default>
+    <Cont>
       <Header theme={btnName} themeClick={onClick} />
-      {children}
+      <section className="children">{children}</section>
       <Footer />
-    </Default>
+    </Cont>
   );
 };
+const Cont = styled.section`
+  font-size: 1.3rem;
+  color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
+  .children {
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 15px auto;
+    }
+  }
+`;

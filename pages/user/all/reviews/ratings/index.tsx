@@ -18,9 +18,9 @@ interface RatingWithUser extends Review {
 
 const rating: NextPage = () => {
   const { data } = useSWR<IGetRatings>(`/api/all/reviews/ratings`);
-  //
   return (
     <Page>
+      <h1>All Ratings</h1>
       {data && data.ok && data.ratings && (
         <>
           {data.ratings.map((info) => (

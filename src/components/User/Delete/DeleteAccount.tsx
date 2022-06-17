@@ -19,7 +19,7 @@ export const DeleteAccount = ({ openDel, setOpenDel }: any) => {
   );
 };
 const Cont = styled.article`
-  margin: 20px auto;
+  width: 700px;
   padding: 35px;
   display: flex;
   align-items: center;

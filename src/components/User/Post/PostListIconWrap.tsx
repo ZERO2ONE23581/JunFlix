@@ -1,10 +1,8 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import useUser from '../../../libs/client/useUser';
-import {
-  SolidCommentIcon,
-  SolidHeartIcon,
-} from '../../Style/Svg/CommentsLikes';
+import { EmptyLikeIcon, SolidLikeIcon } from '../../Style/Svg/\bLikes';
+import { EmptyCommentIcon, SolidCommentIcon } from '../../Style/Svg/Comments';
 
 interface IIsMyPostProps {
   user_id: number;
@@ -28,8 +26,8 @@ export const PostListIconWrap = ({
     <Cont>
       <ul>
         <li>{isOwner ? <IsOwnerTrue className="owner-icon" /> : null}</li>
-        <li>{isLiked ? <SolidHeartIcon /> : null}</li>
-        <li>{isComment ? <SolidCommentIcon /> : null}</li>
+        <li>{isLiked ? <SolidLikeIcon /> : <EmptyLikeIcon />}</li>
+        <li>{isComment ? <SolidCommentIcon /> : <EmptyCommentIcon />}</li>
       </ul>
     </Cont>
   );

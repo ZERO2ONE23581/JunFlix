@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { EmptyImage } from '../../Style/Svg/EmptyImage';
 
 interface IAvatarProps {
   url?: string | null | boolean;
@@ -16,7 +17,7 @@ export const ThumnailAvatar = ({ isBoard, url, preview }: IAvatarProps) => {
           <img src={`${`${base}/${url}/${variant}`}`} alt="이미지" />
         )}
         {Boolean(preview) && <img src={preview} alt="프리뷰 이미지" />}
-        {!url && !preview && <img src="/img/noimage.svg" alt="이미지 없음" />}
+        {!url && !preview && <EmptyImage />}
       </Cont>
     </>
   );
@@ -34,6 +35,7 @@ const Cont = styled.div<{ isBoard?: boolean; isImage: boolean }>`
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   width: 100%;
   height: 250px;
+  background-color: black;
   img {
     width: ${(p) => (p.isImage ? '100%' : '50px')};
     height: ${(p) => (p.isImage ? '100%' : '50px')};

@@ -1,13 +1,16 @@
 import type { NextPage } from 'next';
+import { Page } from '../../styles/global';
 import { Title } from '../../src/components/Layout/Title';
 import { MovieInfo } from '../../src/components/Movie';
 
-const News: NextPage = () => {
+const UpcomingMovies: NextPage = () => {
   return (
     <>
       <Title title="개봉예정영화" />
-      <MovieInfo type="upcoming" />
+      <Page>
+        <MovieInfo type="upcoming" />
+      </Page>
     </>
   );
 };
-export default News;
+export default UpcomingMovies;

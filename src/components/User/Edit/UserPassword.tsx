@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { EditCont } from './EditUserId';
+import { EditCont } from './UserId';
 import { Btn } from '../../Style/Button';
 import { useForm } from 'react-hook-form';
 import { MutationRes } from '../../../types/mutation';

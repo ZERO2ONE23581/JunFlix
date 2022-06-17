@@ -18,37 +18,39 @@ export const PostList = ({
   const posts = data?.posts;
   const likes = LikeData?.postlikes;
   return (
-    <Grid>
-      {posts?.map((post) => (
-        <Link
-          key={post.id}
-          href={`/user/${post.UserID}/board/${post.BoardID}/post/${post.id}`}
-        >
-          <a>
-            <ThumnailAvatar url={post.avatar} />
-            <PostListIconWrap
-              user_id={post.UserID}
-              board_id={post.BoardID}
-              post_id={post.id}
-            />
-          </a>
-        </Link>
-      ))}
-      {likes?.map((like) => (
-        <Link
-          key={like.id}
-          href={`/user/${like.post.UserID}/board/${like.post.BoardID}/post/${like.post.id}`}
-        >
-          <a>
-            <ThumnailAvatar url={like.post.avatar} />
-          </a>
-        </Link>
-      ))}
-    </Grid>
+    <>
+      <h1>{isAllPosts ? 'All Posts' : isMyPosts ? 'My Posts' : null}</h1>
+      <Grid>
+        {posts?.map((post) => (
+          <Link
+            key={post.id}
+            href={`/user/${post.UserID}/board/${post.BoardID}/post/${post.id}`}
+          >
+            <a>
+              <ThumnailAvatar url={post.avatar} />
+              <PostListIconWrap
+                user_id={post.UserID}
+                board_id={post.BoardID}
+                post_id={post.id}
+              />
+            </a>
+          </Link>
+        ))}
+        {likes?.map((like) => (
+          <Link
+            key={like.id}
+            href={`/user/${like.post.UserID}/board/${like.post.BoardID}/post/${like.post.id}`}
+          >
+            <a>
+              <ThumnailAvatar url={like.post.avatar} />
+            </a>
+          </Link>
+        ))}
+      </Grid>
+    </>
   );
 };
 const Grid = styled.article`
-  margin-top: 15px;
   gap: 20px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);

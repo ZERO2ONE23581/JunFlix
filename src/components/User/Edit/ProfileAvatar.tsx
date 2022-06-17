@@ -59,7 +59,7 @@ export const EditProfileAvatar = ({ user }: IEditProfileProps) => {
   return (
     <>
       <Cont>
-        <h1>Edit Profile Avatar</h1>
+        <h1>Edit Avatar</h1>
         <Form onSubmit={handleSubmit(onValid)}>
           <label className="avatar-label" htmlFor="avatar">
             <ProfileAvatar size={130} preview={preview} url={user?.avatar} />
@@ -75,9 +75,8 @@ export const EditProfileAvatar = ({ user }: IEditProfileProps) => {
             accept="image/*"
           />
           {errors.avatar && <Errors>{errors.avatar.message}</Errors>}
-          <div className="btn-flex">
-            <Btn name="아바타 수정" type="submit" loading={avatarLoading} />
-          </div>
+          <Btn name="아바타 수정" type="submit" loading={avatarLoading} />
+          <div className="btn-flex"></div>
           {data?.error && <Errors>{data?.error}</Errors>}
         </Form>
       </Cont>
@@ -85,21 +84,23 @@ export const EditProfileAvatar = ({ user }: IEditProfileProps) => {
   );
 };
 const Cont = styled(FormCont)`
+  text-align: center;
   h1 {
     font-weight: 700;
     margin-bottom: 15px;
   }
   form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .avatar-label {
+      width: 100px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .avatar-input {
       display: none;
-    }
-    .btn-flex {
-      justify-content: center;
     }
   }
 `;

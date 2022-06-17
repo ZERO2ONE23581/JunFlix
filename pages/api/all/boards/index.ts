@@ -12,6 +12,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       avatar: true,
       UserID: true,
       user: { select: { username: true } },
+      followers: true,
     },
   });
   if (!boards) return res.json({ ok: false, error: 'NO BOARDS FOUND' });

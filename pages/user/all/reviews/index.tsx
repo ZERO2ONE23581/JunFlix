@@ -8,10 +8,7 @@ const AllReviews: NextPage = () => {
     <>
       <Title title="모든 리뷰" />
       <Page>
-        <section className="flex-column">
-          <h1>All Reviews</h1>
-          <ReviewList isAllReviews={true} />
-        </section>
+        <ReviewList isAllReviews={true} />
       </Page>
     </>
   );

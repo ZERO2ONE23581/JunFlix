@@ -8,7 +8,7 @@ import { PostList } from '../../../../../src/components/User/Post/PostList';
 import { BoardList } from '../../../../../src/components/User/Board/BoardList';
 import { ReviewList } from '../../../../../src/components/User/Review/ReviewList';
 import { UserProfileInfo } from '../../../../../src/components/User/Profile/UserProfileInfo';
-import { FollowingBoards } from '../../../../../src/components/User/Board/Follow/FollowingBoards';
+import { FollowingBoards } from '../../../../../src/components/User/Profile/FollowingBoards';
 
 const MyPage: NextPage = () => {
   const { isLoggedIn, loggedInUser } = useUser();

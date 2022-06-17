@@ -8,10 +8,7 @@ const AllPosts: NextPage = () => {
     <>
       <Title title="모든 포스트 둘러보기" />
       <Page>
-        <section className="flex-column">
-          <h1>All Posts</h1>
-          <PostList isAllPosts={true} />
-        </section>
+        <PostList isAllPosts={true} />
       </Page>
     </>
   );

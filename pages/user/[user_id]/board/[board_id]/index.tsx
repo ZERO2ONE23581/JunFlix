@@ -6,9 +6,9 @@ import { useRouter } from 'next/router';
 import useUser from '../../../../../src/libs/client/useUser';
 import { IGetBoardDetail } from '../../../../../src/types/board';
 import { Btn } from '../../../../../src/components/Style/Button';
+import { BoardDetail } from '../../../../../src/components/User/Board/BoardDetail';
 import { EditBgAvatar } from '../../../../../src/components/User/Board/Edit/EditBoardAvatar';
 import { BackGroundAvatar } from '../../../../../src/components/User/Avatar/BackgroundAvatar';
-import { BoardDetail } from '../../../../../src/components/User/Board/BoardDetail';
 
 const Board: NextPage = () => {
   const router = useRouter();
