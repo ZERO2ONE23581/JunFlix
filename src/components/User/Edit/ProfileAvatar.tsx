@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { MutationRes } from '../../../types/mutation';
 import { IEditProfileProps } from '../../../types/user';
-import { ProfileAvatar } from '../Avatar/ProfileAvatar';
+import { ProfileAvatar } from '../Avatar/Profile';
 import useMutation from '../../../libs/client/useMutation';
 import { IProfileAvatarForm } from '../../../types/avatar';
 import { Errors, Form, FormCont } from '../../../../styles/global';

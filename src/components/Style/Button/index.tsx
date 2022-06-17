@@ -18,8 +18,8 @@ export const Btn = ({ clicked, type, name, loading, onClick }: IBtnProps) => {
   );
 };
 const Button = styled.button<{ clicked: boolean | undefined }>`
-  border: none;
   width: 100px;
+  border: none;
   padding: 10px;
   font-size: 0.9rem;
   border-radius: 5px;

@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import { IGetBoards } from '../../../types/board';
-import { ThumnailAvatar } from '../Avatar/ThumnailAvatar';
+import { ThumnailAvatar } from '../Avatar/Thumnail';
 import { FollowBoard } from './Follow/FollowBoard';
 import useUser from '../../../libs/client/useUser';
 import { IsBoardFollowed } from './Follow/IsBoardFollowed';
@@ -18,7 +18,11 @@ export const BoardList = ({
   isSelect,
 }: IBoardListProps) => {
   const { data } = useSWR<IGetBoards>(
-    isAllBoards ? `/api/all/boards` : isMyBoards ? `/api/my/boards` : null
+    isAllBoards
+      ? `/api/user/all/boards`
+      : isMyBoards
+      ? `/api/user/my/boards`
+      : null
   );
   const boards = data?.boards;
   const BoardLink = (userId: number, boardId: number) => {
@@ -65,7 +69,6 @@ const Grid = styled.article`
   grid-template-columns: repeat(5, 1fr);
 `;
 const Item = styled.div`
-  position: relative;
   border-radius: 5px;
   border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};

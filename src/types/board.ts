@@ -1,12 +1,12 @@
 import { Board, Following, Post, User } from '@prisma/client';
 
-export interface BoardForm {
+export interface IBoardForm {
   title: string;
   intro: string;
   genre: string;
   avatar?: FileList;
 }
-export interface IGetBoardDetail {
+export interface IGetBoard {
   ok: boolean;
   error?: string;
   board?: BoardWithUserAndPost;
@@ -17,11 +17,6 @@ export interface BoardWithUserAndPost extends Board {
 }
 export interface IPostListProps {
   posts: Post[];
-}
-export interface IEditBoardForm {
-  title?: string;
-  intro?: string;
-  genre?: string;
 }
 export interface IGetBoards {
   ok: boolean;

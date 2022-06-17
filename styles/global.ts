@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 export const Page = styled.section`
   padding: 0 15%;
   padding-bottom: 20px;
+  color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
   .form-wrap {
     width: 420px;
   }
@@ -13,7 +15,9 @@ export const FormCont = styled.section`
   border-radius: 8px;
   background-color: inherit;
   border: ${(p) => p.theme.border};
+  color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background-color: ${(p) => p.theme.color.bg};
   .btn-flex {
     display: flex;
     align-items: center;
@@ -81,6 +85,23 @@ export const Input = styled.input`
   }
   &:focus {
     outline: 2px solid ${(p) => p.theme.color.logo};
+  }
+`;
+export const TextArea = styled.textarea`
+  height: 100px;
+  color: black;
+  font-size: 1rem;
+  padding: 20px;
+  border-radius: 5px;
+  border: ${(p) => p.theme.border};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  &::placeholder {
+    font-size: 1rem;
+    color: black;
+    font-style: italic;
+  }
+  &:focus {
+    outline: 3px solid ${(p) => p.theme.color.logo};
   }
 `;
 export const Select = styled.select`

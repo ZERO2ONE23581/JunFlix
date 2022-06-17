@@ -7,6 +7,7 @@ import {
   FollowedBoardIcon,
   UnFollowedBoardIcon,
 } from '../../../Style/Svg/FollowBoard';
+import { IsMyBoardIcon } from '../../../Style/Svg/IsMyBoard';
 
 interface IIsFollowBoardProps {
   user_id?: number | null;
@@ -37,7 +38,11 @@ export const IsBoardFollowed = ({ user_id, board_id }: IIsFollowBoardProps) => {
   };
   return (
     <Cont>
-      {isOwner && <IsOwnerTrue />}
+      {isOwner && (
+        <div className="ismyboard">
+          <IsMyBoardIcon />
+        </div>
+      )}
       {isLoggedIn && (
         <Button onClick={handleClick}>
           {data?.isFollowing ? <FollowedBoardIcon /> : <UnFollowedBoardIcon />}
@@ -46,22 +51,20 @@ export const IsBoardFollowed = ({ user_id, board_id }: IIsFollowBoardProps) => {
     </Cont>
   );
 };
-const Cont = styled.article``;
-
+const Cont = styled.article`
+  position: relative;
+  .ismyboard {
+    position: absolute;
+    top: -240px;
+    left: 10px;
+    border: none;
+    background-color: inherit;
+  }
+`;
 const Button = styled.button`
   position: absolute;
+  top: -40px;
   right: 5px;
-  bottom: 110px;
   border: none;
   background-color: inherit;
-`;
-
-const IsOwnerTrue = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 100%;
-  position: absolute;
-  bottom: 370px;
-  right: -10px;
-  background-color: #2ecc71;
 `;

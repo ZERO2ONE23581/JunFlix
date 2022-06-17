@@ -5,8 +5,7 @@ import { IGetLikes } from '../../../types/likes';
 import { IGetReviews } from '../../../types/review';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CF_BASE, CF_VAR } from '../Avatar/BackgroundAvatar';
-import { ProfileAvatar } from '../Avatar/ProfileAvatar';
+import { ProfileAvatar } from '../Avatar/Profile';
 import { LikeCommentWrap } from '../../Style/Icon/LikeCommentWrap';
 
 interface IReviewListProps {
@@ -20,9 +19,15 @@ export const ReviewList = ({
   findLikes,
 }: IReviewListProps) => {
   const { data } = useSWR<IGetReviews>(
-    isAllReviews ? `/api/all/reviews` : isMyReview ? `/api/my/reviews` : null
+    isAllReviews
+      ? `/api/user/all/reviews`
+      : isMyReview
+      ? `/api/user/my/reviews`
+      : null
   );
-  const { data: LikeData } = useSWR<IGetLikes>(findLikes && `/api/my/likes`);
+  const { data: LikeData } = useSWR<IGetLikes>(
+    findLikes && `/api/user/my/likes`
+  );
   const reviews = data?.reviews;
   const likes = LikeData?.reviewLikes;
   return (

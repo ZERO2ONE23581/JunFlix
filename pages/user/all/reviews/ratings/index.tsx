@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Page } from '../../../../../styles/global';
-import { ProfileAvatar } from '../../../../../src/components/User/Avatar/ProfileAvatar';
+import { ProfileAvatar } from '../../../../../src/components/User/Avatar/Profile';
 
 interface IGetRatings {
   ok: boolean;
@@ -17,7 +17,7 @@ interface RatingWithUser extends Review {
 }
 
 const rating: NextPage = () => {
-  const { data } = useSWR<IGetRatings>(`/api/all/reviews/ratings`);
+  const { data } = useSWR<IGetRatings>(`/api/user/all/reviews/ratings`);
   return (
     <Page>
       <h1>All Ratings</h1>

@@ -6,7 +6,7 @@ import { CommentReplies } from './CommentReplies';
 import { CommentBtnWrap } from './CommentBtnWrap';
 import { Errors } from '../../../../styles/global';
 import { EditComments } from './Edit/EditComments';
-import { ProfileAvatar } from '../Avatar/ProfileAvatar';
+import { ProfileAvatar } from '../Avatar/Profile';
 import { CreateComments } from './Create/CreateComments';
 import { IGetCommentInfo } from '../../../types/comments';
 import { DeleteCommentModal } from './Delete/DeleteCommentModal';

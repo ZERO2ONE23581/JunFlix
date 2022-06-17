@@ -1,15 +1,24 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import useUser from '../../../libs/client/useUser';
 import { Btn } from '../../Style/Button';
 
-export const BtnWrap = ({ board, isEdit, setIsEdit, setDelModal }: any) => {
+interface IBoardBtnWrap {
+  openEdit: boolean;
+  isMyBoard: boolean;
+  setOpenEdit: any;
+  setOpenDelModal: any;
+}
+
+export const BoardBtnWrap = ({
+  openEdit,
+  isMyBoard,
+  setOpenEdit,
+  setOpenDelModal,
+}: IBoardBtnWrap) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
-  const { loggedInUser } = useUser();
-  const isOwner = Boolean(loggedInUser?.id === board?.UserID);
-  const [settingBtn, setSettingBtn] = useState(false);
+  const [clickSetting, setClickSetting] = useState(false);
   return (
     <Cont>
       <Btn
@@ -18,10 +27,10 @@ export const BtnWrap = ({ board, isEdit, setIsEdit, setDelModal }: any) => {
         clicked={false}
         onClick={() => router.push(`/user/all/boards`)}
       />
-      {isOwner && (
+      {isMyBoard && (
         <>
           <Btn
-            name="Create"
+            name="게시물 작성"
             type="button"
             clicked={false}
             onClick={() => {
@@ -31,24 +40,24 @@ export const BtnWrap = ({ board, isEdit, setIsEdit, setDelModal }: any) => {
           <Btn
             name="Setting"
             type="button"
-            clicked={settingBtn}
-            onClick={() => setSettingBtn((p) => !p)}
+            clicked={clickSetting}
+            onClick={() => setClickSetting((p) => !p)}
           />
         </>
       )}
-      {settingBtn && (
+      {clickSetting && (
         <>
           <Btn
             name="Edit"
             type="button"
-            clicked={isEdit}
-            onClick={() => setIsEdit((p: boolean) => !p)}
+            clicked={openEdit}
+            onClick={() => setOpenEdit((p: boolean) => !p)}
           />
           <Btn
             name="Delete"
             type="button"
             clicked={false}
-            onClick={() => setDelModal((p: boolean) => !p)}
+            onClick={() => setOpenDelModal((p: boolean) => !p)}
           />
         </>
       )}
@@ -56,8 +65,10 @@ export const BtnWrap = ({ board, isEdit, setIsEdit, setDelModal }: any) => {
   );
 };
 const Cont = styled.article`
-  margin: 10px auto;
+  gap: 5px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  button {
+    height: 40px;
+  }
 `;

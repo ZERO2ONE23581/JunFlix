@@ -1,7 +1,7 @@
-import client from '../../../../src/libs/server/prisma_client';
+import client from '../../../../../src/libs/server/prisma_client';
 import { NextApiRequest, NextApiResponse } from 'next';
-import withHandler from '../../../../src/libs/server/withHandler';
-import { withApiSession } from '../../../../src/libs/server/withSession';
+import withHandler from '../../../../../src/libs/server/withHandler';
+import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const boards = await client.board.findMany({
@@ -13,6 +13,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       UserID: true,
       user: { select: { username: true } },
       followers: true,
+    },
+    orderBy: {
+      id: 'desc',
     },
   });
   if (!boards) return res.json({ ok: false, error: 'NO BOARDS FOUND' });

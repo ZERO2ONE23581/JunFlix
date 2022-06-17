@@ -8,7 +8,7 @@ import {
   IGetFollowingBoard,
 } from '../../../../types/follow';
 
-export const FollowBoard = ({ isOwner }: IFollowBoardProps) => {
+export const FollowBoard = ({ isMyBoard }: IFollowBoardProps) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const queryId = user_id && board_id;
@@ -19,7 +19,7 @@ export const FollowBoard = ({ isOwner }: IFollowBoardProps) => {
     `/api/user/${user_id}/board/${board_id}/follow/create`
   );
   const handleClick = () => {
-    if (isOwner) return;
+    if (isMyBoard) return;
     if (!data) return;
     mutate(
       {
@@ -42,7 +42,7 @@ export const FollowBoard = ({ isOwner }: IFollowBoardProps) => {
   const isFollower = data?.board?._count?.followers;
   return (
     <Cont>
-      {isOwner ? (
+      {isMyBoard ? (
         <Counts>
           <span>{isFollower === 1 ? 'Follower: ' : 'Followers: '}</span>
           <span>

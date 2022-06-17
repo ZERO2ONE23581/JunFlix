@@ -16,7 +16,7 @@ export interface BoardWithRecords extends Board {
   };
 }
 export interface IFollowBoardProps {
-  isOwner?: boolean;
+  isMyBoard?: boolean;
   user_id?: number | null;
   board_id?: number | null;
 }

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { User } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
-import { ProfileAvatar } from '../Avatar/ProfileAvatar';
+import { ProfileAvatar } from '../Avatar/Profile';
 
 interface IUserInfoProps {
   user?: User;

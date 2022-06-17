@@ -1,10 +1,9 @@
 import useSWR from 'swr';
-import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { IGetBoards } from '../../../../types/board';
+import { IGetBoards } from '../../../types/board';
 
 export const MyBoardFollowers = () => {
-  const { data: BoardData } = useSWR<IGetBoards>(`/api/my/boards`);
+  const { data: BoardData } = useSWR<IGetBoards>(`/api/user/my/boards`);
   const MyBoards = BoardData?.boards?.filter(
     (board) => board?.followers?.length > 0
   );

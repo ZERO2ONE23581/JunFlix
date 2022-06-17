@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { ThumnailAvatar } from '../Avatar/ThumnailAvatar';
+import { ThumnailAvatar } from '../Avatar/Thumnail';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const ReviewDetail = ({ data }: any) => {

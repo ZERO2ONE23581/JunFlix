@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import { IPostForm } from '../../../../../../../src/types/post';
 import { Btn } from '../../../../../../../src/components/Style/Button';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
-import { ThumnailAvatar } from '../../../../../../../src/components/User/Avatar/ThumnailAvatar';
+import { ThumnailAvatar } from '../../../../../../../src/components/User/Avatar/Thumnail';
 
 interface ICreatePostRes {
   ok: boolean;

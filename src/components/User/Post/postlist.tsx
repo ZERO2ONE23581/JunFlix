@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { PostListIconWrap } from './PostListIconWrap';
 import { IGetLikes } from '../../../types/likes';
-import { ThumnailAvatar } from '../Avatar/ThumnailAvatar';
+import { ThumnailAvatar } from '../Avatar/Thumnail';
 import { IGetAllPosts, IPostListProps } from '../../../types/post';
 
 export const PostList = ({
@@ -12,11 +12,14 @@ export const PostList = ({
   findLikes,
 }: IPostListProps) => {
   const { data } = useSWR<IGetAllPosts>(
-    isAllPosts ? `/api/all/posts` : isMyPosts && `/api/my/posts`
+    isAllPosts ? `/api/user/all/posts` : isMyPosts && `/api/user/my/posts`
   );
-  const { data: LikeData } = useSWR<IGetLikes>(findLikes && `/api/my/likes`);
+  const { data: LikeData } = useSWR<IGetLikes>(
+    findLikes && `/api/user/my/likes`
+  );
   const posts = data?.posts;
   const likes = LikeData?.postlikes;
+  console.log(posts);
   return (
     <>
       <h1>{isAllPosts ? 'All Posts' : isMyPosts ? 'My Posts' : null}</h1>

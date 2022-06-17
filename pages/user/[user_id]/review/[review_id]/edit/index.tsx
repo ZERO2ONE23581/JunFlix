@@ -15,7 +15,7 @@ import { MutationRes } from '../../../../../../src/types/mutation';
 import useMutation from '../../../../../../src/libs/client/useMutation';
 import { Btn } from '../../../../../../src/components/Style/Button';
 import { IGetReview, IReviewForm } from '../../../../../../src/types/review';
-import { ThumnailAvatar } from '../../../../../../src/components/User/Avatar/ThumnailAvatar';
+import { ThumnailAvatar } from '../../../../../../src/components/User/Avatar/Thumnail';
 
 const EditReview: NextPage = () => {
   const router = useRouter();

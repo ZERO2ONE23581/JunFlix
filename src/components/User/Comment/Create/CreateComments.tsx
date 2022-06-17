@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Style/Button';
 import useUser from '../../../../libs/client/useUser';
-import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
+import { ProfileAvatar } from '../../Avatar/Profile';
 import useMutation from '../../../../libs/client/useMutation';
 import { Errors, Form, FormCont } from '../../../../../styles/global';
 import { ICommentRes, ICreateCommentsForm } from '../../../../types/comments';

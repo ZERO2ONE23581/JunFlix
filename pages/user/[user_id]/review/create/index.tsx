@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { Btn } from '../../../../../src/components/Style/Button';
 import { IReviewForm } from '../../../../../src/types/review';
 import useMutation from '../../../../../src/libs/client/useMutation';
-import { ThumnailAvatar } from '../../../../../src/components/User/Avatar/ThumnailAvatar';
+import { ThumnailAvatar } from '../../../../../src/components/User/Avatar/Thumnail';
 
 interface ICreateReviewRes {
   ok: boolean;

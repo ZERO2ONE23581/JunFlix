@@ -1,8 +1,9 @@
-import styled from '@emotion/styled';
-import { Post, Review, User } from '@prisma/client';
-import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import { Icons } from '../../Svg/CommentsLikes';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { Post, Review } from '@prisma/client';
+import { EmptyLikeIcon, SolidLikeIcon } from '../../Svg/\bLikes';
+import { EmptyCommentIcon, SolidCommentIcon } from '../../Svg/Comments';
 
 interface IGetPostWithCounts {
   ok: boolean;
@@ -58,9 +59,9 @@ export const CommentIcon = ({ type, userId, reviewId }: any) => {
     <Cont>
       <Icon>
         {postData?.isComments || reviewData?.isComments ? (
-          <Icons name="comments" type="solid" />
+          <SolidCommentIcon />
         ) : (
-          <Icons name="comments" type="empty" />
+          <EmptyCommentIcon />
         )}
       </Icon>
       <Counts>

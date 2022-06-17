@@ -1,9 +1,9 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import { Post, Review } from '@prisma/client';
-import { Icons } from '../../Svg/CommentsLikes';
-import useMutation from '../../../../libs/client/useMutation';
 import { useRouter } from 'next/router';
+import { Post, Review } from '@prisma/client';
+import useMutation from '../../../../libs/client/useMutation';
+import { EmptyLikeIcon, SolidLikeIcon } from '../../Svg/\bLikes';
 
 interface IGetPostWithCounts {
   ok: boolean;
@@ -112,9 +112,9 @@ export const LikesIcon = ({ type, userId, reviewId }: any) => {
       <Cont>
         <IconBtn onClick={handleClick} isAllReivew={isAllReivew}>
           {data?.isLiked || reviewData?.isLiked ? (
-            <Icons name="likes" type="solid" />
+            <SolidLikeIcon />
           ) : (
-            <Icons name="likes" type="empty" />
+            <EmptyLikeIcon />
           )}
         </IconBtn>
         <Counts>

@@ -3,13 +3,13 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import useUser from '../../../../src/libs/client/useUser';
 import { ModalClose, Page } from '../../../../styles/global';
+import { Title } from '../../../../src/components/Layout/Title';
 import { EditUserId } from '../../../../src/components/User/Edit/UserId';
 import { EditUserInfo } from '../../../../src/components/User/Edit/UserInfo';
-import { DeleteAccount } from '../../../../src/components/User/Delete/DeleteAccount';
+import { DeleteAccount } from '../../../../src/components/User/Delete/Account';
 import { EditUserPassword } from '../../../../src/components/User/Edit/UserPassword';
-import { DeleteAccountModal } from '../../../../src/components/User/Delete/DeleteAcctModal';
 import { EditProfileAvatar } from '../../../../src/components/User/Edit/ProfileAvatar';
-import { Title } from '../../../../src/components/Layout/Title';
+import { DeleteAccountModal } from '../../../../src/components/User/Delete/AccountModal';
 
 const EditProfile: NextPage = () => {
   const { loggedInUser } = useUser();

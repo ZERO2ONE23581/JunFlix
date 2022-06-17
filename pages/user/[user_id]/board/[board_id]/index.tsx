@@ -1,53 +1,64 @@
 import useSWR from 'swr';
 import { useState } from 'react';
-import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useUser from '../../../../../src/libs/client/useUser';
-import { IGetBoardDetail } from '../../../../../src/types/board';
-import { Btn } from '../../../../../src/components/Style/Button';
-import { BoardDetail } from '../../../../../src/components/User/Board/BoardDetail';
-import { EditBgAvatar } from '../../../../../src/components/User/Board/Edit/EditBoardAvatar';
-import { BackGroundAvatar } from '../../../../../src/components/User/Avatar/BackgroundAvatar';
+import { Title } from '../../../../../src/components/Layout/Title';
+import { BoardBtnWrap } from '../../../../../src/components/User/Board/BtnWrap';
+import { DeleteBoardModal } from '../../../../../src/components/User/Board/Delete/BoardModal';
+import { EditBoardForm } from '../../../../../src/components/User/Board/Edit/BoardForm';
+import { FormCont, ModalClose } from '../../../../../styles/global';
+import styled from '@emotion/styled';
+import {
+  Background,
+  CreateAvatarURL,
+} from '../../../../../src/components/User/Avatar/Background';
+import { IGetBoard } from '../../../../../src/types/board';
+import { PostList } from '../../../../../src/components/User/Post/PostList';
+import { FollowBoard } from '../../../../../src/components/User/Board/Follow/FollowBoard';
 
-const Board: NextPage = () => {
+const BoardInfo: NextPage = () => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
-  const queryId = user_id && board_id;
   const { isLoggedIn, loggedInUser } = useUser();
-  const { data: BoardData } = useSWR<IGetBoardDetail>(
-    queryId && `/api/user/${user_id}/board/${board_id}`
+  const { data } = useSWR<IGetBoard>(
+    user_id && board_id && `/api/user/${user_id}/board/${board_id}`
   );
-  const board = BoardData?.board;
-  const isOwner = Boolean(loggedInUser?.id === board?.UserID);
+  const avatar = CreateAvatarURL(data?.board?.avatar);
+  const isMyBoard = Boolean(loggedInUser?.id === data?.board?.UserID);
   const [preview, setPreview] = useState('');
-  const [delModal, setDelModal] = useState(false);
-  const [isEditAvatar, setIsEditAvatar] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openDelModal, setOpenDelModal] = useState(false);
   return (
-    <Page>
-      <BackGroundAvatar preview={preview} url={board?.avatar} />
-      {isOwner && (
-        <Btn
-          type="button"
-          name="Background"
-          clicked={isEditAvatar}
-          onClick={() => setIsEditAvatar((p) => !p)}
-        />
+    <>
+      <Title title={`${data?.board?.user?.username}님의 보드`} />
+      <Cont bg={preview ? preview : avatar ? avatar : null}>
+        {isLoggedIn && <FollowBoard isMyBoard={isMyBoard} />}
+        <FormCont>
+          <BoardBtnWrap
+            isMyBoard={isMyBoard}
+            openEdit={openEdit}
+            setOpenEdit={setOpenEdit}
+            setOpenDelModal={setOpenDelModal}
+          />
+          {openEdit && (
+            <EditBoardForm board={data?.board} setPreview={setPreview} />
+          )}
+          {!openEdit && <PostList isMyPosts posts={data?.board?.posts} />}
+        </FormCont>
+      </Cont>
+
+      {openDelModal && (
+        <DeleteBoardModal isMyBoard={isMyBoard} closeModal={setOpenDelModal} />
       )}
-      <EditBgAvatar setPreview={setPreview} isEditAvatar={isEditAvatar} />
-      <BoardDetail
-        isLoggedIn={isLoggedIn}
-        board={board}
-        setDelModal={setDelModal}
-        isOwner={isOwner}
-      />
-    </Page>
+      {openDelModal && <ModalClose onClick={() => setOpenDelModal(false)} />}
+    </>
   );
 };
-export default Board;
+export default BoardInfo;
 
-const Page = styled.section`
-  height: 100%;
-  color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
+const Cont = styled(Background)`
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
 `;

@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { MutationRes } from '../../../../types/mutation';
-import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
+import { ProfileAvatar } from '../../Avatar/Profile';
 import useMutation from '../../../../libs/client/useMutation';
 import { Errors, Form, FormCont } from '../../../../../styles/global';
 
