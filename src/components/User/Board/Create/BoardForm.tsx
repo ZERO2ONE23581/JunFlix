@@ -14,7 +14,7 @@ import {
 import useMutation from '../../../../libs/client/useMutation';
 import { IBoardForm } from '../../../../types/board';
 import { Btn } from '../../../Style/Button';
-import { MovieGenreOption } from '../../../Style/GenreOption';
+import { MovieGenreOption } from '../../../Style/Input/Option';
 import { AddBoardAvatarIcon } from '../../../Style/Svg/BoardAvatar';
 
 interface ICreateBoardRes {

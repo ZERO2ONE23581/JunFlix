@@ -10,7 +10,6 @@ interface IBtnProps {
 }
 
 export const Btn = ({ clicked, type, name, loading, onClick }: IBtnProps) => {
-  //
   return (
     <Button clicked={clicked} type={type} onClick={onClick}>
       {loading ? 'Loading...' : name}
@@ -18,16 +17,17 @@ export const Btn = ({ clicked, type, name, loading, onClick }: IBtnProps) => {
   );
 };
 const Button = styled.button<{ clicked: boolean | undefined }>`
-  width: 100px;
+  width: 100%;
   border: none;
-  padding: 10px;
-  font-size: 0.9rem;
+  padding: 11px 15px;
+  font-size: 1.2rem;
   border-radius: 5px;
   color: ${(p) => p.theme.color.bg};
   background-color: ${(p) =>
-    p.clicked ? p.theme.color.logo : p.theme.color.font};
+    p.clicked ? p.theme.color.logo : p.theme.color.btn};
+
   &:hover {
-    color: whitesmoke;
+    color: white;
     background-color: ${(p) => p.theme.color.logo};
   }
 `;

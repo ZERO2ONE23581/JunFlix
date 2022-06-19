@@ -3,17 +3,17 @@ import {
   IProfileAvatarForm,
 } from '../../../../types/avatar';
 import styled from '@emotion/styled';
-import { Btn } from '../../../Style/Button';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { MutationRes } from '../../../../types/mutation';
+import { Btn } from '../../../Style/Button';
+import { ErrorMsg } from '../../../Style/ErrMsg';
 import { ProfileAvatar } from '../../Avatar/Profile';
+import { MutationRes } from '../../../../types/mutation';
 import useMutation from '../../../../libs/client/useMutation';
-import { Errors, Form, FormCont } from '../../../../../styles/global';
+import { Form, Info, JoinCont } from '../../../../../styles/global';
 
 export const CreateProfileAvatar = ({
-  joinSuccess,
   createdID,
 }: ICreateProfileAvatarProps) => {
   const router = useRouter();
@@ -60,64 +60,50 @@ export const CreateProfileAvatar = ({
       alert(
         `회원가입을 성공적으로 완료하였습니다. 로그인 페이지로 이동합니다.`
       );
-      router.replace('/login');
+      router.replace('/user/login');
     }
   }, [avatar, watch, data, router, setAvatarLoading]);
   return (
-    <>
-      {joinSuccess && (
-        <Container>
-          <h1>Profile Avatar</h1>
-          <h2>Step 3 (Optional)</h2>
-          <Form onSubmit={handleSubmit(onValid)}>
-            <label className="avatar-label" htmlFor="avatar">
-              <ProfileAvatar preview={preview} size={130} />
-            </label>
-            <input
-              className="avatar-input"
-              {...register('avatar', {
-                required: '프로필 사진 파일을 업로드해주세요.',
-              })}
-              type="file"
-              accept="image/*"
-              id="avatar"
-              name="avatar"
-            />
-            {errors.avatar && <Errors>{errors.avatar.message}</Errors>}
-            <span className="info">
-              * 프로필 사진은 추후에 수정 가능합니다.
-            </span>
-            <div className="flex btn-wrap">
-              <Btn type="submit" name="사진 저장" loading={avatarLoading} />
-              <Btn
-                type="button"
-                name="나중에 설정"
-                onClick={() => router.replace('/user/login')}
-              />
-            </div>
-            {data?.error && <Errors>{data?.error}</Errors>}
-          </Form>
-        </Container>
-      )}
-    </>
+    <JoinCont>
+      <h1>Profile Avatar</h1>
+      <h2>Step 3. 프로필 사진 설정 (선택사항)</h2>
+      <Form onSubmit={handleSubmit(onValid)}>
+        <AvatarLabel htmlFor="avatar">
+          <ProfileAvatar preview={preview} size={130} />
+          <input
+            {...register('avatar', {
+              required: '프로필 사진 파일을 업로드해주세요.',
+            })}
+            id="avatar"
+            name="avatar"
+            type="file"
+            accept="image/*"
+          />
+        </AvatarLabel>
+        <Info>
+          <span>* 샤진을 추가하려면 아이콘을 클릭하세요.</span>
+          <span>* 프로필 사진은 추후에 수정 가능합니다.</span>
+        </Info>
+        {errors.avatar && <ErrorMsg error={errors.avatar.message} />}
+        {data?.error && <ErrorMsg error={data.error} />}
+        <div className="flex">
+          <Btn type="submit" name="사진 저장" loading={avatarLoading} />
+          <Btn
+            type="button"
+            name="나중에 설정"
+            onClick={() => router.replace('/user/login')}
+          />
+        </div>
+      </Form>
+    </JoinCont>
   );
 };
-const Container = styled(FormCont)`
-  form {
-    .avatar-label {
-      display: block;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .avatar-input {
-      display: none;
-    }
-    .btn-wrap {
-      gap: 8px;
-      button {
-        width: 100%;
-      }
-    }
+const AvatarLabel = styled.label`
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  input {
+    display: none;
   }
 `;

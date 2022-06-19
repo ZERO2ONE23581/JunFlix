@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import Link from 'next/link';
+import styled from '@emotion/styled';
 
 interface ILinkWrap {
   isJoin?: boolean;
@@ -37,15 +37,14 @@ export const LinkWrap = ({ isJoin, isLogin }: ILinkWrap) => {
   );
 };
 const Cont = styled.article`
-  opacity: 0.8;
-  padding: 15px;
+  padding: 13px;
   margin-top: 15px;
-  font-size: 0.9rem;
+  font-weight: 500;
+  font-size: 1.1rem;
   border-radius: 5px;
-  border: ${(p) => p.theme.border};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
   color: ${(p) => p.theme.color.bg};
-  background-color: ${(p) => p.theme.color.font};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background-color: ${(p) => p.theme.color.btn};
   nav {
     gap: 12px;
     display: flex;

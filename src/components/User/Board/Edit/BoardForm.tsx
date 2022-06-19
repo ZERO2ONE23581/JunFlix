@@ -7,7 +7,7 @@ import { Btn } from '../../../Style/Button';
 import { IBoardForm } from '../../../../types/board';
 import { MutationRes } from '../../../../types/mutation';
 import useMutation from '../../../../libs/client/useMutation';
-import { MovieGenreOption } from '../../../Style/GenreOption';
+import { MovieGenreOption } from '../../../Style/Input/Option';
 import {
   Errors,
   Form,

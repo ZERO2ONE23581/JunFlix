@@ -15,8 +15,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <SWRConfig
       value={{ fetcher: (url: string) => fetch(url).then((res) => res.json()) }}
     >
-      <ThemeProvider theme={theme ? lightTheme : darkTheme}>
-        <Layout onClick={toggleTheme} btnName={theme ? 'DARK' : 'LIGHT'}>
+      {/* <ThemeProvider theme={theme ? lightTheme : darkTheme}> */}
+      <ThemeProvider theme={theme ? darkTheme : lightTheme}>
+        <Layout onClick={toggleTheme} btnName={theme ? 'Dark' : 'Light'}>
           <Component {...pageProps} />
         </Layout>
       </ThemeProvider>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import { FindPageCont } from './user_id';
 import { FormCont, ModalClose } from '../../../../styles/global';
-import { LinkWrap } from '../../../../src/components/Style/LinkWrap';
+import { LinkWrap } from '../../../../src/components/Style/Button/Link';
 import { VerifyTokenForm } from '../../../../src/components/User/Login/Verify/TokenForm';
 import { FindUserInfoModal } from '../../../../src/components/User/Login/Find/UserInfo';
 import { VerifyPasswordForm } from '../../../../src/components/User/Login/Verify/PasswordForm';

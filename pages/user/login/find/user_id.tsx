@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { LinkWrap } from '../../../../src/components/Style/LinkWrap';
+import { LinkWrap } from '../../../../src/components/Style/Button/Link';
 import { FormCont, ModalClose, Page } from '../../../../styles/global';
 import { VerifyTokenForm } from '../../../../src/components/User/Login/Verify/TokenForm';
 import { VerifyEmailForm } from '../../../../src/components/User/Login/Verify/EmailForm';

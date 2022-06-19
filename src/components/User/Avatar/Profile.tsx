@@ -22,6 +22,7 @@ export const ProfileAvatar = ({ url, preview, size }: IAvatarProps) => {
 const Cont = styled.article<{ size: number | undefined }>`
   position: relative;
   overflow: hidden;
+  border: ${(p) => p.theme.border};
   border-radius: 100%;
   display: flex;
   align-items: center;

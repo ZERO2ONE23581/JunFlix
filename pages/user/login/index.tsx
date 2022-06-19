@@ -8,7 +8,7 @@ import { MutationRes } from '../../../src/types/mutation';
 import { Btn } from '../../../src/components/Style/Button';
 import { Title } from '../../../src/components/Layout/Title';
 import useMutation from '../../../src/libs/client/useMutation';
-import { LinkWrap } from '../../../src/components/Style/LinkWrap';
+import { LinkWrap } from '../../../src/components/Style/Button/Link';
 import { Errors, Form, FormCont, Input, Page } from '../../../styles/global';
 
 const Login: NextPage = () => {

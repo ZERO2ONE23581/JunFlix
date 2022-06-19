@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { MutationRes } from './mutation';
 
 export interface IJoinRes {
@@ -5,11 +6,13 @@ export interface IJoinRes {
   error?: string;
 }
 export interface IJoinFormProps {
-  confirmId: boolean;
-  joinSuccess: boolean;
-  UserId: string;
-  setJoinSuccess: any;
-  setCreatedID: any;
+  savedUserID: string;
+  setCreatedID: Dispatch<SetStateAction<number>>;
+  setOpenCreateAvatar: Dispatch<SetStateAction<boolean>>;
+}
+export interface IUserIdCheckProps {
+  setOpenCreateUser: Dispatch<SetStateAction<boolean>>;
+  setSavedUserID?: Dispatch<SetStateAction<string>> | any;
 }
 export interface IJoinForm {
   userId: string;
@@ -24,11 +27,7 @@ export interface IJoinFormRes extends MutationRes {
 export interface IUserIdCheckForm {
   userId: string;
 }
-export interface IUserIdCheckProps {
-  confirmId: boolean;
-  setConfirmId: any;
-  setUserId: any;
-}
+
 export interface IUserIdCheckRes extends MutationRes {
   userId?: string;
 }
