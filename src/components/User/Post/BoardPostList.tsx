@@ -1,27 +1,26 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { IGetLikes } from '../../../types/likes';
+import { Post } from '@prisma/client';
+import { useRouter } from 'next/router';
 import { ThumnailAvatar } from '../Avatar/Thumnail';
 import { PostListIconWrap } from './PostListIconWrap';
-import { IGetAllPosts, IPostListProps } from '../../../types/post';
 
-export const PostList = ({
-  isAllPosts,
-  isMyPosts,
-  findLikes,
-}: IPostListProps) => {
-  const { data } = useSWR<IGetAllPosts>(
-    isAllPosts ? `/api/user/all/posts` : isMyPosts && `/api/user/my/posts`
-  );
-  const { data: LikeData } = useSWR<IGetLikes>(
-    findLikes && `/api/user/my/likes`
+interface IGetBoardPost {
+  posts: Post[];
+}
+
+export const BoardPostList = () => {
+  const router = useRouter();
+  const { user_id, board_id } = router.query;
+  const queryId = user_id && board_id;
+  const { data } = useSWR<IGetBoardPost>(
+    queryId && `/api/user/${user_id}/board/${board_id}/post`
   );
   const posts = data?.posts;
-  const likes = LikeData?.postlikes;
   return (
     <Cont>
-      <h1>{isAllPosts ? 'All Posts' : isMyPosts ? 'Posts' : null}</h1>
+      <h1>Posts</h1>
       <Grid>
         {posts?.map((post) => (
           <Link
@@ -35,16 +34,6 @@ export const PostList = ({
                 board_id={post.BoardID}
                 post_id={post.id}
               />
-            </a>
-          </Link>
-        ))}
-        {likes?.map((like) => (
-          <Link
-            key={like.id}
-            href={`/user/${like.post.UserID}/board/${like.post.BoardID}/post/${like.post.id}`}
-          >
-            <a>
-              <ThumnailAvatar url={like.post.avatar} />
             </a>
           </Link>
         ))}
@@ -63,7 +52,7 @@ const Cont = styled.section`
 const Grid = styled.article`
   gap: 20px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   a {
     position: relative;
   }

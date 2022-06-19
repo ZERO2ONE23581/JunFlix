@@ -1,8 +1,7 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import useUser from '../../../libs/client/useUser';
-import { EmptyLikeIcon, SolidLikeIcon } from '../../Style/Svg/\bLikes';
-import { EmptyCommentIcon, SolidCommentIcon } from '../../Style/Svg/Comments';
+import { CommentIcon, IsMyIcon, LikesIcon } from '../../Style/Svg';
 
 interface IIsMyPostProps {
   user_id: number;
@@ -25,9 +24,13 @@ export const PostListIconWrap = ({
   return (
     <Cont>
       <ul>
-        <li>{isOwner ? <IsOwnerTrue className="owner-icon" /> : null}</li>
-        <li>{isLiked ? <SolidLikeIcon /> : <EmptyLikeIcon />}</li>
-        <li>{isComment ? <SolidCommentIcon /> : <EmptyCommentIcon />}</li>
+        <li>{isOwner ? <IsMyIcon /> : null}</li>
+        <li className="like">
+          {isLiked ? <LikesIcon solid /> : <LikesIcon empty />}
+        </li>
+        <li className="cmt">
+          {isComment ? <CommentIcon solid /> : <CommentIcon empty />}
+        </li>
       </ul>
     </Cont>
   );
@@ -37,9 +40,19 @@ const Cont = styled.div`
   top: 5px;
   right: 5px;
   ul {
-    gap: 3px;
+    gap: 10px;
     display: flex;
     align-items: center;
+    .like {
+      svg {
+        fill: ${(p) => p.theme.color.logo};
+      }
+    }
+    .cmt {
+      svg {
+        fill: whitesmoke;
+      }
+    }
   }
 `;
 const IsOwnerTrue = styled.div`

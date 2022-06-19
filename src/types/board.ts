@@ -7,13 +7,18 @@ export interface IBoardForm {
   avatar?: FileList;
 }
 export interface IGetBoard {
-  ok: boolean;
+  ok?: boolean;
   error?: string;
-  board?: BoardWithUserAndPost;
+  board?: IBoardWithAttrs;
 }
-export interface BoardWithUserAndPost extends Board {
+export interface IBoardWithAttrs extends Board {
   user: User;
   posts: Post[];
+  followers: FollowingWithUser[];
+  _count: {
+    posts: number;
+    followers: number;
+  };
 }
 export interface IPostListProps {
   posts: Post[];

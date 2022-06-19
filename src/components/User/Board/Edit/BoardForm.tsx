@@ -156,32 +156,6 @@ const Cont = styled.article`
   padding: 20px 50px;
   form {
     margin-top: 30px;
-    gap: 30px;
-    .label-input-wrap {
-      .avatar-label {
-        position: relative;
-      }
-      .avatar-input {
-        display: none;
-      }
-      position: relative;
-      label {
-        position: absolute;
-        top: -20px;
-        left: 20px;
-        font-size: 1.2rem;
-        font-weight: 500;
-        z-index: 99;
-        padding: 5px;
-        display: block;
-        background-color: ${(p) => p.theme.color.bg};
-      }
-      input,
-      textarea,
-      select {
-        width: 100%;
-      }
-    }
   }
   .btn-wrap {
     button {

@@ -8,7 +8,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user_id, board_id, post_id } = req.query;
   const queryExists = Boolean(user_id && board_id && post_id);
   if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR' });
-  //
   const post = await client.post.findUnique({
     where: { id: +post_id.toString() },
     include: {

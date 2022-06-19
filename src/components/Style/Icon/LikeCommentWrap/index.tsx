@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { CommentIcon } from '../Comment';
-import { LikesIcon } from '../Likes';
+import { CommentIconBtn } from '../Comment';
+import { LikesIconBtn } from '../Likes';
 
 export const LikeCommentWrap = ({ type, userId, reviewId }: any) => {
   return (
@@ -8,14 +8,14 @@ export const LikeCommentWrap = ({ type, userId, reviewId }: any) => {
       <IconWrap>
         {type === 'post' && (
           <>
-            <LikesIcon type="post" />
-            <CommentIcon type="post" />
+            <LikesIconBtn type="post" />
+            <CommentIconBtn type="post" />
           </>
         )}
         {type === 'review' && (
           <>
-            <LikesIcon type="review" userId={userId} reviewId={reviewId} />
-            <CommentIcon type="review" userId={userId} reviewId={reviewId} />
+            <LikesIconBtn type="review" userId={userId} reviewId={reviewId} />
+            <CommentIconBtn type="review" userId={userId} reviewId={reviewId} />
           </>
         )}
       </IconWrap>

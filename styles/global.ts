@@ -24,19 +24,8 @@ export const FormCont = styled.section`
     justify-content: end;
   }
   h1 {
-    font-size: 1.4rem;
+    font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 20px;
-  }
-  h2 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-  h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 20px;
   }
 `;
 export const Form = styled.form`
@@ -44,8 +33,32 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  label {
-    display: none;
+  gap: 30px;
+  .label-input-wrap {
+    .avatar-label {
+      position: relative;
+    }
+    .avatar-input {
+      display: none;
+    }
+    position: relative;
+    label {
+      border-radius: 10px;
+      position: absolute;
+      top: -17px;
+      left: 20px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      z-index: 99;
+      padding: 5px 10px;
+      display: block;
+      background-color: ${(p) => p.theme.color.bg};
+    }
+    input,
+    textarea,
+    select {
+      width: 100%;
+    }
   }
   .info {
     width: 100%;

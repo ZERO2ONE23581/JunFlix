@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Post, Review } from '@prisma/client';
 import useMutation from '../../../../libs/client/useMutation';
-import { EmptyLikeIcon, SolidLikeIcon } from '../../Svg/\bLikes';
+import { LikesIcon } from '../../Svg';
 
 interface IGetPostWithCounts {
   ok: boolean;
@@ -31,7 +31,7 @@ interface CountsInReview extends Review {
     comments: number;
   };
 }
-export const LikesIcon = ({ type, userId, reviewId }: any) => {
+export const LikesIconBtn = ({ type, userId, reviewId }: any) => {
   const router = useRouter();
   const { user_id, board_id, post_id, review_id } = router.query;
   const isPost = Boolean(type === 'post') && user_id && board_id && post_id;
@@ -112,9 +112,9 @@ export const LikesIcon = ({ type, userId, reviewId }: any) => {
       <Cont>
         <IconBtn onClick={handleClick} isAllReivew={isAllReivew}>
           {data?.isLiked || reviewData?.isLiked ? (
-            <SolidLikeIcon />
+            <LikesIcon solid />
           ) : (
-            <EmptyLikeIcon />
+            <LikesIcon empty />
           )}
         </IconBtn>
         <Counts>

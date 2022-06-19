@@ -7,7 +7,7 @@ import {
   FollowedBoardIcon,
   UnFollowedBoardIcon,
 } from '../../../Style/Svg/FollowBoard';
-import { IsMyBoardIcon } from '../../../Style/Svg/IsMyBoard';
+import { IsMyIcon } from '../../../Style/Svg/IsMy';
 
 interface IIsFollowBoardProps {
   user_id?: number | null;
@@ -40,7 +40,7 @@ export const IsBoardFollowed = ({ user_id, board_id }: IIsFollowBoardProps) => {
     <Cont>
       {isOwner && (
         <div className="ismyboard">
-          <IsMyBoardIcon />
+          <IsMyIcon />
         </div>
       )}
       {isLoggedIn && (

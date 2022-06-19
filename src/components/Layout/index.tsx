@@ -15,11 +15,4 @@ const Cont = styled.section`
   font-size: 1.3rem;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
-  .children {
-    h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin: 15px auto;
-    }
-  }
 `;

@@ -2,8 +2,7 @@ import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Post, Review } from '@prisma/client';
-import { EmptyLikeIcon, SolidLikeIcon } from '../../Svg/\bLikes';
-import { EmptyCommentIcon, SolidCommentIcon } from '../../Svg/Comments';
+import { CommentIcon } from '../../Svg';
 
 interface IGetPostWithCounts {
   ok: boolean;
@@ -31,7 +30,7 @@ interface CountsInReview extends Review {
     comments: number;
   };
 }
-export const CommentIcon = ({ type, userId, reviewId }: any) => {
+export const CommentIconBtn = ({ type, userId, reviewId }: any) => {
   const router = useRouter();
   const { user_id, board_id, post_id, review_id } = router.query;
   const queryPost = user_id && board_id && post_id;
@@ -59,9 +58,9 @@ export const CommentIcon = ({ type, userId, reviewId }: any) => {
     <Cont>
       <Icon>
         {postData?.isComments || reviewData?.isComments ? (
-          <SolidCommentIcon />
+          <CommentIcon solid />
         ) : (
-          <EmptyCommentIcon />
+          <CommentIcon empty />
         )}
       </Icon>
       <Counts>

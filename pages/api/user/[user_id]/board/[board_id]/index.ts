@@ -11,18 +11,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const board = await client.board.findUnique({
     where: { id: +board_id.toString() },
     include: {
-      user: { select: { id: true, username: true } },
-      followers: {
-        select: {
-          id: true,
-          UserID: true,
-          BoardID: true,
-          user: { select: { id: true, username: true } },
-        },
-        orderBy: {
-          id: 'desc',
-        },
-      },
+      user: { select: { id: true, username: true, avatar: true } },
       posts: {
         select: {
           id: true,
@@ -30,6 +19,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           UserID: true,
           BoardID: true,
           avatar: true,
+        },
+        orderBy: {
+          id: 'desc',
+        },
+      },
+      followers: {
+        select: {
+          id: true,
+          UserID: true,
+          BoardID: true,
+          user: { select: { id: true, username: true } },
         },
         orderBy: {
           id: 'desc',

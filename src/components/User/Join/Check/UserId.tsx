@@ -34,8 +34,6 @@ export const CheckUserId = ({
       setUserId(data.userId);
     }
   }, [data, setConfirmId, setUserId]);
-
-  //
   return (
     <>
       {!confirmId && (
