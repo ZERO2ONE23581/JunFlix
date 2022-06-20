@@ -1,12 +1,19 @@
-import { useEffect } from 'react';
-import { Btn } from '../../../Style/Button';
+import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
+import { Btn } from '../../../Style/Button';
+import { ErrorMsg } from '../../../Style/ErrMsg';
+import { InputWrap } from '../../../Style/Input';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
 import { IFindForm, IFindPostRes } from '../../../../types/login';
-import { Errors, Form, Input } from '../../../../../styles/global';
-import { Cont } from './EmailForm';
+import { Form, Info, JoinCont } from '../../../../../styles/global';
 
-export const VerifyPasswordForm = ({ setOpenTokenForm }: any) => {
+interface IVerifyPasswordFormProps {
+  setOpenTokenForm: Dispatch<SetStateAction<boolean>>;
+}
+export const VerifyPasswordForm = ({
+  setOpenTokenForm,
+}: IVerifyPasswordFormProps) => {
   const [verifyUserId, { loading, data }] = useMutation<IFindPostRes>(
     `/api/user/login/verify/user_id`
   );
@@ -24,24 +31,26 @@ export const VerifyPasswordForm = ({ setOpenTokenForm }: any) => {
   }, [data, , setOpenTokenForm]);
   return (
     <Cont>
-      <h2>* Please type your ID for verification.</h2>
-      <h3>인증을 위하여 아이디를 입력해주세요.</h3>
+      <h1>Find Password</h1>
+      <h2>Step 1. Confirm User ID</h2>
       <Form onSubmit={handleSubmit(onValid)}>
-        <label htmlFor="userId" />
-        <Input
-          {...register('userId', {
-            required: '아이디를 입력해주세요.',
-          })}
+        <InputWrap
           type="text"
           id="userId"
-          name="userId"
-          placeholder="아이디를 입력하세요."
+          label="USER ID"
+          inputErrMsg={errors.userId?.message}
+          register={register('userId', {
+            required: '아이디를 입력해주세요.',
+          })}
         />
-        {errors.userId && <Errors>{errors.userId.message}</Errors>}
-        {data?.error && <Errors>{data?.error}</Errors>}
-
+        {data?.error && <ErrorMsg error={data.error} />}
         <Btn type="submit" name="아이디로 인증하기" loading={loading} />
+        <Info>
+          <span>* Please type your ID for verification.</span>
+          <span>* 인증을 위하여 아이디를 입력해주세요.</span>
+        </Info>
       </Form>
     </Cont>
   );
 };
+const Cont = styled(JoinCont)``;

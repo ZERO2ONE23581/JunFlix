@@ -15,17 +15,24 @@ export const FormCont = styled.article`
   h1 {
     font-weight: 700;
     font-size: 1.8rem;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
   }
 `;
 export const JoinCont = styled(FormCont)`
-  h2 {
-    font-weight: 500;
-    font-size: 1.3rem;
-    margin-bottom: 30px;
+  h2,
+  h3 {
     opacity: 0.8;
+    font-weight: 500;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+  h3 {
+    opacity: 0.6;
+    font-size: 1.3rem;
   }
 `;
+export const FindCont = styled(JoinCont)``;
+
 export const Form = styled.form`
   gap: 20px;
   display: flex;
@@ -47,7 +54,7 @@ export const Form = styled.form`
   }
 `;
 export const Info = styled.p`
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-style: italic;
   color: ${(p) => p.theme.color.logo};
   span {
@@ -63,39 +70,44 @@ export const Modal = styled.article`
   left: 50%;
   transform: translate(-50%, -50%);
   //
-  width: 300px;
-  height: 150px;
-  gap: 15px;
+  gap: 20px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
   //
+  padding: 40px;
   border-radius: 10px;
   border: ${(p) => p.theme.border};
   color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
   h1 {
-    font-size: 1.4rem;
+    font-size: 30px;
     font-weight: 700;
   }
   h2 {
-    font-size: 1.2rem;
+    opacity: 0.8;
+    font-size: 20px;
     font-weight: 600;
   }
   .btn-wrap {
     gap: 10px;
     display: flex;
     align-items: center;
+    button {
+      font-weight: 600;
+      width: 80px;
+      height: 40px;
+    }
   }
 `;
 export const ModalClose = styled.article`
-  background-color: rgba(0, 0, 0, 0.6);
-  position: absolute;
-  width: 100%;
-  height: 130vh;
   top: 0;
   left: 0;
   z-index: 2;
+  position: absolute;
+  width: 100%;
+  height: 130vh;
+  background-color: rgba(0, 0, 0, 0.7);
 `;

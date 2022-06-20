@@ -1,47 +1,61 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
-import { FindPageCont } from './user_id';
-import { FormCont, ModalClose } from '../../../../styles/global';
+import styled from '@emotion/styled';
+import { ModalClose, Page } from '../../../../styles/global';
+import { Title } from '../../../../src/components/Layout/Title';
 import { LinkWrap } from '../../../../src/components/Style/Button/Link';
 import { VerifyTokenForm } from '../../../../src/components/User/Login/Verify/TokenForm';
-import { FindUserInfoModal } from '../../../../src/components/User/Login/Find/UserInfo';
+import { FindUserInfoModal } from '../../../../src/components/User/Login/Find/UserInfoModal';
 import { VerifyPasswordForm } from '../../../../src/components/User/Login/Verify/PasswordForm';
 import { CreateNewPasswordForm } from '../../../../src/components/User/Login/Verify/Create/NewPasswordForm';
 
 const FindUserPassword: NextPage = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const [foundUserID, setFoundUserID] = useState('');
   const [openTokenForm, setOpenTokenForm] = useState(false);
   const [isTokenConfirm, setIsTokenConfirm] = useState(false);
-  const [foundUserID, setFoundUserID] = useState('');
-  const [openModal, setOpenModal] = useState(false);
   return (
     <>
-      <FindPageCont>
-        <article className="wrap">
-          <FormCont className="form-cont">
-            <h1>Find Password</h1>
-            {!openTokenForm && (
-              <VerifyPasswordForm setOpenTokenForm={setOpenTokenForm} />
-            )}
-            {openTokenForm && !isTokenConfirm && (
-              <VerifyTokenForm
-                setIsTokenConfirm={setIsTokenConfirm}
-                setFoundUserID={setFoundUserID}
-              />
-            )}
-            {isTokenConfirm && (
-              <CreateNewPasswordForm
-                userId={foundUserID}
-                setOpenModal={setOpenModal}
-              />
-            )}
-          </FormCont>
+      <Title title="비밀번호 찾기" />
+      <Cont>
+        <Wrapper>
+          {!openTokenForm && (
+            <VerifyPasswordForm setOpenTokenForm={setOpenTokenForm} />
+          )}
+          {openTokenForm && !isTokenConfirm && (
+            <VerifyTokenForm
+              setIsTokenConfirm={setIsTokenConfirm}
+              setFoundUserID={setFoundUserID}
+            />
+          )}
+          {isTokenConfirm && (
+            <CreateNewPasswordForm
+              userId={foundUserID}
+              setOpenModal={setOpenModal}
+            />
+          )}
           <LinkWrap isLogin />
-        </article>
-      </FindPageCont>
-      {openModal && <FindUserInfoModal isPassword />}
-      {openModal && <ModalClose />}
+        </Wrapper>
+      </Cont>
+      {openModal && (
+        <>
+          <ModalClose />
+          <FindUserInfoModal isPassword />
+        </>
+      )}
     </>
   );
 };
 
 export default FindUserPassword;
+
+const Cont = styled(Page)`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const Wrapper = styled.article`
+  margin: 0 auto;
+  max-width: 620px;
+`;

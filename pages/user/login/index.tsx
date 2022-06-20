@@ -9,13 +9,16 @@ import { Btn } from '../../../src/components/Style/Button';
 import { Title } from '../../../src/components/Layout/Title';
 import useMutation from '../../../src/libs/client/useMutation';
 import { LinkWrap } from '../../../src/components/Style/Button/Link';
-import { Errors, Form, FormCont, Input, Page } from '../../../styles/global';
+import { Form, FormCont, Info, Page } from '../../../styles/global';
+import { ErrorMsg } from '../../../src/components/Style/ErrMsg';
+import { InputWrap } from '../../../src/components/Style/Input';
 
 const Login: NextPage = () => {
   const router = useRouter();
   const [login, { loading, data }] =
     useMutation<MutationRes>(`/api/user/login`);
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
@@ -35,46 +38,39 @@ const Login: NextPage = () => {
     <>
       <Title title="로그인" />
       <Cont>
-        <section className="form-wrap">
+        <Wrapper>
           <FormCont>
             <h1>Login</h1>
             <Form onSubmit={handleSubmit(onValid)}>
-              <label htmlFor="userId" />
-              <Input
-                {...register('userId', {
+              <InputWrap
+                watch={watch('userId')}
+                id="userId"
+                type="text"
+                label="USER ID"
+                inputErrMsg={errors?.userId?.message}
+                register={register('userId', {
                   required: '아이디를 입력해주세요.',
                 })}
-                id="userId"
-                name="userId"
-                type="text"
-                placeholder="User ID"
               />
-              {errors.userId && <Errors>{errors.userId.message}</Errors>}
-
-              <label htmlFor="password" />
-              <Input
-                {...register('password', {
+              <InputWrap
+                watch={watch('password')}
+                id="password"
+                type="password"
+                label="Password"
+                inputErrMsg={errors?.password?.message}
+                register={register('password', {
                   required: '비밀번호를 입력해주세요.',
                 })}
-                id="password"
-                name="password"
-                type="password"
-                placeholder="Password"
               />
-              {errors.password && <Errors>{errors.password.message}</Errors>}
-
-              <span className="info">
-                * 아이디는 영어 소문자 대문자를 구분하지 않습니다.
-              </span>
-              {data?.error && <Errors>{data?.error}</Errors>}
-
-              <div className="btn-flex">
-                <Btn type="submit" name="로그인" loading={loading} />
-              </div>
+              {data?.error && <ErrorMsg error={data.error} />}
+              <Btn type="submit" name="로그인" loading={loading} />
+              <Info>
+                <span>* 아이디는 영어 소문자 대문자를 구분하지 않습니다.</span>
+              </Info>
             </Form>
           </FormCont>
           <LinkWrap isLogin />
-        </section>
+        </Wrapper>
       </Cont>
     </>
   );
@@ -90,4 +86,8 @@ const Cont = styled(Page)`
       width: 100%;
     }
   }
+`;
+const Wrapper = styled.article`
+  margin: 0 auto;
+  max-width: 620px;
 `;

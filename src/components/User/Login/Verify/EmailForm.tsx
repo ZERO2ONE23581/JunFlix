@@ -1,12 +1,19 @@
-import { useEffect } from 'react';
-import { Btn } from '../../../Style/Button';
+import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
+import { Btn } from '../../../Style/Button';
+import { InputWrap } from '../../../Style/Input';
+import { ErrorMsg } from '../../../Style/ErrMsg';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
 import { IFindForm, IFindPostRes } from '../../../../types/login';
-import { Errors, Form, Input } from '../../../../../styles/global';
-import styled from '@emotion/styled';
+import { Form, Info, JoinCont } from '../../../../../styles/global';
 
-export const VerifyEmailForm = ({ setOpenTokenForm }: any) => {
+interface IVerifyEmailFormProps {
+  setOpenTokenForm: Dispatch<SetStateAction<boolean>>;
+}
+export const VerifyEmailForm = ({
+  setOpenTokenForm,
+}: IVerifyEmailFormProps) => {
   const [verifyEmail, { loading, data }] = useMutation<IFindPostRes>(
     `/api/user/login/verify/email`
   );
@@ -24,33 +31,30 @@ export const VerifyEmailForm = ({ setOpenTokenForm }: any) => {
   }, [data, , setOpenTokenForm]);
   return (
     <Cont>
-      <h2>* Please type your email for verification.</h2>
-      <h3>인증을 위하여 이메일을 입력해주세요.</h3>
+      <h1>Find ID</h1>
+      <h2>Step 1. Confirm Email</h2>
       <Form onSubmit={handleSubmit(onValid)}>
-        <label htmlFor="email" />
-        <Input
-          {...register('email', {
+        <InputWrap
+          id="email"
+          type="text"
+          label="Email"
+          inputErrMsg={errors.email?.message}
+          register={register('email', {
             required: '이메일을 입력하세요.',
             pattern: {
               value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
               message: '이메일 형식이 올바르지 않습니다.',
             },
           })}
-          type="text"
-          id="email"
-          name="email"
-          placeholder="이메일을 입력하세요."
         />
-        {errors.email && <Errors>{errors.email.message}</Errors>}
-        {data?.error && <Errors>{data?.error}</Errors>}
-
+        {data?.error && <ErrorMsg error={data.error} />}
         <Btn type="submit" name="이메일로 인증하기" loading={loading} />
+        <Info>
+          <span>* Please type your email for verification.</span>
+          <span>* 인증을 위하여 이메일을 입력해주세요.</span>
+        </Info>
       </Form>
     </Cont>
   );
 };
-export const Cont = styled.article`
-  button {
-    width: 100%;
-  }
-`;
+const Cont = styled(JoinCont)``;

@@ -37,7 +37,7 @@ export const LinkWrap = ({ isJoin, isLogin }: ILinkWrap) => {
   );
 };
 const Cont = styled.article`
-  padding: 13px;
+  padding: 15px;
   margin-top: 15px;
   font-weight: 500;
   font-size: 1.1rem;

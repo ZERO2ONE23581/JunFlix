@@ -11,7 +11,7 @@ export interface ILoggedInUser {
 export interface IFindForm {
   email?: string;
   userId?: string;
-  tokenNum?: string;
+  token?: string;
   password?: string;
   confirmPassword?: string;
 }

@@ -5,13 +5,15 @@ import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { user } = req.session;
   const { username, userID, password, confirmPassword, email } = req.body;
   const isInputData = Boolean(userID && password && confirmPassword);
+  if (user) return res.json({ ok: false, error: '로그아웃 하셔야 합니다.' });
   if (!isInputData)
     return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
   if (Boolean(password !== confirmPassword))
     return res.json({ ok: false, error: '비밀번호가 일치하지 않습니다.' });
-  //
+
   if (email) {
     const EmailExists = Boolean(
       await client.user.findUnique({

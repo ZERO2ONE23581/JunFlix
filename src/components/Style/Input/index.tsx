@@ -43,7 +43,11 @@ export const InputWrap = ({
           onBlur={handleBlur}
         />
       </div>
-      {inputErrMsg && <ErrorMsg error={inputErrMsg} />}
+      {inputErrMsg && (
+        <div style={{ marginTop: '20px' }}>
+          <ErrorMsg error={inputErrMsg} />
+        </div>
+      )}
     </Cont>
   );
 };
