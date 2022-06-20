@@ -3,9 +3,9 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { IGetBoards } from '../../../types/board';
 import { ThumnailAvatar } from '../Avatar/Thumnail';
-import { FollowBoard } from './Follow/FollowBoard';
-import useUser from '../../../libs/client/useUser';
 import { IsBoardFollowed } from './Follow/IsBoardFollowed';
+import { useRouter } from 'next/router';
+import useUser from '../../../libs/client/useUser';
 
 export interface IBoardListProps {
   isAllBoards?: boolean;
@@ -17,70 +17,86 @@ export const BoardList = ({
   isMyBoards,
   isSelect,
 }: IBoardListProps) => {
-  const { data } = useSWR<IGetBoards>(
-    isAllBoards
-      ? `/api/user/all/boards`
-      : isMyBoards
-      ? `/api/user/my/boards`
-      : null
-  );
+  const { isLoggedIn, loggedInUser } = useUser();
+  const typeSelect = (type: string) => {
+    if (type === 'data') {
+      if (isAllBoards) return `/api/user/all/boards`;
+      if (isLoggedIn && isMyBoards) return `/api/user/my/boards`;
+    }
+    if (type === 'title') {
+      if (isAllBoards) return `All Boards`;
+      if (isLoggedIn && isMyBoards) return `${loggedInUser}'s Boards`;
+    }
+  };
+  const { data } = useSWR<IGetBoards>(typeSelect('data'));
   const boards = data?.boards;
   const BoardLink = (userId: number, boardId: number) => {
     if (isSelect) return `/user/${userId}/board/${boardId}/post/create`;
     return `/user/${userId}/board/${boardId}`;
   };
   return (
-    <>
-      <h1>All Boards</h1>
+    <Cont>
+      <h1>{typeSelect('title')}</h1>
       <Grid>
         {boards?.map((board) => (
-          <article key={board.id}>
-            <Item>
-              <Link href={`${BoardLink(board.UserID, board.id)}`}>
-                <a>
-                  <ThumnailAvatar isBoard url={board.avatar} />
-                </a>
-              </Link>
-              <IsBoardFollowed user_id={board.UserID} board_id={board.id} />
-              <ul>
-                <li>
-                  <span>Title: </span>
-                  <span> {board.title.toUpperCase()}</span>
-                </li>
-                <li>
-                  <span>Genre: </span>
-                  <span> {board.genre}</span>
-                </li>
-                <li>
-                  <span>Made by: </span>
-                  <span> {board.user.username}</span>
-                </li>
-              </ul>
-            </Item>
-          </article>
+          <Board key={board.id}>
+            <Link href={`${BoardLink(board.UserID, board.id)}`}>
+              <a>
+                <ThumnailAvatar isBoard url={board.avatar} />
+              </a>
+            </Link>
+            <IsBoardFollowed user_id={board.UserID} board_id={board.id} />
+            <BoardInfo>
+              <li>
+                <span className="title">{board.title.toUpperCase()}</span>
+              </li>
+              <li>
+                <span>Genre:</span>
+                <span>{board.genre}</span>
+              </li>
+              <li>
+                <span>Made by </span>
+                <span>{board.user.username}</span>
+              </li>
+            </BoardInfo>
+          </Board>
         ))}
       </Grid>
-    </>
+    </Cont>
   );
 };
+const Cont = styled.section`
+  h1 {
+    margin: 20px;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-left: 20px;
+    color: ${(p) => p.theme.color.logo};
+  }
+`;
 const Grid = styled.article`
   gap: 20px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 `;
-const Item = styled.div`
+const Board = styled.article`
+  overflow: hidden;
   border-radius: 5px;
-  border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  ul {
-    padding: 8px 20px;
-    li {
-      border-bottom: 1px dotted ${(p) => p.theme.color.font};
-      padding-bottom: 2px;
-      margin-bottom: 4px;
-      span {
-        font-size: 1rem;
-      }
+`;
+const BoardInfo = styled.ul`
+  padding: 15px 20px;
+  li {
+    margin-bottom: 3px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted ${(p) => p.theme.color.font};
+    span {
+      font-size: 1rem;
+      margin-right: 5px;
+    }
+    .title {
+      font-weight: 600;
+      font-size: 1.1rem;
     }
   }
 `;

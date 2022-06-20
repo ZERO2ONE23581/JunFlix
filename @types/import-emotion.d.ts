@@ -14,5 +14,8 @@ declare module '@emotion/react' {
       nav: string;
       input: string;
     };
+    svg: {
+      calendar: string;
+    };
   }
 }

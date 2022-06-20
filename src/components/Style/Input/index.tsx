@@ -3,11 +3,12 @@ import { ErrorMsg } from '../ErrMsg';
 import styled from '@emotion/styled';
 import { UseFormRegisterReturn, UseWatchProps } from 'react-hook-form';
 
-interface IInputWrap {
+export interface IInputWrapProps {
   id: string;
   label: string;
   type?: string;
   watch?: string;
+  placeholder?: string;
   children?: any;
   isValue?: boolean;
   isSelect?: boolean;
@@ -16,36 +17,32 @@ interface IInputWrap {
   register: UseFormRegisterReturn;
 }
 export const InputWrap = ({
-  children,
-  isSelect,
   id,
   type,
   label,
   watch,
-  disabled,
-  inputErrMsg,
-  register,
   isValue,
-}: IInputWrap) => {
+  children,
+  isSelect,
+  disabled,
+  register,
+  inputErrMsg,
+}: IInputWrapProps) => {
   const [isFocus, setIsFocus] = useState(false);
   const handleBlur = () => {
     if (inputErrMsg) return;
     if (watch) return;
     setIsFocus(false);
   };
-  const labelStyle = Boolean(id === 'birth' || id === 'gender');
+  const isLabelChange = Boolean(
+    isFocus || disabled || isValue || type === 'date'
+  );
   return (
     <Cont>
       <div className="wrap">
-        <Label
-          labelStyle={labelStyle}
-          isValue={isValue}
-          disabled={disabled}
-          isFocus={isFocus}
-          htmlFor={id}
-        >
+        <InputLabel htmlFor={id} isChange={isLabelChange}>
           {label}
-        </Label>
+        </InputLabel>
         {!isSelect && !children && (
           <Input
             {...register}
@@ -57,22 +54,9 @@ export const InputWrap = ({
             onBlur={handleBlur}
           />
         )}
-        {isSelect && children && (
-          <Select
-            as="select"
-            {...register}
-            id={id}
-            name={id}
-            disabled={disabled}
-            onFocus={() => setIsFocus(true)}
-            onBlur={handleBlur}
-          >
-            {children}
-          </Select>
-        )}
       </div>
       {inputErrMsg && (
-        <div style={{ marginTop: '20px' }}>
+        <div className="error">
           <ErrorMsg error={inputErrMsg} />
         </div>
       )}
@@ -84,33 +68,37 @@ const Cont = styled.article`
   .wrap {
     position: relative;
   }
+  .error {
+    margin-top: 20px;
+  }
+  input[type='date']::-webkit-calendar-picker-indicator {
+    background-color: white;
+  }
 `;
-const Label = styled.label<{
-  isFocus: boolean;
-  labelStyle: boolean;
-  isValue?: boolean;
-  disabled?: boolean;
-}>`
-  transform: translate(10px, -50%);
-  position: absolute;
-  z-index: 99;
+export const Label = styled.label<{ isChange: boolean }>`
+  top: 0;
   left: 10px;
-  top: 50%;
-  top: ${(p) => (p.isFocus || p.disabled || p.isValue) && 0};
-  //
-  width: ${(p) => p.labelStyle && !p.isFocus && !p.isValue && '85%'};
-  padding: 0 10px;
-  padding: ${(p) => p.labelStyle && !p.isFocus && !p.isValue && '10px'};
+  z-index: 99;
   border: none;
-  border-radius: 5px;
+  padding: 0 10px;
   font-weight: 500;
+  position: absolute;
+  border-radius: 5px;
   font-size: 1.3rem;
-  font-size: ${(p) => (p.isFocus || p.disabled || p.isValue) && '1rem'};
-  color: #636e72;
-  color: ${(p) => (p.isFocus || p.disabled || p.isValue) && p.theme.color.logo};
+  text-align: center;
+  transform: translate(10px, -50%);
+  background-color: ${(p) => p.theme.color.bg};
+  color: ${(p) => (p.isChange ? p.theme.color.logo : '#636e72')};
+`;
+export const InputLabel = styled(Label)<{ isChange: boolean }>`
+  text-align: start;
+  top: 50%;
+  top: ${(p) => p.isChange && 0};
+  font-size: ${(p) => p.isChange && '1rem'};
+  text-align: ${(p) => p.isChange && 'center'};
   background-color: ${(p) => p.theme.color.bg};
 `;
-const Input = styled.input`
+export const Input = styled.input<{ isDate?: boolean }>`
   width: 100%;
   border: none;
   padding: 15px 20px;
@@ -126,24 +114,5 @@ const Input = styled.input`
   &:focus {
     border: none;
     outline: 2.5px solid ${(p) => p.theme.color.logo};
-  }
-`;
-const Select = styled(Input)``;
-
-const TextArea = styled.textarea`
-  height: 100px;
-  color: black;
-  font-size: 1rem;
-  padding: 20px;
-  border-radius: 5px;
-  border: ${(p) => p.theme.border};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  &::placeholder {
-    font-size: 1rem;
-    color: black;
-    font-style: italic;
-  }
-  &:focus {
-    outline: 3px solid ${(p) => p.theme.color.logo};
   }
 `;

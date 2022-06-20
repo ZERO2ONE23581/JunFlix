@@ -1,21 +1,18 @@
 import styled from '@emotion/styled';
 import { Board } from '@prisma/client';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  Errors,
-  Form,
-  FormCont,
-  Input,
-  Select,
-  TextArea,
-} from '../../../../../styles/global';
-import useMutation from '../../../../libs/client/useMutation';
-import { IBoardForm } from '../../../../types/board';
+import { useEffect, useState } from 'react';
 import { Btn } from '../../../Style/Button';
-import { MovieGenreOption } from '../../../Style/Input/Option';
-import { AddBoardAvatarIcon } from '../../../Style/Svg/BoardAvatar';
+import { IBoardForm } from '../../../../types/board';
+import useMutation from '../../../../libs/client/useMutation';
+import { InputWrap } from '../../../Style/Input';
+import { ErrorMsg } from '../../../Style/ErrMsg';
+import { AvatarLabel } from '../../Avatar/Profile';
+import { TextAreaWrap } from '../../../Style/Input/TextArea';
+import { BoardAvatarIcon } from '../../../Style/Svg/BoardAvatar';
+import { Form, FormCont, Info } from '../../../../../styles/global';
+import { SelectWrap } from '../../../Style/Input/SelectWrap';
 
 interface ICreateBoardRes {
   ok: boolean;
@@ -36,6 +33,7 @@ export const CreateBoardForm = ({ setPreview }: any) => {
   } = useForm<IBoardForm>({ mode: 'onSubmit' });
   const avatar = watch('avatar');
   const [avatarLoading, setAvatarLoading] = useState(false);
+
   const onValid = async ({ title, intro, genre, avatar }: IBoardForm) => {
     const Title = title.toUpperCase();
     setAvatarLoading((p) => !p);
@@ -73,92 +71,71 @@ export const CreateBoardForm = ({ setPreview }: any) => {
     <>
       <Cont>
         <h1>Create Board</h1>
-        <BoardForm onSubmit={handleSubmit(onValid)}>
+        <Form onSubmit={handleSubmit(onValid)}>
           <div className="flex">
-            <div>
-              <h2>Click the icon beside to add Background.</h2>
-              <h3>보드의 배경을 추가하려면 아이콘을 클릭하세요.</h3>
-            </div>
-            <label htmlFor="avatar" className="avatar">
-              <AddBoardAvatarIcon />
-            </label>
+            <InputWrap
+              type="text"
+              id="title"
+              label="Title"
+              watch={watch('title')}
+              inputErrMsg={errors.title?.message}
+              register={register('title', {
+                required: '생성하실 보드의 제목을 입력하세요.',
+                maxLength: {
+                  value: 30,
+                  message: '보드제목은 30자 이내여야 합니다.',
+                },
+              })}
+            />
+            <Avatar htmlFor="avatar">
+              <BoardAvatarIcon />
+              <input
+                {...register('avatar')}
+                id="avatar"
+                name="avatar"
+                type="file"
+                accept="image/*"
+              />
+            </Avatar>
           </div>
-          <Input
-            {...register('avatar')}
-            type="file"
-            id="avatar"
-            name="avatar"
-            className="avatar-input"
+          <SelectWrap
+            id="genre"
+            label="Movie Genre"
+            watch={watch('genre')}
+            register={register('genre')}
+            inputErrMsg={errors.genre?.message}
           />
-          {errors.avatar && <Errors>{errors.avatar?.message}</Errors>}
-
-          <label htmlFor="title" />
-          <Input
-            {...register('title', {
-              required: '생성하실 보드의 제목을 입력하세요.',
-              maxLength: {
-                value: 30,
-                message: '보드제목은 30자 이내여야 합니다.',
-              },
-            })}
-            type="text"
-            id="title"
-            name="title"
-            placeholder="생성하실 보드의 제목을 입력하세요."
-          />
-
-          <label htmlFor="genre" />
-          <Select {...register('genre')} id="genre" name="genre">
-            <MovieGenreOption />
-          </Select>
-          {errors.genre && <Errors>{errors.genre.message}</Errors>}
-
-          <label htmlFor="intro" />
-          <TextArea
-            {...register('intro', {
+          <TextAreaWrap
+            id="intro"
+            label="Intro"
+            watch={watch('intro')}
+            inputErrMsg={errors.intro?.message}
+            placeholder="이 보드의 소개글을 작성해주세요."
+            register={register('intro', {
               maxLength: {
                 value: 100,
                 message: '소개글은 100자 이내여야 합니다.',
               },
             })}
-            id="intro"
-            name="intro"
-            placeholder="보드에 대한 소개글을 작성해 보세요."
           />
-          {errors.intro && <Errors>{errors.intro?.message}</Errors>}
-
-          {data?.error && <Errors>{data?.error}</Errors>}
+          {data?.error && <ErrorMsg error={data.error} />}
+          {errors.avatar && <ErrorMsg error={errors.avatar.message} />}
           <Btn type="submit" name="나의 보드 만들기" loading={avatarLoading} />
-        </BoardForm>
+          <Info>
+            <span>* Click the icon beside to add Background.</span>
+            <span>* 보드의 배경을 추가하려면 아이콘을 클릭하세요.</span>
+            <span>* 소개글은 100자 이내여야 합니다.</span>
+          </Info>
+        </Form>
       </Cont>
     </>
   );
 };
-
 const Cont = styled(FormCont)`
-  width: 540px;
-  padding: 30px 50px;
-  h2 {
-    font-size: 1.2 rem;
+  form {
+    gap: 25px;
   }
 `;
-const BoardForm = styled(Form)`
-  .flex {
-    margin-top: 10px;
-    align-items: flex-start;
-    .avatar {
-      cursor: pointer;
-      display: block;
-      width: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-  .avatar-input {
-    display: none;
-  }
-  button {
-    width: 100%;
-  }
+const Avatar = styled(AvatarLabel)`
+  /* border: 3px solid white; */
 `;

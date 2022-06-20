@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../../Style/Button';
 import { ErrorMsg } from '../../../Style/ErrMsg';
-import { ProfileAvatar } from '../../Avatar/Profile';
+import { AvatarLabel, ProfileAvatar } from '../../Avatar/Profile';
 import { MutationRes } from '../../../../types/mutation';
 import useMutation from '../../../../libs/client/useMutation';
 import { Form, Info, JoinCont } from '../../../../../styles/global';
@@ -98,12 +98,3 @@ export const CreateProfileAvatar = ({
     </JoinCont>
   );
 };
-const AvatarLabel = styled.label`
-  display: block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  input {
-    display: none;
-  }
-`;

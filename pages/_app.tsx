@@ -8,15 +8,16 @@ import { darkTheme, lightTheme } from '../styles/theme';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState(true);
-  const toggleTheme = () => {
-    setTheme((p) => !p);
+  const Fetcher = {
+    fetcher: (url: string) => fetch(url).then((res) => res.json()),
   };
   return (
-    <SWRConfig
-      value={{ fetcher: (url: string) => fetch(url).then((res) => res.json()) }}
-    >
+    <SWRConfig value={Fetcher}>
       <ThemeProvider theme={theme ? darkTheme : lightTheme}>
-        <Layout onClick={toggleTheme} btnName={theme ? 'Dark' : 'Light'}>
+        <Layout
+          onClick={() => setTheme((p) => !p)}
+          btnName={theme ? 'Dark' : 'Light'}
+        >
           <Component {...pageProps} />
         </Layout>
       </ThemeProvider>

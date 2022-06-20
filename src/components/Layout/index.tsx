@@ -1,8 +1,15 @@
 import { Footer } from './Footer';
 import styled from '@emotion/styled';
 import { Header } from './Header/Header';
+import { ReactElement } from 'react';
 
-export const Layout = ({ children, onClick, btnName }: any) => {
+interface ILayoutProps {
+  btnName: string;
+  onClick: () => void;
+  children: ReactElement;
+}
+
+export const Layout = ({ children, onClick, btnName }: ILayoutProps) => {
   return (
     <Cont>
       <Header theme={btnName} themeClick={onClick} />

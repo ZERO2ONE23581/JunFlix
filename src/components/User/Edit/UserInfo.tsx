@@ -9,6 +9,7 @@ import { MutationRes } from '../../../types/mutation';
 import { IEditProfileProps } from '../../../types/user';
 import { Form, FormCont } from '../../../../styles/global';
 import useMutation from '../../../libs/client/useMutation';
+import { SelectWrap } from '../../Style/Input/SelectWrap';
 
 interface IEditUserInfoForm {
   username?: string;
@@ -19,7 +20,6 @@ interface IEditUserInfoForm {
   location?: string;
   NoInputError?: string;
 }
-
 export const EditUserInfo = ({ user }: IEditProfileProps) => {
   const router = useRouter();
   const [editUserInfo, { loading, data }] = useMutation<MutationRes>(
@@ -122,21 +122,14 @@ export const EditUserInfo = ({ user }: IEditProfileProps) => {
           />
         </div>
         <div className="flex">
-          <InputWrap
-            isSelect
+          <SelectWrap
             id="gender"
             label="Gender"
             watch={watch('gender')}
             isValue={isValue('gender')}
             register={register('gender')}
             inputErrMsg={errors.gender?.message}
-          >
-            <>
-              <option value="">성별을 선택해주세요.</option>
-              <option value="male">남</option>
-              <option value="female">여</option>
-            </>
-          </InputWrap>
+          />
           <InputWrap
             id="location"
             type="text"

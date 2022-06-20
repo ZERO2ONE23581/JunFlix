@@ -1,7 +1,11 @@
 import styled from '@emotion/styled';
 
+export const LayoutPage = styled.section`
+  font-weight: 600;
+  padding: 10px 8%;
+`;
 export const Page = styled.section`
-  padding: 0 15%;
+  padding: 0 8%;
   font-size: 1.2rem;
   padding-bottom: 20px;
   color: ${(p) => p.theme.color.font};
@@ -11,7 +15,9 @@ export const FormCont = styled.article`
   padding: 30px 40px;
   border-radius: 8px;
   border: ${(p) => p.theme.border};
+  color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background-color: ${(p) => p.theme.color.bg};
   h1 {
     font-weight: 700;
     font-size: 1.8rem;
@@ -108,7 +114,7 @@ export const Modal = styled.article`
 export const ModalClose = styled.article`
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 992;
   position: absolute;
   width: 100%;
   height: 130vh;

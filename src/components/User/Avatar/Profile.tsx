@@ -34,3 +34,13 @@ const Cont = styled.article<{ size: number | undefined }>`
     height: 100%;
   }
 `;
+export const AvatarLabel = styled.label`
+  cursor: pointer;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  input {
+    display: none;
+  }
+`;

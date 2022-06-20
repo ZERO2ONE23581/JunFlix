@@ -3,15 +3,23 @@ import styled from '@emotion/styled';
 import { Btn } from '../../Style/Button';
 import { ProfileNav } from './My/ProfileNav';
 import { MainNavBar } from './Nav/MainNavBar';
-import { ModalClose } from '../../../../styles/global';
+import { LayoutPage, ModalClose } from '../../../../styles/global';
+import { Logo } from './Nav/Logo';
 
-export const Header = ({ theme, themeClick }: any) => {
+interface IHeaderProps {
+  theme: string;
+  themeClick: () => void;
+}
+export const Header = ({ theme, themeClick }: IHeaderProps) => {
   const [open, setOpen] = useState(false);
   return (
     <Cont>
       <div className="flex">
-        <MainNavBar />
-        <div className="usernav-bar-wrap">
+        <div className="flex logo">
+          <Logo />
+          <MainNavBar />
+        </div>
+        <div className="flex profile">
           <ProfileNav open={open} setOpen={setOpen} />
           <Btn type="button" name={theme} onClick={themeClick} />
         </div>
@@ -20,9 +28,7 @@ export const Header = ({ theme, themeClick }: any) => {
     </Cont>
   );
 };
-const Cont = styled.section`
-  padding: 10px 15%;
-  font-weight: 700;
+const Cont = styled(LayoutPage)`
   margin-bottom: 5px;
   border-bottom: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
@@ -30,10 +36,10 @@ const Cont = styled.section`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .usernav-bar-wrap {
+    .logo,
+    .profile {
+      justify-content: start;
       gap: 40px;
-      display: flex;
-      align-items: center;
     }
   }
 `;
