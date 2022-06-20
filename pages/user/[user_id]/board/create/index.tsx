@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import type { NextPage } from 'next';
-import { CreateBoardForm } from '../../../../../src/components/User/Board/Create/BoardForm';
-import { Background } from '../../../../../src/components/User/Avatar/Background';
 import styled from '@emotion/styled';
+import type { NextPage } from 'next';
+import { PageWithBg } from '../../../../../styles/global';
 import { Title } from '../../../../../src/components/Layout/Title';
+import { BoardForm } from '../../../../../src/components/User/Board/Form';
 
 const CreateBoard: NextPage = () => {
   const [preview, setPreview] = useState('');
@@ -11,13 +11,14 @@ const CreateBoard: NextPage = () => {
     <>
       <Title title="보드생성" />
       <Cont bg={preview}>
-        <CreateBoardForm setPreview={setPreview} />
+        <BoardForm isCreate setPreview={setPreview} />
       </Cont>
     </>
   );
 };
 export default CreateBoard;
-const Cont = styled(Background)`
+
+const Cont = styled(PageWithBg)`
   display: flex;
   align-items: center;
   justify-content: center;

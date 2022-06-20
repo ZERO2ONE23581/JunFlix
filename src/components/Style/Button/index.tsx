@@ -17,6 +17,9 @@ export const Btn = ({ clicked, type, name, loading, onClick }: IBtnProps) => {
   );
 };
 const Button = styled.button<{ clicked: boolean | undefined }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   font-size: 1.1rem;
   border-radius: 5px;
@@ -24,7 +27,6 @@ const Button = styled.button<{ clicked: boolean | undefined }>`
   color: ${(p) => p.theme.color.bg};
   background-color: ${(p) =>
     p.clicked ? p.theme.color.logo : p.theme.color.btn};
-
   &:hover {
     color: white;
     background-color: ${(p) => p.theme.color.logo};

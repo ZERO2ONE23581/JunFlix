@@ -7,7 +7,6 @@ import { FollowingBoardAvatar } from '../Avatar/FollowingBoard';
 export const FollowingBoards = () => {
   const { data } = useSWR<IGetFollowInfo>(`/api/user/my/follow`);
   const following = data?.following;
-
   return (
     <Cont>
       <h1>Following Boards</h1>

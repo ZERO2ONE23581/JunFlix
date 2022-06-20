@@ -9,7 +9,6 @@ import { PostListIconWrap } from './PostListIconWrap';
 interface IGetBoardPost {
   posts: Post[];
 }
-
 export const BoardPostList = () => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
@@ -45,7 +44,7 @@ const Cont = styled.section`
   h1 {
     font-weight: 600;
     font-size: 1.4rem;
-    margin-bottom: 20px;
+    margin: 20px;
     text-align: center;
   }
 `;

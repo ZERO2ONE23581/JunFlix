@@ -1,11 +1,11 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { IGetBoards } from '../../../types/board';
-import { ThumnailAvatar } from '../Avatar/Thumnail';
-import { IsBoardFollowed } from './Follow/IsBoardFollowed';
+import { IGetBoards } from '../../../../types/board';
+import { ThumnailAvatar } from '../../Avatar/Thumnail';
+import { IsBoardFollowed } from '../Follow/IsBoardFollowed';
 import { useRouter } from 'next/router';
-import useUser from '../../../libs/client/useUser';
+import useUser from '../../../../libs/client/useUser';
 
 export interface IBoardListProps {
   isAllBoards?: boolean;

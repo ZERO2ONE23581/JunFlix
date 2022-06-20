@@ -1,4 +1,5 @@
 import { Board, Following, Post, User } from '@prisma/client';
+import { Dispatch, SetStateAction } from 'react';
 
 export interface IBoardForm {
   title: string;
@@ -39,4 +40,15 @@ export interface IGetExistingBoards {
   ok: boolean;
   error?: string;
   boards?: BoardWithUser[];
+}
+export interface IEditBoardFormProps {
+  setAvatar?: Dispatch<SetStateAction<string>> | any;
+  setPreview: any;
+  isEdit?: boolean;
+  isCreate?: boolean;
+}
+export interface IBoardFormRes {
+  ok: boolean;
+  error?: string;
+  board: Board;
 }

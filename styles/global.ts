@@ -11,18 +11,22 @@ export const Page = styled.section`
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
+
 export const FormCont = styled.article`
   padding: 30px 40px;
   border-radius: 8px;
   border: ${(p) => p.theme.border};
-  color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background-color: ${(p) => p.theme.color.bg};
   h1 {
     font-weight: 700;
     font-size: 1.8rem;
     margin-bottom: 25px;
   }
+`;
+
+export const BoardFormCont = styled(FormCont)`
+  color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
 `;
 export const JoinCont = styled(FormCont)`
   h2,
@@ -92,13 +96,13 @@ export const Modal = styled.article`
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
   h1 {
-    font-size: 30px;
     font-weight: 700;
+    font-size: 1.4rem;
   }
   h2 {
     opacity: 0.8;
-    font-size: 20px;
     font-weight: 600;
+    font-size: 1.2rem;
   }
   .btn-wrap {
     gap: 10px;
@@ -119,4 +123,11 @@ export const ModalClose = styled.article`
   width: 100%;
   height: 130vh;
   background-color: rgba(0, 0, 0, 0.7);
+`;
+export const PageWithBg = styled(Page)<{
+  bg?: string | boolean | null;
+}>`
+  height: 90vh;
+  background-color: black;
+  background: ${(p) => p.bg && `url(${p.bg})   center / cover no-repeat`};
 `;

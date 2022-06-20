@@ -32,6 +32,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     where: { id: foundBoard.id },
     data: { title: Title, genre, intro, avatar },
   });
-  return res.json({ ok: true, message: '보드가 수정되었습니다.' });
+  return res.json({ ok: true });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

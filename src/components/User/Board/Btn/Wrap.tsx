@@ -1,42 +1,38 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Btn } from '../../Style/Button';
+import { Btn } from '../../../Style/Button';
 
 interface IBoardBtnWrap {
-  openEdit: boolean;
   isMyBoard: boolean;
-  setOpenEdit: any;
   setOpenDelModal: any;
 }
-
-export const BoardBtnWrap = ({
-  openEdit,
-  isMyBoard,
-  setOpenEdit,
-  setOpenDelModal,
-}: IBoardBtnWrap) => {
+export const BoardBtnWrap = ({ isMyBoard, setOpenDelModal }: IBoardBtnWrap) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const [clickSetting, setClickSetting] = useState(false);
   return (
     <Cont>
-      <Btn
-        name="Boards"
-        type="button"
-        clicked={false}
-        onClick={() => router.push(`/user/all/boards`)}
-      />
+      {!clickSetting && (
+        <Btn
+          name="Boards"
+          type="button"
+          clicked={false}
+          onClick={() => router.push(`/user/all/boards`)}
+        />
+      )}
       {isMyBoard && (
         <>
-          <Btn
-            name="게시물 작성"
-            type="button"
-            clicked={false}
-            onClick={() => {
-              router.push(`/user/${user_id}/board/${board_id}/post/create`);
-            }}
-          />
+          {!clickSetting && (
+            <Btn
+              name="Post"
+              type="button"
+              clicked={false}
+              onClick={() => {
+                router.push(`/user/${user_id}/board/${board_id}/post/create`);
+              }}
+            />
+          )}
           <Btn
             name="Setting"
             type="button"
@@ -50,8 +46,9 @@ export const BoardBtnWrap = ({
           <Btn
             name="Edit"
             type="button"
-            clicked={openEdit}
-            onClick={() => setOpenEdit((p: boolean) => !p)}
+            onClick={() =>
+              router.push(`/user/${user_id}/board/${board_id}/edit`)
+            }
           />
           <Btn
             name="Delete"
@@ -65,10 +62,17 @@ export const BoardBtnWrap = ({
   );
 };
 const Cont = styled.article`
-  gap: 5px;
+  padding: 5px;
+  color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
+  gap: 15px;
   display: flex;
   align-items: center;
   button {
-    height: 40px;
+    width: 80px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 6px 10px;
+    border-radius: 3px;
   }
 `;
