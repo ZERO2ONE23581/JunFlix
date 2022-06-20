@@ -1,12 +1,15 @@
+import Link from 'next/link';
 import { useEffect } from 'react';
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { EditCont } from './UserId';
 import { Btn } from '../../Style/Button';
 import { useForm } from 'react-hook-form';
+import { ErrorMsg } from '../../Style/ErrMsg';
+import { InputWrap } from '../../Style/Input';
 import { MutationRes } from '../../../types/mutation';
-import useMutation from '../../../libs/client/useMutation';
 import { IEditProfileProps } from '../../../types/user';
-import { Errors, Form, Input } from '../../../../styles/global';
+import useMutation from '../../../libs/client/useMutation';
+import { Form, FormCont, Info } from '../../../../styles/global';
 
 interface IEditPasswordForm {
   password?: string;
@@ -16,11 +19,13 @@ interface IEditPasswordForm {
 export const EditUserPassword = ({ user }: IEditProfileProps) => {
   const router = useRouter();
   const {
+    watch,
     register,
     setError,
     handleSubmit,
     formState: { errors },
   } = useForm<IEditPasswordForm>({ mode: 'onBlur' });
+
   const onValid = ({
     password,
     newPassword,
@@ -43,24 +48,26 @@ export const EditUserPassword = ({ user }: IEditProfileProps) => {
     }
   }, [data, router]);
   return (
-    <EditCont>
+    <Cont>
       <h1>Edit Password</h1>
       <Form onSubmit={handleSubmit(onValid)}>
-        <label htmlFor="password" />
-        <Input
-          {...register('password', {
+        <InputWrap
+          watch={watch('password')}
+          id="password"
+          type="password"
+          label="Password"
+          inputErrMsg={errors.password?.message}
+          register={register('password', {
             required: '현재 비밀번호를 입력해주세요.',
           })}
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Password"
         />
-        {errors.password && <Errors>{errors.password.message}</Errors>}
-
-        <label htmlFor="newPassword" />
-        <Input
-          {...register('newPassword', {
+        <InputWrap
+          watch={watch('newPassword')}
+          id="newPassword"
+          type="password"
+          label="New Password"
+          inputErrMsg={errors.newPassword?.message}
+          register={register('newPassword', {
             required: '새로운 비밀번호를 입력해주세요.',
             minLength: {
               value: 8,
@@ -77,33 +84,39 @@ export const EditUserPassword = ({ user }: IEditProfileProps) => {
                 '비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야 합니다.',
             },
           })}
-          id="newPassword"
-          name="newPassword"
-          type="password"
-          placeholder="New Password"
         />
-        {errors.newPassword && <Errors>{errors.newPassword.message}</Errors>}
-
-        <label htmlFor="confirmPassword" />
-        <Input
-          {...register('confirmPassword', {
+        <InputWrap
+          watch={watch('confirmPassword')}
+          id="confirmPassword"
+          type="password"
+          label="Confirm Password"
+          inputErrMsg={errors.confirmPassword?.message}
+          register={register('confirmPassword', {
             required: '새로운 비밀번호를 재입력해주세요.',
           })}
-          id="confirmPassword"
-          name="confirmPassword"
-          type="password"
-          placeholder="Confirm New Password"
         />
-        {errors.confirmPassword && (
-          <Errors>{errors.confirmPassword.message}</Errors>
-        )}
-
-        {data?.error && <Errors>{data?.error}</Errors>}
-
-        <div className="btn-flex">
-          <Btn name="비밀번호 수정" type="submit" loading={loading} />
-        </div>
+        {data?.error && <ErrorMsg error={data.error} />}
+        <Btn name="비밀번호 수정" type="submit" loading={loading} />
       </Form>
-    </EditCont>
+      <FindPassword>
+        <span>비밀번호가 기억나지 않습니까?</span>
+        <span>
+          <Link href="/user/login/find/password">
+            <a>&rarr; 비밀번호 찾기</a>
+          </Link>
+        </span>
+      </FindPassword>
+    </Cont>
   );
 };
+export const Cont = styled(FormCont)``;
+
+const FindPassword = styled(Info)`
+  margin-top: 20px;
+  a {
+    :hover {
+      color: ${(p) => p.theme.color.font};
+      font-weight: 600;
+    }
+  }
+`;

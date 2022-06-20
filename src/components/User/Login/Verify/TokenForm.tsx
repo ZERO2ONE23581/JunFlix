@@ -21,6 +21,7 @@ export const VerifyTokenForm = ({
     `/api/user/login/verify/token`
   );
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
@@ -41,6 +42,7 @@ export const VerifyTokenForm = ({
       <h2>Step 2. Confirm Token</h2>
       <Form onSubmit={handleSubmit(onValid)}>
         <InputWrap
+          watch={watch('token')}
           id="token"
           type="text"
           label="Token Number"

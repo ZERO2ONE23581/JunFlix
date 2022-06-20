@@ -95,7 +95,7 @@ export const CreateUser = ({
             watch={watch('confirmPassword')}
             id="confirmPassword"
             type="password"
-            label="Confirm"
+            label="Confirm Password"
             inputErrMsg={errors.confirmPassword?.message}
             register={register('confirmPassword', {
               required: '비밀번호를 재입력해주세요.',

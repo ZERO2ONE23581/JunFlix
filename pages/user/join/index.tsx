@@ -13,7 +13,6 @@ const Join: NextPage = () => {
   const [savedUserID, setSavedUserID] = useState('');
   const [openCreateUser, setOpenCreateUser] = useState(false);
   const [openCreateAvatar, setOpenCreateAvatar] = useState(false);
-
   return (
     <>
       <Title title="회원가입" />

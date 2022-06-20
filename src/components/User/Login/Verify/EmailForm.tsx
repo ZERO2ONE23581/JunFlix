@@ -18,6 +18,7 @@ export const VerifyEmailForm = ({
     `/api/user/login/verify/email`
   );
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
@@ -35,6 +36,7 @@ export const VerifyEmailForm = ({
       <h2>Step 1. Confirm Email</h2>
       <Form onSubmit={handleSubmit(onValid)}>
         <InputWrap
+          watch={watch('email')}
           id="email"
           type="text"
           label="Email"

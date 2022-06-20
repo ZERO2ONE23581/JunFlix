@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 interface IErrorMsgProps {
-  error: string;
+  error?: string;
 }
 
 export const ErrorMsg = ({ error }: IErrorMsgProps) => {
@@ -13,7 +13,6 @@ export const ErrorMsg = ({ error }: IErrorMsgProps) => {
 };
 const Cont = styled.div`
   color: #e84118;
-  /* margin: 20px; */
   font-size: 1.2rem;
   line-height: 25px;
   font-weight: 700;

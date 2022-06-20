@@ -1,11 +1,16 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../Style/Button';
+import { Dispatch, SetStateAction } from 'react';
+import { FormCont } from '../../../../styles/global';
 
-export const DeleteAccount = ({ openDel, setOpenDel }: any) => {
+interface IDeleteAccountProps {
+  setOpenDel: Dispatch<SetStateAction<boolean>>;
+}
+export const DeleteAccount = ({ setOpenDel }: IDeleteAccountProps) => {
   return (
-    <>
-      <Cont>
-        <div className="flex">
+    <Cont>
+      <div className="flex">
+        <div>
           <h1>Delete Account</h1>
           <h2>* 계정을 삭제하면 복구가 불가합니다.</h2>
         </div>
@@ -14,29 +19,19 @@ export const DeleteAccount = ({ openDel, setOpenDel }: any) => {
           name="Delete"
           onClick={() => setOpenDel((p: boolean) => !p)}
         />
-      </Cont>
-    </>
+      </div>
+    </Cont>
   );
 };
-const Cont = styled.article`
-  width: 700px;
-  padding: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 5px;
-  border: ${(p) => p.theme.border};
-  color: ${(p) => p.theme.color.logo};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
+const Cont = styled(FormCont)`
   .flex {
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    font-size: 1.6rem;
-    font-weight: 600;
-    h2 {
-      font-size: 1rem;
-      font-weight: 500;
+    justify-content: space-between;
+    h1 {
+      margin-bottom: 10px;
+    }
+    button {
+      width: 100px;
+      font-weight: 600;
     }
   }
 `;

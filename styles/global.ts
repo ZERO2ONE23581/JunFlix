@@ -48,6 +48,9 @@ export const Form = styled.form`
     width: 100%;
     display: flex;
     align-items: center;
+    button {
+      width: 100%;
+    }
     input {
       width: 100%;
     }
@@ -97,15 +100,15 @@ export const Modal = styled.article`
     align-items: center;
     button {
       font-weight: 600;
-      width: 80px;
-      height: 40px;
+      min-width: 80px;
+      min-height: 40px;
     }
   }
 `;
 export const ModalClose = styled.article`
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 999;
   position: absolute;
   width: 100%;
   height: 130vh;

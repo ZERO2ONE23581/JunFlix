@@ -3,12 +3,13 @@ import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
+import { ErrorMsg } from '../../Style/ErrMsg';
+import { ProfileAvatar } from '../Avatar/Profile';
 import { MutationRes } from '../../../types/mutation';
 import { IEditProfileProps } from '../../../types/user';
-import { ProfileAvatar } from '../Avatar/Profile';
 import useMutation from '../../../libs/client/useMutation';
 import { IProfileAvatarForm } from '../../../types/avatar';
-import { Errors, Form, FormCont } from '../../../../styles/global';
+import { Form, FormCont } from '../../../../styles/global';
 
 export const EditProfileAvatar = ({ user }: IEditProfileProps) => {
   const router = useRouter();
@@ -55,7 +56,6 @@ export const EditProfileAvatar = ({ user }: IEditProfileProps) => {
       router.reload();
     }
   }, [avatar, data, router]);
-  //
   return (
     <>
       <Cont>
@@ -74,10 +74,9 @@ export const EditProfileAvatar = ({ user }: IEditProfileProps) => {
             type="file"
             accept="image/*"
           />
-          {errors.avatar && <Errors>{errors.avatar.message}</Errors>}
+          {errors.avatar && <ErrorMsg error={errors.avatar.message} />}
+          {data?.error && <ErrorMsg error={data.error} />}
           <Btn name="아바타 수정" type="submit" loading={avatarLoading} />
-          <div className="btn-flex"></div>
-          {data?.error && <Errors>{data?.error}</Errors>}
         </Form>
       </Cont>
     </>

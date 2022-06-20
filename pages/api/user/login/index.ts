@@ -5,10 +5,8 @@ import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { user } = req.session;
   const { userID, password } = req.body;
   const isInputData = Boolean(userID && password);
-  if (user) return res.json({ ok: false, error: '로그아웃 하셔야 합니다.' });
 
   if (req.method === 'POST') {
     if (!isInputData)

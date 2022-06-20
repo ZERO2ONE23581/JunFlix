@@ -18,6 +18,7 @@ export const VerifyPasswordForm = ({
     `/api/user/login/verify/user_id`
   );
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
@@ -35,6 +36,7 @@ export const VerifyPasswordForm = ({
       <h2>Step 1. Confirm User ID</h2>
       <Form onSubmit={handleSubmit(onValid)}>
         <InputWrap
+          watch={watch('userId')}
           type="text"
           id="userId"
           label="USER ID"

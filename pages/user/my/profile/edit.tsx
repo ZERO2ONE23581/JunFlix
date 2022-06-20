@@ -17,39 +17,42 @@ const EditProfile: NextPage = () => {
   return (
     <>
       <Title title="프로필 편집" />
-      <EditProfilePage>
-        <div className="flex">
-          <EditUserId user={loggedInUser} />
-          <EditUserPassword user={loggedInUser} />
-          <EditProfileAvatar user={loggedInUser} />
-          <EditUserInfo user={loggedInUser} />
-        </div>
-        <DeleteAccount openDel={openDel} setOpenDel={setOpenDel} />
-      </EditProfilePage>
-      {openDel && <DeleteAccountModal setOpenDel={setOpenDel} />}
-      {openDel && <ModalClose onClick={() => setOpenDel(false)} />}
+      <Cont>
+        <Wrapper>
+          <article className="flex">
+            <EditUserId user={loggedInUser} />
+            <EditUserPassword user={loggedInUser} />
+            <EditProfileAvatar user={loggedInUser} />
+            <EditUserInfo user={loggedInUser} />
+          </article>
+          <DeleteAccount setOpenDel={setOpenDel} />
+        </Wrapper>
+      </Cont>
+      {openDel && (
+        <>
+          <ModalClose onClick={() => setOpenDel(false)} />
+          <DeleteAccountModal setOpenDel={setOpenDel} />
+        </>
+      )}
     </>
   );
 };
 export default EditProfile;
 
-const EditProfilePage = styled(Page)`
-  padding-top: 30px;
-  gap: 30px;
+const Cont = styled(Page)`
+  padding: 5%;
   display: flex;
   align-items: center;
+  justify-content: center;
+`;
+const Wrapper = styled.article`
+  gap: 50px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   .flex {
     gap: 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    h1 {
-      font-size: 1.4rem;
-    }
-    form {
-      width: 300px;
-    }
   }
 `;

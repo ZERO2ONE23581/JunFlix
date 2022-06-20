@@ -17,11 +17,10 @@ export const Btn = ({ clicked, type, name, loading, onClick }: IBtnProps) => {
   );
 };
 const Button = styled.button<{ clicked: boolean | undefined }>`
-  width: 100%;
   border: none;
-  padding: 11px 15px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   border-radius: 5px;
+  padding: 11px 15px;
   color: ${(p) => p.theme.color.bg};
   background-color: ${(p) =>
     p.clicked ? p.theme.color.logo : p.theme.color.btn};

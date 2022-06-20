@@ -20,6 +20,7 @@ export const CreateNewPasswordForm = ({
     `/api/user/login/create/new_password`
   );
   const {
+    watch,
     setError,
     register,
     handleSubmit,
@@ -42,6 +43,7 @@ export const CreateNewPasswordForm = ({
       <h2>Step 3. Create New Password</h2>
       <Form onSubmit={handleSubmit(onValid)}>
         <InputWrap
+          watch={watch('password')}
           id="password"
           type="password"
           label="New Password"
@@ -65,9 +67,10 @@ export const CreateNewPasswordForm = ({
           })}
         />
         <InputWrap
-          label="Confirm"
-          type="password"
+          watch={watch('confirmPassword')}
           id="confirmPassword"
+          type="password"
+          label="Confirm Password"
           inputErrMsg={errors.confirmPassword?.message}
           register={register('confirmPassword', {
             required: '새 비밀번호 재입력하세요.',
