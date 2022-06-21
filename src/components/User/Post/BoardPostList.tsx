@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Post } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { ThumnailAvatar } from '../Avatar/Thumnail';
-import { PostListIconWrap } from './PostIconWrap';
+import { PostIconWrap } from './PostIconWrap';
 
 interface IGetBoardPost {
   posts: Post[];
@@ -28,7 +28,7 @@ export const BoardPostList = () => {
           >
             <a>
               <ThumnailAvatar url={post.avatar} />
-              <PostListIconWrap
+              <PostIconWrap
                 user_id={post.UserID}
                 board_id={post.BoardID}
                 post_id={post.id}

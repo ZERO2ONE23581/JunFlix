@@ -1,13 +1,12 @@
 import styled from '@emotion/styled';
 import { BoardBtnWrap } from './BtnWrap';
+import { FollowBoard } from './Follow/board';
 import { FollowCounts } from './Follow/counts';
 import { Dispatch, SetStateAction } from 'react';
 import { ProfileAvatar } from '../Avatar/Profile';
 import useUser from '../../../libs/client/useUser';
 import { FormCont } from '../../../../styles/global';
-import { BoardPostList } from '../Post/BoardPostList';
 import { IBoardWithAttrs } from '../../../types/board';
-import { FollowBoard } from './Follow/board';
 
 interface IBoardDetailProps {
   board?: IBoardWithAttrs;
@@ -61,7 +60,6 @@ export const BoardDetail = ({
             </Info>
           </Board>
         </Container>
-        {/* <BoardPostList /> */}
       </Cont>
     </>
   );

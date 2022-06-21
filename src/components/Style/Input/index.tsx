@@ -45,18 +45,16 @@ export const InputWrap = ({
         <InputLabel htmlFor={id} isChange={isLabelChange}>
           {label}
         </InputLabel>
-        {!isSelect && !children && (
-          <Input
-            {...register}
-            id={id}
-            name={id}
-            type={type}
-            maxLength={max}
-            disabled={disabled}
-            onFocus={() => setIsFocus(true)}
-            onBlur={handleBlur}
-          />
-        )}
+        <Input
+          {...register}
+          id={id}
+          name={id}
+          type={type}
+          maxLength={max}
+          disabled={disabled}
+          onFocus={() => setIsFocus(true)}
+          onBlur={handleBlur}
+        />
       </div>
       {inputErrMsg && (
         <div className="error">

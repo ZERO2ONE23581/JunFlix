@@ -3,14 +3,13 @@ import { Info } from '../../../../../styles/global';
 
 interface ICreatePostNoticeProps {
   next: boolean;
-  MaxTitle?: number;
-  MaxContent?: number;
+  maxCnt?: number;
+  maxTitle?: number;
 }
-
-export const CreatePostNotice = ({
+export const PostNotice = ({
   next,
-  MaxTitle,
-  MaxContent,
+  maxCnt,
+  maxTitle,
 }: ICreatePostNoticeProps) => {
   return (
     <>
@@ -21,9 +20,6 @@ export const CreatePostNotice = ({
             <span className="kor">
               (사진을 업로드 하려면 아이콘을 클릭하세요.)
             </span>
-            <ul>
-              <li></li>
-            </ul>
           </>
         ) : (
           <ul>
@@ -36,20 +32,20 @@ export const CreatePostNotice = ({
             <li>
               <span>
                 * Maximum length of the title is equal to or less than{' '}
-                {MaxTitle}
+                {maxTitle}
                 letters.
               </span>
               <span className="kor">
-                (게시물 제목은 {MaxTitle}자 이내여야 합니다.)
+                (게시물 제목은 {maxTitle}자 이내여야 합니다.)
               </span>
             </li>
             <li>
               <span>
                 * Maximum length of the content is equal to or less than
-                {MaxContent} letters..
+                {maxCnt} letters..
               </span>
               <span className="kor">
-                (게시물 내용은 {MaxContent}자 이내여야 합니다.)
+                (게시물 내용은 {maxCnt}자 이내여야 합니다.)
               </span>
             </li>
           </ul>
@@ -69,16 +65,10 @@ const Cont = styled(Info)`
   }
   ul {
     li {
-      /* font-size: 1rem; */
       margin-bottom: 5px;
       span {
         display: inline;
       }
     }
-  }
-  .flex {
-    gap: 20px;
-    display: flex;
-    align-items: center;
   }
 `;

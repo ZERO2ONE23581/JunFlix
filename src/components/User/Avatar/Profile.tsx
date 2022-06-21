@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import useUser from '../../../libs/client/useUser';
 
 interface IAvatarProps {
   url?: string | null;
@@ -43,4 +44,22 @@ export const AvatarLabel = styled.label`
   input {
     display: none;
   }
+`;
+interface IHostIconProps {
+  size: number;
+}
+export const HostIcon = ({ size }: IHostIconProps) => {
+  const { loggedInUser } = useUser();
+  return (
+    <Host>
+      <ProfileAvatar url={loggedInUser?.avatar} size={size} />
+      <span>{loggedInUser?.username}</span>
+    </Host>
+  );
+};
+const Host = styled.div`
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
 `;

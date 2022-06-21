@@ -66,7 +66,7 @@ export const Form = styled.form`
     }
   }
 `;
-export const Info = styled.p`
+export const Info = styled.div`
   font-size: 1.2rem;
   font-style: italic;
   color: ${(p) => p.theme.color.logo};

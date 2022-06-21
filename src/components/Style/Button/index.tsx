@@ -5,7 +5,7 @@ interface IBtnProps {
   clicked?: boolean;
   type: 'button' | 'submit' | 'reset';
   name?: string;
-  loading?: boolean;
+  loading?: boolean | null;
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 

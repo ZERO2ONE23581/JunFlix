@@ -9,12 +9,12 @@ import { MutationRes } from '../../../../../../../src/types/mutation';
 import { Btn } from '../../../../../../../src/components/Style/Button';
 import useMutation from '../../../../../../../src/libs/client/useMutation';
 import { IEditPostForm, IGetPost } from '../../../../../../../src/types/post';
-import { Errors, Form, Input, Page } from '../../../../../../../styles/global';
 import { CommentList } from '../../../../../../../src/components/User/Comment/CommentList';
 import { ThumnailAvatar } from '../../../../../../../src/components/User/Avatar/Thumnail';
 import { LikeCommentWrap } from '../../../../../../../src/components/Style/Icon/LikeCommentWrap';
 import { CreateComments } from '../../../../../../../src/components/User/Comment/Create/CreateComments';
 import { DeleteCommentModal } from '../../../../../../../src/components/User/Comment/Delete/DeleteCommentModal';
+import { Form, Page } from '../../../../../../../styles/global';
 
 const PostInfo: NextPage = () => {
   const router = useRouter();

@@ -28,6 +28,7 @@ const BoardInfo: NextPage = () => {
   return (
     <>
       <Title title={`${data?.board?.user?.username}님의 보드`} />
+
       <Cont bg={avatar}>
         <BoardDetail
           board={data?.board}
@@ -35,6 +36,7 @@ const BoardInfo: NextPage = () => {
           openPost={setOpenPostModal}
         />
       </Cont>
+
       {openDelModal && <DeleteBoardModal closeModal={setOpenDelModal} />}
       {openPostModal && <CreatePostModal openModal={setOpenDelPostModal} />}
       {openDelPostModal && (
