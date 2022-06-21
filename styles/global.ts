@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 
 export const LayoutPage = styled.section`
   font-weight: 600;
-  padding: 10px 8%;
+  padding: 10px 10%;
 `;
 export const Page = styled.section`
-  padding: 0 8%;
+  padding: 0 10%;
   font-size: 1.2rem;
   padding-bottom: 20px;
   color: ${(p) => p.theme.color.font};
@@ -76,25 +76,27 @@ export const Info = styled.p`
   }
 `;
 
-export const Modal = styled.article`
-  position: absolute;
-  z-index: 999;
+export const ModalSchema = styled.article`
   top: 50%;
   left: 50%;
+  z-index: 994;
+  border-radius: 5px;
+  position: absolute;
   transform: translate(-50%, -50%);
-  //
+  border: ${(p) => p.theme.border};
+  color: ${(p) => p.theme.color.font};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background-color: ${(p) => p.theme.color.bg};
+`;
+export const Modal = styled(ModalSchema)`
+  padding: 40px;
+  border: none;
+  border-radius: 10px;
   gap: 20px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  //
-  padding: 40px;
-  border-radius: 10px;
-  border: ${(p) => p.theme.border};
-  color: ${(p) => p.theme.color.font};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background-color: ${(p) => p.theme.color.bg};
   h1 {
     font-weight: 700;
     font-size: 1.4rem;
@@ -105,13 +107,17 @@ export const Modal = styled.article`
     font-size: 1.2rem;
   }
   .btn-wrap {
-    gap: 10px;
+    gap: 12px;
     display: flex;
     align-items: center;
     button {
+      padding: 5px;
       font-weight: 600;
-      min-width: 80px;
-      min-height: 40px;
+      min-height: 30px;
+      min-width: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 `;
@@ -122,8 +128,29 @@ export const ModalClose = styled.article`
   position: absolute;
   width: 100%;
   height: 130vh;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
 `;
+export const ListCont = styled.section`
+  h1 {
+    margin: 20px;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-left: 20px;
+    color: ${(p) => p.theme.color.logo};
+  }
+`;
+export const Grid = styled.article`
+  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+`;
+export const ThumnAvatarCont = styled.article`
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+`;
+
+//
 export const PageWithBg = styled(Page)<{
   bg?: string | boolean | null;
 }>`

@@ -1,4 +1,4 @@
-import { Children, useState } from 'react';
+import { useState } from 'react';
 import { ErrorMsg } from '../ErrMsg';
 import styled from '@emotion/styled';
 import { UseFormRegisterReturn, UseWatchProps } from 'react-hook-form';
@@ -6,6 +6,7 @@ import { UseFormRegisterReturn, UseWatchProps } from 'react-hook-form';
 export interface IInputWrapProps {
   id: string;
   label: string;
+  max?: number | any;
   type?: string;
   watch?: string;
   placeholder?: string;
@@ -17,6 +18,7 @@ export interface IInputWrapProps {
   register: UseFormRegisterReturn;
 }
 export const InputWrap = ({
+  max,
   id,
   type,
   label,
@@ -49,6 +51,7 @@ export const InputWrap = ({
             id={id}
             name={id}
             type={type}
+            maxLength={max}
             disabled={disabled}
             onFocus={() => setIsFocus(true)}
             onBlur={handleBlur}
@@ -77,16 +80,16 @@ const Cont = styled.article`
 `;
 export const Label = styled.label<{ isChange: boolean }>`
   top: 0;
-  left: 10px;
   z-index: 99;
   border: none;
   padding: 0 10px;
   font-weight: 500;
+  font-size: 1.1rem;
   position: absolute;
   border-radius: 5px;
-  font-size: 1.3rem;
   text-align: center;
-  transform: translate(10px, -50%);
+  left: 5px;
+  transform: translate(5px, -50%);
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => (p.isChange ? p.theme.color.logo : '#636e72')};
 `;

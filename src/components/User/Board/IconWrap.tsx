@@ -1,20 +1,19 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import useUser from '../../../../libs/client/useUser';
-import { MutationRes } from '../../../../types/mutation';
-import useMutation from '../../../../libs/client/useMutation';
+import { IsMyIcon } from '../../Style/Svg/IsMy';
+import useUser from '../../../libs/client/useUser';
+import { MutationRes } from '../../../types/mutation';
+import useMutation from '../../../libs/client/useMutation';
 import {
   FollowedBoardIcon,
   UnFollowedBoardIcon,
-} from '../../../Style/Svg/FollowBoard';
-import { IsMyIcon } from '../../../Style/Svg/IsMy';
+} from '../../Style/Svg/FollowBoard';
 
-interface IIsFollowBoardProps {
+interface IBoardIconWrapProps {
   user_id?: number | null;
   board_id?: number | null;
 }
-
-export const IsBoardFollowed = ({ user_id, board_id }: IIsFollowBoardProps) => {
+export const BoardIconWrap = ({ user_id, board_id }: IBoardIconWrapProps) => {
   const { data, mutate } = useSWR(`/api/user/${user_id}/board/${board_id}`);
   const { isLoggedIn, loggedInUser } = useUser();
   const isOwner = Boolean(loggedInUser?.id === user_id);
@@ -39,9 +38,9 @@ export const IsBoardFollowed = ({ user_id, board_id }: IIsFollowBoardProps) => {
   return (
     <Cont>
       {isOwner && (
-        <div className="ismyboard">
+        <Icon>
           <IsMyIcon />
-        </div>
+        </Icon>
       )}
       {isLoggedIn && (
         <Button onClick={handleClick}>
@@ -53,17 +52,17 @@ export const IsBoardFollowed = ({ user_id, board_id }: IIsFollowBoardProps) => {
 };
 const Cont = styled.article`
   position: relative;
-  .ismyboard {
-    position: absolute;
-    top: -240px;
-    left: 10px;
-    border: none;
-    background-color: inherit;
-  }
+`;
+const Icon = styled.div`
+  position: absolute;
+  top: -290px;
+  left: 10px;
+  border: none;
+  background-color: inherit;
 `;
 const Button = styled.button`
   position: absolute;
-  top: -40px;
+  top: -44px;
   right: 5px;
   border: none;
   background-color: inherit;

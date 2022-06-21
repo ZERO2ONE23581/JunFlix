@@ -1,4 +1,5 @@
 import { Post } from '@prisma/client';
+import { LikesWithPost, LikesWithReview } from './likes';
 
 export interface IGetPost {
   ok: boolean;
@@ -17,6 +18,8 @@ export interface IPostForm {
 export interface IGetAllPosts {
   ok: boolean;
   posts?: Post[];
+  postlikes: LikesWithPost[];
+  reviewLikes: LikesWithReview[];
 }
 export interface IPostListProps {
   isAllPosts?: boolean;

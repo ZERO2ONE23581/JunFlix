@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Btn } from '../../../Style/Button';
-import useUser from '../../../../libs/client/useUser';
-import useMutation from '../../../../libs/client/useMutation';
-import { Modal } from '../../../../../styles/global';
+import { Btn } from '../../Style/Button';
+import useUser from '../../../libs/client/useUser';
+import { Modal } from '../../../../styles/global';
+import useMutation from '../../../libs/client/useMutation';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 
-export const DeleteBoardModal = ({ closeModal }: any) => {
+interface IDeleteBoardModalProps {
+  closeModal: Dispatch<SetStateAction<boolean>>;
+}
+export const DeleteBoardModal = ({ closeModal }: IDeleteBoardModalProps) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
   const { user_id, board_id } = router.query;

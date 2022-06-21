@@ -10,7 +10,11 @@ export const ThumnailAvatar = ({ isBoard, url, preview }: IAvatarProps) => {
   const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
   const variant = 'public';
   return (
-    <Cont isBoard={isBoard} isImage={Boolean(url || preview)}>
+    <Cont
+      className="thum-avatar"
+      isBoard={isBoard}
+      isImage={Boolean(url || preview)}
+    >
       {url && !preview && (
         <img src={`${`${base}/${url}/${variant}`}`} alt="이미지" />
       )}
@@ -22,7 +26,7 @@ export const ThumnailAvatar = ({ isBoard, url, preview }: IAvatarProps) => {
 
 const Cont = styled.div<{ isBoard?: boolean; isImage: boolean }>`
   width: 100%;
-  height: 250px;
+  height: 300px;
   border: none;
   background-color: black;
   box-shadow: ${(p) => p.theme.boxShadow.nav};

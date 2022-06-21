@@ -1,28 +1,22 @@
 import useSWR from 'swr';
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../../Style/Button';
-import { ErrorMsg } from '../../../Style/ErrMsg';
-import { InputWrap } from '../../../Style/Input';
-import { AvatarLabel } from '../../Avatar/Profile';
-import { TextAreaWrap } from '../../../Style/Input/TextArea';
-import { SelectWrap } from '../../../Style/Input/SelectWrap';
-import useMutation from '../../../../libs/client/useMutation';
-import { BoardAvatarIcon } from '../../../Style/Svg/BoardAvatar';
-import {
-  BoardFormCont,
-  Form,
-  FormCont,
-  Info,
-} from '../../../../../styles/global';
+import { Btn } from '../../Style/Button';
+import { ErrorMsg } from '../../Style/ErrMsg';
+import { InputWrap } from '../../Style/Input';
+import { AvatarLabel } from '../Avatar/Profile';
+import { TextAreaWrap } from '../../Style/Input/TextArea';
+import { SelectWrap } from '../../Style/Input/SelectWrap';
+import useMutation from '../../../libs/client/useMutation';
+import { BoardAvatarIcon } from '../../Style/Svg/BoardAvatar';
+import { BoardFormCont, Form, Info } from '../../../../styles/global';
 import {
   IGetBoard,
   IBoardForm,
   IBoardFormRes,
   IEditBoardFormProps,
-} from '../../../../types/board';
+} from '../../../types/board';
 
 export const BoardForm = ({
   isEdit,

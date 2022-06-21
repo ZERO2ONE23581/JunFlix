@@ -1,22 +1,29 @@
 import styled from '@emotion/styled';
-import { BoardBtnWrap } from '../Btn/Wrap';
+import { BoardBtnWrap } from './BtnWrap';
+import { FollowCounts } from './Follow/counts';
 import { Dispatch, SetStateAction } from 'react';
-import { ProfileAvatar } from '../../Avatar/Profile';
-import useUser from '../../../../libs/client/useUser';
-import { FormCont } from '../../../../../styles/global';
-import { BoardPostList } from '../../Post/BoardPostList';
-import { IBoardWithAttrs } from '../../../../types/board';
-import { FollowCounts } from './FollowCounts';
+import { ProfileAvatar } from '../Avatar/Profile';
+import useUser from '../../../libs/client/useUser';
+import { FormCont } from '../../../../styles/global';
+import { BoardPostList } from '../Post/BoardPostList';
+import { IBoardWithAttrs } from '../../../types/board';
+import { FollowBoard } from './Follow/board';
 
 interface IBoardDetailProps {
   board?: IBoardWithAttrs;
   setOpenDelModal: Dispatch<SetStateAction<boolean>>;
+  openPost: Dispatch<SetStateAction<boolean>>;
 }
-export const BoardDetail = ({ board, setOpenDelModal }: IBoardDetailProps) => {
+export const BoardDetail = ({
+  board,
+  setOpenDelModal,
+  openPost,
+}: IBoardDetailProps) => {
   const { loggedInUser } = useUser();
   const isMyBoard = Boolean(loggedInUser?.id === board?.UserID);
   return (
     <>
+      <FollowBoard isMyBoard={isMyBoard} />
       <Cont>
         <Container>
           <Creator>
@@ -30,6 +37,7 @@ export const BoardDetail = ({ board, setOpenDelModal }: IBoardDetailProps) => {
             <article className="title">
               <h1>{board?.title}</h1>
               <BoardBtnWrap
+                openPost={openPost}
                 isMyBoard={isMyBoard}
                 setOpenDelModal={setOpenDelModal}
               />
@@ -53,7 +61,7 @@ export const BoardDetail = ({ board, setOpenDelModal }: IBoardDetailProps) => {
             </Info>
           </Board>
         </Container>
-        <BoardPostList />
+        {/* <BoardPostList /> */}
       </Cont>
     </>
   );

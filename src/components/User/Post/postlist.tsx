@@ -1,44 +1,54 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { IGetLikes } from '../../../types/likes';
+import useUser from '../../../libs/client/useUser';
 import { ThumnailAvatar } from '../Avatar/Thumnail';
-import { PostListIconWrap } from './PostListIconWrap';
+import { PostIconWrap } from './PostIconWrap';
 import { IGetAllPosts, IPostListProps } from '../../../types/post';
+import { Grid, ListCont, ThumnAvatarCont } from '../../../../styles/global';
 
 export const PostList = ({
-  isAllPosts,
-  isMyPosts,
   findLikes,
+  isMyPosts,
+  isAllPosts,
 }: IPostListProps) => {
-  const { data } = useSWR<IGetAllPosts>(
-    isAllPosts ? `/api/user/all/posts` : isMyPosts && `/api/user/my/posts`
-  );
-  const { data: LikeData } = useSWR<IGetLikes>(
-    findLikes && `/api/user/my/likes`
-  );
-  const posts = data?.posts;
-  const likes = LikeData?.postlikes;
+  const { isLoggedIn, loggedInUser } = useUser();
+  const typeSelect = (type: string) => {
+    if (type === 'data') {
+      if (isAllPosts) return `/api/user/all/posts`;
+      if (isLoggedIn && isMyPosts) return `/api/user/my/posts`;
+      if (isLoggedIn && findLikes) return `/api/user/my/posts`;
+    }
+    if (type === 'title') {
+      if (isAllPosts) return `All Boards`;
+      if (isLoggedIn && isMyPosts) return `${loggedInUser}'s Boards`;
+    }
+  };
+  const { data } = useSWR<IGetAllPosts>(typeSelect('data'));
+  const PostArray = data?.posts;
+  const PostLink = (userId: number, boardId: number, postId: number) => {
+    return `/user/${userId}/board/${boardId}/post/${postId}`;
+  };
+  const LikesArray = data?.postlikes;
   return (
     <Cont>
       <h1>{isAllPosts ? 'All Posts' : isMyPosts ? 'Posts' : null}</h1>
       <Grid>
-        {posts?.map((post) => (
-          <Link
-            key={post.id}
-            href={`/user/${post.UserID}/board/${post.BoardID}/post/${post.id}`}
-          >
-            <a>
-              <ThumnailAvatar url={post.avatar} />
-              <PostListIconWrap
-                user_id={post.UserID}
-                board_id={post.BoardID}
-                post_id={post.id}
-              />
-            </a>
-          </Link>
+        {PostArray?.map((post) => (
+          <Post key={post.id}>
+            <Link href={`${PostLink(post.UserID, post.BoardID, post.id)}`}>
+              <a>
+                <ThumnailAvatar url={post.avatar} />
+              </a>
+            </Link>
+            <PostIconWrap
+              post_id={post.id}
+              user_id={post.UserID}
+              board_id={post.BoardID}
+            />
+          </Post>
         ))}
-        {likes?.map((like) => (
+        {LikesArray?.map((like) => (
           <Link
             key={like.id}
             href={`/user/${like.post.UserID}/board/${like.post.BoardID}/post/${like.post.id}`}
@@ -52,19 +62,7 @@ export const PostList = ({
     </Cont>
   );
 };
-const Cont = styled.section`
-  h1 {
-    font-weight: 600;
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-`;
-const Grid = styled.article`
-  gap: 20px;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  a {
-    position: relative;
-  }
+const Cont = styled(ListCont)``;
+const Post = styled(ThumnAvatarCont)`
+  position: relative;
 `;

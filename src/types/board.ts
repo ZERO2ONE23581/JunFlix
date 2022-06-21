@@ -52,3 +52,8 @@ export interface IBoardFormRes {
   error?: string;
   board: Board;
 }
+export interface IBoardListProps {
+  isAllBoards?: boolean;
+  isMyBoards?: boolean;
+  isSelect?: boolean;
+}

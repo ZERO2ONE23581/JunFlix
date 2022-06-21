@@ -15,7 +15,7 @@ export const FollowedBoardIcon = () => {
   );
 };
 const Svg = styled.svg`
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   fill: white;
 `;

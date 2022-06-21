@@ -40,6 +40,7 @@ const IsMyCont = styled.svg`
 `;
 
 const Cont = styled.div<{ list?: boolean; likes?: boolean; solid?: boolean }>`
+  cursor: pointer;
   svg {
     width: 30px;
     height: 30px;

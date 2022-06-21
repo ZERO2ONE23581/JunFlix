@@ -11,7 +11,7 @@ const EditBoard: NextPage = () => {
   const [avatar, setAvatar] = useState('');
   return (
     <>
-      <Title title="보드생성" />
+      <Title title="보드수정" />
       <Cont bg={preview ? preview : avatar ? AvatarURL(avatar) : null}>
         <BoardForm isEdit setPreview={setPreview} setAvatar={setAvatar} />
       </Cont>

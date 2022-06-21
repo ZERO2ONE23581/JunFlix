@@ -9,7 +9,7 @@ interface IIsMyPostProps {
   post_id: number;
 }
 
-export const PostListIconWrap = ({
+export const PostIconWrap = ({
   user_id,
   board_id,
   post_id,
@@ -21,43 +21,33 @@ export const PostListIconWrap = ({
   );
   const isLiked = data?.isLiked;
   const isComment = data?.isComments;
+  console.log(user_id);
   return (
     <Cont>
       <ul>
-        <li>{isOwner ? <IsMyIcon /> : null}</li>
-        <li className="like">
-          {isLiked ? <LikesIcon solid /> : <LikesIcon empty />}
-        </li>
-        <li className="cmt">
-          {isComment ? <CommentIcon solid /> : <CommentIcon empty />}
-        </li>
+        <Icon>
+          <ul>
+            <li>{isOwner && <IsMyIcon />}</li>
+            <li>{isLiked ? <LikesIcon solid /> : <LikesIcon empty />}</li>
+            <li>{isComment ? <CommentIcon solid /> : <CommentIcon empty />}</li>
+          </ul>
+        </Icon>
       </ul>
     </Cont>
   );
 };
-const Cont = styled.div`
+const Cont = styled.article`
+  position: relative;
+`;
+const Icon = styled.div`
   position: absolute;
-  top: 5px;
-  right: 5px;
+  right: 10px;
+  bottom: 260px;
+  border: none;
   ul {
+    width: 100%;
     gap: 10px;
     display: flex;
     align-items: center;
-    .like {
-      svg {
-        fill: ${(p) => p.theme.color.logo};
-      }
-    }
-    .cmt {
-      svg {
-        fill: whitesmoke;
-      }
-    }
   }
-`;
-const IsOwnerTrue = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 100%;
-  background-color: #2ecc71;
 `;

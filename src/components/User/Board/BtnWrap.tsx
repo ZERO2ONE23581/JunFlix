@@ -1,13 +1,18 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Btn } from '../../../Style/Button';
+import { Btn } from '../../Style/Button';
 
 interface IBoardBtnWrap {
   isMyBoard: boolean;
-  setOpenDelModal: any;
+  openPost: Dispatch<SetStateAction<boolean>>;
+  setOpenDelModal: Dispatch<SetStateAction<boolean>>;
 }
-export const BoardBtnWrap = ({ isMyBoard, setOpenDelModal }: IBoardBtnWrap) => {
+export const BoardBtnWrap = ({
+  isMyBoard,
+  openPost,
+  setOpenDelModal,
+}: IBoardBtnWrap) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const [clickSetting, setClickSetting] = useState(false);
@@ -28,10 +33,16 @@ export const BoardBtnWrap = ({ isMyBoard, setOpenDelModal }: IBoardBtnWrap) => {
               name="Post"
               type="button"
               clicked={false}
-              onClick={() => {
-                router.push(`/user/${user_id}/board/${board_id}/post/create`);
-              }}
+              onClick={() => openPost(true)}
             />
+            // <Btn
+            //   name="Post"
+            //   type="button"
+            //   clicked={false}
+            //   onClick={() => {
+            //     router.push(`/user/${user_id}/board/${board_id}/post/create`);
+            //   }}
+            // />
           )}
           <Btn
             name="Setting"

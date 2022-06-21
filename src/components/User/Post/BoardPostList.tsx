@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Post } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { ThumnailAvatar } from '../Avatar/Thumnail';
-import { PostListIconWrap } from './PostListIconWrap';
+import { PostListIconWrap } from './PostIconWrap';
 
 interface IGetBoardPost {
   posts: Post[];

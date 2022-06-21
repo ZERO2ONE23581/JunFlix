@@ -22,7 +22,7 @@ const Button = styled.button<{ clicked: boolean | undefined }>`
   justify-content: center;
   border: none;
   font-size: 1.1rem;
-  border-radius: 5px;
+  border-radius: 3px;
   padding: 11px 15px;
   color: ${(p) => p.theme.color.bg};
   background-color: ${(p) =>
