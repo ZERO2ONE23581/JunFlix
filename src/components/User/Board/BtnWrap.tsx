@@ -2,16 +2,19 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
+import { FollowBoard } from './Follow/board';
 
 interface IBoardBtnWrap {
+  isPost: boolean;
   isMyBoard: boolean;
-  openPost: Dispatch<SetStateAction<boolean>>;
-  setOpenDelModal: Dispatch<SetStateAction<boolean>>;
+  setIsPost: Dispatch<SetStateAction<boolean>>;
+  setIsDel: Dispatch<SetStateAction<boolean>>;
 }
-export const BoardBtnWrap = ({
+export const BtnWrap = ({
+  isPost,
   isMyBoard,
-  openPost,
-  setOpenDelModal,
+  setIsPost,
+  setIsDel,
 }: IBoardBtnWrap) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
@@ -32,17 +35,9 @@ export const BoardBtnWrap = ({
             <Btn
               name="Post"
               type="button"
-              clicked={false}
-              onClick={() => openPost(true)}
+              clicked={isPost}
+              onClick={() => setIsPost(true)}
             />
-            // <Btn
-            //   name="Post"
-            //   type="button"
-            //   clicked={false}
-            //   onClick={() => {
-            //     router.push(`/user/${user_id}/board/${board_id}/post/create`);
-            //   }}
-            // />
           )}
           <Btn
             name="Setting"
@@ -65,10 +60,11 @@ export const BoardBtnWrap = ({
             name="Delete"
             type="button"
             clicked={false}
-            onClick={() => setOpenDelModal((p: boolean) => !p)}
+            onClick={() => setIsDel((p: boolean) => !p)}
           />
         </>
       )}
+      {!isMyBoard && <FollowBoard isMyBoard={isMyBoard} />}
     </Cont>
   );
 };

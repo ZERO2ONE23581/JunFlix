@@ -1,4 +1,5 @@
 import { Post } from '@prisma/client';
+import { Dispatch, SetStateAction } from 'react';
 import { LikesWithPost, LikesWithReview } from './likes';
 
 export interface IGetPost {
@@ -13,6 +14,7 @@ export interface IEditPostForm extends IPostForm {
 export interface IPostForm {
   title?: string;
   content?: string;
+  createdAt?: Date;
   avatar?: FileList;
 }
 export interface IGetAllPosts {
@@ -22,8 +24,11 @@ export interface IGetAllPosts {
   reviewLikes: LikesWithReview[];
 }
 export interface IPostListProps {
+  hostName?: string | null;
+  isBoardPosts?: boolean;
   isAllPosts?: boolean;
-  isMyPosts?: boolean;
-  findLikes?: boolean;
+  isAllMyPosts?: boolean;
+  isGetLikes?: boolean;
   posts?: Post[];
+  // setIsClicked: Dispatch<SetStateAction<boolean>>;
 }

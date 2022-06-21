@@ -8,7 +8,6 @@ interface IIsMyPostProps {
   board_id: number;
   post_id: number;
 }
-
 export const PostIconWrap = ({
   user_id,
   board_id,
@@ -21,7 +20,6 @@ export const PostIconWrap = ({
   );
   const isLiked = data?.isLiked;
   const isComment = data?.isComments;
-  console.log(user_id);
   return (
     <Cont>
       <ul>

@@ -17,5 +17,5 @@ export const FollowedBoardIcon = () => {
 const Svg = styled.svg`
   width: 30px;
   height: 30px;
-  fill: white;
+  fill: ${(p) => p.theme.color.font};
 `;

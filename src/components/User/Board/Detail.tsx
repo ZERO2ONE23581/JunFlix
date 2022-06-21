@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import { BoardBtnWrap } from './BtnWrap';
-import { FollowBoard } from './Follow/board';
+import { BtnWrap } from './BtnWrap';
 import { FollowCounts } from './Follow/counts';
 import { Dispatch, SetStateAction } from 'react';
 import { ProfileAvatar } from '../Avatar/Profile';
@@ -9,67 +8,62 @@ import { FormCont } from '../../../../styles/global';
 import { IBoardWithAttrs } from '../../../types/board';
 
 interface IBoardDetailProps {
+  isPost: boolean;
   board?: IBoardWithAttrs;
-  setOpenDelModal: Dispatch<SetStateAction<boolean>>;
-  openPost: Dispatch<SetStateAction<boolean>>;
+  setIsDel: Dispatch<SetStateAction<boolean>>;
+  setIsPost: Dispatch<SetStateAction<boolean>>;
 }
 export const BoardDetail = ({
+  isPost,
   board,
-  setOpenDelModal,
-  openPost,
+  setIsDel,
+  setIsPost,
 }: IBoardDetailProps) => {
   const { loggedInUser } = useUser();
   const isMyBoard = Boolean(loggedInUser?.id === board?.UserID);
   return (
     <>
-      <FollowBoard isMyBoard={isMyBoard} />
       <Cont>
-        <Container>
-          <Creator>
-            <ProfileAvatar url={board?.user.avatar} size={140} />
-            <div className="host">
-              <span className="dim">Host:</span>
-              <span className="name">{board?.user.username}</span>
-            </div>
-          </Creator>
-          <Board>
-            <article className="title">
-              <h1>{board?.title}</h1>
-              <BoardBtnWrap
-                openPost={openPost}
-                isMyBoard={isMyBoard}
-                setOpenDelModal={setOpenDelModal}
-              />
-            </article>
-            <Info>
-              <ul>
-                <li>
-                  <FollowCounts counts={board?._count} />
-                </li>
-                <li>
-                  <span className="item">보드장르</span>
-                  <span className="dim">"{board?.genre}"</span>
-                </li>
-                <li>
-                  <span className="item">소개글:</span>
-                  {board?.intro && (
-                    <p className="dim intro">"{board?.intro}"</p>
-                  )}
-                </li>
-              </ul>
-            </Info>
-          </Board>
-        </Container>
+        <Creator>
+          <ProfileAvatar url={board?.user.avatar} size={140} />
+          <div className="host">
+            <span className="dim">Host:</span>
+            <span className="name">{board?.user.username}</span>
+          </div>
+        </Creator>
+        <Board>
+          <article className="title">
+            <h1>{board?.title}</h1>
+            <BtnWrap
+              isPost={isPost}
+              setIsPost={setIsPost}
+              isMyBoard={isMyBoard}
+              setIsDel={setIsDel}
+            />
+          </article>
+          <Info>
+            <ul>
+              <li>
+                <FollowCounts counts={board?._count} />
+              </li>
+              <li>
+                <span className="item">보드장르</span>
+                <span className="dim">"{board?.genre}"</span>
+              </li>
+              <li>
+                <span className="item">소개글:</span>
+                {board?.intro && <p className="dim intro">"{board?.intro}"</p>}
+              </li>
+            </ul>
+          </Info>
+        </Board>
       </Cont>
     </>
   );
 };
 const Cont = styled(FormCont)`
-  border: none;
-`;
-const Container = styled(FormCont)`
-  border: none;
   gap: 100px;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;

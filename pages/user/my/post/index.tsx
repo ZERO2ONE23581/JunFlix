@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { Page } from '../../../../styles/global';
 import useUser from '../../../../src/libs/client/useUser';
 import { Title } from '../../../../src/components/Layout/Title';
-import { PostList } from '../../../../src/components/User/Post/PostList';
+import { PostList } from '../../../../src/components/User/Post/List';
 
 const MyPosts: NextPage = () => {
   const { loggedInUser } = useUser();

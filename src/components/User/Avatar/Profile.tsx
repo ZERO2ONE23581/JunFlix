@@ -36,7 +36,6 @@ const Cont = styled.article<{ size: number | undefined }>`
   }
 `;
 export const AvatarLabel = styled.label`
-  cursor: pointer;
   display: block;
   display: flex;
   align-items: center;

@@ -4,22 +4,22 @@ import { AvatarLabel } from '../Avatar/Profile';
 import { ThumnailAvatar } from '../Avatar/Thumnail';
 
 interface ICreatePostAvatar {
-  next: boolean;
+  disabled?: boolean;
   preview?: string;
   register: UseFormRegisterReturn;
 }
-export const CreatePostAvatar = ({
+export const PostAvatar = ({
   preview,
   register,
-  next,
+  disabled,
 }: ICreatePostAvatar) => {
   return (
-    <Cont isPreview={Boolean(preview)}>
+    <Cont isPreview={Boolean(preview)} isDisable={disabled}>
       <AvatarLabel htmlFor="avatar">
         <ThumnailAvatar preview={preview} />
         <input
           {...register}
-          disabled={next}
+          disabled={disabled}
           id="avatar"
           name="avatar"
           type="file"
@@ -29,7 +29,8 @@ export const CreatePostAvatar = ({
     </Cont>
   );
 };
-const Cont = styled.article<{ isPreview?: boolean }>`
+const Cont = styled.article<{ isPreview?: boolean; isDisable?: boolean }>`
+  cursor: ${(p) => !p.isDisable && 'pointer'};
   border-radius: 3px;
   border: ${(p) => !p.isPreview && '1px solid #2d3436'};
   .thum-avatar {

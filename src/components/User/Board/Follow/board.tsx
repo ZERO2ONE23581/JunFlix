@@ -7,6 +7,10 @@ import {
   IFollowBoardProps,
   IGetFollowingBoard,
 } from '../../../../types/follow';
+import {
+  FollowedBoardIcon,
+  UnFollowedBoardIcon,
+} from '../../../Style/Svg/FollowBoard';
 
 export const FollowBoard = ({ isMyBoard }: IFollowBoardProps) => {
   const router = useRouter();
@@ -52,9 +56,9 @@ export const FollowBoard = ({ isMyBoard }: IFollowBoardProps) => {
           </span>
         </Counts>
       ) : (
-        <Btn isFollowing={data?.isFollowing} onClick={handleClick}>
-          {data?.isFollowing ? 'Following' : 'Follow'}
-        </Btn>
+        <Button isFollowing={data?.isFollowing} onClick={handleClick}>
+          {data?.isFollowing ? <FollowedBoardIcon /> : <UnFollowedBoardIcon />}
+        </Button>
       )}
     </Cont>
   );
@@ -67,19 +71,9 @@ const Cont = styled.article`
   align-items: center;
   justify-content: center;
 `;
-const Btn = styled.button<{ isFollowing: boolean | undefined }>`
-  font-size: 1.2rem;
-  font-weight: 600;
-  border-radius: 5px;
-  padding: 7px 20px;
+const Button = styled.button<{ isFollowing: boolean | undefined }>`
   border: none;
-  color: ${(p) => (p.isFollowing ? 'whitesmoke' : p.theme.color.bg)};
-  background-color: ${(p) =>
-    p.isFollowing ? p.theme.color.logo : p.theme.color.font};
-  &:hover {
-    color: ${(p) => p.theme.color.bg};
-    background-color: ${(p) => p.theme.color.logo};
-  }
+  background-color: inherit;
 `;
 const Counts = styled.article`
   display: flex;

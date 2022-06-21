@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -11,6 +11,7 @@ import { BoardDetail } from '../../../../../src/components/User/Board/Detail';
 import { DeleteBoardModal } from '../../../../../src/components/User/Board/DeleteModal';
 import { CreatePostModal } from '../../../../../src/components/User/Post/Create/PostModal';
 import { ClosePostModal } from '../../../../../src/components/User/Post/CloseModal';
+import { PostList } from '../../../../../src/components/User/Post/List';
 
 const BoardInfo: NextPage = () => {
   const router = useRouter();
@@ -19,38 +20,39 @@ const BoardInfo: NextPage = () => {
     user_id && board_id && `/api/user/${user_id}/board/${board_id}`
   );
   const avatar = AvatarURL(data?.board?.avatar);
-  const [openDelModal, setOpenDelModal] = useState(false);
-  const [openPostModal, setOpenPostModal] = useState(false);
-  const [openDelPostModal, setOpenDelPostModal] = useState(false);
+  const [isDel, setIsDel] = useState(false);
+  const [isPost, setIsPost] = useState(false);
+  const [isClose, setIsClose] = useState(false);
   const closeModal = () => {
-    setOpenDelModal(false);
+    setIsDel(false);
   };
+  const BoardHost = data?.board?.user?.username;
+  const IsAnyPost = Boolean(data?.board?.posts.length! > 0);
+
   return (
     <>
-      <Title title={`${data?.board?.user?.username}님의 보드`} />
-
-      <Cont bg={avatar}>
+      <Title title={`${BoardHost}님의 보드`} />
+      <Cont bg={avatar} IsAnyPost={IsAnyPost}>
         <BoardDetail
           board={data?.board}
-          setOpenDelModal={setOpenDelModal}
-          openPost={setOpenPostModal}
+          setIsDel={setIsDel}
+          isPost={isPost}
+          setIsPost={setIsPost}
         />
+        <PostList isBoardPosts hostName={BoardHost} />
+        {isDel && <DeleteBoardModal closeModal={setIsDel} />}
+        {isPost && <CreatePostModal openModal={setIsClose} />}
+        {isClose && (
+          <ClosePostModal closeModal={setIsPost} closeDelModal={setIsClose} />
+        )}
+        {isDel && <ModalClose onClick={closeModal} />}
       </Cont>
-
-      {openDelModal && <DeleteBoardModal closeModal={setOpenDelModal} />}
-      {openPostModal && <CreatePostModal openModal={setOpenDelPostModal} />}
-      {openDelPostModal && (
-        <ClosePostModal
-          closeModal={setOpenPostModal}
-          closeDelModal={setOpenDelPostModal}
-        />
-      )}
-      {openDelModal && <ModalClose onClick={closeModal} />}
     </>
   );
 };
 export default BoardInfo;
 
-const Cont = styled(PageWithBg)`
-  padding: 0 11%;
+const Cont = styled(PageWithBg)<{ IsAnyPost: boolean }>`
+  padding: 3% 15%;
+  height: ${(p) => p.IsAnyPost && '100%'};
 `;

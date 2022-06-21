@@ -9,8 +9,8 @@ import { IPostForm } from '../../../types/post';
 import { TextAreaWrap } from '../../Style/Input/TextArea';
 
 interface ICreatePostInputsProps {
-  maxCnt: number;
-  maxTitle: number;
+  maxCnt?: number;
+  maxTitle?: number;
   ErrCnt?: string;
   ErrTitle?: string;
   watch: UseFormWatch<IPostForm>;

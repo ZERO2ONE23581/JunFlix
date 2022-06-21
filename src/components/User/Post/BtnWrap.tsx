@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../Style/Button';
 import { Dispatch, SetStateAction } from 'react';
+import { useRouter } from 'next/router';
+import useUser from '../../../libs/client/useUser';
 
 interface IBtnWrapProps {
   next: boolean;
@@ -27,6 +29,65 @@ export const BtnWrap = ({
           <Btn type="button" name="Next" onClick={() => setNext(true)} />
         )}
         {next && <Btn type="submit" name="포스트 생성" loading={loading} />}
+      </Cont>
+    </>
+  );
+};
+interface IPostInfoBtnWrapProps {
+  edit: boolean;
+  loading: boolean;
+  openSetup: boolean;
+  setEdit: Dispatch<SetStateAction<boolean>>;
+  setOpenSetup: Dispatch<SetStateAction<boolean>>;
+  setOpenDelModal: Dispatch<SetStateAction<boolean>>;
+}
+export const PostInfoBtnWrap = ({
+  edit,
+  setEdit,
+  loading,
+  openSetup,
+  setOpenSetup,
+  setOpenDelModal,
+}: IPostInfoBtnWrapProps) => {
+  const router = useRouter();
+  const { user_id, board_id } = router.query;
+  const ClickBackToBoard = () =>
+    router.push(`/user/${user_id}/board/${board_id}`);
+  const { isLoggedIn, loggedInUser } = useUser();
+  const IsMyPost = Boolean(isLoggedIn && loggedInUser?.id === Number(user_id));
+  return (
+    <>
+      <Cont>
+        <Btn
+          name="Board"
+          loading={loading}
+          type="button"
+          onClick={ClickBackToBoard}
+        />
+        {IsMyPost && (
+          <Btn
+            name={openSetup ? 'Back' : 'Setting'}
+            loading={loading}
+            type="button"
+            onClick={() => setOpenSetup((p) => !p)}
+          />
+        )}
+        {openSetup && (
+          <Btn
+            loading={loading}
+            name={edit ? 'Cancel' : 'Edit'}
+            type="button"
+            onClick={() => setEdit((p) => !p)}
+          />
+        )}
+        {openSetup && (
+          <Btn
+            loading={loading}
+            name="Delete"
+            type="button"
+            onClick={() => setOpenDelModal((p) => !p)}
+          />
+        )}
       </Cont>
     </>
   );

@@ -80,9 +80,9 @@ export const ModalSchema = styled.article`
   top: 50%;
   left: 50%;
   z-index: 994;
-  border-radius: 5px;
   position: absolute;
   transform: translate(-50%, -50%);
+  border-radius: 5px;
   border: ${(p) => p.theme.border};
   color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
@@ -128,7 +128,9 @@ export const ModalClose = styled.article`
   position: absolute;
   width: 100%;
   height: 130vh;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
+  background-color: red;
 `;
 export const ListCont = styled.section`
   h1 {
@@ -154,7 +156,7 @@ export const ThumnAvatarCont = styled.article`
 export const PageWithBg = styled(Page)<{
   bg?: string | boolean | null;
 }>`
-  height: 90vh;
+  height: 100vh;
   background-color: black;
   background: ${(p) => p.bg && `url(${p.bg})   center / cover no-repeat`};
 `;
