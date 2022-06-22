@@ -1,17 +1,17 @@
 import useSWR from 'swr';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { IGetBoard } from '../../../../../src/types/board';
 import { Title } from '../../../../../src/components/Layout/Title';
 import { ModalClose, PageWithBg } from '../../../../../styles/global';
+import { PostList } from '../../../../../src/components/User/Post/List';
 import { AvatarURL } from '../../../../../src/components/User/Avatar/URL';
 import { BoardDetail } from '../../../../../src/components/User/Board/Detail';
+import { ClosePostModal } from '../../../../../src/components/User/Post/CloseModal';
 import { DeleteBoardModal } from '../../../../../src/components/User/Board/DeleteModal';
 import { CreatePostModal } from '../../../../../src/components/User/Post/Create/PostModal';
-import { ClosePostModal } from '../../../../../src/components/User/Post/CloseModal';
-import { PostList } from '../../../../../src/components/User/Post/List';
 
 const BoardInfo: NextPage = () => {
   const router = useRouter();

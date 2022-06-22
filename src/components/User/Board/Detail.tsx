@@ -1,11 +1,13 @@
-import styled from '@emotion/styled';
 import { BtnWrap } from './BtnWrap';
+import styled from '@emotion/styled';
 import { FollowCounts } from './Follow/counts';
 import { Dispatch, SetStateAction } from 'react';
 import { ProfileAvatar } from '../Avatar/Profile';
 import useUser from '../../../libs/client/useUser';
 import { FormCont } from '../../../../styles/global';
+import { IsHostSvg } from '../../Style/Svg/IsHostSvg';
 import { IBoardWithAttrs } from '../../../types/board';
+import { FollowBoardBtn } from './Follow/FollowBoardBtn';
 
 interface IBoardDetailProps {
   isPost: boolean;
@@ -19,8 +21,8 @@ export const BoardDetail = ({
   setIsDel,
   setIsPost,
 }: IBoardDetailProps) => {
-  const { loggedInUser } = useUser();
-  const isMyBoard = Boolean(loggedInUser?.id === board?.UserID);
+  const { isLoggedIn, loggedInUser } = useUser();
+  const isHost = Boolean(isLoggedIn && loggedInUser?.id === board?.UserID);
   return (
     <>
       <Cont>
@@ -33,11 +35,25 @@ export const BoardDetail = ({
         </Creator>
         <Board>
           <article className="title">
-            <h1>{board?.title}</h1>
+            <h1>
+              <span>{board?.title}</span>
+              <span>
+                <IsHostSvg
+                  USERID={board?.UserID!}
+                  property={{ size: 28, top: -2, right: -50 }}
+                />
+                {!isHost && (
+                  <FollowBoardBtn
+                    ID={{ USERID: board?.UserID!, BOARDID: board?.id! }}
+                    property={{ size: 35, top: -2, right: -70 }}
+                  />
+                )}
+              </span>
+            </h1>
             <BtnWrap
               isPost={isPost}
               setIsPost={setIsPost}
-              isMyBoard={isMyBoard}
+              isHost={isHost}
               setIsDel={setIsDel}
             />
           </article>
@@ -101,6 +117,7 @@ const Board = styled.article`
       font-size: 2rem;
       font-weight: 700;
       margin-bottom: 0;
+      position: relative;
     }
   }
 `;

@@ -7,7 +7,7 @@ import { PostInfoBtnWrap } from './BtnWrap';
 import { useEffect, useState } from 'react';
 import { InputWrap } from '../../Style/Input';
 import { ErrorMsg } from '../../Style/ErrMsg';
-import { PostAvatar } from './CreatePostAvatar';
+import { PostAvatar } from './PostAvatar';
 import { PostInputs } from './CreatePostInputs';
 import { MutationRes } from '../../../types/mutation';
 import { Form, ModalSchema, Page } from '../../../../styles/global';
@@ -19,7 +19,7 @@ import styled from '@emotion/styled';
 import { HostIcon } from '../Avatar/Profile';
 
 interface IPostDetailProps {
-  post: Post;
+  post?: Post;
 }
 
 export const PostDetail = ({ post }: IPostDetailProps) => {

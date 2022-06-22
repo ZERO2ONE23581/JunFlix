@@ -1,24 +1,24 @@
-import { Dispatch, SetStateAction, useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
-import { FollowBoard } from './Follow/board';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 interface IBoardBtnWrap {
   isPost: boolean;
-  isMyBoard: boolean;
+  isHost: boolean;
   setIsPost: Dispatch<SetStateAction<boolean>>;
   setIsDel: Dispatch<SetStateAction<boolean>>;
 }
 export const BtnWrap = ({
   isPost,
-  isMyBoard,
+  isHost,
   setIsPost,
   setIsDel,
 }: IBoardBtnWrap) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const [clickSetting, setClickSetting] = useState(false);
+
   return (
     <Cont>
       {!clickSetting && (
@@ -29,7 +29,7 @@ export const BtnWrap = ({
           onClick={() => router.push(`/user/all/boards`)}
         />
       )}
-      {isMyBoard && (
+      {isHost && (
         <>
           {!clickSetting && (
             <Btn
@@ -64,7 +64,6 @@ export const BtnWrap = ({
           />
         </>
       )}
-      {!isMyBoard && <FollowBoard isMyBoard={isMyBoard} />}
     </Cont>
   );
 };

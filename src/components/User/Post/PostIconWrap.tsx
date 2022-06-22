@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import useUser from '../../../libs/client/useUser';
-import { CommentIcon, IsMyIcon, LikesIcon } from '../../Style/Svg';
+import { CommentIcon, LikesIcon } from '../../Style/Svg';
 
 interface IIsMyPostProps {
   user_id: number;
@@ -13,8 +13,6 @@ export const PostIconWrap = ({
   board_id,
   post_id,
 }: IIsMyPostProps) => {
-  const { loggedInUser } = useUser();
-  const isOwner = Boolean(loggedInUser?.id === user_id);
   const { data } = useSWR(
     `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
@@ -25,7 +23,7 @@ export const PostIconWrap = ({
       <ul>
         <Icon>
           <ul>
-            <li>{isOwner && <IsMyIcon />}</li>
+            {/* <li>{isOwner && <IsMyIcon />}</li> */}
             <li>{isLiked ? <LikesIcon solid /> : <LikesIcon empty />}</li>
             <li>{isComment ? <CommentIcon solid /> : <CommentIcon empty />}</li>
           </ul>

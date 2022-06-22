@@ -12,7 +12,7 @@ import {
   Grid,
   ListCont,
   ModalClose,
-  ThumnAvatarCont,
+  ListAvatarInsideBoard,
 } from '../../../../styles/global';
 
 export const PostList = ({
@@ -55,9 +55,13 @@ export const PostList = ({
       {readPost && <ModalClose onClick={() => setReadPost(false)} />}
       {readPost && <ReadPost post_id={postId} openModal={setReadPost} />}
       <Cont>
-        <Grid className="grid">
+        <Grid size={3}>
           {data?.posts?.map((post) => (
-            <Post onClick={() => clickPost(post.id)} key={post.id}>
+            <Post
+              isAvatar={Boolean(post.avatar)}
+              onClick={() => clickPost(post.id)}
+              key={post.id}
+            >
               <ThumnailAvatar url={post.avatar} />
               <PostIconWrap
                 post_id={post.id}
@@ -71,7 +75,7 @@ export const PostList = ({
 
       {isGetLikes && (
         <Cont>
-          <Grid className="grid">
+          <Grid size={3}>
             {data?.postlikes?.map((like) => (
               <Link
                 key={like.id}
@@ -88,13 +92,5 @@ export const PostList = ({
     </>
   );
 };
-const Cont = styled(ListCont)`
-  .grid {
-    margin-top: 20px;
-    grid-template-columns: repeat(3, 1fr);
-  }
-`;
-const Post = styled(ThumnAvatarCont)`
-  cursor: pointer;
-  position: relative;
-`;
+const Cont = styled(ListCont)``;
+const Post = styled(ListAvatarInsideBoard)``;

@@ -7,7 +7,7 @@ import { PostNotice } from './CreatePostNotice';
 import { HostIcon } from '../../Avatar/Profile';
 import { PostInputs } from '../CreatePostInputs';
 import { ErrorMsg } from '../../../Style/ErrMsg';
-import { PostAvatar } from '../CreatePostAvatar';
+import { PostAvatar } from '../PostAvatar';
 import { IPostForm } from '../../../../types/post';
 import useMutation from '../../../../libs/client/useMutation';
 import { ModalClose, ModalSchema } from '../../../../../styles/global';

@@ -42,13 +42,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (board?.UserID !== +user_id)
     return res.json({ ok: false, error: 'INVALID USER!' });
   //
-  const isFollowing = Boolean(
-    await client.following.findFirst({
-      where: { UserID: user?.id, BoardID: board.id },
-    })
-  );
+  if (user) {
+    const isFollowing = await client.following.findFirst({
+      where: { UserID: user.id, BoardID: board.id },
+    });
+    return res.json({ ok: true, board, isFollowing });
+  }
   //
-  return res.json({ ok: true, board, isFollowing });
+  return res.json({ ok: true, board });
 }
 export default withApiSession(
   withHandler({ methods: ['GET'], handler, isPrivate: false })

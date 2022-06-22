@@ -15,7 +15,7 @@ export interface IInputWrapProps {
   isSelect?: boolean;
   disabled?: boolean;
   inputErrMsg?: string;
-  register: UseFormRegisterReturn;
+  register?: UseFormRegisterReturn;
 }
 export const InputWrap = ({
   max,
@@ -24,8 +24,6 @@ export const InputWrap = ({
   label,
   watch,
   isValue,
-  children,
-  isSelect,
   disabled,
   register,
   inputErrMsg,

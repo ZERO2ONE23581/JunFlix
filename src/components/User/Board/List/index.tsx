@@ -2,16 +2,12 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import { BoardListInfo } from './info';
-import { BoardIconWrap } from '../IconWrap';
+import { Avatar } from '../../Avatar/AvatarInput';
 import useUser from '../../../../libs/client/useUser';
-import { ThumnailAvatar } from '../../Avatar/Thumnail';
+import { IsHostSvg } from '../../../Style/Svg/IsHostSvg';
+import { FollowBoardBtn } from '../Follow/FollowBoardBtn';
 import { IBoardListProps, IGetBoards } from '../../../../types/board';
-import {
-  Grid,
-  Info,
-  ListCont,
-  ThumnAvatarCont,
-} from '../../../../../styles/global';
+import { Grid, Info, ListCont, ListAvatar } from '../../../../../styles/global';
 
 export const BoardList = ({
   isSelect,
@@ -44,15 +40,27 @@ export const BoardList = ({
           <span>* 게시물을 만들 회원님의 보드를 선택해주세요.</span>
         </Info>
       )}
-      <Grid>
+      <Grid size={4}>
         {boards?.map((board) => (
           <Board key={board.id}>
             <Link href={`${BoardLink(board.UserID, board.id)}`}>
               <a>
-                <ThumnailAvatar isBoard url={board.avatar} />
+                <Avatar
+                  size={{ height: 330 }}
+                  disabled
+                  avatar={board.avatar}
+                  preview=""
+                />
               </a>
             </Link>
-            <BoardIconWrap user_id={board.UserID} board_id={board.id} />
+            <IsHostSvg
+              USERID={board.UserID}
+              property={{ size: 26, top: 12, left: 12 }}
+            />
+            <FollowBoardBtn
+              ID={{ USERID: board?.UserID, BOARDID: board?.id }}
+              property={{ size: 33, bottom: 120, right: 10 }}
+            />
             <BoardListInfo board={board} />
           </Board>
         ))}
@@ -65,4 +73,4 @@ const Cont = styled(ListCont)`
     margin-bottom: 20px;
   }
 `;
-const Board = styled(ThumnAvatarCont)``;
+const Board = styled(ListAvatar)``;

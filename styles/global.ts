@@ -128,9 +128,7 @@ export const ModalClose = styled.article`
   position: absolute;
   width: 100%;
   height: 130vh;
-  height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
-  background-color: red;
 `;
 export const ListCont = styled.section`
   h1 {
@@ -141,18 +139,30 @@ export const ListCont = styled.section`
     color: ${(p) => p.theme.color.logo};
   }
 `;
-export const Grid = styled.article`
+export const Grid = styled.article<{ size: number }>`
+  margin: 20px auto;
   gap: 20px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: ${(p) => p.size && `repeat(${p.size}, 1fr)`};
 `;
-export const ThumnAvatarCont = styled.article`
+export const ListAvatar = styled.article<{ isAvatar?: boolean }>`
+  cursor: pointer;
   overflow: hidden;
-  border-radius: 5px;
+  border-radius: 3px;
+  position: relative;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
+  border-right: ${(p) => !p.isAvatar && p.theme.border};
+  border-bottom: ${(p) => !p.isAvatar && p.theme.border};
+  .thumnail-avatar {
+    height: 300px;
+  }
 `;
-
-//
+export const ListAvatarInsideBoard = styled(ListAvatar)`
+  border-radius: 5px;
+  .thumnail-avatar {
+    /* height: 400px; */
+  }
+`;
 export const PageWithBg = styled(Page)<{
   bg?: string | boolean | null;
 }>`

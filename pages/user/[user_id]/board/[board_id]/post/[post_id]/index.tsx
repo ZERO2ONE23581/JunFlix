@@ -14,13 +14,12 @@ const PostInfo: NextPage = () => {
     isQueryId && `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
   const PostTitle = data?.post.title;
-  const Post = data?.post;
   //
   return (
     <>
       <Title title={PostTitle!} />
       <Page>
-        <PostDetail />
+        <PostDetail post={data?.post} />
       </Page>
     </>
   );
