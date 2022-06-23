@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { Page } from '../../../../styles/global';
 import { Title } from '../../../../src/components/Layout/Title';
-import { PostList } from '../../../../src/components/User/Post/List';
+import { PostList } from '../../../../src/components/User/Post/PostList';
 
 const AllPosts: NextPage = () => {
   return (

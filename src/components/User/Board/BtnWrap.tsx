@@ -4,16 +4,16 @@ import { Btn } from '../../Style/Button';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 interface IBoardBtnWrap {
-  isPost: boolean;
+  createPost: boolean;
   isHost: boolean;
-  setIsPost: Dispatch<SetStateAction<boolean>>;
-  setIsDel: Dispatch<SetStateAction<boolean>>;
+  openCreatePost: Dispatch<SetStateAction<boolean>>;
+  openDeleteBoard: Dispatch<SetStateAction<boolean>>;
 }
 export const BtnWrap = ({
-  isPost,
+  createPost,
   isHost,
-  setIsPost,
-  setIsDel,
+  openCreatePost,
+  openDeleteBoard,
 }: IBoardBtnWrap) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
@@ -35,8 +35,8 @@ export const BtnWrap = ({
             <Btn
               name="Post"
               type="button"
-              clicked={isPost}
-              onClick={() => setIsPost(true)}
+              clicked={createPost}
+              onClick={() => openCreatePost(true)}
             />
           )}
           <Btn
@@ -60,7 +60,7 @@ export const BtnWrap = ({
             name="Delete"
             type="button"
             clicked={false}
-            onClick={() => setIsDel((p: boolean) => !p)}
+            onClick={() => openDeleteBoard((p: boolean) => !p)}
           />
         </>
       )}

@@ -1,19 +1,14 @@
 import useSWR from 'swr';
-import Link from 'next/link';
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { ReadPost } from './ReadPost';
 import { useRouter } from 'next/router';
-import { PostIconWrap } from './PostIconWrap';
+import { PostIcons } from './PostIcons';
+import { Svg } from '../../Style/Svg/Svg';
+import { Background } from '../Avatar/Avatar';
 import useUser from '../../../libs/client/useUser';
-import { ThumnailAvatar } from '../Avatar/Thumnail';
 import { IGetAllPosts, IPostListProps } from '../../../types/post';
-import {
-  Grid,
-  ListCont,
-  ModalClose,
-  ListAvatarInsideBoard,
-} from '../../../../styles/global';
+import { Grid, ListCont, ModalClose } from '../../../../styles/global';
 
 export const PostList = ({
   isBoardPosts,
@@ -52,18 +47,16 @@ export const PostList = ({
   };
   return (
     <>
-      {readPost && <ModalClose onClick={() => setReadPost(false)} />}
-      {readPost && <ReadPost post_id={postId} openModal={setReadPost} />}
       <Cont>
-        <Grid size={3}>
+        <Grid className="post-grid" size={3}>
           {data?.posts?.map((post) => (
             <Post
-              isAvatar={Boolean(post.avatar)}
-              onClick={() => clickPost(post.id)}
               key={post.id}
+              avatar={post.avatar}
+              onClick={() => clickPost(post.id)}
             >
-              <ThumnailAvatar url={post.avatar} />
-              <PostIconWrap
+              {!post.avatar && <Svg type="no-image" />}
+              <PostIcons
                 post_id={post.id}
                 user_id={post.UserID}
                 board_id={post.BoardID}
@@ -72,25 +65,19 @@ export const PostList = ({
           ))}
         </Grid>
       </Cont>
-
-      {isGetLikes && (
-        <Cont>
-          <Grid size={3}>
-            {data?.postlikes?.map((like) => (
-              <Link
-                key={like.id}
-                href={`/user/${like.post.UserID}/board/${like.post.BoardID}/post/${like.post.id}`}
-              >
-                <a>
-                  <ThumnailAvatar url={like.post.avatar} />
-                </a>
-              </Link>
-            ))}
-          </Grid>
-        </Cont>
-      )}
+      {readPost && <ReadPost post_id={postId} setReadPost={setReadPost} />}
+      {readPost && <ModalClose onClick={() => setReadPost(false)} />}
     </>
   );
 };
-const Cont = styled(ListCont)``;
-const Post = styled(ListAvatarInsideBoard)``;
+const Cont = styled(ListCont)`
+  .post-grid {
+    margin-top: 20px;
+  }
+`;
+const Post = styled(Background)`
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

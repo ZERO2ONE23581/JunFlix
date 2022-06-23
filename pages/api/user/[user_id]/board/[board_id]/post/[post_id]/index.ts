@@ -19,6 +19,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           id: 'desc',
         },
       },
+      user: { select: { username: true, avatar: true } },
+      board: { select: { title: true, avatar: true } },
       _count: { select: { likes: true, comments: true } },
     },
   });

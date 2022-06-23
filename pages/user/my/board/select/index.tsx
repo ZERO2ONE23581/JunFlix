@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import useUser from '../../../../../src/libs/client/useUser';
 import { Title } from '../../../../../src/components/Layout/Title';
-import { BoardList } from '../../../../../src/components/User/Board/List';
+import { BoardList } from '../../../../../src/components/User/Board/List/BoardList';
 import { Page } from '../../../../../styles/global';
 
 const BoardSelect: NextPage = () => {

@@ -4,8 +4,8 @@ import type { NextPage } from 'next';
 import useUser from '../../../../../src/libs/client/useUser';
 import { Btn } from '../../../../../src/components/Style/Button';
 import { Title } from '../../../../../src/components/Layout/Title';
-import { PostList } from '../../../../../src/components/User/Post/List';
-import { BoardList } from '../../../../../src/components/User/Board/List';
+import { PostList } from '../../../../../src/components/User/Post/PostList';
+import { BoardList } from '../../../../../src/components/User/Board/List/BoardList';
 import { ReviewList } from '../../../../../src/components/User/Review/ReviewList';
 import { UserProfileInfo } from '../../../../../src/components/User/Profile/UserProfileInfo';
 import { FollowingBoards } from '../../../../../src/components/User/Profile/FollowingBoards';
@@ -60,7 +60,7 @@ const MyPage: NextPage = () => {
         {tab === 'post' && (
           <>
             <h1>{loggedInUser?.username}'s Posts</h1>
-            <PostList isMyPosts={isLoggedIn} />
+            <PostList isAllMyPosts={isLoggedIn} />
           </>
         )}
         {tab === 'review' && (
@@ -86,7 +86,7 @@ const MyPage: NextPage = () => {
             {likes === 'likesPost' && (
               <>
                 <h1>{loggedInUser?.username}님이 좋아하는 포스트</h1>
-                <PostList findLikes={true} />
+                <PostList isGetLikes={true} />
               </>
             )}
             {likes === 'likesReview' && (

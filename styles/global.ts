@@ -80,12 +80,11 @@ export const ModalSchema = styled.article`
   top: 50%;
   left: 50%;
   z-index: 994;
+  overflow: hidden;
+  border-radius: 5px;
   position: absolute;
   transform: translate(-50%, -50%);
-  border-radius: 5px;
-  border: ${(p) => p.theme.border};
   color: ${(p) => p.theme.color.font};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
 `;
 export const Modal = styled(ModalSchema)`
@@ -140,7 +139,6 @@ export const ListCont = styled.section`
   }
 `;
 export const Grid = styled.article<{ size: number }>`
-  margin: 20px auto;
   gap: 20px;
   display: grid;
   grid-template-columns: ${(p) => p.size && `repeat(${p.size}, 1fr)`};

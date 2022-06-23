@@ -10,16 +10,16 @@ import { IBoardWithAttrs } from '../../../types/board';
 import { FollowBoardBtn } from './Follow/FollowBoardBtn';
 
 interface IBoardDetailProps {
-  isPost: boolean;
+  createPost: boolean;
   board?: IBoardWithAttrs;
-  setIsDel: Dispatch<SetStateAction<boolean>>;
-  setIsPost: Dispatch<SetStateAction<boolean>>;
+  openDeleteBoard: Dispatch<SetStateAction<boolean>>;
+  openCreatePost: Dispatch<SetStateAction<boolean>>;
 }
-export const BoardDetail = ({
-  isPost,
+export const BoardInfo = ({
   board,
-  setIsDel,
-  setIsPost,
+  createPost,
+  openDeleteBoard,
+  openCreatePost,
 }: IBoardDetailProps) => {
   const { isLoggedIn, loggedInUser } = useUser();
   const isHost = Boolean(isLoggedIn && loggedInUser?.id === board?.UserID);
@@ -44,17 +44,17 @@ export const BoardDetail = ({
                 />
                 {!isHost && (
                   <FollowBoardBtn
-                    ID={{ USERID: board?.UserID!, BOARDID: board?.id! }}
-                    property={{ size: 35, top: -2, right: -70 }}
+                    USERID={board?.UserID!}
+                    BOARDID={board?.id!}
                   />
                 )}
               </span>
             </h1>
             <BtnWrap
-              isPost={isPost}
-              setIsPost={setIsPost}
               isHost={isHost}
-              setIsDel={setIsDel}
+              openDeleteBoard={openDeleteBoard}
+              createPost={createPost}
+              openCreatePost={openCreatePost}
             />
           </article>
           <Info>
@@ -121,6 +121,7 @@ const Board = styled.article`
     }
   }
 `;
+
 const Info = styled.ul`
   font-size: 1.1rem;
   li {

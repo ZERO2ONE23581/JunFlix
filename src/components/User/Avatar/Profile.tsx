@@ -56,9 +56,8 @@ export const HostIcon = ({ size }: IHostIconProps) => {
     </Host>
   );
 };
-const Host = styled.div`
-  gap: 10px;
+const Host = styled.span`
+  gap: 12px;
   display: flex;
   align-items: center;
-  justify-content: start;
 `;

@@ -4,19 +4,19 @@ import { Modal, ModalClose } from '../../../../styles/global';
 import { Btn } from '../../Style/Button';
 
 interface IClosePostModalProps {
-  closeModal: Dispatch<SetStateAction<boolean>>;
-  closeDelModal: Dispatch<SetStateAction<boolean>>;
+  openCreatePost: Dispatch<SetStateAction<boolean>>;
+  openDeletePost: Dispatch<SetStateAction<boolean>>;
 }
-export const ClosePostModal = ({
-  closeModal,
-  closeDelModal,
+export const DeletePost = ({
+  openCreatePost,
+  openDeletePost,
 }: IClosePostModalProps) => {
   const clickDelete = () => {
-    closeModal(false);
-    closeDelModal(false);
+    openCreatePost(false);
+    openDeletePost(false);
   };
   const clickCancel = () => {
-    closeDelModal(false);
+    openDeletePost(false);
   };
   return (
     <>

@@ -19,9 +19,9 @@ interface ICreatePostRes {
   post?: Post;
 }
 interface ICreatePostModalProps {
-  openModal: Dispatch<SetStateAction<boolean>>;
+  openDeletePost: Dispatch<SetStateAction<boolean>>;
 }
-export const CreatePostModal = ({ openModal }: ICreatePostModalProps) => {
+export const CreatePost = ({ openDeletePost }: ICreatePostModalProps) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const [createPost, { data, loading }] = useMutation<ICreatePostRes>(
@@ -85,7 +85,7 @@ export const CreatePostModal = ({ openModal }: ICreatePostModalProps) => {
             next={next}
             loading={Loading}
             setNext={setNext}
-            openModal={openModal}
+            openDeletePost={openDeletePost}
           />
           <article className="wrapper">
             <PostAvatar
@@ -114,7 +114,7 @@ export const CreatePostModal = ({ openModal }: ICreatePostModalProps) => {
         {errors.avatar && <ErrorMsg error={errors.avatar.message} />}
         {data?.error && <ErrorMsg error={data.error} />}
       </Cont>
-      <ModalClose onClick={() => openModal(true)} />
+      <ModalClose onClick={() => openDeletePost(true)} />
     </>
   );
 };

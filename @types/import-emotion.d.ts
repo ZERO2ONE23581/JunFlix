@@ -9,7 +9,10 @@ declare module '@emotion/react' {
       logo: string;
       ok: string;
     };
-    border?: string;
+    border: {
+      thin: string;
+      bold: string;
+    };
     boxShadow: {
       nav: string;
       input: string;

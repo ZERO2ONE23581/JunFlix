@@ -8,19 +8,19 @@ interface IBtnWrapProps {
   next: boolean;
   loading: boolean | null;
   setNext: Dispatch<SetStateAction<boolean>>;
-  openModal: Dispatch<SetStateAction<boolean>>;
+  openDeletePost: Dispatch<SetStateAction<boolean>>;
 }
 export const BtnWrap = ({
   next,
   loading,
   setNext,
-  openModal,
+  openDeletePost,
 }: IBtnWrapProps) => {
   return (
     <>
       <Cont>
         {!next ? (
-          <Btn type="button" name="BACK" onClick={() => openModal(true)} />
+          <Btn type="button" name="BACK" onClick={() => openDeletePost(true)} />
         ) : (
           <Btn type="button" name="Back" onClick={() => setNext(false)} />
         )}
