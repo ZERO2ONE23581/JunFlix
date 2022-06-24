@@ -3,16 +3,16 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Svg } from '../../Style/Svg/Svg';
 import { Author } from '../../../../Author';
-import { Background } from '../Avatar/Avatar';
 import { IGetPost } from '../../../types/post';
 import { Dispatch, SetStateAction } from 'react';
 import { ModalSchema } from '../../../../styles/global';
+import { Background } from '../Avatar/AvatarURL';
 
 interface ICreatePostModalProps {
   post_id: number;
   setReadPost: Dispatch<SetStateAction<boolean>>;
 }
-export const ReadPost = ({ setReadPost, post_id }: ICreatePostModalProps) => {
+export const PostInfo = ({ setReadPost, post_id }: ICreatePostModalProps) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const { data } = useSWR<IGetPost>(
@@ -23,7 +23,7 @@ export const ReadPost = ({ setReadPost, post_id }: ICreatePostModalProps) => {
   const post = data?.post;
   return (
     <Cont>
-      <PostAvatar avatar={post?.avatar!} isAvatar={Boolean(post?.avatar)}>
+      <PostAvatar avatar={post?.avatar!}>
         {!post?.avatar && <Svg type="no-image" />}
       </PostAvatar>
       <Info>
@@ -49,7 +49,7 @@ const Cont = styled(ModalSchema)`
   display: flex;
   overflow: hidden;
 `;
-const PostAvatar = styled(Background)<{ isAvatar: boolean }>`
+const PostAvatar = styled(Background)`
   width: 55%;
   display: flex;
   align-items: center;

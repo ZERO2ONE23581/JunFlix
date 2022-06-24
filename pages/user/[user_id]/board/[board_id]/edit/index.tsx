@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { PageWithBg } from '../../../../../../styles/global';
 import { Title } from '../../../../../../src/components/Layout/Title';
-import { AvatarURL } from '../../../../../../src/components/User/Avatar/URL';
+import { AvatarURL } from '../../../../../../src/components/User/Avatar/AvatarURL';
 import { BoardForm } from '../../../../../../src/components/User/Board/Form';
 
 const EditBoard: NextPage = () => {

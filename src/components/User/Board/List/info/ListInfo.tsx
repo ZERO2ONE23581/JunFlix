@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../../Style/Svg/Svg';
 import { BoardWithUser } from '../../../../../types/board';
 import { FollowBoardBtn } from '../../Follow/FollowBoardBtn';
 
@@ -9,7 +8,7 @@ interface IBoardListInfoProps {
 export const ListInfo = ({ board }: IBoardListInfoProps) => {
   return (
     <Cont>
-      <Wrap>
+      <List>
         <li>
           <span className="title">{board?.title.toUpperCase()}</span>
         </li>
@@ -21,32 +20,26 @@ export const ListInfo = ({ board }: IBoardListInfoProps) => {
           <span>Made by </span>
           <span>{board?.user.username}</span>
         </li>
-      </Wrap>
+      </List>
       <FollowBoardBtn USERID={board?.UserID!} BOARDID={board?.id!} />
-      <div className="follow-button"></div>
-      <div className="created-by-me">
-        <Svg type="created-by-me" />
-      </div>
     </Cont>
   );
 };
 const Cont = styled.article`
   color: white;
   position: relative;
-  .created-by-me {
-    svg {
-      left: 4%;
-      top: -210%;
-      position: absolute;
-    }
+  svg {
+    left: 4%;
+    top: -210%;
+    position: absolute;
   }
   .follow-btn {
-    top: 10%;
-    right: 3%;
+    top: 45%;
+    right: 15%;
     position: absolute;
   }
 `;
-const Wrap = styled.ul`
+const List = styled.ul`
   width: 100%;
   padding: 20px;
   li {

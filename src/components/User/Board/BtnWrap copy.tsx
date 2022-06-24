@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
 import { Dispatch, SetStateAction, useState } from 'react';
+import useUser from '../../../libs/client/useUser';
 
 interface IBoardBtnWrap {
   createPost: boolean;

@@ -1,27 +1,25 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 import { Info } from '../../../../../styles/global';
 
 interface ICreatePostNoticeProps {
   next: boolean;
-  maxCnt?: number;
-  maxTitle?: number;
 }
-export const PostNotice = ({
-  next,
-  maxCnt,
-  maxTitle,
-}: ICreatePostNoticeProps) => {
+export const Notice = ({ next }: ICreatePostNoticeProps) => {
+  const [maxCnt] = useState(700);
+  const [maxTitle] = useState(20);
   return (
     <>
-      <Cont className="info">
-        {!next ? (
-          <>
-            <span>* Please click the icon to add picture on the post.</span>
-            <span className="kor">
-              (사진을 업로드 하려면 아이콘을 클릭하세요.)
-            </span>
-          </>
-        ) : (
+      {!next && (
+        <Cont>
+          <span>* Please click the icon to add picture on the post.</span>
+          <span className="kor">
+            (사진을 업로드 하려면 아이콘을 클릭하세요.)
+          </span>
+        </Cont>
+      )}
+      {next && (
+        <Cont>
           <ul>
             <li>
               <span>* Click the back icon to eidt the picture.</span>
@@ -49,15 +47,14 @@ export const PostNotice = ({
               </span>
             </li>
           </ul>
-        )}
-      </Cont>
+        </Cont>
+      )}
     </>
   );
 };
 const Cont = styled(Info)`
-  width: 100%;
-  padding: 20px 40px;
-  font-size: 1.1rem;
+  padding: 20px;
+  font-size: 1rem;
   .kor {
     margin-left: 10px;
     opacity: 0.8;

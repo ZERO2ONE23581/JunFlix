@@ -27,12 +27,3 @@ export interface IGetAllPosts {
   postlikes: LikesWithPost[];
   reviewLikes: LikesWithReview[];
 }
-export interface IPostListProps {
-  hostName?: string | null;
-  isBoardPosts?: boolean;
-  isAllPosts?: boolean;
-  isAllMyPosts?: boolean;
-  isGetLikes?: boolean;
-  posts?: Post[];
-  // setIsClicked: Dispatch<SetStateAction<boolean>>;
-}

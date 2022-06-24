@@ -16,17 +16,17 @@ export const Btn = ({ clicked, type, name, loading, onClick }: IBtnProps) => {
     </Button>
   );
 };
-const Button = styled.button<{ clicked: boolean | undefined }>`
+const Button = styled.button<{ clicked?: boolean }>`
+  border: none;
   display: flex;
+  font-size: 1rem;
+  padding: 11px 15px;
+  border-radius: 3px;
   align-items: center;
   justify-content: center;
-  border: none;
-  font-size: 1.1rem;
-  border-radius: 3px;
-  padding: 11px 15px;
   color: ${(p) => p.theme.color.bg};
   background-color: ${(p) =>
-    p.clicked ? p.theme.color.logo : p.theme.color.btn};
+    p.clicked ? p.theme.color.logo : p.theme.color.font};
   &:hover {
     color: white;
     background-color: ${(p) => p.theme.color.logo};

@@ -11,7 +11,6 @@ import { ThumnailAvatar } from '../Avatar/Thumnail';
 import { TextAreaWrap } from '../../Style/Input/TextArea';
 import { Form, FormCont, Info } from '../../../../styles/global';
 import useMutation from '../../../libs/client/useMutation';
-import { BoardAvatarIcon } from '../../Style/Svg/BoardAvatar';
 import styled from '@emotion/styled';
 
 interface ICreatePostRes {

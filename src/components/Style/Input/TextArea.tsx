@@ -28,16 +28,14 @@ export const TextAreaWrap = ({
           {label}
         </Label>
         <TextArea
-          autoCapitalize="word"
-          // maxLength={max}
-          rows={10}
           {...register}
           id={id}
           name={id}
           disabled={disabled}
-          onFocus={() => setIsFocus(true)}
+          autoCapitalize="word"
           onBlur={handleBlur}
           placeholder={placeholder}
+          onFocus={() => setIsFocus(true)}
         />
       </div>
       {inputErrMsg && (
@@ -68,17 +66,15 @@ const Cont = styled.article`
 const TextArea = styled.textarea`
   resize: none;
   width: 100%;
-  border: none;
-  padding: 20px 15px;
-  padding-right: 5px;
   font-size: 1rem;
-  border-radius: 5px;
-  border: ${(p) => p.theme.border};
+  padding: 18px 15px;
+  border-radius: 4px;
   color: ${(p) => p.theme.color.font};
+  border: ${(p) => p.theme.border.bold};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
   ::placeholder {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-style: italic;
   }
   :disabled {

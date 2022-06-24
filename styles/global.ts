@@ -13,15 +13,10 @@ export const Page = styled.section`
 `;
 
 export const FormCont = styled.article`
+  border: none;
   padding: 30px 40px;
   border-radius: 8px;
-  border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  h1 {
-    font-weight: 700;
-    font-size: 1.8rem;
-    margin-bottom: 25px;
-  }
 `;
 
 export const BoardFormCont = styled(FormCont)`
@@ -155,6 +150,7 @@ export const ListAvatar = styled.article<{ isAvatar?: boolean }>`
     height: 300px;
   }
 `;
+
 export const ListAvatarInsideBoard = styled(ListAvatar)`
   border-radius: 5px;
   .thumnail-avatar {

@@ -9,7 +9,7 @@ interface IFollowCountsProps {
 
 export const FollowCounts = ({ counts }: IFollowCountsProps) => {
   return (
-    <Cont>
+    <Cont className="follow-counts">
       <Box>
         <span>Posts</span>
         <span className="number data">{counts?.posts}</span>

@@ -1,12 +1,12 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Background } from '../../Avatar/Avatar';
+import { ListInfo } from './info/ListInfo';
 import useUser from '../../../../libs/client/useUser';
 import { Grid, Info, ListCont } from '../../../../../styles/global';
 import { IBoardListProps, IGetBoards } from '../../../../types/board';
-import { ListInfo } from './info/ListInfo';
-import Link from 'next/link';
+import { IsOwner } from '../../../IsOwner';
+import { Background } from '../../Avatar/AvatarURL';
 
 export const BoardList = ({
   isSelect,
@@ -33,6 +33,7 @@ export const BoardList = ({
     if (isSelect)
       return router.push(`/user/${userId}/board/${boardId}/post/create`);
   };
+
   return (
     <Cont>
       <h1>{typeSelect('title')}</h1>
@@ -47,6 +48,7 @@ export const BoardList = ({
           <Board key={board.id} avatar={board.avatar}>
             <Button onClick={() => clickBoard(board.UserID, board.id)} />
             <ListInfo board={board} />
+            <IsOwner USERID={board.UserID} />
           </Board>
         ))}
       </Grid>
@@ -65,4 +67,10 @@ const Board = styled(Background)`
   display: flex;
   justify-content: end;
   flex-direction: column;
+  .is-owner {
+    svg {
+      top: 5%;
+      left: 5%;
+    }
+  }
 `;

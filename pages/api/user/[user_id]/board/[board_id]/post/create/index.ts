@@ -7,28 +7,26 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { Title, content, avatar } = req.body;
   const { user_id, board_id } = req.query;
-  const queryExists = Boolean(user_id && board_id);
+  const isQuery = Boolean(user_id && board_id);
   if (!user)
     return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
-  if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
+  if (!isQuery) return res.json({ ok: false, error: 'QUERY ERROR!' });
   if (!Title)
-    return res.json({ ok: false, error: '데이터가 미입력 되었습니다.!' });
+    return res.json({ ok: false, error: '포스트 제목을 입력해주세요.' });
   if (user?.id !== +user_id)
-    return res.json({ ok: false, error: 'UNAUTHORIZED!' });
-  //
-  const currentBoard = await client.board.findUnique({
-    where: { id: +board_id },
+    return res.json({ ok: false, error: '유저불일치. 수정권한없음.' });
+  const FoundBoard = await client.board.findUnique({
+    where: { id: +board_id.toString() },
     select: { id: true, UserID: true },
   });
-  if (!currentBoard) return res.json({ ok: false, error: 'NO BOARD FOUND!' });
-  //
+  if (!FoundBoard) return res.json({ ok: false, error: 'NO BOARD FOUND!' });
   const post = await client.post.create({
     data: {
-      avatar,
       title: Title,
       content,
-      UserID: currentBoard.UserID,
-      BoardID: currentBoard.id,
+      avatar,
+      UserID: FoundBoard.UserID,
+      BoardID: FoundBoard.id,
     },
     select: { UserID: true, BoardID: true, id: true },
   });
