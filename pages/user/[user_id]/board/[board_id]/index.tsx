@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { PageWithBg } from '../../../../../styles/global';
+import { ModalClose, PageWithBg } from '../../../../../styles/global';
 import { IGetBoard } from '../../../../../src/types/board';
 import { Title } from '../../../../../src/components/Layout/Title';
 import { AvatarUrl } from '../../../../../src/components/User/Avatar/AvatarURL';
@@ -29,7 +29,8 @@ const BoardPage: NextPage = () => {
 export default BoardPage;
 
 const Page = styled(PageWithBg)<{ IsAnyPost: boolean }>`
+  height: 100%;
+  min-height: 100vh;
   padding: 3% 10%;
-  position: relative;
   height: ${(p) => p.IsAnyPost && '100%'};
 `;

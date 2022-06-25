@@ -155,7 +155,7 @@ export const EditPost = ({ post_id, setEditPost }: ICreatePostModalProps) => {
           />
         )}
       </form>
-      <DimBG onClick={() => setEditPost(false)} />
+      <ModalClose zIndex={201} onClick={() => setEditPost(false)} />
     </>
   );
 };
@@ -166,11 +166,7 @@ const Cont = styled(ModalSchema)`
   display: flex;
   overflow: hidden;
 `;
-const DimBG = styled(ModalClose)`
-  top: -10%;
-  left: -27%;
-  z-index: 201;
-`;
+
 const EditInfo = styled.article`
   gap: 5%;
   width: 45%;

@@ -1,10 +1,10 @@
 import { Notice } from './Notice';
 import styled from '@emotion/styled';
 import { Post } from '@prisma/client';
-import { UndoPost } from '../UndoPost';
+import { UndoPost } from './UndoPost';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { SubmitPost } from '../SubmitPost';
+import { SubmitPost } from './SubmitPost';
 import { AvatarInput } from './AvatarInput';
 import { PostContent } from './PostContent';
 import { TitleWithBtn } from '../TitleWithBtn';

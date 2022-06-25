@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../Style/Button';
-import { ErrorMsg } from '../../Style/ErrMsg';
+import { Btn } from '../../../Style/Button';
+import { ErrorMsg } from '../../../Style/ErrMsg';
 import { Dispatch, SetStateAction } from 'react';
-import { Modal, ModalClose } from '../../../../styles/global';
+import { Modal, ModalClose } from '../../../../../styles/global';
 
 interface IClosePostModalProps {
   errors?: {

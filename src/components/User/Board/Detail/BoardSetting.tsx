@@ -24,8 +24,9 @@ export const BoardSetting = ({
     <>
       <Cont>
         <IconBtn
-          isClicked={onSetting}
+          type="button"
           svgType="setting"
+          isClicked={onSetting}
           onClick={() => setOnSetting((p) => !p)}
         />
         {onSetting && (
@@ -36,14 +37,10 @@ export const BoardSetting = ({
           </BtnWrap>
         )}
       </Cont>
-      {onSetting && <SettingClose onClick={() => setOnSetting(false)} />}
+      {onSetting && <ModalClose onClick={() => setOnSetting(false)} />}
     </>
   );
 };
-const SettingClose = styled(ModalClose)`
-  top: -10%;
-  left: -27%;
-`;
 const Cont = styled.div`
   top: 5%;
   right: 10%;

@@ -1,16 +1,17 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Svg } from '../../Style/Svg/Svg';
-import { Author } from '../../../../Author';
-import { IGetPost } from '../../../types/post';
+import { Svg } from '../../../Style/Svg/Svg';
+import { Author } from '../../../../../Author';
+import { IGetPost } from '../../../../types/post';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { ModalClose, ModalSchema } from '../../../../styles/global';
-import { IconBtn } from '../../Style/Button/IconBtn';
-import useUser from '../../../libs/client/useUser';
-import { EditPost } from './Edit/EditPost';
-import { WithAvatar } from './Create/AvatarInput';
-import { PostSetting } from './Create/PostSetting';
+import { ModalClose, ModalSchema } from '../../../../../styles/global';
+import { IconBtn } from '../../../Style/Button/IconBtn';
+import useUser from '../../../../libs/client/useUser';
+import { EditPost } from '../Edit/EditPost';
+import { WithAvatar } from '../Create/AvatarInput';
+import { PostSetting } from '../Create/PostSetting';
+import { DeletePost } from '../Delete/DeletePost';
 
 interface ICreatePostModalProps {
   post_id: number;
@@ -20,10 +21,9 @@ export const ReadPost = ({ post_id, setReadPost }: ICreatePostModalProps) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
   const { user_id, board_id } = router.query;
+  const QueryId = user_id && board_id;
   const { data } = useSWR<IGetPost>(
-    user_id &&
-      board_id &&
-      `/api/user/${user_id}/board/${board_id}/post/${post_id}`
+    QueryId && `/api/user/${user_id}/board/${board_id}/post/${post_id}`
   );
   const post = data?.post;
   const isPostHost = Boolean(loggedInUser?.id === post?.UserID);
@@ -45,7 +45,11 @@ export const ReadPost = ({ post_id, setReadPost }: ICreatePostModalProps) => {
                   setDeletePost={setDeletePost}
                 />
               )}
-              <IconBtn svgType="close-btn" onClick={() => setReadPost(false)} />
+              <IconBtn
+                type="button"
+                svgType="close-btn"
+                onClick={() => setReadPost(false)}
+              />
             </div>
           </Title>
           <Content>
@@ -55,7 +59,10 @@ export const ReadPost = ({ post_id, setReadPost }: ICreatePostModalProps) => {
         </Info>
       </Cont>
       {editPost && <EditPost post_id={post?.id!} setEditPost={setEditPost} />}
-      <PostModalClose onClick={() => setReadPost(false)} />
+      {deletePost && (
+        <DeletePost post_id={post?.id!} closeModal={setDeletePost} />
+      )}
+      <ModalClose onClick={() => setReadPost(false)} />
     </>
   );
 };
@@ -111,8 +118,4 @@ const Content = styled.article`
     border: ${(p) => p.theme.border.bold};
     box-shadow: ${(p) => p.theme.boxShadow.nav};
   }
-`;
-const PostModalClose = styled(ModalClose)`
-  top: -10%;
-  left: -27%;
 `;

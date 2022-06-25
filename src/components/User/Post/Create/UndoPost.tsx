@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { Modal, ModalClose } from '../../../../styles/global';
-import { Btn } from '../../Style/Button';
+import { Modal, ModalClose } from '../../../../../styles/global';
+import { Btn } from '../../../Style/Button';
 
 interface IClosePostModalProps {
   closePost: Dispatch<SetStateAction<boolean>>;
@@ -30,10 +30,14 @@ export const UndoPost = ({ closePost, closeModal }: IClosePostModalProps) => {
           />
         </div>
       </Cont>
-      <ModalClose zIndex={200} />
+      <DimBackground zIndex={200} onClick={() => handleClick(false)} />
     </>
   );
 };
 const Cont = styled(Modal)`
   z-index: 201;
+  border: ${(p) => p.theme.border.bold};
+`;
+const DimBackground = styled(ModalClose)`
+  background-color: rgba(0, 0, 0, 0.5);
 `;

@@ -119,7 +119,7 @@ export const ModalClose = styled.article<{ zIndex?: number }>`
   left: 0;
   width: 100vw;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.8);
 `;
 export const ListCont = styled.section`

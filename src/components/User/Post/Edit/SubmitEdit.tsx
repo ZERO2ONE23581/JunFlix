@@ -34,16 +34,11 @@ export const SubmitEdit = ({
         {errors?.title && <ErrorMsg error={errors?.title} />}
         {errors?.content && <ErrorMsg error={errors?.content} />}
       </Cont>
-      <DimBG onClick={() => closeModal(false)} />
+      <ModalClose zIndex={202} onClick={() => closeModal(false)} />
     </>
   );
 };
 const Cont = styled(Modal)`
   z-index: 203;
   border: 1px solid #353b48;
-`;
-const DimBG = styled(ModalClose)`
-  top: -10%;
-  left: -27%;
-  z-index: 202;
 `;

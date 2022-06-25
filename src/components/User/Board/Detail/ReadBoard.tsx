@@ -19,7 +19,7 @@ export const ReadBoard = ({ board }: IBoardDetailProps) => {
   const [createPost, openCreatePost] = useState(false);
   const [editBoard, openEditBoard] = useState(false);
   const [deleteBoard, openDeleteBoard] = useState(false);
-  //
+  const isPosts = Boolean(board?.posts?.length! > 0);
   return (
     <>
       <Cont>
@@ -38,11 +38,17 @@ export const ReadBoard = ({ board }: IBoardDetailProps) => {
           </Info>
         </Board>
 
-        <PostList
-          isHost={isBoardHost}
-          BOARDID={board?.id!}
-          USERID={board?.UserID!}
-        />
+        {isPosts ? (
+          <PostList
+            isHost={isBoardHost}
+            BOARDID={board?.id!}
+            USERID={board?.UserID!}
+          />
+        ) : (
+          <>
+            <h1>포스트가 아직 없습니다.</h1>
+          </>
+        )}
       </Cont>
       {createPost && isBoardHost && (
         <CreatePost board={board} openCreatePost={openCreatePost} />
