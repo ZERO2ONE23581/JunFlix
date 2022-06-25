@@ -27,7 +27,7 @@ const Cont = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 400;
   font-style: italic;
   span {

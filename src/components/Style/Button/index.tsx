@@ -11,7 +11,12 @@ interface IBtnProps {
 
 export const Btn = ({ clicked, type, name, loading, onClick }: IBtnProps) => {
   return (
-    <Button clicked={clicked} type={type} onClick={onClick}>
+    <Button
+      type={type}
+      clicked={clicked}
+      onClick={onClick}
+      className="btn-style"
+    >
       {loading ? 'Loading...' : name}
     </Button>
   );

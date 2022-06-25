@@ -63,7 +63,7 @@ const Cont = styled.article`
   }
 `;
 
-const TextArea = styled.textarea`
+export const TextArea = styled.textarea`
   resize: none;
   width: 100%;
   font-size: 1rem;

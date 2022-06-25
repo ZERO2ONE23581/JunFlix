@@ -4,49 +4,49 @@ import { IconBtn } from '../../Style/Button/IconBtn';
 
 interface IBtnWrapProps {
   next: boolean;
-  submit: boolean;
-  undoPost: boolean;
   setNext: Dispatch<SetStateAction<boolean>>;
-  setSubmit: Dispatch<SetStateAction<boolean>>;
+  onSubmit: boolean;
+  setOnSubmit: Dispatch<SetStateAction<boolean>>;
+  undoPost: boolean;
   setUndoPost: Dispatch<SetStateAction<boolean>>;
 }
 export const TitleWithBtn = ({
   next,
-  submit,
-  undoPost,
   setNext,
-  setSubmit,
+  onSubmit,
+  setOnSubmit,
+  undoPost,
   setUndoPost,
 }: IBtnWrapProps) => {
   return (
     <>
       {!next && (
-        <FirstStep>
+        <Cont>
           <IconBtn
             isClicked={undoPost}
             svgType="undo-arrow"
             onClick={() => setUndoPost(true)}
           />
-          <h1>새 게시물 만들기 Step 1</h1>
+          <h1>새 게시물 만들기</h1>
           <IconBtn svgType="right-arrow" onClick={() => setNext(true)} />
-        </FirstStep>
+        </Cont>
       )}
       {next && (
-        <FirstStep>
+        <Cont>
           <IconBtn svgType="left-arrow" onClick={() => setNext(false)} />
-          <h1>새 게시물 만들기 Step 2</h1>
+          <h1>새 게시물 만들기</h1>
           <IconBtn
-            isClicked={submit}
+            isClicked={onSubmit}
             svgType="submit-arrow"
-            onClick={() => setSubmit(true)}
+            onClick={() => setOnSubmit(true)}
           />
-        </FirstStep>
+        </Cont>
       )}
     </>
   );
 };
-const FirstStep = styled.div`
-  padding: 15px 20px;
+const Cont = styled.div`
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;

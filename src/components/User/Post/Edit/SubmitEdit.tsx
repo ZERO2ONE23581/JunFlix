@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../Style/Button';
-import { ErrorMsg } from '../../Style/ErrMsg';
 import { Dispatch, SetStateAction } from 'react';
-import { Modal, ModalClose } from '../../../../styles/global';
+import { Modal, ModalClose } from '../../../../../styles/global';
+import { Btn } from '../../../Style/Button';
+import { ErrorMsg } from '../../../Style/ErrMsg';
 
-interface IClosePostModalProps {
+interface ISubmitEditProps {
   errors?: {
     data?: string;
     title?: string;
@@ -13,16 +13,15 @@ interface IClosePostModalProps {
   loading: boolean | null;
   closeModal: Dispatch<SetStateAction<boolean>>;
 }
-export const SubmitPost = ({
+export const SubmitEdit = ({
   errors,
   loading,
   closeModal,
-}: IClosePostModalProps) => {
+}: ISubmitEditProps) => {
   return (
     <>
       <Cont>
-        <h1>작성하신 게시물을 제출하시겠습니까?</h1>
-        <h2>게시물은 추후에 수정이 가능합니다.</h2>
+        <h1>편집한 게시물을 업로드 하시겠습니까?</h1>
         <div className="btn-wrap">
           <Btn name="제출하기" type="submit" loading={loading} />
           <Btn
@@ -35,11 +34,16 @@ export const SubmitPost = ({
         {errors?.title && <ErrorMsg error={errors?.title} />}
         {errors?.content && <ErrorMsg error={errors?.content} />}
       </Cont>
-      <ModalClose zIndex={201} />
+      <DimBG onClick={() => closeModal(false)} />
     </>
   );
 };
 const Cont = styled(Modal)`
-  z-index: 9999;
+  z-index: 203;
   border: 1px solid #353b48;
+`;
+const DimBG = styled(ModalClose)`
+  top: -10%;
+  left: -27%;
+  z-index: 202;
 `;

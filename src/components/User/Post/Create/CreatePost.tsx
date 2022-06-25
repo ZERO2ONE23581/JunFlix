@@ -21,14 +21,14 @@ interface ICreatePostRes {
 }
 interface ICreatePostModalProps {
   board?: IBoardWithAttrs;
-  closeModal: Dispatch<SetStateAction<boolean>>;
+  openCreatePost: Dispatch<SetStateAction<boolean>>;
 }
-export const CreatePost = ({ board, closeModal }: ICreatePostModalProps) => {
+export const CreatePost = ({
+  board,
+  openCreatePost,
+}: ICreatePostModalProps) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
-  const [createPost, { data, loading }] = useMutation<ICreatePostRes>(
-    `/api/user/${user_id}/board/${board_id}/post/create`
-  );
 
   const {
     watch,
@@ -37,11 +37,18 @@ export const CreatePost = ({ board, closeModal }: ICreatePostModalProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IPostForm>({ mode: 'onSubmit' });
+  const avatar = watch('avatar');
+  const [preview, setPreview] = useState('');
+  const [avatarLoading, setAvatarLoading] = useState(false);
+  const [createPost, { data, loading }] = useMutation<ICreatePostRes>(
+    `/api/user/${user_id}/board/${board_id}/post/create`
+  );
 
+  const Loading = avatarLoading ? avatarLoading : loading ? loading : null;
   const onValid = async ({ avatar, title, content }: IPostForm) => {
-    const Title = title?.toUpperCase();
     if (loading) return;
     if (avatar && avatar.length > 0) {
+      setAvatarLoading((p) => !p);
       const { uploadURL } = await (await fetch(`/api/file`)).json();
       const form = new FormData();
       form.append('file', avatar[0]);
@@ -53,17 +60,12 @@ export const CreatePost = ({ board, closeModal }: ICreatePostModalProps) => {
           body: form,
         })
       ).json();
-      createPost({ Title, content, avatar: id });
+      setAvatarLoading((p) => !p);
+      return createPost({ title, content, avatar: id });
     } else {
-      createPost({ Title, content });
+      return createPost({ title, content });
     }
   };
-
-  const avatar = watch('avatar');
-  const [preview, setPreview] = useState('');
-  const [next, setNext] = useState(false);
-  const [submit, setSubmit] = useState(false);
-  const [undoPost, setUndoPost] = useState(false);
   useEffect(() => {
     if (avatar && avatar.length > 0) {
       const file = avatar[0];
@@ -71,23 +73,25 @@ export const CreatePost = ({ board, closeModal }: ICreatePostModalProps) => {
     }
     if (data?.ok) {
       alert('새로운 게시물이 생성되었습니다.');
-      router.reload();
+      openCreatePost(false);
     }
-  }, [avatar, data, router]);
-
+  }, [avatar, data, openCreatePost]);
+  const [next, setNext] = useState(false);
+  const [onSubmit, setOnSubmit] = useState(false);
+  const [undoPost, setUndoPost] = useState(false);
   return (
     <>
-      <Cont>
-        <Form onSubmit={handleSubmit(onValid)}>
+      <form onSubmit={handleSubmit(onValid)}>
+        <Cont>
           <TitleWithBtn
             next={next}
-            submit={submit}
             setNext={setNext}
-            setSubmit={setSubmit}
+            onSubmit={onSubmit}
+            setOnSubmit={setOnSubmit}
             undoPost={undoPost}
             setUndoPost={setUndoPost}
           />
-          <FormInputs>
+          <Wrap>
             <AvatarInput
               disabled={next}
               preview={preview}
@@ -102,36 +106,35 @@ export const CreatePost = ({ board, closeModal }: ICreatePostModalProps) => {
                 getValues={getValues}
               />
             )}
-          </FormInputs>
+          </Wrap>
           <Notice next={next} />
-          {submit && (
-            <SubmitPost
-              loading={loading}
-              errors={{
-                data: data?.error,
-                title: errors.title?.message,
-                content: errors.content?.message,
-              }}
-              closeModal={setSubmit}
-            />
-          )}
-          {submit && <ModalClose />}
-        </Form>
-      </Cont>
+        </Cont>
+
+        {onSubmit && (
+          <SubmitPost
+            loading={Loading}
+            closeModal={setOnSubmit}
+            errors={{
+              data: data?.error,
+              title: errors.title?.message,
+              content: errors.content?.message,
+            }}
+          />
+        )}
+      </form>
       <ModalClose onClick={() => setUndoPost(true)} />
-      {undoPost && <UndoPost closePost={closeModal} closeModal={setUndoPost} />}
+      {undoPost && (
+        <UndoPost closePost={openCreatePost} closeModal={setUndoPost} />
+      )}
     </>
   );
 };
 const Cont = styled(ModalSchema)`
-  height: 75vh;
-`;
-const Form = styled.form`
-  height: 100%;
+  height: 80vh;
   display: flex;
   flex-direction: column;
 `;
-const FormInputs = styled.article`
+const Wrap = styled.article`
   height: 100%;
   display: flex;
   align-items: center;

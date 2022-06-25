@@ -30,9 +30,10 @@ export const UndoPost = ({ closePost, closeModal }: IClosePostModalProps) => {
           />
         </div>
       </Cont>
+      <ModalClose zIndex={200} />
     </>
   );
 };
 const Cont = styled(Modal)`
-  border: 1px solid #353b48;
+  z-index: 201;
 `;

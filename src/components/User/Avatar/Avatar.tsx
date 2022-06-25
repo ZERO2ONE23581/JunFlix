@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { Svg } from '../../Style/Svg/Svg';
-import { AvatarUrl, Background } from './AvatarURL';
+import { WithAvatar } from '../Post/Create/AvatarInput';
 
 interface ICreatePostAvatar {
   disabled?: boolean;
@@ -30,7 +30,7 @@ export const Avatar = ({
     </Cont>
   );
 };
-const Cont = styled(Background)`
+const Cont = styled(WithAvatar)`
   input {
     display: none;
   }

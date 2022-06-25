@@ -1,17 +1,16 @@
 import useSWR from 'swr';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { PostIcons } from './PostIcons';
 import { Svg } from '../../Style/Svg/Svg';
-import useUser from '../../../libs/client/useUser';
-import { Grid, ListCont, ModalClose } from '../../../../styles/global';
-import { PostInfo } from './PostInfo';
-import { Background } from '../Avatar/AvatarURL';
+import { Grid, ListCont } from '../../../../styles/global';
 import { Post } from '@prisma/client';
 import { IGetAllPosts } from '../../../types/post';
+import { WithAvatar } from './Create/AvatarInput';
+import { ReadPost } from './ReadPost';
 
 interface IPostListProps {
+  isHost: boolean;
   USERID: number;
   BOARDID: number;
   posts?: Post[];
@@ -31,7 +30,7 @@ export const PostList = ({
   );
   const { data: AllPosts } = useSWR<IGetAllPosts>(`/api/user/all/posts`);
   const { data: MyPosts } = useSWR<IGetAllPosts>(`/api/user/my/posts`);
-
+  //
   const [readPost, setReadPost] = useState(false);
   const [postId, setPostId] = useState(0);
   const clickPost = (id: number) => {
@@ -58,8 +57,7 @@ export const PostList = ({
           ))}
         </Grid>
       </Cont>
-      {readPost && <PostInfo post_id={postId} setReadPost={setReadPost} />}
-      {readPost && <ModalClose onClick={() => setReadPost(false)} />}
+      {readPost && <ReadPost post_id={postId} setReadPost={setReadPost} />}
     </>
   );
 };
@@ -68,10 +66,10 @@ const Cont = styled(ListCont)`
     margin-top: 20px;
   }
 `;
-const Post = styled(Background)`
-  height: 300px;
+const Post = styled(WithAvatar)`
   display: flex;
+  height: 300px;
+  border-radius: 5px;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
 `;

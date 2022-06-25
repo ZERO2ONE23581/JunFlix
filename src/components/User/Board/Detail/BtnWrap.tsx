@@ -23,7 +23,8 @@ const Cont = styled.article`
   width: 250%;
   top: 110%;
   right: -70%;
-  border: 3px solid pink;
+  overflow: hidden;
+  border-radius: 3px;
   position: absolute;
   display: flex;
   flex-direction: column;

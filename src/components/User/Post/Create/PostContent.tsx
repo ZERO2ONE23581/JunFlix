@@ -46,7 +46,6 @@ export const PostContent = ({
         <Host board={board} />
         <TextAreaWrap
           id="content"
-          type="text"
           max={maxCnt}
           label="Content"
           disabled={disabled}

@@ -1,31 +1,35 @@
-import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
-import { FollowCounts } from '../Follow/counts';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { ProfileAvatar } from '../../Avatar/Profile';
 import useUser from '../../../../libs/client/useUser';
 import { Profile } from './Profile';
 import { TitleLayer } from './TitleLayer';
 import { Description } from './Description';
-import { SettingBtn } from './SettingBtn';
 import { PostList } from '../../Post/PostList';
 import { FormCont, ModalClose } from '../../../../../styles/global';
 import { IBoardWithAttrs } from '../../../../types/board';
 import { CreatePost } from '../../Post/Create/CreatePost';
+import { useState } from 'react';
+import { BoardSetting } from './BoardSetting';
 
 interface IBoardDetailProps {
   board?: IBoardWithAttrs;
 }
-export const BoardInfo = ({ board }: IBoardDetailProps) => {
+export const ReadBoard = ({ board }: IBoardDetailProps) => {
   const { loggedInUser } = useUser();
   const isBoardHost = Boolean(loggedInUser?.id === board?.UserID);
+  const [createPost, openCreatePost] = useState(false);
   const [editBoard, openEditBoard] = useState(false);
   const [deleteBoard, openDeleteBoard] = useState(false);
-  const [createPost, openCreatePost] = useState(false);
-  const [setting, openSetting] = useState(false);
+  //
   return (
     <>
       <Cont>
+        {isBoardHost && (
+          <BoardSetting
+            onEdit={openEditBoard}
+            onDelete={openDeleteBoard}
+            onCreate={openCreatePost}
+          />
+        )}
         <Board>
           <Profile board={board} />
           <Info>
@@ -33,21 +37,16 @@ export const BoardInfo = ({ board }: IBoardDetailProps) => {
             <Description board={board} />
           </Info>
         </Board>
-        {isBoardHost && (
-          <SettingBtn
-            setting={setting}
-            openSetting={openSetting}
-            onEdit={openEditBoard}
-            onDelete={openDeleteBoard}
-            onCreate={openCreatePost}
-          />
-        )}
-        <PostList USERID={board?.UserID!} BOARDID={board?.id!} />
+
+        <PostList
+          isHost={isBoardHost}
+          BOARDID={board?.id!}
+          USERID={board?.UserID!}
+        />
       </Cont>
       {createPost && isBoardHost && (
-        <CreatePost board={board} closeModal={openCreatePost} />
+        <CreatePost board={board} openCreatePost={openCreatePost} />
       )}
-      {setting && <ModalClose onClick={() => openSetting(false)} />}
 
       {/* {deletePost && (
         <DeletePost
@@ -65,14 +64,12 @@ const Cont = styled.section`
   margin: 0 auto;
   min-width: 800px;
   max-width: 990px;
-  border: 10px solid whitesmoke;
 `;
 const Board = styled(FormCont)`
   padding: 30px 10%;
   gap: 50px;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
   .dim {

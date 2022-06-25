@@ -11,14 +11,12 @@ export const Page = styled.section`
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
-
 export const FormCont = styled.article`
   border: none;
   padding: 30px 40px;
   border-radius: 8px;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
 `;
-
 export const BoardFormCont = styled(FormCont)`
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
@@ -70,11 +68,10 @@ export const Info = styled.div`
     margin-bottom: 5px;
   }
 `;
-
-export const ModalSchema = styled.article`
+export const ModalSchema = styled.article<{ zIndex?: number }>`
+  z-index: ${(p) => (p.zIndex ? p.zIndex : '200')};
   top: 50%;
   left: 50%;
-  z-index: 994;
   overflow: hidden;
   border-radius: 5px;
   position: absolute;
@@ -82,12 +79,13 @@ export const ModalSchema = styled.article`
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
-export const Modal = styled(ModalSchema)`
-  padding: 40px;
-  border: none;
-  border-radius: 10px;
+export const Modal = styled(ModalSchema)<{ zIndex?: number }>`
+  z-index: ${(p) => (p.zIndex ? p.zIndex : '200')};
   gap: 20px;
+  border: none;
   display: flex;
+  padding: 40px;
+  border-radius: 8px;
   align-items: center;
   flex-direction: column;
   justify-content: center;
@@ -115,13 +113,13 @@ export const Modal = styled(ModalSchema)`
     }
   }
 `;
-export const ModalClose = styled.article`
+export const ModalClose = styled.article<{ zIndex?: number }>`
+  z-index: ${(p) => (p.zIndex ? p.zIndex : '100')};
   top: 0;
   left: 0;
-  z-index: 992;
+  width: 100vw;
+  height: 100vh;
   position: absolute;
-  width: 100%;
-  height: 130vh;
   background-color: rgba(0, 0, 0, 0.8);
 `;
 export const ListCont = styled.section`

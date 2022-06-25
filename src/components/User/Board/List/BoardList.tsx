@@ -2,11 +2,11 @@ import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { ListInfo } from './info/ListInfo';
+import { IsOwner } from '../../../IsOwner';
 import useUser from '../../../../libs/client/useUser';
 import { Grid, Info, ListCont } from '../../../../../styles/global';
 import { IBoardListProps, IGetBoards } from '../../../../types/board';
-import { IsOwner } from '../../../IsOwner';
-import { Background } from '../../Avatar/AvatarURL';
+import { AvatarInput, WithAvatar } from '../../Post/Create/AvatarInput';
 
 export const BoardList = ({
   isSelect,
@@ -62,7 +62,7 @@ const Button = styled.button`
   height: 100%;
   background: none;
 `;
-const Board = styled(Background)`
+const Board = styled(WithAvatar)`
   height: 400px;
   display: flex;
   justify-content: end;

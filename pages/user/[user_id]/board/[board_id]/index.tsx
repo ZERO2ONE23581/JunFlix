@@ -6,7 +6,7 @@ import { PageWithBg } from '../../../../../styles/global';
 import { IGetBoard } from '../../../../../src/types/board';
 import { Title } from '../../../../../src/components/Layout/Title';
 import { AvatarUrl } from '../../../../../src/components/User/Avatar/AvatarURL';
-import { BoardInfo } from '../../../../../src/components/User/Board/Detail/BoardInfo';
+import { ReadBoard } from '../../../../../src/components/User/Board/Detail/ReadBoard';
 
 const BoardPage: NextPage = () => {
   const router = useRouter();
@@ -21,7 +21,7 @@ const BoardPage: NextPage = () => {
     <>
       <Title title={`${BoardHost}님의 보드`} />
       <Page bg={avatar} IsAnyPost={IsAnyPost}>
-        <BoardInfo board={data?.board} />
+        <ReadBoard board={data?.board} />
       </Page>
     </>
   );

@@ -1,36 +1,34 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../../Style/Button';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { IconBtn } from '../../../Style/Button/IconBtn';
+import { ModalClose } from '../../../../../styles/global';
 
 interface ISettingBtnProps {
-  setting: boolean;
   onEdit: Dispatch<SetStateAction<boolean>>;
   onDelete: Dispatch<SetStateAction<boolean>>;
   onCreate: Dispatch<SetStateAction<boolean>>;
-  openSetting: Dispatch<SetStateAction<boolean>>;
 }
 
-export const SettingBtn = ({
+export const BoardSetting = ({
   onEdit,
   onDelete,
   onCreate,
-  setting,
-  openSetting,
 }: ISettingBtnProps) => {
   const clickCreatePost = () => {
     onCreate(true);
-    openSetting(false);
+    setOnSetting(false);
   };
+  const [onSetting, setOnSetting] = useState(false);
   return (
     <>
       <Cont>
         <IconBtn
-          isClicked={setting}
+          isClicked={onSetting}
           svgType="setting"
-          onClick={() => openSetting((p) => !p)}
+          onClick={() => setOnSetting((p) => !p)}
         />
-        {setting && (
+        {onSetting && (
           <BtnWrap>
             <Btn name="보드수정" type="button" onClick={() => onEdit(true)} />
             <Btn name="보드삭제" type="button" onClick={() => onDelete(true)} />
@@ -38,9 +36,14 @@ export const SettingBtn = ({
           </BtnWrap>
         )}
       </Cont>
+      {onSetting && <SettingClose onClick={() => setOnSetting(false)} />}
     </>
   );
 };
+const SettingClose = styled(ModalClose)`
+  top: -10%;
+  left: -27%;
+`;
 const Cont = styled.div`
   top: 5%;
   right: 10%;
@@ -51,7 +54,8 @@ const BtnWrap = styled.article`
   width: 250%;
   top: 110%;
   right: -70%;
-  border: 3px solid pink;
+  overflow: hidden;
+  border-radius: 3px;
   position: absolute;
   display: flex;
   flex-direction: column;

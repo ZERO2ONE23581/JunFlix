@@ -5,16 +5,17 @@ import { withApiSession } from '../../../../../../../../src/libs/server/withSess
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { Title, content, avatar } = req.body;
+  const { title, content, avatar } = req.body;
   const { user_id, board_id } = req.query;
   const isQuery = Boolean(user_id && board_id);
   if (!user)
     return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
   if (!isQuery) return res.json({ ok: false, error: 'QUERY ERROR!' });
-  if (!Title)
+  if (!title)
     return res.json({ ok: false, error: '포스트 제목을 입력해주세요.' });
   if (user?.id !== +user_id)
     return res.json({ ok: false, error: '유저불일치. 수정권한없음.' });
+
   const FoundBoard = await client.board.findUnique({
     where: { id: +board_id.toString() },
     select: { id: true, UserID: true },
@@ -22,7 +23,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!FoundBoard) return res.json({ ok: false, error: 'NO BOARD FOUND!' });
   const post = await client.post.create({
     data: {
-      title: Title,
+      title,
       content,
       avatar,
       UserID: FoundBoard.UserID,
