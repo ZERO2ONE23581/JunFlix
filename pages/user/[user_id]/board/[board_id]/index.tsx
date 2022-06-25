@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { ModalClose, PageWithBg } from '../../../../../styles/global';
+import { PageWithBg } from '../../../../../styles/global';
 import { IGetBoard } from '../../../../../src/types/board';
 import { Title } from '../../../../../src/components/Layout/Title';
 import { AvatarUrl } from '../../../../../src/components/User/Avatar/AvatarURL';
@@ -15,12 +15,11 @@ const BoardPage: NextPage = () => {
     user_id && board_id && `/api/user/${user_id}/board/${board_id}`
   );
   const avatar = AvatarUrl(data?.board?.avatar!);
-  const BoardHost = data?.board?.user?.username;
-  const IsAnyPost = Boolean(data?.board?.posts.length! > 0);
+  const HostName = data?.board?.user?.username;
   return (
     <>
-      <Title title={`${BoardHost}님의 보드`} />
-      <Page bg={avatar} IsAnyPost={IsAnyPost}>
+      <Title title={`${HostName}님의 보드`} />
+      <Page bg={avatar}>
         <ReadBoard board={data?.board} />
       </Page>
     </>
@@ -28,9 +27,8 @@ const BoardPage: NextPage = () => {
 };
 export default BoardPage;
 
-const Page = styled(PageWithBg)<{ IsAnyPost: boolean }>`
+const Page = styled(PageWithBg)`
   height: 100%;
-  min-height: 100vh;
   padding: 3% 10%;
-  height: ${(p) => p.IsAnyPost && '100%'};
+  min-height: 100vh;
 `;

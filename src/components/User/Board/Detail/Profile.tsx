@@ -1,7 +1,11 @@
 import styled from '@emotion/styled';
 import { ProfileAvatar } from '../../Avatar/Profile';
+import { IBoardWithAttrs } from '../../../../types/board';
 
-export const Profile = ({ board }: any) => {
+interface IProfileProps {
+  board?: IBoardWithAttrs;
+}
+export const Profile = ({ board }: IProfileProps) => {
   return (
     <Cont>
       <ProfileAvatar url={board?.user.avatar} size={120} />

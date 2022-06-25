@@ -20,6 +20,14 @@ export const Svg = ({ type }: ISvgProps) => {
     'M568.482 177.448L424.479 313.433C409.3 327.768 384 317.14 384 295.985v-71.963c-144.575.97-205.566 35.113-164.775 171.353 4.483 14.973-12.846 26.567-25.006 17.33C155.252 383.105 120 326.488 120 269.339c0-143.937 117.599-172.5 264-173.312V24.012c0-21.174 25.317-31.768 40.479-17.448l144.003 135.988c10.02 9.463 10.028 25.425 0 34.896zM384 379.128V448H64V128h50.916a11.99 11.99 0 0 0 8.648-3.693c14.953-15.568 32.237-27.89 51.014-37.676C185.708 80.83 181.584 64 169.033 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48v-88.806c0-8.288-8.197-14.066-16.011-11.302a71.83 71.83 0 0 1-34.189 3.377c-7.27-1.046-13.8 4.514-13.8 11.859z'
   );
   useEffect(() => {
+    if (type === 'edit') {
+      setSize('30px');
+      setColor('#F9F8F8');
+      setViewbox('0 0 512 512');
+      setPath(
+        'M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z'
+      );
+    }
     if (type === 'loading') {
       setSize('30px');
       setColor('#F9F8F8');
@@ -165,7 +173,13 @@ export const Svg = ({ type }: ISvgProps) => {
   }, [type, setClicked, setPath, setSize, setColor, setViewbox]);
   //
   return (
-    <Cont isToggle={isToggle} isClicked={clicked} size={size} color={color}>
+    <Cont
+      type={type}
+      isToggle={isToggle}
+      isClicked={clicked}
+      size={size}
+      color={color}
+    >
       <svg xmlns={XMLNS} viewBox={viewbox}>
         <path d={path} />
       </svg>
@@ -177,6 +191,7 @@ const Cont = styled.div<{
   isToggle?: boolean;
   isClicked?: boolean;
   size: string;
+  type: string;
   color: string;
 }>`
   svg {
@@ -185,7 +200,7 @@ const Cont = styled.div<{
     fill: ${(p) => p.color && p.color};
     opacity: ${(p) => p.isToggle && !p.isClicked && 0.5};
     :hover {
-      fill: ${(p) => p.theme.color.logo};
+      fill: ${(p) => p.type !== 'isOwner' && p.theme.color.logo};
     }
   }
 `;

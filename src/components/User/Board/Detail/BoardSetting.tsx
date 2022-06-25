@@ -1,64 +1,63 @@
+import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
-import { Btn } from '../../../Style/Button';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { IconBtn } from '../../../Style/Button/IconBtn';
 import { ModalClose } from '../../../../../styles/global';
 
-interface ISettingBtnProps {
-  onEdit: Dispatch<SetStateAction<boolean>>;
-  onDelete: Dispatch<SetStateAction<boolean>>;
-  onCreate: Dispatch<SetStateAction<boolean>>;
+interface IBoardSettingProps {
+  onEdit: boolean;
+  onDelete: boolean;
+  onCreate: boolean;
+  onSetting: boolean;
+  setOnEdit: Dispatch<SetStateAction<boolean>>;
+  setOnDelete: Dispatch<SetStateAction<boolean>>;
+  setOnCreate: Dispatch<SetStateAction<boolean>>;
+  setOnSetting: Dispatch<SetStateAction<boolean>>;
 }
-
-export const BoardSetting = ({
+export const Setting = ({
   onEdit,
   onDelete,
   onCreate,
-}: ISettingBtnProps) => {
-  const clickCreatePost = () => {
-    onCreate(true);
-    setOnSetting(false);
-  };
-  const [onSetting, setOnSetting] = useState(false);
+  onSetting,
+  setOnEdit,
+  setOnDelete,
+  setOnCreate,
+  setOnSetting,
+}: IBoardSettingProps) => {
   return (
     <>
       <Cont>
-        <IconBtn
-          type="button"
-          svgType="setting"
-          isClicked={onSetting}
-          onClick={() => setOnSetting((p) => !p)}
-        />
+        {!onEdit ? (
+          <IconBtn
+            type="button"
+            svgType="setting"
+            isClicked={onSetting}
+            onClick={() => setOnSetting((p) => !p)}
+          />
+        ) : (
+          <IconBtn
+            type="button"
+            svgType="edit"
+            isClicked={onEdit}
+            onClick={() => setOnEdit((p) => !p)}
+          />
+        )}
         {onSetting && (
-          <BtnWrap>
-            <Btn name="보드수정" type="button" onClick={() => onEdit(true)} />
-            <Btn name="보드삭제" type="button" onClick={() => onDelete(true)} />
-            <Btn type="button" name="게시물 작성" onClick={clickCreatePost} />
-          </BtnWrap>
+          <BtnWrap
+            setOnEdit={setOnEdit}
+            setOnDelete={setOnDelete}
+            setOnCreate={setOnCreate}
+            setOnSetting={setOnSetting}
+          />
         )}
       </Cont>
-      {onSetting && <ModalClose onClick={() => setOnSetting(false)} />}
+      {onSetting && (
+        <ModalClose zIndex={100} onClick={() => setOnSetting(false)} />
+      )}
     </>
   );
 };
-const Cont = styled.div`
-  top: 5%;
-  right: 10%;
-  position: absolute;
-`;
-const BtnWrap = styled.article`
-  z-index: 999;
-  width: 250%;
-  top: 110%;
-  right: -70%;
-  overflow: hidden;
-  border-radius: 3px;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  button {
-    width: 100%;
-    border-radius: 0%;
-  }
+const Cont = styled.article`
+  z-index: 202;
+  position: relative;
 `;

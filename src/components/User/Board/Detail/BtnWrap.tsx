@@ -1,25 +1,45 @@
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { Btn } from '../../../Style/Button';
-import { Dispatch, SetStateAction, useState } from 'react';
-import useUser from '../../../../libs/client/useUser';
+import { Dispatch, SetStateAction } from 'react';
 
 interface IBoardBtnWrap {
-  onEdit: Dispatch<SetStateAction<boolean>>;
-  onCreate: Dispatch<SetStateAction<boolean>>;
-  onDelete: Dispatch<SetStateAction<boolean>>;
+  setOnEdit: Dispatch<SetStateAction<boolean>>;
+  setOnDelete: Dispatch<SetStateAction<boolean>>;
+  setOnCreate: Dispatch<SetStateAction<boolean>>;
+  setOnSetting: Dispatch<SetStateAction<boolean>>;
 }
-export const BtnWrap = ({ onEdit, onDelete, onCreate }: IBoardBtnWrap) => {
+export const BtnWrap = ({
+  setOnEdit,
+  setOnDelete,
+  setOnCreate,
+  setOnSetting,
+}: IBoardBtnWrap) => {
+  const hadleClick = (type: string) => {
+    setOnSetting(false);
+    if (type === 'edit') setOnEdit(true);
+    if (type === 'delete') setOnDelete(true);
+    if (type === 'create') setOnCreate(true);
+  };
   return (
-    <Cont>
-      <Btn name="보드수정" type="button" onClick={() => onEdit(true)} />
-      <Btn name="보드삭제" type="button" onClick={() => onDelete(true)} />
-      <Btn name="게시물 작성" type="button" onClick={() => onCreate(true)} />
-    </Cont>
+    <>
+      <Cont>
+        <Btn name="보드수정" type="button" onClick={() => hadleClick('edit')} />
+        <Btn
+          name="보드삭제"
+          type="button"
+          onClick={() => hadleClick('delete')}
+        />
+        <Btn
+          name="게시물 작성"
+          type="button"
+          onClick={() => hadleClick('create')}
+        />
+      </Cont>
+    </>
   );
 };
 const Cont = styled.article`
-  z-index: 999;
+  z-index: 201;
   width: 250%;
   top: 110%;
   right: -70%;
@@ -32,5 +52,6 @@ const Cont = styled.article`
   button {
     width: 100%;
     border-radius: 0%;
+    border-bottom: 1px solid ${(p) => p.theme.color.bg};
   }
 `;

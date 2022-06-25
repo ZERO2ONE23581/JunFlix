@@ -40,6 +40,8 @@ export const CreatePost = ({
   const avatar = watch('avatar');
   const [preview, setPreview] = useState('');
   const [avatarLoading, setAvatarLoading] = useState(false);
+
+  //post
   const [createPost, { data, loading }] = useMutation<ICreatePostRes>(
     `/api/user/${user_id}/board/${board_id}/post/create`
   );

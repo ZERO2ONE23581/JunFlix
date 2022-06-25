@@ -65,7 +65,6 @@ const Cont = styled.article`
 
 export const TextArea = styled.textarea`
   resize: none;
-  width: 100%;
   font-size: 1rem;
   padding: 18px 15px;
   border-radius: 4px;

@@ -1,36 +1,44 @@
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { IsOwner } from '../../../IsOwner';
-import { IconBtn } from '../../../Style/Button/IconBtn';
-import { FollowBoardBtn } from '../Follow/FollowBoardBtn';
+import { IBoardInfosProps } from './ReadBoard';
+import { Input } from '../../../Style/Input';
 
-export const TitleLayer = ({ board }: any) => {
-  const router = useRouter();
+export const TitleLayer = ({ onEdit, register }: IBoardInfosProps) => {
   return (
     <Cont>
-      <h1>{board?.title}</h1>
-      <FollowBoardBtn USERID={board?.UserID!} BOARDID={board?.id!} />
-      <IsOwner USERID={board?.UserID} />
-      <IconBtn
-        svgType="compass"
-        onClick={() => router.push(`/user/all/boards`)}
-      />
+      <Title isEdit={onEdit}>
+        <Input disabled={!onEdit} type="text" {...register('title')} />
+      </Title>
     </Cont>
   );
 };
 const Cont = styled.article`
-  /* border: 1px solid blue; */
   gap: 30px;
   display: flex;
   align-items: center;
-  align-content: center;
-  h1 {
-    font-size: 2rem;
-    font-weight: 700;
+  justify-content: space-between;
+  .flex {
+    gap: 20px;
+    display: flex;
+    align-items: center;
   }
-  .is-owner {
-    svg {
-      position: relative;
+`;
+const Title = styled.div<{ isEdit: boolean }>`
+  input {
+    padding: 5px 0;
+    padding-left: 20px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    box-shadow: none;
+    color: ${(p) => p.theme.color.logo};
+    border: 2px solid ${(p) => p.theme.color.logo};
+    :disabled {
+      color: inherit;
+      border: none;
+    }
+    &:focus {
+      border: 2px solid transparent;
+      color: #2ecc71;
+      outline: 3px solid #2ecc71;
     }
   }
 `;
