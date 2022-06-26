@@ -2,21 +2,21 @@ import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../Style/Button';
-import { ErrorMsg } from '../../Style/ErrMsg';
-import { InputWrap } from '../../Style/Input';
-import { AvatarLabel } from '../Avatar/Profile';
-import { TextAreaWrap } from '../../Style/Input/TextArea';
-import { SelectWrap } from '../../Style/Input/SelectWrap';
-import useMutation from '../../../libs/client/useMutation';
-import { BoardAvatarIcon } from '../../Style/Svg/BoardAvatar';
-import { BoardFormCont, Form, Info } from '../../../../styles/global';
+import { Btn } from '../../../Style/Button';
+import { ErrorMsg } from '../../../Style/ErrMsg';
+import { InputWrap } from '../../../Style/Input';
+import { AvatarLabel } from '../../Avatar/Profile';
+import { TextAreaWrap } from '../../../Style/Input/TextArea';
+import { SelectWrap } from '../../../Style/Input/SelectWrap';
+import useMutation from '../../../../libs/client/useMutation';
+import { BoardAvatarIcon } from '../../../Style/Svg/BoardAvatar';
+import { BoardFormCont, Form, Info } from '../../../../../styles/global';
 import {
   IGetBoard,
   IBoardForm,
   IBoardFormRes,
   IEditBoardFormProps,
-} from '../../../types/board';
+} from '../../../../types/board';
 
 export const BoardForm = ({
   isEdit,
@@ -123,8 +123,8 @@ export const BoardForm = ({
             register={register('title', {
               required: '생성하실 보드의 제목을 입력하세요.',
               maxLength: {
-                value: 20,
-                message: '보드제목은 20자 이내여야 합니다.',
+                value: 15,
+                message: '보드제목은 15자 이내여야 합니다.',
               },
             })}
           />
@@ -144,7 +144,9 @@ export const BoardForm = ({
           label="Movie Genre"
           watch={watch('genre')}
           isValue={isValue('genre')}
-          register={register('genre')}
+          register={register('genre', {
+            required: '보드 장르를 선택해주세요.',
+          })}
           inputErrMsg={errors.genre?.message}
         />
         <TextAreaWrap

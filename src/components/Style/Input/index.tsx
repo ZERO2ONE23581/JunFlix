@@ -5,7 +5,7 @@ import { UseFormRegisterReturn, UseWatchProps } from 'react-hook-form';
 
 export interface IInputWrapProps {
   id: string;
-  label: string;
+  label?: string;
   max?: number | any;
   type?: string;
   watch?: string;
@@ -76,32 +76,29 @@ const Cont = styled.article`
 `;
 export const Label = styled.label<{ isChange: boolean }>`
   top: 0;
+  left: 5px;
   z-index: 99;
+  position: absolute;
+  transform: translate(5px, -50%);
   border: none;
   padding: 0 10px;
-  font-weight: 500;
-  font-size: 1.1rem;
-  position: absolute;
-  border-radius: 5px;
   text-align: center;
-  left: 5px;
-  transform: translate(5px, -50%);
+  border-radius: 5px;
   background-color: ${(p) => p.theme.color.bg};
   color: ${(p) => (p.isChange ? p.theme.color.logo : '#636e72')};
 `;
 export const InputLabel = styled(Label)<{ isChange: boolean }>`
-  text-align: start;
   top: 50%;
+  text-align: start;
   top: ${(p) => p.isChange && 0};
   font-size: ${(p) => p.isChange && '1rem'};
   text-align: ${(p) => p.isChange && 'center'};
   background-color: ${(p) => p.theme.color.bg};
 `;
 export const Input = styled.input<{ isDate?: boolean }>`
-  width: 100%;
   border: none;
+  font-size: 1rem;
   padding: 15px 20px;
-  font-size: 1.3rem;
   border-radius: 5px;
   border: ${(p) => p.theme.border};
   color: ${(p) => p.theme.color.font};

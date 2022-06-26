@@ -89,6 +89,7 @@ export const Modal = styled(ModalSchema)<{ zIndex?: number }>`
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  border: 1px solid #353b48;
   h1 {
     font-weight: 700;
     font-size: 1.4rem;

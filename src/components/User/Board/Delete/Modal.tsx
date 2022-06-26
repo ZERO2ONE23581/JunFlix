@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Btn } from '../../Style/Button';
-import useUser from '../../../libs/client/useUser';
-import { Modal } from '../../../../styles/global';
-import useMutation from '../../../libs/client/useMutation';
+import { Btn } from '../../../Style/Button';
+import useUser from '../../../../libs/client/useUser';
+import { Modal } from '../../../../../styles/global';
+import useMutation from '../../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 
 interface IDeleteBoardModalProps {

@@ -6,7 +6,7 @@ export const lightTheme: Theme = {
     font: 'black',
     btn: 'black',
     logo: '#E50914',
-    ok: '#2ecc71',
+    green: '#2ecc71',
   },
   border: {
     thin: 'none',
@@ -26,7 +26,7 @@ export const darkTheme: Theme = {
     font: 'white',
     btn: '#dfe6e9',
     logo: '#E50914',
-    ok: '#2ecc71',
+    green: '#2ecc71',
   },
   border: {
     thin: '1px solid #2D2C2C',

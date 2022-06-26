@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { PageWithBg } from '../../../../../styles/global';
 import { Title } from '../../../../../src/components/Layout/Title';
-import { BoardForm } from '../../../../../src/components/User/Board/Form';
+import { BoardForm } from '../../../../../src/components/User/Board/Create/Form';
 
 const CreateBoard: NextPage = () => {
   const [preview, setPreview] = useState('');

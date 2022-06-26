@@ -27,9 +27,9 @@ export const BoardList = ({
   };
   const { data } = useSWR<IGetBoards>(typeSelect('data'));
   const boards = data?.boards;
-  const clickBoard = (userId: number, boardId: number) => {
+  const clickBoard = (userId: number, boardId: number, title: string) => {
     if (isAllBoards || isMyBoards)
-      return router.push(`/user/${userId}/board/${boardId}`);
+      return router.push(`/user/${userId}/board/${boardId}/${title}`);
     if (isSelect)
       return router.push(`/user/${userId}/board/${boardId}/post/create`);
   };
@@ -46,7 +46,9 @@ export const BoardList = ({
       <Grid size={4}>
         {boards?.map((board) => (
           <Board key={board.id} avatar={board.avatar}>
-            <Button onClick={() => clickBoard(board.UserID, board.id)} />
+            <Button
+              onClick={() => clickBoard(board.UserID, board.id, board.title)}
+            />
             <ListInfo board={board} />
             <IsOwner USERID={board.UserID} />
           </Board>

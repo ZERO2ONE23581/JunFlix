@@ -5,22 +5,23 @@ import { withApiSession } from '../../../../../../../../src/libs/server/withSess
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { board_id } = req.query;
+  const { user_id, board_id } = req.query;
   const { avatar } = req.body;
-  if (!user)
-    return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
-  if (!board_id) return res.json({ ok: false, error: 'QUERY ERROR!' });
-  if (!avatar)
-    return res.json({ ok: false, error: '데이터가 미입력 되었습니다.!' });
-  //
-  const foundBoard = await client.board.findUnique({
+  const isQuery = Boolean(user_id && board_id);
+  const isOwner = Boolean(user?.id === +user_id);
+  if (!user) return res.json({ ok: false, error: 'login needed.' });
+  if (!isQuery) return res.json({ ok: false, error: 'invalid url.' });
+  if (!avatar) return res.json({ ok: false, error: 'No input.' });
+  if (!isOwner) return res.json({ ok: false, error: 'no rights to edit.' });
+
+  const FoundBoard = await client.board.findUnique({
     where: { id: +board_id.toString() },
     select: { id: true, avatar: true },
   });
-  if (!foundBoard) return res.json({ ok: false, error: 'NO BOARD FOUND!' });
-  //
+  if (!FoundBoard) return res.json({ ok: false, error: 'NO BOARD FOUND!' });
+
   await client.board.update({
-    where: { id: foundBoard.id },
+    where: { id: FoundBoard.id },
     data: { avatar },
   });
   return res.json({ ok: true });

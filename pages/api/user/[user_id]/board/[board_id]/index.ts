@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const queryExists = Boolean(user_id && board_id);
   if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR' });
   const board = await client.board.findUnique({
-    where: { id: +board_id.toString() },
+    where: { id: +board_id },
     include: {
       user: { select: { id: true, username: true, avatar: true } },
       posts: {

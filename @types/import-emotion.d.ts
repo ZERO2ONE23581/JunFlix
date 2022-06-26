@@ -7,7 +7,7 @@ declare module '@emotion/react' {
       btn: string;
       font: string;
       logo: string;
-      ok: string;
+      green: string;
     };
     border: {
       thin: string;

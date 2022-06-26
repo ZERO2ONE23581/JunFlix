@@ -1,8 +1,9 @@
 import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../../Style/Button/IconBtn';
-import { ModalClose } from '../../../../../styles/global';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { IconBtn } from '../../../../Style/Button/IconBtn';
+import { ModalClose } from '../../../../../../styles/global';
+import { CancelEdit } from './CancelEdit';
 
 interface IBoardSettingProps {
   onEdit: boolean;
@@ -10,6 +11,7 @@ interface IBoardSettingProps {
   onCreate: boolean;
   onSetting: boolean;
   setOnEdit: Dispatch<SetStateAction<boolean>>;
+  setCancelEdit: Dispatch<SetStateAction<boolean>>;
   setOnDelete: Dispatch<SetStateAction<boolean>>;
   setOnCreate: Dispatch<SetStateAction<boolean>>;
   setOnSetting: Dispatch<SetStateAction<boolean>>;
@@ -20,6 +22,7 @@ export const Setting = ({
   onCreate,
   onSetting,
   setOnEdit,
+  setCancelEdit,
   setOnDelete,
   setOnCreate,
   setOnSetting,
@@ -35,12 +38,14 @@ export const Setting = ({
             onClick={() => setOnSetting((p) => !p)}
           />
         ) : (
-          <IconBtn
-            type="button"
-            svgType="edit"
-            isClicked={onEdit}
-            onClick={() => setOnEdit((p) => !p)}
-          />
+          <>
+            <IconBtn
+              type="button"
+              svgType="edit-thin"
+              isClicked={onEdit}
+              onClick={() => setCancelEdit(true)}
+            />
+          </>
         )}
         {onSetting && (
           <BtnWrap

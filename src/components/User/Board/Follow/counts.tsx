@@ -12,26 +12,24 @@ export const FollowCounts = ({ counts }: IFollowCountsProps) => {
     <Cont className="follow-counts">
       <Box>
         <span>Posts</span>
-        <span className="number data">{counts?.posts}</span>
+        <span className="number">{counts?.posts}</span>
       </Box>
       <Box>
         <span>{counts?.followers === 1 ? 'Follower' : 'Followers'}</span>
-        <span className="number data">{counts?.followers}</span>
+        <span className="number">{counts?.followers}</span>
       </Box>
     </Cont>
   );
 };
 const Cont = styled.article`
+  margin: 15px auto;
+  padding-left: 20px;
   gap: 20px;
   display: flex;
-  align-items: center;
-  justify-content: end;
-  font-size: 1.3rem;
+  align-items: center; ;
 `;
 const Box = styled.div`
   .number {
-    margin-left: 5px;
-    font-weight: 600;
-    font-size: 1.4rem;
+    margin-left: 10px;
   }
 `;

@@ -3,6 +3,27 @@ import { IInputWrapProps, Input, InputLabel } from '.';
 import { ErrorMsg } from '../ErrMsg';
 import styled from '@emotion/styled';
 
+interface IOptionsProps {
+  type: string;
+}
+export const Options = ({ type }: IOptionsProps) => {
+  return (
+    <>
+      {type === 'genre' && (
+        <>
+          <option value="SF">SF</option>
+          <option value="Action">Action</option>
+          <option value="Drama">Drama</option>
+          <option value="Horror">Horror</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Thriller">Thriller</option>
+          <option value="others">Others (기타)</option>
+        </>
+      )}
+    </>
+  );
+};
 export const SelectWrap = ({
   id,
   label,
@@ -26,7 +47,6 @@ export const SelectWrap = ({
           {label}
         </Label>
         <Select
-          as="select"
           {...register}
           id={id}
           name={id}
@@ -41,18 +61,7 @@ export const SelectWrap = ({
               <option value="female">여</option>
             </>
           )}
-          {id === 'genre' && (
-            <>
-              <option value="">좋아하는 영화 장르를 선택해주세요.</option>
-              <option value="SF">SF</option>
-              <option value="Action">Action</option>
-              <option value="Drama">Drama</option>
-              <option value="Horror">Horror</option>
-              <option value="Comedy">Comedy</option>
-              <option value="Fantasy">Fantasy</option>
-              <option value="Thriller">Thriller</option>
-            </>
-          )}
+          {id === 'genre' && <Options type="genre" />}
         </Select>
       </div>
       {inputErrMsg && (
@@ -64,7 +73,6 @@ export const SelectWrap = ({
   );
 };
 const Cont = styled.article`
-  width: 100%;
   .wrap {
     position: relative;
   }
@@ -76,4 +84,16 @@ const Label = styled(InputLabel)<{ isChange: boolean }>`
   width: 90%;
   width: ${(p) => p.isChange && '32%'};
 `;
-const Select = styled(Input)``;
+const Select = styled.select`
+  border: none;
+  padding: 5px;
+  color: inherit;
+  border-radius: 5px;
+  background-color: inherit;
+  border: ${(p) => p.theme.border};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  &:focus {
+    border: none;
+    outline: 2px solid ${(p) => p.theme.color.logo};
+  }
+`;
