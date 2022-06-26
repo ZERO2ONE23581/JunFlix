@@ -5,6 +5,8 @@ export const LayoutPage = styled.section`
   padding: 10px 10%;
 `;
 export const Page = styled.section`
+  min-width: 100vw;
+  min-height: 100vh;
   padding: 0 10%;
   font-size: 1.2rem;
   padding-bottom: 20px;
@@ -86,13 +88,14 @@ export const Modal = styled(ModalSchema)<{ zIndex?: number }>`
   display: flex;
   padding: 40px;
   border-radius: 8px;
+  text-align: center;
   align-items: center;
   flex-direction: column;
   justify-content: center;
   border: 1px solid #353b48;
   h1 {
     font-weight: 700;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
   h2 {
     opacity: 0.8;

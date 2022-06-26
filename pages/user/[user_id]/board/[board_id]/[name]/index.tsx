@@ -17,13 +17,13 @@ const BoardPage: NextPage = () => {
   const { data } = useSWR<IGetBoard>(
     QueryId && `/api/user/${user_id}/board/${board_id}`
   );
-  const [preview, setPreview] = useState('');
+  const [boardPreview, setBoardPreview] = useState('');
   const owner = data?.board?.title;
   return (
     <>
       <Title title={`${owner}`} />
-      <Page bg={AvatarUrl(data?.board?.avatar!)} preview={preview}>
-        <EditAvatar setPreview={setPreview} />
+      <Page bg={AvatarUrl(data?.board?.avatar!)} preview={boardPreview}>
+        <EditAvatar setBoardPreview={setBoardPreview} />
         <ReadBoard board={data?.board} />
       </Page>
     </>
@@ -33,6 +33,7 @@ export default BoardPage;
 
 const Page = styled(PageWithBg)<{ preview: string }>`
   position: relative;
+  min-width: 100vw;
   height: 100%;
   padding: 3% 10%;
   min-height: 100vh;

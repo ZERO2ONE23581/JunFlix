@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { ListInfo } from './info/ListInfo';
 import { IsOwner } from '../../../IsOwner';
 import useUser from '../../../../libs/client/useUser';
+import { WithAvatar } from '../../Post/Create/AvatarInput';
 import { Grid, Info, ListCont } from '../../../../../styles/global';
 import { IBoardListProps, IGetBoards } from '../../../../types/board';
-import { AvatarInput, WithAvatar } from '../../Post/Create/AvatarInput';
 
 export const BoardList = ({
   isSelect,
@@ -57,7 +57,10 @@ export const BoardList = ({
     </Cont>
   );
 };
-const Cont = styled(ListCont)``;
+const Cont = styled(ListCont)`
+  width: 100%;
+  height: 100%;
+`;
 const Button = styled.button`
   border: none;
   width: 100%;
@@ -65,10 +68,12 @@ const Button = styled.button`
   background: none;
 `;
 const Board = styled(WithAvatar)`
-  height: 400px;
   display: flex;
   justify-content: end;
   flex-direction: column;
+  min-width: 200px;
+  min-height: 350px;
+  border-radius: 3px;
   .is-owner {
     svg {
       top: 5%;

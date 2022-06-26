@@ -45,6 +45,8 @@ export const DeleteBoardModal = ({ closeModal }: IDeleteBoardModalProps) => {
   );
 };
 const Cont = styled(Modal)`
+  width: 200px;
+  gap: 0px;
   h2 {
     color: ${(p) => p.theme.color.logo};
   }

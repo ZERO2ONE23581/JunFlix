@@ -1,14 +1,11 @@
 import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { IconBtn } from '../../../../Style/Button/IconBtn';
 import { ModalClose } from '../../../../../../styles/global';
-import { CancelEdit } from './CancelEdit';
 
 interface IBoardSettingProps {
   onEdit: boolean;
-  onDelete: boolean;
-  onCreate: boolean;
   onSetting: boolean;
   setOnEdit: Dispatch<SetStateAction<boolean>>;
   setCancelEdit: Dispatch<SetStateAction<boolean>>;
@@ -18,8 +15,6 @@ interface IBoardSettingProps {
 }
 export const Setting = ({
   onEdit,
-  onDelete,
-  onCreate,
   onSetting,
   setOnEdit,
   setCancelEdit,
@@ -63,6 +58,9 @@ export const Setting = ({
   );
 };
 const Cont = styled.article`
-  z-index: 202;
+  z-index: 200;
   position: relative;
+  svg {
+    fill: white;
+  }
 `;

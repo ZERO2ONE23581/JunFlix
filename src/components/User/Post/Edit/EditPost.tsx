@@ -97,7 +97,11 @@ export const EditPost = ({ post_id, setEditPost }: ICreatePostModalProps) => {
           <EditInfo>
             <Top>
               <span>게시물 수정하기</span>
-              <IconBtn svgType="close-btn" onClick={() => setEditPost(false)} />
+              <IconBtn
+                type="button"
+                svgType="close-btn"
+                onClick={() => setEditPost(false)}
+              />
             </Top>
             <Title>
               <label htmlFor="title" />

@@ -96,6 +96,7 @@ export const InputLabel = styled(Label)<{ isChange: boolean }>`
   background-color: ${(p) => p.theme.color.bg};
 `;
 export const Input = styled.input<{ isDate?: boolean }>`
+  width: 100%;
   border: none;
   font-size: 1rem;
   padding: 15px 20px;

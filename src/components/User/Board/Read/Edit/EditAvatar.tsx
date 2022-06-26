@@ -10,22 +10,22 @@ import { Svg } from '../../../../Style/Svg/Svg';
 import { UpdateBG } from './UpdateBG';
 
 interface IEditAvatarProps {
-  setPreview: Dispatch<SetStateAction<string>>;
+  setBoardPreview: Dispatch<SetStateAction<string>>;
 }
-export const EditAvatar = ({ setPreview }: IEditAvatarProps) => {
+export const EditAvatar = ({ setBoardPreview }: IEditAvatarProps) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const { watch, register, handleSubmit } = useForm<IBoardForm>();
   const [EditAvatar, { data, loading }] = useMutation<MutationRes>(
     `/api/user/${user_id}/board/${board_id}/edit/avatar`
   );
-  const onValid = async ({ avatar }: IBoardForm) => {
+  const onValid = async ({ boardAvatar }: IBoardForm) => {
     if (loading) return;
     setAvatarLoading((p) => !p);
-    if (avatar && avatar.length > 0) {
+    if (boardAvatar && boardAvatar.length > 0) {
       const { uploadURL } = await (await fetch(`/api/file`)).json();
       const form = new FormData();
-      form.append('file', avatar[0]);
+      form.append('file', boardAvatar[0]);
       const {
         result: { id },
       } = await (
@@ -38,31 +38,31 @@ export const EditAvatar = ({ setPreview }: IEditAvatarProps) => {
       return EditAvatar({ avatar: id });
     }
   };
-  const avatar = watch('avatar');
+  const BoardAvatar = watch('avatar');
   const [avatarLoading, setAvatarLoading] = useState(false);
   const Loading = avatarLoading ? avatarLoading : loading ? loading : null;
   useEffect(() => {
-    if (avatar && avatar.length > 0) {
-      const file = avatar[0];
-      setPreview(URL.createObjectURL(file));
+    if (BoardAvatar && BoardAvatar.length > 0) {
+      const file = BoardAvatar[0];
+      setBoardPreview(URL.createObjectURL(file));
     }
     if (data?.ok) {
       router.reload();
     }
-  }, [data, avatar, router]);
-  const isWatch = Boolean(avatar && avatar.length > 0);
+  }, [data, BoardAvatar, router]);
+  const isWatch = Boolean(BoardAvatar && BoardAvatar.length > 0);
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
         <Avatar isWatch={isWatch}>
-          <label htmlFor="avatar">
+          <label htmlFor="boardAvatar">
             <Svg type="edit" />
           </label>
           <input
-            {...register('avatar')}
-            id="avatar"
+            {...register('boardAvatar')}
+            id="boardAvatar"
             type="file"
-            name="avatar"
+            name="boardAvatar"
             accept="image/*"
           />
           {isWatch && <Btn type="submit" name="SAVE" />}

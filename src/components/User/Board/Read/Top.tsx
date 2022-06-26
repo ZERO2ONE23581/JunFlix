@@ -1,9 +1,15 @@
 import styled from '@emotion/styled';
-import { IBoardInfosProps } from './Board';
 import { Input } from '../../../Style/Input';
+import { IBoardForm } from '../../../../types/board';
+import { UseFormRegister } from 'react-hook-form';
 import { SelectWrap } from '../../../Style/Input/SelectWrap';
 
-export const TopLayer = ({ onEdit, register }: IBoardInfosProps) => {
+interface ITopProps {
+  onEdit: boolean;
+  // board: IBoardWithAttrs;
+  register: UseFormRegister<IBoardForm>;
+}
+export const Top = ({ onEdit, register }: ITopProps) => {
   return (
     <Cont isEdit={onEdit}>
       <Title>
@@ -13,8 +19,8 @@ export const TopLayer = ({ onEdit, register }: IBoardInfosProps) => {
           {...register('title', {
             required: '보드의 제목을 입력하세요.',
             maxLength: {
-              value: 15,
-              message: '보드제목은 15자 이내여야 합니다.',
+              value: 25,
+              message: '보드제목은 25자 이내여야 합니다.',
             },
           })}
         />

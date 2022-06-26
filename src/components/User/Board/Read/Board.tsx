@@ -1,10 +1,7 @@
 import { Profile } from './Profile';
 import styled from '@emotion/styled';
-import { TopLayer } from './TopLayer';
 import { useRouter } from 'next/router';
 import { Setting } from './Edit/Setting';
-import { Btn } from '../../../Style/Button';
-import { BottomLayer } from './BottomLayer';
 import { Svg } from '../../../Style/Svg/Svg';
 import { SaveUpdate } from './Edit/SaveUpdate';
 import { PostList } from '../../Post/PostList';
@@ -17,20 +14,20 @@ import { FollowBoardBtn } from '../Follow/FollowBoardBtn';
 import { useForm, UseFormRegister } from 'react-hook-form';
 import useMutation from '../../../../libs/client/useMutation';
 import { IBoardForm, IBoardWithAttrs } from '../../../../types/board';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Top } from './Top';
+import { Bottom } from './Bottom';
+import { DeleteBoard } from '../Delete/DeleteBoard';
 
 export interface IReadBoardProps {
   board?: IBoardWithAttrs;
 }
-export interface IBoardInfosProps {
-  onEdit: boolean;
-  board?: IBoardWithAttrs;
-  register: UseFormRegister<IBoardForm>;
-}
+
 export const ReadBoard = ({ board }: IReadBoardProps) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
   const isBoardHost = Boolean(loggedInUser?.id === board?.UserID);
+  //
   const [onSetting, setOnSetting] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
   const [saveEdit, setSaveEdit] = useState(false);
@@ -63,21 +60,28 @@ export const ReadBoard = ({ board }: IReadBoardProps) => {
       router.reload();
     }
   }, [board, setValue, data, router]);
-  const isMyBoard = Boolean(board?.UserID === loggedInUser?.id);
+  //
   return (
     <>
       <Cont>
         <form onSubmit={handleSubmit(onValid)}>
           <Board>
-            {isMyBoard ? (
+            {isBoardHost ? (
               <Svg type="isOwner" />
             ) : (
               <FollowBoardBtn USERID={board?.UserID!} BOARDID={board?.id!} />
             )}
             <Profile board={board} />
-            <Data>
-              <TopLayer board={board} onEdit={onEdit} register={register} />
-              <BottomLayer board={board} onEdit={onEdit} register={register} />
+            <Flex>
+              <BoardInfo>
+                <Top onEdit={onEdit} register={register} />
+                <Bottom
+                  board={board!}
+                  onEdit={onEdit}
+                  register={register}
+                  setSaveEdit={setSaveEdit}
+                />
+              </BoardInfo>
               <Icons>
                 <IconBtn
                   type="button"
@@ -87,8 +91,6 @@ export const ReadBoard = ({ board }: IReadBoardProps) => {
                 {isBoardHost && (
                   <Setting
                     onEdit={onEdit}
-                    onDelete={onDelete}
-                    onCreate={onCreate}
                     onSetting={onSetting}
                     setOnEdit={setOnEdit}
                     setCancelEdit={setCancelEdit}
@@ -98,19 +100,10 @@ export const ReadBoard = ({ board }: IReadBoardProps) => {
                   />
                 )}
               </Icons>
-            </Data>
-            {onEdit && (
-              <Submit>
-                <Btn
-                  type="button"
-                  name="SAVE"
-                  onClick={() => setSaveEdit(true)}
-                />
-              </Submit>
-            )}
-            {cancelEdit && <CancelEdit closeModal={setCancelEdit} />}
+            </Flex>
           </Board>
 
+          {cancelEdit && <CancelEdit closeModal={setCancelEdit} />}
           {saveEdit && (
             <SaveUpdate
               data={data}
@@ -125,6 +118,7 @@ export const ReadBoard = ({ board }: IReadBoardProps) => {
             />
           )}
         </form>
+        {onDelete && <DeleteBoard closeModal={setOnDelete} />}
 
         {isPosts ? (
           <PostList
@@ -162,9 +156,13 @@ const Board = styled.div`
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
 `;
-const Data = styled.article`
-  /* border: 2px solid yellow; */
-  position: relative;
+const Flex = styled.div`
+  gap: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+`;
+const BoardInfo = styled.article`
   input,
   select,
   textarea {
@@ -172,8 +170,8 @@ const Data = styled.article`
       opacity: 1;
       border: none;
       color: inherit;
-      background-color: inherit;
       box-shadow: none;
+      background-color: inherit;
     }
     opacity: 0.6;
     color: ${(p) => p.theme.color.logo};
@@ -186,16 +184,8 @@ const Data = styled.article`
   }
 `;
 const Icons = styled.div`
-  top: 5%;
-  right: -25%;
-  position: absolute;
-  gap: 1.2em;
+  gap: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-const Submit = styled.article`
-  bottom: 15%;
-  right: 10%;
-  position: absolute;
 `;

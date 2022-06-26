@@ -6,6 +6,7 @@ export interface IBoardForm {
   intro: string;
   genre: string;
   avatar?: FileList;
+  boardAvatar?: FileList;
 }
 export interface IGetBoard {
   ok?: boolean;
