@@ -28,7 +28,6 @@ export const DeleteBoard = ({ closeModal }: IDeleteBoardProps) => {
     if (!isMyBoard) alert('삭제권한이 없습니다.');
     setConfirm(true);
   };
-
   //post
   const {
     watch,

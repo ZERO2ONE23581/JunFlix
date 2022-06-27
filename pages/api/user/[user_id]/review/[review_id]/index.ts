@@ -12,9 +12,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const review = await client.review.findUnique({
     where: { id: +review_id.toString() },
     include: {
+      user: {
+        select: { id: true, username: true, avatar: true, userId: true },
+      },
       comments: {
         include: {
-          user: { select: { id: true, username: true } },
+          user: { select: { id: true, username: true, avatar: true } },
         },
         orderBy: {
           id: 'desc',

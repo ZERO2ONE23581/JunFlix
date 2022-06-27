@@ -11,7 +11,7 @@ export const ProfileAvatar = ({ url, preview, size }: IAvatarProps) => {
   const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
   const variant = 'public';
   return (
-    <Cont size={size}>
+    <Cont size={size} className="profile-avatar">
       {preview && <img src={preview} alt="프로필 이미지" />}
       {url && !preview && (
         <img src={`${`${base}/${url}/${variant}`}`} alt="프로필 이미지" />

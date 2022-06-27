@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { Page } from '../../../../styles/global';
 import useUser from '../../../../src/libs/client/useUser';
 import { Title } from '../../../../src/components/Layout/Title';
-import { ReviewList } from '../../../../src/components/User/Review/ReviewList';
+import { ReviewList } from '../../../../src/components/User/Review/Read/ReviewList';
 
 const MyReviews: NextPage = () => {
   const { loggedInUser } = useUser();

@@ -1,12 +1,12 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { IGetLikes } from '../../../types/likes';
-import { IGetReviews } from '../../../types/review';
+import { IGetLikes } from '../../../../types/likes';
+import { IGetReviews } from '../../../../types/review';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ProfileAvatar } from '../Avatar/Profile';
-import { LikeCommentWrap } from '../../Style/Icon/LikeCommentWrap';
+import { ProfileAvatar } from '../../Avatar/Profile';
+import { LikeCommentWrap } from '../../../Style/Icon/LikeCommentWrap';
 
 interface IReviewListProps {
   isAllReviews?: boolean;

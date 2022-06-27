@@ -4,12 +4,12 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { CommentReplies } from './CommentReplies';
 import { CommentBtnWrap } from './CommentBtnWrap';
-import { Errors } from '../../../../styles/global';
 import { EditComments } from './Edit/EditComments';
 import { ProfileAvatar } from '../Avatar/Profile';
 import { CreateComments } from './Create/CreateComments';
 import { IGetCommentInfo } from '../../../types/comments';
-import { DeleteCommentModal } from './Delete/DeleteCommentModal';
+import { DeleteComments } from './Delete/DeleteComments';
+import { ErrorMsg } from '../../Style/ErrMsg';
 
 interface ICommentInfoProps {
   isPost?: boolean;
@@ -85,7 +85,7 @@ export const CommentDetail = ({
   //
   return (
     <Cont>
-      {PostData?.error && <Errors>{PostData.error}</Errors>}
+      {PostData?.error && <ErrorMsg error={PostData.error} />}
       <Wrap>
         <ProfileAvatar url={CmtAvatarUrl} />
         <Desc>
@@ -124,7 +124,7 @@ export const CommentDetail = ({
       {isReview && <CommentReplies isReview parentId={ReviewCmt?.id} />}
 
       {openDelModal && (
-        <DeleteCommentModal
+        <DeleteComments
           id={CommentID}
           type={CommentType}
           setSaveId={setSaveId}
