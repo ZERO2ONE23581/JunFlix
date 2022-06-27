@@ -1,13 +1,13 @@
 import useSWR from 'swr';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
-import { PostIcons } from './PostIcons';
-import { Svg } from '../../Style/Svg/Svg';
-import { Grid, ListCont, ModalClose } from '../../../../styles/global';
 import { Post } from '@prisma/client';
-import { IGetAllPosts } from '../../../types/post';
-import { WithAvatar } from './Create/AvatarInput';
-import { ReadPost } from './Read/ReadPost';
+import { ReadPost } from './ReadPost';
+import { PostIcons } from './PostIcons';
+import { Svg } from '../../../Style/Svg/Svg';
+import { IGetAllPosts } from '../../../../types/post';
+import { WithAvatar } from '../../Avatar/AvatarInput';
+import { Grid, ListCont } from '../../../../../styles/global';
 
 interface IPostListProps {
   isHost: boolean;
@@ -61,7 +61,6 @@ export const PostList = ({
     </>
   );
 };
-
 const Cont = styled(ListCont)`
   .post-grid {
     margin-top: 20px;

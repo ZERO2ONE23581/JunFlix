@@ -1,8 +1,8 @@
 import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../../../Style/Button/IconBtn';
-import { ModalClose } from '../../../../../../styles/global';
+import { IconBtn } from '../../../Style/Button/IconBtn';
+import { ModalClose } from '../../../../../styles/global';
 
 interface IBoardSettingProps {
   onEdit: boolean;

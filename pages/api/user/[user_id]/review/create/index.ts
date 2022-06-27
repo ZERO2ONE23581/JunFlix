@@ -5,30 +5,30 @@ import { withApiSession } from '../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
+  const { user_id } = req.query;
+  const isQuery = Boolean(user_id);
   const {
-    avatar,
-    Title,
+    title,
     movieTitle,
     genre,
+    avatar,
     content,
     oneline,
     recommend,
     score,
   } = req.body;
-  const isInputData = Boolean(Title && movieTitle && genre && content);
-
-  //error handling
-  if (!user)
-    return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
-  if (!isInputData)
-    return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
-
-  //Create review
+  const isInputData = Boolean(title && movieTitle && genre && content);
+  if (!user) return res.json({ ok: false, error: 'Need to login.' });
+  if (!isQuery) return res.json({ ok: false, error: 'invalid url.' });
+  if (!isInputData) return res.json({ ok: false, error: 'No inputs.' });
+  if (user.id !== +user_id)
+    return res.json({ ok: false, error: 'Invalid User.' });
+  //
   const review = await client.review.create({
     data: {
-      avatar,
-      title: Title,
+      title,
       movieTitle,
+      avatar,
       genre,
       content,
       score: +score,

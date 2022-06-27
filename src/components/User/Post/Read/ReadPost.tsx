@@ -9,7 +9,7 @@ import { ModalClose, ModalSchema } from '../../../../../styles/global';
 import { IconBtn } from '../../../Style/Button/IconBtn';
 import useUser from '../../../../libs/client/useUser';
 import { EditPost } from '../Edit/EditPost';
-import { WithAvatar } from '../Create/AvatarInput';
+import { WithAvatar } from '../../Avatar/AvatarInput';
 import { PostSetting } from '../Create/PostSetting';
 import { DeletePost } from '../Delete/DeletePost';
 

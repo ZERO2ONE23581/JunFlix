@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useMutation from '../../../../../libs/client/useMutation';
-import { IBoardForm } from '../../../../../types/board';
-import { MutationRes } from '../../../../../types/mutation';
-import { Btn } from '../../../../Style/Button';
-import { Svg } from '../../../../Style/Svg/Svg';
+import useMutation from '../../../../libs/client/useMutation';
+import { IBoardForm } from '../../../../types/board';
+import { MutationRes } from '../../../../types/mutation';
+import { Btn } from '../../../Style/Button';
+import { Svg } from '../../../Style/Svg/Svg';
 import { UpdateBG } from './UpdateBG';
 
 interface IEditAvatarProps {

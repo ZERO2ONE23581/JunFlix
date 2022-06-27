@@ -2,11 +2,11 @@ import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { ListInfo } from './info/ListInfo';
-import { IsOwner } from '../../../IsOwner';
-import useUser from '../../../../libs/client/useUser';
-import { WithAvatar } from '../../Post/Create/AvatarInput';
-import { Grid, Info, ListCont } from '../../../../../styles/global';
-import { IBoardListProps, IGetBoards } from '../../../../types/board';
+import { IsOwner } from '../../../../IsOwner';
+import useUser from '../../../../../libs/client/useUser';
+import { WithAvatar } from '../../../Avatar/AvatarInput';
+import { Grid, Info, ListCont } from '../../../../../../styles/global';
+import { IBoardListProps, IGetBoards } from '../../../../../types/board';
 
 export const BoardList = ({
   isSelect,

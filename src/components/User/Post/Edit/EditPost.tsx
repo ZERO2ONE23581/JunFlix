@@ -10,7 +10,7 @@ import useMutation from '../../../../libs/client/useMutation';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../../Style/Input';
 import { TextArea } from '../../../Style/Input/TextArea';
-import { AvatarInput } from '../Create/AvatarInput';
+import { AvatarInput } from '../../Avatar/AvatarInput';
 import { Btn } from '../../../Style/Button';
 import { SubmitEdit } from './SubmitEdit';
 

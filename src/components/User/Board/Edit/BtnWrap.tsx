@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../../../Style/Button';
+import { Btn } from '../../../Style/Button';
 import { Dispatch, SetStateAction } from 'react';
 
 interface IBoardBtnWrap {

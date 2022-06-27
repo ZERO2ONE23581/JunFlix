@@ -1,18 +1,18 @@
+import { Top } from '../Read/Top';
 import { Notice } from './Notice';
 import styled from '@emotion/styled';
 import { Post } from '@prisma/client';
-import { UndoPost } from './UndoPost';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { SubmitPost } from './SubmitPost';
-import { AvatarInput } from './AvatarInput';
 import { PostContent } from './PostContent';
-import { TitleWithBtn } from '../TitleWithBtn';
 import { IPostForm } from '../../../../types/post';
+import { AvatarInput } from '../../Avatar/AvatarInput';
 import { IBoardWithAttrs } from '../../../../types/board';
-import { ModalClose, ModalSchema } from '../../../../../styles/global';
 import useMutation from '../../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { ModalClose, ModalSchema } from '../../../../../styles/global';
+import { UndoPost } from '../Read/UndoPost';
 
 interface ICreatePostRes {
   ok: boolean;
@@ -85,7 +85,7 @@ export const CreatePost = ({
     <>
       <form onSubmit={handleSubmit(onValid)}>
         <Cont>
-          <TitleWithBtn
+          <Top
             next={next}
             setNext={setNext}
             onSubmit={onSubmit}

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { BoardWithUser } from '../../../../../types/board';
-import { FollowBoardBtn } from '../../Follow/FollowBoardBtn';
+import { BoardWithUser } from '../../../../../../types/board';
+import { FollowBoardBtn } from '../../../Follow/FollowBoardBtn';
 
 interface IBoardListInfoProps {
   board?: BoardWithUser;

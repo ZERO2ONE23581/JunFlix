@@ -4,7 +4,6 @@ import { ErrorMsg } from '../ErrMsg';
 import styled from '@emotion/styled';
 
 export const TextAreaWrap = ({
-  max,
   id,
   label,
   watch,
@@ -64,6 +63,7 @@ const Cont = styled.article`
 `;
 
 export const TextArea = styled.textarea`
+  width: 100%;
   resize: none;
   padding: 18px 15px;
   border-radius: 4px;

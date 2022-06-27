@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import { Svg } from '../../Style/Svg/Svg';
 import { useRouter } from 'next/router';
+import { Svg } from '../../../Style/Svg/Svg';
 
 interface IIsMyPostProps {
   user_id: number;

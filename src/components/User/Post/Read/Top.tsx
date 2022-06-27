@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../Style/Button/IconBtn';
+import { IconBtn } from '../../../Style/Button/IconBtn';
 
 interface IBtnWrapProps {
   next: boolean;
@@ -10,7 +10,7 @@ interface IBtnWrapProps {
   undoPost: boolean;
   setUndoPost: Dispatch<SetStateAction<boolean>>;
 }
-export const TitleWithBtn = ({
+export const Top = ({
   next,
   setNext,
   onSubmit,
@@ -23,19 +23,29 @@ export const TitleWithBtn = ({
       {!next && (
         <Cont>
           <IconBtn
+            type="button"
             isClicked={undoPost}
             svgType="undo-arrow"
             onClick={() => setUndoPost(true)}
           />
           <h1>새 게시물 만들기</h1>
-          <IconBtn svgType="right-arrow" onClick={() => setNext(true)} />
+          <IconBtn
+            type="button"
+            svgType="right-arrow"
+            onClick={() => setNext(true)}
+          />
         </Cont>
       )}
       {next && (
         <Cont>
-          <IconBtn svgType="left-arrow" onClick={() => setNext(false)} />
+          <IconBtn
+            type="button"
+            svgType="left-arrow"
+            onClick={() => setNext(false)}
+          />
           <h1>새 게시물 만들기</h1>
           <IconBtn
+            type="button"
             isClicked={onSubmit}
             svgType="submit-arrow"
             onClick={() => setOnSubmit(true)}

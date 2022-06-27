@@ -5,9 +5,9 @@ export const LayoutPage = styled.section`
   padding: 10px 10%;
 `;
 export const Page = styled.section`
+  padding: 0 10%;
   min-width: 100vw;
   min-height: 100vh;
-  padding: 0 10%;
   font-size: 1.2rem;
   padding-bottom: 20px;
   color: ${(p) => p.theme.color.font};
@@ -42,12 +42,6 @@ export const Form = styled.form`
   gap: 20px;
   display: flex;
   flex-direction: column;
-  border-radius: 8px;
-  h3 {
-    opacity: 0.8;
-    font-weight: 400;
-    font-size: 1.2rem;
-  }
   .flex {
     gap: 12px;
     width: 100%;

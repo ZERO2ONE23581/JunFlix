@@ -1,23 +1,23 @@
+import { Top } from './Top';
+import { Bottom } from './Bottom';
 import { Profile } from './Profile';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Setting } from './Edit/Setting';
+import { Setting } from '../Edit/Setting';
+import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import { Svg } from '../../../Style/Svg/Svg';
-import { SaveUpdate } from './Edit/SaveUpdate';
-import { PostList } from '../../Post/PostList';
-import { CancelEdit } from './Edit/CancelEdit';
+import { CancelEdit } from '../Edit/CancelEdit';
+import { SaveUpdate } from '../Edit/SaveUpdate';
+import { PostList } from '../../Post/Read/PostList';
+import { DeleteBoard } from '../Delete/DeleteBoard';
 import useUser from '../../../../libs/client/useUser';
 import { IconBtn } from '../../../Style/Button/IconBtn';
 import { MutationRes } from '../../../../types/mutation';
 import { CreatePost } from '../../Post/Create/CreatePost';
 import { FollowBoardBtn } from '../Follow/FollowBoardBtn';
-import { useForm, UseFormRegister } from 'react-hook-form';
 import useMutation from '../../../../libs/client/useMutation';
 import { IBoardForm, IBoardWithAttrs } from '../../../../types/board';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Top } from './Top';
-import { Bottom } from './Bottom';
-import { DeleteBoard } from '../Delete/DeleteBoard';
 
 export interface IReadBoardProps {
   board?: IBoardWithAttrs;

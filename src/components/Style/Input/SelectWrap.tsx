@@ -11,6 +11,7 @@ export const Options = ({ type }: IOptionsProps) => {
     <>
       {type === 'genre' && (
         <>
+          <option value="">장르를 선택해주세요.</option>
           <option value="SF">SF</option>
           <option value="Action">Action</option>
           <option value="Drama">Drama</option>
@@ -81,17 +82,18 @@ const Cont = styled.article`
   }
 `;
 const Label = styled(InputLabel)<{ isChange: boolean }>`
-  width: 90%;
-  width: ${(p) => p.isChange && '32%'};
+  /* width: 90%; */
+  /* width: ${(p) => p.isChange && '32%'}; */
 `;
 const Select = styled.select`
   border: none;
   padding: 5px;
-  color: inherit;
+  font-size: 1rem;
   border-radius: 5px;
   background-color: inherit;
   border: ${(p) => p.theme.border};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
+  color: ${(p) => p.theme.color.font};
   &:focus {
     border: none;
     outline: 2px solid ${(p) => p.theme.color.logo};

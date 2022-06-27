@@ -7,6 +7,7 @@ export interface IInputWrapProps {
   id: string;
   label?: string;
   max?: number | any;
+  min?: number | any;
   type?: string;
   watch?: string;
   placeholder?: string;
@@ -19,6 +20,7 @@ export interface IInputWrapProps {
 }
 export const InputWrap = ({
   max,
+  min,
   id,
   type,
   label,
@@ -49,6 +51,7 @@ export const InputWrap = ({
           name={id}
           type={type}
           maxLength={max}
+          minLength={min}
           disabled={disabled}
           onFocus={() => setIsFocus(true)}
           onBlur={handleBlur}

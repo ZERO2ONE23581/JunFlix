@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { Svg } from '../../../Style/Svg/Svg';
+import { Svg } from '../../Style/Svg/Svg';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface IAvatarInputProps {
@@ -11,7 +11,7 @@ interface IAvatarInputProps {
 }
 const variant = 'public';
 const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
-const AvatarURL = (avatar: string) => `${base}/${avatar}/${variant}`;
+export const AvatarURL = (avatar: string) => `${base}/${avatar}/${variant}`;
 
 export const AvatarInput = ({
   avatar,
@@ -26,39 +26,31 @@ export const AvatarInput = ({
     if (avatar && !preview) setURL(AvatarURL(avatar));
   }, [setURL, preview, avatar]);
   return (
-    <>
-      <Cont URL={URL}>
-        <Label htmlFor="avatar" isDisable={disabled}>
-          {noimage && <Svg type="no-image" />}
-        </Label>
-        <input
-          {...register}
-          id="avatar"
-          name="avatar"
-          type="file"
-          accept="image/*"
-          disabled={disabled}
-        />
-      </Cont>
-    </>
+    <Cont URL={URL} className="avatar-cont">
+      <Label htmlFor="avatar" isDisable={disabled} className="avatar-label">
+        {noimage && <Svg type="no-image" />}
+      </Label>
+      <input
+        {...register}
+        id="avatar"
+        name="avatar"
+        type="file"
+        accept="image/*"
+        disabled={disabled}
+      />
+    </Cont>
   );
 };
-const Default = styled.article`
+const Cont = styled.article<{ URL?: string | null }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 45vw;
   overflow: hidden;
   position: relative;
   background-color: black;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-`;
-export const WithAvatar = styled(Default)<{ avatar?: string | null }>`
-  background: ${(p) =>
-    p.avatar && `url(${AvatarURL(p.avatar)}) center / cover  no-repeat`};
-`;
-const Cont = styled(Default)<{ URL?: string | null }>`
-  height: 100%;
-  display: flex;
-  min-width: 45vw;
-  align-items: center;
-  justify-content: center;
+  border: ${(p) => !p.URL && p.theme.border.bold};
   background: ${(p) => p.URL && `URL(${p.URL}) center / cover  no-repeat`};
   input {
     display: none;
@@ -66,8 +58,6 @@ const Cont = styled(Default)<{ URL?: string | null }>`
 `;
 const Label = styled.label<{ isDisable: boolean }>`
   cursor: ${(p) => !p.isDisable && 'pointer'};
-  width: 100px;
-  height: 100px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -78,4 +68,12 @@ const Label = styled.label<{ isDisable: boolean }>`
       fill: ${(p) => (!p.isDisable ? p.theme.color.logo : p.theme.color.font)};
     }
   }
+`;
+export const WithAvatar = styled.article<{ avatar?: string | null }>`
+  overflow: hidden;
+  position: relative;
+  background-color: black;
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background: ${(p) =>
+    p.avatar && `url(${AvatarURL(p.avatar)}) center / cover  no-repeat`};
 `;

@@ -6,9 +6,9 @@ import { useRouter } from 'next/router';
 import { PageWithBg } from '../../../../../../styles/global';
 import { IGetBoard } from '../../../../../../src/types/board';
 import { Title } from '../../../../../../src/components/Layout/Title';
-import { AvatarUrl } from '../../../../../../src/components/User/Avatar/AvatarURL';
 import { ReadBoard } from '../../../../../../src/components/User/Board/Read/Board';
-import { EditAvatar } from '../../../../../../src/components/User/Board/Read/Edit/EditAvatar';
+import { AvatarURL } from '../../../../../../src/components/User/Avatar/AvatarInput';
+import { EditAvatar } from '../../../../../../src/components/User/Board/Edit/EditAvatar';
 
 const BoardPage: NextPage = () => {
   const router = useRouter();
@@ -22,7 +22,7 @@ const BoardPage: NextPage = () => {
   return (
     <>
       <Title title={`${owner}`} />
-      <Page bg={AvatarUrl(data?.board?.avatar!)} preview={boardPreview}>
+      <Page bg={AvatarURL(data?.board?.avatar!)} preview={boardPreview}>
         <EditAvatar setBoardPreview={setBoardPreview} />
         <ReadBoard board={data?.board} />
       </Page>

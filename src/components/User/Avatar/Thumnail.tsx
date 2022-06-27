@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { EmptyImage } from '../../Style/Svg/EmptyImage';
+import { Svg } from '../../Style/Svg/Svg';
 
 interface IAvatarProps {
   url?: string | null | boolean;
@@ -14,7 +14,7 @@ export const ThumnailAvatar = ({ url, preview }: IAvatarProps) => {
         <img src={`${`${base}/${url}/${variant}`}`} alt="이미지" />
       )}
       {Boolean(preview) && <img src={preview} alt="프리뷰 이미지" />}
-      {!url && !preview && <EmptyImage />}
+      {!url && !preview && <Svg type="no-image" />}
     </Cont>
   );
 };
