@@ -47,7 +47,7 @@ export const NavTabDetail = ({ title, type, setType }: any) => {
 
           {isLoggedIn ? (
             title === 'Post' ? (
-              <Link href={`/user/my/board/select`}>
+              <Link href={`/user/my/board`}>
                 <a>
                   <li onClick={() => setType('x')}>
                     <span>Create</span>

@@ -1,14 +1,18 @@
+import useSWR from 'swr';
 import type { NextPage } from 'next';
 import { Page } from '../../../../styles/global';
+import { IGetAllPosts } from '../../../../src/types/post';
 import { Title } from '../../../../src/components/Layout/Title';
-import { PostList } from '../../../../src/components/User/Post/PostList';
+import { PostList } from '../../../../src/components/Post/Read/PostList';
 
 const AllPosts: NextPage = () => {
+  const { data } = useSWR<IGetAllPosts>(`/api/user/all/posts`);
   return (
     <>
-      <Title title="모든 포스트 둘러보기" />
+      <Title title="모든 포스트" />
       <Page>
-        <PostList isAllPosts={true} />
+        <h1>모든 포스트</h1>
+        <PostList posts={data?.posts!} />
       </Page>
     </>
   );

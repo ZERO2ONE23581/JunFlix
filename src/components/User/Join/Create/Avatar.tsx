@@ -9,8 +9,8 @@ import { Btn } from '../../../Style/Button';
 import { ErrorMsg } from '../../../Style/ErrMsg';
 import { MutationRes } from '../../../../types/mutation';
 import useMutation from '../../../../libs/client/useMutation';
-import { AvatarLabel, ProfileAvatar } from '../../Avatar/Profile';
 import { Form, Info, JoinCont } from '../../../../../styles/global';
+import { AvatarLabel, ProfileAvatar } from '../../../Avatar/Profile';
 
 export const CreateProfileAvatar = ({
   createdID,

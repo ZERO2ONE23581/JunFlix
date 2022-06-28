@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
-import { CreateReview } from '../../../../../src/components/User/Review/Create/CreateReview';
+import { CreateReview } from '../../../../../src/components/Review/Create/CreateReview';
 import { Page } from '../../../../../styles/global';
 
 const CreateReviewPage: NextPage = () => {

@@ -5,11 +5,11 @@ import useUser from '../../../../../src/libs/client/useUser';
 import { Btn } from '../../../../../src/components/Style/Button';
 import { Title } from '../../../../../src/components/Layout/Title';
 
-import { BoardList } from '../../../../../src/components/User/Board/Read/List/BoardList';
-import { ReviewList } from '../../../../../src/components/User/Review/Read/ReviewList';
+import { ReviewList } from '../../../../../src/components/Review/Read/ReviewList';
 import { UserProfileInfo } from '../../../../../src/components/User/Profile/UserProfileInfo';
 import { FollowingBoards } from '../../../../../src/components/User/Profile/FollowingBoards';
-import { PostList } from '../../../../../src/components/User/Post/Read/PostList';
+import { BoardList } from '../../../../../src/components/Board/Read/BoardList';
+import { PostList } from '../../../../../src/components/Post/Read/PostList';
 
 const MyPage: NextPage = () => {
   const { isLoggedIn, loggedInUser } = useUser();

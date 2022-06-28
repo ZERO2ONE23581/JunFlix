@@ -1,16 +1,15 @@
+import {
+  IJoinForm,
+  IJoinFormProps,
+  IJoinFormRes,
+} from '../../../../types/join';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Style/Button';
 import { InputWrap } from '../../../Style/Input';
 import { ErrorMsg } from '../../../Style/ErrMsg';
 import useMutation from '../../../../libs/client/useMutation';
-import { Form, FormCont, Info, JoinCont } from '../../../../../styles/global';
-import {
-  IJoinForm,
-  IJoinFormProps,
-  IJoinFormRes,
-} from '../../../../types/join';
-import styled from '@emotion/styled';
+import { Form, Info, JoinCont } from '../../../../../styles/global';
 
 export const CreateUser = ({
   setCreatedID,

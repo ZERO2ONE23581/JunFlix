@@ -1,11 +1,11 @@
 import useSWR from 'swr';
 import type { NextPage } from 'next';
-import { Review, User } from '@prisma/client';
 import styled from '@emotion/styled';
+import { Review, User } from '@prisma/client';
+import { Page } from '../../../../../styles/global';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Page } from '../../../../../styles/global';
-import { ProfileAvatar } from '../../../../../src/components/User/Avatar/Profile';
+import { ProfileAvatar } from '../../../../../src/components/Avatar/Profile';
 
 interface IGetRatings {
   ok: boolean;

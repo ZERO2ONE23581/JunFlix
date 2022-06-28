@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import { Logo } from './Nav/Logo';
 import styled from '@emotion/styled';
 import { Btn } from '../../Style/Button';
 import { ProfileNav } from './My/ProfileNav';
 import { MainNavBar } from './Nav/MainNavBar';
 import { LayoutPage, ModalClose } from '../../../../styles/global';
-import { Logo } from './Nav/Logo';
 
 interface IHeaderProps {
   theme: string;

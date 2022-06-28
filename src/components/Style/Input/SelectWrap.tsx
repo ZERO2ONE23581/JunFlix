@@ -87,7 +87,7 @@ const Label = styled(InputLabel)<{ isChange: boolean }>`
 `;
 const Select = styled.select`
   border: none;
-  padding: 5px;
+  padding: 10px;
   font-size: 1rem;
   border-radius: 5px;
   background-color: inherit;

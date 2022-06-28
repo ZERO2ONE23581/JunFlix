@@ -23,7 +23,7 @@ const Cont = styled.footer`
   padding: 10px 8%;
   border-top: ${(p) => p.theme.border};
   color: whitesmoke;
-  background-color: #0d0d0d;
+  background-color: #262424;
 `;
 const CopyRight = styled.article`
   font-style: italic;

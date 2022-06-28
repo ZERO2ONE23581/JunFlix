@@ -1,6 +1,6 @@
 import { Footer } from './Footer';
-import styled from '@emotion/styled';
 import { Header } from './Header';
+import styled from '@emotion/styled';
 import { ReactElement } from 'react';
 
 interface ILayoutProps {

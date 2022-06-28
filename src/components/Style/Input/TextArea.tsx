@@ -1,71 +1,45 @@
-import { useState } from 'react';
-import { IInputWrapProps, Label } from '.';
+import { IInputWrapProps } from '.';
 import { ErrorMsg } from '../ErrMsg';
 import styled from '@emotion/styled';
 
 export const TextAreaWrap = ({
   id,
-  label,
-  watch,
-  isValue,
   register,
   disabled,
   inputErrMsg,
   placeholder,
 }: IInputWrapProps) => {
-  const [isFocus, setIsFocus] = useState(false);
-  const handleBlur = () => {
-    if (inputErrMsg) return;
-    if (watch) return;
-    setIsFocus(false);
-  };
-  const isLabelChange = Boolean(isFocus || disabled || isValue);
   return (
     <Cont>
-      <div className="wrap">
-        <Label htmlFor={id} isChange={isLabelChange}>
-          {label}
-        </Label>
-        <TextArea
-          {...register}
-          id={id}
-          name={id}
-          disabled={disabled}
-          autoCapitalize="word"
-          onBlur={handleBlur}
-          placeholder={placeholder}
-          onFocus={() => setIsFocus(true)}
-        />
-      </div>
-      {inputErrMsg && (
-        <div className="error">
-          <ErrorMsg error={inputErrMsg} />
-        </div>
-      )}
+      <label htmlFor={id} />
+      <TextArea
+        {...register}
+        id={id}
+        name={id}
+        rows={4}
+        disabled={disabled}
+        autoCapitalize="sentences"
+        placeholder={placeholder}
+      />
+      {inputErrMsg && <ErrorMsg error={inputErrMsg} />}
     </Cont>
   );
 };
 const Cont = styled.article`
-  width: 100%;
-  .wrap {
-    position: relative;
-    label {
-      font-size: 1.1rem;
-      padding: 8px 10px;
-      border-radius: 20%;
-      padding-bottom: 4px;
-      transform: translate(10px, -70%);
-    }
-  }
-  .error {
-    margin-top: 20px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  label {
+    display: none;
   }
 `;
-
 export const TextArea = styled.textarea`
   width: 100%;
   resize: none;
+  font-size: 1rem;
   padding: 18px 15px;
+  padding: 20px;
   border-radius: 4px;
   color: ${(p) => p.theme.color.font};
   border: ${(p) => p.theme.border.bold};

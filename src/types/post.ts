@@ -8,9 +8,9 @@ export interface IGetPost {
   isComments?: boolean;
   post: PostModel;
 }
-interface PostModel extends Post {
-  user: User;
-  board: Board;
+export interface PostModel extends Post {
+  user?: User;
+  board?: Board;
 }
 export interface IEditPostForm extends IPostForm {
   createdAt?: Date;
