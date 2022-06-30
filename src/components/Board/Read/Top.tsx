@@ -1,14 +1,17 @@
 import styled from '@emotion/styled';
 import { Input } from '../../Style/Input';
-import { UseFormRegister } from 'react-hook-form';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 import { IBoardForm } from '../../../types/board';
 import { SelectWrap } from '../../Style/Input/SelectWrap';
+import { ErrorMsg } from '../../Style/ErrMsg';
 
 interface ITopProps {
   onEdit: boolean;
   register: UseFormRegister<IBoardForm>;
+  ERR_TITLE?: string;
+  ERR_GENRE?: string;
 }
-export const Top = ({ onEdit, register }: ITopProps) => {
+export const Top = ({ onEdit, register, ERR_TITLE, ERR_GENRE }: ITopProps) => {
   return (
     <Cont isEdit={onEdit}>
       <Title>
@@ -23,14 +26,20 @@ export const Top = ({ onEdit, register }: ITopProps) => {
             },
           })}
         />
+        {ERR_TITLE && <ErrorMsg error={ERR_TITLE} />}
       </Title>
+
       {onEdit && (
-        <SelectWrap
-          id="genre"
-          register={register('genre', {
-            required: '보드 장르를 선택해주세요.',
-          })}
-        />
+        <>
+          <SelectWrap
+            id="genre"
+            inputErrMsg={ERR_GENRE}
+            register={register('genre', {
+              required: '보드 장르를 선택해주세요.',
+            })}
+          />
+          {ERR_GENRE && <ErrorMsg error={ERR_GENRE} />}
+        </>
       )}
     </Cont>
   );
@@ -43,6 +52,9 @@ const Cont = styled.article<{ isEdit: boolean }>`
     box-shadow: none;
     font-size: 1.6rem;
     padding-left: 20px;
+    :disabled {
+      padding: 0;
+    }
   }
   select {
     font-size: 1.2rem;

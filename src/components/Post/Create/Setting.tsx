@@ -2,17 +2,14 @@ import styled from '@emotion/styled';
 import { Btn } from '../../Style/Button';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { IconBtn } from '../../Style/Button/IconBtn';
-import { ModalClose } from '../../../../styles/global';
+import { DimBackground, Modal } from '../../../../styles/global';
 
 interface ISettingBtnProps {
   setEditPost: Dispatch<SetStateAction<boolean>>;
   setDeletePost: Dispatch<SetStateAction<boolean>>;
 }
 
-export const PostSetting = ({
-  setEditPost,
-  setDeletePost,
-}: ISettingBtnProps) => {
+export const Setting = ({ setEditPost, setDeletePost }: ISettingBtnProps) => {
   const [onSetting, setOnSetting] = useState(false);
   const handleClick = (type: string) => {
     setOnSetting(false);
@@ -38,35 +35,40 @@ export const PostSetting = ({
             <Btn
               type="button"
               name="포스트 삭제"
+              CLASSNAME="delete-post-btn"
               onClick={() => handleClick('delete')}
             />
           </BtnWrap>
         )}
       </Cont>
-      {onSetting && <ModalClose onClick={() => setOnSetting((p) => !p)} />}
+      {onSetting && (
+        <DimBackground zIndex={99} onClick={() => setOnSetting((p) => !p)} />
+      )}
     </>
   );
 };
 const Cont = styled.div`
-  position: relative;
   svg {
+    width: 2em;
+    height: 2em;
     fill: ${(p) => p.theme.color.font};
   }
 `;
-const BtnWrap = styled.article`
-  z-index: 999;
-  width: 300%;
-  top: 100%;
-  right: -100%;
-  position: absolute;
+const BtnWrap = styled(Modal)`
+  width: 40vw;
+  gap: 0;
+  padding: 0;
   border: none;
-  display: flex;
   overflow: hidden;
   border-radius: 3px;
-  align-items: center;
-  flex-direction: column;
   button {
     width: 100%;
     border-radius: 0%;
+    border-bottom: 1px solid ${(p) => p.theme.color.bg};
+  }
+  .delete-post-btn {
+    button {
+      border-bottom: none;
+    }
   }
 `;

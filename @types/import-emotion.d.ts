@@ -11,7 +11,7 @@ declare module '@emotion/react' {
     };
     border: {
       thin: string;
-      bold: string;
+      thick: string;
     };
     boxShadow: {
       nav: string;

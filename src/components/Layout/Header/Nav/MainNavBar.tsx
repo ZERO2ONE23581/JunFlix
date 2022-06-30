@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavTab } from './NavTab';
 import styled from '@emotion/styled';
-import { ModalClose } from '../../../../../styles/global';
+import { DimBackground } from '../../../../../styles/global';
 
 export const MainNavBar = () => {
   const [type, setType] = useState('');
@@ -18,7 +18,7 @@ export const MainNavBar = () => {
           <NavTab type={type} setType={setType} title={'movie'} />
         </Nav>
       </Cont>
-      {isTabbed && <ModalClose onClick={() => setType('')} />}
+      {isTabbed && <DimBackground onClick={() => setType('')} />}
     </>
   );
 };

@@ -5,7 +5,7 @@ import { Svg } from '../../Style/Svg/Svg';
 import { ErrorMsg } from '../../Style/ErrMsg';
 import { Dispatch, SetStateAction } from 'react';
 import { MutationRes } from '../../../types/mutation';
-import { Modal, ModalClose } from '../../../../styles/global';
+import { Modal, DimBackground } from '../../../../styles/global';
 
 interface ISaveBoardUpdateProps {
   data?: MutationRes;
@@ -71,7 +71,7 @@ export const SaveUpdate = ({
           <Btn name="확인" type="button" onClick={() => router.reload()} />
         </Error>
       )}
-      <ModalClose zIndex={203} />
+      <DimBackground zIndex={203} />
     </>
   );
 };

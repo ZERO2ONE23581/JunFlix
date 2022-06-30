@@ -1,66 +1,113 @@
-import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction } from 'react';
+import { Btn } from '../../Style/Button';
 import { IconBtn } from '../../Style/Button/IconBtn';
-import { ModalClose } from '../../../../styles/global';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { DimBackground, Modal } from '../../../../styles/global';
+import { CancelEditBoard } from './CancelEditBoard';
+import { SaveEditBoard } from './SaveEditBoard';
 
 interface IBoardSettingProps {
-  onEdit: boolean;
-  onSetting: boolean;
-  setOnEdit: Dispatch<SetStateAction<boolean>>;
-  setCancelEdit: Dispatch<SetStateAction<boolean>>;
-  setOnDelete: Dispatch<SetStateAction<boolean>>;
-  setOnCreate: Dispatch<SetStateAction<boolean>>;
-  setOnSetting: Dispatch<SetStateAction<boolean>>;
+  isData: boolean;
+  loading: boolean;
+  editBoard: boolean;
+  saveEditBoard: boolean;
+  setEditBoard: Dispatch<SetStateAction<boolean>>;
+  setSaveEditBoard: Dispatch<SetStateAction<boolean>>;
+  setDeleteBoard: Dispatch<SetStateAction<boolean>>;
+  setCreatePost: Dispatch<SetStateAction<boolean>>;
 }
 export const Setting = ({
-  onEdit,
-  onSetting,
-  setOnEdit,
-  setCancelEdit,
-  setOnDelete,
-  setOnCreate,
-  setOnSetting,
+  isData,
+  loading,
+  editBoard,
+  saveEditBoard,
+  setEditBoard,
+  setDeleteBoard,
+  setCreatePost,
+  setSaveEditBoard,
 }: IBoardSettingProps) => {
+  const [setting, setSetting] = useState(false);
+  const [cancelEditBoard, setCancelEditBoard] = useState(false);
+  const handleClick = (type: string) => {
+    setSetting(false);
+    if (type === 'edit-board') return setEditBoard(true);
+    if (type === 'delete-board') return setDeleteBoard(true);
+    if (type === 'create-post') return setCreatePost(true);
+  };
   return (
     <>
       <Cont>
-        {!onEdit ? (
+        {!editBoard && (
           <IconBtn
             type="button"
             svgType="setting"
-            isClicked={onSetting}
-            onClick={() => setOnSetting((p) => !p)}
+            isClicked={setting}
+            onClick={() => setSetting((p) => !p)}
           />
-        ) : (
+        )}
+        {editBoard && (
+          <IconBtn
+            type="button"
+            svgType="edit-board"
+            isClicked={editBoard}
+            onClick={() => setCancelEditBoard(true)}
+          />
+        )}
+        {!editBoard && setting && (
           <>
-            <IconBtn
-              type="button"
-              svgType="edit-thin"
-              isClicked={onEdit}
-              onClick={() => setCancelEdit(true)}
-            />
+            <BtnWrap>
+              <Btn
+                name="보드 수정하기"
+                type="button"
+                onClick={() => handleClick('edit-board')}
+              />
+              <Btn
+                name="보드 삭제하기"
+                type="button"
+                onClick={() => handleClick('delete-board')}
+              />
+              <Btn
+                name="포스트 만들기"
+                type="button"
+                onClick={() => handleClick('create-post')}
+              />
+            </BtnWrap>
+            <DimBackground zIndex={100} onClick={() => setSetting(false)} />
           </>
         )}
-        {onSetting && (
-          <BtnWrap
-            setOnEdit={setOnEdit}
-            setOnDelete={setOnDelete}
-            setOnCreate={setOnCreate}
-            setOnSetting={setOnSetting}
-          />
-        )}
       </Cont>
-      {onSetting && (
-        <ModalClose zIndex={100} onClick={() => setOnSetting(false)} />
+      {cancelEditBoard && <CancelEditBoard closeModal={setCancelEditBoard} />}
+      {!isData && saveEditBoard && (
+        <SaveEditBoard loading={loading} closeModal={setSaveEditBoard} />
       )}
     </>
   );
 };
 const Cont = styled.article`
-  z-index: 200;
-  position: relative;
+  right: 7.7%;
+  bottom: 40%;
+  z-index: 101;
+  position: fixed;
   svg {
-    fill: white;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+`;
+const BtnWrap = styled(Modal)`
+  z-index: 201;
+  gap: 0;
+  padding: 0;
+  width: 40vw;
+  border: none;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: transparent;
+  button {
+    width: 100%;
+    border-radius: 0%;
+    border-bottom: 1px solid #2d3436;
+    :nth-of-type(3) {
+      border: none;
+    }
   }
 `;

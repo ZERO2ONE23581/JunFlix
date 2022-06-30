@@ -16,7 +16,7 @@ export interface IEditPostForm extends IPostForm {
   createdAt?: Date;
 }
 export interface IPostForm {
-  title?: string;
+  title: string;
   content?: string;
   createdAt?: Date;
   avatar?: FileList;

@@ -5,38 +5,40 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { ErrorMsg } from '../../Style/ErrMsg';
 import { InputWrap } from '../../Style/Input';
+import { LoadingModal } from '../../LoadingModal';
 import useUser from '../../../libs/client/useUser';
 import { ModalProps } from '../../../types/global';
 import { IconBtn } from '../../Style/Button/IconBtn';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
-import { Form, Info, Modal, ModalClose } from '../../../../styles/global';
+import { Form, Info, Modal, DimBackground } from '../../../../styles/global';
 
-interface IDeleteBoardForm {
+export interface IVerifyID {
   userId: string;
 }
-export const DeleteBoard = ({ openModal }: ModalProps) => {
+export interface IDeleteBoard extends ModalProps {
+  USERID: number;
+  BOARDID: number;
+}
+export const DeleteBoard = ({ openModal, USERID, BOARDID }: IDeleteBoard) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
-  const { user_id, board_id } = router.query;
   const [confirm, setConfirm] = useState(false);
-  const isMyBoard = Boolean(String(loggedInUser?.id) === user_id);
-  //
+  const isMyBoard = Boolean(loggedInUser?.id === USERID);
   const clickYes = () => {
     if (!isMyBoard) alert('삭제권한이 없습니다.');
     setConfirm(true);
   };
-  //post
   const {
     watch,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IDeleteBoardForm>({ mode: 'onSubmit' });
+  } = useForm<IVerifyID>({ mode: 'onSubmit' });
   const [DeleteBoard, { data, loading }] = useMutation<MutationRes>(
-    `/api/user/${user_id}/board/${board_id}/delete`
+    `/api/user/${USERID}/board/${BOARDID}/delete`
   );
-  const onValid = async ({ userId }: IDeleteBoardForm) => {
+  const onValid = async ({ userId }: IVerifyID) => {
     if (loading) return;
     return DeleteBoard({ userId });
   };
@@ -49,63 +51,67 @@ export const DeleteBoard = ({ openModal }: ModalProps) => {
   }, [data, router]);
   return (
     <>
-      <Cont>
-        {!confirm ? (
-          <>
-            <h1>이 보드를 삭제 하시겠습니까?</h1>
-            <h2>삭제시 복구가 불가합니다.</h2>
-            <Notice>
-              <span>Are you sure to delete this board?</span>
-              <span>You cant' recover the board once it is deleted.</span>
-            </Notice>
-            <div className="btn-wrap">
-              <Btn name="YES" type="button" onClick={clickYes} />
-              <Btn name="NO" type="button" onClick={() => openModal(false)} />
-            </div>
-          </>
-        ) : (
-          <Wrap>
-            <div className="click-cancel">
-              <IconBtn type="button" svgType="close-btn" />
-            </div>
-            <Notice className="second-notice">
-              <span>삭제확인을 위해 회원님의 아이디를 입력해주세요.</span>
-              <span style={{ fontSize: '1.1rem' }}>
-                Please type the your ID to confirm delete.
-              </span>
-            </Notice>
-            <Form onSubmit={handleSubmit(onValid)}>
-              <InputWrap
-                id="userId"
-                type="text"
-                label="USER ID"
-                watch={watch('userId')}
-                inputErrMsg={errors.userId?.message}
-                register={register('userId', {
-                  required: '아이디를 입력해주세요.',
-                })}
+      {!loading && (
+        <Cont>
+          {!confirm ? (
+            <>
+              <h1>이 보드를 삭제 하시겠습니까?</h1>
+              <h2>삭제시 복구가 불가합니다.</h2>
+              <Notice>
+                <span>Are you sure to delete this board?</span>
+                <span>You cant' recover the board once it is deleted.</span>
+              </Notice>
+              <div className="btn-wrap">
+                <Btn name="YES" type="button" onClick={clickYes} />
+                <Btn name="NO" type="button" onClick={() => openModal(false)} />
+              </div>
+            </>
+          ) : (
+            <Wrap>
+              <IconBtn
+                type="button"
+                svgType="close-btn"
+                onClick={() => openModal(false)}
               />
-              {isTyped && (
-                <IconBtn
-                  type="submit"
-                  svgType={loading ? 'loading' : 'trash'}
+              <Notice className="second-notice">
+                <span>삭제확인을 위해 회원님의 아이디를 입력해주세요.</span>
+                <span style={{ fontSize: '1.1rem' }}>
+                  Please type the your ID to confirm delete.
+                </span>
+              </Notice>
+              <Form onSubmit={handleSubmit(onValid)}>
+                <InputWrap
+                  id="userId"
+                  type="text"
+                  label="USER ID"
+                  watch={watch('userId')}
+                  inputErrMsg={errors.userId?.message}
+                  register={register('userId', {
+                    required: '아이디를 입력해주세요.',
+                  })}
                 />
-              )}
-            </Form>
-          </Wrap>
-        )}
-        {data?.error && <ErrorMsg error={data?.error} />}
-      </Cont>
-      <ModalClose zIndex={202} onClick={() => openModal(false)} />
+                {isTyped && <IconBtn type="submit" svgType="trash" />}
+              </Form>
+            </Wrap>
+          )}
+          {data?.error && <ErrorMsg error={data?.error} />}
+        </Cont>
+      )}
+      {loading && (
+        <LoadingModal
+          zIndex={103}
+          text={{ kor: '보드 삭제중...', eng: 'Deleting Board...' }}
+        />
+      )}
+      <DimBackground zIndex={102} onClick={() => openModal(false)} />
     </>
   );
 };
 const Cont = styled(Modal)`
+  z-index: 103;
   gap: 12px;
-  width: 60%;
-  z-index: 203;
-  min-height: 240px;
   padding: 20px;
+  min-width: 500px;
   border: 1px solid #353b48;
   form {
     width: 70%;
@@ -113,10 +119,10 @@ const Cont = styled(Modal)`
     text-align: center;
     input {
       padding: 12px;
-      border: ${(p) => p.theme.border.bold};
+      border: ${(p) => p.theme.border.thick};
     }
   }
-  .click-cancel {
+  .close-btn {
     top: 15px;
     right: 10px;
     position: absolute;

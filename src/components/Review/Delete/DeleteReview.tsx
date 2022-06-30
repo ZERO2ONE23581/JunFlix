@@ -6,7 +6,7 @@ import useUser from '../../../libs/client/useUser';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { Info, Modal, ModalClose } from '../../../../styles/global';
+import { Info, Modal, DimBackground } from '../../../../styles/global';
 
 interface IDeleteReviewProps {
   setDelReivew: Dispatch<SetStateAction<boolean>>;
@@ -58,7 +58,7 @@ export const DeleteReivew = ({ setDelReivew }: IDeleteReviewProps) => {
           </>
         )}
       </Cont>
-      <ModalClose zIndex={202} onClick={() => setDelReivew(false)} />
+      <DimBackground zIndex={202} onClick={() => setDelReivew(false)} />
     </>
   );
 };

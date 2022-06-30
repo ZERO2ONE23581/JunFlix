@@ -1,42 +1,44 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Btn } from '../../Style/Button';
-import { Input } from '../../Style/Input';
 import { SubmitEdit } from './SubmitEdit';
 import { useForm } from 'react-hook-form';
-import { Author } from '../../../../Author';
+import { Avatar } from '../../Avatar/Avatar';
+import { EditPostInputs } from './EditPostInputs';
 import { IconBtn } from '../../Style/Button/IconBtn';
-import { TextArea } from '../../Style/Input/TextArea';
-import { AvatarInput } from '../../Avatar/AvatarInput';
 import useMutation from '../../../libs/client/useMutation';
 import { IEditPostForm, IGetPost } from '../../../types/post';
-import { ModalClose, ModalSchema } from '../../../../styles/global';
+import { Modal, DimBackground } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-interface ICreatePostModalProps {
-  post_id: number;
+export interface IPostModalProps {
+  USERID: number;
+  BOARDID: number;
+  POSTID: number;
+}
+interface IEditPostModalProps extends IPostModalProps {
   setEditPost: Dispatch<SetStateAction<boolean>>;
 }
-export const EditPost = ({ post_id, setEditPost }: ICreatePostModalProps) => {
+export const EditPost = ({
+  USERID,
+  BOARDID,
+  POSTID,
+  setEditPost,
+}: IEditPostModalProps) => {
   const router = useRouter();
-  const { user_id, board_id } = router.query;
-  const QueryId = user_id && board_id;
   const {
     watch,
+    setError,
+    clearErrors,
     register,
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<IEditPostForm>({ mode: 'onSubmit' });
+  } = useForm<IEditPostForm>({ mode: 'onBlur' });
   const avatar = watch('avatar');
-  const [maxCnt] = useState(700);
-  const [maxTitle] = useState(20);
-  const [avatarLoading, setAvatarLoading] = useState(false);
-
   //get
   const { data: givenData } = useSWR<IGetPost>(
-    QueryId && `/api/user/${user_id}/board/${board_id}/post/${post_id}`
+    `/api/user/${USERID}/board/${BOARDID}/post/${POSTID}`
   );
   const post = givenData?.post;
   useEffect(() => {
@@ -45,11 +47,11 @@ export const EditPost = ({ post_id, setEditPost }: ICreatePostModalProps) => {
       if (post.content) setValue('content', post.content);
     }
   }, [givenData, setValue, post]);
-
   //post
   const [EditPost, { data, loading }] = useMutation(
-    `/api/user/${user_id}/board/${board_id}/post/${post_id}/edit`
+    `/api/user/${USERID}/board/${BOARDID}/post/${POSTID}/edit`
   );
+  const [avatarLoading, setAvatarLoading] = useState(false);
   const Loading = avatarLoading ? avatarLoading : loading ? loading : null;
   const onValid = async ({ avatar, title, content }: IEditPostForm) => {
     if (loading) return;
@@ -72,29 +74,32 @@ export const EditPost = ({ post_id, setEditPost }: ICreatePostModalProps) => {
       return EditPost({ title, content });
     }
   };
+  //
   const [preview, setPreview] = useState('');
-  const [onSubmit, setOnSubmit] = useState(false);
+  const [saveEdit, setSaveEdit] = useState(false);
   useEffect(() => {
     if (avatar && avatar.length > 0) {
       const file = avatar[0];
       setPreview(URL.createObjectURL(file));
     }
+    if (data?.error) alert(data.error);
     if (data?.ok) {
-      alert('게시물을 수정했습니다.');
       setEditPost(false);
+      router.reload();
     }
   }, [avatar, data, router, setEditPost]);
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
         <Cont>
-          <AvatarInput
+          <Avatar
             disabled={false}
             preview={preview}
-            avatar={post?.avatar}
+            url={post?.avatar}
             register={register('avatar')}
+            size={{ width: '35vw', height: '65vh' }}
           />
-          <EditInfo>
+          <About>
             <Top>
               <span>게시물 수정하기</span>
               <IconBtn
@@ -103,88 +108,67 @@ export const EditPost = ({ post_id, setEditPost }: ICreatePostModalProps) => {
                 onClick={() => setEditPost(false)}
               />
             </Top>
-            <Title>
-              <label htmlFor="title" />
-              <Input
-                {...register('title', {
-                  required: '게시물 제목을 입력해주세요.',
-                  maxLength: {
-                    value: maxTitle,
-                    message: '게시물 제목은 20자 이내여야 합니다.',
-                  },
-                })}
-                id="title"
-                name="title"
-                type="text"
-              />
-            </Title>
-            <Content>
-              <Author post={post!} />
-              <label htmlFor="content" />
-              <TextArea
-                {...register('content', {
-                  maxLength: {
-                    value: maxCnt,
-                    message: '게시물 내용은 1000자 이내여야 합니다.',
-                  },
-                })}
-                id="content"
-                name="content"
-              />
-            </Content>
-            <div className="submit-btn">
-              <Btn
-                type="button"
-                name="수정완료"
-                onClick={() => setOnSubmit(true)}
-              />
-            </div>
-            <Notice>
-              <span>* Click the picture if you'd like to pick a new one.</span>
-              <span>
-                * 새로운 사진을 업로드 하시길 원하면 왼쪽 사진을 클릭하세요.
-              </span>
-            </Notice>
-          </EditInfo>
+            <EditPostInputs
+              watch={watch}
+              preview={preview}
+              register={register}
+              setError={setError}
+              clearErrors={clearErrors}
+              setSaveCreate={setSaveEdit}
+              ERRORS_TITLE={errors.title}
+              ERRORS_CONTENT={errors.content}
+            />
+          </About>
         </Cont>
-        {onSubmit && (
-          <SubmitEdit
-            loading={Loading}
-            closeModal={setOnSubmit}
-            errors={{
-              data: data?.error,
-              title: errors.title?.message,
-              content: errors.content?.message,
-            }}
-          />
-        )}
+
+        {saveEdit && <SubmitEdit loading={Loading} closeModal={setSaveEdit} />}
       </form>
-      <ModalClose zIndex={201} onClick={() => setEditPost(false)} />
+      <DimBackground zIndex={102} onClick={() => setEditPost(false)} />
     </>
   );
 };
-const Cont = styled(ModalSchema)`
-  width: 70vw;
-  height: 70vh;
-  z-index: 202;
-  display: flex;
+const Cont = styled(Modal)`
+  z-index: 103;
+  padding: 0;
+  width: 60vw;
+  height: 65vh;
+  min-width: 800px;
   overflow: hidden;
+  gap: 0;
+  flex-direction: row;
 `;
-
-const EditInfo = styled.article`
-  gap: 5%;
-  width: 45%;
+const About = styled.article`
+  width: 25vw;
+  height: 100%;
+  overflow: hidden;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  color: ${(p) => p.theme.color.font};
+  border: ${(p) => p.theme.border.thin};
+  background-color: ${(p) => p.theme.color.bg};
+  //
+  gap: 10px;
   display: flex;
   flex-direction: column;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border.bold};
-  background-color: ${(p) => p.theme.color.bg};
-  input,
-  textarea {
-    border: 2px solid #c0392b;
-    border: 2px solid #2ecc71;
+  //
+  input {
+    color: ${(p) => p.theme.color.logo};
+    border: 2px solid ${(p) => p.theme.color.logo};
+    :focus {
+      border: 2px solid transparent;
+      color: ${(p) => p.theme.color.green};
+      outline: 2px solid ${(p) => p.theme.color.green};
+    }
+  }
+  .question {
+    right: 20px;
+    bottom: 20px;
+    position: absolute;
+    svg {
+      opacity: 0.8;
+      width: 33px;
+      height: 33px;
+    }
   }
   .submit-btn {
     display: flex;
@@ -197,7 +181,7 @@ const Top = styled.div`
   padding: 14px 10px;
   font-size: 1.1rem;
   text-align: center;
-  border-bottom: ${(p) => p.theme.border.bold};
+  border-bottom: ${(p) => p.theme.border.thick};
   button {
     top: 15%;
     right: 2%;
@@ -206,31 +190,5 @@ const Top = styled.div`
       width: 28px;
       height: 28px;
     }
-  }
-`;
-const Title = styled.article`
-  padding: 0 15px;
-  input {
-    padding: 10px;
-    box-shadow: none;
-    border-radius: 3px;
-  }
-`;
-const Content = styled.article`
-  padding: 0 20px;
-  textarea {
-    /* height: 220px; */
-    padding: 15px;
-    margin: 20px auto;
-  }
-`;
-const Notice = styled.div`
-  padding-left: 10px;
-  font-size: 0.9rem;
-  span {
-    opacity: 0.6;
-    display: block;
-    font-style: italic;
-    margin-bottom: 5px;
   }
 `;

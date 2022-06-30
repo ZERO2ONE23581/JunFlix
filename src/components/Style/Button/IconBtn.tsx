@@ -14,7 +14,7 @@ export const IconBtn = ({
   isClicked,
 }: IIconBtnProps) => {
   return (
-    <Cont className="icon-btn" isClicked={isClicked}>
+    <Cont className={svgType} isClicked={isClicked}>
       <button type={type} onClick={onClick}>
         <Svg type={svgType} />
       </button>

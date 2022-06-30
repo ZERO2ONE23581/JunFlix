@@ -6,7 +6,7 @@ interface IErrorMsgProps {
 
 export const ErrorMsg = ({ error }: IErrorMsgProps) => {
   return (
-    <Cont>
+    <Cont className="error-msg">
       <span>{error}</span>
     </Cont>
   );

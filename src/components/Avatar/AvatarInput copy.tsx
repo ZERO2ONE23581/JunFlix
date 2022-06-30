@@ -5,8 +5,8 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface IAvatarInputProps {
   disabled: boolean;
-  url?: string | null | boolean;
-  preview?: string;
+  avatar?: string | null;
+  preview?: string | null;
   register?: UseFormRegisterReturn;
 }
 const variant = 'public';
@@ -14,38 +14,31 @@ const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
 export const AvatarURL = (avatar: string) => `${base}/${avatar}/${variant}`;
 
 export const AvatarInput = ({
-  url,
+  avatar,
   preview,
   register,
   disabled,
 }: IAvatarInputProps) => {
-  const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
-  const variant = 'public';
-  {
-    url && !preview && (
-      <img src={`${`${base}/${url}/${variant}`}`} alt="이미지" />
-    );
-  }
-  {
-    Boolean(preview) && <img src={preview} alt="프리뷰 이미지" />;
-  }
-  {
-    !url && !preview && <Svg type="no-image" />;
-  }
+  const noimage = Boolean(!avatar && !preview);
+  const [URL, setURL] = useState('');
+  useEffect(() => {
+    if (avatar || preview) setURL(preview!);
+    if (avatar && !preview) setURL(AvatarURL(avatar));
+  }, [setURL, preview, avatar]);
   return (
-    <Label htmlFor="avatar" isDisable={disabled} className="avatar-label">
-      <Cont URL={URL} className="avatar-cont">
+    <Cont URL={URL} className="avatar-cont">
+      <Label htmlFor="avatar" isDisable={disabled} className="avatar-label">
         {noimage && <Svg type="no-image" />}
-        <input
-          {...register}
-          id="avatar"
-          name="avatar"
-          type="file"
-          accept="image/*"
-          disabled={disabled}
-        />
-      </Cont>
-    </Label>
+      </Label>
+      <input
+        {...register}
+        id="avatar"
+        name="avatar"
+        type="file"
+        accept="image/*"
+        disabled={disabled}
+      />
+    </Cont>
   );
 };
 const Cont = styled.article<{ URL?: string | null }>`

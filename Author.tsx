@@ -1,39 +1,22 @@
 import styled from '@emotion/styled';
-import { Board, Post, User } from '@prisma/client';
 import { ProfileAvatar } from './src/components/Avatar/Profile';
 
 interface IAuthorProps {
-  post: PostWithRelations;
+  CREATOR_AVATAR: string;
+  CREATOR_USERNAME: string;
 }
-interface PostWithRelations extends Post {
-  user?: User;
-  board?: Board;
-}
-
-export const Author = ({ post }: IAuthorProps) => {
+export const Author = ({ CREATOR_AVATAR, CREATOR_USERNAME }: IAuthorProps) => {
   return (
-    <Cont>
-      <span>
-        <ProfileAvatar url={post?.user?.avatar} size={30} />
-      </span>
-      <span className="data">@{post?.user?.username}</span>
-      <span>from</span>
-      <span className="data">@{post?.board?.title}</span>
+    <Cont className="author">
+      <ProfileAvatar url={CREATOR_AVATAR} size={'2em'} />
+      <span className="data">@{CREATOR_USERNAME}</span>
     </Cont>
   );
 };
 const Cont = styled.div`
-  gap: 5px;
+  gap: 10px;
   display: flex;
   align-items: center;
-  justify-content: end;
-  font-size: 0.8rem;
-  font-weight: 400;
+  font-size: 1.2rem;
   font-style: italic;
-  span {
-    margin-right: 5px;
-  }
-  .data {
-    color: ${(p) => p.theme.color.logo};
-  }
 `;

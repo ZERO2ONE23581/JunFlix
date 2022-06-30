@@ -4,7 +4,7 @@ import useUser from '../../libs/client/useUser';
 interface IAvatarProps {
   url?: string | null;
   preview?: string;
-  size?: number;
+  size?: string;
 }
 
 export const ProfileAvatar = ({ url, preview, size }: IAvatarProps) => {
@@ -20,16 +20,16 @@ export const ProfileAvatar = ({ url, preview, size }: IAvatarProps) => {
     </Cont>
   );
 };
-const Cont = styled.article<{ size: number | undefined }>`
+const Cont = styled.article<{ size: string | undefined }>`
   position: relative;
-  overflow: hidden;
-  border: ${(p) => p.theme.border};
-  border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: ${(p) => (p.size ? `${p.size}px` : '60px')};
-  height: ${(p) => (p.size ? `${p.size}px` : '60px')};
+  overflow: hidden;
+  border-radius: 50%;
+  border: ${(p) => p.theme.border.thin};
+  width: ${(p) => (p.size ? `${p.size}` : '2em')};
+  height: ${(p) => (p.size ? `${p.size}` : '2em')};
   img {
     width: 100%;
     height: 100%;

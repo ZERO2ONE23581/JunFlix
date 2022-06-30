@@ -1,19 +1,29 @@
 import styled from '@emotion/styled';
 import { ProfileAvatar } from '../../Avatar/Profile';
-import { IBoardWithAttrs } from '../../../types/board';
+import { IsOwner } from './IsOwner';
 
-interface IProfileProps {
-  board?: IBoardWithAttrs;
+interface IProfile {
+  BOARDID: number;
+  USERID: number;
+  USER_AVATAR: string | null;
+  USER_USERNAME: string;
 }
-export const Profile = ({ board }: IProfileProps) => {
+export const Profile = ({
+  BOARDID,
+  USERID,
+  USER_AVATAR,
+  USER_USERNAME,
+}: IProfile) => {
   return (
     <Cont>
-      <ProfileAvatar url={board?.user.avatar} size={120} />
-      <span>@ {board?.user.username}</span>
+      <IsOwner BOARDID={BOARDID} BOARD_USERID={USERID} />
+      <ProfileAvatar url={USER_AVATAR} size={'7em'} />
+      <span>@{USER_USERNAME}</span>
     </Cont>
   );
 };
 const Cont = styled.article`
+  position: relative;
   gap: 10px;
   display: flex;
   align-items: center;

@@ -2,12 +2,12 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
 import { Dispatch, SetStateAction } from 'react';
-import { Modal, ModalClose } from '../../../../styles/global';
+import { Modal, DimBackground } from '../../../../styles/global';
 
 interface ICancelEditProps {
   closeModal: Dispatch<SetStateAction<boolean>>;
 }
-export const CancelEdit = ({ closeModal }: ICancelEditProps) => {
+export const CancelEditBoard = ({ closeModal }: ICancelEditProps) => {
   const router = useRouter();
   return (
     <>
@@ -19,11 +19,16 @@ export const CancelEdit = ({ closeModal }: ICancelEditProps) => {
           <Btn name="NO" type="button" onClick={() => closeModal(false)} />
         </div>
       </Cont>
-      <ModalClose zIndex={201} />
+      <DimBackground zIndex={201} />
     </>
   );
 };
 const Cont = styled(Modal)`
   z-index: 204;
-  border: 1px solid #353b48;
+  gap: 10px;
+  font-size: 1.1rem;
+  .btn-wrap {
+    width: 100%;
+    margin-top: 10px;
+  }
 `;

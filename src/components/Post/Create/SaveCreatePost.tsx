@@ -5,19 +5,22 @@ import { Dispatch, SetStateAction } from 'react';
 import { Modal, DimBackground } from '../../../../styles/global';
 import { LoadingModal } from '../../LoadingModal';
 
-interface ISubmitEditProps {
+interface IClosePostModalProps {
   loading: boolean | null;
   closeModal: Dispatch<SetStateAction<boolean>>;
 }
-export const SubmitEdit = ({ loading, closeModal }: ISubmitEditProps) => {
+export const SaveCreatePost = ({
+  loading,
+  closeModal,
+}: IClosePostModalProps) => {
   return (
     <>
       {!loading ? (
         <Cont>
-          <h1>수정한 포스트를 저장하시겠습니까?</h1>
-          <h2>Do you want to save the recent update?</h2>
+          <h1>작성하신 게시물을 제출하시겠습니까?</h1>
+          <h2>게시물은 추후에 수정이 가능합니다.</h2>
           <div className="btn-wrap">
-            <Btn name="저장하기" type="submit" />
+            <Btn name="제출하기" type="submit" />
             <Btn
               name="돌아가기"
               type="button"
@@ -27,15 +30,14 @@ export const SubmitEdit = ({ loading, closeModal }: ISubmitEditProps) => {
         </Cont>
       ) : (
         <LoadingModal
-          zIndex={204}
-          text={{ kor: '포스트 업데이트중...', eng: 'Updating post...' }}
+          zIndex={103}
+          text={{ kor: '새로운 포스트 저장중...', eng: 'Saving new Post...' }}
         />
       )}
-      <DimBackground zIndex={202} onClick={() => closeModal(false)} />
+      <DimBackground zIndex={102} />
     </>
   );
 };
 const Cont = styled(Modal)`
-  z-index: 203;
-  border: 1px solid #353b48;
+  z-index: 103;
 `;

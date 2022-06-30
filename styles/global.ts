@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 
 export const LayoutPage = styled.section`
   font-weight: 600;
-  padding: 10px 10%;
+  padding: 1% 12%;
 `;
 export const Page = styled.section`
-  padding: 2% 10%;
+  padding: 4% 10%;
   min-width: 100vw;
   min-height: 100vh;
+  height: 100%;
   font-size: 1.2rem;
-  padding-bottom: 20px;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
@@ -18,7 +18,7 @@ export const FormCont = styled.article`
   padding: 30px 40px;
   border-radius: 8px;
   color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border.bold};
+  border: ${(p) => p.theme.border.thin};
   background-color: ${(p) => p.theme.color.bg};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
 `;
@@ -67,69 +67,46 @@ export const Info = styled.div`
     margin-bottom: 5px;
   }
 `;
-export const ModalSchema = styled.article`
+export const Modal = styled.article`
+  z-index: 100;
+  position: fixed;
   top: 50%;
   left: 50%;
-  position: fixed;
-  overflow: hidden;
-  border-radius: 8px;
   transform: translate(-50%, -50%);
-  color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border.bold};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background-color: ${(p) => p.theme.color.bg};
-  h1 {
-    font-weight: 700;
-    font-size: 1.3rem;
-  }
-  h2 {
-    opacity: 0.8;
-    font-weight: 600;
-  }
-`;
-export const Modal = styled(ModalSchema)<{ zIndex?: number }>`
-  z-index: ${(p) => (p.zIndex ? p.zIndex : '200')};
+  //
   gap: 20px;
-  border: none;
   display: flex;
-  padding: 40px;
-  border-radius: 8px;
-  text-align: center;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  border: 1px solid #353b48;
-  h1 {
-    font-weight: 700;
-    font-size: 1.3rem;
-  }
-  h2 {
-    opacity: 0.8;
-    font-weight: 600;
-    font-size: 1.2rem;
-  }
+  //
+  padding: 40px;
+  font-size: 1.2rem;
+  overflow: hidden;
+  border-radius: 8px;
+  color: ${(p) => p.theme.color.font};
+  border: ${(p) => p.theme.border.thin};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background-color: ${(p) => p.theme.color.bg};
   .btn-wrap {
-    gap: 12px;
+    gap: 1em;
     display: flex;
     align-items: center;
+    width: 100%;
     button {
+      width: 100%;
       padding: 5px;
-      font-weight: 600;
-      min-height: 30px;
-      min-width: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
   }
 `;
-export const ModalClose = styled.article<{ zIndex?: number }>`
-  z-index: ${(p) => (p.zIndex ? p.zIndex : '100')};
+export const DimBackground = styled.article<{ zIndex: number }>`
+  z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   position: fixed;
+  background-color: #ffeaa7;
   background-color: rgba(0, 0, 0, 0.8);
 `;
 export const Grid = styled.article<{ size: number }>`

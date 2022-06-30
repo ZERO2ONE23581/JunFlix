@@ -20,7 +20,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         },
       },
       user: { select: { username: true, avatar: true } },
-      board: { select: { title: true, avatar: true } },
+      board: true,
       _count: { select: { likes: true, comments: true } },
     },
   });

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Btn } from '../../../Style/Button';
-import { Modal, ModalClose } from '../../../../../styles/global';
+import { Modal, DimBackground } from '../../../../../styles/global';
 import { ICommentRes } from '../../../../types/comments';
 import useMutation from '../../../../libs/client/useMutation';
 
@@ -63,7 +63,7 @@ export const DeleteComments = ({
           <Btn type="button" name="Cancel" onClick={clickCancel} />
         </BtnWrap>
       </Modal>
-      <ModalClose />
+      <DimBackground />
     </>
   );
 };

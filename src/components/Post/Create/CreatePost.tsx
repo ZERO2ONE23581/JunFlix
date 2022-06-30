@@ -1,18 +1,17 @@
-import { Top } from '../Read/Top';
-import { Notice } from './Notice';
 import styled from '@emotion/styled';
+import { TopLayer } from './TopLayer';
 import { Post } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { SubmitPost } from './SubmitPost';
-import { PostContent } from './PostContent';
+import { PostInputs } from './PostInputs';
 import { UndoPost } from '../Read/UndoPost';
+import { Avatar } from '../../Avatar/Avatar';
 import { IPostForm } from '../../../types/post';
-import { AvatarInput } from '../../Avatar/AvatarInput';
-import { IBoardWithAttrs } from '../../../types/board';
+import useUser from '../../../libs/client/useUser';
+import { SaveCreatePost } from './SaveCreatePost';
 import useMutation from '../../../libs/client/useMutation';
+import { Modal, DimBackground } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ModalClose, ModalSchema } from '../../../../styles/global';
 
 interface ICreatePostRes {
   ok: boolean;
@@ -20,30 +19,32 @@ interface ICreatePostRes {
   post?: Post;
 }
 interface ICreatePostModalProps {
-  board?: IBoardWithAttrs;
+  BOARD_TITLE: string;
   openCreatePost: Dispatch<SetStateAction<boolean>>;
 }
-export const CreatePost = ({
-  board,
-  openCreatePost,
-}: ICreatePostModalProps) => {
-  const router = useRouter();
-  const { user_id, board_id } = router.query;
-  //post
+export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
   const {
-    watch,
-    getValues,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IPostForm>({ mode: 'onSubmit' });
-  const avatar = watch('avatar');
-  const [preview, setPreview] = useState('');
-  const [avatarLoading, setAvatarLoading] = useState(false);
+    watch,
+    setError,
+    clearErrors,
+  } = useForm<IPostForm>({ mode: 'onBlur' });
+  const router = useRouter();
+  const { user_id, board_id } = router.query;
   const [createPost, { data, loading }] = useMutation<ICreatePostRes>(
     `/api/user/${user_id}/board/${board_id}/post/create`
   );
+  //
+  const [next, setNext] = useState(false);
+  const [undoPost, setUndoPost] = useState(false);
+  const [saveCreate, setSaveCreate] = useState(false);
+  const [avatarLoading, setAvatarLoading] = useState(false);
+  const avatar = watch('avatar');
+  const [preview, setPreview] = useState('');
   const Loading = avatarLoading ? avatarLoading : loading ? loading : null;
+  //
   const onValid = async ({ avatar, title, content }: IPostForm) => {
     if (loading) return;
     if (avatar && avatar.length > 0) {
@@ -71,73 +72,67 @@ export const CreatePost = ({
       const file = avatar[0];
       setPreview(URL.createObjectURL(file));
     }
+    if (data?.error) alert(data.error);
     if (data?.ok) {
       alert('새로운 게시물이 생성되었습니다.');
       openCreatePost(false);
     }
   }, [avatar, data, openCreatePost]);
-  //
-  const [next, setNext] = useState(false);
-  const [onSubmit, setOnSubmit] = useState(false);
-  const [undoPost, setUndoPost] = useState(false);
-  //
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
-        <Cont>
-          <Top
+        <Cont isNext={next}>
+          <TopLayer
             next={next}
             setNext={setNext}
-            onSubmit={onSubmit}
-            setOnSubmit={setOnSubmit}
             undoPost={undoPost}
             setUndoPost={setUndoPost}
           />
           <Wrap>
-            <AvatarInput
+            <Avatar
               disabled={next}
               preview={preview}
               register={register('avatar')}
+              size={{ width: '35vw', height: '64vh' }}
             />
             {next && (
-              <PostContent
-                board={board}
+              <PostInputs
                 watch={watch}
-                disabled={false}
+                preview={preview}
                 register={register}
-                getValues={getValues}
+                setError={setError}
+                clearErrors={clearErrors}
+                setSaveCreate={setSaveCreate}
+                ERRORS_TITLE={errors.title}
+                ERRORS_CONTENT={errors.content}
               />
             )}
           </Wrap>
-          <Notice next={next} />
         </Cont>
 
-        {onSubmit && (
-          <SubmitPost
-            loading={Loading}
-            closeModal={setOnSubmit}
-            errors={{
-              data: data?.error,
-              title: errors.title?.message,
-              content: errors.content?.message,
-            }}
-          />
+        {saveCreate && (
+          <SaveCreatePost loading={Loading} closeModal={setSaveCreate} />
         )}
       </form>
-      <ModalClose onClick={() => setUndoPost(true)} />
+      <DimBackground zIndex={101} onClick={() => setUndoPost(true)} />
       {undoPost && (
         <UndoPost closePost={openCreatePost} closeModal={setUndoPost} />
       )}
     </>
   );
 };
-const Cont = styled(ModalSchema)`
-  height: 80vh;
+const Cont = styled(Modal)<{ isNext: boolean }>`
+  min-width: 30vw;
+  width: ${(p) => p.isNext && '60vw'};
+  height: 70vh;
+  z-index: 102;
+  gap: 0;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  padding: 0;
 `;
 const Wrap = styled.article`
-  height: 100%;
   display: flex;
   align-items: center;
 `;

@@ -57,6 +57,6 @@ const Post = styled(WithAvatar)`
   align-items: center;
   justify-content: center;
   min-width: 200px;
-  min-height: 250px;
+  min-height: 300px;
   border-radius: 5px;
 `;

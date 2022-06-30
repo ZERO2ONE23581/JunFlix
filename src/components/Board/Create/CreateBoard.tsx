@@ -3,6 +3,7 @@ import {
   IBoardFormRes,
   IEditBoardFormProps,
 } from '../../../types/board';
+import { Answer } from './Answer';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
@@ -11,19 +12,17 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { ErrorMsg } from '../../Style/ErrMsg';
 import { InputWrap } from '../../Style/Input';
+import { LoadingModal } from '../../LoadingModal';
 import { AvatarLabel } from '../../Avatar/Profile';
-import { Form, FormCont, Info } from '../../../../styles/global';
+import { FormCont, Info } from '../../../../styles/global';
 import { SelectWrap } from '../../Style/Input/SelectWrap';
 import { TextAreaWrap } from '../../Style/Input/TextArea';
 import useMutation from '../../../libs/client/useMutation';
 import { IconBtnFixed } from '../../Style/Button/IconBtnFixed';
-import { Answer } from './Answer';
-import { LoadingModal } from '../../LoadingModal';
 
 export const CreateBoard = ({ isCreate, setPreview }: IEditBoardFormProps) => {
   const router = useRouter();
   const { user_id } = router.query;
-  //post
   const [CreateBoard, { loading, data }] = useMutation<IBoardFormRes>(
     `/api/user/${user_id}/board/create`
   );
@@ -34,10 +33,12 @@ export const CreateBoard = ({ isCreate, setPreview }: IEditBoardFormProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IBoardForm>({ mode: 'onSubmit' });
+  //
   const avatar = watch('avatar');
   const [avatarLoading, setAvatarLoading] = useState(false);
   const Loading = avatarLoading ? avatarLoading : loading ? loading : null;
   const isValue = (type: string | any) => Boolean(getValues(type));
+  //
   const onValid = async ({ title, genre, intro, avatar }: IBoardForm) => {
     if (loading) return;
     if (avatar && avatar.length > 0) {
@@ -65,14 +66,13 @@ export const CreateBoard = ({ isCreate, setPreview }: IEditBoardFormProps) => {
       const file = avatar[0];
       setPreview(URL.createObjectURL(file));
     }
+    if (data?.error) alert(data.error);
     if (data?.ok) {
-      alert('생성한 보드로 이동합니다. ');
       router.replace(
         `/user/${data.board.UserID}/board/${data.board.id}/${data.board.title}`
       );
     }
   }, [data, router, avatar]);
-  //
   const [question, setQuestion] = useState(false);
   //
   return (
@@ -171,7 +171,7 @@ const Cont = styled(FormCont)`
   input,
   select,
   textarea {
-    border: ${(p) => p.theme.border.bold};
+    border: ${(p) => p.theme.border.thin};
   }
   select {
     width: 100%;

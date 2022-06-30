@@ -6,9 +6,9 @@ import { useRouter } from 'next/router';
 import { PageWithBg } from '../../../../../../styles/global';
 import { IGetBoard } from '../../../../../../src/types/board';
 import { Title } from '../../../../../../src/components/Layout/Title';
-import { ReadBoard } from '../../../../../../src/components/Board/Read/Board';
+import { ReadBoard } from '../../../../../../src/components/Board/Read/ReadBoard';
 import { AvatarURL } from '../../../../../../src/components/Avatar/AvatarInput';
-import { EditAvatar } from '../../../../../../src/components/Board/Edit/EditAvatar';
+import { EditBackground } from '../../../../../../src/components/Board/Edit/EditBackground';
 
 const BoardPage: NextPage = () => {
   const router = useRouter();
@@ -19,11 +19,12 @@ const BoardPage: NextPage = () => {
   );
   const [boardPreview, setBoardPreview] = useState('');
   const owner = data?.board?.title;
+  console.log(boardPreview);
   return (
     <>
       <Title title={`${owner}`} />
       <Page bg={AvatarURL(data?.board?.avatar!)} preview={boardPreview}>
-        <EditAvatar setBoardPreview={setBoardPreview} />
+        <EditBackground setBoardPreview={setBoardPreview} />
         <ReadBoard board={data?.board} />
       </Page>
     </>
@@ -33,9 +34,9 @@ export default BoardPage;
 
 const Page = styled(PageWithBg)<{ preview: string }>`
   position: relative;
-  min-width: 100vw;
+  padding: 1% 12%;
   height: 100%;
-  padding: 3% 10%;
+  min-width: 100vw;
   min-height: 100vh;
   background: ${(p) =>
     p.preview && `url(${p.preview})   center / cover no-repeat`};

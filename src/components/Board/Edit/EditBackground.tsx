@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { UpdateBG } from './UpdateBG';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
 import { Svg } from '../../Style/Svg/Svg';
 import { useForm } from 'react-hook-form';
 import { IBoardForm } from '../../../types/board';
+import { LoadingModal } from '../../LoadingModal';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 interface IEditAvatarProps {
   setBoardPreview: Dispatch<SetStateAction<string>>;
 }
-export const EditAvatar = ({ setBoardPreview }: IEditAvatarProps) => {
+export const EditBackground = ({ setBoardPreview }: IEditAvatarProps) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const { watch, register, handleSubmit } = useForm<IBoardForm>();
@@ -38,7 +38,7 @@ export const EditAvatar = ({ setBoardPreview }: IEditAvatarProps) => {
       return EditAvatar({ avatar: id });
     }
   };
-  const BoardAvatar = watch('avatar');
+  const BoardAvatar = watch('boardAvatar');
   const [avatarLoading, setAvatarLoading] = useState(false);
   const Loading = avatarLoading ? avatarLoading : loading ? loading : null;
   useEffect(() => {
@@ -51,13 +51,15 @@ export const EditAvatar = ({ setBoardPreview }: IEditAvatarProps) => {
     }
   }, [data, BoardAvatar, router]);
   const isWatch = Boolean(BoardAvatar && BoardAvatar.length > 0);
+  //
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
-        <Avatar isWatch={isWatch}>
+        <Cont isWatch={isWatch}>
           <label htmlFor="boardAvatar">
             <Svg type="edit" />
           </label>
+          {isWatch && <Btn type="submit" name="SAVE" />}
           <input
             {...register('boardAvatar')}
             id="boardAvatar"
@@ -65,21 +67,24 @@ export const EditAvatar = ({ setBoardPreview }: IEditAvatarProps) => {
             name="boardAvatar"
             accept="image/*"
           />
-          {isWatch && <Btn type="submit" name="SAVE" />}
-        </Avatar>
+        </Cont>
       </form>
-      {Loading && <UpdateBG loading={Loading} />}
+
+      {Loading && (
+        <LoadingModal
+          text={{ kor: '보드배경 저장중...', eng: 'Saving Background...' }}
+        />
+      )}
     </>
   );
 };
-const Avatar = styled.article<{ isWatch: boolean }>`
-  bottom: 20%;
-  right: 6%;
-  position: absolute;
+const Cont = styled.article<{ isWatch: boolean }>`
+  right: 8%;
+  bottom: 10%;
+  position: fixed;
   gap: 1rem;
   display: flex;
   align-items: center;
-  flex-direction: column;
   justify-content: center;
   button {
     font-size: 0.9rem;
@@ -88,8 +93,8 @@ const Avatar = styled.article<{ isWatch: boolean }>`
   }
   label {
     svg {
-      width: 35px;
-      height: 35px;
+      width: 2.5rem;
+      height: 2.5rem;
       fill: ${(p) => (p.isWatch ? p.theme.color.logo : 'white')};
     }
   }

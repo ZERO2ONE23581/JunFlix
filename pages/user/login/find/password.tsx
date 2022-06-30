@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { ModalClose, Page } from '../../../../styles/global';
+import { DimBackground, Page } from '../../../../styles/global';
 import { Title } from '../../../../src/components/Layout/Title';
 import { LinkWrap } from '../../../../src/components/Style/Button/Link';
 import { VerifyTokenForm } from '../../../../src/components/User/Login/Verify/TokenForm';
@@ -39,7 +39,7 @@ const FindUserPassword: NextPage = () => {
       </Cont>
       {openModal && (
         <>
-          <ModalClose />
+          <DimBackground />
           <FindUserInfoModal isPassword />
         </>
       )}

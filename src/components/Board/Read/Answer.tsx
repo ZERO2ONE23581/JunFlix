@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Modal, ModalClose } from '../../../../styles/global';
+import { Modal, DimBackground } from '../../../../styles/global';
 import { ModalProps } from '../../../types/global';
 
 export const Answer = ({ openModal }: ModalProps) => {
@@ -13,7 +13,7 @@ export const Answer = ({ openModal }: ModalProps) => {
         </h1>
         <h2>Please select the board to create new POST.</h2>
       </Cont>
-      <ModalClose onClick={() => openModal(false)} />
+      <DimBackground zIndex={99} onClick={() => openModal(false)} />
     </>
   );
 };

@@ -7,7 +7,7 @@ import {
   UseFormRegister,
   UseFormSetError,
 } from 'react-hook-form';
-import { Info, Modal, ModalClose } from '../../../../styles/global';
+import { Info, Modal, DimBackground } from '../../../../styles/global';
 import { IReviewForm } from '../../../types/review';
 import { Btn } from '../../Style/Button';
 import { ErrorMsg } from '../../Style/ErrMsg';
@@ -146,7 +146,7 @@ export const SubmitReview = ({
           </Box>
         )}
       </Cont>
-      <ModalClose />
+      <DimBackground />
     </>
   );
 };

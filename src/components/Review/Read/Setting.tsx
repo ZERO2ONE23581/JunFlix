@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { ModalClose } from '../../../../styles/global';
+import { DimBackground } from '../../../../styles/global';
 import useUser from '../../../libs/client/useUser';
 import { Btn } from '../../Style/Button';
 import { IconBtn } from '../../Style/Button/IconBtn';
@@ -43,7 +43,9 @@ export const Setting = ({}: IReviewBtnsProps) => {
           </Wrap>
         )}
       </Cont>
-      {onSetting && <ModalClose onClick={() => setOnSetting(false)} />}
+      {onSetting && (
+        <DimBackground zIndex={99} onClick={() => setOnSetting(false)} />
+      )}
       {delReview && <DeleteReivew setDelReivew={setDelReivew} />}
     </>
   );

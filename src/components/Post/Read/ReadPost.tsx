@@ -1,16 +1,14 @@
 import useSWR from 'swr';
+import { Main } from './Main';
 import styled from '@emotion/styled';
-import { Svg } from '../../Style/Svg/Svg';
+import { TopLayer } from './TopLayer';
 import { EditPost } from '../Edit/EditPost';
-import { Author } from '../../../../Author';
 import { IGetPost } from '../../../types/post';
 import { DeletePost } from '../Delete/DeletePost';
 import useUser from '../../../libs/client/useUser';
-import { PostSetting } from '../Create/PostSetting';
-import { IconBtn } from '../../Style/Button/IconBtn';
-import { WithAvatar } from '../../Avatar/AvatarInput';
+import { ThumnailAvatar } from '../../Avatar/Thumnail';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { ModalClose, ModalSchema } from '../../../../styles/global';
+import { Modal, DimBackground } from '../../../../styles/global';
 
 interface ICreatePostModalProps {
   USERID: number;
@@ -35,90 +33,69 @@ export const ReadPost = ({
   return (
     <>
       <Cont>
-        <Avatar avatar={post?.avatar!}>
-          {!post?.avatar && <Svg type="no-image" />}
-        </Avatar>
-        <Info>
-          <Title>
-            <span className="title">{post?.title.toUpperCase()}</span>
-            <div className="flex">
-              {isPostHost && (
-                <PostSetting
-                  setEditPost={setEditPost}
-                  setDeletePost={setDeletePost}
-                />
-              )}
-              <IconBtn
-                type="button"
-                svgType="close-btn"
-                onClick={() => setReadPost(false)}
-              />
-            </div>
-          </Title>
-          <Content>
-            <Author post={post!} />
-            <p>{post?.content && post.content}</p>
-          </Content>
-        </Info>
+        <ThumnailAvatar url={post?.avatar} />
+        <About>
+          <TopLayer
+            Board={post?.board!}
+            isPostHost={isPostHost}
+            setReadPost={setReadPost}
+            setEditPost={setEditPost}
+            setDeletePost={setDeletePost}
+          />
+          <Main
+            POST_TITLE={post?.title.toUpperCase()!}
+            POST_CONTENT={post?.content!}
+            CREATOR_AVATAR={post?.user?.avatar!}
+            CREATOR_USERNAME={post?.user?.username!}
+          />
+        </About>
       </Cont>
-      {editPost && <EditPost post_id={post?.id!} setEditPost={setEditPost} />}
-      {deletePost && (
-        <DeletePost post_id={post?.id!} closeModal={setDeletePost} />
+      <DimBackground zIndex={101} onClick={() => setReadPost(false)} />
+
+      {editPost && (
+        <EditPost
+          POSTID={post?.id!}
+          USERID={post?.UserID!}
+          BOARDID={post?.BoardID!}
+          setEditPost={setEditPost}
+        />
       )}
-      <ModalClose onClick={() => setReadPost(false)} />
+
+      {deletePost && (
+        <DeletePost
+          POSTID={post?.id!}
+          USERID={post?.UserID!}
+          BOARDID={post?.BoardID!}
+          openModal={setDeletePost}
+        />
+      )}
     </>
   );
 };
-const Cont = styled(ModalSchema)`
-  width: 80vw;
-  height: 80vh;
-  display: flex;
+const Cont = styled(Modal)`
+  padding: 0;
+  width: 70vw;
+  height: 75vh;
+  min-width: 900px;
   overflow: hidden;
+  //
+  z-index: 102;
+  gap: 0;
+  flex-direction: row;
+  .thumnail-avatar {
+    width: 60%;
+    height: 100%;
+  }
+  border: none;
 `;
-const Avatar = styled(WithAvatar)`
-  width: 55%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const Info = styled.article`
-  width: 45%;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+const About = styled.article`
+  width: 40%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
   color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border.bold};
+  border: ${(p) => p.theme.border.thin};
   background-color: ${(p) => p.theme.color.bg};
-`;
-const Title = styled.h1`
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: ${(p) => p.theme.border.bold};
-  .title {
-    font-size: 1.4em;
-  }
-  .flex {
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    button {
-      svg {
-        width: 28px;
-        height: 28px;
-      }
-    }
-  }
-`;
-const Content = styled.article`
-  padding: 20px;
-  min-height: 60%;
-  p {
-    margin: 20px auto;
-    min-height: 100px;
-    padding: 25px 20px;
-    border-radius: 8px;
-    border: ${(p) => p.theme.border.bold};
-    box-shadow: ${(p) => p.theme.boxShadow.nav};
-  }
 `;

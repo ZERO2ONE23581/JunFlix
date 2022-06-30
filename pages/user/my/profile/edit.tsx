@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import useUser from '../../../../src/libs/client/useUser';
-import { ModalClose, Page } from '../../../../styles/global';
+import { DimBackground, Page } from '../../../../styles/global';
 import { Title } from '../../../../src/components/Layout/Title';
 import { EditUserId } from '../../../../src/components/User/Edit/UserId';
 import { EditUserInfo } from '../../../../src/components/User/Edit/UserInfo';
@@ -30,7 +30,7 @@ const EditProfile: NextPage = () => {
       </Cont>
       {openDel && (
         <>
-          <ModalClose onClick={() => setOpenDel(false)} />
+          <DimBackground onClick={() => setOpenDel(false)} />
           <DeleteAccountModal setOpenDel={setOpenDel} />
         </>
       )}

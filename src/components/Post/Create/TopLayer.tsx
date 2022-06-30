@@ -5,16 +5,12 @@ import { IconBtn } from '../../Style/Button/IconBtn';
 interface IBtnWrapProps {
   next: boolean;
   setNext: Dispatch<SetStateAction<boolean>>;
-  onSubmit: boolean;
-  setOnSubmit: Dispatch<SetStateAction<boolean>>;
   undoPost: boolean;
   setUndoPost: Dispatch<SetStateAction<boolean>>;
 }
-export const Top = ({
+export const TopLayer = ({
   next,
   setNext,
-  onSubmit,
-  setOnSubmit,
   undoPost,
   setUndoPost,
 }: IBtnWrapProps) => {
@@ -25,7 +21,7 @@ export const Top = ({
           <IconBtn
             type="button"
             isClicked={undoPost}
-            svgType="undo-arrow"
+            svgType="left-arrow"
             onClick={() => setUndoPost(true)}
           />
           <h1>새 게시물 만들기</h1>
@@ -44,24 +40,29 @@ export const Top = ({
             onClick={() => setNext(false)}
           />
           <h1>새 게시물 만들기</h1>
-          <IconBtn
-            type="button"
-            isClicked={onSubmit}
-            svgType="submit-arrow"
-            onClick={() => setOnSubmit(true)}
-          />
+          <div />
         </Cont>
       )}
     </>
   );
 };
 const Cont = styled.div`
-  padding: 10px 20px;
+  width: 100%;
+  height: 6vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 20px;
   border-bottom: ${(p) => p.theme.border.thin};
   h1 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+  }
+  svg {
+    width: 1.3em;
+    height: 1.3em;
+  }
+  button {
+    padding: 5px;
+    font-size: 1rem;
   }
 `;

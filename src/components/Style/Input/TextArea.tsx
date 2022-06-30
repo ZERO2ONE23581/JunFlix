@@ -35,14 +35,13 @@ const Cont = styled.article`
   }
 `;
 export const TextArea = styled.textarea`
-  width: 100%;
   resize: none;
   font-size: 1rem;
   padding: 18px 15px;
   padding: 20px;
   border-radius: 4px;
   color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border.bold};
+  border: ${(p) => p.theme.border.thin};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
   ::placeholder {

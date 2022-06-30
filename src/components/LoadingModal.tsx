@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Modal, ModalClose, ModalSchema } from '../../styles/global';
+import { Modal, DimBackground } from '../../styles/global';
 import { Svg } from './Style/Svg/Svg';
 
 interface ILoadingModalProps {
@@ -7,18 +7,21 @@ interface ILoadingModalProps {
     kor: string;
     eng: string;
   };
+  zIndex?: number;
 }
 
-export const LoadingModal = ({ text }: ILoadingModalProps) => {
+export const LoadingModal = ({ text, zIndex }: ILoadingModalProps) => {
   return (
     <>
-      <Cont>
+      <Cont zIndex={zIndex}>
         <h1>{text.kor}</h1>
         <h2>{text.eng}</h2>
         <Svg type="loading" />
       </Cont>
-      <ModalClose />
+      <DimBackground zIndex={99} />
     </>
   );
 };
-const Cont = styled(Modal)``;
+const Cont = styled(Modal)<{ zIndex?: number }>`
+  z-index: ${(p) => p.zIndex && p.zIndex};
+`;

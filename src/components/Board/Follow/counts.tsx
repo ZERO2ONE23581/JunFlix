@@ -22,11 +22,10 @@ export const FollowCounts = ({ counts }: IFollowCountsProps) => {
   );
 };
 const Cont = styled.article`
-  margin: 15px auto;
-  padding-left: 20px;
   gap: 20px;
   display: flex;
-  align-items: center; ;
+  align-items: center;
+  margin: 15px auto;
 `;
 const Box = styled.div`
   .number {

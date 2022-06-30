@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Btn } from '../../Style/Button';
 import { ProfileNav } from './My/ProfileNav';
 import { MainNavBar } from './Nav/MainNavBar';
-import { LayoutPage, ModalClose } from '../../../../styles/global';
+import { LayoutPage, DimBackground } from '../../../../styles/global';
 
 interface IHeaderProps {
   theme: string;
@@ -24,7 +24,7 @@ export const Header = ({ theme, themeClick }: IHeaderProps) => {
           <Btn type="button" name={theme} onClick={themeClick} />
         </div>
       </div>
-      {open && <ModalClose onClick={() => setOpen(false)} />}
+      {open && <DimBackground zIndex={99} onClick={() => setOpen(false)} />}
     </Cont>
   );
 };
