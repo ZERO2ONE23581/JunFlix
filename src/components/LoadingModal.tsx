@@ -24,4 +24,5 @@ export const LoadingModal = ({ text, zIndex }: ILoadingModalProps) => {
 };
 const Cont = styled(Modal)<{ zIndex?: number }>`
   z-index: ${(p) => p.zIndex && p.zIndex};
+  min-width: 300px;
 `;

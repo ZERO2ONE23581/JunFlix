@@ -1,13 +1,13 @@
 import useSWR from 'swr';
+import { Stars } from './Stars';
+import { Setting } from './Setting';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import useUser from '../../../libs/client/useUser';
 import { IGetReview } from '../../../types/review';
-import { ThumnailAvatar } from '../../Avatar/Thumnail';
 import { IconBtn } from '../../Style/Button/IconBtn';
-import { Setting } from './Setting';
-import { Stars } from './Stars';
-import { useEffect, useState } from 'react';
+import { ThumnailAvatar } from '../../Avatar/Thumnail';
 
 export const ReadReview = () => {
   const router = useRouter();

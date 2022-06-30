@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Btn } from '../../../Style/Button';
+import useMutation from '../../../libs/client/useMutation';
+import { ICommentRes, IEditCommentForm } from '../../../types/comments';
 import { useForm } from 'react-hook-form';
-import { Errors } from '../../../../../styles/global';
-import useMutation from '../../../../libs/client/useMutation';
-import { ICommentRes, IEditCommentForm } from '../../../../types/comments';
+import { ErrorMsg } from '../../Style/ErrMsg';
+import { Btn } from '../../Style/Button';
 
 interface IEditComments {
   type: string | null;
@@ -55,8 +55,8 @@ export const EditComments = ({ type, parentId, ogContent }: IEditComments) => {
         name="content"
         placeholder="Add a comment..."
       />
-      {PostData?.error && <Errors>{PostData?.error}</Errors>}
-      {errors.content && <Errors>{errors.content?.message}</Errors>}
+      {PostData?.error && <ErrorMsg error={PostData?.error} />}
+      {errors.content && <ErrorMsg error={errors.content.message} />}
 
       {type === 'post' && (
         <Btn name="Edit" loading={PostLoading} type="submit" />

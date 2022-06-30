@@ -35,14 +35,16 @@ const Cont = styled.article`
   }
 `;
 export const TextArea = styled.textarea`
+  width: 100%;
   resize: none;
+  padding: 0;
+  border: none;
+  outline: none;
   font-size: 1rem;
-  padding: 18px 15px;
-  padding: 20px;
+  box-shadow: none;
+  margin-top: 10px;
   border-radius: 4px;
   color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border.thin};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
   ::placeholder {
     font-size: 1rem;
@@ -51,9 +53,9 @@ export const TextArea = styled.textarea`
   :disabled {
     background-color: inherit;
   }
-  &:focus {
+  :focus {
     border: none;
-    outline: 2.5px solid ${(p) => p.theme.color.logo};
+    outline: none;
   }
   ::-webkit-scrollbar {
     background-color: #0d0d0d;

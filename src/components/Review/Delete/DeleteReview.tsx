@@ -7,6 +7,7 @@ import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { Info, Modal, DimBackground } from '../../../../styles/global';
+import { LoadingModal } from '../../LoadingModal';
 
 interface IDeleteReviewProps {
   setDelReivew: Dispatch<SetStateAction<boolean>>;
@@ -14,18 +15,17 @@ interface IDeleteReviewProps {
 export const DeleteReivew = ({ setDelReivew }: IDeleteReviewProps) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
-  const { user_id, board_id } = router.query;
+  const { user_id, review_id } = router.query;
   const isMyBoard = Boolean(String(loggedInUser?.id) === user_id);
-  const [DeleteBoard, { data, loading }] = useMutation<MutationRes>(
-    `/api/user/${user_id}/board/${board_id}/delete`
+  const [DeleteReview, { data, loading }] = useMutation<MutationRes>(
+    `/api/user/${user_id}/review/${review_id}/delete`
   );
   const clickYes = () => {
     if (!isMyBoard) alert('삭제권한이 없습니다.');
-    DeleteBoard({});
+    DeleteReview({});
   };
   useEffect(() => {
     if (data?.ok) {
-      alert('리뷰가 삭제되었습니다.');
       router.replace('/user/all/reviews');
     }
   }, [data, router]);
@@ -50,21 +50,19 @@ export const DeleteReivew = ({ setDelReivew }: IDeleteReviewProps) => {
             </div>
           </>
         )}
-        {loading && (
-          <>
-            <h1>리뷰 삭제중...</h1>
-            <h2>Deleting Review...</h2>
-            <Svg type="loading" />
-          </>
-        )}
       </Cont>
+      {loading && (
+        <LoadingModal
+          zIndex={203}
+          text={{ kor: '리뷰 삭제중...', eng: 'Deleting Review...' }}
+        />
+      )}
       <DimBackground zIndex={202} onClick={() => setDelReivew(false)} />
     </>
   );
 };
 const Cont = styled(Modal)`
   gap: 12px;
-  width: 60%;
   z-index: 203;
   min-height: 240px;
   padding: 20px;

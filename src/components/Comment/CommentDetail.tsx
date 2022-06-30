@@ -7,9 +7,9 @@ import { CommentBtnWrap } from './CommentBtnWrap';
 import { EditComments } from './Edit/EditComments';
 import { ProfileAvatar } from '../Avatar/Profile';
 import { CreateComments } from './Create/CreateComments';
-import { IGetCommentInfo } from '../../../types/comments';
 import { DeleteComments } from './Delete/DeleteComments';
-import { ErrorMsg } from '../../Style/ErrMsg';
+import { IGetCommentInfo } from '../../types/comments';
+import { ErrorMsg } from '../Style/ErrMsg';
 
 interface ICommentInfoProps {
   isPost?: boolean;

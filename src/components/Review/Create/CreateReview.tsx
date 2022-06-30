@@ -1,21 +1,20 @@
 import styled from '@emotion/styled';
 import { Review } from '@prisma/client';
 import { useRouter } from 'next/router';
+import { Btn } from '../../Style/Button';
+import { Svg } from '../../Style/Svg/Svg';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../Style/Button';
+import { Avatar } from '../../Avatar/Avatar';
 import { SubmitReview } from './SubmitReview';
 import { InputWrap } from '../../Style/Input';
 import { ErrorMsg } from '../../Style/ErrMsg';
-import { AvatarInput } from '../../Avatar/AvatarInput';
-import { IReviewForm } from '../../../types/review';
-import { SelectWrap } from '../../Style/Input/SelectWrap';
-import useMutation from '../../../libs/client/useMutation';
-import { TextArea, TextAreaWrap } from '../../Style/Input/TextArea';
-import { IconBtn } from '../../Style/Button/IconBtn';
-import { Svg } from '../../Style/Svg/Svg';
 import useUser from '../../../libs/client/useUser';
 import { ProfileAvatar } from '../../Avatar/Profile';
+import { IReviewForm } from '../../../types/review';
+import { TextArea } from '../../Style/Input/TextArea';
+import { SelectWrap } from '../../Style/Input/SelectWrap';
+import useMutation from '../../../libs/client/useMutation';
 
 interface ICreateReviewRes {
   ok: boolean;
@@ -116,17 +115,18 @@ export const CreateReview = () => {
       setPreview(URL.createObjectURL(file));
     }
     if (data?.ok) {
-      alert('새로운 리뷰를 생성하였습니다. 생성한 리뷰로 이동합니다.');
-      router.push(`/user/${data.review?.UserID}/review/${data.review?.id}`);
+      router.replace(`/user/${data.review?.UserID}/review/${data.review?.id}`);
     }
   }, [data, avatar, watch, router]);
   //
+  const [isFocus, setIsFocus] = useState(false);
+  const [openLabel, setOpenLabel] = useState(false);
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
         <Cont>
           <h1>Create Review</h1>
-          <Title>
+          <TopLayer>
             <InputWrap
               id="title"
               type="text"
@@ -163,26 +163,37 @@ export const CreateReview = () => {
                 required: '영화의 장르를 선택해주세요.',
               })}
             />
-            <Btn type="button" name="SAVE" onClick={clickSave} />
-          </Title>
-          <Content>
-            {errors.content && <ErrorMsg error={errors.content.message} />}
-            {preview && <Preview preview={preview} />}
-            <Avatar>
-              <span>* 사진을 업로드하려면 아이콘을 클릭하세요.</span>
-              <label htmlFor="avatar">
-                <Svg type="file-upload" />
-              </label>
-              <input
-                {...register('avatar')}
-                id="avatar"
-                name="avatar"
-                type="file"
-                accept="image/*"
-              />
-            </Avatar>
+            <Btn
+              CLASSNAME="create-reivew-btn"
+              type="button"
+              name="SAVE"
+              onClick={clickSave}
+            />
+          </TopLayer>
+          {errors.content && <ErrorMsg error={errors.content.message} />}
+          {openLabel && (
+            <Avatar
+              preview={preview}
+              register={register('avatar')}
+              size={{ width: '70vw', height: '400px' }}
+            />
+          )}
+          <div className="flex">
+            <span>
+              * 사진을 업로드하려면 아이콘을 클릭한 후 배경화면을 클릭하세요.
+            </span>
+            <span>
+              (Click the icon beside and click the screen after to post a photo
+              on your review.)
+            </span>
+            <div onClick={() => setOpenLabel((p) => !p)}>
+              <Svg type="file-upload" />
+            </div>
+          </div>
+
+          <ContentInput isFocus={isFocus}>
             <Profile>
-              <ProfileAvatar size={40} url={loggedInUser?.avatar} />
+              <ProfileAvatar size={'3em'} url={loggedInUser?.avatar} />
               <div>
                 <span>{loggedInUser?.username}</span>
                 <span>'s Review</span>
@@ -199,9 +210,12 @@ export const CreateReview = () => {
               rows={10}
               id="content"
               name="content"
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
             />
-          </Content>
+          </ContentInput>
         </Cont>
+
         {submit && (
           <SubmitReview
             loading={Loading}
@@ -217,41 +231,51 @@ export const CreateReview = () => {
   );
 };
 const Cont = styled.section`
+  padding: 20px 30px;
+  padding-bottom: 50px;
+  border-radius: 5px;
+  border: 1px solid #636e72;
   h1 {
     font-size: 1.6rem;
+    padding-bottom: 20px;
   }
-  .avatar-cont {
-    width: 60%;
-    margin: 0 auto;
-    border-radius: 3px;
-    background-size: contain;
-    border: ${(p) => p.theme.border.bold};
+  .thumnail-avatar {
+    margin-top: 20px;
   }
-  .avatar-label {
-    min-height: 400px;
+  .flex {
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 15px 0;
+    font-size: 1rem;
+    font-style: italic;
+    opacity: 0.7;
   }
 `;
-const Title = styled.article`
+const ContentInput = styled.div<{ isFocus: boolean }>`
+  padding: 20px;
+  border-radius: 5px;
+  border: ${(p) =>
+    p.isFocus ? `2px solid ${p.theme.color.logo}` : p.theme.border.thin};
+  textarea {
+    font-size: 1.2rem;
+  }
+`;
+const TopLayer = styled.article`
   gap: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 20px 0;
+  justify-content: space-around;
   select,
   input {
-    border: ${(p) => p.theme.border.bold};
+    border: ${(p) => p.theme.border.thick};
   }
   select {
     padding: 15px;
   }
-`;
-const Content = styled.article`
-  padding: 30px 60px;
-  border-radius: 5px;
-  border: 1px solid #636e72;
-  textarea {
-    font-size: 1.2rem;
-    margin-top: 12px;
+  .create-reivew-btn {
+    width: auto;
   }
 `;
 const Profile = styled.article`
@@ -262,39 +286,40 @@ const Profile = styled.article`
   font-style: italic;
   font-size: 1rem;
 `;
-const Avatar = styled.article`
-  gap: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  font-size: 1rem;
-  label {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    svg {
-      width: 1.4em;
-      height: 1.4em;
-    }
-    &:hover {
-      svg {
-        fill: ${(p) => p.theme.color.logo};
-      }
-    }
-  }
-  input {
-    display: none;
-  }
-  span {
-    opacity: 0.8;
-    font-style: italic;
-    color: ${(p) => p.theme.color.logo};
-  }
-`;
-const Preview = styled.div<{ preview: string | null }>`
-  min-height: 300px;
-  background: ${(p) =>
-    p.preview && `url(${p.preview}) center / contain  no-repeat`};
-`;
+// const Preview = styled.div<{ preview: string | null }>`
+//   min-height: 300px;
+//   background: ${(p) =>
+//     p.preview && `url(${p.preview}) center / contain  no-repeat`};
+// `;
+
+// const Avatar = styled.article`
+//   gap: 10px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: end;
+//   font-size: 1rem;
+//   label {
+//     width: 50px;
+//     height: 50px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     svg {
+//       width: 1.4em;
+//       height: 1.4em;
+//     }
+//     &:hover {
+//       svg {
+//         fill: ${(p) => p.theme.color.logo};
+//       }
+//     }
+//   }
+//   input {
+//     display: none;
+//   }
+//   span {
+//     opacity: 0.8;
+//     font-style: italic;
+//     color: ${(p) => p.theme.color.logo};
+//   }
+// `;

@@ -3,11 +3,11 @@ import { Svg } from '../Style/Svg/Svg';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface IAvatarProps {
-  url?: string | null | boolean;
   preview?: string;
-  disabled: boolean;
   register?: UseFormRegisterReturn;
   size: { width: string; height: string };
+  url?: string | null | boolean;
+  disabled?: boolean;
 }
 export const Avatar = ({
   url,
@@ -44,7 +44,7 @@ export const Avatar = ({
           {!isImage && !url && !preview && (
             <NoImageCont
               size={{ width: size.width, height: size.height }}
-              disabled={disabled}
+              disabled={disabled!}
             >
               <Svg type="no-image" />
             </NoImageCont>
@@ -86,6 +86,7 @@ const NoImageCont = styled.article<{
   display: flex;
   align-items: center;
   justify-content: center;
+  border: ${(p) => p.theme.border.thin};
   :hover {
     svg {
       fill: ${(p) => !p.disabled && p.theme.color.logo};

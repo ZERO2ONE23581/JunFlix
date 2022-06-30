@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import useUser from '../../../libs/client/useUser';
+import useUser from '../../libs/client/useUser';
 
 export const CommentBtnWrap = ({
   id,

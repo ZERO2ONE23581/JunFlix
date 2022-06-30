@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { CommentDetail } from './\bCommentDetail';
-import { IGetAllComments } from '../../../types/comments';
+import { IGetAllComments } from '../../types/comments';
 
 interface ICommentListsProps {
   isPost?: boolean;

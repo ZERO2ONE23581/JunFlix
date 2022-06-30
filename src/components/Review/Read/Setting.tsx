@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { DimBackground } from '../../../../styles/global';
+import { DimBackground, Modal } from '../../../../styles/global';
 import useUser from '../../../libs/client/useUser';
 import { Btn } from '../../Style/Button';
 import { IconBtn } from '../../Style/Button/IconBtn';
@@ -34,11 +34,10 @@ export const Setting = ({}: IReviewBtnsProps) => {
               }
             />
             <Btn
+              CLASSNAME="delete-review-btn"
               name="리뷰삭제"
               type="button"
-              onClick={() =>
-                router.push(`/user/${user_id}/review/${review_id}/edit`)
-              }
+              onClick={() => setDelReivew(true)}
             />
           </Wrap>
         )}
@@ -50,20 +49,12 @@ export const Setting = ({}: IReviewBtnsProps) => {
     </>
   );
 };
-const Cont = styled.article`
-  position: relative;
-`;
-const Wrap = styled.article`
-  position: absolute;
-  z-index: 201;
-  right: -70%;
-  top: 110%;
-  //
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  //
-  width: 250%;
+const Cont = styled.article``;
+const Wrap = styled(Modal)`
+  width: 40vw;
+  gap: 0;
+  padding: 0;
+  border: none;
   overflow: hidden;
   border-radius: 3px;
   button {
@@ -71,11 +62,9 @@ const Wrap = styled.article`
     border-radius: 0%;
     border-bottom: 1px solid ${(p) => p.theme.color.bg};
   }
-`;
-
-const Button = styled.button`
-  border: 3px solid blue;
-  font-size: 1rem;
-  width: 90px;
-  height: 40px;
+  .delete-review-btn {
+    button {
+      border-bottom: none;
+    }
+  }
 `;

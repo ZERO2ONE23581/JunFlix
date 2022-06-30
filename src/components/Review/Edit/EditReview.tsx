@@ -1,45 +1,80 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-import { SaveUpdate } from './SaveUpdate';
 import { Btn } from '../../Style/Button';
-import { Svg } from '../../Style/Svg/Svg';
+import { SaveUpdate } from './SaveUpdate';
+import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
+import { Avatar } from '../../Avatar/Avatar';
+import { InputWrap } from '../../Style/Input';
 import { ErrorMsg } from '../../Style/ErrMsg';
+import useUser from '../../../libs/client/useUser';
 import { ProfileAvatar } from '../../Avatar/Profile';
-import { ThumnailAvatar } from '../../Avatar/Thumnail';
-import { Input, InputWrap } from '../../Style/Input';
 import { TextArea } from '../../Style/Input/TextArea';
 import { MutationRes } from '../../../types/mutation';
 import { SelectWrap } from '../../Style/Input/SelectWrap';
 import useMutation from '../../../libs/client/useMutation';
 import { IGetReview, IReviewForm } from '../../../types/review';
+import { Critic } from './Critic';
 
 export const EditReview = () => {
   const router = useRouter();
+  const { loggedInUser } = useUser();
   const { user_id, review_id } = router.query;
   const QueryId = user_id && review_id;
-  //get
+  //
   const { data: ReviewData } = useSWR<IGetReview>(
     QueryId && `/api/user/${user_id}/review/${review_id}`
   );
   const review = ReviewData?.review;
-
-  //post
-  const {
-    watch,
-    setValue,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IReviewForm>({ mode: 'onChange' });
-  const avatar = watch('avatar');
+  useEffect(() => {
+    if (review) {
+      if (review.title) setValue('title', review.title);
+      if (review.movieTitle) setValue('movieTitle', review.movieTitle);
+      if (review.genre) setValue('genre', review.genre);
+      if (review.content) setValue('content', review.content);
+      if (review.score) setValue('score', review.score);
+      if (review.oneline) setValue('oneline', review.oneline);
+      if (review.recommend) setValue('recommend', review.recommend);
+    }
+  }, [review]);
+  //
   const [EditReview, { loading, data }] = useMutation<MutationRes>(
     `/api/user/${user_id}/review/${review_id}/edit`
   );
+  const {
+    watch,
+    register,
+    handleSubmit,
+    getValues,
+    setValue,
+    setError,
+    formState: { errors },
+  } = useForm<IReviewForm>({ mode: 'onSubmit' });
+  const avatar = watch('avatar');
   const [avatarLoading, setAvatarLoading] = useState(false);
   const Loading = avatarLoading ? avatarLoading : loading ? loading : null;
+  const [saveEdit, setSaveEdit] = useState(false);
+
+  const clickSave = () => {
+    if (getValues('title') === '')
+      return setError('title', { type: 'test', message: '제목을 입력하세요.' });
+    if (getValues('movieTitle') === '')
+      return setError('movieTitle', { message: '영화제목을 입력하세요.' });
+    if (getValues('genre') === '')
+      return setError('genre', { message: '영화 장르를 선택해 주세요.' });
+    if (getValues('content') === '')
+      return setError('content', {
+        type: 'custom',
+        message: '리뷰를 적어주세요',
+      });
+    if (getValues('content')!.length <= 50)
+      return setError('content', {
+        type: 'custom',
+        message: '리뷰는 최소 50자 이상이어야 합니다.',
+      });
+    setSaveEdit(true);
+  };
   const onValid = async ({
     avatar,
     title,
@@ -88,40 +123,33 @@ export const EditReview = () => {
     }
   };
   //
+
   const [preview, setPreview] = useState('');
   useEffect(() => {
-    if (review) {
-      if (review.title) setValue('title', review.title);
-      if (review.movieTitle) setValue('movieTitle', review.movieTitle);
-      if (review.genre) setValue('genre', review.genre);
-      if (review.content) setValue('content', review.content);
-      if (review.score) setValue('score', review.score);
-      if (review.oneline) setValue('oneline', review.oneline);
-      if (review.recommend) setValue('recommend', review.recommend);
-    }
     if (avatar && avatar.length > 0) {
       const file = avatar[0];
       setPreview(URL.createObjectURL(file));
     }
+
     if (data?.ok) {
-      alert('리뷰를 수정했습니다.');
       router.replace(`/user/${user_id}/review/${review_id}`);
     }
-  }, [review, data, avatar, watch, router]);
+  }, [, data, avatar, router, setPreview]);
   //
-  const [saveEdit, setSaveEdit] = useState(false);
+  const [isFocus, setIsFocus] = useState(false);
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
         <Cont>
           <h1>Edit Review</h1>
-          <Title>
+          <TopLayer>
             <InputWrap
               id="title"
               type="text"
+              label="리뷰제목"
               watch={watch('title')}
               inputErrMsg={errors.title?.message}
-              label="리뷰제목"
+              isValue={Boolean(getValues('title'))}
               register={register('title', {
                 required: '제목을 작성해 주세요.',
                 maxLength: {
@@ -133,9 +161,10 @@ export const EditReview = () => {
             <InputWrap
               id="movieTitle"
               type="text"
+              label="영화제목"
               watch={watch('movieTitle')}
               inputErrMsg={errors.movieTitle?.message}
-              label="영화제목"
+              isValue={Boolean(getValues('movieTitle'))}
               register={register('movieTitle', {
                 required: '리뷰하는 영화제목을 작성해 주세요.',
                 maxLength: {
@@ -152,28 +181,32 @@ export const EditReview = () => {
                 required: '영화의 장르를 선택해주세요.',
               })}
             />
-            <Btn name="SAVE" type="button" onClick={() => setSaveEdit(true)} />
-          </Title>
-          <Content>
-            {errors.content && <ErrorMsg error={errors.content.message} />}
-            <ThumnailAvatar url={review?.avatar} preview={preview} />
-            <Avatar>
-              <span>* 새로운 사진을 업로드하려면 아이콘을 클릭하세요.</span>
-              <label htmlFor="avatar">
-                <Svg type="file-upload" />
-              </label>
-              <input
-                {...register('avatar')}
-                id="avatar"
-                name="avatar"
-                type="file"
-                accept="image/*"
-              />
-            </Avatar>
+            <Btn
+              CLASSNAME="create-reivew-btn"
+              type="button"
+              name="SAVE"
+              onClick={clickSave}
+            />
+          </TopLayer>
+          {errors.content && <ErrorMsg error={errors.content.message} />}
+
+          <Avatar
+            url={review?.avatar}
+            preview={preview}
+            register={register('avatar')}
+            size={{ width: '70vw', height: '400px' }}
+          />
+
+          <div className="flex">
+            <span>* 새로운 사진을 업로드하려면 기존 사진을 클릭하세요.</span>
+            <span>(click the original picture to post a new one.)</span>
+          </div>
+
+          <ContentInput isFocus={isFocus}>
             <Profile>
-              <ProfileAvatar size={40} url={review?.user?.avatar} />
+              <ProfileAvatar size={'3em'} url={loggedInUser?.avatar} />
               <div>
-                <span>{review?.user?.username}</span>
+                <span>{loggedInUser?.username}</span>
                 <span>'s Review</span>
               </div>
             </Profile>
@@ -188,38 +221,11 @@ export const EditReview = () => {
               rows={10}
               id="content"
               name="content"
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
             />
-          </Content>
-          <Oneline>
-            <label htmlFor="oneline">
-              이 영화에 대한 한줄평을 작성해 주세요.
-            </label>
-            <Input
-              id="oneline"
-              type="text"
-              maxLength={30}
-              placeholder="영화 한줄평"
-              {...register('oneline')}
-            />
-            <span>한줄평은 30자 이내 작성할 수 있습니다.</span>
-          </Oneline>
-          <Score>
-            <label htmlFor="score">이 영화에 대한 당신의 별점은?</label>
-            <input {...register('score')} type="range" min={0} max={5} />
-            <span>숫자를 입력해주세요.</span>
-            <span>별점은 0부터 5까지 선택가능합니다.</span>
-          </Score>
-          <Recommend>
-            <label htmlFor="recommend">
-              이 영화를 추천한다면 체크해주세요.
-            </label>
-            <input
-              {...register('recommend')}
-              type="checkbox"
-              id="recommend"
-              name="recommend"
-            />
-          </Recommend>
+          </ContentInput>
+          <Critic register={register} />
         </Cont>
 
         {saveEdit && (
@@ -244,41 +250,51 @@ export const EditReview = () => {
   );
 };
 const Cont = styled.section`
+  padding: 20px 30px;
+  padding-bottom: 50px;
+  border-radius: 5px;
+  border: 1px solid #636e72;
   h1 {
     font-size: 1.6rem;
+    padding-bottom: 20px;
   }
-  .avatar-cont {
-    width: 60%;
-    margin: 0 auto;
-    border-radius: 3px;
-    background-size: contain;
-    border: ${(p) => p.theme.border.bold};
+  .thumnail-avatar {
+    margin-top: 20px;
   }
-  .avatar-label {
-    min-height: 400px;
+  .flex {
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 15px 0;
+    font-size: 1rem;
+    font-style: italic;
+    opacity: 0.7;
   }
 `;
-const Title = styled.article`
+const ContentInput = styled.div<{ isFocus: boolean }>`
+  padding: 20px;
+  border-radius: 5px;
+  border: ${(p) =>
+    p.isFocus ? `2px solid ${p.theme.color.logo}` : p.theme.border.thin};
+  textarea {
+    font-size: 1.2rem;
+  }
+`;
+const TopLayer = styled.article`
   gap: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 20px 0;
+  justify-content: space-around;
   select,
   input {
-    border: ${(p) => p.theme.border.bold};
+    border: ${(p) => p.theme.border.thick};
   }
   select {
     padding: 15px;
   }
-`;
-const Content = styled.article`
-  padding: 30px 60px;
-  border-radius: 5px;
-  border: 1px solid #636e72;
-  textarea {
-    font-size: 1.2rem;
-    margin-top: 12px;
+  .create-reivew-btn {
+    width: auto;
   }
 `;
 const Profile = styled.article`
@@ -288,78 +304,4 @@ const Profile = styled.article`
   opacity: 0.8;
   font-style: italic;
   font-size: 1rem;
-`;
-const Avatar = styled.article`
-  gap: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  font-size: 1rem;
-  label {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    svg {
-      width: 1.4em;
-      height: 1.4em;
-    }
-    &:hover {
-      svg {
-        fill: ${(p) => p.theme.color.logo};
-      }
-    }
-  }
-  input {
-    display: none;
-  }
-  span {
-    opacity: 0.8;
-    font-style: italic;
-    color: ${(p) => p.theme.color.logo};
-  }
-`;
-const FlexColumn = styled.div`
-  padding: 20px;
-  min-width: 330px;
-  text-align: center;
-  gap: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  label {
-    font-size: 1.1rem;
-  }
-  input {
-    border: ${(p) => p.theme.border.bold};
-  }
-`;
-const Oneline = styled(FlexColumn)``;
-const Score = styled(FlexColumn)`
-  input {
-    padding: 10px;
-    width: 60px;
-    margin: 10px auto;
-    text-align: center;
-    ::-webkit-outer-spin-button,
-    ::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-    }
-  }
-`;
-const Recommend = styled(FlexColumn)`
-  flex-direction: row;
-  align-items: center;
-  input {
-    border-radius: 10%;
-    width: 30px;
-    height: 30px;
-    &:checked {
-      color: red;
-      background-color: red;
-    }
-  }
 `;

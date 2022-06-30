@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../Style/Button';
-import useUser from '../../../../libs/client/useUser';
+import { Btn } from '../../Style/Button';
+import { ErrorMsg } from '../../Style/ErrMsg';
+import useUser from '../../../libs/client/useUser';
 import { ProfileAvatar } from '../../Avatar/Profile';
-import useMutation from '../../../../libs/client/useMutation';
-import { Errors, Form, FormCont } from '../../../../../styles/global';
-import { ICommentRes, ICreateCommentsForm } from '../../../../types/comments';
+import { Form, FormCont } from '../../../../styles/global';
+import useMutation from '../../../libs/client/useMutation';
+import { ICommentRes, ICreateCommentsForm } from '../../../types/comments';
 
 interface ICreateCommentsProps {
   parentId?: number | null;
@@ -91,9 +92,9 @@ export const CreateComments = ({ parentId, type }: ICreateCommentsProps) => {
             name="content"
             placeholder="Add a comment..."
           />
-          {errors.content && <Errors>{errors.content?.message}</Errors>}
-          {PostCmtData?.error && <Errors>{PostCmtData?.error}</Errors>}
-          {PostReplyData?.error && <Errors>{PostReplyData?.error}</Errors>}
+          {errors.content && <ErrorMsg error={errors.content?.message} />}
+          {PostCmtData?.error && <ErrorMsg error={PostCmtData.error} />}
+          {PostReplyData?.error && <ErrorMsg error={PostReplyData.error} />}
 
           {type === 'post' && (
             <Btn

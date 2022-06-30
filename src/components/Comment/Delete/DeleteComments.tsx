@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Btn } from '../../../Style/Button';
-import { Modal, DimBackground } from '../../../../../styles/global';
-import { ICommentRes } from '../../../../types/comments';
-import useMutation from '../../../../libs/client/useMutation';
+import { Btn } from '../../Style/Button';
+import { ICommentRes } from '../../../types/comments';
+import useMutation from '../../../libs/client/useMutation';
+import { DimBackground, Modal } from '../../../../styles/global';
 
 interface IDeleteCommentModalProps {
   type: string | null;
@@ -63,7 +63,7 @@ export const DeleteComments = ({
           <Btn type="button" name="Cancel" onClick={clickCancel} />
         </BtnWrap>
       </Modal>
-      <DimBackground />
+      <DimBackground zIndex={99} />
     </>
   );
 };

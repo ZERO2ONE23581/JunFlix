@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
-import { IGetReplies } from '../../../types/comments';
 import { CommentDetail } from './\bCommentDetail';
+import { IGetReplies } from '../../types/comments';
 
 interface IRepliesProps {
   isPost?: boolean;
