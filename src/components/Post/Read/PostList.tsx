@@ -25,29 +25,37 @@ export const PostList = ({ posts }: IPostListProps) => {
   };
   return (
     <>
-      <Grid className="post-grid" size={3}>
-        {posts?.map((post) => (
-          <Post
-            key={post.id}
-            avatar={post.avatar}
-            onClick={() => clickPost(post.id)}
-          >
-            {!post.avatar && <Svg type="no-image" />}
-            <PostIcons
-              post_id={post.id}
-              user_id={post.UserID}
-              board_id={post.BoardID}
+      {posts?.length > 0 ? (
+        <>
+          <Grid className="post-grid" size={3}>
+            {posts?.map((post) => (
+              <Post
+                key={post.id}
+                avatar={post.avatar}
+                onClick={() => clickPost(post.id)}
+              >
+                {!post.avatar && <Svg type="no-image" />}
+                <PostIcons
+                  post_id={post.id}
+                  user_id={post.UserID}
+                  board_id={post.BoardID}
+                />
+              </Post>
+            ))}
+          </Grid>
+          {post && (
+            <ReadPost
+              USERID={userId}
+              BOARDID={boardId}
+              POSTID={postId}
+              setReadPost={setPost}
             />
-          </Post>
-        ))}
-      </Grid>
-      {post && (
-        <ReadPost
-          USERID={userId}
-          BOARDID={boardId}
-          POSTID={postId}
-          setReadPost={setPost}
-        />
+          )}
+        </>
+      ) : (
+        <>
+          <h1>포스트가 존재하지 않습니다.</h1>
+        </>
       )}
     </>
   );

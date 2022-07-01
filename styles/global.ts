@@ -5,7 +5,7 @@ export const LayoutPage = styled.section`
   padding: 1% 12%;
 `;
 export const Page = styled.section`
-  padding: 4% 10%;
+  padding: 2% 10%;
   min-width: 100vw;
   min-height: 100vh;
   height: 100%;

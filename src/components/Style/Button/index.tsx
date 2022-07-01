@@ -19,21 +19,18 @@ export const Btn = ({
   CLASSNAME,
 }: IBtnProps) => {
   return (
-    <Cont className={CLASSNAME}>
+    <>
       <Button
         type={type}
         isClicked={isClicked}
         onClick={onClick}
-        className="btn-style"
+        className={CLASSNAME}
       >
         {loading ? 'Loading...' : name}
       </Button>
-    </Cont>
+    </>
   );
 };
-const Cont = styled.div`
-  width: 100%;
-`;
 export const Button = styled.button<{ isClicked?: boolean }>`
   display: flex;
   align-items: center;

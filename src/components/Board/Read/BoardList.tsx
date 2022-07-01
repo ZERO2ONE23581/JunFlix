@@ -32,41 +32,49 @@ export const BoardList = ({ boards }: IBoardListProps) => {
   //
   return (
     <>
-      <Grid size={5}>
-        {boards?.map((board) => (
-          <Board key={board.id} avatar={board.avatar}>
-            <Button
-              onClick={() =>
-                clickBoard({
-                  USERID: board.UserID,
-                  BOARDID: board.id,
-                  TITLE: board.title,
-                })
-              }
-            />
-            <ListInfo board={board} />
-            <IsOwner USERID={board.UserID} />
+      {boards?.length > 0 ? (
+        <>
+          <Grid size={5}>
+            {boards?.map((board) => (
+              <Board key={board.id} avatar={board.avatar}>
+                <Button
+                  onClick={() =>
+                    clickBoard({
+                      USERID: board.UserID,
+                      BOARDID: board.id,
+                      TITLE: board.title,
+                    })
+                  }
+                />
+                <ListInfo board={board} />
+                <IsOwner USERID={board.UserID} />
+                <IconBtnFixed
+                  type="button"
+                  svgType="add"
+                  isClicked={false}
+                  onClick={() =>
+                    clickBoard({
+                      isCreate: true,
+                      USERID: loggedInUser?.id!,
+                    })
+                  }
+                />
+              </Board>
+            ))}
             <IconBtnFixed
               type="button"
-              svgType="add"
-              isClicked={false}
-              onClick={() =>
-                clickBoard({
-                  isCreate: true,
-                  USERID: loggedInUser?.id!,
-                })
-              }
+              svgType="question"
+              isClicked={question}
+              onClick={() => setQuestion(true)}
             />
-          </Board>
-        ))}
-        <IconBtnFixed
-          type="button"
-          svgType="question"
-          isClicked={question}
-          onClick={() => setQuestion(true)}
-        />
-      </Grid>
-      {question && <Answer openModal={setQuestion} />}
+          </Grid>
+          {question && <Answer openModal={setQuestion} />}
+        </>
+      ) : (
+        <>
+          <h1>보드가 존재하지 않습니다...</h1>
+        </>
+      )}
     </>
   );
 };

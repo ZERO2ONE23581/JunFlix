@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
   const following = await client.following.findMany({
     where: { UserID: user.id },
-    select: { board: true },
+    include: { board: true, user: true },
   });
   const MyBoards = await client.board.findMany({
     where: { UserID: user.id },

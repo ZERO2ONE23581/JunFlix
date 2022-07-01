@@ -23,8 +23,9 @@ export interface IFollowBoardProps {
 export interface IGetFollowInfo {
   ok: boolean;
   error?: string;
-  following?: FollowingWithBoards[];
+  following?: FollowingWith[];
 }
-export interface FollowingWithBoards extends Following {
+export interface FollowingWith extends Following {
   board: Board;
+  user: User;
 }

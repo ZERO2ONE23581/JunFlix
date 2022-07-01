@@ -16,40 +16,48 @@ export const ReviewList = ({ reviews }: IReviewList) => {
     return reviews.length - reviews.indexOf(item);
   };
   return (
-    <Cont>
-      <TopLayer />
-      {reviews?.map((review) => (
-        <Lists key={review.id}>
-          <li className="number">{Order(review)}</li>
-          <Title className="title">
-            <Link href={`/user/${review.UserID}/review/${review.id}`}>
-              <a>{CapFirstLetter(review.title)}</a>
-            </Link>
-          </Title>
-          <li className="movie-title">{review.movieTitle.toUpperCase()}</li>
-          <li className="genre">{review.genre}</li>
-          <li className="stars">
-            <Stars score={review.score!} />
-          </li>
-          <li className="author">
-            <ProfileAvatar url={review?.user?.avatar} size={'1.8em'} />
-            {review.user.username}
-          </li>
-          <li className="likes">
-            <Counts isLikes LikesCounts={review?._count?.likes} />
-          </li>
-          <li className="comments">
-            <Counts isComment CommentCounts={review?._count?.comments} />
-          </li>
-          <li className="date created-at">
-            <span>{ComputeDate(review.createdAt.toString())}</span>
-          </li>
-          <li className="date updated-at">
-            <span>{ComputeDate(review.updatedAt.toString())}</span>
-          </li>
-        </Lists>
-      ))}
-    </Cont>
+    <>
+      {reviews?.length > 0 ? (
+        <Cont className="review-list">
+          <TopLayer />
+          {reviews?.map((review) => (
+            <Lists key={review.id}>
+              <li className="number">{Order(review)}</li>
+              <Title className="title">
+                <Link href={`/user/${review.UserID}/review/${review.id}`}>
+                  <a>{CapFirstLetter(review.title)}</a>
+                </Link>
+              </Title>
+              <li className="movie-title">{review.movieTitle.toUpperCase()}</li>
+              <li className="genre">{review.genre}</li>
+              <li className="stars">
+                <Stars score={review.score!} />
+              </li>
+              <li className="author">
+                <ProfileAvatar url={review?.user?.avatar} size={'1.8em'} />
+                {review.user.username}
+              </li>
+              <li className="likes">
+                <Counts isLikes LikesCounts={review?._count?.likes} />
+              </li>
+              <li className="comments">
+                <Counts isComment CommentCounts={review?._count?.comments} />
+              </li>
+              <li className="date created-at">
+                <span>{ComputeDate(review.createdAt.toString())}</span>
+              </li>
+              <li className="date updated-at">
+                <span>{ComputeDate(review.updatedAt.toString())}</span>
+              </li>
+            </Lists>
+          ))}
+        </Cont>
+      ) : (
+        <>
+          <h1>리뷰가 존재하지 않습니다...</h1>
+        </>
+      )}
+    </>
   );
 };
 const Cont = styled.section`

@@ -91,13 +91,14 @@ const Cont = styled.article`
   svg {
     width: 2.5rem;
     height: 2.5rem;
+    /* fill: ${(p) => p.theme.color.bg}; */
   }
 `;
 const BtnWrap = styled(Modal)`
   z-index: 201;
+  width: 40vw;
   gap: 0;
   padding: 0;
-  width: 40vw;
   border: none;
   overflow: hidden;
   border-radius: 5px;

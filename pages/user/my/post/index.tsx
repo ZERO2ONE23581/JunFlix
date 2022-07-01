@@ -13,7 +13,7 @@ const MyPosts: NextPage = () => {
     <>
       <Title title={`${loggedInUser?.username}'s Posts`} />
       <Page>
-        <h1>{loggedInUser?.username}님의 모든 포스트</h1>
+        <h1>{loggedInUser?.username}님의 포스트</h1>
         <PostList posts={data?.posts!} />
       </Page>
     </>
