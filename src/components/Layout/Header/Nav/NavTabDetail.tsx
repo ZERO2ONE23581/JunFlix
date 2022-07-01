@@ -23,17 +23,6 @@ export const NavTabDetail = ({ title, type, setType }: any) => {
               </li>
             </a>
           </Link>
-          {type === 'review' && (
-            <Link href={`/user/all/${type}s/ratings`}>
-              <a>
-                <li onClick={() => setType('x')}>
-                  <span>All </span>
-                  <span className="title">Ratings</span>
-                </li>
-              </a>
-            </Link>
-          )}
-
           {isLoggedIn && (
             <Link href={`/user/my/${type}`}>
               <a>
@@ -44,7 +33,6 @@ export const NavTabDetail = ({ title, type, setType }: any) => {
               </a>
             </Link>
           )}
-
           {isLoggedIn ? (
             title === 'Post' ? (
               <Link href={`/user/my/board`}>

@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../../../../styles/global';
 import { Title } from '../../../../../src/components/Layout/Title';
-import { ReviewComments } from '../../../../../src/components/Review/Read/ReviewComments';
 import { ReadReview } from '../../../../../src/components/Review/Read/ReadReview';
+import { ReviewComments } from '../../../../../src/components/Review/Read/ReviewComments';
 
 const ReviewPage: NextPage = () => {
   return (

@@ -27,7 +27,7 @@ const EditReviewPage: NextPage = () => {
 export default EditReviewPage;
 
 const PageCont = styled(Page)`
-  padding: 2% 15%;
+  padding: 2% 5%;
   .question {
     right: 5rem;
     bottom: 5rem;

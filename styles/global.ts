@@ -68,6 +68,7 @@ export const Info = styled.div`
   }
 `;
 export const Modal = styled.article`
+  min-width: 300px;
   z-index: 100;
   position: fixed;
   top: 50%;

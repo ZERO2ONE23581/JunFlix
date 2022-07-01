@@ -1,4 +1,5 @@
 import useSWR from 'swr';
+import { Critic } from './Critic';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
@@ -15,7 +16,6 @@ import { MutationRes } from '../../../types/mutation';
 import { SelectWrap } from '../../Style/Input/SelectWrap';
 import useMutation from '../../../libs/client/useMutation';
 import { IGetReview, IReviewForm } from '../../../types/review';
-import { Critic } from './Critic';
 
 export const EditReview = () => {
   const router = useRouter();
@@ -44,11 +44,11 @@ export const EditReview = () => {
   );
   const {
     watch,
-    register,
-    handleSubmit,
     getValues,
     setValue,
     setError,
+    register,
+    handleSubmit,
     formState: { errors },
   } = useForm<IReviewForm>({ mode: 'onSubmit' });
   const avatar = watch('avatar');
@@ -194,7 +194,7 @@ export const EditReview = () => {
             url={review?.avatar}
             preview={preview}
             register={register('avatar')}
-            size={{ width: '70vw', height: '400px' }}
+            size={{ width: '100vw', height: '66vh' }}
           />
 
           <div className="flex">

@@ -125,7 +125,6 @@ export const CreateReview = () => {
     <>
       <form onSubmit={handleSubmit(onValid)}>
         <Cont>
-          <h1>Create Review</h1>
           <TopLayer>
             <InputWrap
               id="title"
@@ -175,7 +174,7 @@ export const CreateReview = () => {
             <Avatar
               preview={preview}
               register={register('avatar')}
-              size={{ width: '70vw', height: '400px' }}
+              size={{ width: '100vw', height: '66vh' }}
             />
           )}
           <div className="flex">
@@ -235,10 +234,6 @@ const Cont = styled.section`
   padding-bottom: 50px;
   border-radius: 5px;
   border: 1px solid #636e72;
-  h1 {
-    font-size: 1.6rem;
-    padding-bottom: 20px;
-  }
   .thumnail-avatar {
     margin-top: 20px;
   }

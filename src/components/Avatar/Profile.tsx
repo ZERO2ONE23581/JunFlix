@@ -47,17 +47,3 @@ export const AvatarLabel = styled.label`
 interface IHostIconProps {
   size: number;
 }
-export const HostIcon = ({ size }: IHostIconProps) => {
-  const { loggedInUser } = useUser();
-  return (
-    <Host>
-      <ProfileAvatar url={loggedInUser?.avatar} size={size} />
-      <span>{loggedInUser?.username}</span>
-    </Host>
-  );
-};
-const Host = styled.span`
-  gap: 12px;
-  display: flex;
-  align-items: center;
-`;

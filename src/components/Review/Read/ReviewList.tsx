@@ -1,203 +1,108 @@
-import useSWR from 'swr';
 import Link from 'next/link';
+import { Stars } from './Stars';
 import styled from '@emotion/styled';
-import { IGetLikes } from '../../../types/likes';
-import { IGetReviews } from '../../../types/review';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Svg } from '../../Style/Svg/Svg';
+import { ListWrap, TopLayer } from './TopLayer';
 import { ProfileAvatar } from '../../Avatar/Profile';
-import { LikeCommentWrap } from '../../Style/Icon/LikeCommentWrap';
+import { ReviewWithUser } from '../../../types/review';
+import { CapFirstLetter, ComputeDate } from '../../Tools';
+import { Counts } from '../../Style/Icon/Counts';
 
-interface IReviewListProps {
-  isAllReviews?: boolean;
-  isMyReview?: boolean;
-  findLikes?: boolean;
+interface IReviewList {
+  reviews: ReviewWithUser[];
 }
-export const ReviewList = ({
-  isAllReviews,
-  isMyReview,
-  findLikes,
-}: IReviewListProps) => {
-  const { data } = useSWR<IGetReviews>(
-    isAllReviews
-      ? `/api/user/all/reviews`
-      : isMyReview
-      ? `/api/user/my/reviews`
-      : null
-  );
-  const { data: LikeData } = useSWR<IGetLikes>(
-    findLikes && `/api/user/my/likes`
-  );
-  const reviews = data?.reviews;
-  const likes = LikeData?.reviewLikes;
+export const ReviewList = ({ reviews }: IReviewList) => {
+  const Order = (item: ReviewWithUser) => {
+    return reviews.length - reviews.indexOf(item);
+  };
   return (
-    <>
-      <h1>{isAllReviews ? 'All Reviews' : isMyReview ? 'My Reviews' : null}</h1>
+    <Cont>
+      <TopLayer />
       {reviews?.map((review) => (
-        <Cont key={review.id} BgUrl={`${CF_BASE}/${review.avatar}/${CF_VAR}`}>
-          <Item>
+        <Lists key={review.id}>
+          <li className="number">{Order(review)}</li>
+          <Title className="title">
             <Link href={`/user/${review.UserID}/review/${review.id}`}>
-              <a>
-                <Order>#{reviews.length - reviews.indexOf(review)}</Order>
-                <ProfileAvatar url={review?.user?.avatar} size={60} />
-                <Wrap>
-                  <Title>{review.title}</Title>
-                  <Items>
-                    <ul>
-                      <li>
-                        <span>{review.movieTitle}</span>
-                        <span> / </span>
-                      </li>
-                      <li>
-                        <span>{review.genre}</span>
-                        <span> / </span>
-                      </li>
-                      <li>
-                        <span>작성자: </span>
-                        <span>{review.user.username}</span>
-                      </li>
-                    </ul>
-                    <Stars>
-                      {[1, 2, 3, 4, 5].map((score) => (
-                        <span key={score}>
-                          {review.score! >= score ? (
-                            <FontAwesomeIcon
-                              icon={faStar}
-                              style={{ color: 'red' }}
-                            />
-                          ) : (
-                            <FontAwesomeIcon icon={faStar} />
-                          )}
-                        </span>
-                      ))}
-                    </Stars>
-                  </Items>
-                </Wrap>
-              </a>
+              <a>{CapFirstLetter(review.title)}</a>
             </Link>
-            <LikeCommentWrap
-              type="review"
-              userId={review.UserID}
-              reviewId={review.id}
-            />
-          </Item>
-        </Cont>
+          </Title>
+          <li className="movie-title">{review.movieTitle.toUpperCase()}</li>
+          <li className="genre">{review.genre}</li>
+          <li className="stars">
+            <Stars score={review.score!} />
+          </li>
+          <li className="author">
+            <ProfileAvatar url={review?.user?.avatar} size={'1.8em'} />
+            {review.user.username}
+          </li>
+          <li className="likes">
+            <Counts isLikes LikesCounts={review?._count?.likes} />
+          </li>
+          <li className="comments">
+            <Counts isComment CommentCounts={review?._count?.comments} />
+          </li>
+          <li className="date created-at">
+            <span>{ComputeDate(review.createdAt.toString())}</span>
+          </li>
+          <li className="date updated-at">
+            <span>{ComputeDate(review.updatedAt.toString())}</span>
+          </li>
+        </Lists>
       ))}
-      {likes?.map((like) => (
-        <Cont
-          key={like.id}
-          BgUrl={`${CF_BASE}/${like.review.avatar}/${CF_VAR}`}
-        >
-          <Link href={`/user/${like.review.UserID}/review/${like.review.id}`}>
-            <a>
-              <Item>
-                <Order>#{likes.length - likes.indexOf(like)}</Order>
-                <ProfileAvatar size={60} url={like?.review.user?.avatar} />
-                <Wrap>
-                  <Title>{like.review.title}</Title>
-                  <Items>
-                    <ul>
-                      <li>
-                        <span>{like.review.movieTitle}</span>
-                        <span> / </span>
-                      </li>
-                      <li>
-                        <span>{like.review.genre}</span>
-                        <span> / </span>
-                      </li>
-                      <li>
-                        <span>작성자: </span>
-                        <span>{like.review.user?.username}</span>
-                      </li>
-                    </ul>
-                    <Stars>
-                      {[1, 2, 3, 4, 5].map((score) => (
-                        <span key={score}>
-                          {like.review.score! >= score ? (
-                            <FontAwesomeIcon
-                              icon={faStar}
-                              style={{ color: 'red' }}
-                            />
-                          ) : (
-                            <FontAwesomeIcon icon={faStar} />
-                          )}
-                        </span>
-                      ))}
-                    </Stars>
-                  </Items>
-                </Wrap>
-              </Item>
-            </a>
-          </Link>
-          <LikeCommentWrap
-            type="like"
-            userId={like.review.UserID}
-            likeId={like.review.id}
-          />
-        </Cont>
-      ))}
-    </>
+    </Cont>
   );
 };
-const Cont = styled.article<{ BgUrl: string | null | undefined }>`
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 5px;
-  border: ${(p) => p.theme.border};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background: ${(p) => p.BgUrl && `url(${p.BgUrl})  no-repeat center / cover`};
+const Cont = styled.section`
+  font-size: 0.9rem;
+  min-width: 1362px;
 `;
-const Item = styled.article`
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: ${(p) => p.theme.boxShadow.input};
-  color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
-  a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+const Lists = styled(ListWrap)`
+  border: none;
+  li {
+    height: 45px;
+    border: 1px solid ${(p) => p.theme.color.font};
   }
-`;
-const Stars = styled.span`
-  font-size: 0.8rem;
-`;
-const Order = styled.span`
-  width: 40px;
-  height: 40px;
-  font-size: 0.8rem;
-  border-radius: 50%;
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${(p) => p.theme.color.bg};
-  background-color: ${(p) => p.theme.color.font};
-`;
-
-const Title = styled.h2`
-  font-size: 1.3rem;
-  font-weight: 700;
-`;
-const Wrap = styled.div`
-  width: 100%;
-  padding: 0 15px;
-  border: 1px solid red;
-`;
-const Items = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  ul {
-    gap: 5px;
-    display: flex;
-    align-items: center;
-    li {
-      span {
-        font-size: 1rem;
-        font-style: italic;
-        color: ${(p) => p.theme.color.logo};
+  .title {
+    font-size: 1.1rem;
+  }
+  .number,
+  .movie-title {
+    font-size: 1rem;
+  }
+  .stars {
+    div {
+      gap: 1px;
+      svg {
+        width: 1em;
+        height: 1em;
       }
     }
+  }
+  .likes,
+  .comments {
+    div {
+      span {
+        div {
+          svg {
+            width: 1.6em;
+            height: 1.6em;
+          }
+        }
+      }
+    }
+  }
+  .date {
+    span {
+      opacity: 0.8;
+      font-style: italic;
+    }
+  }
+`;
+
+const Title = styled.li`
+  :hover {
+    color: ${(p) => p.theme.color.logo};
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
 `;

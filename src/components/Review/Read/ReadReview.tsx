@@ -8,6 +8,7 @@ import useUser from '../../../libs/client/useUser';
 import { IGetReview } from '../../../types/review';
 import { IconBtn } from '../../Style/Button/IconBtn';
 import { ThumnailAvatar } from '../../Avatar/Thumnail';
+import { CapFirstLetter } from '../../Tools';
 
 export const ReadReview = () => {
   const router = useRouter();
@@ -38,33 +39,29 @@ export const ReadReview = () => {
       );
     }
   }, [setDate, setUpdateAt, review]);
+  const MOVIE_TITLE = review?.movieTitle.toUpperCase();
   //
   return (
     <>
       <Cont>
-        <BtnWrap>
-          <IconBtn
-            type="button"
-            svgType="compass"
-            onClick={() => router.push(`/all/reviews`)}
-          />
-          {IsOwner && <Setting />}
-        </BtnWrap>
         <Info>
           <Genre>
             <span>장르:</span>
             <span>{review?.genre}</span>
           </Genre>
           <Title>
-            <span className="movie-title">'{review?.movieTitle}' review: </span>
-            <span className="review-title">{review?.title}</span>
+            <span className="movie-title">'{MOVIE_TITLE}' review: </span>
+            <span className="review-title">
+              {CapFirstLetter(review?.title!)}
+            </span>
           </Title>
           <OneLine>"{review?.oneline}"</OneLine>
-          <Stars
-            score={review?.score!}
-            movieTitle={review?.movieTitle!}
-            reviewer={review?.user.username!}
-          />
+          <StarInfo>
+            <span>Stars to the movie</span>
+            <span>"{MOVIE_TITLE}"</span>
+            <Stars score={review?.score!} />
+            <span>- {review?.user.username}</span>
+          </StarInfo>
           <div className="date">
             <div className="update">
               <span>Updated at</span>
@@ -84,6 +81,14 @@ export const ReadReview = () => {
           <p>{review?.content}</p>
         </Content>
       </Cont>
+      <BtnWrap>
+        <IconBtn
+          type="button"
+          svgType="compass"
+          onClick={() => router.push(`/user/all/reviews`)}
+        />
+        {IsOwner && <Setting />}
+      </BtnWrap>
     </>
   );
 };
@@ -109,7 +114,7 @@ const BtnWrap = styled.div`
 `;
 
 const Info = styled.div`
-  padding: 2% 25%;
+  padding: 2% 20%;
   gap: 15px;
   display: flex;
   justify-content: center;
@@ -143,9 +148,13 @@ const Genre = styled.div`
   }
 `;
 const Title = styled.div`
-  font-size: 4rem;
+  line-height: 50px;
+  .movie-title {
+    font-size: 3.3em;
+  }
   .review-title {
     font-style: italic;
+    font-size: 3rem;
   }
 `;
 const OneLine = styled.p`
@@ -155,11 +164,19 @@ const OneLine = styled.p`
 `;
 
 const Content = styled.article`
-  padding: 2% 25%;
+  padding: 2% 20%;
   border: none;
   p {
     font-size: 1.6rem;
     font-weight: 300;
     line-height: 30px;
   }
+`;
+const StarInfo = styled.article`
+  width: 100%;
+  gap: 0.5em;
+  display: flex;
+  align-items: center;
+  font-style: italic;
+  color: ${(p) => p.theme.color.logo};
 `;

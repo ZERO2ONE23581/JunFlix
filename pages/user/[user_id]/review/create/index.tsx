@@ -6,6 +6,7 @@ import { Page } from '../../../../../styles/global';
 const CreateReviewPage: NextPage = () => {
   return (
     <PageCont>
+      <h1>Create Review</h1>
       <CreateReview />
     </PageCont>
   );
@@ -13,5 +14,9 @@ const CreateReviewPage: NextPage = () => {
 export default CreateReviewPage;
 
 const PageCont = styled(Page)`
-  padding: 2% 15%;
+  padding: 2% 5%;
+  h1 {
+    font-size: 1.6rem;
+    padding-bottom: 20px;
+  }
 `;

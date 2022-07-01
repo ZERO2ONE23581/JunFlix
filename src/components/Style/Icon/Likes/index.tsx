@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { Post, Review } from '@prisma/client';
 import useMutation from '../../../../libs/client/useMutation';
 import { LikesIcon } from '../../Svg';
+import { Svg } from '../../Svg/Svg';
 
 interface IGetPostWithCounts {
   ok: boolean;
@@ -112,9 +113,9 @@ export const LikesIconBtn = ({ type, userId, reviewId }: any) => {
       <Cont>
         <IconBtn onClick={handleClick} isAllReivew={isAllReivew}>
           {data?.isLiked || reviewData?.isLiked ? (
-            <LikesIcon solid />
+            <Svg type="like" />
           ) : (
-            <LikesIcon empty />
+            <Svg type="dislike" />
           )}
         </IconBtn>
         <Counts>

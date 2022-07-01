@@ -20,4 +20,8 @@ export interface IGetReviews {
 }
 export interface ReviewWithUser extends Review {
   user: User;
+  _count: {
+    likes: number;
+    comments: number;
+  };
 }
