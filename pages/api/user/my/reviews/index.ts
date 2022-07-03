@@ -5,14 +5,15 @@ import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  if (!user)
-    return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
-  //
+  if (!user) return res.json({ ok: false, error: 'login needed.' });
   const reviews = await client.review.findMany({
-    where: { UserID: user.id },
-    include: { user: { select: { username: true, avatar: true } } },
     orderBy: {
       id: 'desc',
+    },
+    where: { UserID: user.id },
+    include: {
+      _count: true,
+      user: { select: { username: true, avatar: true } },
     },
   });
   if (reviews.length === 0)

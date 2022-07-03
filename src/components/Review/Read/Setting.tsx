@@ -10,9 +10,7 @@ import { DeleteReivew } from '../Delete/DeleteReview';
 interface IReviewBtnsProps {}
 export const Setting = ({}: IReviewBtnsProps) => {
   const router = useRouter();
-  const { loggedInUser } = useUser();
   const { user_id, review_id } = router.query;
-
   const [onSetting, setOnSetting] = useState(false);
   const [delReview, setDelReivew] = useState(false);
   //

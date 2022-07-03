@@ -1,4 +1,4 @@
-import { Board, Post, User } from '@prisma/client';
+import { Board, Post, Review, User } from '@prisma/client';
 import { Dispatch, SetStateAction } from 'react';
 import { LikesWithPost, LikesWithReview } from './likes';
 
@@ -9,6 +9,14 @@ export interface IGetPost {
   post: PostModel;
 }
 export interface PostModel extends Post {
+  user?: User;
+  board?: Board;
+}
+export interface ReviewModel extends Review {
+  _count: {
+    likes: number;
+    comments: number;
+  };
   user?: User;
   board?: Board;
 }

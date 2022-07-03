@@ -1,18 +1,17 @@
 import Link from 'next/link';
 import { Stars } from './Stars';
 import styled from '@emotion/styled';
-import { Svg } from '../../Style/Svg/Svg';
+import { IconCount } from './IconCount';
 import { ListWrap, TopLayer } from './TopLayer';
+import { ReviewModel } from '../../../types/post';
 import { ProfileAvatar } from '../../Avatar/Profile';
-import { ReviewWithUser } from '../../../types/review';
 import { CapFirstLetter, ComputeDate } from '../../Tools';
-import { Counts } from '../../Style/Icon/Counts';
 
-interface IReviewList {
-  reviews: ReviewWithUser[];
+export interface IReviewList {
+  reviews: ReviewModel[];
 }
 export const ReviewList = ({ reviews }: IReviewList) => {
-  const Order = (item: ReviewWithUser) => {
+  const Order = (item: ReviewModel) => {
     return reviews.length - reviews.indexOf(item);
   };
   return (
@@ -35,13 +34,21 @@ export const ReviewList = ({ reviews }: IReviewList) => {
               </li>
               <li className="author">
                 <ProfileAvatar url={review?.user?.avatar} size={'1.8em'} />
-                {review.user.username}
+                {review?.user?.username}
               </li>
               <li className="likes">
-                <Counts isLikes LikesCounts={review?._count?.likes} />
+                <IconCount
+                  isLike
+                  CmtsCount={0}
+                  likesCount={review?._count?.likes}
+                />
               </li>
               <li className="comments">
-                <Counts isComment CommentCounts={review?._count?.comments} />
+                <IconCount
+                  isCmt
+                  likesCount={0}
+                  CmtsCount={review?._count?.comments}
+                />
               </li>
               <li className="date created-at">
                 <span>{ComputeDate(review.createdAt.toString())}</span>

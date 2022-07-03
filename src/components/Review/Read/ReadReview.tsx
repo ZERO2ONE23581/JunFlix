@@ -4,15 +4,15 @@ import { Setting } from './Setting';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { CapFirstLetter } from '../../Tools';
 import useUser from '../../../libs/client/useUser';
 import { IGetReview } from '../../../types/review';
 import { IconBtn } from '../../Style/Button/IconBtn';
 import { ThumnailAvatar } from '../../Avatar/Thumnail';
-import { CapFirstLetter } from '../../Tools';
 
 export const ReadReview = () => {
-  const router = useRouter();
   const { loggedInUser } = useUser();
+  const router = useRouter();
   const { user_id, review_id } = router.query;
   const IsOwner = String(loggedInUser?.id) === user_id;
   const QueryId = user_id && review_id;
@@ -20,7 +20,6 @@ export const ReadReview = () => {
     QueryId && `/api/user/${user_id}/review/${review_id}`
   );
   const review = data?.review;
-  //
   const [date, setDate] = useState('');
   const [updateAt, setUpdateAt] = useState('');
   useEffect(() => {
@@ -42,7 +41,7 @@ export const ReadReview = () => {
   const MOVIE_TITLE = review?.movieTitle.toUpperCase();
   //
   return (
-    <>
+    <Control>
       <Cont>
         <Info>
           <Genre>
@@ -81,6 +80,7 @@ export const ReadReview = () => {
           <p>{review?.content}</p>
         </Content>
       </Cont>
+
       <BtnWrap>
         <IconBtn
           type="button"
@@ -89,9 +89,16 @@ export const ReadReview = () => {
         />
         {IsOwner && <Setting />}
       </BtnWrap>
-    </>
+    </Control>
   );
 };
+const Control = styled.section`
+  .setting,
+  .compass {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+`;
 const Cont = styled.article`
   position: relative;
   min-width: 1000px;
@@ -104,9 +111,9 @@ const Cont = styled.article`
 const BtnWrap = styled.div`
   z-index: 2;
   position: fixed;
-  top: 15%;
-  right: 1%;
-  gap: 10px;
+  top: 20%;
+  right: 3%;
+  gap: 2rem;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -124,7 +131,6 @@ const Info = styled.div`
     opacity: 0.7;
     font-size: 1.1rem;
     font-style: italic;
-    //
     gap: 5px;
     display: flex;
     align-items: flex-end;

@@ -7,10 +7,10 @@ import { PostModel } from '../../../types/post';
 import { Grid } from '../../../../styles/global';
 import { WithAvatar } from '../../Avatar/AvatarInput';
 
-interface IPostListProps {
+interface IPostList {
   posts: PostModel[];
 }
-export const PostList = ({ posts }: IPostListProps) => {
+export const PostList = ({ posts }: IPostList) => {
   const [post, setPost] = useState(false);
   const [userId, setUserId] = useState(0);
   const [boardId, setBoardId] = useState(0);
@@ -30,15 +30,15 @@ export const PostList = ({ posts }: IPostListProps) => {
           <Grid className="post-grid" size={3}>
             {posts?.map((post) => (
               <Post
-                key={post.id}
-                avatar={post.avatar}
-                onClick={() => clickPost(post.id)}
+                key={post?.id}
+                avatar={post?.avatar}
+                onClick={() => clickPost(post?.id)}
               >
-                {!post.avatar && <Svg type="no-image" />}
+                {!post?.avatar && <Svg type="no-image" />}
                 <PostIcons
-                  post_id={post.id}
-                  user_id={post.UserID}
-                  board_id={post.BoardID}
+                  post_id={post?.id}
+                  user_id={post?.UserID}
+                  board_id={post?.BoardID}
                 />
               </Post>
             ))}

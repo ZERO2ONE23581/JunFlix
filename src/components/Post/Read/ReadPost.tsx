@@ -1,14 +1,17 @@
 import useSWR from 'swr';
 import { Main } from './Main';
 import styled from '@emotion/styled';
+import { IconWrap } from './IconWrap';
 import { TopLayer } from './TopLayer';
 import { EditPost } from '../Edit/EditPost';
+import { ReadComments } from './ReadComments';
 import { IGetPost } from '../../../types/post';
 import { DeletePost } from '../Delete/DeletePost';
 import useUser from '../../../libs/client/useUser';
 import { ThumnailAvatar } from '../../Avatar/Thumnail';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Modal, DimBackground } from '../../../../styles/global';
+import { LikesBtn } from '../../Style/Icon/Likes/LikesBtn';
 
 interface ICreatePostModalProps {
   USERID: number;
@@ -48,6 +51,13 @@ export const ReadPost = ({
             CREATOR_AVATAR={post?.user?.avatar!}
             CREATOR_USERNAME={post?.user?.username!}
           />
+          <IconWrap
+            REVIEWID={0}
+            POSTID={post?.id!}
+            USERID={post?.UserID!}
+            BOARDID={post?.BoardID!}
+          />
+          <ReadComments isPost isReview={false} />
         </About>
       </Cont>
       <DimBackground zIndex={101} onClick={() => setReadPost(false)} />
@@ -60,7 +70,6 @@ export const ReadPost = ({
           setEditPost={setEditPost}
         />
       )}
-
       {deletePost && (
         <DeletePost
           POSTID={post?.id!}

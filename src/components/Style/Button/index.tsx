@@ -22,8 +22,8 @@ export const Btn = ({
     <>
       <Button
         type={type}
-        isClicked={isClicked}
         onClick={onClick}
+        isClicked={isClicked}
         className={CLASSNAME}
       >
         {loading ? 'Loading...' : name}

@@ -5,12 +5,12 @@ import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const reviews = await client.review.findMany({
-    include: {
-      user: { select: { username: true, avatar: true } },
-      _count: true,
-    },
     orderBy: {
       id: 'desc',
+    },
+    include: {
+      _count: true,
+      user: { select: { username: true, avatar: true } },
     },
   });
   if (!reviews) return res.json({ ok: false, error: 'NO REIVEWS FOUND' });

@@ -8,22 +8,28 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!user)
     return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
   //
-  const AllLikes = await client.likes.findMany({
+  const MyLikes = await client.likes.findMany({
     where: { UserID: user.id },
     select: {
       id: true,
-      post: { select: { id: true, UserID: true, BoardID: true, avatar: true } },
+      post: {
+        include: { user: true, board: true, _count: true },
+      },
       review: {
-        include: { user: { select: { username: true, avatar: true } } },
+        include: { user: true, _count: true },
       },
     },
     orderBy: {
       id: 'desc',
     },
   });
-  const postlikes = AllLikes.filter((like) => like?.post !== null);
-  const reviewLikes = AllLikes.filter((like) => like?.review !== null);
+  const MyPostLikes = MyLikes.map((like) => like?.post).filter(
+    (post) => post !== null
+  );
+  const MyReviewLikes = MyLikes.map((like) => like?.review).filter(
+    (review) => review !== null
+  );
   //
-  return res.json({ ok: true, postlikes, reviewLikes });
+  return res.json({ ok: true, MyPostLikes, MyReviewLikes });
 }
 export default withApiSession(withHandler({ methods: ['GET'], handler }));

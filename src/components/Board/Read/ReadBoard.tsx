@@ -4,19 +4,19 @@ import { Bottom } from './Bottom';
 import { Profile } from './Profile';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { Btn } from '../../Style/Button';
 import { Setting } from '../Edit/Setting';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import useUser from '../../../libs/client/useUser';
 import { IGetAllPosts } from '../../../types/post';
 import { PostList } from '../../Post/Read/PostList';
+import { DeleteBoard } from '../Delete/DeleteBoard';
 import { IconBtn } from '../../Style/Button/IconBtn';
 import { MutationRes } from '../../../types/mutation';
+import { CreatePost } from '../../Post/Create/CreatePost';
 import useMutation from '../../../libs/client/useMutation';
 import { IBoardForm, IBoardWithAttrs } from '../../../types/board';
-import { DeleteBoard } from '../Delete/DeleteBoard';
-import { CreatePost } from '../../Post/Create/CreatePost';
-import { Btn } from '../../Style/Button';
 
 export interface IReadBoardProps {
   board?: IBoardWithAttrs;

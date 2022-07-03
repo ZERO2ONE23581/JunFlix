@@ -3,8 +3,8 @@ import type { NextPage } from 'next';
 import { Page } from '../../../../styles/global';
 import useUser from '../../../../src/libs/client/useUser';
 import { Title } from '../../../../src/components/Layout/Title';
-import { TopLayer } from '../../../../src/components/User/Profile/TopLayer';
-import { MyList } from '../../../../src/components/User/Profile/MyList';
+import { TopLayer } from '../../../../src/components/User/MyPage/TopLayer';
+import { MyList } from '../../../../src/components/User/MyPage/MyList';
 
 const MyPage: NextPage = () => {
   const { isLoggedIn, loggedInUser } = useUser();
