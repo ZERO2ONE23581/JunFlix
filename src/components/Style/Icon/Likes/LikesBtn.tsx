@@ -46,7 +46,7 @@ export const LikesBtn = ({ USERID, BOARDID, POSTID, REVIEWID }: ILikesBtn) => {
     }
   };
   const { data, mutate } = useSWR<IGetPostWithCounts>(GetAPI());
-  const LikesCounts = () => {
+  const Counts = () => {
     if (Boolean(BOARDID && POSTID)) {
       return data?.post?._count.likes;
     }
@@ -88,7 +88,7 @@ export const LikesBtn = ({ USERID, BOARDID, POSTID, REVIEWID }: ILikesBtn) => {
       <Cont onClick={onClick}>
         {data?.isLiked && <Svg type={'solid-heart'} />}
         {!data?.isLiked && <Svg type={'unsolid-heart'} />}
-        <Counts>{LikesCounts() ? LikesCounts() : null}</Counts>
+        <span className="counts">{Counts() ? Counts() : null}</span>
       </Cont>
     </>
   );
@@ -98,22 +98,9 @@ const Cont = styled.button`
   border: none;
   outline: none;
   background-color: inherit;
-  svg {
-    width: 2rem;
-    height: 2rem;
-  }
   div {
     .solid-heart {
       fill: #e74c3c;
     }
   }
-`;
-
-const Counts = styled.article`
-  top: -8px;
-  right: -4px;
-  position: absolute;
-  font-weight: 500;
-  font-size: 1.1em;
-  color: ${(p) => p.theme.color.font}; ;
 `;

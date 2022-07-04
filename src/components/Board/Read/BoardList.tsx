@@ -29,7 +29,6 @@ export const BoardList = ({ boards }: IBoardListProps) => {
     return router.push(`/user/${USERID}/board/${BOARDID}/${TITLE}`);
   };
   const [question, setQuestion] = useState(false);
-  //
   return (
     <>
       {boards?.length > 0 ? (

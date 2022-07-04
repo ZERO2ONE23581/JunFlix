@@ -1,23 +1,19 @@
 import useSWR from 'swr';
 import { Stars } from './Stars';
-import { Setting } from './Setting';
+import { BtnWrap } from './BtnWrap';
+import { Content } from './Content';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { CapFirstLetter } from '../../Tools';
-import useUser from '../../../libs/client/useUser';
 import { IGetReview } from '../../../types/review';
-import { IconBtn } from '../../Style/Button/IconBtn';
 import { ThumnailAvatar } from '../../Avatar/Thumnail';
 
 export const ReadReview = () => {
-  const { loggedInUser } = useUser();
   const router = useRouter();
   const { user_id, review_id } = router.query;
-  const IsOwner = String(loggedInUser?.id) === user_id;
-  const QueryId = user_id && review_id;
   const { data } = useSWR<IGetReview>(
-    QueryId && `/api/user/${user_id}/review/${review_id}`
+    user_id && review_id && `/api/user/${user_id}/review/${review_id}`
   );
   const review = data?.review;
   const [date, setDate] = useState('');
@@ -42,6 +38,7 @@ export const ReadReview = () => {
   //
   return (
     <Control>
+      <BtnWrap />
       <Cont>
         <Info>
           <Genre>
@@ -76,19 +73,12 @@ export const ReadReview = () => {
           </div>
         </Info>
         <ThumnailAvatar url={review?.avatar} />
-        <Content>
-          <p>{review?.content}</p>
-        </Content>
-      </Cont>
-
-      <BtnWrap>
-        <IconBtn
-          type="button"
-          svgType="compass"
-          onClick={() => router.push(`/user/all/reviews`)}
+        <Content
+          REVIEWID={review?.id!}
+          USERID={review?.UserID!}
+          CONTENT={review?.content!}
         />
-        {IsOwner && <Setting />}
-      </BtnWrap>
+      </Cont>
     </Control>
   );
 };
@@ -108,18 +98,6 @@ const Cont = styled.article`
     z-index: 1;
   }
 `;
-const BtnWrap = styled.div`
-  z-index: 2;
-  position: fixed;
-  top: 20%;
-  right: 3%;
-  gap: 2rem;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-`;
-
 const Info = styled.div`
   padding: 2% 20%;
   gap: 15px;
@@ -169,15 +147,6 @@ const OneLine = styled.p`
   font-style: italic;
 `;
 
-const Content = styled.article`
-  padding: 2% 20%;
-  border: none;
-  p {
-    font-size: 1.6rem;
-    font-weight: 300;
-    line-height: 30px;
-  }
-`;
 const StarInfo = styled.article`
   width: 100%;
   gap: 0.5em;

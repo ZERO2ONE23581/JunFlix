@@ -112,6 +112,7 @@ model Comment {
   id                  Int         @id @default(autoincrement())
   content             String  
   ReplyID             Int?        @default(0)      
+  ParentID            Int?        @default(0)      
   user                User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID              Int
   post                Post?       @relation(fields: [PostID], references: [id], onDelete: Cascade)

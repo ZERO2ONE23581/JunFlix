@@ -13,6 +13,7 @@ export const IconCount = ({
   likesCount,
   CmtsCount,
 }: IIconCount) => {
+  console.log(CmtsCount);
   return (
     <Cont>
       {isLike && (
@@ -32,7 +33,7 @@ export const IconCount = ({
           {CmtsCount > 0 ? (
             <>
               <Svg type="solid-comment" />
-              <span className="counts">{likesCount}</span>
+              <span className="counts">{CmtsCount}</span>
             </>
           ) : (
             <Svg type="unsolid-comment" />

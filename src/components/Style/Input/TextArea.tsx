@@ -42,7 +42,6 @@ export const TextArea = styled.textarea`
   outline: none;
   font-size: 1rem;
   box-shadow: none;
-  margin-top: 10px;
   border-radius: 4px;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};

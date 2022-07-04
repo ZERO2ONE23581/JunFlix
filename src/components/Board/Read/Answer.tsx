@@ -17,7 +17,6 @@ export const Answer = ({ openModal }: ModalProps) => {
     </>
   );
 };
-
 const Cont = styled(Modal)`
   padding: 60px 50px;
   gap: 8px;

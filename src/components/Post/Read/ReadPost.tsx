@@ -1,17 +1,17 @@
 import useSWR from 'swr';
 import { Main } from './Main';
 import styled from '@emotion/styled';
-import { IconWrap } from './IconWrap';
 import { TopLayer } from './TopLayer';
 import { EditPost } from '../Edit/EditPost';
-import { ReadComments } from './ReadComments';
 import { IGetPost } from '../../../types/post';
+import { PostIconWrap } from '../../PostIconWrap';
 import { DeletePost } from '../Delete/DeletePost';
 import useUser from '../../../libs/client/useUser';
 import { ThumnailAvatar } from '../../Avatar/Thumnail';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Modal, DimBackground } from '../../../../styles/global';
-import { LikesBtn } from '../../Style/Icon/Likes/LikesBtn';
+import { CreateComments } from '../../Comment/Create/CreateComments';
+import { ReadComment } from '../../Comment/ReadComment';
 
 interface ICreatePostModalProps {
   USERID: number;
@@ -33,6 +33,7 @@ export const ReadPost = ({
   const isPostHost = Boolean(loggedInUser?.id === post?.UserID);
   const [editPost, setEditPost] = useState(false);
   const [deletePost, setDeletePost] = useState(false);
+  const [createCmt, setCreateCmt] = useState(false);
   return (
     <>
       <Cont>
@@ -51,13 +52,27 @@ export const ReadPost = ({
             CREATOR_AVATAR={post?.user?.avatar!}
             CREATOR_USERNAME={post?.user?.username!}
           />
-          <IconWrap
+          <PostIconWrap
+            REVIEWID={0}
+            POSTID={post?.id!}
+            USERID={post?.UserID!}
+            BOARDID={post?.BoardID!}
+            setCreateCmt={setCreateCmt}
+          />
+          {createCmt && (
+            <ReadComment
+              REVIEWID={0}
+              POSTID={post?.id!}
+              USERID={post?.UserID!}
+              BOARDID={post?.BoardID!}
+            />
+          )}
+          <CreateComments
             REVIEWID={0}
             POSTID={post?.id!}
             USERID={post?.UserID!}
             BOARDID={post?.BoardID!}
           />
-          <ReadComments isPost isReview={false} />
         </About>
       </Cont>
       <DimBackground zIndex={101} onClick={() => setReadPost(false)} />
@@ -84,7 +99,7 @@ export const ReadPost = ({
 const Cont = styled(Modal)`
   padding: 0;
   width: 70vw;
-  height: 75vh;
+  height: 80vh;
   min-width: 900px;
   overflow: hidden;
   //

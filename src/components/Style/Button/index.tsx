@@ -4,6 +4,7 @@ import { MouseEventHandler } from 'react';
 interface IBtnProps {
   name?: string;
   CLASSNAME?: string;
+  disabled?: boolean;
   isClicked?: boolean;
   loading?: boolean | null;
   type: 'button' | 'submit' | 'reset';
@@ -17,10 +18,12 @@ export const Btn = ({
   onClick,
   isClicked,
   CLASSNAME,
+  disabled,
 }: IBtnProps) => {
   return (
     <>
       <Button
+        disabled={disabled}
         type={type}
         onClick={onClick}
         isClicked={isClicked}

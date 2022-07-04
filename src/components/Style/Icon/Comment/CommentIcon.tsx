@@ -1,10 +1,9 @@
 import useSWR from 'swr';
-import styled from '@emotion/styled';
-import { ILikesBtn } from './LikesBtn';
-import { CommentSvg } from './CommentSvg';
-import { Post, Review } from '@prisma/client';
 import { Svg } from '../../Svg/Svg';
-import { Dispatch, SetStateAction } from 'react';
+import styled from '@emotion/styled';
+import { ILikesBtn } from '../Likes/LikesBtn';
+import { Post, Review } from '@prisma/client';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IGetPostWithCounts {
   ok: boolean;
@@ -27,13 +26,15 @@ interface CountsInReview extends Review {
   };
 }
 interface IComment extends ILikesBtn {
+  createCmt?: boolean;
   setCreateCmt: Dispatch<SetStateAction<boolean>>;
 }
-export const Comment = ({
+export const CommentIcon = ({
   USERID,
   BOARDID,
   POSTID,
   REVIEWID,
+  createCmt,
   setCreateCmt,
 }: IComment) => {
   const GetAPI = () => {
@@ -47,40 +48,33 @@ export const Comment = ({
     }
   };
   const { data } = useSWR<IGetPostWithCounts>(GetAPI());
-  const CommentsCount = () => {
+  const [counts, setCounts] = useState(0);
+  console.log(data);
+  useEffect(() => {
     if (Boolean(BOARDID && POSTID)) {
-      return data?.post?._count.comments;
+      return setCounts(data?.post?._count?.comments!);
     }
     if (Boolean(REVIEWID)) {
-      return data?.review?._count.comments;
+      return setCounts(data?.review?._count?.comments!);
     }
-  };
+  }, [data, setCounts, BOARDID, POSTID, REVIEWID]);
   return (
     <>
-      <Cont onClick={() => setCreateCmt((p) => !p)}>
-        {CommentsCount() === 0 ? (
-          <Svg type="unsolid-comment" />
-        ) : (
-          <Svg type="solid-comment" />
-        )}
-        <Counts>{CommentsCount() ? CommentsCount() : null}</Counts>
+      <Cont createCmt={createCmt!} onClick={() => setCreateCmt((p) => !p)}>
+        {Boolean(counts > 0) && <Svg type="solid-comment" />}
+        {!Boolean(counts > 0) && <Svg type="unsolid-comment" />}
+        <span className="counts"> {counts > 0 ? counts : null}</span>
       </Cont>
     </>
   );
 };
-const Cont = styled.div`
+const Cont = styled.div<{ createCmt: boolean }>`
   position: relative;
   border: none;
   outline: none;
   cursor: pointer;
   background-color: inherit;
-`;
-
-const Counts = styled.article`
-  top: -8px;
-  right: -4px;
-  position: absolute;
-  font-weight: 500;
-  font-size: 1.1em;
-  color: ${(p) => p.theme.color.font}; ;
+  svg {
+    fill: ${(p) => p.createCmt && p.theme.color.logo};
+  }
 `;

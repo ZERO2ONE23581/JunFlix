@@ -22,6 +22,7 @@ export interface ICreateCommentsForm {
 export interface ICommentRes {
   ok: boolean;
   error?: string;
+  DeletedID?: number;
 }
 export interface IEditCommentForm {
   content?: string;

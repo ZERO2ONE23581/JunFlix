@@ -1,46 +1,40 @@
 import useSWR from 'swr';
-import { useRouter } from 'next/router';
-import { CommentDetail } from './\bCommentDetail';
+import { CommentInfo } from './CommentInfo';
 import { IGetReplies } from '../../types/comments';
 
 interface IRepliesProps {
-  isPost?: boolean;
-  isReview?: boolean;
+  USERID: number;
+  BOARDID: number;
+  POSTID: number;
+  REVIEWID: number;
   parentId: number | any;
 }
 export const CommentReplies = ({
-  isPost,
-  isReview,
+  USERID,
+  BOARDID,
+  POSTID,
+  REVIEWID,
   parentId,
 }: IRepliesProps) => {
-  const router = useRouter();
-  const { user_id, board_id, post_id, review_id } = router.query;
-  const PostQuery = isPost && user_id && board_id && post_id;
-  const ReviewQuery = isReview && user_id && review_id;
-  const { data: PostData } = useSWR<IGetReplies>(
-    PostQuery &&
-      `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/${parentId}/replies`
+  const { data } = useSWR<IGetReplies>(
+    BOARDID && POSTID && parentId
+      ? `/api/user/${USERID}/board/${BOARDID}/post/${POSTID}/comment/${parentId}/replies`
+      : REVIEWID && parentId
+      ? `/api/user/${USERID}/review/${REVIEWID}/comment/${parentId}/replies`
+      : null
   );
-  const { data: ReplyData } = useSWR<IGetReplies>(
-    ReviewQuery &&
-      `/api/user/${user_id}/review/${review_id}/comment/${parentId}/replies`
-  );
-  const PostReplies = PostData?.replies;
-  const ReviewReplies = ReplyData?.replies;
   return (
     <>
-      {isPost &&
-        PostReplies?.map((reply) => (
-          <div key={reply.id}>
-            <CommentDetail isPost commentId={reply.id} />
-          </div>
-        ))}
-      {isReview &&
-        ReviewReplies?.map((reply) => (
-          <div key={reply.id}>
-            <CommentDetail isReview commentId={reply.id} />
-          </div>
-        ))}
+      {data?.replies?.map((reply) => (
+        <CommentInfo
+          key={reply.id}
+          POSTID={POSTID}
+          USERID={USERID}
+          BOARDID={BOARDID}
+          REVIEWID={REVIEWID}
+          commentId={reply.id}
+        />
+      ))}
     </>
   );
 };

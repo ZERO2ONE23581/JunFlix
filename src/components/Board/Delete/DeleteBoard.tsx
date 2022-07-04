@@ -16,15 +16,12 @@ import { Form, Info, Modal, DimBackground } from '../../../../styles/global';
 export interface IVerifyID {
   userId: string;
 }
-export interface IDeleteBoard extends ModalProps {
-  USERID: number;
-  BOARDID: number;
-}
-export const DeleteBoard = ({ openModal, USERID, BOARDID }: IDeleteBoard) => {
+export const DeleteBoard = ({ openModal }: ModalProps) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
+  const { user_id, board_id } = router.query;
   const [confirm, setConfirm] = useState(false);
-  const isMyBoard = Boolean(loggedInUser?.id === USERID);
+  const isMyBoard = Boolean(loggedInUser?.id === Number(user_id));
   const clickYes = () => {
     if (!isMyBoard) alert('삭제권한이 없습니다.');
     setConfirm(true);
@@ -36,7 +33,7 @@ export const DeleteBoard = ({ openModal, USERID, BOARDID }: IDeleteBoard) => {
     formState: { errors },
   } = useForm<IVerifyID>({ mode: 'onSubmit' });
   const [DeleteBoard, { data, loading }] = useMutation<MutationRes>(
-    `/api/user/${USERID}/board/${BOARDID}/delete`
+    `/api/user/${user_id}/board/${board_id}/delete`
   );
   const onValid = async ({ userId }: IVerifyID) => {
     if (loading) return;
@@ -45,7 +42,6 @@ export const DeleteBoard = ({ openModal, USERID, BOARDID }: IDeleteBoard) => {
   const isTyped = Boolean(watch('userId'));
   useEffect(() => {
     if (data?.ok) {
-      alert('보드가 삭제되었습니다.');
       router.replace('/user/all/boards');
     }
   }, [data, router]);

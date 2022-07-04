@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
 import { ErrorMsg } from '../../Style/ErrMsg';
 import { InputWrap } from '../../Style/Input';
 import { LoadingModal } from '../../LoadingModal';
@@ -10,11 +9,17 @@ import useUser from '../../../libs/client/useUser';
 import { IconBtn } from '../../Style/Button/IconBtn';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
-import { IDeleteBoard, IVerifyID } from '../../Board/Delete/DeleteBoard';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Form, Info, Modal, DimBackground } from '../../../../styles/global';
 
-interface IDeletePost extends IDeleteBoard {
+interface IDeletePost {
+  USERID: number;
+  BOARDID: number;
   POSTID: number;
+  openModal: Dispatch<SetStateAction<boolean>>;
+}
+interface IVerifyID {
+  userId: string;
 }
 export const DeletePost = ({
   USERID,

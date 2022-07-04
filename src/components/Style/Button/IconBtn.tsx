@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 interface IIconBtnProps {
   svgType: string;
+  disabled?: boolean;
   isClicked?: boolean;
   onClick?: () => void;
   type: 'button' | 'submit' | 'reset' | undefined;
@@ -12,10 +13,11 @@ export const IconBtn = ({
   svgType,
   onClick,
   isClicked,
+  disabled,
 }: IIconBtnProps) => {
   return (
     <Cont className={svgType} isClicked={isClicked}>
-      <button type={type} onClick={onClick}>
+      <button type={type} onClick={onClick} disabled={disabled}>
         <Svg type={svgType} />
       </button>
     </Cont>

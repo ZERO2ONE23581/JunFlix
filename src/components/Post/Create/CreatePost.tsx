@@ -7,29 +7,27 @@ import { PostInputs } from './PostInputs';
 import { UndoPost } from '../Read/UndoPost';
 import { Avatar } from '../../Avatar/Avatar';
 import { IPostForm } from '../../../types/post';
-import useUser from '../../../libs/client/useUser';
 import { SaveCreatePost } from './SaveCreatePost';
 import useMutation from '../../../libs/client/useMutation';
 import { Modal, DimBackground } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface ICreatePostRes {
+  post?: Post;
   ok: boolean;
   error?: string;
-  post?: Post;
 }
 interface ICreatePostModalProps {
-  BOARD_TITLE: string;
   openCreatePost: Dispatch<SetStateAction<boolean>>;
 }
 export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
     watch,
     setError,
     clearErrors,
+    register,
+    handleSubmit,
+    formState: { errors },
   } = useForm<IPostForm>({ mode: 'onBlur' });
   const router = useRouter();
   const { user_id, board_id } = router.query;
@@ -74,7 +72,6 @@ export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
     }
     if (data?.error) alert(data.error);
     if (data?.ok) {
-      alert('새로운 게시물이 생성되었습니다.');
       openCreatePost(false);
     }
   }, [avatar, data, openCreatePost]);

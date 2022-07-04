@@ -17,16 +17,15 @@ import { MutationRes } from '../../../types/mutation';
 import { CreatePost } from '../../Post/Create/CreatePost';
 import useMutation from '../../../libs/client/useMutation';
 import { IBoardForm, IBoardWithAttrs } from '../../../types/board';
+import { SaveEditBoard } from '../Edit/SaveEditBoard';
 
 export interface IReadBoardProps {
+  editBoard: boolean;
   board?: IBoardWithAttrs;
 }
-export const ReadBoard = ({ board }: IReadBoardProps) => {
+export const ReadBoard = ({ board, editBoard }: IReadBoardProps) => {
   const router = useRouter();
-  const { loggedInUser } = useUser();
-  const [editBoard, setEditBoard] = useState(false);
   const isPosts = Boolean(board?.posts?.length! > 0);
-  const isBoardOwner = Boolean(loggedInUser?.id === board?.UserID);
   //post
   const {
     register,
@@ -42,13 +41,8 @@ export const ReadBoard = ({ board }: IReadBoardProps) => {
     return EditBoard({ title, genre, intro });
   };
   const [saveEditBoard, setSaveEditBoard] = useState(false);
-  const [deleteBoard, setDeleteBoard] = useState(false);
-  const [createPost, setCreatePost] = useState(false);
   const clickSave = () => {
-    const ERR_TITLE = Boolean(errors.title);
-    const ERR_GENRE = Boolean(errors.genre);
-    const ERR_INTRO = Boolean(errors.intro);
-    if (ERR_TITLE || ERR_GENRE || ERR_INTRO) return;
+    if (errors.title || errors.genre || errors.intro) return;
     setSaveEditBoard(true);
   };
   useEffect(() => {
@@ -91,48 +85,21 @@ export const ReadBoard = ({ board }: IReadBoardProps) => {
                 ERR_INTRO={errors.intro?.message}
               />
             </Info>
+            {saveEditBoard && (
+              <SaveEditBoard loading={loading} closeModal={setSaveEditBoard} />
+            )}
             {editBoard && (
               <Btn
-                CLASSNAME="save-board-edit"
                 name="SAVE"
                 type="button"
-                isClicked={saveEditBoard}
                 onClick={clickSave}
-              />
-            )}
-            {isBoardOwner && (
-              <Setting
-                isData={Boolean(data)}
-                loading={loading}
-                editBoard={editBoard}
-                setEditBoard={setEditBoard}
-                saveEditBoard={saveEditBoard}
-                setSaveEditBoard={setSaveEditBoard}
-                setDeleteBoard={setDeleteBoard}
-                setCreatePost={setCreatePost}
+                isClicked={saveEditBoard}
+                CLASSNAME="save-board-edit"
               />
             )}
           </Board>
         </form>
-        <IconBtn
-          type="button"
-          svgType="compass"
-          onClick={() => router.push(`/user/all/boards`)}
-        />
-        <IconBtn type="button" svgType="question" />
-        {deleteBoard && (
-          <DeleteBoard
-            BOARDID={board?.id!}
-            USERID={board?.UserID!}
-            openModal={setDeleteBoard}
-          />
-        )}
-        {createPost && (
-          <CreatePost
-            BOARD_TITLE={board?.title!}
-            openCreatePost={setCreatePost}
-          />
-        )}
+
         {isPosts ? (
           <PostList posts={post?.posts!} />
         ) : (
@@ -151,15 +118,6 @@ const Cont = styled.section`
   max-width: 80vw;
   position: relative;
   border: 10px solid hotpink;
-  .compass,
-  .question {
-    right: 7.7%;
-    position: fixed;
-    svg {
-      width: 2.5rem;
-      height: 2.5rem;
-    }
-  }
   .question {
     bottom: 20%;
   }

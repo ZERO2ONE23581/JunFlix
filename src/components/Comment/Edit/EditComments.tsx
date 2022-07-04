@@ -1,29 +1,41 @@
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import useMutation from '../../../libs/client/useMutation';
-import { ICommentRes, IEditCommentForm } from '../../../types/comments';
+import { Btn } from '../../Style/Button';
 import { useForm } from 'react-hook-form';
 import { ErrorMsg } from '../../Style/ErrMsg';
-import { Btn } from '../../Style/Button';
+import { IComment } from '../ReadComment';
+import useMutation from '../../../libs/client/useMutation';
+import { ICommentRes, IEditCommentForm } from '../../../types/comments';
+import { TextArea } from '../../Style/Input/TextArea';
+import { ProfileAvatar } from '../../Avatar/Profile';
+import { StartWithCapLetter } from '../../Tools';
 
-interface IEditComments {
-  type: string | null;
+interface IEditComments extends IComment {
+  disabled: boolean;
+  USERAVATAR: string;
   parentId?: number | null;
-  ogContent?: string | null;
+  CONTENT?: string | null;
 }
 
-export const EditComments = ({ type, parentId, ogContent }: IEditComments) => {
+export const EditComments = ({
+  disabled,
+  USERAVATAR,
+  USERID,
+  BOARDID,
+  POSTID,
+  REVIEWID,
+  parentId,
+  CONTENT,
+}: IEditComments) => {
   const router = useRouter();
-  const { user_id, board_id, post_id, review_id } = router.query;
-  const [EditPostComments, { loading: PostLoading, data: PostData }] =
-    useMutation<ICommentRes>(
-      `/api/user/${user_id}/board/${board_id}/post/${post_id}/comment/${parentId}/edit`
-    );
-  const [EditReviewComments, { loading: ReviewLoading, data: ReviewData }] =
-    useMutation<ICommentRes>(
-      `/api/user/${user_id}/review/${review_id}/comment/${parentId}/edit`
-    );
+  const [EditComment, { loading, data }] = useMutation<ICommentRes>(
+    BOARDID && POSTID
+      ? `/api/user/${USERID}/board/${BOARDID}/post/${POSTID}/comment/${parentId}/edit`
+      : REVIEWID
+      ? `/api/user/${USERID}/review/${REVIEWID}/comment/${parentId}/edit`
+      : ''
+  );
   const {
     register,
     setValue,
@@ -31,54 +43,58 @@ export const EditComments = ({ type, parentId, ogContent }: IEditComments) => {
     formState: { errors },
   } = useForm<IEditCommentForm>({ mode: 'onSubmit' });
   const onValid = ({ content }: IEditCommentForm) => {
-    if (type === 'post') {
-      if (PostLoading) return;
-      EditPostComments({ content });
-    }
-    if (type === 'review') {
-      if (ReviewLoading) return;
-      EditReviewComments({ content });
-    }
+    if (loading) return;
+    EditComment({ content });
   };
-  const IsDataOk = Boolean(PostData?.ok || ReviewData?.ok);
   useEffect(() => {
-    if (ogContent) setValue('content', ogContent);
-    if (IsDataOk) {
-      router.reload();
-    }
-  }, [router, setValue, ogContent, IsDataOk]);
+    if (CONTENT) setValue('content', StartWithCapLetter(CONTENT));
+    if (data?.ok) router.reload();
+  }, [router, setValue, CONTENT, data]);
   return (
-    <Form onSubmit={handleSubmit(onValid)}>
-      <Textarea
-        {...register('content', { required: '댓글을 입력해주세요.' })}
-        id="content"
-        name="content"
-        placeholder="Add a comment..."
-      />
-      {PostData?.error && <ErrorMsg error={PostData?.error} />}
+    <form onSubmit={handleSubmit(onValid)}>
+      <Cont>
+        <Flex disabled={disabled}>
+          <ProfileAvatar url={USERAVATAR} size="5rem" />
+          <TextArea
+            {...register('content', { required: '댓글을 입력해주세요.' })}
+            rows={4}
+            disabled={disabled}
+            id="content"
+            name="content"
+            placeholder="Add a comment..."
+          />
+        </Flex>
+        {!disabled && (
+          <div className="edit-btn">
+            <Btn loading={loading} type="submit" name="댓글 수정하기" />
+          </div>
+        )}
+      </Cont>
       {errors.content && <ErrorMsg error={errors.content.message} />}
-
-      {type === 'post' && (
-        <Btn name="Edit" loading={PostLoading} type="submit" />
-      )}
-      {type === 'review' && (
-        <Btn name="Edit" loading={ReviewLoading} type="submit" />
-      )}
-    </Form>
+    </form>
   );
 };
-const Form = styled.form`
-  gap: 10px;
-  display: flex;
-  align-items: center;
+const Cont = styled.div`
+  .edit-btn {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+  }
 `;
-const Textarea = styled.textarea`
-  width: 100%;
-  height: 100px;
-  padding: 20px;
-  font-size: 1.1rem;
-  border-radius: 5px;
-  border: ${(p) => p.theme.border};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background-color: ${(p) => p.theme.color.bg};
+const Flex = styled.div<{ disabled: boolean }>`
+  gap: 20px;
+  display: flex;
+  .profile-avatar {
+    margin-top: 10px;
+  }
+  textarea {
+    padding: 10px;
+    font-size: 1.2rem;
+    color: ${(p) => !p.disabled && p.theme.color.logo};
+    border: 2px solid ${(p) => (!p.disabled ? p.theme.color.logo : 'none')};
+    :focus {
+      border: 2px solid ${(p) => !p.disabled && p.theme.color.logo};
+    }
+  }
 `;

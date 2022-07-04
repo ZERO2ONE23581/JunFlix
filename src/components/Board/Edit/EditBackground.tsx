@@ -51,15 +51,13 @@ export const EditBackground = ({ setBoardPreview }: IEditAvatarProps) => {
     }
   }, [data, BoardAvatar, router]);
   const isWatch = Boolean(BoardAvatar && BoardAvatar.length > 0);
-  //
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
         <Cont isWatch={isWatch}>
           <label htmlFor="boardAvatar">
-            <Svg type="edit" />
+            <Svg type="landscape" />
           </label>
-          {isWatch && <Btn type="submit" name="SAVE" />}
           <input
             {...register('boardAvatar')}
             id="boardAvatar"
@@ -67,6 +65,12 @@ export const EditBackground = ({ setBoardPreview }: IEditAvatarProps) => {
             name="boardAvatar"
             accept="image/*"
           />
+          {isWatch && (
+            <>
+              <Btn type="submit" name="저장" />
+              <Btn type="button" name="취소" onClick={() => router.reload()} />
+            </>
+          )}
         </Cont>
       </form>
 
@@ -79,24 +83,14 @@ export const EditBackground = ({ setBoardPreview }: IEditAvatarProps) => {
   );
 };
 const Cont = styled.article<{ isWatch: boolean }>`
-  right: 8%;
-  bottom: 10%;
-  position: fixed;
-  gap: 1rem;
+  gap: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   button {
     font-size: 0.9rem;
-    width: 50px;
-    height: 40px;
-  }
-  label {
-    svg {
-      width: 2.5rem;
-      height: 2.5rem;
-      fill: ${(p) => (p.isWatch ? p.theme.color.logo : 'white')};
-    }
+    width: 55px;
+    height: 30px;
   }
   input {
     display: none;

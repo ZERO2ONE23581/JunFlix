@@ -8,16 +8,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { content } = req.body;
   const { user_id, review_id, comment_id } = req.query;
   const queryExists = Boolean(user_id && review_id && comment_id);
-  if (!user)
-    return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
-  if (!content)
-    return res.json({ ok: false, error: '데이터가 미입력 되었습니다.!' });
-  if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
+  if (!user) return res.json({ ok: false, error: 'login needed' });
+  if (!content) return res.json({ ok: false, error: 'input data missed' });
+  if (!queryExists) return res.json({ ok: false, error: 'invalid query!' });
   //
   await client.comment.create({
     data: {
       content,
       ReplyID: +comment_id,
+      ParentID: +comment_id,
       user: { connect: { id: user?.id } },
       review: { connect: { id: +review_id.toString() } },
     },

@@ -19,6 +19,9 @@ export const IsOwner = ({ USERID }: IIsOwnerProps) => {
 const Cont = styled.div<{ isMyBoard: boolean }>`
   display: ${(p) => !p.isMyBoard && 'none'};
   svg {
+    width: 20px;
+    height: 20px;
     position: absolute;
+    fill: #2ecc71;
   }
 `;

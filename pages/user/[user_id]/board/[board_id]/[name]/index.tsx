@@ -6,26 +6,30 @@ import { useRouter } from 'next/router';
 import { PageWithBg } from '../../../../../../styles/global';
 import { IGetBoard } from '../../../../../../src/types/board';
 import { Title } from '../../../../../../src/components/Layout/Title';
-import { ReadBoard } from '../../../../../../src/components/Board/Read/ReadBoard';
 import { AvatarURL } from '../../../../../../src/components/Avatar/AvatarInput';
+import { ReadBoard } from '../../../../../../src/components/Board/Read/ReadBoard';
+import { FixedBtnWrap } from '../../../../../../src/components/Board/Read/FixedBtnWrap';
 import { EditBackground } from '../../../../../../src/components/Board/Edit/EditBackground';
 
 const BoardPage: NextPage = () => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
-  const QueryId = user_id && board_id;
+  const [editBoard, setEditBoard] = useState(false);
+  const [preview, setPreview] = useState('');
   const { data } = useSWR<IGetBoard>(
-    QueryId && `/api/user/${user_id}/board/${board_id}`
+    user_id && board_id && `/api/user/${user_id}/board/${board_id}`
   );
-  const [boardPreview, setBoardPreview] = useState('');
   const owner = data?.board?.title;
-  console.log(boardPreview);
   return (
     <>
       <Title title={`${owner}`} />
-      <Page bg={AvatarURL(data?.board?.avatar!)} preview={boardPreview}>
-        <EditBackground setBoardPreview={setBoardPreview} />
-        <ReadBoard board={data?.board} />
+      <Page bg={AvatarURL(data?.board?.avatar!)} preview={preview}>
+        <ReadBoard board={data?.board} editBoard={editBoard} />
+        <FixedBtnWrap
+          setPreview={setPreview}
+          editBoard={editBoard}
+          setEditBoard={setEditBoard}
+        />
       </Page>
     </>
   );

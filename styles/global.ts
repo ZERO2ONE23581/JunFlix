@@ -68,7 +68,7 @@ export const Info = styled.div`
   }
 `;
 export const Modal = styled.article`
-  min-width: 300px;
+  min-width: 330px;
   z-index: 100;
   position: fixed;
   top: 50%;
@@ -81,9 +81,9 @@ export const Modal = styled.article`
   flex-direction: column;
   justify-content: center;
   //
-  padding: 40px;
-  font-size: 1.2rem;
+  padding: 30px;
   overflow: hidden;
+  font-size: 1.2rem;
   border-radius: 8px;
   color: ${(p) => p.theme.color.font};
   border: ${(p) => p.theme.border.thin};
@@ -95,9 +95,16 @@ export const Modal = styled.article`
     align-items: center;
     width: 100%;
     button {
-      width: 100%;
+      min-width: 100px;
       padding: 5px;
     }
+  }
+  .wrap {
+    width: 100%;
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+    justify-content: center;
   }
 `;
 export const DimBackground = styled.article<{ zIndex: number }>`

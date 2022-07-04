@@ -1,14 +1,13 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { DimBackground, Modal } from '../../../../styles/global';
-import useUser from '../../../libs/client/useUser';
 import { Btn } from '../../Style/Button';
 import { IconBtn } from '../../Style/Button/IconBtn';
 import { DeleteReivew } from '../Delete/DeleteReview';
+import { DimBackground, Modal } from '../../../../styles/global';
 
 interface IReviewBtnsProps {}
-export const Setting = ({}: IReviewBtnsProps) => {
+export const Setting = () => {
   const router = useRouter();
   const { user_id, review_id } = router.query;
   const [onSetting, setOnSetting] = useState(false);
