@@ -35,8 +35,7 @@ export const DeleteComments = ({
     setDelComment(false);
   };
   useEffect(() => {
-    // if (data?.ok) return router.reload();
-    if (data?.ok && data.DeletedID) console.log(data.DeletedID);
+    if (data?.ok) return router.reload();
   }, [router, data]);
 
   return (

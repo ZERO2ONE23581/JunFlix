@@ -76,7 +76,7 @@ export const CommentInfo = ({
         BOARDID={BOARDID}
         POSTID={POSTID}
         REVIEWID={REVIEWID}
-        parentId={Comment?.id}
+        replyID={Comment?.id!}
       />
       {delComment && (
         <DeleteComments

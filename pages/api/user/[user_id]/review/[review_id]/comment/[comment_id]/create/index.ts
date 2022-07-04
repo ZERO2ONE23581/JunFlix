@@ -12,15 +12,31 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!content) return res.json({ ok: false, error: 'input data missed' });
   if (!queryExists) return res.json({ ok: false, error: 'invalid query!' });
   //
-  await client.comment.create({
-    data: {
-      content,
-      ReplyID: +comment_id,
-      ParentID: +comment_id,
-      user: { connect: { id: user?.id } },
-      review: { connect: { id: +review_id.toString() } },
-    },
+  const ParentComment = await client.comment.findUnique({
+    where: { id: +comment_id },
   });
+  if (ParentComment && ParentComment.ParentID !== 0) {
+    await client.comment.create({
+      data: {
+        content,
+        ReplyID: +comment_id,
+        ParentID: ParentComment?.ParentID,
+        user: { connect: { id: user?.id } },
+        review: { connect: { id: +review_id.toString() } },
+      },
+    });
+  } else {
+    //첫번째 댓글
+    await client.comment.create({
+      data: {
+        content,
+        ReplyID: +comment_id,
+        ParentID: +comment_id,
+        user: { connect: { id: user?.id } },
+        review: { connect: { id: +review_id.toString() } },
+      },
+    });
+  }
   return res.json({ ok: true });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

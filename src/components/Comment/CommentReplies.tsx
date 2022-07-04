@@ -7,20 +7,20 @@ interface IRepliesProps {
   BOARDID: number;
   POSTID: number;
   REVIEWID: number;
-  parentId: number | any;
+  replyID: number;
 }
 export const CommentReplies = ({
   USERID,
   BOARDID,
   POSTID,
   REVIEWID,
-  parentId,
+  replyID,
 }: IRepliesProps) => {
   const { data } = useSWR<IGetReplies>(
-    BOARDID && POSTID && parentId
-      ? `/api/user/${USERID}/board/${BOARDID}/post/${POSTID}/comment/${parentId}/replies`
-      : REVIEWID && parentId
-      ? `/api/user/${USERID}/review/${REVIEWID}/comment/${parentId}/replies`
+    BOARDID && POSTID && replyID
+      ? `/api/user/${USERID}/board/${BOARDID}/post/${POSTID}/comment/${replyID}/replies`
+      : REVIEWID && replyID
+      ? `/api/user/${USERID}/review/${REVIEWID}/comment/${replyID}/replies`
       : null
   );
   return (

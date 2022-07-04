@@ -49,7 +49,7 @@ export const CommentIcon = ({
   };
   const { data } = useSWR<IGetPostWithCounts>(GetAPI());
   const [counts, setCounts] = useState(0);
-  console.log(data);
+
   useEffect(() => {
     if (Boolean(BOARDID && POSTID)) {
       return setCounts(data?.post?._count?.comments!);

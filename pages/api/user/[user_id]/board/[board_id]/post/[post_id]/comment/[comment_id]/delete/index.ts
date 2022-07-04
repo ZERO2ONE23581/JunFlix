@@ -11,22 +11,34 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
   if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
   //
-  const foundComment = await client.comment.findUnique({
+  const Target = await client.comment.findUnique({
     where: { id: +comment_id },
   });
-  if (!foundComment) return res.json({ ok: false, error: 'NO COMMENT FOUND' });
+  if (!Target) return res.json({ ok: false, error: 'no comment to delete' });
   await client.comment.delete({
-    where: { id: foundComment.id },
+    where: { id: Target.id },
   });
   //
-  const replies = await client.comment.findMany({
-    where: { ReplyID: foundComment.id },
-  });
-  if (replies) {
+  if (Target.ParentID === 0) {
     await client.comment.deleteMany({
-      where: { ReplyID: foundComment.id },
+      where: { ParentID: Target.id },
     });
-    return res.json({ ok: true });
+  }
+  if (Target.ParentID !== 0 && Target.ReplyID === Target.ParentID) {
+    await client.comment.deleteMany({
+      where: { ParentID: Target.ParentID },
+    });
+  }
+  if (Target.ParentID !== 0 && Target.ReplyID !== Target.ParentID) {
+    const Comments = await client.comment.findMany({
+      where: { ParentID: Target.ParentID },
+    });
+    Comments.filter((value) => value.id > Target?.ReplyID!).map(
+      async (value) =>
+        await client.comment.deleteMany({
+          where: { id: value.id },
+        })
+    );
   }
   return res.json({ ok: true });
 }

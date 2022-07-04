@@ -13,7 +13,6 @@ export const IconCount = ({
   likesCount,
   CmtsCount,
 }: IIconCount) => {
-  console.log(CmtsCount);
   return (
     <Cont>
       {isLike && (
