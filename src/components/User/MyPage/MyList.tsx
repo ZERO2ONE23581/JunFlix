@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
 import { Post } from '@prisma/client';
+import { LikesList } from './LikesList';
 import { PostList } from '../../Post/Read/PostList';
 import { BoardWithUser } from '../../../types/board';
 import { BoardList } from '../../Board/Read/BoardList';
 import { ReviewWithUser } from '../../../types/review';
 import { ReviewList } from '../../Review/Read/ReviewList';
 import { LikesWithPost, LikesWithReview } from '../../../types/likes';
-import { LikesList } from './LikesList';
 
 interface IGet {
   ok: boolean;
@@ -20,7 +20,6 @@ interface IGet {
   reviewLikes: LikesWithReview[];
   reviews?: ReviewWithUser[];
 }
-
 export const MyList = () => {
   const [type, setType] = useState('board');
   const GetAPI = (type: string) => {

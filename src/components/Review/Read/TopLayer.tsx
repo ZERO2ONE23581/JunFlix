@@ -5,7 +5,7 @@ export const TopLayer = () => {
     <>
       <Cont>
         <ListWrap>
-          <li className="number">번호</li>
+          <li className="number padding">번호</li>
           <li className="title">제목</li>
           <li className="movie-title">영화제목</li>
           <li className="genre">장르</li>
@@ -37,25 +37,32 @@ export const ListWrap = styled.ul`
     justify-content: center;
   }
   .title {
-    width: 30%;
+    width: 26%;
   }
   .movie-title {
-    width: 20%;
+    width: 18%;
   }
   .author {
-    width: 10%;
+    width: 8%;
     gap: 10px;
     padding: 0px 10px;
   }
   .genre,
-  .stars,
-  .created-at,
-  .updated-at {
-    width: 7%;
+  .stars {
+    width: 7.5%;
   }
-  .number,
+  .number {
+    width: 3%;
+  }
+  .padding {
+    padding-left: 10px;
+  }
   .likes,
   .comments {
     width: 5%;
+  }
+  .created-at,
+  .updated-at {
+    width: 10%;
   }
 `;

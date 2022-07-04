@@ -39,21 +39,23 @@ export const PostIconWrap = ({
   );
 };
 const Cont = styled.article`
-  border: 2px solid red;
-  gap: 30px;
+  gap: 20px;
   display: flex;
   align-items: center;
-  padding-left: 30px;
-  .counts {
-    top: -8px;
-    right: -10px;
-    position: absolute;
-    font-size: 15px;
-    font-weight: 550;
-    color: ${(p) => p.theme.color.logo};
+  margin-bottom: 10px;
+  button {
+    padding: 0;
+    .counts {
+      top: -8px;
+      right: -10px;
+      position: absolute;
+      font-size: 15px;
+      font-weight: 550;
+      color: ${(p) => p.theme.color.logo};
+    }
   }
   svg {
-    width: 30px;
-    height: 30px;
+    width: 1.6rem;
+    height: 1.6rem;
   }
 `;

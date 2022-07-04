@@ -12,6 +12,8 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { Modal, DimBackground } from '../../../../styles/global';
 import { CreateComments } from '../../Comment/Create/CreateComments';
 import { ReadComment } from '../../Comment/ReadComment';
+import { Avatar } from '../../Avatar/Avatar';
+import { CreatePostCmts } from '../../Comment/Create/CreatePostCmts';
 
 interface ICreatePostModalProps {
   USERID: number;
@@ -37,7 +39,12 @@ export const ReadPost = ({
   return (
     <>
       <Cont>
-        <ThumnailAvatar url={post?.avatar} />
+        <Avatar
+          url={post?.avatar}
+          disabled
+          // size={{ width: '100%', height: '100%' }}
+          size={{ width: '40vw', height: '80vh' }}
+        />
         <About>
           <TopLayer
             Board={post?.board!}
@@ -46,33 +53,32 @@ export const ReadPost = ({
             setEditPost={setEditPost}
             setDeletePost={setDeletePost}
           />
-          <Main
-            POST_TITLE={post?.title.toUpperCase()!}
-            POST_CONTENT={post?.content!}
-            CREATOR_AVATAR={post?.user?.avatar!}
-            CREATOR_USERNAME={post?.user?.username!}
-          />
-          <PostIconWrap
-            REVIEWID={0}
-            POSTID={post?.id!}
-            USERID={post?.UserID!}
-            BOARDID={post?.BoardID!}
-            setCreateCmt={setCreateCmt}
-          />
-          {createCmt && (
-            <ReadComment
-              REVIEWID={0}
-              POSTID={post?.id!}
-              USERID={post?.UserID!}
-              BOARDID={post?.BoardID!}
+          <div className="flex">
+            <Main
+              POST_TITLE={post?.title.toUpperCase()!}
+              POST_CONTENT={post?.content!}
+              CREATOR_AVATAR={post?.user?.avatar!}
+              CREATOR_USERNAME={post?.user?.username!}
             />
-          )}
-          <CreateComments
-            REVIEWID={0}
-            POSTID={post?.id!}
-            USERID={post?.UserID!}
-            BOARDID={post?.BoardID!}
-          />
+            <div className="cmt">
+              <PostIconWrap
+                REVIEWID={0}
+                POSTID={post?.id!}
+                USERID={post?.UserID!}
+                BOARDID={post?.BoardID!}
+                setCreateCmt={setCreateCmt}
+              />
+              {createCmt && (
+                <CreatePostCmts
+                  replyID={0}
+                  REVIEWID={0}
+                  POSTID={post?.id!}
+                  USERID={post?.UserID!}
+                  BOARDID={post?.BoardID!}
+                />
+              )}
+            </div>
+          </div>
         </About>
       </Cont>
       <DimBackground zIndex={101} onClick={() => setReadPost(false)} />
@@ -101,25 +107,38 @@ const Cont = styled(Modal)`
   width: 70vw;
   height: 80vh;
   min-width: 900px;
+  min-height: 500px;
   overflow: hidden;
-  //
   z-index: 102;
   gap: 0;
   flex-direction: row;
-  .thumnail-avatar {
-    width: 60%;
-    height: 100%;
-  }
   border: none;
+  .thumnail-avatar {
+    img {
+      min-width: 500px;
+      min-height: 500px;
+    }
+  }
 `;
 const About = styled.article`
-  width: 40%;
+  width: 30vw;
+  min-width: 400px;
   height: 100%;
   overflow: hidden;
   border-radius: 8px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border.thin};
+  border: ${(p) => p.theme.border.thick};
   background-color: ${(p) => p.theme.color.bg};
+  .flex {
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .cmt {
+    padding: 20px;
+    border-top: ${(p) => p.theme.border.thin};
+  }
 `;

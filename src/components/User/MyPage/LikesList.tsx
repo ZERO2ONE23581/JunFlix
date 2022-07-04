@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { PostList } from '../../Post/Read/PostList';
 import { ReviewList } from '../../Review/Read/ReviewList';
 import { PostModel, ReviewModel } from '../../../types/post';
+import useUser from '../../../libs/client/useUser';
 
 interface IGetMyLikes {
   ok: boolean;
@@ -12,6 +13,7 @@ interface IGetMyLikes {
   MyReviewLikes: ReviewModel[];
 }
 export const LikesList = () => {
+  const { loggedInUser } = useUser();
   const { data } = useSWR<IGetMyLikes>(`/api/user/my/likes`);
   const LikedPosts = data?.MyPostLikes;
   const LikedReviews = data?.MyReviewLikes;
@@ -20,20 +22,22 @@ export const LikesList = () => {
     <Cont>
       <BtnWrap>
         <Button
-          type="button"
-          onClick={() => setType('post')}
-          likeType="post"
           Type={type}
+          type="button"
+          likeType="post"
+          onClick={() => setType('post')}
         >
-          POST
+          <span className="username">{loggedInUser?.username}</span>
+          <span>님이 좋아하는 포스트</span>
         </Button>
         <Button
-          type="button"
-          onClick={() => setType('review')}
           Type={type}
+          type="button"
           likeType="review"
+          onClick={() => setType('review')}
         >
-          REVIEW
+          <span className="username">{loggedInUser?.username}</span>
+          <span>님이 좋아하는 리뷰</span>
         </Button>
       </BtnWrap>
       {type === 'post' && <PostList posts={LikedPosts!} />}
@@ -68,5 +72,10 @@ const Button = styled.button<{ Type: string; likeType: string }>`
     p.Type === p.likeType ? p.theme.color.logo : p.theme.color.font};
   :nth-of-type(1) {
     border-right: 3px solid ${(p) => p.theme.color.logo};
+  }
+  .username {
+    font-size: 1.2rem;
+    margin-right: 4px;
+    font-style: italic;
   }
 `;

@@ -33,7 +33,7 @@ export const ReviewList = ({ reviews }: IReviewList) => {
                 <Stars score={review.score!} />
               </li>
               <li className="author">
-                <ProfileAvatar url={review?.user?.avatar} size={'1.8em'} />
+                <ProfileAvatar url={review?.user?.avatar} size={'2em'} />
                 {review?.user?.username}
               </li>
               <li className="likes">
@@ -116,8 +116,8 @@ const Lists = styled(ListWrap)`
 
 const Title = styled.li`
   :hover {
-    color: ${(p) => p.theme.color.logo};
     text-decoration: underline;
     text-underline-offset: 4px;
+    color: ${(p) => p.theme.color.logo};
   }
 `;

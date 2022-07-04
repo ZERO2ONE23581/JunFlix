@@ -22,7 +22,7 @@ export const Main = ({
           CREATOR_USERNAME={CREATOR_USERNAME}
         />
         <Title>{POST_TITLE}</Title>
-        <TextArea disabled value={POST_CONTENT} rows={5} />
+        <TextArea disabled value={POST_CONTENT} />
       </Cont>
     </>
   );
@@ -34,6 +34,8 @@ const Cont = styled.article`
   //
   padding: 20px;
   textarea {
+    font-size: 1em;
+
     border: none;
     padding: 20px 0;
     box-shadow: none;

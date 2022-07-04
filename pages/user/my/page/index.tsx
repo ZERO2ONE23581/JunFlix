@@ -27,4 +27,6 @@ const MyPage: NextPage = () => {
 };
 export default MyPage;
 
-const Cont = styled(Page)``;
+const Cont = styled(Page)`
+  padding: 2% 7%;
+`;
