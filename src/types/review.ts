@@ -25,3 +25,6 @@ export interface ReviewWithUser extends Review {
     comments: number;
   };
 }
+export interface IReview {
+  review: ReviewWithUser;
+}

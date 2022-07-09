@@ -23,7 +23,7 @@ export const ProfileNav = ({ open, setOpen }: any) => {
         </nav>
       ) : (
         <article onClick={() => setOpen((p: boolean) => !p)}>
-          <ProfileAvatar url={loggedInUser?.avatar} />
+          <ProfileAvatar avatar={loggedInUser?.avatar} />
         </article>
       )}
       {open && <ProfileNavDetail user={loggedInUser} setOpen={setOpen} />}

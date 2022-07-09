@@ -7,7 +7,7 @@ interface IText {
   Username: string;
   CreatedAt: Date;
 }
-export const PostText = ({ Content, Username, CreatedAt }: IText) => {
+export const ReviewText = ({ Content, Username, CreatedAt }: IText) => {
   const [text, setText] = useState('');
   const [fold, setFold] = useState(false);
   const Sliced = Content?.slice(0, 30) + '...';

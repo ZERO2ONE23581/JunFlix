@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import useUser from '../../../libs/client/useUser';
-import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
 import { IconBtn } from '../../Style/Button/IconBtn';
+import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
 
 export const Profile = () => {
   const router = useRouter();
@@ -30,7 +30,7 @@ export const Profile = () => {
         </BtnWrap>
       </Flex>
       <Flex>
-        <ProfileAvatar size={'8em'} url={loggedInUser?.avatar} />
+        <ProfileAvatar size={'8em'} avatar={loggedInUser?.avatar} />
         <List>
           <li className="name">
             <Label>Name</Label>

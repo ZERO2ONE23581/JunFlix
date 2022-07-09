@@ -35,6 +35,7 @@ export const CommentIcon = ({
   POSTID,
   REVIEWID,
   createCmt,
+  setCreateCmt,
 }: IComment) => {
   const GetAPI = () => {
     if (Boolean(USERID)) {

@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
+import { Avatar } from '../../Avatar';
 import { TopLayer } from './TopLayer';
 import { Post } from '@prisma/client';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
 import { PostInputs } from './PostInputs';
-import { UndoPost } from '../Read/UndoPost';
-import { Avatar } from '../../Avatar';
+import { useForm } from 'react-hook-form';
 import { IPostForm } from '../../../types/post';
 import { SaveCreatePost } from './SaveCreatePost';
+import { CancelCreatePost } from '../Edit/Cancel';
 import useMutation from '../../../libs/client/useMutation';
 import { Modal, DimBackground } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -114,7 +114,7 @@ export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
       </form>
       <DimBackground zIndex={101} onClick={() => setUndoPost(true)} />
       {undoPost && (
-        <UndoPost closePost={openCreatePost} closeModal={setUndoPost} />
+        <CancelCreatePost closePost={openCreatePost} closeModal={setUndoPost} />
       )}
     </>
   );

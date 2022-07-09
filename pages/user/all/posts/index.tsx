@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { Page } from '../../../../styles/global';
 import { IGetAllPosts } from '../../../../src/types/post';
 import { Title } from '../../../../src/components/Layout/Title';
-import { PostList } from '../../../../src/components/Post/Read/PostList';
+import { PostList } from '../../../../src/components/Post/Read/List';
 
 const AllPosts: NextPage = () => {
   const { data } = useSWR<IGetAllPosts>(`/api/user/all/posts`);

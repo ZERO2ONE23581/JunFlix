@@ -73,11 +73,7 @@ export const ReadReview = () => {
           </div>
         </Info>
         <ThumnailAvatar url={review?.avatar} />
-        <Content
-          REVIEWID={review?.id!}
-          USERID={review?.UserID!}
-          CONTENT={review?.content!}
-        />
+        <Content review={review!} />
       </Cont>
     </Control>
   );

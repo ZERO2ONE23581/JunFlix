@@ -24,4 +24,9 @@ const Cont = styled.div`
   top: -10%;
   left: -20%;
   position: absolute;
+  .isOwner {
+    svg {
+      fill: #2ecc71;
+    }
+  }
 `;

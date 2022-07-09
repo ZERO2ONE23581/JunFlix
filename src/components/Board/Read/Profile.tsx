@@ -9,15 +9,15 @@ interface IProfile {
   USER_USERNAME: string;
 }
 export const Profile = ({
-  BOARDID,
   USERID,
+  BOARDID,
   USER_AVATAR,
   USER_USERNAME,
 }: IProfile) => {
   return (
     <Cont>
       <IsOwner BOARDID={BOARDID} BOARD_USERID={USERID} />
-      <ProfileAvatar url={USER_AVATAR} size={'7em'} />
+      <ProfileAvatar avatar={USER_AVATAR} size={'7em'} />
       <span>@{USER_USERNAME}</span>
     </Cont>
   );

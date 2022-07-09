@@ -8,7 +8,7 @@ import { Btn } from '../../Style/Button';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { IGetAllPosts } from '../../../types/post';
-import { PostList } from '../../Post/Read/PostList';
+import { PostList } from '../../Post/Read/List';
 import { MutationRes } from '../../../types/mutation';
 import { SaveEditBoard } from '../Edit/SaveEditBoard';
 import useMutation from '../../../libs/client/useMutation';
@@ -51,7 +51,6 @@ export const ReadBoard = ({ board, editBoard }: IReadBoardProps) => {
       router.reload();
     }
   }, [board, setValue, data, router]);
-  //
   const { data: post } = useSWR<IGetAllPosts>(
     board && `/api/user/${board?.UserID}/board/${board?.id}/post`
   );
@@ -112,7 +111,6 @@ const Cont = styled.section`
   min-width: 800px;
   max-width: 80vw;
   position: relative;
-  border: 10px solid hotpink;
   .question {
     bottom: 20%;
   }

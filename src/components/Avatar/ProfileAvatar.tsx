@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import useUser from '../../libs/client/useUser';
 
 interface IAvatarProps {
   avatar?: string | null;

@@ -4,7 +4,7 @@ import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
 import { Post } from '@prisma/client';
 import { LikesList } from './LikesList';
-import { PostList } from '../../Post/Read/PostList';
+import { PostList } from '../../Post/Read/List';
 import { BoardWithUser } from '../../../types/board';
 import { BoardList } from '../../Board/Read/BoardList';
 import { ReviewWithUser } from '../../../types/review';

@@ -1,43 +1,17 @@
-import { useState } from 'react';
 import styled from '@emotion/styled';
-import { IconWrap } from '../../IconWrap';
-import { ReadComment } from '../../Comment/ReadComment';
-import { CreateReviewComments } from '../../Comment/Create/Review/CreateComments';
+import { IReview } from '../../../types/review';
+import { CreateReviewCmt } from '../Comment/Create/Comment';
+import { ReadReviewCmtList } from '../Comment/Read/CmtList';
+import { ReviewLikesNCmts } from '../Comment/Read/LikesNCmts';
 
-interface IContent {
-  USERID: number;
-  REVIEWID: number;
-  CONTENT: string;
-}
-export const Content = ({ CONTENT, REVIEWID, USERID }: IContent) => {
-  const [createCmt, setCreateCmt] = useState(false);
+export const Content = ({ review }: IReview) => {
   return (
     <>
       <Cont>
-        <p>{CONTENT}</p>
-        <IconWrap
-          POSTID={0}
-          BOARDID={0}
-          USERID={USERID}
-          REVIEWID={REVIEWID}
-          createCmt={createCmt}
-          setCreateCmt={setCreateCmt}
-        />
-        {createCmt && (
-          <CreateReviewComments
-            replyID={0}
-            POSTID={0}
-            BOARDID={0}
-            USERID={USERID}
-            REVIEWID={REVIEWID}
-          />
-        )}
-        <ReadComment
-          POSTID={0}
-          BOARDID={0}
-          USERID={USERID}
-          REVIEWID={REVIEWID}
-        />
+        <p>{review?.content}</p>
+        <ReviewLikesNCmts review={review} />
+        <CreateReviewCmt review={review} />
+        <ReadReviewCmtList review={review} />
       </Cont>
     </>
   );
