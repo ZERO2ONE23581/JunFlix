@@ -4,11 +4,11 @@ import styled from '@emotion/styled';
 import { ListInfo } from './ListInfo';
 import { IsOwner } from '../../IsOwner';
 import { useRouter } from 'next/router';
+import { AVATAR_BG } from '../../Avatar';
 import { Grid } from '../../../../styles/global';
-import { WithAvatar } from '../../Avatar/AvatarInput';
+import useUser from '../../../libs/client/useUser';
 import { IBoardListProps } from '../../../types/board';
 import { IconBtnFixed } from '../../Style/Button/IconBtnFixed';
-import useUser from '../../../libs/client/useUser';
 
 interface IClickBoardProps {
   isCreate?: boolean;
@@ -35,7 +35,7 @@ export const BoardList = ({ boards }: IBoardListProps) => {
         <>
           <Grid size={5}>
             {boards?.map((board) => (
-              <Board key={board.id} avatar={board.avatar}>
+              <Board key={board.id} avatar={board.avatar!}>
                 <Button
                   onClick={() =>
                     clickBoard({
@@ -83,7 +83,7 @@ const Button = styled.button`
   height: 100%;
   background: none;
 `;
-const Board = styled(WithAvatar)`
+const Board = styled(AVATAR_BG)`
   display: flex;
   justify-content: end;
   flex-direction: column;

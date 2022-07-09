@@ -110,7 +110,7 @@ model Likes {
 }
 model Comment {
   id                  Int         @id @default(autoincrement())
-  content             String  
+  content             String?     @db.LongText
   ReplyID             Int?        @default(0)      
   ParentID            Int?        @default(0)      
   user                User        @relation(fields: [UserID], references: [id], onDelete: Cascade)

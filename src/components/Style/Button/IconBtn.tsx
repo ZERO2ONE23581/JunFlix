@@ -25,6 +25,7 @@ export const IconBtn = ({
 };
 const Cont = styled.div<{ isClicked?: boolean }>`
   button {
+    padding: 0;
     border: none;
     outline: none;
     background: none;

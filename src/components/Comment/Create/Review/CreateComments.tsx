@@ -1,27 +1,25 @@
-import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Btn } from '../../Style/Button';
+import { Svg } from '../../../Style/Svg/Svg';
+import { Btn } from '../../../Style/Button';
 import { useForm } from 'react-hook-form';
-import { IComment } from '../ReadComment';
-import { ErrorMsg } from '../../Style/ErrMsg';
-import useUser from '../../../libs/client/useUser';
-import { ProfileAvatar } from '../../Avatar/Profile';
-import { TextArea } from '../../Style/Input/TextArea';
-import useMutation from '../../../libs/client/useMutation';
-import { ICommentRes, ICreateCommentsForm } from '../../../types/comments';
+import { IComment } from '../../ReadComment';
+import { useEffect, useState } from 'react';
+import { ErrorMsg } from '../../../Style/ErrMsg';
+import { TextArea } from '../../../Style/Input/TextArea';
+import useMutation from '../../../../libs/client/useMutation';
+import { ICommentRes, ICreateCommentsForm } from '../../../../types/comments';
 
 interface ICreateCommentsProps extends IComment {
   replyID: number;
 }
-export const CreateComments = ({
+export const CreateReviewComments = ({
   USERID,
   BOARDID,
   POSTID,
   REVIEWID,
   replyID,
 }: ICreateCommentsProps) => {
-  const { loggedInUser } = useUser();
   const router = useRouter();
   const [CreateComment, { loading: CommentLoading, data: CommentData }] =
     useMutation<ICommentRes>(
@@ -40,6 +38,7 @@ export const CreateComments = ({
         : ''
     );
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
@@ -53,31 +52,36 @@ export const CreateComments = ({
       return CreateComment({ content });
     }
   };
+  // useEffect(() => {
+  //   if (CommentData?.ok || ReplyData?.ok) router.reload();
+  // }, [router, CommentData, ReplyData]);
+
+  const [TextAreaHeight, setTextAreaHeight] = useState(40);
   useEffect(() => {
+    const content = watch('content');
+    setTextAreaHeight(content?.length!);
     if (CommentData?.ok || ReplyData?.ok) router.reload();
-  }, [router, CommentData, ReplyData]);
+  }, [watch('content'), setTextAreaHeight, router, CommentData, ReplyData]);
+  //
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
         <Cont>
-          <span>@{loggedInUser?.userId}</span>
-          <Flex>
-            <ProfileAvatar url={loggedInUser?.avatar} size="5rem" />
+          <Flex TextAreaHeight={TextAreaHeight}>
+            <Svg type="smile" size="1.6rem" />
             <TextArea
               {...register('content', { required: '댓글을 입력해주세요.' })}
-              rows={5}
               id="content"
               name="content"
-              placeholder="Add a comment..."
+              placeholder="댓글 달기..."
             />
-          </Flex>
-          <div className="submit-btn">
             <Btn
+              name="Post"
               type="submit"
-              name="댓글 달기"
+              CLASSNAME="submit-btn"
               loading={CommentLoading ? CommentLoading : ReplyLoading}
             />
-          </div>
+          </Flex>
         </Cont>
       </form>
       {errors.content && <ErrorMsg error={errors.content?.message} />}
@@ -88,36 +92,23 @@ export const CreateComments = ({
 };
 
 const Cont = styled.div`
-  margin-top: 20px;
-  margin-left: 40px;
-  padding: 12px 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-radius: 8px;
-  border: ${(p) => p.theme.border.thick};
-  border: 5px solid ${(p) => p.theme.color.logo};
+  padding: 12px 20px;
+  border-top: ${(p) => p.theme.border.thin};
   .submit-btn {
-    display: flex;
-    align-items: center;
-    justify-content: end;
+    width: 10%;
+    height: 100%;
+    color: inherit;
+    background-color: inherit;
   }
 `;
-const Flex = styled.div`
-  margin-top: 20px;
-  margin-bottom: 10px;
-  gap: 20px;
+const Flex = styled.div<{ TextAreaHeight: number }>`
+  gap: 10px;
   display: flex;
-  .profile-avatar {
-    margin-top: 10px;
-  }
+  align-items: center;
   textarea {
     padding: 10px;
-    font-size: 1.2rem;
-    color: ${(p) => p.theme.color.logo};
-    border: 2px dotted #d63031;
-    :focus {
-      border: 3px solid ${(p) => p.theme.color.logo};
-    }
+    min-height: 40px;
+    max-height: 100px;
+    height: ${(p) => p.TextAreaHeight && `${p.TextAreaHeight}px`};
   }
 `;

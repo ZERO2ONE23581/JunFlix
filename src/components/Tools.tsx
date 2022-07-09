@@ -7,11 +7,13 @@ export const ComputeDate = (date: string) => {
   const Minute = NewDate.getMinutes();
   return `${Year.slice(2, 4)}년 ${Month}월 ${TheDate}일 ${Hour}:${Minute}`;
 };
-export const CapFirstLetter = (word: string) => {
+export const CapFirstLetters = (word: string) => {
   return word?.replace(/(?:^|\s)\S/g, function (a) {
     return a.toUpperCase();
   });
 };
-export const StartWithCapLetter = (word: string) => {
-  return word.charAt(0).toUpperCase() + word.slice(1);
+export const CapFirstLetter = (word: string) => {
+  return `${
+    word?.toString()?.slice(0, 1).toUpperCase() + word?.toString().slice(1)
+  }`;
 };

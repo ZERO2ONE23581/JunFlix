@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import { CommentInfo } from './CommentInfo';
+import { CommentInfo } from './Read/Review/CommentInfo';
 import { IGetAllComments } from '../../types/comments';
 
 export interface IComment {

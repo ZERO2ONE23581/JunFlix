@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ProfileAvatar } from '../../Avatar/Profile';
+import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
 import { IsOwner } from './IsOwner';
 
 interface IProfile {

@@ -6,11 +6,11 @@ import { Btn } from '../../Style/Button';
 import { SaveUpdate } from './SaveUpdate';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Avatar } from '../../Avatar/Avatar';
+import { Avatar } from '../../Avatar';
 import { InputWrap } from '../../Style/Input';
 import { ErrorMsg } from '../../Style/ErrMsg';
 import useUser from '../../../libs/client/useUser';
-import { ProfileAvatar } from '../../Avatar/Profile';
+import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
 import { TextArea } from '../../Style/Input/TextArea';
 import { MutationRes } from '../../../types/mutation';
 import { SelectWrap } from '../../Style/Input/SelectWrap';
@@ -191,7 +191,7 @@ export const EditReview = () => {
           {errors.content && <ErrorMsg error={errors.content.message} />}
 
           <Avatar
-            url={review?.avatar}
+            avatar={review?.avatar!}
             preview={preview}
             register={register('avatar')}
             size={{ width: '100vw', height: '66vh' }}

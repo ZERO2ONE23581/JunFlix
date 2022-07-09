@@ -10,7 +10,7 @@ import { ErrorMsg } from '../../../Style/ErrMsg';
 import { MutationRes } from '../../../../types/mutation';
 import useMutation from '../../../../libs/client/useMutation';
 import { Form, Info, JoinCont } from '../../../../../styles/global';
-import { AvatarLabel, ProfileAvatar } from '../../../Avatar/Profile';
+import { AvatarLabel, ProfileAvatar } from '../../../Avatar/ProfileAvatar';
 
 export const CreateProfileAvatar = ({
   createdID,

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { ThumnailAvatar } from '../../Avatar/Thumnail';
 import { IGetFollowInfo } from '../../../types/follow';
-import { ProfileAvatar } from '../../Avatar/Profile';
+import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
 
 interface IBoardLink {
   USERID: number;

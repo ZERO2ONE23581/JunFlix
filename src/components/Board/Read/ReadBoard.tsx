@@ -5,19 +5,14 @@ import { Profile } from './Profile';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
-import { Setting } from '../Edit/Setting';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import useUser from '../../../libs/client/useUser';
 import { IGetAllPosts } from '../../../types/post';
 import { PostList } from '../../Post/Read/PostList';
-import { DeleteBoard } from '../Delete/DeleteBoard';
-import { IconBtn } from '../../Style/Button/IconBtn';
 import { MutationRes } from '../../../types/mutation';
-import { CreatePost } from '../../Post/Create/CreatePost';
+import { SaveEditBoard } from '../Edit/SaveEditBoard';
 import useMutation from '../../../libs/client/useMutation';
 import { IBoardForm, IBoardWithAttrs } from '../../../types/board';
-import { SaveEditBoard } from '../Edit/SaveEditBoard';
 
 export interface IReadBoardProps {
   editBoard: boolean;
@@ -58,7 +53,7 @@ export const ReadBoard = ({ board, editBoard }: IReadBoardProps) => {
   }, [board, setValue, data, router]);
   //
   const { data: post } = useSWR<IGetAllPosts>(
-    `/api/user/${board?.UserID}/board/${board?.id}/post`
+    board && `/api/user/${board?.UserID}/board/${board?.id}/post`
   );
   return (
     <>

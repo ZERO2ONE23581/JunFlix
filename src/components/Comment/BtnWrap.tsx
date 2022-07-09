@@ -1,66 +1,64 @@
 import styled from '@emotion/styled';
-import useUser from '../../libs/client/useUser';
 import { Dispatch, SetStateAction } from 'react';
 import { IconBtn } from '../Style/Button/IconBtn';
 
 interface IBtnWrap {
-  id: number;
-  saveId: number;
-  ownerId: number;
-  setSaveId: Dispatch<SetStateAction<number>>;
-  setReply: Dispatch<SetStateAction<boolean>>;
-  setEdit: Dispatch<SetStateAction<boolean>>;
-  setDelComment: Dispatch<SetStateAction<boolean>>;
+  selectId: number;
+  commentId: number;
+  isMyComment: boolean;
+  setSelectId: Dispatch<SetStateAction<number>>;
+  setEditCmt: Dispatch<SetStateAction<boolean>>;
+  setReplyCmt: Dispatch<SetStateAction<boolean>>;
+  setDeleteCmt: Dispatch<SetStateAction<boolean>>;
 }
 export const BtnWrap = ({
-  id,
-  saveId,
-  ownerId,
-  setSaveId,
-  setReply,
-  setEdit,
-  setDelComment,
+  selectId,
+  commentId,
+  isMyComment,
+  setSelectId,
+  setEditCmt,
+  setReplyCmt,
+  setDeleteCmt,
 }: IBtnWrap) => {
-  const { loggedInUser } = useUser();
-  const handleClick = (id: number, type: string) => {
-    setSaveId(id);
-    if (type === 'reply') setReply((p: boolean) => !p);
-    if (type === 'edit') setEdit((p: boolean) => !p);
-    if (type === 'delete') setDelComment((p: boolean) => !p);
+  const handleClick = (ID: number, type: string) => {
+    setSelectId(ID);
+    if (type === 'reply') setReplyCmt(true);
+    if (type === 'edit') setEditCmt(true);
+    if (type === 'delete') setDeleteCmt(true);
     if (type === 'cancel') {
-      setSaveId(0);
-      setEdit(false);
-      setReply(false);
-      setDelComment(false);
+      setSelectId(0);
+      setEditCmt(false);
+      setReplyCmt(false);
+      setDeleteCmt(false);
     }
   };
   return (
-    <Cont>
+    <Cont className="edit-comment-btns">
       <IconBtn
         svgType="reply"
         type="button"
-        disabled={saveId !== 0}
-        onClick={() => handleClick(id, 'reply')}
+        disabled={selectId !== 0}
+        onClick={() => handleClick(commentId, 'reply')}
       />
       <IconBtn
         svgType="close"
         type="button"
-        disabled={saveId === 0}
-        onClick={() => handleClick(id, 'cancel')}
+        disabled={selectId === 0}
+        onClick={() => handleClick(commentId, 'cancel')}
       />
-      {ownerId === loggedInUser?.id && (
+      {isMyComment && (
         <>
           <IconBtn
             svgType="pen"
             type="button"
-            disabled={saveId !== 0}
-            onClick={() => handleClick(id, 'edit')}
+            disabled={selectId !== 0}
+            onClick={() => handleClick(commentId, 'edit')}
           />
           <IconBtn
             svgType="trash"
             type="button"
-            disabled={saveId !== 0}
-            onClick={() => handleClick(id, 'delete')}
+            disabled={selectId !== 0}
+            onClick={() => handleClick(commentId, 'delete')}
           />
         </>
       )}
@@ -68,20 +66,14 @@ export const BtnWrap = ({
   );
 };
 const Cont = styled.article`
+  gap: 10px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  justify-content: end;
+  margin-bottom: 5px;
   svg {
-    width: 20px;
-    height: 20px;
     :hover {
       fill: ${(p) => p.theme.color.logo};
-    }
-  }
-  .close {
-    svg {
-      width: 28px;
-      height: 28px;
     }
   }
   button {
@@ -89,7 +81,6 @@ const Cont = styled.article`
       cursor: default;
       opacity: 0.4;
       svg {
-        /* fill: ${(p) => p.theme.color.logo}; */
         :hover {
           fill: ${(p) => p.theme.color.font};
         }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { IconWrap } from '../../IconWrap';
 import { ReadComment } from '../../Comment/ReadComment';
-import { CreateComments } from '../../Comment/Create/CreateComments';
+import { CreateReviewComments } from '../../Comment/Create/Review/CreateComments';
 
 interface IContent {
   USERID: number;
@@ -24,7 +24,7 @@ export const Content = ({ CONTENT, REVIEWID, USERID }: IContent) => {
           setCreateCmt={setCreateCmt}
         />
         {createCmt && (
-          <CreateComments
+          <CreateReviewComments
             replyID={0}
             POSTID={0}
             BOARDID={0}
@@ -45,6 +45,7 @@ export const Content = ({ CONTENT, REVIEWID, USERID }: IContent) => {
 const Cont = styled.article`
   border: none;
   padding: 2% 20%;
+  overflow-wrap: break-word;
   p {
     font-size: 1.6rem;
     font-weight: 300;

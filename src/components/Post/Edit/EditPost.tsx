@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { SubmitEdit } from './SubmitEdit';
 import { useForm } from 'react-hook-form';
-import { Avatar } from '../../Avatar/Avatar';
+import { Avatar } from '../../Avatar';
 import { EditPostInputs } from './EditPostInputs';
 import { IconBtn } from '../../Style/Button/IconBtn';
 import useMutation from '../../../libs/client/useMutation';
@@ -95,7 +95,7 @@ export const EditPost = ({
           <Avatar
             disabled={false}
             preview={preview}
-            url={post?.avatar}
+            avatar={post?.avatar!}
             register={register('avatar')}
             size={{ width: '35vw', height: '65vh' }}
           />

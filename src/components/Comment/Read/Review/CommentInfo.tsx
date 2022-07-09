@@ -1,31 +1,17 @@
 import useSWR from 'swr';
-import { Date } from './Date';
+import { Date } from '../../Date';
 import { useState } from 'react';
-import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
-import { IComment } from './ReadComment';
+import { BtnWrap } from '../../BtnWrap';
 import { CommentReplies } from './CommentReplies';
-import { EditComments } from './Edit/EditComments';
-import { IGetCommentInfo } from '../../types/comments';
-import { CreateComments } from './Create/CreateComments';
-import { DeleteComments } from './Delete/DeleteComments';
+import { IGetCommentInfo, IPostComment } from '../../../../types/comments';
 
-interface ICommentInfo extends IComment {
+interface ICommentInfo extends IPostComment {
   commentId: number | any;
 }
-export const CommentInfo = ({
-  USERID,
-  BOARDID,
-  POSTID,
-  REVIEWID,
-  commentId,
-}: ICommentInfo) => {
+export const ReviewCommentInfo = ({ post, commentId }: ICommentInfo) => {
   const { data } = useSWR<IGetCommentInfo>(
-    BOARDID && POSTID
-      ? `/api/user/${USERID}/board/${BOARDID}/post/${POSTID}/comment/${commentId}`
-      : REVIEWID
-      ? `/api/user/${USERID}/review/${REVIEWID}/comment/${commentId}`
-      : null
+    `/api/user/${post?.UserID}/board/${post?.BoardID}/post/${post?.id}/comment/${commentId}`
   );
   const Comment = data?.comment;
   const [edit, setEdit] = useState(false);
@@ -51,16 +37,7 @@ export const CommentInfo = ({
             setDelComment={setDelComment}
           />
         </Flex>
-        <EditComments
-          disabled={!edit}
-          USERAVATAR={Comment?.user.avatar!}
-          USERID={USERID}
-          BOARDID={BOARDID}
-          POSTID={POSTID}
-          REVIEWID={REVIEWID}
-          parentId={Comment?.id}
-          CONTENT={Comment?.content}
-        />
+        <EditPostCmt disabled={!edit} post={post!} comment={Comment!} />
       </EachComment>
       {isReplyOK && (
         <CreateComments

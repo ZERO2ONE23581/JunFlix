@@ -8,8 +8,10 @@ import { IComment } from '../ReadComment';
 import useMutation from '../../../libs/client/useMutation';
 import { ICommentRes, IEditCommentForm } from '../../../types/comments';
 import { TextArea } from '../../Style/Input/TextArea';
-import { ProfileAvatar } from '../../Avatar/Profile';
+import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
 import { StartWithCapLetter } from '../../Tools';
+import { IconBtn } from '../../Style/Button/IconBtn';
+import { Svg } from '../../Style/Svg/Svg';
 
 interface IEditComments extends IComment {
   disabled: boolean;
@@ -54,21 +56,24 @@ export const EditComments = ({
     <form onSubmit={handleSubmit(onValid)}>
       <Cont>
         <Flex disabled={disabled}>
-          <ProfileAvatar url={USERAVATAR} size="5rem" />
+          <ProfileAvatar url={USERAVATAR} size="2.2em" />
           <TextArea
             {...register('content', { required: '댓글을 입력해주세요.' })}
-            rows={4}
             disabled={disabled}
             id="content"
             name="content"
             placeholder="Add a comment..."
           />
+          {!disabled && (
+            <Submit>
+              {loading ? (
+                <Svg type="solid-check" />
+              ) : (
+                <IconBtn type="submit" svgType="unsolid-check" />
+              )}
+            </Submit>
+          )}
         </Flex>
-        {!disabled && (
-          <div className="edit-btn">
-            <Btn loading={loading} type="submit" name="댓글 수정하기" />
-          </div>
-        )}
       </Cont>
       {errors.content && <ErrorMsg error={errors.content.message} />}
     </form>
@@ -83,18 +88,24 @@ const Cont = styled.div`
   }
 `;
 const Flex = styled.div<{ disabled: boolean }>`
+  margin-top: 10px;
   gap: 20px;
   display: flex;
-  .profile-avatar {
-    margin-top: 10px;
-  }
+  align-items: center;
   textarea {
+    height: 40px;
     padding: 10px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: ${(p) => !p.disabled && p.theme.color.logo};
     border: 2px solid ${(p) => (!p.disabled ? p.theme.color.logo : 'none')};
     :focus {
       border: 2px solid ${(p) => !p.disabled && p.theme.color.logo};
     }
+  }
+`;
+const Submit = styled.div`
+  svg {
+    width: 22px;
+    height: 22px;
   }
 `;

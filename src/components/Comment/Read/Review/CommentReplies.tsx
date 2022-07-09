@@ -1,24 +1,14 @@
 import useSWR from 'swr';
 import { CommentInfo } from './CommentInfo';
-import { IGetReplies } from '../../types/comments';
+import { IGetReplies, IPostComment } from '../../../../types/comments';
 
-interface IRepliesProps {
-  USERID: number;
-  BOARDID: number;
-  POSTID: number;
-  REVIEWID: number;
+interface IRepliesProps extends IPostComment {
   replyID: number;
 }
-export const CommentReplies = ({
-  USERID,
-  BOARDID,
-  POSTID,
-  REVIEWID,
-  replyID,
-}: IRepliesProps) => {
+export const CommentReplies = ({ replyID }: IRepliesProps) => {
   const { data } = useSWR<IGetReplies>(
     BOARDID && POSTID && replyID
-      ? `/api/user/${USERID}/board/${BOARDID}/post/${POSTID}/comment/${replyID}/replies`
+      ? `/api/user/${USERID}/board/${BOARDID}/post/${POSTID}/comment/`
       : REVIEWID && replyID
       ? `/api/user/${USERID}/review/${REVIEWID}/comment/${replyID}/replies`
       : null

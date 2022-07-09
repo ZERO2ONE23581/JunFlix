@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import { ErrorMsg } from '../../Style/ErrMsg';
 import { InputWrap } from '../../Style/Input';
 import { LoadingModal } from '../../LoadingModal';
-import { AvatarLabel } from '../../Avatar/Profile';
+import { AvatarLabel } from '../../Avatar/ProfileAvatar';
 import { FormCont, Info } from '../../../../styles/global';
 import { SelectWrap } from '../../Style/Input/SelectWrap';
 import { TextAreaWrap } from '../../Style/Input/TextArea';

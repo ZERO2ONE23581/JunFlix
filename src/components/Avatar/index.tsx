@@ -2,33 +2,52 @@ import styled from '@emotion/styled';
 import { Svg } from '../Style/Svg/Svg';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-interface IAvatarProps {
+const variant = 'public';
+const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
+export const AVATAR_URL = (avatar: string) => `${base}/${avatar}/${variant}`;
+
+export const AVATAR_BG = styled.article<{ avatar: string }>`
+  overflow: hidden;
+  position: relative;
+  background-color: black;
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background: ${(p) =>
+    p.avatar && `url(${AVATAR_URL(p.avatar)}) center / cover  no-repeat`};
+`;
+
+export const AVATAR_PAGE = styled(AVATAR_BG)<{ preview: string }>`
+  height: 100%;
+  padding: 1% 12%;
+  min-width: 100vw;
+  min-height: 100vh;
+  background: ${(p) =>
+    p.preview && `url(${p.preview}) center / cover no-repeat`};
+`;
+interface IAvatar {
+  avatar: string;
   preview?: string;
+  disabled?: boolean;
   register?: UseFormRegisterReturn;
   size: { width: string; height: string };
-  url?: string | null | boolean;
-  disabled?: boolean;
 }
 export const Avatar = ({
-  url,
+  avatar,
   preview,
   disabled,
   register,
   size,
-}: IAvatarProps) => {
-  const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
-  const variant = 'public';
-  const isImage = Boolean(url || preview);
+}: IAvatar) => {
+  const isImage = Boolean(avatar || preview);
   return (
     <>
       <label htmlFor="avatar">
         <Cont className="thumnail-avatar" isImage={isImage}>
           {isImage && (
             <>
-              {url && !preview && (
+              {avatar && !preview && (
                 <Img
                   size={{ width: size?.width, height: size?.height }}
-                  src={`${`${base}/${url}/${variant}`}`}
+                  src={AVATAR_URL(avatar)}
                   alt="이미지"
                 />
               )}
@@ -41,7 +60,7 @@ export const Avatar = ({
               )}
             </>
           )}
-          {!isImage && !url && !preview && (
+          {!isImage && !avatar && !preview && (
             <NoImageCont
               size={{ width: size.width, height: size.height }}
               disabled={disabled!}

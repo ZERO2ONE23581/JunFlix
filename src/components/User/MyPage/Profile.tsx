@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import useUser from '../../../libs/client/useUser';
-import { ProfileAvatar } from '../../Avatar/Profile';
+import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
 import { IconBtn } from '../../Style/Button/IconBtn';
 
 export const Profile = () => {

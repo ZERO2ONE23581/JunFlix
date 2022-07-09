@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { PostInputs } from './PostInputs';
 import { UndoPost } from '../Read/UndoPost';
-import { Avatar } from '../../Avatar/Avatar';
+import { Avatar } from '../../Avatar';
 import { IPostForm } from '../../../types/post';
 import { SaveCreatePost } from './SaveCreatePost';
 import useMutation from '../../../libs/client/useMutation';
@@ -87,6 +87,7 @@ export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
           />
           <Wrap>
             <Avatar
+              avatar=""
               disabled={next}
               preview={preview}
               register={register('avatar')}

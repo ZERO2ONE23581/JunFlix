@@ -36,13 +36,14 @@ const Cont = styled.article`
 `;
 export const TextArea = styled.textarea`
   width: 100%;
+  padding: 10px;
   resize: none;
-  padding: 0;
   border: none;
   outline: none;
   font-size: 1rem;
   box-shadow: none;
   border-radius: 4px;
+  overflow-wrap: break-word;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
   ::placeholder {

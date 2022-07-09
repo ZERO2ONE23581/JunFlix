@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Btn } from '../../Style/Button';
-import { IComment } from '../ReadComment';
-import { LoadingModal } from '../../LoadingModal';
-import { ICommentRes } from '../../../types/comments';
-import useMutation from '../../../libs/client/useMutation';
+import { Btn } from '../../../Style/Button';
+import { IComment } from '../../ReadComment';
+import { LoadingModal } from '../../../LoadingModal';
+import { ICommentRes } from '../../../../types/comments';
+import useMutation from '../../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { DimBackground, Modal } from '../../../../styles/global';
+import { DimBackground, Modal } from '../../../../../styles/global';
 
 interface IDeleteComment extends IComment {
   id?: number | null;

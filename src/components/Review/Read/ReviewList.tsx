@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { IconCount } from './IconCount';
 import { ListWrap, TopLayer } from './TopLayer';
 import { ReviewModel } from '../../../types/post';
-import { ProfileAvatar } from '../../Avatar/Profile';
+import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
 import { CapFirstLetter, ComputeDate } from '../../Tools';
 
 export interface IReviewList {

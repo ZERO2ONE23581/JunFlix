@@ -1,9 +1,8 @@
-import { Board, Post, Review, User } from '@prisma/client';
-import { Dispatch, SetStateAction } from 'react';
 import { LikesWithPost, LikesWithReview } from './likes';
+import { Board, Post, Review, User } from '@prisma/client';
 
 export interface IGetPost {
-  ok: boolean;
+  ok?: boolean;
   error?: string;
   isComments?: boolean;
   post: PostModel;

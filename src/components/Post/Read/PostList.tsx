@@ -2,21 +2,21 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { ReadPost } from './ReadPost';
 import { PostIcons } from './PostIcons';
+import { AVATAR_BG } from '../../Avatar';
 import { Svg } from '../../Style/Svg/Svg';
 import { PostModel } from '../../../types/post';
 import { Grid } from '../../../../styles/global';
-import { WithAvatar } from '../../Avatar/AvatarInput';
 
 interface IPostList {
   posts: PostModel[];
 }
 export const PostList = ({ posts }: IPostList) => {
-  const [post, setPost] = useState(false);
+  const [readPost, setReadPost] = useState(false);
   const [userId, setUserId] = useState(0);
   const [boardId, setBoardId] = useState(0);
   const [postId, setPostId] = useState(0);
   const clickPost = (id: number) => {
-    setPost(true);
+    setReadPost(true);
     if (id) {
       setUserId(id);
       setBoardId(id);
@@ -31,7 +31,7 @@ export const PostList = ({ posts }: IPostList) => {
             {posts?.map((post) => (
               <Post
                 key={post?.id}
-                avatar={post?.avatar}
+                avatar={post?.avatar!}
                 onClick={() => clickPost(post?.id)}
               >
                 {!post?.avatar && <Svg type="no-image" />}
@@ -43,12 +43,12 @@ export const PostList = ({ posts }: IPostList) => {
               </Post>
             ))}
           </Grid>
-          {post && (
+          {readPost && (
             <ReadPost
               USERID={userId}
               BOARDID={boardId}
               POSTID={postId}
-              setReadPost={setPost}
+              setReadPost={setReadPost}
             />
           )}
         </>
@@ -60,7 +60,7 @@ export const PostList = ({ posts }: IPostList) => {
     </>
   );
 };
-const Post = styled(WithAvatar)`
+const Post = styled(AVATAR_BG)`
   display: flex;
   align-items: center;
   justify-content: center;

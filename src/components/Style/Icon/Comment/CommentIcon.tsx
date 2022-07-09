@@ -27,7 +27,7 @@ interface CountsInReview extends Review {
 }
 interface IComment extends ILikesBtn {
   createCmt?: boolean;
-  setCreateCmt: Dispatch<SetStateAction<boolean>>;
+  setCreateCmt?: Dispatch<SetStateAction<boolean>>;
 }
 export const CommentIcon = ({
   USERID,
@@ -60,7 +60,7 @@ export const CommentIcon = ({
   }, [data, setCounts, BOARDID, POSTID, REVIEWID]);
   return (
     <>
-      <Cont createCmt={createCmt!} onClick={() => setCreateCmt((p) => !p)}>
+      <Cont createCmt={createCmt!}>
         {Boolean(counts > 0) && <Svg type="solid-comment" />}
         {!Boolean(counts > 0) && <Svg type="unsolid-comment" />}
         <span className="counts"> {counts > 0 ? counts : null}</span>

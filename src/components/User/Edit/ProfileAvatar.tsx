@@ -4,7 +4,7 @@ import { Btn } from '../../Style/Button';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { ErrorMsg } from '../../Style/ErrMsg';
-import { ProfileAvatar } from '../../Avatar/Profile';
+import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
 import { MutationRes } from '../../../types/mutation';
 import { IEditProfileProps } from '../../../types/user';
 import useMutation from '../../../libs/client/useMutation';

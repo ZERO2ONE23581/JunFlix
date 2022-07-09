@@ -1,19 +1,19 @@
 import styled from '@emotion/styled';
+import { Avatar } from '../../Avatar';
 import { Review } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
 import { Svg } from '../../Style/Svg/Svg';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Avatar } from '../../Avatar/Avatar';
 import { SubmitReview } from './SubmitReview';
 import { InputWrap } from '../../Style/Input';
 import { ErrorMsg } from '../../Style/ErrMsg';
 import useUser from '../../../libs/client/useUser';
-import { ProfileAvatar } from '../../Avatar/Profile';
 import { IReviewForm } from '../../../types/review';
 import { TextArea } from '../../Style/Input/TextArea';
 import { SelectWrap } from '../../Style/Input/SelectWrap';
+import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
 import useMutation from '../../../libs/client/useMutation';
 
 interface ICreateReviewRes {
@@ -172,6 +172,7 @@ export const CreateReview = () => {
           {errors.content && <ErrorMsg error={errors.content.message} />}
           {openLabel && (
             <Avatar
+              avatar=""
               preview={preview}
               register={register('avatar')}
               size={{ width: '100vw', height: '66vh' }}

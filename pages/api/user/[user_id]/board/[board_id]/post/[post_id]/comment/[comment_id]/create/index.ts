@@ -14,14 +14,32 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: '데이터가 미입력 되었습니다.!' });
   if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR!' });
   //
-  await client.comment.create({
-    data: {
-      content,
-      ReplyID: +comment_id,
-      user: { connect: { id: user?.id } },
-      post: { connect: { id: +post_id.toString() } },
-    },
+  const ParentComment = await client.comment.findUnique({
+    where: { id: +comment_id },
   });
+
+  if (ParentComment && ParentComment.ParentID !== 0) {
+    await client.comment.create({
+      data: {
+        content,
+        ReplyID: +comment_id,
+        ParentID: ParentComment?.ParentID,
+        user: { connect: { id: user?.id } },
+        post: { connect: { id: +post_id.toString() } },
+      },
+    });
+  } else {
+    //첫번째 댓글
+    await client.comment.create({
+      data: {
+        content,
+        ReplyID: +comment_id,
+        ParentID: +comment_id,
+        user: { connect: { id: user?.id } },
+        post: { connect: { id: +post_id.toString() } },
+      },
+    });
+  }
   return res.json({ ok: true });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));
