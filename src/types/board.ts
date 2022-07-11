@@ -1,6 +1,9 @@
 import { Board, Following, Post, User } from '@prisma/client';
 import { Dispatch, SetStateAction } from 'react';
 
+export interface IBoard {
+  board?: IBoardWithAttrs;
+}
 export interface IBoardForm {
   title: string;
   intro: string;
@@ -28,7 +31,7 @@ export interface IPostListProps {
 export interface IGetBoards {
   ok: boolean;
   error: string;
-  boards?: BoardWithUser[];
+  boards?: IBoardWithAttrs[];
 }
 export interface BoardWithUser extends Board {
   user: User;
@@ -36,11 +39,6 @@ export interface BoardWithUser extends Board {
 }
 interface FollowingWithUser extends Following {
   user: User;
-}
-export interface IGetExistingBoards {
-  ok: boolean;
-  error?: string;
-  boards?: BoardWithUser[];
 }
 export interface IEditBoardFormProps {
   setAvatar?: Dispatch<SetStateAction<string>> | any;
@@ -54,5 +52,5 @@ export interface IBoardFormRes {
   board: Board;
 }
 export interface IBoardListProps {
-  boards: BoardWithUser[];
+  boards: IBoardWithAttrs[];
 }

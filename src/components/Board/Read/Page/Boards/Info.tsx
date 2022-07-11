@@ -1,49 +1,33 @@
 import styled from '@emotion/styled';
-import { BoardWithUser } from '../../../types/board';
-import { FollowBoardBtn } from '../Follow/FollowBoardBtn';
+import { IBoard } from '../../../../../types/board';
+import { CapFirstLetters } from '../../../../Tools';
 
-interface IBoardListInfoProps {
-  board?: BoardWithUser;
-}
-export const ListInfo = ({ board }: IBoardListInfoProps) => {
+export const ListInfo = ({ board }: IBoard) => {
   return (
     <Cont>
       <List>
         <li>
-          <span className="title">{board?.title.toUpperCase()}</span>
+          <span className="title">{CapFirstLetters(board?.title!)}</span>
         </li>
         <li>
           <span>Genre:</span>
           <span>{board?.genre}</span>
         </li>
         <li>
-          <span>Made by </span>
-          <span>{board?.user.username}</span>
+          <span>Host:</span>
+          <span>@{board?.user.username}</span>
         </li>
       </List>
-      <FollowBoardBtn USERID={board?.UserID!} BOARDID={board?.id!} />
     </Cont>
   );
 };
 const Cont = styled.article`
   color: white;
   position: relative;
-  svg {
-    left: 4%;
-    top: -210%;
-    position: absolute;
-  }
-  .follow-btn {
-    top: 45%;
-    right: 15%;
-    position: absolute;
-  }
 `;
 const List = styled.ul`
-  width: 100%;
-  padding: 20px;
+  padding: 15px 20px;
   li {
-    width: 80%;
     margin-bottom: 3px;
     padding-bottom: 4px;
     border-bottom: 1px dotted transparent;
@@ -52,7 +36,7 @@ const List = styled.ul`
       margin-right: 5px;
     }
     .title {
-      font-weight: 600;
+      font-weight: 500;
       font-size: 1.1rem;
     }
   }

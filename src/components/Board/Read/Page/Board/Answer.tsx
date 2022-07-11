@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { Modal, DimBackground } from '../../../../styles/global';
-import { ModalProps } from '../../../types/global';
+import { ModalProps } from '../../../../../types/global';
+import { Modal, DimBackground } from '../../../../../../styles/global';
 
 export const PageAnswer = ({ openModal }: ModalProps) => {
   return (

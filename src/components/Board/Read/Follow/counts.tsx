@@ -6,7 +6,6 @@ interface IFollowCountsProps {
     followers: number;
   };
 }
-
 export const FollowCounts = ({ counts }: IFollowCountsProps) => {
   return (
     <Cont className="follow-counts">
@@ -22,10 +21,10 @@ export const FollowCounts = ({ counts }: IFollowCountsProps) => {
   );
 };
 const Cont = styled.article`
+  width: 100%;
   gap: 20px;
   display: flex;
   align-items: center;
-  margin: 15px auto;
 `;
 const Box = styled.div`
   .number {

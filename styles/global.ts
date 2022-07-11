@@ -5,10 +5,11 @@ export const LayoutPage = styled.section`
   padding: 1% 12%;
 `;
 export const Page = styled.section`
-  padding: 2% 10%;
+  height: 100%;
   min-width: 100vw;
   min-height: 100vh;
-  height: 100%;
+  padding: 2% 10%;
+  padding-bottom: 10%;
   font-size: 1.2rem;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
@@ -96,6 +97,7 @@ export const Modal = styled.article`
     width: 100%;
     button {
       min-width: 100px;
+      width: 100%;
       padding: 5px;
     }
   }
@@ -107,6 +109,23 @@ export const Modal = styled.article`
     justify-content: center;
   }
 `;
+export const AnswerModal = styled(Modal)`
+  padding: 40px;
+  gap: 8px;
+  align-items: flex-start;
+  line-height: 22px;
+  li {
+    span {
+      opacity: 0.8;
+      font-size: 1.2rem;
+      font-style: italic;
+    }
+  }
+  .eng {
+    margin-bottom: 10px;
+  }
+`;
+
 export const DimBackground = styled.article<{ zIndex: number }>`
   z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
   top: 0;
@@ -140,11 +159,4 @@ export const ListAvatarInsideBoard = styled(ListAvatar)`
   .thumnail-avatar {
     /* height: 400px; */
   }
-`;
-export const PageWithBg = styled(Page)<{
-  bg?: string | boolean | null;
-}>`
-  height: 100vh;
-  background-color: black;
-  background: ${(p) => p.bg && `url(${p.bg})   center / cover no-repeat`};
 `;

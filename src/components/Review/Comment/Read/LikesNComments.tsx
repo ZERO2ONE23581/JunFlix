@@ -3,7 +3,7 @@ import { IReview } from '../../../../types/review';
 import { CommentIcon } from '../../../Style/Icon/Comment/CommentIcon';
 import { ReviewLikes } from '../../../Style/Icon/Likes/ReviewLikes';
 
-export const ReviewLikesNCmts = ({ review }: IReview) => {
+export const ReviewLikesNComments = ({ review }: IReview) => {
   return (
     <Cont>
       <ReviewLikes REVIEWID={review?.id!} USERID={review?.UserID!} />
@@ -17,7 +17,6 @@ export const ReviewLikesNCmts = ({ review }: IReview) => {
   );
 };
 const Cont = styled.article`
-  padding: 10px 20px;
   gap: 30px;
   display: flex;
   align-items: center;
@@ -30,7 +29,7 @@ const Cont = styled.article`
     color: ${(p) => p.theme.color.logo};
   }
   svg {
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 2rem;
+    height: 2rem;
   }
 `;

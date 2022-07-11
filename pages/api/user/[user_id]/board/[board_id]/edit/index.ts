@@ -7,7 +7,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { user_id, board_id } = req.query;
   const { title, genre, intro } = req.body;
-  const isInput = Boolean(title && genre);
+  const isInput = Boolean(title);
   const isQuery = Boolean(user_id && board_id);
   const isOwner = Boolean(user?.id === +user_id);
   if (!user) return res.json({ ok: false, error: 'login needed.' });

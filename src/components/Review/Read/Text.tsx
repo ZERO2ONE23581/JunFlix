@@ -57,7 +57,6 @@ export const ReviewText = ({ Content, Username, CreatedAt }: IText) => {
             </span>
           )}
         </div>
-        <ReadDate CREATEDAT={CreatedAt} />
       </Cont>
     </>
   );

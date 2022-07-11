@@ -1,28 +1,28 @@
 import styled from '@emotion/styled';
+import { PageAnswer } from './Answer';
 import { Board } from '@prisma/client';
 import { useRouter } from 'next/router';
-import { Btn } from '../../Style/Button';
-import { PageAnswer } from './PageAnswer';
-import { DeleteBoard } from '../Delete/DeleteBoard';
-import { IconBtn } from '../../Style/Button/IconBtn';
-import { EditBackground } from '../Edit/EditBackground';
-import { CancelEditBoard } from '../Edit/CancelEditBoard';
-import { CreatePost } from '../../Post/Create/CreatePost';
+import { DeleteBoard } from '../../../Delete';
+import { Btn } from '../../../../Style/Button';
+import { CancelEditBoard } from '../../../Edit/Cancel';
+import useUser from '../../../../../libs/client/useUser';
+import { EditBackground } from '../../../Edit/Background';
+import { IconBtn } from '../../../../Style/Button/IconBtn';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { DimBackground, Modal } from '../../../../styles/global';
+import { CreatePost } from '../../../../Post/Create/CreatePost';
+import { DimBackground, Modal } from '../../../../../../styles/global';
 
 interface IFiexdBtnWrap {
   board?: Board;
-  editBoard: boolean;
+  edit: boolean;
   setPreview: Dispatch<SetStateAction<string>>;
-  setEditBoard: Dispatch<SetStateAction<boolean>>;
+  setEdit: Dispatch<SetStateAction<boolean>>;
 }
-export const FixedBtnWrap = ({
-  editBoard,
-  setPreview,
-  setEditBoard,
-}: IFiexdBtnWrap) => {
+export const PageBtns = ({ edit, setPreview, setEdit }: IFiexdBtnWrap) => {
   const router = useRouter();
+  const { loggedInUser } = useUser();
+  const { user_id } = router.query;
+  const isMyBoard = Boolean(loggedInUser?.id === Number(user_id));
   const [answer, setAnwser] = useState(false);
   const [setting, setSetting] = useState(false);
   const [createPost, setCreatePost] = useState(false);
@@ -31,7 +31,7 @@ export const FixedBtnWrap = ({
 
   const handleClick = (type: string) => {
     setSetting(false);
-    if (type === 'edit-board') return setEditBoard(true);
+    if (type === 'edit-board') return setEdit(true);
     if (type === 'delete-board') return setDeleteBoard(true);
     if (type === 'create-post') return setCreatePost(true);
   };
@@ -43,23 +43,27 @@ export const FixedBtnWrap = ({
           svgType="compass"
           onClick={() => router.push(`/user/all/boards`)}
         />
-        {!editBoard && (
-          <IconBtn
-            type="button"
-            svgType="setting"
-            isClicked={setting}
-            onClick={() => setSetting((p) => !p)}
-          />
+        {isMyBoard && (
+          <>
+            {!edit && (
+              <IconBtn
+                type="button"
+                svgType="setting"
+                isClicked={setting}
+                onClick={() => setSetting((p) => !p)}
+              />
+            )}
+            {edit && (
+              <IconBtn
+                type="button"
+                svgType="pen"
+                isClicked={edit}
+                onClick={() => setCancelEditBoard(true)}
+              />
+            )}
+            <EditBackground setBoardPreview={setPreview} />
+          </>
         )}
-        {editBoard && (
-          <IconBtn
-            type="button"
-            svgType="pen"
-            isClicked={editBoard}
-            onClick={() => setCancelEditBoard(true)}
-          />
-        )}
-        <EditBackground setBoardPreview={setPreview} />
         <IconBtn
           type="button"
           svgType="question"
@@ -97,8 +101,9 @@ export const FixedBtnWrap = ({
   );
 };
 const Cont = styled.article`
-  top: 10%;
-  right: 10%;
+  top: 20%;
+  right: 5%;
+  z-index: 999;
   position: absolute;
   gap: 30px;
   display: flex;

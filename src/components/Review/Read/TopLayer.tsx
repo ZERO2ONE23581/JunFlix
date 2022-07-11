@@ -37,10 +37,10 @@ export const ListWrap = styled.ul`
     justify-content: center;
   }
   .title {
-    width: 26%;
+    width: 20%;
   }
   .movie-title {
-    width: 18%;
+    width: 20%;
   }
   .author {
     width: 8%;
@@ -63,6 +63,6 @@ export const ListWrap = styled.ul`
   }
   .created-at,
   .updated-at {
-    width: 10%;
+    width: 12%;
   }
 `;

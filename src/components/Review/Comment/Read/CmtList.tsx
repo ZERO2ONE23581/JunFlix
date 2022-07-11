@@ -4,7 +4,7 @@ import { ReadReviewCmtInfo } from './\bCmtInfo';
 import { IReview } from '../../../../types/review';
 import { IGetAllComments } from '../../../../types/comments';
 
-export const ReadReviewCmtList = ({ review }: IReview) => {
+export const ReadReviewCommentList = ({ review }: IReview) => {
   const { data } = useSWR<IGetAllComments>(
     review && `/api/user/${review?.UserID}/review/${review?.id}/comment`
   );

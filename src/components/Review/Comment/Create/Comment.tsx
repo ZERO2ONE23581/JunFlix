@@ -9,7 +9,7 @@ import { TextArea } from '../../../Style/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
 import { ICommentRes, ICreateCommentsForm } from '../../../../types/comments';
 
-export const CreateReviewCmt = ({ review }: IReview) => {
+export const CreateReviewComment = ({ review }: IReview) => {
   const [CreateComment, { loading, data }] = useMutation<ICommentRes>(
     `/api/user/${review?.UserID}/review/${review?.id}/comment/create`
   );
@@ -57,8 +57,11 @@ export const CreateReviewCmt = ({ review }: IReview) => {
   );
 };
 const Cont = styled.div`
-  padding: 15px 20px;
-  border-top: ${(p) => p.theme.border.thin};
+  padding: 20px;
+  border-radius: 5px;
+  border: ${(p) => p.theme.border.thick};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  border: 1px solid ${(p) => p.theme.color.font};
   button {
     width: 10%;
     height: 100%;

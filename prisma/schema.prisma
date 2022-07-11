@@ -46,7 +46,7 @@ model Token {
 model Board {
   id           Int        @id @default(autoincrement())
   title        String     @unique
-  intro        String
+  intro        String     @db.LongText
   genre        String
   avatar       String?  
   user         User       @relation(fields: [UserID], references: [id], onDelete: Cascade)

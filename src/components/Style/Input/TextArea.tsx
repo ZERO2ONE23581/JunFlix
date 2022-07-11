@@ -43,7 +43,6 @@ export const TextArea = styled.textarea`
   font-size: 1rem;
   box-shadow: none;
   border-radius: 4px;
-  overflow-wrap: break-word;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
   ::placeholder {
@@ -58,18 +57,6 @@ export const TextArea = styled.textarea`
     outline: none;
   }
   ::-webkit-scrollbar {
-    background-color: #0d0d0d;
-    width: 10px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: ${(p) => p.theme.color.logo};
-    background-color: #c0392b;
-    opacity: 0.5;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px black;
-  }
-  ::-webkit-scrollbar-track {
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 1px white;
+    display: none;
   }
 `;

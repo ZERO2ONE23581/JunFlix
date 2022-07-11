@@ -5,7 +5,7 @@ import useUser from '../../../../src/libs/client/useUser';
 import { IGetReviews } from '../../../../src/types/review';
 import { Title } from '../../../../src/components/Layout/Title';
 import { Svg } from '../../../../src/components/Style/Svg/Svg';
-import { ReviewList } from '../../../../src/components/Review/Read/ReviewList';
+import { ReviewList } from '../../../../src/components/Review/Read/List';
 
 const MyReviews: NextPage = () => {
   const { loggedInUser } = useUser();

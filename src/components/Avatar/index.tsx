@@ -15,14 +15,6 @@ export const AVATAR_BG = styled.article<{ avatar: string }>`
     p.avatar && `url(${AVATAR_URL(p.avatar)}) center / cover  no-repeat`};
 `;
 
-export const AVATAR_PAGE = styled(AVATAR_BG)<{ preview: string }>`
-  height: 100%;
-  padding: 1% 12%;
-  min-width: 100vw;
-  min-height: 100vh;
-  background: ${(p) =>
-    p.preview && `url(${p.preview}) center / cover no-repeat`};
-`;
 interface IAvatar {
   avatar: string;
   preview?: string;

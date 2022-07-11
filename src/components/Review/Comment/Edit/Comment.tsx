@@ -5,16 +5,16 @@ import {
 } from '../../../../types/comments';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Author } from '../../../../../Author';
 import { ErrorMsg } from '../../../Style/ErrMsg';
-import { CapFirstLetter } from '../../../Tools';
-import { IconBtn } from '../../../Style/Button/IconBtn';
-import { TextArea } from '../../../Style/Input/TextArea';
-import useMutation from '../../../../libs/client/useMutation';
 import { Svg } from '../../../Style/Svg/Svg';
 import { IReview } from '../../../../types/review';
-import { ReviewText } from '../../Read/ReviewText';
+import { ReviewText } from '../../Read/Text';
+import { IconBtn } from '../../../Style/Button/IconBtn';
+import { TextArea } from '../../../Style/Input/TextArea';
+import { CapFirstLetter, ReadDate } from '../../../Tools';
+import useMutation from '../../../../libs/client/useMutation';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IEditComments extends IReview {
   editCmt: boolean;
@@ -65,7 +65,8 @@ export const EditReviewCmt = ({
   return (
     <form onSubmit={handleSubmit(onValid)}>
       <Cont disabled={editCmt}>
-        <Author AVATAR={comment?.user.avatar!} SIZE="2em" />
+        <Author AVATAR={comment?.user.avatar!} SIZE="3rem" />
+        <ReadDate CREATEDAT={review?.createdAt} isList />
         {editCmt && (
           <ReviewText
             Content={comment?.content!}
@@ -95,9 +96,14 @@ export const EditReviewCmt = ({
   );
 };
 const Cont = styled.article<{ disabled: boolean }>`
-  gap: 20px;
+  gap: 10px;
   display: flex;
+  align-items: center;
   justify-content: flex-start;
+  .READ-DATE {
+    opacity: 0.8;
+    min-width: 150px;
+  }
 `;
 const EditTextArea = styled(TextArea)<{ height: string }>`
   height: ${(p) => p.height && p.height};

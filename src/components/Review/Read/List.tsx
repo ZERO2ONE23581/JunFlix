@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import { IconCount } from './IconCount';
 import { ListWrap, TopLayer } from './TopLayer';
 import { ReviewModel } from '../../../types/post';
+import { CapFirstLetter, ReadDate } from '../../Tools';
 import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
-import { CapFirstLetter, ComputeDate } from '../../Tools';
 
 export interface IReviewList {
   reviews: ReviewModel[];
@@ -33,7 +33,7 @@ export const ReviewList = ({ reviews }: IReviewList) => {
                 <Stars score={review.score!} />
               </li>
               <li className="author">
-                <ProfileAvatar url={review?.user?.avatar} size={'2em'} />
+                <ProfileAvatar avatar={review?.user?.avatar} size={'2em'} />
                 {review?.user?.username}
               </li>
               <li className="likes">
@@ -51,10 +51,12 @@ export const ReviewList = ({ reviews }: IReviewList) => {
                 />
               </li>
               <li className="date created-at">
-                <span>{ComputeDate(review.createdAt.toString())}</span>
+                <ReadDate CREATEDAT={review.createdAt} isList />
               </li>
               <li className="date updated-at">
-                <span>{ComputeDate(review.updatedAt.toString())}</span>
+                <span>
+                  <ReadDate UPDATEDAT={review.updatedAt} isList />
+                </span>
               </li>
             </Lists>
           ))}
@@ -106,14 +108,10 @@ const Lists = styled(ListWrap)`
       }
     }
   }
-  .date {
-    span {
-      opacity: 0.8;
-      font-style: italic;
-    }
+  .created-at,
+  .updated-at {
   }
 `;
-
 const Title = styled.li`
   :hover {
     text-decoration: underline;

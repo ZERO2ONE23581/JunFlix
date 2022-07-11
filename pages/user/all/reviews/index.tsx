@@ -5,7 +5,7 @@ import { Page } from '../../../../styles/global';
 import { IGetReviews } from '../../../../src/types/review';
 import { Svg } from '../../../../src/components/Style/Svg/Svg';
 import { Title } from '../../../../src/components/Layout/Title';
-import { ReviewList } from '../../../../src/components/Review/Read/ReviewList';
+import { ReviewList } from '../../../../src/components/Review/Read/List';
 
 const AllReviewsPage: NextPage = () => {
   const { data } = useSWR<IGetReviews>(`/api/user/all/reviews`);

@@ -1,101 +1,58 @@
-import { useState } from 'react';
-import { IInputWrapProps, Input, InputLabel } from '.';
-import { ErrorMsg } from '../ErrMsg';
 import styled from '@emotion/styled';
+import { Genre } from '../../Board/Read/Page/Board/Info/Genre';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
-interface IOptionsProps {
-  type: string;
+interface ISelectWrap {
+  id: string;
+  genre: string;
+  disabled?: boolean;
+  register: UseFormRegisterReturn;
 }
-export const Options = ({ type }: IOptionsProps) => {
+
+export const SelectWrap = ({ id, register, disabled, genre }: ISelectWrap) => {
   return (
-    <>
-      {type === 'genre' && (
-        <>
-          <option value="">장르를 선택해주세요.</option>
-          <option value="SF">SF</option>
-          <option value="Action">Action</option>
-          <option value="Drama">Drama</option>
-          <option value="Horror">Horror</option>
-          <option value="Comedy">Comedy</option>
-          <option value="Fantasy">Fantasy</option>
-          <option value="Thriller">Thriller</option>
-          <option value="others">Others (기타)</option>
-        </>
-      )}
-    </>
-  );
-};
-export const SelectWrap = ({
-  id,
-  label,
-  watch,
-  isValue,
-  register,
-  disabled,
-  inputErrMsg,
-}: IInputWrapProps) => {
-  const [isFocus, setIsFocus] = useState(false);
-  const handleBlur = () => {
-    if (inputErrMsg) return;
-    if (watch) return;
-    setIsFocus(false);
-  };
-  const isLabelChange = Boolean(isFocus || disabled || isValue);
-  return (
-    <Cont>
-      <div className="wrap">
-        <Label htmlFor={id} isChange={isLabelChange}>
-          {label}
-        </Label>
-        <Select
-          {...register}
-          id={id}
-          name={id}
-          disabled={disabled}
-          onFocus={() => setIsFocus(true)}
-          onBlur={handleBlur}
-        >
-          {id === 'gender' && (
-            <>
-              <option value="">성별을 선택해주세요.</option>
-              <option value="male">남</option>
-              <option value="female">여</option>
-            </>
-          )}
-          {id === 'genre' && <Options type="genre" />}
-        </Select>
-      </div>
-      {inputErrMsg && (
-        <div className="error">
-          <ErrorMsg error={inputErrMsg} />
-        </div>
-      )}
+    <Cont className="select-wrap">
+      <Select {...register} id={id} name={id} disabled={disabled}>
+        {id === 'gender' && (
+          <>
+            <option value="">성별을 선택해주세요.</option>
+            <option value="male">남</option>
+            <option value="female">여</option>
+          </>
+        )}
+        {id === 'genre' && (
+          <>
+            <option value="">영화장르</option>
+            <option value="SF">SF (SF)</option>
+            <option value="Action">Action (액션)</option>
+            <option value="Drama">Drama (드라마)</option>
+            <option value="Horror">Horror (공포)</option>
+            <option value="Thriller">Thriller (스릴러)</option>
+            <option value="Mystery">Mystery (미스터리)</option>
+            <option value="Comedy">Comedy (코미디)</option>
+            <option value="Fantasy">Fantasy (판타지)</option>
+          </>
+        )}
+      </Select>
+      {id === 'genre' && <Genre genre={genre} />}
     </Cont>
   );
 };
-const Cont = styled.article`
-  .wrap {
-    position: relative;
-  }
-  .error {
-    margin-top: 20px;
-  }
-`;
-const Label = styled(InputLabel)<{ isChange: boolean }>`
-  /* width: 90%; */
-  /* width: ${(p) => p.isChange && '32%'}; */
+const Cont = styled.div`
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  border: ${(p) => p.theme.border.thin};
+  box-shadow: ${(p) => p.theme.boxShadow.input};
 `;
 const Select = styled.select`
   border: none;
   padding: 10px;
   font-size: 1rem;
-  border-radius: 5px;
+  text-align: center;
   background-color: inherit;
-  border: ${(p) => p.theme.border};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
   color: ${(p) => p.theme.color.font};
-  &:focus {
-    border: none;
-    outline: 2px solid ${(p) => p.theme.color.logo};
-  }
+  outline: none;
 `;

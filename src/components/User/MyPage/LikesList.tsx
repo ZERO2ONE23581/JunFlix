@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { PostList } from '../../Post/Read/List';
-import { ReviewList } from '../../Review/Read/ReviewList';
+import { ReviewList } from '../../Review/Read/List';
 import { PostModel, ReviewModel } from '../../../types/post';
 import useUser from '../../../libs/client/useUser';
 

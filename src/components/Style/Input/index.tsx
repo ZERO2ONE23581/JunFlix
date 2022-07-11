@@ -106,7 +106,7 @@ export const Input = styled.input<{ isDate?: boolean }>`
   border-radius: 5px;
   border: ${(p) => p.theme.border};
   color: ${(p) => p.theme.color.font};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  box-shadow: ${(p) => p.theme.boxShadow.input};
   background-color: ${(p) => p.theme.color.bg};
   :disabled {
     background-color: inherit;

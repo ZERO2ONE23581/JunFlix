@@ -28,6 +28,13 @@ export const ReadReviewCmtInfo = ({ review, comment_id }: ICommentInfo) => {
   return (
     <>
       <Cont>
+        <EditReviewCmt
+          review={review!}
+          comment={Comment!}
+          editCmt={!editCmt}
+          setEditCmt={setEditCmt}
+          setSelectId={setSelectId}
+        />
         <BtnWrap
           selectId={selectId}
           commentId={Comment?.id!}
@@ -36,13 +43,6 @@ export const ReadReviewCmtInfo = ({ review, comment_id }: ICommentInfo) => {
           setEditCmt={setEditCmt}
           setReplyCmt={setReplyCmt}
           setDeleteCmt={setDeleteCmt}
-        />
-        <EditReviewCmt
-          review={review!}
-          comment={Comment!}
-          editCmt={!editCmt}
-          setEditCmt={setEditCmt}
-          setSelectId={setSelectId}
         />
       </Cont>
       {isReply && (
@@ -67,9 +67,18 @@ export const ReadReviewCmtInfo = ({ review, comment_id }: ICommentInfo) => {
 };
 const Cont = styled.article`
   padding: 10px 20px;
+  margin-bottom: 15px;
   border: none;
-  font-size: 0.9rem;
-  border-bottom: ${(p) => p.theme.border.thin};
+  font-size: 1rem;
+  border-radius: 8px;
+  border: ${(p) => p.theme.border.thick};
+  box-shadow: ${(p) => p.theme.boxShadow.input};
+  .flex {
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+  }
   .edit-comment-btns {
     gap: 10px;
     svg {

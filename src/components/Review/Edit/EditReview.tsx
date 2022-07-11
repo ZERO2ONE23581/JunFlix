@@ -204,7 +204,7 @@ export const EditReview = () => {
 
           <ContentInput isFocus={isFocus}>
             <Profile>
-              <ProfileAvatar size={'3em'} url={loggedInUser?.avatar} />
+              <ProfileAvatar size={'3em'} avatar={loggedInUser?.avatar} />
               <div>
                 <span>{loggedInUser?.username}</span>
                 <span>'s Review</span>
