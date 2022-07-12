@@ -3,13 +3,20 @@ import styled from '@emotion/styled';
 import { IBoard } from '../../../../../../types/board';
 import { FollowCounts } from '../../../Follow/counts';
 import { CapFirstLetters } from '../../../../../Tools';
+import { FollowBoard } from '../../Boards/Follow';
+import useUser from '../../../../../../libs/client/useUser';
 
 export const Info = ({ board }: IBoard) => {
+  const { isLoggedIn, loggedInUser } = useUser();
+  const isMyBoard = (userId: number) => Boolean(loggedInUser?.id === userId);
   return (
     <Cont>
       <Title>
         <h1>{CapFirstLetters(board?.title!)}</h1>
-        <Genre genre={board?.genre!} />
+        <Genre genre={board?.genre!} size="3rem" />
+        {isLoggedIn && !isMyBoard(board?.UserID!) && (
+          <FollowBoard USERID={board?.UserID!} BOARDID={board?.id!} />
+        )}
       </Title>
       <FollowCounts counts={board?._count} />
       <Intro isIntro={Boolean(board?.intro)}>"{board?.intro}"</Intro>

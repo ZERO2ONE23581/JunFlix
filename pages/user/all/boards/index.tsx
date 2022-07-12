@@ -1,21 +1,27 @@
 import useSWR from 'swr';
 import type { NextPage } from 'next';
+import styled from '@emotion/styled';
 import { Page } from '../../../../styles/global';
 import { IGetBoards } from '../../../../src/types/board';
-import { Title } from '../../../../src/components/Layout/Title';
+import { Title, TitleSign } from '../../../../src/components/Layout/Title';
 import { BoardList } from '../../../../src/components/Board/Read/Page/Boards';
-import { BoardsPgBtns } from '../../../../src/components/Board/Read/Page/Boards/Btns';
+import { PageBtns } from '../../../../src/components/Board/Read/Page/Boards/Btns';
 
 const AllBoardsPage: NextPage = () => {
   const { data } = useSWR<IGetBoards>(`/api/user/all/boards`);
   return (
     <>
       <Title title="All Boards" />
-      <Page>
+      <Cont>
+        <TitleSign type="Boards" />
         <BoardList boards={data?.boards!} />
-      </Page>
-      <BoardsPgBtns />
+      </Cont>
+      <PageBtns />
     </>
   );
 };
 export default AllBoardsPage;
+
+const Cont = styled(Page)`
+  padding-top: 0;
+`;

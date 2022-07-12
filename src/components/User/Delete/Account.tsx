@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../Style/Button';
 import { Dispatch, SetStateAction } from 'react';
-import { FormCont } from '../../../../styles/global';
+import { Container } from '../../../../styles/global';
 
 interface IDeleteAccountProps {
   setOpenDel: Dispatch<SetStateAction<boolean>>;
@@ -23,7 +23,7 @@ export const DeleteAccount = ({ setOpenDel }: IDeleteAccountProps) => {
     </Cont>
   );
 };
-const Cont = styled(FormCont)`
+const Cont = styled(Container)`
   .flex {
     justify-content: space-between;
     h1 {

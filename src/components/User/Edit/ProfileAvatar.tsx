@@ -9,7 +9,7 @@ import { MutationRes } from '../../../types/mutation';
 import { IEditProfileProps } from '../../../types/user';
 import useMutation from '../../../libs/client/useMutation';
 import { IProfileAvatarForm } from '../../../types/avatar';
-import { Form, FormCont } from '../../../../styles/global';
+import { Form, Container } from '../../../../styles/global';
 
 export const EditProfileAvatar = ({ user }: IEditProfileProps) => {
   const router = useRouter();
@@ -82,7 +82,7 @@ export const EditProfileAvatar = ({ user }: IEditProfileProps) => {
     </>
   );
 };
-const Cont = styled(FormCont)`
+const Cont = styled(Container)`
   text-align: center;
   h1 {
     font-weight: 700;

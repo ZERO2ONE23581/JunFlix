@@ -1,50 +1,57 @@
 import styled from '@emotion/styled';
 import { IBoard } from '../../../../../types/board';
 import { CapFirstLetters } from '../../../../Tools';
+import { Genre } from '../Board/Info/Genre';
 
 export const ListInfo = ({ board }: IBoard) => {
   return (
     <Cont>
-      <List>
-        <li>
-          <span className="title">{CapFirstLetters(board?.title!)}</span>
-        </li>
-        <li>
-          <span>Genre:</span>
-          <span>{board?.genre}</span>
-        </li>
-        <li>
-          <span>Host:</span>
-          <span>@{board?.user.username}</span>
-        </li>
-      </List>
+      <Title>
+        <span>{CapFirstLetters(board?.title!)}</span>
+      </Title>
+      <Info>
+        <span>@ {board?.user.username}</span>
+        <span className="dot">•</span>
+        <span className="board-genre">{board?.genre}</span>
+        <Genre genre={board?.genre!} size="1.4rem" />
+      </Info>
     </Cont>
   );
 };
-const Cont = styled.article`
+const Cont = styled.ul`
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   color: white;
-  position: relative;
-`;
-const List = styled.ul`
-  padding: 15px 20px;
-  li {
-    margin-bottom: 3px;
-    padding-bottom: 4px;
-    border-bottom: 1px dotted transparent;
-    span {
-      font-size: 1rem;
-      margin-right: 5px;
-    }
-    .title {
-      font-weight: 500;
-      font-size: 1.1rem;
-    }
-  }
+  font-size: 1rem;
+  font-style: italic;
+  padding: 20px;
   :hover {
     background-color: black;
     color: ${(p) => p.theme.color.logo};
-    li {
-      border-bottom: 1px dotted ${(p) => p.theme.color.logo};
+    svg {
+      fill: ${(p) => p.theme.color.logo};
     }
+    span {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .dot {
+      text-decoration: none;
+    }
+  }
+`;
+const Title = styled.li`
+  font-weight: 400;
+  font-size: 1.5rem;
+`;
+const Info = styled.li`
+  gap: 7px;
+  display: flex;
+  align-items: center;
+  svg {
+    fill: white;
+    margin-left: 10px;
   }
 `;

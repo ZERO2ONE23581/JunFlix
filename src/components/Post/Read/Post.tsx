@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Avatar } from '../../Avatar';
 import { PostContent } from './Content';
 import { Setting } from '../Create/Setting';
-import { IGetPost } from '../../../types/post';
+import { IGetPost, IPost } from '../../../types/post';
 import { Dispatch, SetStateAction } from 'react';
 import { ReadPostCmtList } from '../Comment/Read/CmtList';
 import { PostLikesNCmts } from '../Comment/Read/LikesNCmts';
@@ -12,20 +12,21 @@ import { Modal, DimBackground } from '../../../../styles/global';
 
 interface IReadPost {
   USERID: number;
-  BOARDID: number;
   POSTID: number;
+  BOARDID: number;
   setReadPost: Dispatch<SetStateAction<boolean>>;
 }
 export const ReadPost = ({
   USERID,
-  BOARDID,
   POSTID,
+  BOARDID,
   setReadPost,
 }: IReadPost) => {
   const { data } = useSWR<IGetPost>(
     `/api/user/${USERID}/board/${BOARDID}/post/${POSTID}`
   );
   const post = data?.post;
+  console.log(post);
   return (
     <>
       <Cont>

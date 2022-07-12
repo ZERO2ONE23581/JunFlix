@@ -10,31 +10,37 @@ import { IBoardListProps } from '../../../../../types/board';
 
 export const BoardList = ({ boards }: IBoardListProps) => {
   const router = useRouter();
-  const { isLoggedIn, loggedInUser } = useUser();
   const isBoard = Boolean(boards?.length > 0);
+  const { isLoggedIn, loggedInUser } = useUser();
   const isMyBoard = (userId: number) => Boolean(loggedInUser?.id === userId);
   return (
     <>
       {isBoard && (
         <Grid size={4}>
           {boards?.map((board) => (
-            <Map key={board.id}>
-              <Board avatar={board.avatar!}>
+            <Board key={board.id} avatar={board.avatar!}>
+              <Follow>
                 {isLoggedIn && !isMyBoard(board.UserID) && (
                   <FollowBoard USERID={board?.UserID!} BOARDID={board?.id!} />
                 )}
-                <button
-                  className="router"
-                  onClick={() =>
-                    router.push(
-                      `/user/${board.UserID}/board/${board.id}/${board.title}`
-                    )
-                  }
+              </Follow>
+              <LinkBtn
+                className="router"
+                onClick={() =>
+                  router.push(
+                    `/user/${board.UserID}/board/${board.id}/${board.title}`
+                  )
+                }
+              />
+              {isMyBoard(board.UserID) && (
+                <Svg
+                  type="isOwner"
+                  size="1.6rem"
+                  fill={(p: any) => p.theme.color.green!}
                 />
-                {isMyBoard(board.UserID) && <Svg type="isOwner" />}
-                <ListInfo board={board!} />
-              </Board>
-            </Map>
+              )}
+              <ListInfo board={board!} />
+            </Board>
           ))}
         </Grid>
       )}
@@ -42,47 +48,42 @@ export const BoardList = ({ boards }: IBoardListProps) => {
     </>
   );
 };
-const Map = styled.article`
+const Board = styled(AVATAR_BG)`
+  min-width: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 5px;
+  border-right: ${(p) => !p.avatar && p.theme.border.thin};
+  border-bottom: ${(p) => !p.avatar && p.theme.border.thin};
+  position: relative;
+  .isOwner {
+    top: 4%;
+    left: 5%;
+    position: absolute;
+  }
+`;
+const Follow = styled.div`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: end;
   .follow-board {
-    display: flex;
-    justify-content: end;
     button {
       border: none;
       border-radius: 0;
       font-size: 1.2rem;
-      padding: 10px 15px;
+      padding: 5px 10px 10px 15px;
       border-bottom-left-radius: 20px;
       background-color: ${(p) => p.theme.color.bg};
       &:hover {
-        color: white;
         background-color: ${(p) => p.theme.color.logo};
       }
     }
   }
 `;
-const Board = styled(AVATAR_BG)`
-  min-width: 200px;
-  min-height: 380px;
-  display: flex;
-  justify-content: end;
-  flex-direction: column;
-  border-radius: 5px;
-  border-right: ${(p) => !p.avatar && p.theme.border.thin};
-  border-bottom: ${(p) => !p.avatar && p.theme.border.thin};
-  .router {
-    width: 100%;
-    min-height: 300px;
-    border: none;
-    background: none;
-  }
-  .isOwner {
-    svg {
-      width: 20px;
-      height: 20px;
-      top: 5%;
-      left: 5%;
-      position: absolute;
-      fill: ${(p) => p.theme.color.green};
-    }
-  }
+const LinkBtn = styled.button`
+  height: 280px;
+  border: none;
+  background: none;
 `;

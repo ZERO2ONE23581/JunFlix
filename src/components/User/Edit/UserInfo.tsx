@@ -7,7 +7,7 @@ import { ErrorMsg } from '../../Style/ErrMsg';
 import { InputWrap } from '../../Style/Input';
 import { MutationRes } from '../../../types/mutation';
 import { IEditProfileProps } from '../../../types/user';
-import { Form, FormCont } from '../../../../styles/global';
+import { Form, Container } from '../../../../styles/global';
 import useMutation from '../../../libs/client/useMutation';
 import { SelectWrap } from '../../Style/Input/SelectWrap';
 
@@ -150,7 +150,7 @@ export const EditUserInfo = ({ user }: IEditProfileProps) => {
     </Cont>
   );
 };
-const Cont = styled(FormCont)``;
+const Cont = styled(Container)``;
 const HiddenInput = styled.input`
   display: none;
 `;

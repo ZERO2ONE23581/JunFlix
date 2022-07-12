@@ -1,28 +1,27 @@
 import styled from '@emotion/styled';
-import { Modal, DimBackground } from '../../styles/global';
 import { Svg } from './Style/Svg/Svg';
+import { DimBackground, AnswerModal } from '../../styles/global';
 
 interface ILoadingModalProps {
   text: {
     kor: string;
     eng: string;
   };
-  zIndex?: number;
 }
-
-export const LoadingModal = ({ text, zIndex }: ILoadingModalProps) => {
+export const LoadingModal = ({ text }: ILoadingModalProps) => {
   return (
     <>
-      <Cont zIndex={zIndex}>
-        <h1>{text.kor}</h1>
-        <h2>{text.eng}</h2>
-        <Svg type="loading" />
+      <Cont>
+        <ul>
+          <li>
+            <span>{text.kor}</span>
+            <span>{text.eng}</span>
+          </li>
+        </ul>
+        <Svg type="loading" size="2rem" />
       </Cont>
       <DimBackground zIndex={99} />
     </>
   );
 };
-const Cont = styled(Modal)<{ zIndex?: number }>`
-  z-index: ${(p) => p.zIndex && p.zIndex};
-  min-width: 300px;
-`;
+const Cont = styled(AnswerModal)``;

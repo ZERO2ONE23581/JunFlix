@@ -34,25 +34,26 @@ export const SelectWrap = ({ id, register, disabled, genre }: ISelectWrap) => {
           </>
         )}
       </Select>
-      {id === 'genre' && <Genre genre={genre} />}
+      {id === 'genre' && <Genre genre={genre} size="2rem" />}
     </Cont>
   );
 };
 const Cont = styled.div`
+  padding: 0 10px;
   gap: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
-  border: ${(p) => p.theme.border.thin};
+  border-radius: 3px;
+  border: ${(p) => p.theme.border.thick};
   box-shadow: ${(p) => p.theme.boxShadow.input};
 `;
 const Select = styled.select`
   border: none;
+  outline: none;
   padding: 10px;
   font-size: 1rem;
   text-align: center;
   background-color: inherit;
   color: ${(p) => p.theme.color.font};
-  outline: none;
 `;

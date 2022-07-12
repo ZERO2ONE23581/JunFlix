@@ -86,8 +86,8 @@ export const LikesBtn = ({ USERID, BOARDID, POSTID, REVIEWID }: ILikesBtn) => {
   return (
     <>
       <Cont onClick={onClick}>
-        {data?.isLiked && <Svg type={'solid-heart'} />}
-        {!data?.isLiked && <Svg type={'unsolid-heart'} />}
+        {data?.isLiked && <Svg type={'solid-heart'} size="1rem" />}
+        {!data?.isLiked && <Svg type={'unsolid-heart'} size="1rem" />}
         <span className="counts">{Counts() ? Counts() : null}</span>
       </Cont>
     </>

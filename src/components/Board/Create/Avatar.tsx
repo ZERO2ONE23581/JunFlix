@@ -18,7 +18,7 @@ export const BoardAvatar = ({
   return (
     <Cont>
       <label htmlFor="avatar">
-        <Svg type="landscape" />
+        <Svg type="landscape" size="50px" />
         <input
           {...register('avatar')}
           id="avatar"
@@ -28,7 +28,12 @@ export const BoardAvatar = ({
         />
       </label>
       {isPreivew && (
-        <IconBtn type="button" svgType="undo" onClick={() => setPreview('')} />
+        <IconBtn
+          size="33px"
+          type="button"
+          svgType="undo"
+          onClick={() => setPreview('')}
+        />
       )}
     </Cont>
   );
@@ -37,20 +42,16 @@ const Cont = styled.article`
   gap: 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  .undo {
-    width: 30px;
-    height: 30px;
-  }
+  justify-content: center;
   label {
     display: flex;
     align-items: center;
     justify-content: center;
-    .landscape {
-      width: 40px;
-      height: 40px;
+    svg {
+      :hover {
+        fill: ${(p) => p.theme.color.logo};
+      }
     }
-
     input {
       display: none;
     }

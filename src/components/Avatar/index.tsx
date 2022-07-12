@@ -57,7 +57,7 @@ export const Avatar = ({
               size={{ width: size.width, height: size.height }}
               disabled={disabled!}
             >
-              <Svg type="no-image" />
+              <Svg type="no-image" size="2rem" />
             </NoImageCont>
           )}
           <input

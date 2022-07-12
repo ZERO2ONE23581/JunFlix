@@ -56,7 +56,7 @@ export const EditBackground = ({ setBoardPreview }: IEditAvatarProps) => {
       <form onSubmit={handleSubmit(onValid)}>
         <Cont isWatch={isWatch}>
           <label htmlFor="boardAvatar">
-            <Svg type="landscape" />
+            <Svg type="landscape" size="1rem" />
           </label>
           <input
             {...register('boardAvatar')}
@@ -86,6 +86,7 @@ const Cont = styled.article<{ isWatch: boolean }>`
   gap: 12px;
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   button {
     font-size: 0.9rem;

@@ -85,11 +85,7 @@ const Cont = styled.article`
   textarea,
   .select-wrap {
     word-wrap: normal;
-    border-radius: 3px;
     border: 1px solid ${(p) => p.theme.color.logo};
-  }
-  .select-wrap {
-    padding: 0 10px;
   }
   textarea {
     font-size: 1.1rem;
@@ -113,4 +109,3 @@ const Title = styled.div`
     height: 50px;
   }
 `;
-const Intro = styled.p<{ isIntro: boolean }>``;

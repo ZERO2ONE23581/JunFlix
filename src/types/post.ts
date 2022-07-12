@@ -1,15 +1,22 @@
 import { LikesWithPost, LikesWithReview } from './likes';
-import { Board, Post, Review, User } from '@prisma/client';
+import { Board, Comment, Likes, Post, Review, User } from '@prisma/client';
 
-export interface IGetPost {
-  ok?: boolean;
-  error?: string;
-  isComments?: boolean;
+export interface PostModel extends Post {
+  user: User;
+  board: Board;
+  likes: Likes[];
+  comments: Comment[];
+  _count: {
+    likes: number;
+    comments: number;
+  };
+}
+export interface IPost {
   post: PostModel;
 }
-export interface PostModel extends Post {
-  user?: User;
-  board?: Board;
+export interface IGetPost extends IPost {
+  ok?: boolean;
+  error?: string;
 }
 export interface ReviewModel extends Review {
   _count: {
@@ -19,18 +26,18 @@ export interface ReviewModel extends Review {
   user?: User;
   board?: Board;
 }
-export interface IEditPostForm extends IPostForm {
-  createdAt?: Date;
-}
 export interface IPostForm {
   title: string;
   content?: string;
   createdAt?: Date;
   avatar?: FileList;
 }
+export interface IEditPostForm extends IPostForm {
+  createdAt?: Date;
+}
 export interface IGetAllPosts {
   ok: boolean;
-  posts?: Post[];
+  posts?: PostModel[];
   postlikes: LikesWithPost[];
   reviewLikes: LikesWithReview[];
 }

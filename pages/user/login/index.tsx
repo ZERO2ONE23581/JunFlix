@@ -9,7 +9,7 @@ import { Btn } from '../../../src/components/Style/Button';
 import { Title } from '../../../src/components/Layout/Title';
 import useMutation from '../../../src/libs/client/useMutation';
 import { LinkWrap } from '../../../src/components/Style/Button/Link';
-import { Form, FormCont, Info, Page } from '../../../styles/global';
+import { Form, Container, Info, Page } from '../../../styles/global';
 import { ErrorMsg } from '../../../src/components/Style/ErrMsg';
 import { InputWrap } from '../../../src/components/Style/Input';
 
@@ -39,7 +39,7 @@ const Login: NextPage = () => {
       <Title title="로그인" />
       <Cont>
         <Wrapper>
-          <FormCont>
+          <Container>
             <h1>Login</h1>
             <Form onSubmit={handleSubmit(onValid)}>
               <InputWrap
@@ -68,7 +68,7 @@ const Login: NextPage = () => {
                 <span>* 아이디는 영어 소문자 대문자를 구분하지 않습니다.</span>
               </Info>
             </Form>
-          </FormCont>
+          </Container>
           <LinkWrap isLogin />
         </Wrapper>
       </Cont>

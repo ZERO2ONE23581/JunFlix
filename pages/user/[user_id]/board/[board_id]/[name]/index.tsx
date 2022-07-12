@@ -35,14 +35,10 @@ const BoardPage: NextPage = () => {
 };
 export default BoardPage;
 
-const Cont = styled(Page)`
-  padding: 0 12%;
-  min-width: 100vw;
-  min-height: 100vh;
-`;
+const Cont = styled(Page)``;
 const AVATAR_PAGE = styled(AVATAR_BG)<{ preview: string }>`
-  padding: 3% 12%;
   height: 100vh;
+  padding: 3% 12%;
   background: ${(p) =>
     p.preview && `url(${p.preview}) center / cover no-repeat`};
 `;

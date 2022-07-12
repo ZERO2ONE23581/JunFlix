@@ -8,7 +8,7 @@ import { ErrorMsg } from '../../Style/ErrMsg';
 import { InputWrap } from '../../Style/Input';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
-import { Form, FormCont, Info } from '../../../../styles/global';
+import { Form, Container, Info } from '../../../../styles/global';
 import { IEditProfileProps, IEditUserIdForm } from '../../../types/user';
 
 export const EditUserId = ({ user }: IEditProfileProps) => {
@@ -67,7 +67,7 @@ export const EditUserId = ({ user }: IEditProfileProps) => {
     </Cont>
   );
 };
-export const Cont = styled(FormCont)``;
+export const Cont = styled(Container)``;
 
 const FindID = styled(Info)`
   margin-top: 20px;

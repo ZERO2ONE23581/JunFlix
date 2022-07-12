@@ -47,7 +47,7 @@ const Cont = styled.article<{ isFollow: boolean }>`
     font-size: 0.9rem;
     font-weight: 600;
     background-color: inherit;
-    color: ${(p) => (p.isFollow ? p.theme.color.logo : 'inherit')};
+    color: ${(p) => (p.isFollow ? p.theme.color.logo : p.theme.color.font)};
     border: 3px solid
       ${(p) => (p.isFollow ? p.theme.color.logo : p.theme.color.font)};
   }

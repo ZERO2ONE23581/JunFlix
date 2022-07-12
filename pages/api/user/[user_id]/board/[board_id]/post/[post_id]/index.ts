@@ -11,6 +11,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const post = await client.post.findUnique({
     where: { id: +post_id.toString() },
     include: {
+      likes: {
+        include: {
+          user: { select: { id: true, username: true } },
+        },
+        orderBy: {
+          id: 'desc',
+        },
+      },
       comments: {
         include: {
           user: { select: { id: true, username: true } },
@@ -26,17 +34,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   });
   if (!post) return res.json({ ok: false, error: 'NO POST FOUND' });
   //
-  const isLiked = Boolean(
-    await client.likes.findFirst({
-      where: { UserID: user?.id, PostID: post.id },
-    })
-  );
-  const isComments = Boolean(
-    await client.comment.findFirst({
-      where: { UserID: user?.id, PostID: post.id },
-    })
-  );
-  return res.json({ ok: true, post, isLiked, isComments });
+  return res.json({ ok: true, post });
 }
 export default withApiSession(
   withHandler({ methods: ['GET'], handler, isPrivate: false })

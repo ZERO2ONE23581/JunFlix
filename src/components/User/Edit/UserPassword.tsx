@@ -9,7 +9,7 @@ import { InputWrap } from '../../Style/Input';
 import { MutationRes } from '../../../types/mutation';
 import { IEditProfileProps } from '../../../types/user';
 import useMutation from '../../../libs/client/useMutation';
-import { Form, FormCont, Info } from '../../../../styles/global';
+import { Form, Container, Info } from '../../../../styles/global';
 
 interface IEditPasswordForm {
   password?: string;
@@ -109,7 +109,7 @@ export const EditUserPassword = ({ user }: IEditProfileProps) => {
     </Cont>
   );
 };
-export const Cont = styled(FormCont)``;
+export const Cont = styled(Container)``;
 
 const FindPassword = styled(Info)`
   margin-top: 20px;

@@ -3,8 +3,9 @@ import type { NextPage } from 'next';
 import { Page } from '../../../../styles/global';
 import { IGetAllPosts } from '../../../../src/types/post';
 import useUser from '../../../../src/libs/client/useUser';
-import { Title } from '../../../../src/components/Layout/Title';
+import { Title, TitleSign } from '../../../../src/components/Layout/Title';
 import { PostList } from '../../../../src/components/Post/Read/List';
+import styled from '@emotion/styled';
 
 const MyPosts: NextPage = () => {
   const { loggedInUser } = useUser();
@@ -12,11 +13,16 @@ const MyPosts: NextPage = () => {
   return (
     <>
       <Title title={`${loggedInUser?.username}'s Posts`} />
-      <Page>
-        <h1>{loggedInUser?.username}님의 포스트</h1>
+      <Cont>
+        <TitleSign type="포스트" name={loggedInUser?.username!} />
         <PostList posts={data?.posts!} />
-      </Page>
+      </Cont>
     </>
   );
 };
 export default MyPosts;
+
+const Cont = styled(Page)`
+  padding: 0 20%;
+  padding-bottom: 5%;
+`;

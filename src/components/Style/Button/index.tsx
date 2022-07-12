@@ -23,8 +23,8 @@ export const Btn = ({
   return (
     <>
       <Button
-        disabled={disabled}
         type={type}
+        disabled={disabled}
         onClick={onClick}
         isClicked={isClicked}
         className={CLASSNAME}
@@ -35,13 +35,12 @@ export const Btn = ({
   );
 };
 export const Button = styled.button<{ isClicked?: boolean }>`
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  //
   border: none;
   font-size: 1rem;
-  padding: 11px 15px;
   border-radius: 3px;
   color: ${(p) => p.theme.color.bg};
   background-color: ${(p) =>

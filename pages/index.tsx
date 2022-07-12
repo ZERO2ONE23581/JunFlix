@@ -4,7 +4,7 @@ import { Page } from '../styles/global';
 import { IGetBoards } from '../src/types/board';
 import { MovieInfo } from '../src/components/Movie';
 import { Title } from '../src/components/Layout/Title';
-import { BoardList } from '../src/components/Board/Read/List';
+import { BoardList } from '../src/components/Board/Read/Page/Boards';
 
 const Home: NextPage = () => {
   const { data } = useSWR<IGetBoards>(`/api/user/all/boards`);

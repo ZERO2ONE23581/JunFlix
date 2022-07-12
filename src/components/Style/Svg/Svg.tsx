@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 
 interface ISvgProps {
   type: string;
-  size?: string;
+  size: string;
+  fill?: string | any;
 }
-export const Svg = ({ type, size }: ISvgProps) => {
+export const Svg = ({ type, size, fill }: ISvgProps) => {
   const XMLNS = 'http://www.w3.org/2000/svg';
   const [viewbox, setViewbox] = useState('0 0 0 0');
   const [path, setPath] = useState(
@@ -280,20 +281,21 @@ export const Svg = ({ type, size }: ISvgProps) => {
     }
   }, [setViewbox, setPath]);
   return (
-    <Cont className={type} size={size}>
-      <svg xmlns={XMLNS} viewBox={viewbox}>
-        <path d={path} />
-      </svg>
+    <Cont
+      xmlns={XMLNS}
+      viewBox={viewbox}
+      size={size}
+      fill={fill}
+      className={type}
+    >
+      <path d={path} />
     </Cont>
   );
 };
-const Cont = styled.div<{ size?: string }>`
-  padding: 0;
-  svg {
-    min-width: 1rem;
-    min-height: 1rem;
-    width: ${(p) => p.size && p.size};
-    height: ${(p) => p.size && p.size};
-    fill: ${(p) => p.theme.color.font};
-  }
+const Cont = styled.svg<{ size?: string; fill?: string }>`
+  min-width: 1rem;
+  min-height: 1rem;
+  width: ${(p) => (p.size ? p.size : '1rem')};
+  height: ${(p) => (p.size ? p.size : '1rem')};
+  fill: ${(p) => (p.fill ? p.fill : p.theme.color.font)};
 `;

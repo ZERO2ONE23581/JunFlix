@@ -84,7 +84,7 @@ export const Label = styled.label<{ isChange: boolean }>`
   position: absolute;
   transform: translate(5px, -50%);
   border: none;
-  padding: 0 10px;
+  padding: 5px 10px;
   text-align: center;
   border-radius: 5px;
   background-color: ${(p) => p.theme.color.bg};
@@ -93,21 +93,22 @@ export const Label = styled.label<{ isChange: boolean }>`
 export const InputLabel = styled(Label)<{ isChange: boolean }>`
   top: 50%;
   text-align: start;
-  top: ${(p) => p.isChange && 0};
-  font-size: ${(p) => p.isChange && '1rem'};
+  top: ${(p) => p.isChange && '-5px'};
+  left: ${(p) => p.isChange && '10px'};
+  font-size: ${(p) => p.isChange && '1.1rem'};
   text-align: ${(p) => p.isChange && 'center'};
   background-color: ${(p) => p.theme.color.bg};
 `;
 export const Input = styled.input<{ isDate?: boolean }>`
   width: 100%;
   border: none;
-  font-size: 1rem;
-  padding: 15px 20px;
-  border-radius: 5px;
-  border: ${(p) => p.theme.border};
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 3px;
   color: ${(p) => p.theme.color.font};
-  box-shadow: ${(p) => p.theme.boxShadow.input};
+  border: ${(p) => p.theme.border.thick};
   background-color: ${(p) => p.theme.color.bg};
+  box-shadow: ${(p) => p.theme.boxShadow.input};
   :disabled {
     background-color: inherit;
   }

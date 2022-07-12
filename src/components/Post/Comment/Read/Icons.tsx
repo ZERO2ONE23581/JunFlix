@@ -1,36 +1,63 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { Svg } from '../../../Style/Svg/Svg';
+import { IPostComment } from '../../../../types/comments';
+import { IGetPost, PostModel } from '../../../../types/post';
 
 interface IIsMyPostProps {
-  user_id: number;
-  board_id: number;
-  post_id: number;
+  post: PostModel;
 }
-export const PostIcons = ({ user_id, board_id, post_id }: IIsMyPostProps) => {
-  const { data } = useSWR(
-    `/api/user/${user_id}/board/${board_id}/post/${post_id}`
+export const PostIcons = ({ post }: IIsMyPostProps) => {
+  const { data } = useSWR<IGetPost>(
+    `/api/user/${post.UserID}/board/${post.BoardID}/post/${post.id}`
   );
-  const isLiked = data?.isLiked;
-  const isComment = data?.isComments;
+  const LikesCount = data?.post?._count.likes;
+  const CommentsCount = data?.post?._count.comments;
+  const isLiked = Boolean(data?.post.likes.length! > 0);
+  const isComment = Boolean(data?.post.comments.length! > 0);
   return (
     <Cont>
-      <ul>
-        <li>{isLiked ? <Svg type="likes" /> : <Svg type="dislikes" />}</li>
-        <li>
-          {isComment ? <Svg type="comment" /> : <Svg type="un-comment" />}
-        </li>
-      </ul>
+      <li>
+        {isLiked ? (
+          <>
+            <Svg size="2.3rem" type="solid-heart" />
+            <Count>{LikesCount}</Count>
+          </>
+        ) : (
+          <Svg size="2.3rem" type="unsolid-heart" />
+        )}
+      </li>
+      <li>
+        {isComment ? (
+          <>
+            <Svg size="2.3rem" type="solid-comment" />
+            <Count>{CommentsCount}</Count>
+          </>
+        ) : (
+          <Svg size="2.3rem" type="unsolid-comment" />
+        )}
+      </li>
     </Cont>
   );
 };
-const Cont = styled.article`
-  position: absolute;
-  top: 5%;
-  right: 5%;
-  ul {
-    gap: 0.8rem;
-    display: flex;
-    align-items: center;
+const Cont = styled.ul`
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  gap: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(p) => p.theme.color.bg};
+  li {
+    position: relative;
   }
+`;
+const Count = styled.span`
+  top: -5px;
+  right: -15px;
+  font-weight: 700;
+  position: absolute;
+  color: ${(p) => p.theme.color.logo};
 `;

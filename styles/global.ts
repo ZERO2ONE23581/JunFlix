@@ -8,26 +8,26 @@ export const Page = styled.section`
   height: 100%;
   min-width: 100vw;
   min-height: 100vh;
-  padding: 2% 10%;
-  padding-bottom: 10%;
+  padding: 0% 12%;
+  padding-bottom: 5%;
   font-size: 1.2rem;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
-export const FormCont = styled.article`
+export const Container = styled.article`
   border: none;
   padding: 30px 40px;
-  border-radius: 8px;
+  border-radius: 3px;
   color: ${(p) => p.theme.color.font};
   border: ${(p) => p.theme.border.thin};
   background-color: ${(p) => p.theme.color.bg};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
 `;
-export const BoardFormCont = styled(FormCont)`
+export const BoardContainer = styled(Container)`
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
-export const JoinCont = styled(FormCont)`
+export const JoinCont = styled(Container)`
   h2,
   h3 {
     opacity: 0.8;
@@ -137,7 +137,7 @@ export const DimBackground = styled.article<{ zIndex: number }>`
   background-color: rgba(0, 0, 0, 0.8);
 `;
 export const Grid = styled.article<{ size: number }>`
-  gap: 20px;
+  gap: 25px;
   display: grid;
   grid-template-columns: ${(p) => p.size && `repeat(${p.size}, 1fr)`};
 `;

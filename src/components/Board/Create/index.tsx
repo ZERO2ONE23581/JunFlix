@@ -1,13 +1,13 @@
 import { Answer } from './Answer';
 import styled from '@emotion/styled';
+import { BoardAvatar } from './Avatar';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
 import { useForm } from 'react-hook-form';
-import { BoardAvatar } from './Avatar';
 import { ErrorMsg } from '../../Style/ErrMsg';
 import { InputWrap } from '../../Style/Input';
 import { LoadingModal } from '../../LoadingModal';
-import { FormCont } from '../../../../styles/global';
+import { Container } from '../../../../styles/global';
 import { TextArea } from '../../Style/Input/TextArea';
 import { SelectWrap } from '../../Style/Input/SelectWrap';
 import useMutation from '../../../libs/client/useMutation';
@@ -49,11 +49,11 @@ export const CreateBoard = ({
     if (loading) return;
     //
     if (TitleLength > MaxTitle)
-      setError('title', {
+      return setError('title', {
         message: `제목의 길이는 ${MaxTitle}이하여야 합니다.`,
       });
     if (IntroLength > MaxIntro)
-      setError('intro', {
+      return setError('intro', {
         message: `소개글의 길이는 ${MaxIntro}이하여야 합니다.`,
       });
     //
@@ -80,6 +80,7 @@ export const CreateBoard = ({
   const [avatarLoading, setAvatarLoading] = useState(false);
   const Loading = avatarLoading ? avatarLoading : loading ? loading : null;
   const isValue = (type: string | any) => Boolean(getValues(type));
+
   useEffect(() => {
     if (avatar && avatar.length > 0) {
       const file = avatar[0];
@@ -93,15 +94,15 @@ export const CreateBoard = ({
     }
   }, [data, router, avatar]);
   //
-
-  //
   return (
     <>
-      {!Loading ? (
+      {!Loading && (
         <form onSubmit={handleSubmit(onValid)}>
           <Cont>
-            <h1>Create Board</h1>
-            <Flex>
+            <div className="flex">
+              <h1>Create Board</h1>
+            </div>
+            <Wrap>
               <InputWrap
                 id="title"
                 type="text"
@@ -115,83 +116,72 @@ export const CreateBoard = ({
               <SelectWrap
                 id="genre"
                 genre={watch('genre')}
-                register={register('genre', {
-                  required: '보드 장르를 선택해주세요.',
-                })}
+                register={register('genre')}
               />
               <BoardAvatar
                 register={register}
                 isPreivew={isPreivew}
                 setPreview={setPreview}
               />
-            </Flex>
-            <TextArea
-              {...register('intro', {
-                maxLength: {
-                  value: MaxIntro,
-                  message: `소개글은 ${MaxIntro}자 이내여야 합니다.`,
-                },
-              })}
+              <Btn type="submit" name="보드 만들기" CLASSNAME="create-board" />
+            </Wrap>
+
+            <Intro
+              {...register('intro')}
               rows={4}
               name="intro"
               placeholder="이 보드의 소개글을 작성해주세요."
             />
-            <div className="errors">
+
+            <>
               {data?.error && <ErrorMsg error={data.error} />}
               {errors?.title && <ErrorMsg error={errors.title.message} />}
               {errors?.genre && <ErrorMsg error={errors.genre.message} />}
               {errors?.intro && <ErrorMsg error={errors.intro.message} />}
               {errors?.avatar && <ErrorMsg error={errors.avatar.message} />}
-            </div>
-            <Btn type="submit" name="보드생성" />
+            </>
           </Cont>
         </form>
-      ) : (
-        <LoadingModal
-          text={{ kor: '보드 생성중...', eng: 'Creating Board...' }}
-        />
       )}
       {answer && (
         <Answer openModal={setAnswer} MaxTitle={MaxTitle} MaxIntro={MaxIntro} />
+      )}
+      {Loading && (
+        <LoadingModal
+          text={{ kor: '보드 생성중...', eng: 'Creating Board...' }}
+        />
       )}
     </>
   );
 };
 
-const Cont = styled(FormCont)`
-  margin: 0 auto;
-  max-width: 500px;
-  padding: 30px 40px;
-  border-radius: 8px;
+const Cont = styled(Container)`
   gap: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   h1 {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
   }
-  textarea {
-    border: ${(p) => p.theme.border.thick};
-    box-shadow: ${(p) => p.theme.boxShadow.input};
-    :focus {
-      outline: 2px solid ${(p) => p.theme.color.logo};
-    }
+  .flex {
+    display: flex;
+    justify-content: space-between;
   }
 `;
-const Flex = styled.div`
+const Intro = styled(TextArea)`
+  border: ${(p) => p.theme.border.thick};
+  box-shadow: ${(p) => p.theme.boxShadow.input};
+  :focus {
+    outline: 2px solid ${(p) => p.theme.color.logo};
+  }
+`;
+const Wrap = styled.div`
+  width: 70%;
   gap: 20px;
   display: flex;
   align-items: center;
-  input,
-  select {
-    border-radius: 3px;
-    border: ${(p) => p.theme.border.thick};
-  }
-  input {
-    padding: 12px;
-  }
-  select {
-    min-height: 45px;
-    min-width: 120px;
+  justify-content: center;
+  .create-board {
+    min-width: 100px;
   }
 `;

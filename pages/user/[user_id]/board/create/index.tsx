@@ -3,10 +3,10 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../../../styles/global';
 import { Title } from '../../../../../src/components/Layout/Title';
-import { IconBtn } from '../../../../../src/components/Style/Button/IconBtn';
 import { CreateBoard } from '../../../../../src/components/Board/Create';
+import { IconBtn } from '../../../../../src/components/Style/Button/IconBtn';
 
-const CreateBoardPage: NextPage = () => {
+const Create_Board: NextPage = () => {
   const [preview, setPreview] = useState('');
   const [answer, setAnswer] = useState(false);
   return (
@@ -22,6 +22,7 @@ const CreateBoardPage: NextPage = () => {
           />
         </Background>
         <IconBtn
+          size="3rem"
           type="button"
           svgType="question"
           onClick={() => setAnswer(true)}
@@ -30,23 +31,19 @@ const CreateBoardPage: NextPage = () => {
     </>
   );
 };
-export default CreateBoardPage;
+export default Create_Board;
 
 const Cont = styled(Page)`
-  padding: 0 10%;
+  padding-bottom: 0;
   .question {
-    right: 3%;
-    bottom: 10%;
-    position: absolute;
-    svg {
-      width: 40px;
-      height: 40px;
-    }
+    right: 6%;
+    bottom: 20%;
+    position: fixed;
   }
 `;
 const Background = styled.section<{ bg?: string }>`
   min-height: 100vh;
-  padding-top: 15%;
-  background-color: #2d3436;
-  background: ${(p) => p.bg && `url(${p.bg})   center / cover no-repeat`};
+  padding: 3% 12%;
+  background: url('/img/random/1.png ') center/cover no-repeat;
+  background: ${(p) => p.bg && `url(${p.bg}) center / cover no-repeat`};
 `;

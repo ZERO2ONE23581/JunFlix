@@ -4,9 +4,9 @@ import styled from '@emotion/styled';
 import { Page } from '../../../../styles/global';
 import { IGetBoards } from '../../../../src/types/board';
 import useUser from '../../../../src/libs/client/useUser';
-import { Title } from '../../../../src/components/Layout/Title';
+import { Title, TitleSign } from '../../../../src/components/Layout/Title';
 import { BoardList } from '../../../../src/components/Board/Read/Page/Boards';
-import { BoardsPgBtns } from '../../../../src/components/Board/Read/Page/Boards/Btns';
+import { PageBtns } from '../../../../src/components/Board/Read/Page/Boards/Btns';
 
 const MyBoardsPage: NextPage = () => {
   const { loggedInUser } = useUser();
@@ -15,19 +15,15 @@ const MyBoardsPage: NextPage = () => {
     <>
       <Title title={`${loggedInUser?.username}'s Boards`} />
       <Cont>
-        <h1>{loggedInUser?.username}님의 보드</h1>
+        <TitleSign type="보드" name={loggedInUser?.username!} />
         <BoardList boards={data?.boards!} />
       </Cont>
-      <BoardsPgBtns />
+      <PageBtns />
     </>
   );
 };
 export default MyBoardsPage;
 
 const Cont = styled(Page)`
-  h1 {
-    font-size: 1.6rem;
-    margin-left: 30px;
-    margin-bottom: 15px;
-  }
+  padding-top: 0;
 `;

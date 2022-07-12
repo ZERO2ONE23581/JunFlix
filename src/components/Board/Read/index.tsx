@@ -1,12 +1,13 @@
 import useSWR from 'swr';
-import { Info } from './Page/Board/Info';
-import { Profile } from './Page/Board/Info/Profile';
 import styled from '@emotion/styled';
 import { EditInfo } from '../Edit/Info';
+import { Info } from './Page/Board/Info';
 import { IBoard } from '../../../types/board';
 import { PostList } from '../../Post/Read/List';
 import { Dispatch, SetStateAction } from 'react';
 import { IGetAllPosts } from '../../../types/post';
+import { Profile } from './Page/Board/Info/Profile';
+import { Container } from '../../../../styles/global';
 
 interface IReadBoard extends IBoard {
   edit: boolean;
@@ -31,15 +32,10 @@ export const ReadBoard = ({ board, edit, setEdit }: IReadBoard) => {
     </>
   );
 };
-const Board = styled.article`
-  padding: 30px 100px;
-  border-radius: 5px;
-  margin-bottom: 20px;
+const Board = styled(Container)`
   gap: 30px;
   display: flex;
+  margin-bottom: 20px;
+  padding: 30px 100px;
   align-items: flex-start;
-  /* justify-content: center; */
-  color: ${(p) => p.theme.color.font};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background-color: ${(p) => p.theme.color.bg};
 `;
