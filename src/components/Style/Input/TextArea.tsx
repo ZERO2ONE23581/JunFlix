@@ -1,42 +1,66 @@
-import { IInputWrapProps } from '.';
 import { ErrorMsg } from '../ErrMsg';
 import styled from '@emotion/styled';
+import { Creator } from '../../../../Creator';
+import useUser from '../../../libs/client/useUser';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import { useState } from 'react';
 
+interface ITextAreaWrap {
+  id: string;
+  error?: string;
+  height?: number;
+  disabled?: boolean;
+  placeholder: string;
+  register: UseFormRegisterReturn;
+}
 export const TextAreaWrap = ({
   id,
+  error,
+  height,
   register,
   disabled,
-  inputErrMsg,
   placeholder,
-}: IInputWrapProps) => {
+}: ITextAreaWrap) => {
+  const { loggedInUser } = useUser();
+  const [isFocus, setIsFocus] = useState(false);
   return (
-    <Cont>
+    <Cont isFocus={isFocus}>
+      <Creator
+        size="2.5rem"
+        avatar={loggedInUser?.avatar!}
+        username={loggedInUser?.username!}
+      />
       <label htmlFor={id} />
       <TextArea
         {...register}
         id={id}
         name={id}
-        rows={4}
+        height={height!}
         disabled={disabled}
-        autoCapitalize="sentences"
         placeholder={placeholder}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
       />
-      {inputErrMsg && <ErrorMsg error={inputErrMsg} />}
+      {error && <ErrorMsg error={error} />}
     </Cont>
   );
 };
-const Cont = styled.article`
+const Cont = styled.article<{ isFocus: boolean }>`
+  width: 100%;
+  border-radius: 3px;
+  padding: 10px 20px;
   gap: 10px;
   display: flex;
-  align-items: center;
   flex-direction: column;
+  border: ${(p) => (p.isFocus ? '2px solid red' : p.theme.border.thick)};
   label {
     display: none;
   }
 `;
-export const TextArea = styled.textarea`
+export const TextArea = styled.textarea<{ height?: number }>`
   width: 100%;
-  padding: 10px;
+  max-height: 400px;
+  height: ${(p) => (p.height ? `${p.height}px` : '150px')};
   resize: none;
   border: none;
   outline: none;
@@ -48,13 +72,6 @@ export const TextArea = styled.textarea`
   ::placeholder {
     font-size: 1rem;
     font-style: italic;
-  }
-  :disabled {
-    background-color: inherit;
-  }
-  :focus {
-    border: none;
-    outline: none;
   }
   ::-webkit-scrollbar {
     display: none;

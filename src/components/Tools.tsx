@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { UseFormWatch } from 'react-hook-form';
-import { IBoardForm } from '../types/board';
+import { IPostForm } from '../types/post';
 
 export const CapFirstLetters = (word: string) => {
   return word?.replace(/(?:^|\s)\S/g, function (a) {
@@ -59,3 +59,7 @@ const DateCont = styled.div`
     color: ${(p) => p.theme.color.logo};
   }
 `;
+
+export const ComputeLength = ({ watch, type }: any) => {
+  return watch(type)?.toString().replace(/\s/gi, '')?.length;
+};

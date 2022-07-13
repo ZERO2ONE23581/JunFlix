@@ -53,12 +53,13 @@ export const Avatar = ({
             </>
           )}
           {!isImage && !avatar && !preview && (
-            <NoImageCont
+            <EmptyImg
               size={{ width: size.width, height: size.height }}
               disabled={disabled!}
             >
-              <Svg type="no-image" size="2rem" />
-            </NoImageCont>
+              {disabled && <Svg type="eye-slash" size="2rem" />}
+              {!disabled && <Svg type="landscape" size="2rem" />}
+            </EmptyImg>
           )}
           <input
             {...register}
@@ -85,25 +86,25 @@ const Cont = styled.div<{ isImage: boolean }>`
   }
 `;
 const Img = styled.img<{ size: { width: string; height: string } }>`
-  width: ${(p) => (p.size.width ? p.size.width : 'auto')};
-  height: ${(p) => (p.size.height ? p.size.height : 'auto')};
+  min-width: 600px;
+  min-height: 600px;
+  width: ${(p) => p.size.width && p.size.width};
+  height: ${(p) => p.size.height && p.size.height};
 `;
-const NoImageCont = styled.article<{
+const EmptyImg = styled.article<{
   size: { width: string; height: string };
   disabled: boolean;
 }>`
-  width: ${(p) => (p.size.width ? p.size.width : 'auto')};
-  height: ${(p) => (p.size.height ? p.size.height : 'auto')};
   display: flex;
   align-items: center;
   justify-content: center;
-  border: ${(p) => p.theme.border.thin};
+  min-width: 600px;
+  min-height: 600px;
+  width: ${(p) => p.size.width && p.size.width};
+  height: ${(p) => p.size.height && p.size.height};
   :hover {
     svg {
-      fill: ${(p) => !p.disabled && p.theme.color.logo};
-      :hover {
-        fill: ${(p) => p.theme.color.font};
-      }
+      fill: ${(p) => p.theme.color.logo};
     }
   }
 `;

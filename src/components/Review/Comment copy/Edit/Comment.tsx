@@ -1,36 +1,36 @@
 import {
   ICommentRes,
+  IPostComment,
   CommentWithUser,
   IEditCommentForm,
 } from '../../../../types/comments';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
-import { Author } from '../../../../../Creator';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ErrorMsg } from '../../../Style/ErrMsg';
-import { Svg } from '../../../Style/Svg/Svg';
-import { IReview } from '../../../../types/review';
-import { ReviewText } from '../../Read/Text';
+import { PostModel } from '../../../../types/post';
+import { CapFirstLetter } from '../../../Tools';
 import { IconBtn } from '../../../Style/Button/IconBtn';
 import { TextArea } from '../../../Style/Input/TextArea';
-import { CapFirstLetter, ReadDate } from '../../../Tools';
 import useMutation from '../../../../libs/client/useMutation';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Svg } from '../../../Style/Svg/Svg';
 
-interface IEditComments extends IReview {
+interface IEditComments extends IPostComment {
   editCmt: boolean;
+  post: PostModel;
   comment: CommentWithUser;
   setEditCmt: Dispatch<SetStateAction<boolean>>;
   setSelectId: Dispatch<SetStateAction<number>>;
 }
-export const EditReviewCmt = ({
-  review,
+export const PostComment = ({
+  post,
   comment,
   editCmt,
   setEditCmt,
   setSelectId,
 }: IEditComments) => {
   const [EditComment, { loading, data }] = useMutation<ICommentRes>(
-    `/api/user/${review?.UserID}/review/${review?.id}/comment/${comment?.id}/edit`
+    `/api/user/${post?.UserID}/board/${post?.BoardID}/post/${post?.id}/comment/${comment?.id}/edit`
   );
   const {
     watch,
@@ -65,10 +65,9 @@ export const EditReviewCmt = ({
   return (
     <form onSubmit={handleSubmit(onValid)}>
       <Cont disabled={editCmt}>
-        <Author AVATAR={comment?.user.avatar!} SIZE="3rem" />
-        <ReadDate CREATEDAT={review?.createdAt} isList />
+        <Author AVATAR={comment?.user.avatar!} SIZE="2em" />
         {editCmt && (
-          <ReviewText
+          <Text
             Content={comment?.content!}
             CreatedAt={comment?.createdAt}
             Username={comment?.user?.username!}
@@ -96,14 +95,9 @@ export const EditReviewCmt = ({
   );
 };
 const Cont = styled.article<{ disabled: boolean }>`
-  gap: 10px;
+  gap: 20px;
   display: flex;
-  align-items: center;
   justify-content: flex-start;
-  .READ-DATE {
-    opacity: 0.8;
-    min-width: 150px;
-  }
 `;
 const EditTextArea = styled(TextArea)<{ height: string }>`
   height: ${(p) => p.height && p.height};

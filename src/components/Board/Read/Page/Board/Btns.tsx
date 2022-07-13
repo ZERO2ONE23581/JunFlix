@@ -39,6 +39,7 @@ export const PageBtns = ({ edit, setPreview, setEdit }: IFiexdBtnWrap) => {
     <>
       <Cont>
         <IconBtn
+          size="2.5rem"
           type="button"
           svgType="compass"
           onClick={() => router.push(`/user/all/boards`)}
@@ -47,6 +48,7 @@ export const PageBtns = ({ edit, setPreview, setEdit }: IFiexdBtnWrap) => {
           <>
             {!edit && (
               <IconBtn
+                size="2.5rem"
                 type="button"
                 svgType="setting"
                 isClicked={setting}
@@ -55,6 +57,7 @@ export const PageBtns = ({ edit, setPreview, setEdit }: IFiexdBtnWrap) => {
             )}
             {edit && (
               <IconBtn
+                size="2.5rem"
                 type="button"
                 svgType="pen"
                 isClicked={edit}
@@ -65,6 +68,7 @@ export const PageBtns = ({ edit, setPreview, setEdit }: IFiexdBtnWrap) => {
           </>
         )}
         <IconBtn
+          size="2.5rem"
           type="button"
           svgType="question"
           onClick={() => setAnwser((p) => !p)}
@@ -103,28 +107,13 @@ export const PageBtns = ({ edit, setPreview, setEdit }: IFiexdBtnWrap) => {
 const Cont = styled.article`
   top: 20%;
   right: 5%;
-  z-index: 999;
+  z-index: 100;
   position: absolute;
   gap: 30px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  svg {
-    width: 40px;
-    height: 40px;
-    fill: ${(p) => p.theme.color.font};
-    :hover {
-      fill: ${(p) => p.theme.color.logo};
-    }
-  }
-  label {
-    svg {
-      width: 40px;
-      height: 40px;
-      fill: ${(p) => p.theme.color.font};
-    }
-  }
 `;
 const BtnWrap = styled(Modal)`
   z-index: 201;

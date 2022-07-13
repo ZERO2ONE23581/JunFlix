@@ -56,7 +56,7 @@ export const EditBackground = ({ setBoardPreview }: IEditAvatarProps) => {
       <form onSubmit={handleSubmit(onValid)}>
         <Cont isWatch={isWatch}>
           <label htmlFor="boardAvatar">
-            <Svg type="landscape" size="1rem" />
+            <Svg type="landscape" size="2.5rem" />
           </label>
           <input
             {...register('boardAvatar')}

@@ -37,8 +37,10 @@ export default BoardPage;
 
 const Cont = styled(Page)``;
 const AVATAR_PAGE = styled(AVATAR_BG)<{ preview: string }>`
-  height: 100vh;
+  min-width: 1200px;
+  min-height: 800px;
   padding: 3% 12%;
   background: ${(p) =>
     p.preview && `url(${p.preview}) center / cover no-repeat`};
+  border: 10px solid blueviolet;
 `;

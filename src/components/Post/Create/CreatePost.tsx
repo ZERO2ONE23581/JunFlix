@@ -1,18 +1,22 @@
+import { Top } from './Top';
 import styled from '@emotion/styled';
 import { Avatar } from '../../Avatar';
-import { TopLayer } from './TopLayer';
 import { Post } from '@prisma/client';
 import { useRouter } from 'next/router';
-import { PostInputs } from './PostInputs';
 import { useForm } from 'react-hook-form';
+import { Btn } from '../../Style/Button';
+import { ComputeLength } from '../../Tools';
+import { InputWrap } from '../../Style/Input';
+import { ErrorMsg } from '../../Style/ErrMsg';
 import { IPostForm } from '../../../types/post';
 import { SaveCreatePost } from './SaveCreatePost';
 import { CancelCreatePost } from '../Edit/Cancel';
+import { TextAreaWrap } from '../../Style/Input/TextArea';
 import useMutation from '../../../libs/client/useMutation';
 import { Modal, DimBackground } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-interface ICreatePostRes {
+export interface ICreatePostRes {
   post?: Post;
   ok: boolean;
   error?: string;
@@ -23,9 +27,9 @@ interface ICreatePostModalProps {
 export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
   const {
     watch,
+    register,
     setError,
     clearErrors,
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm<IPostForm>({ mode: 'onBlur' });
@@ -35,13 +39,50 @@ export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
     `/api/user/${user_id}/board/${board_id}/post/create`
   );
   //
-  const [next, setNext] = useState(false);
-  const [undoPost, setUndoPost] = useState(false);
-  const [saveCreate, setSaveCreate] = useState(false);
-  const [avatarLoading, setAvatarLoading] = useState(false);
   const avatar = watch('avatar');
   const [preview, setPreview] = useState('');
+  const [avatarLoading, setAvatarLoading] = useState(false);
   const Loading = avatarLoading ? avatarLoading : loading ? loading : null;
+  useEffect(() => {
+    if (avatar && avatar.length > 0) {
+      const file = avatar[0];
+      setPreview(URL.createObjectURL(file));
+    }
+  }, [avatar]);
+  //
+  const [maxTitle] = useState(24);
+  const [maxContent] = useState(700);
+  const [height, setHeight] = useState(150);
+  const [next, setNext] = useState(false);
+  const [save, setSave] = useState(false);
+  const [cancel, setCancel] = useState(false);
+  useEffect(() => {
+    if (watch('content')) {
+      setHeight(200 + ComputeLength({ watch: watch, type: 'content' }));
+    }
+  }, [watch('content'), ComputeLength, setHeight]);
+  //
+  const clickSave = () => {
+    if (ComputeLength({ watch: watch, type: 'title' }) === 0)
+      return setError('title', { message: '제목을 입력해주세요.' });
+    if (ComputeLength({ watch: watch, type: 'title' }) > maxTitle)
+      return setError('MaxTitle', {
+        message: `포스트 제목의 길이는 ${maxTitle}자 이하입니다.`,
+      });
+    if (ComputeLength({ watch: watch, type: 'content' }) > maxContent)
+      return setError('content', {
+        message: `포스트 길이는 ${maxContent}자 이하입니다.`,
+      });
+    setSave(true);
+  };
+  useEffect(() => {
+    if (ComputeLength({ watch: watch, type: 'title' }) !== 0)
+      clearErrors('title');
+    if (ComputeLength({ watch: watch, type: 'title' }) < maxTitle)
+      clearErrors('MaxTitle');
+    if (ComputeLength({ watch: watch, type: 'content' }) < maxContent)
+      clearErrors('content');
+  }, [ComputeLength, clearErrors, watch('title'), watch('content')]);
   //
   const onValid = async ({ avatar, title, content }: IPostForm) => {
     if (loading) return;
@@ -66,71 +107,116 @@ export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
   };
   //
   useEffect(() => {
-    if (avatar && avatar.length > 0) {
-      const file = avatar[0];
-      setPreview(URL.createObjectURL(file));
-    }
-    if (data?.error) alert(data.error);
     if (data?.ok) {
+      setSave(false);
       openCreatePost(false);
+      alert('새로운 포스트를 생성했습니다.');
     }
-  }, [avatar, data, openCreatePost]);
+  }, [data, openCreatePost, setSave]);
+  //
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
         <Cont isNext={next}>
-          <TopLayer
+          <Top
             next={next}
             setNext={setNext}
-            undoPost={undoPost}
-            setUndoPost={setUndoPost}
+            cancel={cancel}
+            setCancel={setCancel}
           />
-          <Wrap>
+          <div className="flex">
             <Avatar
               avatar=""
               disabled={next}
               preview={preview}
               register={register('avatar')}
-              size={{ width: '35vw', height: '64vh' }}
+              size={{ width: next ? '35vw' : '40vw', height: '80vh' }}
             />
             {next && (
-              <PostInputs
-                watch={watch}
-                preview={preview}
-                register={register}
-                setError={setError}
-                clearErrors={clearErrors}
-                setSaveCreate={setSaveCreate}
-                ERRORS_TITLE={errors.title}
-                ERRORS_CONTENT={errors.content}
-              />
+              <Info>
+                <InputWrap
+                  id="title"
+                  type="text"
+                  label="Post Title"
+                  isValue={Boolean(watch('title'))}
+                  placeholder="포스트 제목을 입력해 주세요."
+                  register={register('title', {
+                    required: '포스트 제목을 입력해 주세요.',
+                  })}
+                />
+                <TextAreaWrap
+                  id="content"
+                  height={height && height}
+                  register={register('content')}
+                  placeholder="포스트의 내용을 적어주세요."
+                />
+                {data?.error && <ErrorMsg error={data?.error} />}
+                {errors.title && <ErrorMsg error={errors.title.message} />}
+                {errors.MaxTitle && (
+                  <ErrorMsg error={errors.MaxTitle.message} />
+                )}
+                {errors.content && <ErrorMsg error={errors.content.message} />}
+                <Btn name="SAVE" type="button" onClick={clickSave} />
+              </Info>
             )}
-          </Wrap>
+          </div>
         </Cont>
-
-        {saveCreate && (
-          <SaveCreatePost loading={Loading} closeModal={setSaveCreate} />
+        {save && (
+          <SaveCreatePost data={data} loading={Loading} closeModal={setSave} />
         )}
+        <input
+          type="text"
+          name="MaxTitle"
+          disabled
+          style={{ display: 'none' }}
+        />
       </form>
-      <DimBackground zIndex={101} onClick={() => setUndoPost(true)} />
-      {undoPost && (
-        <CancelCreatePost closePost={openCreatePost} closeModal={setUndoPost} />
+      <DimBackground zIndex={101} onClick={() => setCancel(true)} />
+      {cancel && (
+        <CancelCreatePost closePost={openCreatePost} closeModal={setCancel} />
       )}
     </>
   );
 };
 const Cont = styled(Modal)<{ isNext: boolean }>`
-  min-width: 30vw;
-  width: ${(p) => p.isNext && '60vw'};
-  height: 70vh;
+  padding: 0;
   z-index: 102;
-  gap: 0;
+  border: none;
+  display: block;
+  min-width: 600px;
+  min-height: 700px;
+  border-radius: 5px;
+  .flex {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+`;
+const Info = styled.article`
+  width: 35vw;
+  height: 80vh;
+  min-width: 400px;
+  min-height: 600px;
+  padding: 20px;
+  gap: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: 0;
-`;
-const Wrap = styled.article`
-  display: flex;
-  align-items: center;
+  border-left: ${(p) => p.theme.border.thin};
+  .INPUT-WRAP {
+    max-width: 260px;
+    label {
+      display: none;
+    }
+    input {
+      border: none;
+      padding: 5px;
+      font-size: 1.3rem;
+      border-radius: 0;
+      border-bottom: 2px solid ${(p) => p.theme.color.font};
+      :focus {
+        outline: none;
+        border-bottom: 2px solid ${(p) => p.theme.color.logo};
+      }
+    }
+  }
 `;

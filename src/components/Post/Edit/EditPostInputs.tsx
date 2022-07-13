@@ -9,7 +9,7 @@ import { Answer } from './Answer';
 import styled from '@emotion/styled';
 import { Btn } from '../../Style/Button';
 import { Input } from '../../Style/Input';
-import { Author } from '../../../../Author';
+import { Author } from '../../../../Creator';
 import { ErrorMsg } from '../../Style/ErrMsg';
 import { IPostForm } from '../../../types/post';
 import useUser from '../../../libs/client/useUser';

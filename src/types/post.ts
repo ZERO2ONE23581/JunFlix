@@ -28,6 +28,7 @@ export interface ReviewModel extends Review {
 }
 export interface IPostForm {
   title: string;
+  MaxTitle: string;
   content?: string;
   createdAt?: Date;
   avatar?: FileList;

@@ -20,11 +20,7 @@ export const Container = styled.article`
   border-radius: 3px;
   color: ${(p) => p.theme.color.font};
   border: ${(p) => p.theme.border.thin};
-  background-color: ${(p) => p.theme.color.bg};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-`;
-export const BoardContainer = styled(Container)`
-  color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
 export const JoinCont = styled(Container)`
@@ -40,8 +36,6 @@ export const JoinCont = styled(Container)`
     font-size: 1.3rem;
   }
 `;
-export const FindCont = styled(JoinCont)``;
-
 export const Form = styled.form`
   gap: 20px;
   display: flex;
@@ -104,16 +98,16 @@ export const Modal = styled.article`
   .wrap {
     width: 100%;
     display: flex;
-    /* align-items: center; */
     flex-direction: column;
     justify-content: center;
   }
 `;
 export const AnswerModal = styled(Modal)`
-  padding: 40px;
   gap: 8px;
-  align-items: flex-start;
+  padding: 40px;
   line-height: 22px;
+  text-align: center;
+  align-items: flex-start;
   li {
     span {
       opacity: 0.8;

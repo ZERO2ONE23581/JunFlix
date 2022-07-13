@@ -1,108 +1,69 @@
 import { useState } from 'react';
 import { ErrorMsg } from '../ErrMsg';
 import styled from '@emotion/styled';
-import { UseFormRegisterReturn, UseWatchProps } from 'react-hook-form';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface IInputWrapProps {
   id: string;
-  label?: string;
-  max?: number | any;
-  min?: number | any;
   type?: string;
+  label?: string;
   watch?: string;
-  placeholder?: string;
-  children?: any;
+  error?: string;
   isValue?: boolean;
   isSelect?: boolean;
   disabled?: boolean;
-  inputErrMsg?: string;
+  placeholder?: string;
   register?: UseFormRegisterReturn;
 }
 export const InputWrap = ({
-  max,
-  min,
   id,
   type,
   label,
-  watch,
+  error,
   isValue,
   disabled,
   register,
-  inputErrMsg,
+  placeholder,
 }: IInputWrapProps) => {
   const [isFocus, setIsFocus] = useState(false);
-  const handleBlur = () => {
-    if (inputErrMsg) return;
-    if (watch) return;
-    setIsFocus(false);
-  };
-  const isLabelChange = Boolean(
-    isFocus || disabled || isValue || type === 'date'
-  );
   return (
-    <Cont>
-      <div className="wrap">
-        <InputLabel htmlFor={id} isChange={isLabelChange}>
-          {label}
-        </InputLabel>
-        <Input
-          {...register}
-          id={id}
-          name={id}
-          type={type}
-          maxLength={max}
-          minLength={min}
-          disabled={disabled}
-          onFocus={() => setIsFocus(true)}
-          onBlur={handleBlur}
-        />
-      </div>
-      {inputErrMsg && (
-        <div className="error">
-          <ErrorMsg error={inputErrMsg} />
-        </div>
-      )}
+    <Cont className="INPUT-WRAP" isFocus={isFocus || isValue!}>
+      <label htmlFor={id}>{label}</label>
+      <Input
+        {...register}
+        id={id}
+        name={id}
+        type={type}
+        disabled={disabled}
+        placeholder={placeholder}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
+      />
+      {error && <ErrorMsg error={error} />}
     </Cont>
   );
 };
-const Cont = styled.article`
+const Cont = styled.article<{ isFocus: boolean }>`
   width: 100%;
-  .wrap {
-    position: relative;
+  position: relative;
+  label {
+    left: 3%;
+    position: absolute;
+    transform: translateY(-50%);
+    top: ${(p) => (p.isFocus ? '-10%' : '50%')};
+    padding: 5px 10px;
+    display: inline-block;
+    border: none;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    background-color: ${(p) => p.theme.color.bg};
+    font-size: ${(p) => (p.isFocus ? '0.9rem' : '1rem')};
   }
-  .error {
-    margin-top: 20px;
-  }
-  input[type='date']::-webkit-calendar-picker-indicator {
-    background-color: white;
-  }
-`;
-export const Label = styled.label<{ isChange: boolean }>`
-  top: 0;
-  left: 5px;
-  z-index: 99;
-  position: absolute;
-  transform: translate(5px, -50%);
-  border: none;
-  padding: 5px 10px;
-  text-align: center;
-  border-radius: 5px;
-  background-color: ${(p) => p.theme.color.bg};
-  color: ${(p) => (p.isChange ? p.theme.color.logo : '#636e72')};
-`;
-export const InputLabel = styled(Label)<{ isChange: boolean }>`
-  top: 50%;
-  text-align: start;
-  top: ${(p) => p.isChange && '-5px'};
-  left: ${(p) => p.isChange && '10px'};
-  font-size: ${(p) => p.isChange && '1.1rem'};
-  text-align: ${(p) => p.isChange && 'center'};
-  background-color: ${(p) => p.theme.color.bg};
 `;
 export const Input = styled.input<{ isDate?: boolean }>`
   width: 100%;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 10px 20px;
   border-radius: 3px;
   color: ${(p) => p.theme.color.font};
@@ -114,6 +75,6 @@ export const Input = styled.input<{ isDate?: boolean }>`
   }
   &:focus {
     border: none;
-    outline: 2.5px solid ${(p) => p.theme.color.logo};
+    outline: 1px solid ${(p) => p.theme.color.logo};
   }
 `;

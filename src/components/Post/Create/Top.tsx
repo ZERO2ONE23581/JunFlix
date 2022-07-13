@@ -4,28 +4,25 @@ import { IconBtn } from '../../Style/Button/IconBtn';
 
 interface IBtnWrapProps {
   next: boolean;
+  cancel: boolean;
   setNext: Dispatch<SetStateAction<boolean>>;
-  undoPost: boolean;
-  setUndoPost: Dispatch<SetStateAction<boolean>>;
+  setCancel: Dispatch<SetStateAction<boolean>>;
 }
-export const TopLayer = ({
-  next,
-  setNext,
-  undoPost,
-  setUndoPost,
-}: IBtnWrapProps) => {
+export const Top = ({ next, setNext, cancel, setCancel }: IBtnWrapProps) => {
   return (
     <>
       {!next && (
         <Cont>
           <IconBtn
+            size="1.3rem"
             type="button"
-            isClicked={undoPost}
+            isClicked={cancel}
             svgType="left-arrow"
-            onClick={() => setUndoPost(true)}
+            onClick={() => setCancel(true)}
           />
           <h1>새 게시물 만들기</h1>
           <IconBtn
+            size="1.3rem"
             type="button"
             svgType="right-arrow"
             onClick={() => setNext(true)}
@@ -35,6 +32,7 @@ export const TopLayer = ({
       {next && (
         <Cont>
           <IconBtn
+            size="1.3rem"
             type="button"
             svgType="left-arrow"
             onClick={() => setNext(false)}
@@ -48,21 +46,14 @@ export const TopLayer = ({
 };
 const Cont = styled.div`
   width: 100%;
-  height: 6vh;
   display: flex;
+  padding: 10px 20px;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
-  border-bottom: ${(p) => p.theme.border.thin};
-  h1 {
-    font-size: 1.1rem;
-  }
+  color: ${(p) => p.theme.color.bg};
   svg {
-    width: 1.3em;
-    height: 1.3em;
+    fill: ${(p) => p.theme.color.bg};
   }
-  button {
-    padding: 5px;
-    font-size: 1rem;
-  }
+  background-color: ${(p) => p.theme.color.font};
+  border-bottom: ${(p) => p.theme.border.thin};
 `;

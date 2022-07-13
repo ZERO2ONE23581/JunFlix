@@ -99,9 +99,7 @@ export const CreateBoard = ({
       {!Loading && (
         <form onSubmit={handleSubmit(onValid)}>
           <Cont>
-            <div className="flex">
-              <h1>Create Board</h1>
-            </div>
+            <h1>Create Board</h1>
             <Wrap>
               <InputWrap
                 id="title"
@@ -125,14 +123,12 @@ export const CreateBoard = ({
               />
               <Btn type="submit" name="보드 만들기" CLASSNAME="create-board" />
             </Wrap>
-
             <Intro
               {...register('intro')}
               rows={4}
               name="intro"
               placeholder="이 보드의 소개글을 작성해주세요."
             />
-
             <>
               {data?.error && <ErrorMsg error={data.error} />}
               {errors?.title && <ErrorMsg error={errors.title.message} />}
@@ -148,6 +144,7 @@ export const CreateBoard = ({
       )}
       {Loading && (
         <LoadingModal
+          zIndex={99}
           text={{ kor: '보드 생성중...', eng: 'Creating Board...' }}
         />
       )}

@@ -63,7 +63,7 @@ export const CreatePostReply = ({
               name="content"
               placeholder="답글 달기..."
             />
-            {loading && <Svg type="loading" />}
+            {loading && <Svg type="loading" size="2rem" />}
             {!loading && <Btn name="Post" type="submit" />}
           </Flex>
         </Cont>

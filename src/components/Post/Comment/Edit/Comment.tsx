@@ -8,7 +8,7 @@ import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { PostText } from '../../Read/Text';
 import { Svg } from '../../../Style/Svg/Svg';
-import { Author } from '../../../../../Author';
+import { Author } from '../../../../../Creator';
 import { CapFirstLetter } from '../../../Tools';
 import { ErrorMsg } from '../../../Style/ErrMsg';
 import { PostModel } from '../../../../types/post';

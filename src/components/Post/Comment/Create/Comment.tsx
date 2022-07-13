@@ -49,7 +49,7 @@ export const CreatePostComment = ({ post }: IPostComment) => {
               name="content"
               placeholder="댓글 달기..."
             />
-            {loading && <Svg type="loading" />}
+            {loading && <Svg type="loading" size="2rem" />}
             {!loading && <Btn name="Post" type="submit" />}
           </Flex>
         </Cont>

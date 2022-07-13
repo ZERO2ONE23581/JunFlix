@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Author } from '../../../../Author';
+import { Author } from '../../../../Creator';
 import { IGetPost } from '../../../types/post';
 import { PostText } from './Text';
 

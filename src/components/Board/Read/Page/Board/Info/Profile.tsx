@@ -9,13 +9,7 @@ export const Profile = ({ board }: IBoard) => {
   const isMyBoard = Boolean(loggedInUser?.id === board?.UserID);
   return (
     <Cont>
-      {isMyBoard && (
-        <Svg
-          type="isOwner"
-          size="1.2rem"
-          fill={(p: any) => p.theme.color.green}
-        />
-      )}
+      {isMyBoard && <Svg type="isOwner" size="1.2rem" fill="#27ae60" />}
       <ProfileAvatar avatar={board?.user?.avatar} size={'7em'} />
       <span>@{board?.user?.username}</span>
     </Cont>
