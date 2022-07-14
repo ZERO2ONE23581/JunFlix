@@ -24,7 +24,7 @@ export const EditInfo = ({ board, setEdit }: IEditInfo) => {
   } = useForm<IBoardForm>({ mode: 'onSubmit' });
   useEffect(() => {
     if (board) {
-      if (board.title) setValue('title', board.title.toUpperCase());
+      if (board.title) setValue('title', board.title);
       if (board.genre) setValue('genre', board.genre);
       if (board.intro) setValue('intro', board.intro);
     }
@@ -38,6 +38,10 @@ export const EditInfo = ({ board, setEdit }: IEditInfo) => {
   const IntroLength = watch('intro')?.toString().replace(/\s/gi, '')?.length;
   const onValid = async ({ title, genre, intro }: IBoardForm) => {
     if (loading) return;
+    if (TitleLength === 0)
+      return setError('title', {
+        message: `제목을 입력해주세요.`,
+      });
     if (TitleLength > MaxTitle)
       return setError('title', {
         message: `제목의 길이는 ${MaxTitle}이하여야 합니다.`,
@@ -68,7 +72,8 @@ export const EditInfo = ({ board, setEdit }: IEditInfo) => {
             register={register('genre')}
           />
         </Title>
-        <TextArea rows={5} {...register('intro')} />
+        <TextArea rows={3} {...register('intro')} />
+        {data?.error && <ErrorMsg error={data?.error} />}
         {errors.title && <ErrorMsg error={errors.title.message} />}
         {errors.intro && <ErrorMsg error={errors.intro.message} />}
         <Btn type="submit" name="SAVE" />
@@ -77,7 +82,7 @@ export const EditInfo = ({ board, setEdit }: IEditInfo) => {
   );
 };
 const Cont = styled.article`
-  max-width: 800px;
+  z-index: 91;
   gap: 15px;
   display: flex;
   flex-direction: column;
@@ -85,13 +90,14 @@ const Cont = styled.article`
   textarea,
   .select-wrap {
     word-wrap: normal;
-    border: 1px solid ${(p) => p.theme.color.logo};
+    border: 1px dashed ${(p) => p.theme.color.logo};
+    :focus {
+      border: thick double ${(p) => p.theme.color.logo};
+    }
   }
   textarea {
-    font-size: 1.1rem;
-    :focus {
-      border: 2px solid ${(p) => p.theme.color.logo};
-    }
+    padding: 5px;
+    font-size: 1.15rem;
   }
 `;
 const Title = styled.div`
@@ -100,6 +106,7 @@ const Title = styled.div`
   align-items: center;
   h1 {
     input {
+      max-width: 300px;
       font-size: 2rem;
       padding: 5px 10px;
     }

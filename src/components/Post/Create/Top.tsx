@@ -38,7 +38,12 @@ export const Top = ({ next, setNext, cancel, setCancel }: IBtnWrapProps) => {
             onClick={() => setNext(false)}
           />
           <h1>새 게시물 만들기</h1>
-          <div />
+          <IconBtn
+            size="1.3rem"
+            type="button"
+            svgType="close"
+            onClick={() => setCancel(true)}
+          />
         </Cont>
       )}
     </>

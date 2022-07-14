@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { ReadPost } from './Post';
 import styled from '@emotion/styled';
-import { AVATAR_BG } from '../../Avatar';
-import { PostModel } from '../../../types/post';
-import { Grid } from '../../../../styles/global';
-import { PostIcons } from '../Comment/Read/Icons';
 import { Btn } from '../../Style/Button';
+import { PostModel } from '../../../types/post';
+import { PostIcons } from '../Comment/Read/Icons';
+import { AVATAR_BG, Grid } from '../../../../styles/global';
 
 interface IPostList {
   posts: PostModel[];
@@ -30,7 +29,6 @@ export const PostList = ({ posts }: IPostList) => {
   const noFold = Boolean(posts?.length < length);
   const unFold = Boolean(length !== posts?.length);
   const Fold = Boolean(length === posts?.length);
-  console.log(noFold);
   return (
     <>
       {isPost && (
@@ -81,7 +79,7 @@ export const PostList = ({ posts }: IPostList) => {
 };
 const Post = styled(AVATAR_BG)`
   min-width: 200px;
-  min-height: 400px;
+  min-height: 370px;
   position: relative;
   display: flex;
   align-items: center;
@@ -90,12 +88,12 @@ const Post = styled(AVATAR_BG)`
   border-radius: 5px;
 `;
 const PostFold = styled.div`
-  border: 2px solid blueviolet;
   margin-top: 20px;
   display: flex;
   align-content: center;
   justify-content: end;
   button {
     width: 80px;
+    border: 2px solid white;
   }
 `;

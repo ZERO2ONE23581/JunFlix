@@ -8,13 +8,13 @@ import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { PostText } from '../../Read/Text';
 import { Svg } from '../../../Style/Svg/Svg';
-import { Author } from '../../../../../Creator';
-import { CapFirstLetter } from '../../../Tools';
+import { Creator } from '../../../../../Creator';
 import { ErrorMsg } from '../../../Style/ErrMsg';
 import { PostModel } from '../../../../types/post';
 import { IconBtn } from '../../../Style/Button/IconBtn';
-import { TextArea } from '../../../Style/Input/TextArea';
+import { TextAreaWrap } from '../../../Style/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
+import { CapFirstLetter, ComputeLength } from '../../../Tools';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IEditComments extends IPostComment {
@@ -37,6 +37,7 @@ export const EditPostCmt = ({
   const {
     watch,
     register,
+    getValues,
     setValue,
     handleSubmit,
     formState: { errors },
@@ -45,17 +46,17 @@ export const EditPostCmt = ({
     if (loading) return;
     EditComment({ content });
   };
-  //
   useEffect(() => {
     if (comment?.content) setValue('content', CapFirstLetter(comment.content));
   }, [setValue, comment]);
-  const [height, setHeight] = useState('50px');
-
+  //
+  const minHeight = 50;
+  const [height, setHeight] = useState(minHeight);
   useEffect(() => {
-    const length = watch('content')?.length;
-    if (length! > 56) setHeight(`${length!}px`);
-  }, [watch('content'), setHeight]);
-
+    const length = ComputeLength({ watch: watch, type: 'content' });
+    if (length) setHeight(minHeight + length);
+  }, [watch('content'), setHeight, ComputeLength]);
+  //
   useEffect(() => {
     if (data?.ok) {
       alert('댓글을 수정했습니다.');
@@ -67,7 +68,7 @@ export const EditPostCmt = ({
   return (
     <form onSubmit={handleSubmit(onValid)}>
       <Cont disabled={editCmt}>
-        <Author AVATAR={comment?.user.avatar!} SIZE="2em" />
+        <Creator avatar={comment?.user.avatar!} size="2.2em" />
         {editCmt && (
           <PostText
             Content={comment?.content!}
@@ -77,17 +78,19 @@ export const EditPostCmt = ({
         )}
         {!editCmt && (
           <>
-            <EditTextArea
-              {...register('content', { required: '댓글을 입력해주세요.' })}
+            <TextAreaWrap
               id="content"
-              name="content"
               height={height}
+              minHeight={minHeight}
               disabled={editCmt}
               placeholder="Add a comment..."
+              register={register('content', {
+                required: '댓글을 입력해주세요.',
+              })}
             />
             <SubmitBtn>
-              {loading && <Svg type="loading" />}
-              {!loading && <IconBtn type="submit" svgType={'pen'} />}
+              {loading && <Svg size="2rem" type="loading" />}
+              {!loading && <IconBtn size="1rem" type="submit" svgType="save" />}
             </SubmitBtn>
           </>
         )}
@@ -99,17 +102,9 @@ export const EditPostCmt = ({
 const Cont = styled.article<{ disabled: boolean }>`
   gap: 20px;
   display: flex;
-  justify-content: flex-start;
-`;
-const EditTextArea = styled(TextArea)<{ height: string }>`
-  height: ${(p) => p.height && p.height};
-  max-height: 120px;
-  border: 1px dotted ${(p) => (!p.disabled ? p.theme.color.logo : 'none')};
-  :disabled {
-    cursor: default;
-  }
-  :focus {
-    border: 1px solid ${(p) => !p.disabled && p.theme.color.logo};
+  align-items: flex-start;
+  textarea {
+    max-height: 200px;
   }
 `;
 const SubmitBtn = styled.div`

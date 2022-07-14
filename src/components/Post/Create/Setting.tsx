@@ -33,47 +33,39 @@ export const Setting = ({ post, setReadPost }: ISettingBtnProps) => {
   };
   return (
     <>
-      <Cont>
-        <IconBtn
-          type="button"
-          svgType="ellipsis-v"
-          isClicked={onSetting}
-          onClick={() => setOnSetting((p) => !p)}
-        />
-        {onSetting && (
-          <BtnWrap>
-            {isMyPost && (
-              <>
-                <Btn
-                  type="button"
-                  name="포스트 수정"
-                  onClick={() => handleClick('edit')}
-                />
-                <Btn
-                  type="button"
-                  name="포스트 삭제"
-                  CLASSNAME="delete-post-btn"
-                  onClick={() => handleClick('delete')}
-                />
-              </>
-            )}
-            <Btn
-              type="button"
-              name="보드로 이동하기"
-              onClick={() => handleClick('board')}
-            />
-          </BtnWrap>
-        )}
-      </Cont>
-
-      {editPost && (
-        <EditPost
-          POSTID={post?.id!}
-          USERID={post?.UserID!}
-          BOARDID={post?.BoardID!}
-          setEditPost={setEditPost}
-        />
+      <IconBtn
+        size="1.3rem"
+        type="button"
+        svgType="ellipsis-v"
+        isClicked={onSetting}
+        onClick={() => setOnSetting((p) => !p)}
+      />
+      {onSetting && (
+        <BtnWrap>
+          {isMyPost && (
+            <>
+              <Btn
+                type="button"
+                name="포스트 수정"
+                onClick={() => handleClick('edit')}
+              />
+              <Btn
+                type="button"
+                name="포스트 삭제"
+                CLASSNAME="delete-post-btn"
+                onClick={() => handleClick('delete')}
+              />
+            </>
+          )}
+          <Btn
+            type="button"
+            name="보드로 이동하기"
+            onClick={() => handleClick('board')}
+          />
+        </BtnWrap>
       )}
+
+      {editPost && <EditPost post={post} setEditPost={setEditPost} />}
       {deletePost && (
         <DeletePost
           POSTID={post?.id!}
@@ -89,13 +81,7 @@ export const Setting = ({ post, setReadPost }: ISettingBtnProps) => {
     </>
   );
 };
-const Cont = styled.div`
-  svg {
-    width: 22px;
-    height: 22px;
-    fill: ${(p) => p.theme.color.font};
-  }
-`;
+const Cont = styled.div``;
 const BtnWrap = styled(Modal)`
   width: 40vw;
   gap: 0;

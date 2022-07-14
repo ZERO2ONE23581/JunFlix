@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import useUser from '../../../../../libs/client/useUser';
 import { IconBtn } from '../../../../Style/Button/IconBtn';
 
-export const PageBtns = () => {
+export const BtnWrap = () => {
   const router = useRouter();
   const [answer, setAnswer] = useState(false);
   const { isLoggedIn, loggedInUser } = useUser();
@@ -30,9 +30,9 @@ export const PageBtns = () => {
   );
 };
 const Cont = styled.article`
-  right: 3%;
-  bottom: 10%;
-  position: fixed;
+  right: -8%;
+  top: 20%;
+  position: absolute;
   gap: 20px;
   display: flex;
   flex-direction: column;

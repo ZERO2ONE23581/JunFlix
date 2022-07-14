@@ -24,6 +24,3 @@ export const MyBoardFollowers = () => {
     </>
   );
 };
-const Cont = styled.section`
-  border: 10px solid blueviolet;
-`;

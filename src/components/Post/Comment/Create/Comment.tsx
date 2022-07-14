@@ -9,8 +9,9 @@ import { useEffect, useState } from 'react';
 import { Btn } from '../../../Style/Button';
 import { Svg } from '../../../Style/Svg/Svg';
 import { ErrorMsg } from '../../../Style/ErrMsg';
-import { TextArea } from '../../../Style/Input/TextArea';
+import { TextArea, TextAreaWrap } from '../../../Style/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
+import { ComputeLength } from '../../../Tools';
 
 export const CreatePostComment = ({ post }: IPostComment) => {
   const [CreateComment, { loading, data }] = useMutation<ICommentRes>(
@@ -26,12 +27,13 @@ export const CreatePostComment = ({ post }: IPostComment) => {
     if (loading) return;
     return CreateComment({ content });
   };
-  const [height, setHeight] = useState(40);
+  const minHeight = 20;
+  const [height, setHeight] = useState(minHeight);
   useEffect(() => {
-    const content = watch('content');
-    setHeight(content?.length!);
-  }, [setHeight, watch('content')]);
-
+    const length = ComputeLength({ watch: watch, type: 'content' });
+    if (length) setHeight(minHeight + length);
+  }, [watch('content'), setHeight, ComputeLength]);
+  //
   useEffect(() => {
     if (data?.ok) {
       alert('새로운 댓글을 생성합니다.');
@@ -43,11 +45,14 @@ export const CreatePostComment = ({ post }: IPostComment) => {
         <Cont>
           <Flex height={height}>
             <Svg type="smile" size="1.6rem" />
-            <TextArea
-              {...register('content', { required: '댓글을 입력해주세요.' })}
+            <TextAreaWrap
               id="content"
-              name="content"
-              placeholder="댓글 달기..."
+              height={height}
+              minHeight={minHeight}
+              placeholder="Add a comment..."
+              register={register('content', {
+                required: '댓글을 입력해주세요.',
+              })}
             />
             {loading && <Svg type="loading" size="2rem" />}
             {!loading && <Btn name="Post" type="submit" />}
@@ -73,12 +78,12 @@ const Flex = styled.div<{ height: number }>`
   gap: 10px;
   display: flex;
   align-items: center;
-  textarea {
-    min-height: 40px;
-    max-height: 100px;
-    height: ${(p) => p.height && `${p.height}px`};
-    ::-webkit-scrollbar {
-      display: none;
+  .textarea-wrap {
+    border: none;
+    padding: 10px;
+    textarea {
+      padding: 0;
+      max-height: 80px;
     }
   }
 `;

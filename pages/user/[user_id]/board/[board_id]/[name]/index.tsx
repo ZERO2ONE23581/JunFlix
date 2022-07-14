@@ -3,12 +3,10 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Page } from '../../../../../../styles/global';
 import { IGetBoard } from '../../../../../../src/types/board';
-import { AVATAR_BG } from '../../../../../../src/components/Avatar';
+import { AVATAR_BG, Page } from '../../../../../../styles/global';
 import { Title } from '../../../../../../src/components/Layout/Title';
 import { ReadBoard } from '../../../../../../src/components/Board/Read';
-import { PageBtns } from '../../../../../../src/components/Board/Read/Page/Board/Btns';
 
 const BoardPage: NextPage = () => {
   const router = useRouter();
@@ -21,26 +19,29 @@ const BoardPage: NextPage = () => {
   return (
     <>
       <Title title={data?.board?.title!} />
-      <Cont>
-        <PageBtns setPreview={setPreview} edit={edit} setEdit={setEdit} />
-        <AVATAR_PAGE avatar={data?.board?.avatar!} preview={preview}>
+      <Page>
+        <Cont avatar={data?.board?.avatar!} preview={preview}>
           {data?.board && (
-            <ReadBoard board={data?.board} edit={edit} setEdit={setEdit} />
+            <ReadBoard
+              board={data?.board}
+              edit={edit}
+              setEdit={setEdit}
+              setPreview={setPreview}
+            />
           )}
           {!data?.board && <h1>NO BOARD FOUND..</h1>}
-        </AVATAR_PAGE>
-      </Cont>
+        </Cont>
+      </Page>
     </>
   );
 };
 export default BoardPage;
 
-const Cont = styled(Page)``;
-const AVATAR_PAGE = styled(AVATAR_BG)<{ preview: string }>`
+const Cont = styled(AVATAR_BG)<{ preview: string }>`
   min-width: 1200px;
   min-height: 800px;
   padding: 3% 12%;
+  background-color: ${(p) => p.theme.color.font};
   background: ${(p) =>
     p.preview && `url(${p.preview}) center / cover no-repeat`};
-  border: 10px solid blueviolet;
 `;

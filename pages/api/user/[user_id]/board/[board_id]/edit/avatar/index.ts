@@ -11,12 +11,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const isOwner = Boolean(user?.id === +user_id);
   if (!user) return res.json({ ok: false, error: 'login needed.' });
   if (!isQuery) return res.json({ ok: false, error: 'invalid url.' });
-  if (!avatar) return res.json({ ok: false, error: 'No input.' });
   if (!isOwner) return res.json({ ok: false, error: 'no rights to edit.' });
 
   const FoundBoard = await client.board.findUnique({
     where: { id: +board_id.toString() },
-    select: { id: true, avatar: true },
+    select: { id: true },
   });
   if (!FoundBoard) return res.json({ ok: false, error: 'NO BOARD FOUND!' });
 
@@ -24,6 +23,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     where: { id: FoundBoard.id },
     data: { avatar },
   });
-  return res.json({ ok: true });
+  return res.json({ ok: true, avatar });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

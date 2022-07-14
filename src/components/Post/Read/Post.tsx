@@ -5,7 +5,7 @@ import { PostContent } from './Content';
 import { Setting } from '../Create/Setting';
 import { IGetPost, IPost } from '../../../types/post';
 import { Dispatch, SetStateAction } from 'react';
-import { ReadPostCmtList } from '../Comment/Read/CmtList';
+import { CommentList } from '../Comment/Read/CmtList';
 import { PostLikesNCmts } from '../Comment/Read/LikesNCmts';
 import { CreatePostComment } from '../Comment/Create/Comment';
 import { Modal, DimBackground } from '../../../../styles/global';
@@ -26,7 +26,6 @@ export const ReadPost = ({
     `/api/user/${USERID}/board/${BOARDID}/post/${POSTID}`
   );
   const post = data?.post;
-  console.log(post);
   return (
     <>
       <Cont>
@@ -35,22 +34,22 @@ export const ReadPost = ({
           avatar={post?.avatar!}
           size={{ width: '45vw', height: '85vh' }}
         />
-        <PostInfo>
-          <Title>
-            <h1>{post?.title.toUpperCase()}</h1>
-            <Setting post={post!} setReadPost={setReadPost} />
-          </Title>
-          <Main>
+        <Info>
+          <div className="wrap">
+            <Title>
+              <h1>{post?.title.toUpperCase()}</h1>
+              <Setting post={post!} setReadPost={setReadPost} />
+            </Title>
             <Top>
               <PostContent post={post!} />
-              <ReadPostCmtList post={post!} />
+              <CommentList post={post!} />
             </Top>
-            <Bottom>
-              <PostLikesNCmts post={post!} />
-              <CreatePostComment post={post!} />
-            </Bottom>
-          </Main>
-        </PostInfo>
+          </div>
+          <Bottom>
+            <PostLikesNCmts post={post!} />
+            <CreatePostComment post={post!} />
+          </Bottom>
+        </Info>
       </Cont>
       <DimBackground zIndex={101} onClick={() => setReadPost(false)} />
     </>
@@ -58,7 +57,7 @@ export const ReadPost = ({
 };
 const Cont = styled(Modal)`
   padding: 0;
-  width: 75vw;
+  width: 80vw;
   height: 85vh;
   min-width: 900px;
   min-height: 500px;
@@ -66,7 +65,6 @@ const Cont = styled(Modal)`
   z-index: 102;
   gap: 0;
   flex-direction: row;
-  border: none;
   .thumnail-avatar {
     img {
       min-width: 500px;
@@ -74,46 +72,43 @@ const Cont = styled(Modal)`
     }
   }
 `;
-const PostInfo = styled.article`
-  width: 30vw;
-  min-width: 400px;
-  height: 100%;
+const Info = styled.article`
+  width: 35vw;
+  height: 85vh;
+  display: flex;
   overflow: hidden;
-  border-radius: 8px;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border.thick};
-  background-color: ${(p) => p.theme.color.bg};
+  min-width: 400px;
+  flex-direction: column;
+  justify-content: space-between;
+  .wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 const Title = styled.article`
-  height: 6vh;
+  padding: 7px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  border-bottom: ${(p) => p.theme.border.thin};
+  color: ${(p) => p.theme.color.bg};
+  background-color: ${(p) => p.theme.color.font};
+  svg {
+    fill: ${(p) => p.theme.color.bg};
+  }
   h1 {
     font-weight: 400;
     font-size: 1.7rem;
     line-height: 1.2em;
   }
 `;
-const Main = styled.div`
-  height: 79vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
 const Top = styled.article`
-  gap: 10px;
   display: flex;
-  flex-direction: column;
   overflow-y: auto;
+  flex-direction: column;
 `;
 const Bottom = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-top: ${(p) => p.theme.border.thin};
 `;

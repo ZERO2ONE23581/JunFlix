@@ -12,7 +12,7 @@ import { IGetCommentInfo, IPostComment } from '../../../../types/comments';
 interface ICommentInfo extends IPostComment {
   commentId: number;
 }
-export const ReadPostCmtInfo = ({ post, commentId }: ICommentInfo) => {
+export const CommentInfo = ({ post, commentId }: ICommentInfo) => {
   const { loggedInUser } = useUser();
   const { data } = useSWR<IGetCommentInfo>(
     `/api/user/${post?.UserID}/board/${post?.BoardID}/post/${post?.id}/comment/${commentId}`
@@ -27,6 +27,13 @@ export const ReadPostCmtInfo = ({ post, commentId }: ICommentInfo) => {
   return (
     <>
       <Cont>
+        <EditPostCmt
+          post={post!}
+          comment={Comment!}
+          editCmt={!editCmt}
+          setEditCmt={setEditCmt}
+          setSelectId={setSelectId}
+        />
         <BtnWrap
           selectId={selectId}
           commentId={Comment?.id!}
@@ -35,13 +42,6 @@ export const ReadPostCmtInfo = ({ post, commentId }: ICommentInfo) => {
           setEditCmt={setEditCmt}
           setReplyCmt={setReplyCmt}
           setDeleteCmt={setDeleteCmt}
-        />
-        <EditPostCmt
-          post={post!}
-          comment={Comment!}
-          editCmt={!editCmt}
-          setEditCmt={setEditCmt}
-          setSelectId={setSelectId}
         />
       </Cont>
       {isReply && (
@@ -65,10 +65,11 @@ export const ReadPostCmtInfo = ({ post, commentId }: ICommentInfo) => {
   );
 };
 const Cont = styled.article`
-  padding: 10px 20px;
+  position: relative;
+  padding: 20px 20px 10px;
   border: none;
   font-size: 0.9rem;
-  border-bottom: ${(p) => p.theme.border.thin};
+  /* border-bottom: ${(p) => p.theme.border.thin}; */
   .edit-comment-btns {
     gap: 10px;
     svg {

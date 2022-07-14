@@ -24,7 +24,7 @@ export const Info = ({ board }: IBoard) => {
   );
 };
 const Cont = styled.article`
-  max-width: 800px;
+  max-width: 700px;
   gap: 15px;
   display: flex;
   flex-direction: column;

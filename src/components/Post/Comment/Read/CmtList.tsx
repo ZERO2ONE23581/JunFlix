@@ -1,9 +1,9 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import { ReadPostCmtInfo } from './\bCmtInfo';
+import { CommentInfo } from './\bCmtInfo';
 import { IGetAllComments, IPostComment } from '../../../../types/comments';
 
-export const ReadPostCmtList = ({ post }: IPostComment) => {
+export const CommentList = ({ post }: IPostComment) => {
   const { data } = useSWR<IGetAllComments>(
     post &&
       `/api/user/${post?.UserID}/board/${post?.BoardID}/post/${post?.id}/comment`
@@ -13,17 +13,14 @@ export const ReadPostCmtList = ({ post }: IPostComment) => {
       {data?.allComments
         ?.filter((comment) => !comment.ReplyID)
         .map((comment) => (
-          <ReadPostCmtInfo
-            post={post!}
-            key={comment.id}
-            commentId={comment.id}
-          />
+          <CommentInfo post={post!} key={comment.id} commentId={comment.id} />
         ))}
     </Cont>
   );
 };
 const Cont = styled.article`
-  width: 100%;
+  margin-top: 10px;
+  gap: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;

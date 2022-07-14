@@ -36,6 +36,7 @@ export const Btn = ({
 };
 export const Button = styled.button<{ isClicked?: boolean }>`
   padding: 10px;
+  gap: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,5 +49,12 @@ export const Button = styled.button<{ isClicked?: boolean }>`
   &:hover {
     color: white;
     background-color: ${(p) => p.theme.color.logo};
+    svg {
+      fill: white;
+    }
+  }
+  svg {
+    fill: ${(p) => p.theme.color.bg};
+    padding-bottom: 3px;
   }
 `;

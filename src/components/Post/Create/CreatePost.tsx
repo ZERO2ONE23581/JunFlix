@@ -11,6 +11,7 @@ import { ErrorMsg } from '../../Style/ErrMsg';
 import { IPostForm } from '../../../types/post';
 import { SaveCreatePost } from './SaveCreatePost';
 import { CancelCreatePost } from '../Edit/Cancel';
+import useUser from '../../../libs/client/useUser';
 import { TextAreaWrap } from '../../Style/Input/TextArea';
 import useMutation from '../../../libs/client/useMutation';
 import { Modal, DimBackground } from '../../../../styles/global';
@@ -34,6 +35,7 @@ export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
     formState: { errors },
   } = useForm<IPostForm>({ mode: 'onBlur' });
   const router = useRouter();
+  const { loggedInUser } = useUser();
   const { user_id, board_id } = router.query;
   const [createPost, { data, loading }] = useMutation<ICreatePostRes>(
     `/api/user/${user_id}/board/${board_id}/post/create`
@@ -50,18 +52,21 @@ export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
     }
   }, [avatar]);
   //
+  const minHeight = 80;
+  const maxHeight = 300;
   const [maxTitle] = useState(24);
   const [maxContent] = useState(700);
-  const [height, setHeight] = useState(150);
+  const [height, setHeight] = useState(minHeight);
+  useEffect(() => {
+    const length = ComputeLength({ watch: watch, type: 'content' });
+    setHeight(minHeight + length * 0.3);
+    if (length) {
+    }
+  }, [watch('content'), ComputeLength, setHeight, minHeight]);
+  //
   const [next, setNext] = useState(false);
   const [save, setSave] = useState(false);
   const [cancel, setCancel] = useState(false);
-  useEffect(() => {
-    if (watch('content')) {
-      setHeight(200 + ComputeLength({ watch: watch, type: 'content' }));
-    }
-  }, [watch('content'), ComputeLength, setHeight]);
-  //
   const clickSave = () => {
     if (ComputeLength({ watch: watch, type: 'title' }) === 0)
       return setError('title', { message: '제목을 입력해주세요.' });
@@ -127,6 +132,7 @@ export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
           <div className="flex">
             <Avatar
               avatar=""
+              id="avatar"
               disabled={next}
               preview={preview}
               register={register('avatar')}
@@ -146,7 +152,10 @@ export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
                 />
                 <TextAreaWrap
                   id="content"
-                  height={height && height}
+                  user={loggedInUser}
+                  height={height}
+                  minHeight={minHeight}
+                  maxHeight={maxHeight}
                   register={register('content')}
                   placeholder="포스트의 내용을 적어주세요."
                 />

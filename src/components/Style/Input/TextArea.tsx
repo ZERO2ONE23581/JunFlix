@@ -1,42 +1,51 @@
 import { ErrorMsg } from '../ErrMsg';
 import styled from '@emotion/styled';
 import { Creator } from '../../../../Creator';
-import useUser from '../../../libs/client/useUser';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { useState } from 'react';
+import { User } from '@prisma/client';
 
 interface ITextAreaWrap {
   id: string;
   error?: string;
-  height?: number;
+  height: number;
+  minHeight: number;
+  maxHeight: number;
   disabled?: boolean;
   placeholder: string;
+  user?: User;
   register: UseFormRegisterReturn;
 }
 export const TextAreaWrap = ({
   id,
+  user,
   error,
   height,
+  minHeight,
+  maxHeight,
   register,
   disabled,
   placeholder,
 }: ITextAreaWrap) => {
-  const { loggedInUser } = useUser();
   const [isFocus, setIsFocus] = useState(false);
   return (
-    <Cont isFocus={isFocus}>
-      <Creator
-        size="2.5rem"
-        avatar={loggedInUser?.avatar!}
-        username={loggedInUser?.username!}
-      />
+    <Cont isFocus={isFocus} className="textarea-wrap">
+      {user && (
+        <Creator
+          size="2.5rem"
+          avatar={user.avatar!}
+          username={user.username!}
+        />
+      )}
       <label htmlFor={id} />
       <TextArea
         {...register}
         id={id}
         name={id}
-        height={height!}
         disabled={disabled}
+        height={height!}
+        minHeight={minHeight!}
+        maxHeight={maxHeight!}
         placeholder={placeholder}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
@@ -46,21 +55,23 @@ export const TextAreaWrap = ({
   );
 };
 const Cont = styled.article<{ isFocus: boolean }>`
-  width: 100%;
-  border-radius: 3px;
-  padding: 10px 20px;
   gap: 10px;
+  width: 100%;
   display: flex;
+  padding: 10px 20px;
+  border-radius: 3px;
   flex-direction: column;
   border: ${(p) => (p.isFocus ? '2px solid red' : p.theme.border.thick)};
   label {
     display: none;
   }
 `;
-export const TextArea = styled.textarea<{ height?: number }>`
+export const TextArea = styled.textarea<{
+  height?: number;
+  minHeight?: number;
+  maxHeight?: number;
+}>`
   width: 100%;
-  max-height: 400px;
-  height: ${(p) => (p.height ? `${p.height}px` : '150px')};
   resize: none;
   border: none;
   outline: none;
@@ -68,9 +79,10 @@ export const TextArea = styled.textarea<{ height?: number }>`
   box-shadow: none;
   border-radius: 4px;
   color: ${(p) => p.theme.color.font};
+  max-height: ${(p) => `${p.maxHeight}px`};
   background-color: ${(p) => p.theme.color.bg};
+  height: ${(p) => (p.height ? `${p.height}px` : p.minHeight)};
   ::placeholder {
-    font-size: 1rem;
     font-style: italic;
   }
   ::-webkit-scrollbar {

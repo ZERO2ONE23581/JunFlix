@@ -1,6 +1,4 @@
 import styled from '@emotion/styled';
-import { UseFormWatch } from 'react-hook-form';
-import { IPostForm } from '../types/post';
 
 export const CapFirstLetters = (word: string) => {
   return word?.replace(/(?:^|\s)\S/g, function (a) {

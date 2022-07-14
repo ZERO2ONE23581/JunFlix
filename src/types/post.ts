@@ -34,6 +34,7 @@ export interface IPostForm {
   avatar?: FileList;
 }
 export interface IEditPostForm extends IPostForm {
+  editAvatar?: FileList;
   createdAt?: Date;
 }
 export interface IGetAllPosts {

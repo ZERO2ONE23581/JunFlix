@@ -9,7 +9,7 @@ import { Answer } from './Answer';
 import styled from '@emotion/styled';
 import { Btn } from '../../Style/Button';
 import { Input } from '../../Style/Input';
-import { Author } from '../../../../Creator';
+import { Creator } from '../../../../Creator';
 import { ErrorMsg } from '../../Style/ErrMsg';
 import { IPostForm } from '../../../types/post';
 import useUser from '../../../libs/client/useUser';
@@ -85,9 +85,9 @@ export const EditPostInputs = ({
         {ERRORS_TITLE && <ErrorMsg error={ERRORS_TITLE.message} />}
 
         <Content isFocus={isFocus}>
-          <Author
-            CREATOR_AVATAR={loggedInUser?.avatar!}
-            CREATOR_USERNAME={loggedInUser?.username!}
+          <Creator
+            avatar={loggedInUser?.avatar!}
+            username={loggedInUser?.username!}
           />
           <label htmlFor="content" />
           <TextArea
@@ -113,18 +113,6 @@ export const EditPostInputs = ({
           CLASSNAME="create-post-btn"
         />
       </Info>
-      <IconBtn
-        type="button"
-        svgType="question"
-        onClick={() => setClickQuestion(true)}
-      />
-      {clickQuestion && (
-        <Answer
-          maxTitle={maxTitle}
-          maxCnt={maxContent}
-          openModal={setClickQuestion}
-        />
-      )}
     </>
   );
 };

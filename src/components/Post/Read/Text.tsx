@@ -38,51 +38,46 @@ export const PostText = ({ Content, Username, CreatedAt }: IText) => {
   };
   return (
     <>
-      <Cont className="TEXT">
-        <div>
-          <Name>@{Username?.toUpperCase()}</Name>
-          <span className="text-content">{CapFirstLetter(text)}</span>
-          {isLongLength && (
-            <span>
-              {fold && (
-                <More type="button" onClick={() => handleClick('unfold')}>
-                  더보기
-                </More>
-              )}
-              {!fold && (
-                <More type="button" onClick={() => handleClick('fold')}>
-                  접기
-                </More>
-              )}
-            </span>
-          )}
-        </div>
+      <Cont>
+        <span className="username">@{Username?.toUpperCase()}</span>
+        <span className="text-content">{CapFirstLetter(text)}</span>
+        {isLongLength && (
+          <span>
+            {fold && (
+              <More type="button" onClick={() => handleClick('unfold')}>
+                더보기
+              </More>
+            )}
+            {!fold && (
+              <More type="button" onClick={() => handleClick('fold')}>
+                접기
+              </More>
+            )}
+          </span>
+        )}
         <ReadDate CREATEDAT={CreatedAt} />
       </Cont>
     </>
   );
 };
 const Cont = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-size: 1rem;
-  div {
-    display: inline;
+  padding-top: 5px;
+  span {
+    line-height: 20px;
+    word-break: break-word;
+  }
+  .username {
+    font-weight: 400;
+    font-style: italic;
+    margin-right: 7px;
+  }
+  .READ-DATE {
+    display: inline-block;
+    margin-left: 5px;
     span {
-      line-height: 20px;
-      word-break: break-word;
+      font-size: 0.9em;
     }
   }
-  .created-at {
-    font-size: 0.9rem;
-  }
-`;
-const Name = styled.span`
-  font-weight: 400;
-  font-style: italic;
-  margin-right: 7px;
 `;
 const More = styled.button`
   border: none;

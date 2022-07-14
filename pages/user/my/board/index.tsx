@@ -6,7 +6,7 @@ import { IGetBoards } from '../../../../src/types/board';
 import useUser from '../../../../src/libs/client/useUser';
 import { Title, TitleSign } from '../../../../src/components/Layout/Title';
 import { BoardList } from '../../../../src/components/Board/Read/Page/Boards';
-import { PageBtns } from '../../../../src/components/Board/Read/Page/Boards/Btns';
+import { BtnWrap } from '../../../../src/components/Board/Read/Page/Boards/BtnWrap';
 
 const MyBoardsPage: NextPage = () => {
   const { loggedInUser } = useUser();
@@ -18,7 +18,7 @@ const MyBoardsPage: NextPage = () => {
         <TitleSign type="보드" name={loggedInUser?.username!} />
         <BoardList boards={data?.boards!} />
       </Cont>
-      <PageBtns />
+      <BtnWrap />
     </>
   );
 };

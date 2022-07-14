@@ -8,7 +8,7 @@ export const Page = styled.section`
   height: 100%;
   min-width: 100vw;
   min-height: 100vh;
-  padding: 0% 12%;
+  padding: 0% 10%;
   padding-bottom: 5%;
   font-size: 1.2rem;
   color: ${(p) => p.theme.color.font};
@@ -19,7 +19,7 @@ export const Container = styled.article`
   padding: 30px 40px;
   border-radius: 3px;
   color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border.thin};
+  /* border: ${(p) => p.theme.border.thin}; */
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
 `;
@@ -79,9 +79,9 @@ export const Modal = styled.article`
   padding: 30px;
   overflow: hidden;
   font-size: 1.2rem;
-  border-radius: 8px;
+  border: none;
+  border-radius: 5px;
   color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border.thin};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
   .btn-wrap {
@@ -133,6 +133,7 @@ export const DimBackground = styled.article<{ zIndex: number }>`
 export const Grid = styled.article<{ size: number }>`
   gap: 25px;
   display: grid;
+  position: relative;
   grid-template-columns: ${(p) => p.size && `repeat(${p.size}, 1fr)`};
 `;
 export const ListAvatar = styled.article<{ isAvatar?: boolean }>`
@@ -153,4 +154,22 @@ export const ListAvatarInsideBoard = styled(ListAvatar)`
   .thumnail-avatar {
     /* height: 400px; */
   }
+`;
+const variant = 'public';
+const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
+export const AVATAR_URL = (avatar: string) => `${base}/${avatar}/${variant}`;
+export const AVATAR_BG = styled.article<{ avatar: string }>`
+  overflow: hidden;
+  position: relative;
+  background-color: black;
+  border-right: ${(p) => !p.avatar && p.theme.border.thin};
+  border-bottom: ${(p) => !p.avatar && p.theme.border.thin};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background: ${(p) =>
+    p.avatar && `url(${AVATAR_URL(p.avatar)}) no-repeat center center `};
+  background-size: 100% 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  /* background-size: cover; */
 `;

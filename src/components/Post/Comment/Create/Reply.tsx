@@ -9,10 +9,11 @@ import { Btn } from '../../../Style/Button';
 import { Svg } from '../../../Style/Svg/Svg';
 import { ErrorMsg } from '../../../Style/ErrMsg';
 import useUser from '../../../../libs/client/useUser';
-import { TextArea } from '../../../Style/Input/TextArea';
+import { TextArea, TextAreaWrap } from '../../../Style/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
 import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { ComputeLength } from '../../../Tools';
 
 interface ICreatePostReply extends IPostComment {
   comment_id: number;
@@ -25,6 +26,7 @@ export const CreatePostReply = ({
   setSelectId,
   setReplyCmt,
 }: ICreatePostReply) => {
+  const { loggedInUser } = useUser();
   const [CreateReply, { loading, data }] = useMutation<ICommentRes>(
     `/api/user/${post?.UserID}/board/${post?.BoardID}/post/${post?.id}/comment/${comment_id}/create`
   );
@@ -38,11 +40,13 @@ export const CreatePostReply = ({
     if (loading) return;
     return CreateReply({ content });
   };
-  const [height, setHeight] = useState(40);
+  const minHeight = 20;
+  const [height, setHeight] = useState(minHeight);
   useEffect(() => {
-    const content = watch('content');
-    setHeight(content?.length!);
-  }, [setHeight, watch('content')]);
+    const length = ComputeLength({ watch: watch, type: 'content' });
+    if (length) setHeight(minHeight + length);
+  }, [watch('content'), setHeight, ComputeLength]);
+  //
   useEffect(() => {
     if (data?.ok) {
       setSelectId(0);
@@ -50,18 +54,20 @@ export const CreatePostReply = ({
       alert('새로운 댓글을 생성합니다.');
     }
   }, [data, setReplyCmt, setSelectId]);
-  const { loggedInUser } = useUser();
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
         <Cont>
           <Flex height={height}>
             <ProfileAvatar avatar={loggedInUser?.avatar} size="2.2rem" />
-            <TextArea
-              {...register('content', { required: '댓글을 입력해주세요.' })}
+            <TextAreaWrap
               id="content"
-              name="content"
+              height={height}
+              minHeight={minHeight}
               placeholder="답글 달기..."
+              register={register('content', {
+                required: '댓글을 입력해주세요.',
+              })}
             />
             {loading && <Svg type="loading" size="2rem" />}
             {!loading && <Btn name="Post" type="submit" />}
@@ -87,9 +93,14 @@ const Flex = styled.div<{ height: number }>`
   gap: 10px;
   display: flex;
   align-items: center;
-  textarea {
-    min-height: 40px;
-    max-height: 100px;
-    height: ${(p) => p.height && `${p.height}px`};
+  .textarea-wrap {
+    border: none;
+    padding: 10px;
+    border-radius: 0;
+    border: 2px double red;
+    textarea {
+      padding: 0;
+      max-height: 80px;
+    }
   }
 `;

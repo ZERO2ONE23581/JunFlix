@@ -1,10 +1,11 @@
 import { Svg } from '../Svg/Svg';
 import styled from '@emotion/styled';
 
-interface IIconBtnProps {
+interface IIconBtn {
   size: string;
   svgType: string;
-  disabled?: boolean;
+  fill?: string;
+  isDisable?: boolean;
   isClicked?: boolean;
   onClick?: () => void;
   type: 'button' | 'submit' | 'reset' | undefined;
@@ -12,32 +13,36 @@ interface IIconBtnProps {
 export const IconBtn = ({
   size,
   type,
+  fill,
   onClick,
   svgType,
-  disabled,
+  isDisable,
   isClicked,
-}: IIconBtnProps) => {
+}: IIconBtn) => {
   return (
-    <Cont
+    <Button
       type={type}
       onClick={onClick}
-      disabled={disabled}
+      disabled={isDisable}
       className={svgType}
       isClicked={isClicked}
     >
-      <Svg type={svgType} size={size!} />
-    </Cont>
+      <Svg type={svgType} size={size!} fill={fill} />
+    </Button>
   );
 };
-const Cont = styled.button<{ isClicked?: boolean }>`
+const Button = styled.button<{ isClicked?: boolean }>`
   padding: 0;
   border: none;
   outline: none;
   background: none;
+  :disabled {
+    svg {
+      opacity: 0.5;
+    }
+    pointer-events: none;
+  }
   svg {
     fill: ${(p) => p.isClicked && p.theme.color.logo};
-    :hover {
-      fill: ${(p) => p.theme.color.logo};
-    }
   }
 `;

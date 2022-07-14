@@ -33,30 +33,34 @@ export const BtnWrap = ({
     }
   };
   return (
-    <Cont className="edit-comment-btns">
+    <Cont>
       <IconBtn
-        svgType="reply"
+        size="1rem"
         type="button"
+        svgType="reply"
         disabled={selectId !== 0}
         onClick={() => handleClick(commentId, 'reply')}
       />
       <IconBtn
-        svgType="close"
+        size="1rem"
         type="button"
+        svgType="close"
         disabled={selectId === 0}
         onClick={() => handleClick(commentId, 'cancel')}
       />
       {isMyComment && (
         <>
           <IconBtn
+            size="1rem"
             svgType="pen"
             type="button"
             disabled={selectId !== 0}
             onClick={() => handleClick(commentId, 'edit')}
           />
           <IconBtn
-            svgType="trash"
+            size="1rem"
             type="button"
+            svgType="trash"
             disabled={selectId !== 0}
             onClick={() => handleClick(commentId, 'delete')}
           />
@@ -66,16 +70,14 @@ export const BtnWrap = ({
   );
 };
 const Cont = styled.article`
+  top: 0;
+  right: 20px;
+  position: absolute;
   gap: 10px;
   display: flex;
   align-items: center;
   justify-content: end;
   margin-bottom: 5px;
-  svg {
-    :hover {
-      fill: ${(p) => p.theme.color.logo};
-    }
-  }
   button {
     :disabled {
       cursor: default;

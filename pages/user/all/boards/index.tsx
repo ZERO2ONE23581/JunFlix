@@ -5,7 +5,7 @@ import { Page } from '../../../../styles/global';
 import { IGetBoards } from '../../../../src/types/board';
 import { Title, TitleSign } from '../../../../src/components/Layout/Title';
 import { BoardList } from '../../../../src/components/Board/Read/Page/Boards';
-import { PageBtns } from '../../../../src/components/Board/Read/Page/Boards/Btns';
+import { BtnWrap } from '../../../../src/components/Board/Read/Page/Boards/BtnWrap';
 
 const AllBoardsPage: NextPage = () => {
   const { data } = useSWR<IGetBoards>(`/api/user/all/boards`);
@@ -16,7 +16,6 @@ const AllBoardsPage: NextPage = () => {
         <TitleSign type="Boards" />
         <BoardList boards={data?.boards!} />
       </Cont>
-      <PageBtns />
     </>
   );
 };

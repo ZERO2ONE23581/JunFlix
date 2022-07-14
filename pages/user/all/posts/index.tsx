@@ -1,10 +1,10 @@
 import useSWR from 'swr';
+import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../../../styles/global';
 import { IGetAllPosts } from '../../../../src/types/post';
-import { Title, TitleSign } from '../../../../src/components/Layout/Title';
 import { PostList } from '../../../../src/components/Post/Read/List';
-import styled from '@emotion/styled';
+import { Title, TitleSign } from '../../../../src/components/Layout/Title';
 
 const AllPosts: NextPage = () => {
   const { data } = useSWR<IGetAllPosts>(`/api/user/all/posts`);
@@ -21,6 +21,5 @@ const AllPosts: NextPage = () => {
 export default AllPosts;
 
 const Cont = styled(Page)`
-  padding: 0 20%;
-  padding-bottom: 5%;
+  padding: 0 20% 5% 20%;
 `;

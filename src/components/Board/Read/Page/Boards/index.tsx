@@ -1,12 +1,12 @@
 import { ListInfo } from './Info';
+import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
 import { FollowBoard } from './Follow';
 import { useRouter } from 'next/router';
-import { AVATAR_BG } from '../../../../Avatar';
 import { Svg } from '../../../../Style/Svg/Svg';
-import { Grid } from '../../../../../../styles/global';
 import useUser from '../../../../../libs/client/useUser';
 import { IBoardListProps } from '../../../../../types/board';
+import { AVATAR_BG, Grid } from '../../../../../../styles/global';
 
 export const BoardList = ({ boards }: IBoardListProps) => {
   const router = useRouter();
@@ -16,7 +16,7 @@ export const BoardList = ({ boards }: IBoardListProps) => {
   return (
     <>
       {isBoard && (
-        <Grid size={4}>
+        <Cont size={4}>
           {boards?.map((board) => (
             <Board key={board.id} avatar={board.avatar!}>
               <Follow>
@@ -42,14 +42,18 @@ export const BoardList = ({ boards }: IBoardListProps) => {
               <ListInfo board={board!} />
             </Board>
           ))}
-        </Grid>
+          <BtnWrap />
+        </Cont>
       )}
       {!isBoard && <h1>NO BOARD FOUND.</h1>}
     </>
   );
 };
+const Cont = styled(Grid)`
+  position: relative;
+  min-width: 900px;
+`;
 const Board = styled(AVATAR_BG)`
-  min-width: 360px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
