@@ -3,10 +3,11 @@ import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
 import { FollowBoard } from './Follow';
 import { useRouter } from 'next/router';
+import { Genre } from '../Board/Info/Genre';
 import { Svg } from '../../../../Style/Svg/Svg';
 import useUser from '../../../../../libs/client/useUser';
 import { IBoardListProps } from '../../../../../types/board';
-import { AVATAR_BG, Grid } from '../../../../../../styles/global';
+import { AVATAR_BG, Grid, NoAvatar } from '../../../../../../styles/global';
 
 export const BoardList = ({ boards }: IBoardListProps) => {
   const router = useRouter();
@@ -16,7 +17,7 @@ export const BoardList = ({ boards }: IBoardListProps) => {
   return (
     <>
       {isBoard && (
-        <Cont size={4}>
+        <Grid size={4} className="board-list">
           {boards?.map((board) => (
             <Board key={board.id} avatar={board.avatar!}>
               <Follow>
@@ -31,36 +32,33 @@ export const BoardList = ({ boards }: IBoardListProps) => {
                     `/user/${board.UserID}/board/${board.id}/${board.title}`
                   )
                 }
-              />
+              >
+                {!board.avatar && (
+                  <NoAvatar>
+                    <Genre size="2rem" genre={board.genre} />
+                  </NoAvatar>
+                )}
+              </LinkBtn>
               {isMyBoard(board.UserID) && (
-                <Svg
-                  type="isOwner"
-                  size="1.6rem"
-                  fill={(p: any) => p.theme.color.green!}
-                />
+                <Svg type="isOwner" size="1.6rem" fill="#2ecc71" />
               )}
               <ListInfo board={board!} />
             </Board>
           ))}
           <BtnWrap />
-        </Cont>
+        </Grid>
       )}
       {!isBoard && <h1>NO BOARD FOUND.</h1>}
     </>
   );
 };
-const Cont = styled(Grid)`
-  position: relative;
-  min-width: 900px;
-`;
+
 const Board = styled(AVATAR_BG)`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 5px;
-  border-right: ${(p) => !p.avatar && p.theme.border.thin};
-  border-bottom: ${(p) => !p.avatar && p.theme.border.thin};
-  position: relative;
   .isOwner {
     top: 4%;
     left: 5%;
@@ -90,4 +88,9 @@ const LinkBtn = styled.button`
   height: 280px;
   border: none;
   background: none;
+  :hover {
+    svg {
+      fill: red;
+    }
+  }
 `;

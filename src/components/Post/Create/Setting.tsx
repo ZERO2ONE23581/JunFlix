@@ -66,14 +66,7 @@ export const Setting = ({ post, setReadPost }: ISettingBtnProps) => {
       )}
 
       {editPost && <EditPost post={post} setEditPost={setEditPost} />}
-      {deletePost && (
-        <DeletePost
-          POSTID={post?.id!}
-          USERID={post?.UserID!}
-          BOARDID={post?.BoardID!}
-          openModal={setDeletePost}
-        />
-      )}
+      {deletePost && <DeletePost post={post} openModal={setDeletePost} />}
 
       {onSetting && (
         <DimBackground zIndex={99} onClick={() => setOnSetting((p) => !p)} />

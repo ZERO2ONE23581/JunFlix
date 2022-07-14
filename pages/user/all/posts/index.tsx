@@ -11,15 +11,26 @@ const AllPosts: NextPage = () => {
   return (
     <>
       <Title title="모든 포스트" />
-      <Cont>
+      <AllPostsPg>
         <TitleSign type="Posts" />
         <PostList posts={data?.posts!} />
-      </Cont>
+      </AllPostsPg>
     </>
   );
 };
 export default AllPosts;
 
-const Cont = styled(Page)`
-  padding: 0 20% 5% 20%;
+export const AllPostsPg = styled(Page)`
+  padding: 0 22%;
+  padding-bottom: 5%;
+  .post-fold {
+    button {
+      color: ${(p) => p.theme.color.bg};
+      background-color: ${(p) => p.theme.color.font};
+      :hover {
+        color: white;
+        background-color: ${(p) => p.theme.color.logo};
+      }
+    }
+  }
 `;

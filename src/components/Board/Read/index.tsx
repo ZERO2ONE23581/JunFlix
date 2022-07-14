@@ -15,14 +15,14 @@ interface IReadBoard extends IBoard {
   setEdit: Dispatch<SetStateAction<boolean>>;
   setPreview: Dispatch<SetStateAction<string>>;
 }
-export const ReadBoard = ({ board, edit, setEdit, setPreview }: IReadBoard) => {
+export const Board = ({ board, edit, setEdit, setPreview }: IReadBoard) => {
   const isPosts = Boolean(board?.posts?.length! > 0);
-  const { data: post } = useSWR<IGetAllPosts>(
+  const { data } = useSWR<IGetAllPosts>(
     board && `/api/user/${board?.UserID}/board/${board?.id}/post`
   );
   return (
     <>
-      <Board>
+      <Cont>
         <Profile board={board} />
         {!edit && <Info board={board} />}
         {edit && (
@@ -31,14 +31,14 @@ export const ReadBoard = ({ board, edit, setEdit, setPreview }: IReadBoard) => {
           </>
         )}
         <BtnWrap setPreview={setPreview} edit={edit} setEdit={setEdit} />
-      </Board>
+      </Cont>
       {edit && <DimBackground zIndex={1} />}
-      {isPosts && <PostList posts={post?.posts!} />}
+      {isPosts && <PostList posts={data?.posts!} />}
       {!isPosts && <h1>no post found</h1>}
     </>
   );
 };
-const Board = styled(Container)`
+const Cont = styled(Container)`
   z-index: 2;
   position: relative;
   padding: 30px 100px;

@@ -5,7 +5,7 @@ import { Genre } from '../Board/Info/Genre';
 
 export const ListInfo = ({ board }: IBoard) => {
   return (
-    <Cont>
+    <Cont isAvatar={Boolean(board?.avatar)}>
       <Title>
         <span>{CapFirstLetters(board?.title!)}</span>
       </Title>
@@ -18,17 +18,18 @@ export const ListInfo = ({ board }: IBoard) => {
     </Cont>
   );
 };
-const Cont = styled.ul`
+const Cont = styled.ul<{ isAvatar: boolean }>`
   gap: 8px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: white;
   font-size: 1rem;
   font-style: italic;
   padding: 20px;
+  color: ${(p) => (!p.isAvatar ? p.theme.color.bg : 'white')};
   :hover {
     background-color: black;
+    background-color: ${(p) => p.theme.color.bg};
     color: ${(p) => p.theme.color.logo};
     svg {
       fill: ${(p) => p.theme.color.logo};

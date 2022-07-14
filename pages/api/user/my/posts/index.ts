@@ -12,7 +12,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     where: { UserID: user.id },
     include: {
       user: { select: { username: true } },
-      board: { select: { title: true } },
+      board: { select: { title: true, genre: true } },
     },
     orderBy: {
       id: 'desc',

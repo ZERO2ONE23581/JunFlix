@@ -6,6 +6,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { IconBtn } from '../../../../../Style/Button/IconBtn';
 import { EditBackground } from '../../../../Edit/Background';
 import { DimBackground, Modal } from '../../../../../../../styles/global';
+import { CreatePost } from '../../../../../Post/Create/CreatePost';
 
 interface ISetting {
   edit: boolean;
@@ -31,9 +32,22 @@ export const SettingWrap = ({
     if (type === 'delete-board') return setDeleteBoard(true);
   };
   const [cancel, setCancel] = useState(false);
+  const [createPost, setCreatePost] = useState(false);
   const [deleteBoard, setDeleteBoard] = useState(false);
   return (
     <>
+      <IconBtn
+        size="2.2rem"
+        type="button"
+        svgType="add"
+        isDisable={edit || editBg}
+        onClick={() => {
+          setSetting(false);
+          setCreatePost(true);
+        }}
+      />
+      {createPost && <CreatePost openCreatePost={setCreatePost} />}
+
       {!edit && !editBg && (
         <IconBtn
           size="2.2rem"
@@ -42,20 +56,6 @@ export const SettingWrap = ({
           isClicked={edit}
           onClick={() => setSetting((p) => !p)}
         />
-      )}
-      <IconBtn
-        size="2.2rem"
-        type="button"
-        svgType="landscape"
-        isDisable={edit}
-        isClicked={editBg}
-        onClick={() => {
-          setEdit(false);
-          setEditBg((p) => !p);
-        }}
-      />
-      {editBg && (
-        <EditBackground setPreview={setPreview} setEditBg={setEditBg} />
       )}
       {setting && (
         <>
@@ -74,6 +74,7 @@ export const SettingWrap = ({
           <DimBackground zIndex={100} onClick={() => setSetting(false)} />
         </>
       )}
+      {deleteBoard && <DeleteBoard setDeleteBoard={setDeleteBoard} />}
       {edit && (
         <>
           <IconBtn
@@ -85,8 +86,21 @@ export const SettingWrap = ({
           />
         </>
       )}
-      {deleteBoard && <DeleteBoard openModal={setDeleteBoard} />}
       {cancel && <CancelEditBoard setEdit={setEdit} setCancel={setCancel} />}
+      <IconBtn
+        size="2.2rem"
+        type="button"
+        svgType="landscape"
+        isDisable={edit}
+        isClicked={editBg}
+        onClick={() => {
+          setEdit(false);
+          setEditBg((p) => !p);
+        }}
+      />
+      {editBg && (
+        <EditBackground setPreview={setPreview} setEditBg={setEditBg} />
+      )}
     </>
   );
 };

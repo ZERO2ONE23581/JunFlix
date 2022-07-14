@@ -1,3 +1,4 @@
+import { ThemeContext } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const LayoutPage = styled.section`
@@ -5,10 +6,11 @@ export const LayoutPage = styled.section`
   padding: 1% 12%;
 `;
 export const Page = styled.section`
+  position: relative;
   height: 100%;
   min-width: 100vw;
   min-height: 100vh;
-  padding: 0% 10%;
+  padding: 0 15%;
   padding-bottom: 5%;
   font-size: 1.2rem;
   color: ${(p) => p.theme.color.font};
@@ -19,7 +21,6 @@ export const Container = styled.article`
   padding: 30px 40px;
   border-radius: 3px;
   color: ${(p) => p.theme.color.font};
-  /* border: ${(p) => p.theme.border.thin}; */
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
 `;
@@ -105,7 +106,7 @@ export const Modal = styled.article`
 export const AnswerModal = styled(Modal)`
   gap: 8px;
   padding: 40px;
-  line-height: 22px;
+  line-height: 25px;
   text-align: center;
   align-items: flex-start;
   li {
@@ -136,40 +137,41 @@ export const Grid = styled.article<{ size: number }>`
   position: relative;
   grid-template-columns: ${(p) => p.size && `repeat(${p.size}, 1fr)`};
 `;
-export const ListAvatar = styled.article<{ isAvatar?: boolean }>`
-  cursor: pointer;
-  overflow: hidden;
-  border-radius: 3px;
-  position: relative;
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  border-right: ${(p) => !p.isAvatar && p.theme.border};
-  border-bottom: ${(p) => !p.isAvatar && p.theme.border};
-  .thumnail-avatar {
-    height: 300px;
-  }
-`;
-
-export const ListAvatarInsideBoard = styled(ListAvatar)`
-  border-radius: 5px;
-  .thumnail-avatar {
-    /* height: 400px; */
-  }
-`;
 const variant = 'public';
 const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
 export const AVATAR_URL = (avatar: string) => `${base}/${avatar}/${variant}`;
+
 export const AVATAR_BG = styled.article<{ avatar: string }>`
-  overflow: hidden;
-  position: relative;
-  background-color: black;
-  border-right: ${(p) => !p.avatar && p.theme.border.thin};
-  border-bottom: ${(p) => !p.avatar && p.theme.border.thin};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
   background: ${(p) =>
     p.avatar && `url(${AVATAR_URL(p.avatar)}) no-repeat center center `};
-  background-size: 100% 100%;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
+  min-width: 300px;
+  min-height: 440px;
+  border: none;
+  opacity: 0.9;
+  overflow: hidden;
+  position: relative;
   -o-background-size: cover;
-  /* background-size: cover; */
+  background-size: 100% 100%;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background-color: ${(p) => p.theme.color.font};
+  .post-list {
+    .POST {
+      background-color: ${(p) => p.theme.color.bg};
+      svg {
+        fill: ${(p) => p.theme.color.font};
+      }
+    }
+  }
+`;
+export const NoAvatar = styled.div`
+  svg {
+    top: 50%;
+    left: 50%;
+    opacity: 0.9;
+    position: absolute;
+    fill: ${(p) => p.theme.color.bg};
+    transform: translate(-50%, -50%);
+  }
 `;

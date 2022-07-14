@@ -14,7 +14,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       UserID: true,
       BoardID: true,
       user: { select: { username: true } },
-      board: { select: { title: true } },
+      board: { select: { title: true, genre: true } },
     },
     orderBy: {
       id: 'desc',

@@ -4,7 +4,8 @@ import styled from '@emotion/styled';
 import { Btn } from '../../Style/Button';
 import { PostModel } from '../../../types/post';
 import { PostIcons } from '../Comment/Read/Icons';
-import { AVATAR_BG, Grid } from '../../../../styles/global';
+import { Genre } from '../../Board/Read/Page/Board/Info/Genre';
+import { AVATAR_BG, Grid, NoAvatar } from '../../../../styles/global';
 
 interface IPostList {
   posts: PostModel[];
@@ -29,25 +30,32 @@ export const PostList = ({ posts }: IPostList) => {
   const noFold = Boolean(posts?.length < length);
   const unFold = Boolean(length !== posts?.length);
   const Fold = Boolean(length === posts?.length);
+
   return (
     <>
       {isPost && (
-        <Grid className="post-grid" size={3}>
+        <Grid className="post-list" size={3}>
           {posts?.slice(0, length).map((post) => (
             <Post
+              className="POST"
               key={post?.id}
               avatar={post?.avatar!}
               onClick={() => setReadPost(true)}
               onMouseOver={() => onMouse('over', post)}
               onMouseLeave={() => onMouse('leave', post)}
             >
+              {!post.avatar && (
+                <NoAvatar>
+                  <Genre size="2rem" genre={post.board.genre} />
+                </NoAvatar>
+              )}
               {postId === post.id && !close && <PostIcons post={post} />}
             </Post>
           ))}
         </Grid>
       )}
       {!noFold && (
-        <PostFold>
+        <PostFold className="post-fold">
           {unFold && (
             <Btn
               type="button"
@@ -78,8 +86,6 @@ export const PostList = ({ posts }: IPostList) => {
   );
 };
 const Post = styled(AVATAR_BG)`
-  min-width: 200px;
-  min-height: 370px;
   position: relative;
   display: flex;
   align-items: center;
@@ -94,6 +100,7 @@ const PostFold = styled.div`
   justify-content: end;
   button {
     width: 80px;
-    border: 2px solid white;
+    color: ${(p) => p.theme.color.font};
+    background-color: ${(p) => p.theme.color.bg};
   }
 `;
