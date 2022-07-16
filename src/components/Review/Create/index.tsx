@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
 import { useForm } from 'react-hook-form';
 import { CreatePreivew } from './Preview';
+import { ComputeLength } from '../../Tools';
 import { InputWrap } from '../../Style/Input';
 import { ErrorMsg } from '../../Style/ErrMsg';
 import { TextAreaHeight } from './TextAreaHeight';

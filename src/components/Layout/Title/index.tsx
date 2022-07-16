@@ -20,11 +20,14 @@ export const Title = ({ title }: ITitleProps) => {
 interface ITitleSign {
   name?: string;
   type: string;
+  svg?: string;
+  svgSize?: string;
+  width: string;
 }
-export const TitleSign = ({ name, type }: ITitleSign) => {
+export const TitleSign = ({ name, type, svg, svgSize, width }: ITitleSign) => {
   return (
     <>
-      <Cont>
+      <Cont width={width}>
         <div className="flex">
           <Svg type="ellipsis-v" fill="#e50914" size="1.6rem" />
           <Svg type="ellipsis-v" fill="#e50914" size="1.6rem" />
@@ -35,16 +38,21 @@ export const TitleSign = ({ name, type }: ITitleSign) => {
               {name}님의 {type}
             </>
           )}
-          {!name && <>All {type}</>}
+          {!name && (
+            <>
+              {type !== 'Movie Reviews' && <span>All</span>} {type}
+            </>
+          )}
+          <Svg type={svg!} size={svgSize!} />
         </h1>
       </Cont>
     </>
   );
 };
-const Cont = styled.article`
-  max-width: 250px;
+const Cont = styled.article<{ width: string }>`
   margin-left: 30px;
   margin-bottom: 15px;
+  max-width: ${(p) => p.width && p.width};
   .flex {
     display: flex;
     justify-content: space-between;
@@ -55,5 +63,13 @@ const Cont = styled.article`
     text-align: center;
     border-radius: 5px;
     border: 4px solid ${(p) => p.theme.color.logo};
+    position: relative;
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      pointer-events: none;
+    }
   }
 `;

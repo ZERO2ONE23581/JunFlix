@@ -22,7 +22,7 @@ interface IEditComments extends IReview {
   setEditCmt: Dispatch<SetStateAction<boolean>>;
   setSelectId: Dispatch<SetStateAction<number>>;
 }
-export const EditReviewCmt = ({
+export const EditComment = ({
   review,
   comment,
   editCmt,

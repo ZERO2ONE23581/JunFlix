@@ -1,12 +1,11 @@
 import useSWR from 'swr';
-import { Info } from './Info';
 import styled from '@emotion/styled';
+import { TitleWrap } from './TitleWrap';
 import { useRouter } from 'next/router';
+import { CommentWrap } from './List/Comment';
+import { Icons } from '../Comment/Read/Icons';
 import { IGetReview } from '../../../types/review';
 import { ThumnailAvatar } from '../../Avatar/Thumnail';
-import { IconWraps } from '../Comment/Read/IconWraps';
-import { CreateReviewComment } from '../Comment/Create/Comment';
-import { ReadReviewCommentList } from '../Comment/Read/CmtList';
 
 export const ReadReview = () => {
   const router = useRouter();
@@ -16,39 +15,58 @@ export const ReadReview = () => {
   );
   return (
     <>
-      <Cont>
-        <Info review={data?.review!} />
-        <ThumnailAvatar url={data?.review?.avatar} />
-        <Wrap>
-          <Content>{data?.review?.content}</Content>
-          <IconWraps review={data?.review!} />
-          <CreateReviewComment review={data?.review!} />
-          <ReadReviewCommentList review={data?.review!} />
-        </Wrap>
-      </Cont>
+      {data && (
+        <Cont>
+          <TitleWrap review={data?.review!} />
+          {data?.review?.avatar && (
+            <ThumnailAvatar url={data?.review?.avatar} />
+          )}
+          <Content className="content-wrap">
+            <p>{data?.review?.content}</p>
+          </Content>
+          <Icons review={data?.review!} />
+          <CommentWrap review={data?.review!} />
+        </Cont>
+      )}
+      {!data && <h1>No data found..</h1>}
     </>
   );
 };
 const Cont = styled.article`
   position: relative;
-  min-width: 1000px;
   .thumnail-avatar {
     z-index: 1;
-    opacity: 0.9;
+    opacity: 0.8;
     height: 60vh;
+    margin-top: 40px;
+  }
+  .title-wrap,
+  .comment-wrap {
+    padding: 0% 22%;
+  }
+  .content-wrap {
+    padding: 5% 22%;
+  }
+  .icons-wrap {
+    padding: 15px 24%;
   }
 `;
-const Content = styled.p`
-  font-size: 1.6rem;
-  font-weight: 300;
-  line-height: 30px;
+const Content = styled.div`
+  min-height: 55vh;
+  p {
+    min-width: 750px;
+    font-weight: 300;
+    font-size: 1.6rem;
+    line-height: 30px;
+  }
 `;
 const Wrap = styled.article`
-  padding: 2% 20%;
+  min-height: 50vh;
   gap: 30px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   border: none;
   overflow-wrap: break-word;
-  border: 2px solid red;
+  border: 1px solid blue;
 `;

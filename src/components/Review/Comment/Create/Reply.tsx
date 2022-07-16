@@ -17,7 +17,7 @@ interface ICreateReviewReply extends IReview {
   setSelectId: Dispatch<SetStateAction<number>>;
   setReplyCmt: Dispatch<SetStateAction<boolean>>;
 }
-export const CreateReviewReply = ({
+export const CreateReply = ({
   review,
   comment_id,
   setSelectId,
@@ -57,7 +57,7 @@ export const CreateReviewReply = ({
       <form onSubmit={handleSubmit(onValid)}>
         <Cont>
           <Flex height={height}>
-            <ProfileAvatar avatar={loggedInUser?.avatar} size="2.2rem" />
+            <ProfileAvatar avatar={loggedInUser?.avatar} size="3rem" />
             <TextArea
               {...register('content', { required: '댓글을 입력해주세요.' })}
               id="content"
@@ -76,7 +76,6 @@ export const CreateReviewReply = ({
 };
 const Cont = styled.div`
   padding: 12px 20px;
-  border-top: ${(p) => p.theme.border.thin};
   button {
     width: 10%;
     height: 100%;
@@ -85,9 +84,9 @@ const Cont = styled.div`
   }
 `;
 const Flex = styled.div<{ height: number }>`
-  gap: 10px;
+  gap: 20px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   textarea {
     min-height: 40px;
     max-height: 100px;

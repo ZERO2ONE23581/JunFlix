@@ -6,7 +6,7 @@ interface IStars {
 }
 export const Stars = ({ score }: IStars) => {
   return (
-    <Cont>
+    <Cont className="Stars">
       <Left>
         {[0, 1, 2, 3, 4].map((num) => (
           <Wrap key={num} isStar={score > num}>
@@ -26,11 +26,11 @@ export const Stars = ({ score }: IStars) => {
 };
 
 const Cont = styled.div`
+  position: absolute;
   z-index: 1;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  position: absolute;
   min-width: 300px;
   display: flex;
   align-items: center;

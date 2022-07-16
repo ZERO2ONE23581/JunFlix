@@ -13,7 +13,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     where: { UserID: user.id },
     include: {
       _count: true,
-      user: { select: { username: true, avatar: true } },
+      user: { select: { username: true, avatar: true, userId: true } },
     },
   });
   if (reviews.length === 0)

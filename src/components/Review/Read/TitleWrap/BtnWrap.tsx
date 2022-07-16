@@ -25,7 +25,7 @@ export const BtnWrap = () => {
       {isMyReview && (
         <>
           <IconBtn
-            size="2rem"
+            size="2.5rem"
             type="button"
             svgType="setting"
             onClick={() => setOnSetting((p) => !p)}
@@ -59,7 +59,7 @@ export const BtnWrap = () => {
 const Cont = styled.div`
   z-index: 2;
   top: 10%;
-  right: -25%;
+  right: -15%;
   position: absolute;
   gap: 2rem;
   display: flex;

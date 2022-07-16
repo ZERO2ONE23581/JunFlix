@@ -109,6 +109,7 @@ export const AnswerModal = styled(Modal)`
   line-height: 25px;
   text-align: center;
   align-items: flex-start;
+  border: ${(p) => p.theme.border.thin};
   li {
     span {
       opacity: 0.8;

@@ -5,16 +5,16 @@ export const Layer = () => {
     <>
       <Cont>
         <ListWrap>
-          <li className="number padding">번호</li>
+          <li className="number">번호</li>
           <li className="title">제목</li>
-          <li className="movie-title">영화제목</li>
+          <li className="author">글쓴이 </li>
+          <li className="movie">영화제목</li>
           <li className="genre">장르</li>
           <li className="stars">별점</li>
-          <li className="author">글쓴이 </li>
-          <li className="likes">좋아요</li>
-          <li className="comments">댓글</li>
-          <li className="created-at">작성일</li>
-          <li className="updated-at">수정일</li>
+          <li className="recommend">추천</li>
+          <li className="icons">좋아요 · 댓글</li>
+          <li className="createdAt date">작성일</li>
+          <li className="updatedAt date">수정일</li>
         </ListWrap>
       </Cont>
     </>
@@ -22,47 +22,46 @@ export const Layer = () => {
 };
 const Cont = styled.div`
   font-size: 1rem;
-  margin: 15px auto;
+  margin-top: 30px;
+  margin-bottom: 15px;
 `;
 export const ListWrap = styled.ul`
   display: flex;
   align-items: center;
-  border-top: 5px solid #2980b9;
-  border-bottom: 5px solid #2980b9;
+  border-top: thick double ${(p) => p.theme.color.logo};
+  border-bottom: thick double ${(p) => p.theme.color.logo};
   li {
-    width: 100%;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .title {
-    width: 20%;
-  }
-  .movie-title {
-    width: 20%;
-  }
-  .author {
-    width: 8%;
-    gap: 10px;
-    padding: 0px 10px;
-  }
-  .genre,
-  .stars {
-    width: 7.5%;
-  }
   .number {
     width: 3%;
+    font-size: 1rem;
   }
-  .padding {
-    padding-left: 10px;
+  .title {
+    width: 22%;
   }
-  .likes,
-  .comments {
-    width: 5%;
+  .author {
+    width: 9%;
   }
-  .created-at,
-  .updated-at {
-    width: 12%;
+  .movie {
+    width: 22%;
+  }
+  .genre {
+    width: 7%;
+  }
+  .stars {
+    width: 8%;
+  }
+  .recommend {
+    width: 3%;
+  }
+  .icons {
+    width: 6%;
+  }
+  .date {
+    width: 10%;
   }
 `;

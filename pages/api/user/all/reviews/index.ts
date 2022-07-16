@@ -10,7 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     },
     include: {
       _count: true,
-      user: { select: { username: true, avatar: true } },
+      user: { select: { username: true, avatar: true, userId: true } },
     },
   });
   if (!reviews) return res.json({ ok: false, error: 'NO REIVEWS FOUND' });

@@ -21,10 +21,10 @@ export const TextAreaHeight = (
 ): IHeightReturn => {
   const minHeight = 250;
   const maxHeight = 400;
-  const [maxTitle] = useState(20);
-  const [maxMovieTitle] = useState(20);
+  const [maxTitle] = useState(30);
+  const [maxMovieTitle] = useState(30);
   const [minContent] = useState(50);
-  const [maxContent] = useState(1000);
+  const [maxContent] = useState(3000);
   const [height, setHeight] = useState(minHeight);
   //
   useEffect(() => {
@@ -41,20 +41,22 @@ export const TextAreaHeight = (
     if (TitleLength === 0)
       return setError('title', { message: '리뷰제목을 입력해주세요.' });
     if (MovieLength === 0)
-      return setError('title', { message: '영화제목을 입력해주세요.' });
-    if (TitleLength >= maxTitle)
+      return setError('movieTitle', { message: '영화제목을 입력해주세요.' });
+    if (ContentLength === 0)
+      return setError('content', { message: '리뷰를 입력해주세요.' });
+    if (TitleLength > maxTitle)
       return setError('title', {
         message: `리뷰제목의 길이는 ${maxTitle}자 이하입니다.`,
       });
-    if (MovieLength >= maxMovieTitle)
-      return setError('title', {
+    if (MovieLength > maxMovieTitle)
+      return setError('movieTitle', {
         message: `영화제목의 길이는 ${maxMovieTitle}자 이하입니다.`,
       });
     if (ContentLength <= minContent)
       return setError('content', {
         message: `리뷰의 최소길이는 ${minContent}자 이상입니다.`,
       });
-    if (ContentLength >= maxContent)
+    if (ContentLength > maxContent)
       return setError('content', {
         message: `리뷰의 최대길이는 ${maxContent}자 이하입니다.`,
       });

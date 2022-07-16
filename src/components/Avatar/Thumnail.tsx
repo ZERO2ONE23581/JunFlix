@@ -14,7 +14,7 @@ export const ThumnailAvatar = ({ url, preview }: IAvatarProps) => {
         <img src={`${`${base}/${url}/${variant}`}`} alt="이미지" />
       )}
       {Boolean(preview) && <img src={preview} alt="프리뷰 이미지" />}
-      {!url && !preview && <Svg type="no-image" />}
+      {!url && !preview && <Svg type="no-image" size="2rem" />}
     </Cont>
   );
 };

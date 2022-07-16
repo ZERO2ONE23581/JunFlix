@@ -1,10 +1,10 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import { ReadReviewCmtInfo } from './\bCmtInfo';
+import { CommentInfo } from './\bCmtInfo';
 import { IReview } from '../../../../types/review';
 import { IGetAllComments } from '../../../../types/comments';
 
-export const ReadReviewCommentList = ({ review }: IReview) => {
+export const CommentList = ({ review }: IReview) => {
   const { data } = useSWR<IGetAllComments>(
     review && `/api/user/${review?.UserID}/review/${review?.id}/comment`
   );
@@ -13,7 +13,7 @@ export const ReadReviewCommentList = ({ review }: IReview) => {
       {data?.allComments
         ?.filter((comment) => !comment.ReplyID)
         .map((comment) => (
-          <ReadReviewCmtInfo
+          <CommentInfo
             review={review!}
             key={comment.id}
             comment_id={comment.id}

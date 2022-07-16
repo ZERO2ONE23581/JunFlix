@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import { ReadReviewCmtInfo } from './\bCmtInfo';
+import { CommentInfo } from './\bCmtInfo';
 import { IReview } from '../../../../types/review';
 import { IGetReplies } from '../../../../types/comments';
 
@@ -15,11 +15,7 @@ export const ReviewReplyList = ({ review, comment_id }: IReviewReplyList) => {
   return (
     <Cont>
       {data?.replies?.map((reply) => (
-        <ReadReviewCmtInfo
-          key={reply.id}
-          review={review!}
-          comment_id={reply.id}
-        />
+        <CommentInfo key={reply.id} review={review!} comment_id={reply.id} />
       ))}
     </Cont>
   );

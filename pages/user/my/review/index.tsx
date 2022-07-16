@@ -1,11 +1,11 @@
 import useSWR from 'swr';
+import styled from '@emotion/styled';
 import type { NextPage } from 'next';
-import { ReviewPage } from '../../all/reviews';
+import { Page } from '../../../../styles/global';
 import useUser from '../../../../src/libs/client/useUser';
 import { IGetReviews } from '../../../../src/types/review';
-import { Title } from '../../../../src/components/Layout/Title';
-import { Svg } from '../../../../src/components/Style/Svg/Svg';
 import { ReviewList } from '../../../../src/components/Review/Read/List';
+import { Title, TitleSign } from '../../../../src/components/Layout/Title';
 
 const MyReviews: NextPage = () => {
   const { loggedInUser } = useUser();
@@ -13,21 +13,26 @@ const MyReviews: NextPage = () => {
   return (
     <>
       <Title title={`${loggedInUser?.username}'s Reviews`} />
-      <ReviewPage>
-        <h1>
-          <Svg type="clapper" />
-          <span>My Reivew</span>
-          <span className="kor">나의 리뷰</span>
-        </h1>
-        {data?.reviews ? (
-          <ReviewList reviews={data?.reviews} />
-        ) : (
+      <Cont>
+        <TitleSign
+          width="400px"
+          svg="clapper"
+          svgSize="1.8rem"
+          type="Movie Reviews"
+          name={loggedInUser?.username!}
+        />
+        {data?.reviews && <ReviewList reviews={data?.reviews} />}
+        {!data?.reviews && (
           <>
             <h1>NO REVIES FOUND...</h1>
           </>
         )}
-      </ReviewPage>
+      </Cont>
     </>
   );
 };
 export default MyReviews;
+
+export const Cont = styled(Page)`
+  padding: 0% 8%;
+`;

@@ -66,7 +66,7 @@ const Cont = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-size: 1rem;
+  font-size: 1.2rem;
   div {
     display: inline;
     span {

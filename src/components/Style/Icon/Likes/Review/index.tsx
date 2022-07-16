@@ -1,33 +1,20 @@
 import useSWR from 'swr';
-import { Svg } from '../../Svg/Svg';
 import styled from '@emotion/styled';
-import { Review } from '@prisma/client';
-import useMutation from '../../../../libs/client/useMutation';
+import { Svg } from '../../../Svg/Svg';
+import { IReviewLikes } from '../../../../../types/review';
+import useMutation from '../../../../../libs/client/useMutation';
 
-interface IGetPostWithCounts {
-  ok: boolean;
-  error?: string;
-  isLiked?: boolean;
-  isComments?: boolean;
-  review: CountsInReview;
-}
-interface CountsInReview extends Review {
-  _count: {
-    likes: number;
-    comments: number;
-  };
-}
 export interface ILikesBtn {
-  USERID: number;
-  REVIEWID: number;
+  userId: number;
+  reviewId: number;
 }
-export const ReviewLikes = ({ USERID, REVIEWID }: ILikesBtn) => {
-  const { data, mutate } = useSWR<IGetPostWithCounts>(
-    `/api/user/${USERID}/review/${REVIEWID}`
+export const LikeIcon = ({ userId, reviewId }: ILikesBtn) => {
+  const { data, mutate } = useSWR<IReviewLikes>(
+    `/api/user/${userId}/review/${reviewId}`
   );
   const Counts = data?.review?._count.likes;
   const [CreateLikes] = useMutation(
-    `/api/user/${USERID}/review/${REVIEWID}/create/likes`
+    `/api/user/${userId}/review/${reviewId}/create/likes`
   );
   const onClick = () => {
     if (!data) return;
@@ -52,21 +39,18 @@ export const ReviewLikes = ({ USERID, REVIEWID }: ILikesBtn) => {
   return (
     <>
       <Cont onClick={onClick}>
-        {data?.isLiked && <Svg type={'solid-heart'} />}
-        {!data?.isLiked && <Svg type={'unsolid-heart'} />}
+        {data?.isLiked && (
+          <Svg type={'solid-heart'} size="2.5rem" fill="#e74c3c" />
+        )}
+        {!data?.isLiked && <Svg type={'unsolid-heart'} size="2.5rem" />}
         <span className="counts">{Counts ? Counts : null}</span>
       </Cont>
     </>
   );
 };
 const Cont = styled.button`
-  position: relative;
   border: none;
   outline: none;
+  position: relative;
   background-color: inherit;
-  div {
-    .solid-heart {
-      fill: #e74c3c;
-    }
-  }
 `;

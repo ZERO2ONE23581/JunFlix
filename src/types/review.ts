@@ -28,3 +28,18 @@ export interface ReviewWithUser extends Review {
 export interface IReview {
   review: ReviewWithUser;
 }
+export interface IReviewCmt {
+  ok: boolean;
+  review: Counts;
+  error?: string;
+  isComments?: boolean;
+}
+export interface IReviewLikes extends IReviewCmt {
+  isLiked?: boolean;
+}
+interface Counts extends Review {
+  _count: {
+    likes: number;
+    comments: number;
+  };
+}

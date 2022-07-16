@@ -9,7 +9,7 @@ import { TextArea } from '../../../Style/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
 import { ICommentRes, ICreateCommentsForm } from '../../../../types/comments';
 
-export const CreateReviewComment = ({ review }: IReview) => {
+export const CreateComment = ({ review }: IReview) => {
   const [CreateComment, { loading, data }] = useMutation<ICommentRes>(
     `/api/user/${review?.UserID}/review/${review?.id}/comment/create`
   );
@@ -37,18 +37,16 @@ export const CreateReviewComment = ({ review }: IReview) => {
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
-        <Cont>
-          <Flex height={height}>
-            <Svg type="smile" size="1.6rem" />
-            <TextArea
-              {...register('content', { required: '댓글을 입력해주세요.' })}
-              id="content"
-              name="content"
-              placeholder="댓글 달기..."
-            />
-            {loading && <Svg type="loading" size="2rem" />}
-            {!loading && <Btn name="Post" type="submit" />}
-          </Flex>
+        <Cont height={height}>
+          <Svg type="smile" size="3rem" />
+          <TextArea
+            {...register('content', { required: '댓글을 입력해주세요.' })}
+            id="content"
+            name="content"
+            placeholder="댓글 달기..."
+          />
+          {loading && <Svg type="loading" size="2rem" />}
+          {!loading && <Btn name="Post" type="submit" CLASSNAME="submit-btn" />}
         </Cont>
       </form>
       {data?.error && <ErrorMsg error={data.error} />}
@@ -56,29 +54,32 @@ export const CreateReviewComment = ({ review }: IReview) => {
     </>
   );
 };
-const Cont = styled.div`
-  padding: 20px;
-  border-radius: 5px;
-  border: ${(p) => p.theme.border.thick};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  border: 1px solid ${(p) => p.theme.color.font};
-  button {
-    width: 10%;
-    height: 100%;
-    color: inherit;
-    background-color: inherit;
-  }
-`;
-const Flex = styled.div<{ height: number }>`
-  gap: 10px;
+const Cont = styled.div<{ height: number }>`
+  margin-bottom: 20px;
+  gap: 20px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  border: none;
+  border-radius: 5px;
+  svg {
+    pointer-events: none;
+  }
   textarea {
-    min-height: 40px;
-    max-height: 100px;
+    cursor: auto;
+    min-height: 50px;
+    max-height: 120px;
+    font-size: 1.4rem;
     height: ${(p) => p.height && `${p.height}px`};
-    ::-webkit-scrollbar {
-      display: none;
+  }
+  .submit-btn {
+    padding: 0;
+    color: inherit;
+    font-size: 1.5rem;
+    background-color: inherit;
+    :hover {
+      color: ${(p) => p.theme.color.logo};
+      text-decoration: 3px underline ${(p) => p.theme.color.logo};
+      text-underline-offset: 5px;
     }
   }
 `;

@@ -3,17 +3,17 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { BtnWrap } from '../Edit/BtnWrap';
 import { ReviewReplyList } from './ReplyList';
-import { EditReviewCmt } from '../Edit/Comment';
+import { EditComment } from '../Edit/Comment';
 import { IReview } from '../../../../types/review';
 import { DeleteReviewCmt } from '../Delete/Comment';
-import { CreateReviewReply } from '../Create/Reply';
+import { CreateReply } from '../Create/Reply';
 import useUser from '../../../../libs/client/useUser';
 import { IGetCommentInfo } from '../../../../types/comments';
 
 interface ICommentInfo extends IReview {
   comment_id: number;
 }
-export const ReadReviewCmtInfo = ({ review, comment_id }: ICommentInfo) => {
+export const CommentInfo = ({ review, comment_id }: ICommentInfo) => {
   const { loggedInUser } = useUser();
   const { data } = useSWR<IGetCommentInfo>(
     `/api/user/${review?.UserID}/review/${review?.id}/comment/${comment_id}`
@@ -28,7 +28,7 @@ export const ReadReviewCmtInfo = ({ review, comment_id }: ICommentInfo) => {
   return (
     <>
       <Cont>
-        <EditReviewCmt
+        <EditComment
           review={review!}
           comment={Comment!}
           editCmt={!editCmt}
@@ -46,14 +46,16 @@ export const ReadReviewCmtInfo = ({ review, comment_id }: ICommentInfo) => {
         />
       </Cont>
       {isReply && (
-        <CreateReviewReply
+        <CreateReply
           review={review!}
           comment_id={selectId}
           setSelectId={setSelectId}
           setReplyCmt={setReplyCmt}
         />
       )}
-      <ReviewReplyList review={review!} comment_id={Comment?.id!} />
+      {Comment?.id && (
+        <ReviewReplyList review={review!} comment_id={Comment?.id!} />
+      )}
       {deleteCmt && (
         <DeleteReviewCmt
           review={review!}
