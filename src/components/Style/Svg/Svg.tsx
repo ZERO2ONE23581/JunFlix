@@ -5,8 +5,9 @@ interface ISvgProps {
   type: string;
   size: string;
   fill?: string | any;
+  onClick?: () => void;
 }
-export const Svg = ({ type, size, fill }: ISvgProps) => {
+export const Svg = ({ type, size, fill, onClick }: ISvgProps) => {
   const XMLNS = 'http://www.w3.org/2000/svg';
   const [viewbox, setViewbox] = useState('0 0 0 0');
   const [path, setPath] = useState(
@@ -91,6 +92,12 @@ export const Svg = ({ type, size, fill }: ISvgProps) => {
         'M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z'
       );
     }
+    if (type === 'check') {
+      setViewbox('0 0 512 512');
+      setPath(
+        'M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z'
+      );
+    }
     if (type === 'solid-check') {
       setViewbox('0 0 512 512');
       setPath(
@@ -149,6 +156,18 @@ export const Svg = ({ type, size, fill }: ISvgProps) => {
       setViewbox('0 0 512 512');
       setPath(
         'M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z'
+      );
+    }
+    if (type === 'star-left') {
+      setViewbox('0 0 576 512');
+      setPath(
+        'M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z'
+      );
+    }
+    if (type === 'star-right') {
+      setViewbox('0 0 576 512');
+      setPath(
+        'M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z'
       );
     }
     if (type === 'star') {
@@ -305,6 +324,7 @@ export const Svg = ({ type, size, fill }: ISvgProps) => {
       size={size}
       fill={fill}
       className={type}
+      onClick={onClick}
     >
       <path d={path} />
     </Cont>
@@ -319,4 +339,40 @@ const Cont = styled.svg<{ size?: string; fill?: string }>`
   :hover {
     fill: ${(p) => p.theme.color.logo};
   }
+`;
+interface IStarSvg {
+  type: string;
+  size: string;
+}
+export const StarSvg = ({ type, size }: IStarSvg) => {
+  return (
+    <>
+      {type === 'left' && (
+        <svg>
+          <LeftStar
+            size={size}
+            d={
+              'M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z'
+            }
+          />
+        </svg>
+      )}
+      {type === 'right' && (
+        <RightStar
+          size={size}
+          d={
+            'M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z'
+          }
+        />
+      )}
+    </>
+  );
+};
+const LeftStar = styled.path<{ size: string }>`
+  width: ${(p) => p.size && p.size};
+  height: ${(p) => p.size && p.size};
+`;
+const RightStar = styled.path<{ size: string }>`
+  width: ${(p) => p.size && p.size};
+  height: ${(p) => p.size && p.size};
 `;

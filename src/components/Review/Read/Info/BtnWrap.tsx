@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Btn } from '../../Style/Button';
-import useUser from '../../../libs/client/useUser';
-import { IconBtn } from '../../Style/Button/IconBtn';
-import { DeleteReivew } from '../Delete/DeleteReview';
-import { DimBackground, Modal } from '../../../../styles/global';
+import { Btn } from '../../../Style/Button';
+import useUser from '../../../../libs/client/useUser';
+import { IconBtn } from '../../../Style/Button/IconBtn';
+import { DeleteReivew } from '../../Delete/DeleteReview';
+import { DimBackground, Modal } from '../../../../../styles/global';
 
 export const BtnWrap = () => {
   const router = useRouter();
@@ -17,6 +17,7 @@ export const BtnWrap = () => {
   return (
     <Cont>
       <IconBtn
+        size="2.5rem"
         type="button"
         svgType="compass"
         onClick={() => router.push(`/user/all/reviews`)}
@@ -24,6 +25,7 @@ export const BtnWrap = () => {
       {isMyReview && (
         <>
           <IconBtn
+            size="2rem"
             type="button"
             svgType="setting"
             onClick={() => setOnSetting((p) => !p)}
@@ -56,18 +58,14 @@ export const BtnWrap = () => {
 };
 const Cont = styled.div`
   z-index: 2;
-  position: fixed;
-  top: 20%;
-  right: 3%;
+  top: 10%;
+  right: -25%;
+  position: absolute;
   gap: 2rem;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  svg {
-    width: 3rem;
-    height: 3rem;
-  }
 `;
 const Wrap = styled(Modal)`
   width: 40vw;

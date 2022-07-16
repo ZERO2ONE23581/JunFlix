@@ -28,6 +28,7 @@ export const CreatePostComment = ({ post }: IPostComment) => {
     return CreateComment({ content });
   };
   const minHeight = 20;
+  const maxHeight = 100;
   const [height, setHeight] = useState(minHeight);
   useEffect(() => {
     const length = ComputeLength({ watch: watch, type: 'content' });
@@ -49,6 +50,7 @@ export const CreatePostComment = ({ post }: IPostComment) => {
               id="content"
               height={height}
               minHeight={minHeight}
+              maxHeight={maxHeight}
               placeholder="Add a comment..."
               register={register('content', {
                 required: '댓글을 입력해주세요.',
@@ -83,7 +85,6 @@ const Flex = styled.div<{ height: number }>`
     padding: 10px;
     textarea {
       padding: 0;
-      max-height: 80px;
     }
   }
 `;

@@ -21,8 +21,6 @@ export const Avatar = ({
 }: IAvatar) => {
   const isImage = Boolean(avatar || preview);
   const noImage = Boolean(!isImage && !avatar && !preview);
-  console.log(size);
-  console.log(preview);
   return (
     <>
       <Cont className={id}>
@@ -82,8 +80,6 @@ const Cont = styled.div`
   }
 `;
 const Img = styled.img<{ size: { width: string; height: string } }>`
-  /* min-width: 600px;
-  min-height: 600px; */
   width: ${(p) => p.size.width && p.size.width};
   height: ${(p) => p.size.height && p.size.height};
 `;

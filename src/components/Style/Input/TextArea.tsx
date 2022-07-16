@@ -8,6 +8,7 @@ import { User } from '@prisma/client';
 interface ITextAreaWrap {
   id: string;
   error?: string;
+  watch?: string;
   height: number;
   minHeight: number;
   maxHeight: number;
@@ -20,16 +21,17 @@ export const TextAreaWrap = ({
   id,
   user,
   error,
-  height,
-  minHeight,
-  maxHeight,
+  watch,
   register,
   disabled,
   placeholder,
+  height,
+  minHeight,
+  maxHeight,
 }: ITextAreaWrap) => {
   const [isFocus, setIsFocus] = useState(false);
   return (
-    <Cont isFocus={isFocus} className="textarea-wrap">
+    <Cont className={id} isFocus={isFocus} isWatch={Boolean(watch)}>
       {user && (
         <Creator
           size="2.5rem"
@@ -37,7 +39,7 @@ export const TextAreaWrap = ({
           username={user.username!}
         />
       )}
-      <label htmlFor={id} />
+      <label htmlFor={id} style={{ display: 'none' }} />
       <TextArea
         {...register}
         id={id}
@@ -54,17 +56,17 @@ export const TextAreaWrap = ({
     </Cont>
   );
 };
-const Cont = styled.article<{ isFocus: boolean }>`
+const Cont = styled.article<{ isFocus: boolean; isWatch: boolean }>`
   gap: 10px;
   width: 100%;
   display: flex;
   padding: 10px 20px;
   border-radius: 3px;
   flex-direction: column;
-  border: ${(p) => (p.isFocus ? '2px solid red' : p.theme.border.thick)};
-  label {
-    display: none;
-  }
+  box-shadow: ${(p) => p.theme.boxShadow.input};
+  border: ${(p) => p.isWatch && `1px solid ${p.theme.color.logo}`};
+  border: ${(p) =>
+    p.isFocus ? `thick double ${p.theme.color.logo}` : p.theme.border.thick};
 `;
 export const TextArea = styled.textarea<{
   height?: number;

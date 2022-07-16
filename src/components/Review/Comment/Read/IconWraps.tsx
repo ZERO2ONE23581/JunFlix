@@ -3,7 +3,7 @@ import { IReview } from '../../../../types/review';
 import { CommentIcon } from '../../../Style/Icon/Comment/CommentIcon';
 import { ReviewLikes } from '../../../Style/Icon/Likes/ReviewLikes';
 
-export const ReviewLikesNComments = ({ review }: IReview) => {
+export const IconWraps = ({ review }: IReview) => {
   return (
     <Cont>
       <ReviewLikes REVIEWID={review?.id!} USERID={review?.UserID!} />

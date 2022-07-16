@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../../../../styles/global';
 import { Title } from '../../../../../src/components/Layout/Title';
-import { ReadReview } from '../../../../../src/components/Review/Read/Review';
+import { ReadReview } from '../../../../../src/components/Review/Read';
 
 const ReviewPage: NextPage = () => {
   return (

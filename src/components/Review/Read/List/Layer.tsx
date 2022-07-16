@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const TopLayer = () => {
+export const Layer = () => {
   return (
     <>
       <Cont>

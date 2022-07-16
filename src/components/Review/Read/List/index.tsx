@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import { Stars } from './Stars';
+import { Icons } from './Icons';
 import styled from '@emotion/styled';
-import { IconCount } from './IconCount';
-import { ListWrap, TopLayer } from './TopLayer';
-import { ReviewModel } from '../../../types/post';
-import { CapFirstLetter, ReadDate } from '../../Tools';
-import { ProfileAvatar } from '../../Avatar/ProfileAvatar';
+import { ListWrap, Layer } from './Layer';
+import { ReviewModel } from '../../../../types/post';
+import { Stars } from '../../Create/Save/Score/Stars';
+import { CapFirstLetter, ReadDate } from '../../../Tools';
+import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
 
 export interface IReviewList {
   reviews: ReviewModel[];
@@ -18,7 +18,7 @@ export const ReviewList = ({ reviews }: IReviewList) => {
     <>
       {reviews?.length > 0 ? (
         <Cont className="review-list">
-          <TopLayer />
+          <Layer />
           {reviews?.map((review) => (
             <Lists key={review.id}>
               <li className="number">{Order(review)}</li>
@@ -37,14 +37,14 @@ export const ReviewList = ({ reviews }: IReviewList) => {
                 {review?.user?.username}
               </li>
               <li className="likes">
-                <IconCount
+                <Icons
                   isLike
                   CmtsCount={0}
                   likesCount={review?._count?.likes}
                 />
               </li>
               <li className="comments">
-                <IconCount
+                <Icons
                   isCmt
                   likesCount={0}
                   CmtsCount={review?._count?.comments}

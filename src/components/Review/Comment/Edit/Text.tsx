@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { CapFirstLetter, ReadDate } from '../../Tools';
+import { CapFirstLetter } from '../../../Tools';
 
 interface IText {
   Content: string;

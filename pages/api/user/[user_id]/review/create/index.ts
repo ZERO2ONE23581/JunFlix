@@ -17,7 +17,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     recommend,
     score,
   } = req.body;
-  const isInputData = Boolean(title && movieTitle && genre && content);
+  const isInputData = Boolean(title && movieTitle && content);
   if (!user) return res.json({ ok: false, error: 'Need to login.' });
   if (!isQuery) return res.json({ ok: false, error: 'invalid url.' });
   if (!isInputData) return res.json({ ok: false, error: 'No inputs.' });

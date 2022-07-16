@@ -87,7 +87,7 @@ model Review {
   genre        String
   avatar       String? 
   content      String?     @db.LongText
-  score        Int?        @default(1)
+  score        Float?      @default(1)
   oneline      String?
   recommend    Boolean?    @default(true)
   user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)

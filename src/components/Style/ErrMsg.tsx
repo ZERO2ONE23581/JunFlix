@@ -13,7 +13,7 @@ export const ErrorMsg = ({ error }: IErrorMsgProps) => {
 };
 const Cont = styled.div`
   color: #e84118;
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 25px;
   font-weight: 700;
   font-style: italic;

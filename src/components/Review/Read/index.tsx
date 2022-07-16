@@ -1,13 +1,12 @@
 import useSWR from 'swr';
 import { Info } from './Info';
-import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { IGetReview } from '../../../types/review';
 import { ThumnailAvatar } from '../../Avatar/Thumnail';
+import { IconWraps } from '../Comment/Read/IconWraps';
 import { CreateReviewComment } from '../Comment/Create/Comment';
 import { ReadReviewCommentList } from '../Comment/Read/CmtList';
-import { ReviewLikesNComments } from '../Comment/Read/LikesNComments';
 
 export const ReadReview = () => {
   const router = useRouter();
@@ -17,13 +16,12 @@ export const ReadReview = () => {
   );
   return (
     <>
-      <BtnWrap />
       <Cont>
         <Info review={data?.review!} />
         <ThumnailAvatar url={data?.review?.avatar} />
         <Wrap>
           <Content>{data?.review?.content}</Content>
-          <ReviewLikesNComments review={data?.review!} />
+          <IconWraps review={data?.review!} />
           <CreateReviewComment review={data?.review!} />
           <ReadReviewCommentList review={data?.review!} />
         </Wrap>

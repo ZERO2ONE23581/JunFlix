@@ -144,7 +144,7 @@ export const CreatePost = ({ openCreatePost }: ICreatePostModalProps) => {
                   id="title"
                   type="text"
                   label="Post Title"
-                  isValue={Boolean(watch('title'))}
+                  watch={watch('title')}
                   placeholder="포스트 제목을 입력해 주세요."
                   register={register('title', {
                     required: '포스트 제목을 입력해 주세요.',

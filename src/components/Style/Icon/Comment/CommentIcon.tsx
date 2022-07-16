@@ -60,8 +60,8 @@ export const CommentIcon = ({
   return (
     <>
       <Cont createCmt={createCmt!}>
-        {Boolean(counts > 0) && <Svg type="solid-comment" />}
-        {!Boolean(counts > 0) && <Svg type="unsolid-comment" />}
+        {Boolean(counts > 0) && <Svg type="solid-comment" size="2rem" />}
+        {!Boolean(counts > 0) && <Svg type="unsolid-comment" size="2rem" />}
         <span className="counts"> {counts > 0 ? counts : null}</span>
       </Cont>
     </>

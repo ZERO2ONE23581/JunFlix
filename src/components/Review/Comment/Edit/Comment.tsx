@@ -3,18 +3,18 @@ import {
   CommentWithUser,
   IEditCommentForm,
 } from '../../../../types/comments';
+import { ReviewText } from './Text';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
-import { Author } from '../../../../../Creator';
-import { ErrorMsg } from '../../../Style/ErrMsg';
 import { Svg } from '../../../Style/Svg/Svg';
+import { Creator } from '../../../../../Creator';
+import { ErrorMsg } from '../../../Style/ErrMsg';
 import { IReview } from '../../../../types/review';
-import { ReviewText } from '../../Read/Text';
 import { IconBtn } from '../../../Style/Button/IconBtn';
 import { TextArea } from '../../../Style/Input/TextArea';
-import { CapFirstLetter, ReadDate } from '../../../Tools';
 import useMutation from '../../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { CapFirstLetter, ComputeLength, ReadDate } from '../../../Tools';
 
 interface IEditComments extends IReview {
   editCmt: boolean;
@@ -47,12 +47,13 @@ export const EditReviewCmt = ({
   useEffect(() => {
     if (comment?.content) setValue('content', CapFirstLetter(comment.content));
   }, [setValue, comment]);
-  const [height, setHeight] = useState('50px');
-
+  const minHeight = 20;
+  const maxHeight = 100;
+  const [height, setHeight] = useState(minHeight);
   useEffect(() => {
-    const length = watch('content')?.length;
-    if (length! > 56) setHeight(`${length!}px`);
-  }, [watch('content'), setHeight]);
+    const length = ComputeLength({ watch: watch, type: 'content' });
+    if (length) setHeight(minHeight + length);
+  }, [watch('content'), setHeight, ComputeLength]);
 
   useEffect(() => {
     if (data?.ok) {
@@ -65,7 +66,7 @@ export const EditReviewCmt = ({
   return (
     <form onSubmit={handleSubmit(onValid)}>
       <Cont disabled={editCmt}>
-        <Author AVATAR={comment?.user.avatar!} SIZE="3rem" />
+        <Creator avatar={comment?.user.avatar!} size="3rem" />
         <ReadDate CREATEDAT={review?.createdAt} isList />
         {editCmt && (
           <ReviewText
@@ -81,12 +82,14 @@ export const EditReviewCmt = ({
               id="content"
               name="content"
               height={height}
+              minHeight={minHeight}
+              maxHeight={maxHeight}
               disabled={editCmt}
               placeholder="Add a comment..."
             />
             <SubmitBtn>
-              {loading && <Svg type="loading" />}
-              {!loading && <IconBtn type="submit" svgType={'pen'} />}
+              {loading && <Svg type="loading" size="2rem" />}
+              {!loading && <IconBtn type="submit" svgType="pen" size="2rem" />}
             </SubmitBtn>
           </>
         )}
@@ -105,9 +108,7 @@ const Cont = styled.article<{ disabled: boolean }>`
     min-width: 150px;
   }
 `;
-const EditTextArea = styled(TextArea)<{ height: string }>`
-  height: ${(p) => p.height && p.height};
-  max-height: 120px;
+const EditTextArea = styled(TextArea)`
   border: 1px dotted ${(p) => (!p.disabled ? p.theme.color.logo : 'none')};
   :disabled {
     cursor: default;

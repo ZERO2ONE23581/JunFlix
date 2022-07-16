@@ -51,6 +51,7 @@ export const EditPostCmt = ({
   }, [setValue, comment]);
   //
   const minHeight = 50;
+  const maxHeight = 100;
   const [height, setHeight] = useState(minHeight);
   useEffect(() => {
     const length = ComputeLength({ watch: watch, type: 'content' });
@@ -82,6 +83,7 @@ export const EditPostCmt = ({
               id="content"
               height={height}
               minHeight={minHeight}
+              maxHeight={maxHeight}
               disabled={editCmt}
               placeholder="Add a comment..."
               register={register('content', {

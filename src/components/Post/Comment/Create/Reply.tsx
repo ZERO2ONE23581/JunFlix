@@ -7,13 +7,13 @@ import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Style/Button';
 import { Svg } from '../../../Style/Svg/Svg';
+import { ComputeLength } from '../../../Tools';
 import { ErrorMsg } from '../../../Style/ErrMsg';
 import useUser from '../../../../libs/client/useUser';
-import { TextArea, TextAreaWrap } from '../../../Style/Input/TextArea';
+import { TextAreaWrap } from '../../../Style/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
 import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ComputeLength } from '../../../Tools';
 
 interface ICreatePostReply extends IPostComment {
   comment_id: number;
@@ -41,6 +41,7 @@ export const CreatePostReply = ({
     return CreateReply({ content });
   };
   const minHeight = 20;
+  const maxHeight = 100;
   const [height, setHeight] = useState(minHeight);
   useEffect(() => {
     const length = ComputeLength({ watch: watch, type: 'content' });
@@ -64,6 +65,7 @@ export const CreatePostReply = ({
               id="content"
               height={height}
               minHeight={minHeight}
+              maxHeight={maxHeight}
               placeholder="답글 달기..."
               register={register('content', {
                 required: '댓글을 입력해주세요.',
@@ -100,7 +102,6 @@ const Flex = styled.div<{ height: number }>`
     border: 2px double red;
     textarea {
       padding: 0;
-      max-height: 80px;
     }
   }
 `;

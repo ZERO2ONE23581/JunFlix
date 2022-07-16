@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../Style/Svg/Svg';
+import { Svg } from '../../../Style/Svg/Svg';
 
 interface IIconCount {
   isLike?: boolean;
@@ -7,23 +7,18 @@ interface IIconCount {
   likesCount: number;
   CmtsCount: number;
 }
-export const IconCount = ({
-  isLike,
-  isCmt,
-  likesCount,
-  CmtsCount,
-}: IIconCount) => {
+export const Icons = ({ isLike, isCmt, likesCount, CmtsCount }: IIconCount) => {
   return (
     <Cont>
       {isLike && (
         <>
           {likesCount > 0 ? (
             <>
-              <Svg type="solid-heart" />
+              <Svg type="solid-heart" size="1rem" />
               <span className="counts">{likesCount}</span>
             </>
           ) : (
-            <Svg type="unsolid-heart" />
+            <Svg type="unsolid-heart" size="1rem" />
           )}
         </>
       )}
@@ -31,11 +26,11 @@ export const IconCount = ({
         <>
           {CmtsCount > 0 ? (
             <>
-              <Svg type="solid-comment" />
+              <Svg type="solid-comment" size="1rem" />
               <span className="counts">{CmtsCount}</span>
             </>
           ) : (
-            <Svg type="unsolid-comment" />
+            <Svg type="unsolid-comment" size="1rem" />
           )}
         </>
       )}

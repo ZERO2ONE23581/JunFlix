@@ -4,14 +4,14 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface ISelectWrap {
   id: string;
-  genre: string;
+  watch: string;
   disabled?: boolean;
   register: UseFormRegisterReturn;
 }
 
-export const SelectWrap = ({ id, register, disabled, genre }: ISelectWrap) => {
+export const SelectWrap = ({ id, register, disabled, watch }: ISelectWrap) => {
   return (
-    <Cont className="select-wrap">
+    <Cont className="select-wrap" isWatch={Boolean(watch)}>
       <Select {...register} id={id} name={id} disabled={disabled}>
         {id === 'gender' && (
           <>
@@ -34,19 +34,20 @@ export const SelectWrap = ({ id, register, disabled, genre }: ISelectWrap) => {
           </>
         )}
       </Select>
-      {id === 'genre' && <Genre genre={genre} size="2rem" />}
+      {id === 'genre' && <Genre genre={watch} size="2rem" />}
     </Cont>
   );
 };
-const Cont = styled.div`
+const Cont = styled.div<{ isWatch: boolean }>`
   padding: 0 10px;
   gap: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 3px;
-  border: ${(p) => p.theme.border.thick};
   box-shadow: ${(p) => p.theme.boxShadow.input};
+  border: ${(p) =>
+    p.isWatch ? `1px solid ${p.theme.color.logo}` : p.theme.border.thin};
 `;
 const Select = styled.select`
   border: none;

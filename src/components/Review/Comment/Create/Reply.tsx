@@ -10,6 +10,7 @@ import useMutation from '../../../../libs/client/useMutation';
 import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ICommentRes, ICreateCommentsForm } from '../../../../types/comments';
+import { ComputeLength } from '../../../Tools';
 
 interface ICreateReviewReply extends IReview {
   comment_id: number;
@@ -35,11 +36,14 @@ export const CreateReviewReply = ({
     if (loading) return;
     return CreateReply({ content });
   };
-  const [height, setHeight] = useState(40);
+  const minHeight = 50;
+  const maxHeight = 100;
+  const [height, setHeight] = useState(minHeight);
   useEffect(() => {
-    const content = watch('content');
-    setHeight(content?.length!);
-  }, [setHeight, watch('content')]);
+    const length = ComputeLength({ watch: watch, type: 'content' });
+    if (length) setHeight(minHeight + length);
+  }, [watch('content'), setHeight, ComputeLength]);
+  //
   useEffect(() => {
     if (data?.ok) {
       setSelectId(0);
@@ -60,7 +64,7 @@ export const CreateReviewReply = ({
               name="content"
               placeholder="답글 달기..."
             />
-            {loading && <Svg type="loading" />}
+            {loading && <Svg type="loading" size="2rem" />}
             {!loading && <Btn name="Post" type="submit" />}
           </Flex>
         </Cont>
