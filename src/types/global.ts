@@ -13,10 +13,10 @@ export interface ModalProps {
   onClick?: Dispatch<SetStateAction<boolean>>;
 }
 export interface IUseform {
-  watch: UseFormWatch<any>;
-  register: UseFormRegister<any>;
-  setError: UseFormSetError<any>;
-  setValue: UseFormSetValue<any>;
+  watch?: UseFormWatch<any>;
+  register?: UseFormRegister<any>;
+  setError?: UseFormSetError<any>;
+  setValue?: UseFormSetValue<any>;
   getValues?: UseFormGetValues<any>;
-  clearErrors: UseFormClearErrors<any>;
+  clearErrors?: UseFormClearErrors<any>;
 }

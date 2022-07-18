@@ -5,6 +5,7 @@ import { IGetBoards } from '../src/types/board';
 import { MovieInfo } from '../src/components/Movie';
 import { Title } from '../src/components/Layout/Title';
 import { BoardList } from '../src/components/Board/Read/Page/Boards';
+import styled from '@emotion/styled';
 
 const Home: NextPage = () => {
   const { data } = useSWR<IGetBoards>(`/api/user/all/boards`);
@@ -19,3 +20,5 @@ const Home: NextPage = () => {
   );
 };
 export default Home;
+
+const Const = styled(Page)``;

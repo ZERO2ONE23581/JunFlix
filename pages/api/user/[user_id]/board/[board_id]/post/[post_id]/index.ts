@@ -34,7 +34,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   });
   if (!post) return res.json({ ok: false, error: 'NO POST FOUND' });
   //
-  return res.json({ ok: true, post });
+  const isLiked = await client.likes.findFirst({
+    where: { UserID: user?.id, PostID: +post_id },
+  });
+  return res.json({ ok: true, post, isLiked });
 }
 export default withApiSession(
   withHandler({ methods: ['GET'], handler, isPrivate: false })

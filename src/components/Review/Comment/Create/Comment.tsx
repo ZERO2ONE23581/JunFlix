@@ -58,7 +58,7 @@ const Cont = styled.div<{ height: number }>`
   margin-bottom: 20px;
   gap: 20px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   border: none;
   border-radius: 5px;
   svg {
@@ -68,6 +68,7 @@ const Cont = styled.div<{ height: number }>`
     cursor: auto;
     min-height: 50px;
     max-height: 120px;
+    padding-top: 20px;
     font-size: 1.4rem;
     height: ${(p) => p.height && `${p.height}px`};
   }

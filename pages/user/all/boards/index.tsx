@@ -5,19 +5,22 @@ import { Page } from '../../../../styles/global';
 import { IGetBoards } from '../../../../src/types/board';
 import { Title, TitleSign } from '../../../../src/components/Layout/Title';
 import { BoardList } from '../../../../src/components/Board/Read/Page/Boards';
+import { FixedBtn } from '../../../../src/components/Board/Read/Page/Boards/FixedBtn';
 
-const AllBoardsPage: NextPage = () => {
+const All_Boards: NextPage = () => {
   const { data } = useSWR<IGetBoards>(`/api/user/all/boards`);
   return (
     <>
       <Title title="All Boards" />
-      <Page>
-        <TitleSign type="Boards" />
+      <Cont>
+        <TitleSign type="Boards" width="220px" svgSize="2rem" svg="board" />
         <BoardList boards={data?.boards!} />
-      </Page>
+      </Cont>
     </>
   );
 };
-export default AllBoardsPage;
+export default All_Boards;
 
-const Cont = styled(Page)``;
+const Cont = styled(Page)`
+  padding: 0 10% 5%;
+`;

@@ -1,9 +1,9 @@
 import { Genre } from './Genre';
 import styled from '@emotion/styled';
-import { IBoard } from '../../../../../../types/board';
+import { FollowBoard } from '../../Boards/Follow';
 import { FollowCounts } from '../../../Follow/counts';
 import { CapFirstLetters } from '../../../../../Tools';
-import { FollowBoard } from '../../Boards/Follow';
+import { IBoard } from '../../../../../../types/board';
 import useUser from '../../../../../../libs/client/useUser';
 
 export const Info = ({ board }: IBoard) => {

@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import { IReview } from '../../../../types/review';
 import { LikeIcon } from '../../../Style/Icon/Likes/Review';
-import { CmtIcon } from '../../../Style/Icon/Comment/Review';
+import { CommentIcon } from '../../../Style/Icon/Comment/Review';
 
 export const Icons = ({ review }: IReview) => {
   return (
     <Cont className="icons-wrap">
       <LikeIcon reviewId={review?.id!} userId={review?.UserID!} />
-      <CmtIcon reviewId={review?.id} userId={review?.UserID} />
+      <CommentIcon reviewId={review?.id} userId={review?.UserID} />
     </Cont>
   );
 };

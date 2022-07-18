@@ -21,14 +21,13 @@ export const TitleInput = ({
   type,
   label,
   error,
-  isValue,
   disabled,
   register,
   placeholder,
 }: ITitleInput) => {
   const [isFocus, setIsFocus] = useState(false);
   return (
-    <Cont isFocus={isFocus}>
+    <Cont isFocus={isFocus} className={id}>
       <label htmlFor={id}>{label}</label>
       <Input
         {...register}
@@ -45,7 +44,6 @@ export const TitleInput = ({
   );
 };
 const Cont = styled.article<{ isFocus: boolean }>`
-  max-width: 330px;
   label {
     display: none;
   }

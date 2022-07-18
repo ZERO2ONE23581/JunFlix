@@ -1,11 +1,10 @@
-import styled from '@emotion/styled';
 import Head from 'next/head';
+import styled from '@emotion/styled';
 import { Svg } from '../../Style/Svg/Svg';
 
 interface ITitleProps {
   title: string;
 }
-
 export const Title = ({ title }: ITitleProps) => {
   return (
     <>
@@ -18,11 +17,11 @@ export const Title = ({ title }: ITitleProps) => {
 };
 
 interface ITitleSign {
-  name?: string;
   type: string;
   svg?: string;
-  svgSize?: string;
   width: string;
+  name?: string;
+  svgSize?: string;
 }
 export const TitleSign = ({ name, type, svg, svgSize, width }: ITitleSign) => {
   return (
@@ -43,7 +42,7 @@ export const TitleSign = ({ name, type, svg, svgSize, width }: ITitleSign) => {
               {type !== 'Movie Reviews' && <span>All</span>} {type}
             </>
           )}
-          <Svg type={svg!} size={svgSize!} />
+          {svg && <Svg type={svg!} size={svgSize!} />}
         </h1>
       </Cont>
     </>
@@ -64,7 +63,7 @@ const Cont = styled.article<{ width: string }>`
     border-radius: 5px;
     border: 4px solid ${(p) => p.theme.color.logo};
     position: relative;
-    gap: 20px;
+    gap: 10px;
     display: flex;
     align-items: center;
     justify-content: center;

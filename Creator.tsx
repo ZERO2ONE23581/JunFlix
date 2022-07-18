@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
 import { ProfileAvatar } from './src/components/Avatar/ProfileAvatar';
 
-interface IAuthorProps {
+interface ICreator {
   size?: string;
-  avatar: string;
+  userAvatar: string;
   username?: string;
 }
-export const Creator = ({ avatar, username, size }: IAuthorProps) => {
+export const Creator = ({ userAvatar, username, size }: ICreator) => {
   return (
     <Cont>
-      <ProfileAvatar avatar={avatar} size={size} />
+      <ProfileAvatar avatar={userAvatar} size={size} />
       {username && <span>@{username}</span>}
     </Cont>
   );

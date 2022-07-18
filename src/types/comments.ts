@@ -2,6 +2,8 @@ import { PostModel } from './post';
 import { Comment, User } from '@prisma/client';
 
 export interface IPostComment {
+  ok?: boolean;
+  error?: string;
   post: PostModel;
 }
 export interface IDataID {

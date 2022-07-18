@@ -8,6 +8,7 @@ import { MutationRes } from '../../../types/mutation';
 import { SelectWrap } from '../../Style/Input/SelectWrap';
 import { IBoard, IBoardForm } from '../../../types/board';
 import useMutation from '../../../libs/client/useMutation';
+import { DimBackground } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IEditInfo extends IBoard {
@@ -60,25 +61,28 @@ export const EditInfo = ({ board, setEdit }: IEditInfo) => {
   }, [data, setEdit]);
   //
   return (
-    <form onSubmit={handleSubmit(onValid)}>
-      <Cont>
-        <Title>
-          <h1>
-            <Input type="text" {...register('title')} />
-          </h1>
-          <SelectWrap
-            id="genre"
-            genre={watch('genre')}
-            register={register('genre')}
-          />
-        </Title>
-        <TextArea rows={3} {...register('intro')} />
-        {data?.error && <ErrorMsg error={data?.error} />}
-        {errors.title && <ErrorMsg error={errors.title.message} />}
-        {errors.intro && <ErrorMsg error={errors.intro.message} />}
-        <Btn type="submit" name="SAVE" />
-      </Cont>
-    </form>
+    <>
+      <form onSubmit={handleSubmit(onValid)}>
+        <Cont>
+          <Title>
+            <h1>
+              <Input type="text" {...register('title')} />
+            </h1>
+            <SelectWrap
+              id="genre"
+              watch={watch('genre')}
+              register={register('genre')}
+            />
+          </Title>
+          <TextArea rows={3} {...register('intro')} />
+          {data?.error && <ErrorMsg error={data?.error} />}
+          {errors.title && <ErrorMsg error={errors.title.message} />}
+          {errors.intro && <ErrorMsg error={errors.intro.message} />}
+          <Btn type="submit" name="SAVE" />
+        </Cont>
+      </form>
+      <DimBackground zIndex={1} />
+    </>
   );
 };
 const Cont = styled.article`

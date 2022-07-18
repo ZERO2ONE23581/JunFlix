@@ -41,27 +41,27 @@ export const ListWrap = styled.ul`
     font-size: 1rem;
   }
   .title {
-    width: 22%;
+    width: 17%;
   }
   .author {
-    width: 9%;
+    width: 11%;
   }
   .movie {
-    width: 22%;
+    width: 20%;
   }
   .genre {
-    width: 7%;
+    width: 8%;
   }
   .stars {
-    width: 8%;
+    width: 10%;
   }
   .recommend {
     width: 3%;
   }
   .icons {
-    width: 6%;
+    width: 8%;
   }
   .date {
-    width: 10%;
+    width: 10.5%;
   }
 `;

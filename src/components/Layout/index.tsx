@@ -1,25 +1,22 @@
-import { Footer } from './Footer';
 import { Header } from './Header';
-import styled from '@emotion/styled';
+import { Footer } from './Footer';
 import { ReactElement } from 'react';
+import styled from '@emotion/styled';
+import { Btns, IBtns } from './Btns';
 
-interface ILayoutProps {
-  btnName: string;
-  onClick: () => void;
+interface ILayoutProps extends IBtns {
   children: ReactElement;
 }
-
-export const Layout = ({ children, onClick, btnName }: ILayoutProps) => {
+export const Layout = ({ children, setTheme, isLight }: ILayoutProps) => {
   return (
     <Cont>
-      <Header theme={btnName} themeClick={onClick} />
+      <Header />
       <section className="children">{children}</section>
       <Footer />
+      <Btns isLight={isLight} setTheme={setTheme} />
     </Cont>
   );
 };
 const Cont = styled.section`
-  font-size: 1.3rem;
-  color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;

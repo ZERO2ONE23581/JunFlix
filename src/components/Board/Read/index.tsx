@@ -1,13 +1,15 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { EditInfo } from '../Edit/Info';
 import { Info } from './Page/Board/Info';
 import { IBoard } from '../../../types/board';
 import { BtnWrap } from './Page/Board/BtnWrap';
 import { PostList } from '../../Post/Read/List';
-import { Dispatch, SetStateAction } from 'react';
 import { IGetAllPosts } from '../../../types/post';
+import useUser from '../../../libs/client/useUser';
 import { Profile } from './Page/Board/Info/Profile';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Container, DimBackground } from '../../../../styles/global';
 
 interface IReadBoard extends IBoard {
@@ -20,19 +22,30 @@ export const Board = ({ board, edit, setEdit, setPreview }: IReadBoard) => {
   const { data } = useSWR<IGetAllPosts>(
     board && `/api/user/${board?.UserID}/board/${board?.id}/post`
   );
+  const router = useRouter();
+  const { user_id } = router.query;
+  const { loggedInUser } = useUser();
+  const [editBg, setEditBg] = useState(false);
+  const [setting, setSetting] = useState(false);
+  const isMyBoard = Boolean(loggedInUser?.id === Number(user_id));
   return (
     <>
       <Cont>
         <Profile board={board} />
         {!edit && <Info board={board} />}
-        {edit && (
-          <>
-            <EditInfo board={board} setEdit={setEdit} />
-          </>
+        {edit && <EditInfo board={board} setEdit={setEdit} />}
+        {isMyBoard && (
+          <BtnWrap
+            edit={edit}
+            editBg={editBg}
+            setEdit={setEdit}
+            setting={setting}
+            setEditBg={setEditBg}
+            setPreview={setPreview}
+            setSetting={setSetting}
+          />
         )}
-        <BtnWrap setPreview={setPreview} edit={edit} setEdit={setEdit} />
       </Cont>
-      {edit && <DimBackground zIndex={1} />}
       {isPosts && <PostList posts={data?.posts!} />}
       {!isPosts && <h1>no post found</h1>}
     </>

@@ -37,10 +37,10 @@ const Button = styled.button<{ isClicked?: boolean }>`
   outline: none;
   background: none;
   :disabled {
+    pointer-events: none;
     svg {
       opacity: 0.5;
     }
-    pointer-events: none;
   }
   svg {
     fill: ${(p) => p.isClicked && p.theme.color.logo};

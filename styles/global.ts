@@ -1,18 +1,18 @@
 import { ThemeContext } from '@emotion/react';
 import styled from '@emotion/styled';
 
-export const LayoutPage = styled.section`
-  font-weight: 600;
-  padding: 1% 12%;
-`;
 export const Page = styled.section`
-  position: relative;
   height: 100%;
   min-width: 100vw;
   min-height: 100vh;
-  padding: 0 15%;
-  padding-bottom: 5%;
-  font-size: 1.2rem;
+  padding: 0 10% 5%;
+  position: relative;
+  color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
+`;
+export const Layout = styled.section`
+  min-width: 100vw;
+  padding: 10px 5%;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
@@ -145,10 +145,8 @@ export const AVATAR_URL = (avatar: string) => `${base}/${avatar}/${variant}`;
 export const AVATAR_BG = styled.article<{ avatar: string }>`
   background: ${(p) =>
     p.avatar && `url(${AVATAR_URL(p.avatar)}) no-repeat center center `};
-  min-width: 300px;
   min-height: 440px;
   border: none;
-  opacity: 0.9;
   overflow: hidden;
   position: relative;
   -o-background-size: cover;

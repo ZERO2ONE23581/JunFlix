@@ -1,6 +1,6 @@
 import { ListInfo } from './Info';
-import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
+import { FixedBtn } from './FixedBtn';
 import { FollowBoard } from './Follow';
 import { useRouter } from 'next/router';
 import { Genre } from '../Board/Info/Genre';
@@ -17,7 +17,8 @@ export const BoardList = ({ boards }: IBoardListProps) => {
   return (
     <>
       {isBoard && (
-        <Grid size={4} className="board-list">
+        <Cont size={4} className="board-list">
+          <FixedBtn />
           {boards?.map((board) => (
             <Board key={board.id} avatar={board.avatar!}>
               <Follow>
@@ -45,17 +46,18 @@ export const BoardList = ({ boards }: IBoardListProps) => {
               <ListInfo board={board!} />
             </Board>
           ))}
-          <BtnWrap />
-        </Grid>
+        </Cont>
       )}
       {!isBoard && <h1>NO BOARD FOUND.</h1>}
     </>
   );
 };
-
+const Cont = styled(Grid)`
+  min-width: 1200px;
+`;
 const Board = styled(AVATAR_BG)`
-  position: relative;
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 5px;

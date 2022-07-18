@@ -1,17 +1,15 @@
+import { useState } from 'react';
 import { ErrorMsg } from '../ErrMsg';
 import styled from '@emotion/styled';
+import { User } from '@prisma/client';
 import { Creator } from '../../../../Creator';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { useState } from 'react';
-import { User } from '@prisma/client';
 
 interface ITextAreaWrap {
   id: string;
   error?: string;
   watch?: string;
   height: number;
-  minHeight: number;
-  maxHeight: number;
   disabled?: boolean;
   placeholder: string;
   user?: User;
@@ -26,16 +24,14 @@ export const TextAreaWrap = ({
   disabled,
   placeholder,
   height,
-  minHeight,
-  maxHeight,
 }: ITextAreaWrap) => {
   const [isFocus, setIsFocus] = useState(false);
   return (
     <Cont className={id} isFocus={isFocus} isWatch={Boolean(watch)}>
       {user && (
         <Creator
-          size="2.5rem"
-          avatar={user.avatar!}
+          size="3rem"
+          userAvatar={user.avatar!}
           username={user.username!}
         />
       )}
@@ -44,10 +40,8 @@ export const TextAreaWrap = ({
         {...register}
         id={id}
         name={id}
-        disabled={disabled}
         height={height!}
-        minHeight={minHeight!}
-        maxHeight={maxHeight!}
+        disabled={disabled}
         placeholder={placeholder}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
@@ -70,20 +64,20 @@ const Cont = styled.article<{ isFocus: boolean; isWatch: boolean }>`
 `;
 export const TextArea = styled.textarea<{
   height?: number;
-  minHeight?: number;
-  maxHeight?: number;
 }>`
   width: 100%;
   resize: none;
-  border: none;
   outline: none;
   font-size: 1rem;
-  box-shadow: none;
+  cursor: auto;
+  border: none;
   border-radius: 4px;
   color: ${(p) => p.theme.color.font};
-  max-height: ${(p) => `${p.maxHeight}px`};
   background-color: ${(p) => p.theme.color.bg};
-  height: ${(p) => (p.height ? `${p.height}px` : p.minHeight)};
+  height: ${(p) => p.height && `${p.height}px`};
+  :focus {
+    outline: ${(p) => `thick double ${p.theme.color.logo}`};
+  }
   ::placeholder {
     font-style: italic;
   }

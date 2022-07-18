@@ -1,6 +1,12 @@
 import { LikesWithPost, LikesWithReview } from './likes';
 import { Board, Comment, Likes, Post, Review, User } from '@prisma/client';
 
+export interface IPostCmtQuery {
+  userId: number;
+  boardId: number;
+  postId: number;
+}
+
 export interface PostModel extends Post {
   user: User;
   board: Board;

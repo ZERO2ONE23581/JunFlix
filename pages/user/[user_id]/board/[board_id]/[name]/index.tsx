@@ -7,18 +7,16 @@ import { IGetBoard } from '../../../../../../src/types/board';
 import { AVATAR_BG, Page } from '../../../../../../styles/global';
 import { Board } from '../../../../../../src/components/Board/Read';
 import { Title } from '../../../../../../src/components/Layout/Title';
-import { IconBtn } from '../../../../../../src/components/Style/Button/IconBtn';
-import { PageAnswer } from '../../../../../../src/components/Board/Read/Page/Board/Answer';
+import { FixedBtn } from '../../../../../../src/components/Board/Read/Page/Board/FixedBtn';
 
 const BoardPage: NextPage = () => {
   const router = useRouter();
+  const [edit, setEdit] = useState(false);
+  const [preview, setPreview] = useState('');
   const { user_id, board_id } = router.query;
   const { data } = useSWR<IGetBoard>(
     user_id && board_id && `/api/user/${user_id}/board/${board_id}`
   );
-  const [edit, setEdit] = useState(false);
-  const [preview, setPreview] = useState('');
-  const [answer, setAnwser] = useState(false);
   return (
     <>
       <Title title={data?.board?.title!} />
@@ -35,23 +33,9 @@ const BoardPage: NextPage = () => {
             )}
             {!data?.board && <h1>NO BOARD FOUND..</h1>}
           </BG>
-          <Btns>
-            <IconBtn
-              size="2.5rem"
-              type="button"
-              svgType="compass"
-              onClick={() => router.push(`/user/all/boards`)}
-            />
-            <IconBtn
-              size="2.5rem"
-              type="button"
-              svgType="question"
-              onClick={() => setAnwser((p) => !p)}
-            />
-          </Btns>
+          <FixedBtn />
         </section>
       </Cont>
-      {answer && <PageAnswer openModal={setAnwser} />}
     </>
   );
 };

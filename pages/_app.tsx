@@ -7,17 +7,14 @@ import { Layout } from '../src/components/Layout';
 import { darkTheme, lightTheme } from '../styles/theme';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [theme, setTheme] = useState(true);
+  const [theme, setTheme] = useState(false);
   const Fetcher = {
     fetcher: (url: string) => fetch(url).then((res) => res.json()),
   };
   return (
     <SWRConfig value={Fetcher}>
-      <ThemeProvider theme={theme ? darkTheme : lightTheme}>
-        <Layout
-          onClick={() => setTheme((p) => !p)}
-          btnName={theme ? 'Dark' : 'Light'}
-        >
+      <ThemeProvider theme={theme ? lightTheme : darkTheme}>
+        <Layout isLight={theme} setTheme={setTheme}>
           <Component {...pageProps} />
         </Layout>
       </ThemeProvider>

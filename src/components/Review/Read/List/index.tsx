@@ -21,7 +21,7 @@ export const ReviewList = ({ reviews }: IReviewList) => {
   return (
     <>
       {isReview && (
-        <Cont>
+        <Cont className="review-list">
           <Layer />
           {reviews?.map((review) => (
             <Lists key={review.id} isFirst={Boolean(Order(review) === 1)}>
@@ -85,7 +85,6 @@ export const ReviewList = ({ reviews }: IReviewList) => {
 };
 const Cont = styled.section`
   font-size: 1rem;
-  min-width: 1600px;
   position: relative;
 `;
 
@@ -112,7 +111,7 @@ const Lists = styled(ListWrap)<{ isFirst: boolean }>`
   }
   .title,
   .movie {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
   .title {
     :hover {
@@ -123,6 +122,7 @@ const Lists = styled(ListWrap)<{ isFirst: boolean }>`
   }
   .author {
     gap: 10px;
+    font-size: 0.9rem;
   }
   .movie {
     font-style: italic;
@@ -132,5 +132,8 @@ const Lists = styled(ListWrap)<{ isFirst: boolean }>`
   }
   .icons {
     gap: 20px;
+  }
+  .date {
+    padding-right: 10px;
   }
 `;

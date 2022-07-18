@@ -1,12 +1,8 @@
 import styled from '@emotion/styled';
 import { ModalProps } from '../../../../../types/global';
-import {
-  Modal,
-  DimBackground,
-  AnswerModal,
-} from '../../../../../../styles/global';
+import { DimBackground, AnswerModal } from '../../../../../../styles/global';
 
-export const PageAnswer = ({ openModal }: ModalProps) => {
+export const Answer = ({ openModal }: ModalProps) => {
   return (
     <>
       <Cont>

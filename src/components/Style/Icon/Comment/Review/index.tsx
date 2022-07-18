@@ -4,11 +4,11 @@ import { Svg } from '../../../Svg/Svg';
 import { useEffect, useState } from 'react';
 import { IReviewCmt } from '../../../../../types/review';
 
-interface ICmtIcon {
+interface ICommentIcon {
   userId: number;
   reviewId: number;
 }
-export const CmtIcon = ({ userId, reviewId }: ICmtIcon) => {
+export const CommentIcon = ({ userId, reviewId }: ICommentIcon) => {
   const { data } = useSWR<IReviewCmt>(`/api/user/${userId}/review/${reviewId}`);
   const [counts, setCounts] = useState(0);
   useEffect(() => {

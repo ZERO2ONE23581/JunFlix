@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Layout } from '../../../../styles/global';
 
 export const Footer = () => {
   const date = new Date();
@@ -19,7 +20,7 @@ export const Footer = () => {
   );
 };
 
-const Cont = styled.footer`
+const Cont = styled(Layout)`
   padding: 10px 8%;
   border-top: ${(p) => p.theme.border};
   color: whitesmoke;

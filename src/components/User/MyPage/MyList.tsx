@@ -5,17 +5,18 @@ import styled from '@emotion/styled';
 import { Post } from '@prisma/client';
 import { LikesList } from './LikesList';
 import { PostList } from '../../Post/Read/List';
-import { BoardList } from '../../Board/Read/List';
 import { ReviewList } from '../../Review/Read/List';
 import { IBoardWithAttrs } from '../../../types/board';
 import { ReviewWithUser } from '../../../types/review';
 import { LikesWithPost, LikesWithReview } from '../../../types/likes';
+import { BoardList } from '../../Board/Read/Page/Boards';
+import { PostModel } from '../../../types/post';
 
 interface IGet {
   ok: boolean;
   error: string;
   boards?: IBoardWithAttrs[];
-  posts?: Post[];
+  posts?: PostModel[];
   postlikes: LikesWithPost[];
   reviewLikes: LikesWithReview[];
   reviews?: ReviewWithUser[];
