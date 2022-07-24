@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { CapFirstLetter } from '../../../Tools';
-import { Genre } from '../../../Board/Read/Page/Board/Info/Genre';
+import { Genre } from '../../../Board/Read/Board/Info/Genre';
 
 interface ITtitle {
   title: string;

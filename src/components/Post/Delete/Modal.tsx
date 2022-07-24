@@ -2,29 +2,24 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
 import { ErrorMsg } from '../../Style/ErrMsg';
+import { IQuery } from '../../../types/global';
 import { LoadingModal } from '../../LoadingModal';
 import useUser from '../../../libs/client/useUser';
-import { IPostCmtQuery } from '../../../types/post';
 import { IconBtn } from '../../Style/Button/IconBtn';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { DimBackground, AnswerModal } from '../../../../styles/global';
 
-interface IDeletePost extends IPostCmtQuery {
-  setDeletePost: Dispatch<SetStateAction<boolean>>;
+interface IDeletePost extends IQuery {
+  setDelete: Dispatch<SetStateAction<boolean>>;
 }
-export const DeleteModal = ({
-  postId,
-  userId,
-  boardId,
-  setDeletePost,
-}: IDeletePost) => {
+export const DeleteModal = ({ query, setDelete }: IDeletePost) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
-  const isMyPost = Boolean(loggedInUser?.id === userId);
+  const isMyPost = Boolean(loggedInUser?.id === query.userId);
   const [DeletePost, { data, loading }] = useMutation<MutationRes>(
-    `/api/user/${userId}/board/${boardId}/post/${postId}/delete`
+    `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}/delete`
   );
   const clickYes = () => {
     if (!isMyPost) alert('삭제권한이 없습니다.');
@@ -43,7 +38,7 @@ export const DeleteModal = ({
             size="1.8rem"
             type="button"
             svgType="close"
-            onClick={() => setDeletePost(false)}
+            onClick={() => setDelete(false)}
           />
           <ul>
             <li>
@@ -61,7 +56,7 @@ export const DeleteModal = ({
           </ul>
           <div className="btn-wrap">
             <Btn name="YES" type="button" onClick={clickYes} />
-            <Btn name="NO" type="button" onClick={() => setDeletePost(false)} />
+            <Btn name="NO" type="button" onClick={() => setDelete(false)} />
           </div>
           {data?.error && <ErrorMsg error={data?.error} />}
         </Cont>
@@ -74,7 +69,7 @@ export const DeleteModal = ({
         />
       )}
 
-      <DimBackground zIndex={102} onClick={() => setDeletePost(false)} />
+      <DimBackground zIndex={102} onClick={() => setDelete(false)} />
     </>
   );
 };

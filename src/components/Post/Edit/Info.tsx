@@ -1,6 +1,5 @@
 import { Layer } from './Layer';
 import styled from '@emotion/styled';
-import { ComputeLength } from '../../Tools';
 import { ErrorMsg } from '../../Style/ErrMsg';
 import { IUseform } from '../../../types/global';
 import useUser from '../../../libs/client/useUser';
@@ -8,25 +7,23 @@ import { TitleInput } from '../../Style/Input/Title';
 import { IconBtn } from '../../Style/Button/IconBtn';
 import { TextAreaWrap } from '../../Style/Input/TextArea';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Length } from '../../Tools';
 
 interface IInfo extends IUseform {
   title: string;
   content: string;
+  dataError: string;
   postAvatar: string;
-  DataError: string;
-  TitleError: string;
-  ContentError: string;
+  setEdit: Dispatch<SetStateAction<boolean>>;
   setUpdate: Dispatch<SetStateAction<boolean>>;
-  setEditPost: Dispatch<SetStateAction<boolean>>;
 }
 export const Info = ({
   title,
+  errors,
   content,
+  dataError,
   setUpdate,
-  setEditPost,
-  DataError,
-  TitleError,
-  ContentError,
+  setEdit,
   watch,
   setValue,
   register,
@@ -50,13 +47,13 @@ export const Info = ({
   }, [setValue, title, content]);
 
   const clickSave = () => {
-    if (ComputeLength({ watch: watch, type: 'title' }) === 0)
+    if (Length(watch!('title'))! === 0)
       return setError!('title', { message: '제목을 입력해주세요.' });
-    if (ComputeLength({ watch: watch, type: 'title' }) > maxTitle)
-      return setError!('MaxTitle', {
+    if (Length(watch!('title'))! > maxTitle)
+      return setError!('title', {
         message: `포스트 제목의 길이는 ${maxTitle}자 이하입니다.`,
       });
-    if (ComputeLength({ watch: watch, type: 'content' }) > maxContent)
+    if (Length(watch!('content'))! > maxContent)
       return setError!('content', {
         message: `포스트 길이는 ${maxContent}자 이하입니다.`,
       });
@@ -64,19 +61,16 @@ export const Info = ({
   };
 
   useEffect(() => {
-    if (ComputeLength({ watch: watch, type: 'title' }) !== 0)
-      clearErrors!('title');
-    if (ComputeLength({ watch: watch, type: 'title' }) < maxTitle)
-      clearErrors!('MaxTitle');
-    if (ComputeLength({ watch: watch, type: 'content' }) < maxContent)
-      clearErrors!('content');
-  }, [ComputeLength, clearErrors, watch!('title'), watch!('content')]);
+    if (Length(watch!('title'))! !== 0) clearErrors!('title');
+    if (Length(watch!('title'))! < maxTitle) clearErrors!('MaxTitle');
+    if (Length(watch!('content'))! < maxContent) clearErrors!('content');
+  }, [Length, clearErrors, watch!('title'), watch!('content')]);
 
   return (
     <Cont className="edit-post-info">
-      <Layer setEditPost={setEditPost} />
+      <Layer setEdit={setEdit} />
       <Main>
-        <div className="flex">
+        <Flex>
           <TitleInput
             id="title"
             type="text"
@@ -91,7 +85,7 @@ export const Info = ({
             svgType="save"
             onClick={clickSave}
           />
-        </div>
+        </Flex>
         <TextAreaWrap
           id="content"
           height={height}
@@ -101,9 +95,9 @@ export const Info = ({
         />
       </Main>
       <>
-        {DataError && <ErrorMsg error={DataError} />}
-        {TitleError && <ErrorMsg error={TitleError} />}
-        {ContentError && <ErrorMsg error={ContentError} />}
+        {dataError && <ErrorMsg error={dataError} />}
+        {errors.title && <ErrorMsg error={errors.title.message} />}
+        {errors.content && <ErrorMsg error={errors.content.message} />}
       </>
     </Cont>
   );
@@ -116,29 +110,25 @@ const Cont = styled.article`
 `;
 const Main = styled.article`
   padding: 20px 25px;
-  .flex {
-    margin-bottom: 20px;
-    gap: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    .title {
-      input {
-        font-size: 2rem;
-        ::placeholder {
-          font-size: 1.3rem;
-        }
-      }
-    }
-  }
   .content {
     min-height: 350px;
-    max-height: 420px;
+    max-height: 400px;
     border-radius: 5px;
     textarea {
       outline: none;
       font-size: 1.1rem;
       min-height: 100px;
     }
+  }
+`;
+const Flex = styled.div`
+  gap: 40px;
+  display: flex;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  align-items: center;
+  input {
+    text-align: center;
+    padding: 5px 0;
   }
 `;

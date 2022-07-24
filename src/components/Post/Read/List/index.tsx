@@ -1,16 +1,13 @@
+import { Fold } from './Fold';
 import { useState } from 'react';
-import { PostModal } from './Modal';
+import { PostModal } from '../Modal';
 import styled from '@emotion/styled';
 import { FixedBtn } from '../FixedBtn';
-import { Btn } from '../../../Style/Button';
-import { PostModel } from '../../../../types/post';
-import { PostIcons } from './Modal/Info/Comment/Read/List/Icons';
-import { Genre } from '../../../Board/Read/Page/Board/Info/Genre';
+import { IPostList, PostModel } from '../../../../types/post';
+import { PostIcons } from '../Modal/Info/Comment/Read/List/Icons';
+import { Genre } from '../../../Board/Read/Board/Info/Genre';
 import { AVATAR_BG, Grid, NoAvatar } from '../../../../../styles/global';
 
-interface IPostList {
-  posts: PostModel[];
-}
 export const PostList = ({ posts }: IPostList) => {
   const [userId, setUserId] = useState(0);
   const [postId, setPostId] = useState(0);
@@ -28,9 +25,6 @@ export const PostList = ({ posts }: IPostList) => {
   const Max = 6;
   const isPost = Boolean(posts?.length > 0);
   const [length, setLength] = useState(Max);
-  const noFold = Boolean(posts?.length < length);
-  const unFold = Boolean(length !== posts?.length);
-  const Fold = Boolean(length === posts?.length);
   return (
     <>
       {isPost && (
@@ -55,27 +49,17 @@ export const PostList = ({ posts }: IPostList) => {
           ))}
         </Cont>
       )}
-      {!noFold && (
-        <PostFold className="post-fold">
-          {unFold && (
-            <Btn
-              type="button"
-              name="펼치기"
-              onClick={() => setLength(posts?.length)}
-            />
-          )}
-          {Fold && (
-            <Btn type="button" name="접기" onClick={() => setLength(Max)} />
-          )}
-        </PostFold>
-      )}
+      <Fold
+        Max={Max}
+        length={length}
+        setLength={setLength}
+        postLength={posts?.length}
+      />
 
       {readPost && (
         <PostModal
-          userId={userId}
-          postId={postId}
-          boardId={boardId}
           setReadPost={setReadPost}
+          query={{ userId: userId, boardId: boardId, postId: postId }}
         />
       )}
 
@@ -95,15 +79,4 @@ const Post = styled(AVATAR_BG)`
   justify-content: center;
   cursor: pointer;
   border-radius: 5px;
-`;
-const PostFold = styled.div`
-  margin-top: 20px;
-  display: flex;
-  align-content: center;
-  justify-content: end;
-  button {
-    width: 80px;
-    color: ${(p) => p.theme.color.font};
-    background-color: ${(p) => p.theme.color.bg};
-  }
 `;

@@ -1,7 +1,10 @@
+import { PostModel } from './post';
+
 export interface MutationRes {
   ok: boolean;
   error?: string;
   message?: string;
+  post?: PostModel;
   [key: string]: any;
 }
 

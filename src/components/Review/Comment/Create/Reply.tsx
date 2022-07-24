@@ -9,8 +9,8 @@ import { TextArea } from '../../../Style/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
 import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ICommentRes, ICreateCommentsForm } from '../../../../types/comments';
-import { ComputeLength } from '../../../Tools';
+import { ICmtRes, ICmtForm } from '../../../../types/comments';
+import { Length } from '../../../Tools';
 
 interface ICreateReviewReply extends IReview {
   comment_id: number;
@@ -23,7 +23,7 @@ export const CreateReply = ({
   setSelectId,
   setReplyCmt,
 }: ICreateReviewReply) => {
-  const [CreateReply, { loading, data }] = useMutation<ICommentRes>(
+  const [CreateReply, { loading, data }] = useMutation<ICmtRes>(
     `/api/user/${review?.UserID}/review/${review?.id}/comment/${comment_id}/create`
   );
   const {
@@ -31,8 +31,8 @@ export const CreateReply = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ICreateCommentsForm>({ mode: 'onSubmit' });
-  const onValid = ({ content }: ICreateCommentsForm) => {
+  } = useForm<ICmtForm>({ mode: 'onSubmit' });
+  const onValid = ({ content }: ICmtForm) => {
     if (loading) return;
     return CreateReply({ content });
   };
@@ -40,9 +40,9 @@ export const CreateReply = ({
   const maxHeight = 100;
   const [height, setHeight] = useState(minHeight);
   useEffect(() => {
-    const length = ComputeLength({ watch: watch, type: 'content' });
+    const length = Length({ watch: watch, type: 'content' });
     if (length) setHeight(minHeight + length);
-  }, [watch('content'), setHeight, ComputeLength]);
+  }, [watch('content'), setHeight, Length]);
   //
   useEffect(() => {
     if (data?.ok) {

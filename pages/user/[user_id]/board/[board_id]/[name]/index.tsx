@@ -7,7 +7,7 @@ import { IGetBoard } from '../../../../../../src/types/board';
 import { AVATAR_BG, Page } from '../../../../../../styles/global';
 import { Board } from '../../../../../../src/components/Board/Read';
 import { Title } from '../../../../../../src/components/Layout/Title';
-import { FixedBtn } from '../../../../../../src/components/Board/Read/Page/Board/FixedBtn';
+import { FixedBtn } from '../../../../../../src/components/Board/Read/Board/FixedBtn';
 
 const BoardPage: NextPage = () => {
   const router = useRouter();

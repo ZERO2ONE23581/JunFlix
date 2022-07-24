@@ -4,8 +4,7 @@ import styled from '@emotion/styled';
 import { Page } from '../../../../styles/global';
 import { IGetBoards } from '../../../../src/types/board';
 import { Title, TitleSign } from '../../../../src/components/Layout/Title';
-import { BoardList } from '../../../../src/components/Board/Read/Page/Boards';
-import { FixedBtn } from '../../../../src/components/Board/Read/Page/Boards/FixedBtn';
+import { BoardList } from '../../../../src/components/Board/Read/List';
 
 const All_Boards: NextPage = () => {
   const { data } = useSWR<IGetBoards>(`/api/user/all/boards`);

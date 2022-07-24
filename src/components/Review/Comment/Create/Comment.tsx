@@ -7,10 +7,10 @@ import { ErrorMsg } from '../../../Style/ErrMsg';
 import { IReview } from '../../../../types/review';
 import { TextArea } from '../../../Style/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
-import { ICommentRes, ICreateCommentsForm } from '../../../../types/comments';
+import { ICmtRes, ICmtForm } from '../../../../types/comments';
 
 export const CreateComment = ({ review }: IReview) => {
-  const [CreateComment, { loading, data }] = useMutation<ICommentRes>(
+  const [CreateComment, { loading, data }] = useMutation<ICmtRes>(
     `/api/user/${review?.UserID}/review/${review?.id}/comment/create`
   );
   const {
@@ -18,8 +18,8 @@ export const CreateComment = ({ review }: IReview) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ICreateCommentsForm>({ mode: 'onSubmit' });
-  const onValid = ({ content }: ICreateCommentsForm) => {
+  } = useForm<ICmtForm>({ mode: 'onSubmit' });
+  const onValid = ({ content }: ICmtForm) => {
     if (loading) return;
     return CreateComment({ content });
   };

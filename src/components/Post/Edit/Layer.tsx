@@ -3,18 +3,18 @@ import { Dispatch, SetStateAction } from 'react';
 import { IconBtn } from '../../Style/Button/IconBtn';
 
 interface ITitle {
-  setEditPost: Dispatch<SetStateAction<boolean>>;
+  setEdit: Dispatch<SetStateAction<boolean>>;
 }
-export const Layer = ({ setEditPost }: ITitle) => {
+export const Layer = ({ setEdit }: ITitle) => {
   return (
     <Cont>
       <div />
-      <h1>게시물 수정하기</h1>
+      <h1>포스트 수정</h1>
       <IconBtn
         size="1.5rem"
         type="button"
         svgType="close"
-        onClick={() => setEditPost(false)}
+        onClick={() => setEdit(false)}
       />
     </Cont>
   );
@@ -27,6 +27,9 @@ const Cont = styled.div`
   justify-content: space-between;
   color: ${(p) => p.theme.color.bg};
   background-color: ${(p) => p.theme.color.font};
+  h1 {
+    margin-left: 30px;
+  }
   button {
     svg {
       fill: ${(p) => p.theme.color.bg};

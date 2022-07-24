@@ -9,7 +9,7 @@ import { ReviewList } from '../../Review/Read/List';
 import { IBoardWithAttrs } from '../../../types/board';
 import { ReviewWithUser } from '../../../types/review';
 import { LikesWithPost, LikesWithReview } from '../../../types/likes';
-import { BoardList } from '../../Board/Read/Page/Boards';
+import { BoardList } from '../../Board/Read/Page/List';
 import { PostModel } from '../../../types/post';
 
 interface IGet {

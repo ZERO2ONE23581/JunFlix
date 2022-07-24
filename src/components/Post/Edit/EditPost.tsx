@@ -1,28 +1,27 @@
 import { Info } from './Info';
-import { SaveEdit } from './Save';
+import { SaveEdit } from './Modal';
 import styled from '@emotion/styled';
 import { Avatar } from '../../Avatar';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import useMutation from '../../../libs/client/useMutation';
-import { Modal, DimBackground } from '../../../../styles/global';
-import { IEditPostForm, IPostCmtQuery } from '../../../types/post';
+import { Modal } from '../../../../styles/global';
+import { IEditPostForm } from '../../../types/post';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { IQuery } from '../../../types/global';
 
-interface IEditPost extends IPostCmtQuery {
+interface IEditPost extends IQuery {
   title: string;
   content: string;
   postAvatar: string;
-  setEditPost: Dispatch<SetStateAction<boolean>>;
+  setEdit: Dispatch<SetStateAction<boolean>>;
 }
 export const EditPost = ({
+  query,
   title,
   content,
   postAvatar,
-  userId,
-  postId,
-  boardId,
-  setEditPost,
+  setEdit,
 }: IEditPost) => {
   const {
     watch,
@@ -36,7 +35,7 @@ export const EditPost = ({
 
   const router = useRouter();
   const [edit, { data, loading }] = useMutation(
-    `/api/user/${userId}/board/${boardId}/post/${postId}/edit`
+    `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}/edit`
   );
   const [update, setUpdate] = useState(false);
   const onValid = async ({ editAvatar, title, content }: IEditPostForm) => {
@@ -64,10 +63,10 @@ export const EditPost = ({
   const Loading = avatarLoading ? avatarLoading : loading ? loading : null;
   useEffect(() => {
     if (data?.ok) {
-      setEditPost(false);
+      setEdit(false);
       alert('포스트를 수정했습니다.');
     }
-  }, [data, router, setEditPost]);
+  }, [data, router, setEdit]);
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
@@ -75,11 +74,12 @@ export const EditPost = ({
           <Avatar
             id="editAvatar"
             avatar={postAvatar}
-            avatarWatch={watch('editAvatar')}
+            avatarWatch={watch('editAvatar')!}
             register={register('editAvatar')}
           />
           <Info
             watch={watch}
+            errors={errors}
             setValue={setValue}
             register={register}
             setError={setError}
@@ -87,16 +87,13 @@ export const EditPost = ({
             title={title}
             content={content}
             setUpdate={setUpdate}
+            dataError={data?.error}
             postAvatar={postAvatar}
-            setEditPost={setEditPost}
-            DataError={data?.error}
-            TitleError={errors.title?.message!}
-            ContentError={errors.content?.message!}
+            setEdit={setEdit}
           />
         </Cont>
         {update && <SaveEdit loading={Loading} closeModal={setUpdate} />}
       </form>
-      <DimBackground zIndex={102} onClick={() => setEditPost(false)} />
     </>
   );
 };
@@ -106,17 +103,18 @@ const Cont = styled(Modal)`
   z-index: 103;
   width: 70vw;
   height: 80vh;
-  border: none;
   min-width: 1000px;
   overflow: hidden;
   flex-direction: row;
+  border: ${(p) => p.theme.border.thick};
   .editAvatar {
-    .noImageCont,
-    .isImageCont {
+    .isPreivewTag,
+    .noImageDiv,
+    .isImageTag {
       width: 40vw;
       height: 80vh;
       min-width: 600px;
-      min-height: 640px;
+      min-height: 580px;
     }
   }
   .edit-post-info {

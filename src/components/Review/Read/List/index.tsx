@@ -8,7 +8,7 @@ import { Svg } from '../../../Style/Svg/Svg';
 import { ReviewModel } from '../../../../types/post';
 import { CapFirstLetter, ReadDate } from '../../../Tools';
 import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
-import { Genre } from '../../../Board/Read/Page/Board/Info/Genre';
+import { Genre } from '../../../Board/Read/Board/Info/Genre';
 
 export interface IReviewList {
   reviews: ReviewModel[];

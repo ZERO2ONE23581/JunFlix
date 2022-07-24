@@ -8,7 +8,7 @@ interface ICreator {
 }
 export const Creator = ({ userAvatar, username, size }: ICreator) => {
   return (
-    <Cont>
+    <Cont className="creator">
       <ProfileAvatar avatar={userAvatar} size={size} />
       {username && <span>@{username}</span>}
     </Cont>

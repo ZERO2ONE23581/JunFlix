@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Btn } from '../../../Style/Button';
 import { IReview } from '../../../../types/review';
 import { LoadingModal } from '../../../LoadingModal';
-import { ICommentRes } from '../../../../types/comments';
+import { ICmtRes } from '../../../../types/comments';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
 import { DimBackground, Modal } from '../../../../../styles/global';
@@ -18,7 +18,7 @@ export const DeleteReviewCmt = ({
   setSelectId,
   setDeleteCmt,
 }: IDeleteComment) => {
-  const [DeleteComment, { loading, data }] = useMutation<ICommentRes>(
+  const [DeleteComment, { loading, data }] = useMutation<ICmtRes>(
     `/api/user/${review?.UserID}/review/${review?.id}/comment/${comment_id}/delete`
   );
   const clickCancel = () => {

@@ -1,11 +1,9 @@
 import useSWR from 'swr';
 import { Svg } from '../../../Svg/Svg';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { Post, Review } from '@prisma/client';
 import useMutation from '../../../../../libs/client/useMutation';
-import { IconBtn } from '../../../Button/IconBtn';
-import { LikeSvg } from '../LikeSvg';
+import { IQuery } from '../../../../../types/global';
 
 interface IGetPostWithCounts {
   ok: boolean;
@@ -27,17 +25,12 @@ interface CountsInReview extends Review {
     comments: number;
   };
 }
-export interface ILikesBtn {
-  userId: number;
-  boardId: number;
-  postId: number;
-}
-export const LikeIcon = ({ userId, boardId, postId }: ILikesBtn) => {
+export const LikeIcon = ({ query }: IQuery) => {
   const { data, mutate } = useSWR<IGetPostWithCounts>(
-    `/api/user/${userId}/board/${boardId}/post/${postId}`
+    `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}`
   );
-  const [CreateLikes] = useMutation(
-    `/api/user/${userId}/board/${boardId}/post/${postId}/create/likes`
+  const [create] = useMutation(
+    `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}/create/likes`
   );
   const onClick = () => {
     if (!data) return;
@@ -57,7 +50,7 @@ export const LikeIcon = ({ userId, boardId, postId }: ILikesBtn) => {
       },
       false
     );
-    CreateLikes({});
+    create({});
   };
 
   return (

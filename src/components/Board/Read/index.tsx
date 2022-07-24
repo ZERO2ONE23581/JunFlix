@@ -1,14 +1,14 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { EditInfo } from '../Edit/Info';
-import { Info } from './Page/Board/Info';
+import { EditInfo } from '../Edit';
+import { Info } from './Board/Info';
 import { IBoard } from '../../../types/board';
-import { BtnWrap } from './Page/Board/BtnWrap';
+import { BtnWrap } from './Board/BtnWrap';
 import { PostList } from '../../Post/Read/List';
 import { IGetAllPosts } from '../../../types/post';
 import useUser from '../../../libs/client/useUser';
-import { Profile } from './Page/Board/Info/Profile';
+import { Profile } from './Board/Info/Profile';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Container, DimBackground } from '../../../../styles/global';
 
@@ -33,7 +33,11 @@ export const Board = ({ board, edit, setEdit, setPreview }: IReadBoard) => {
       <Cont>
         <Profile board={board} />
         {!edit && <Info board={board} />}
-        {edit && <EditInfo board={board} setEdit={setEdit} />}
+        {edit && (
+          <>
+            <EditInfo board={board} setEdit={setEdit} />
+          </>
+        )}
         {isMyBoard && (
           <BtnWrap
             edit={edit}
@@ -48,6 +52,7 @@ export const Board = ({ board, edit, setEdit, setPreview }: IReadBoard) => {
       </Cont>
       {isPosts && <PostList posts={data?.posts!} />}
       {!isPosts && <h1>no post found</h1>}
+      {edit && <DimBackground zIndex={1} />}
     </>
   );
 };

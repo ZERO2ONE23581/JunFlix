@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { StarWrap } from './StarsWrap';
 import { ReadDate } from '../../../Tools';
 import { IReview } from '../../../../types/review';
-import { Genre } from '../../../Board/Read/Page/Board/Info/Genre';
+import { Genre } from '../../../Board/Read/Board/Info/Genre';
 
 export const TitleWrap = ({ review }: IReview) => {
   return (

@@ -26,38 +26,40 @@ export const ReadDate = ({ CREATEDAT, UPDATEDAT, isList }: IReadDate) => {
     const Minute = NewDate.getMinutes();
     return `${Year.slice(2, 4)}년 ${Month}월 ${TheDate}일 ${Hour}:${Minute}`;
   };
+  const isUpdate = Boolean(
+    Compute(CREATEDAT?.toString()!) !== Compute(UPDATEDAT?.toString()!)
+  );
   return (
-    <DateCont className="READ-DATE">
-      {CREATEDAT && (
-        <div className="create">
-          <span>{Compute(CREATEDAT?.toString())}</span>
-          {!isList && <span>에 작성</span>}
-        </div>
+    <Container className="read-date">
+      <span className="create">
+        <span>{Compute(CREATEDAT?.toString()!)}</span>
+        {!isList && <span>작성</span>}
+      </span>
+      {isUpdate && (
+        <span className="update">
+          <span>{Compute(UPDATEDAT?.toString()!)}</span>
+          {!isList && <span>수정</span>}
+        </span>
       )}
-      {UPDATEDAT && (
-        <div className="update">
-          <span>{Compute(UPDATEDAT?.toString())}</span>
-          {!isList && <span>에 업데이트</span>}
-        </div>
-      )}
-    </DateCont>
+    </Container>
   );
 };
-const DateCont = styled.div`
-  gap: 7px;
-  display: flex;
-  flex-direction: column;
-  opacity: 0.7;
-  text-align: end;
+const Container = styled.article`
+  margin-left: 10px;
+  font-size: 0.8rem;
   font-style: italic;
-  .create,
-  .update {
+  display: inline-block;
+  span {
+    margin-right: 3px;
+  }
+  .create {
+    opacity: 0.7;
   }
   .update {
-    color: ${(p) => p.theme.color.logo};
+    opacity: 0.9;
+    color: #d63031;
   }
 `;
-
-export const ComputeLength = ({ watch, type }: any) => {
-  return watch(type)?.toString().replace(/\s/gi, '')?.length;
+export const Length = (watch: string | undefined) => {
+  if (watch) return watch.toString().replace(/\s/gi, '').length;
 };

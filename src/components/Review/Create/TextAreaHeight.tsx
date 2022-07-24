@@ -3,7 +3,7 @@ import {
   UseFormSetError,
   UseFormClearErrors,
 } from 'react-hook-form';
-import { ComputeLength } from '../../Tools';
+import { Length } from '../../Tools';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 type IHeightReturn = [
@@ -28,14 +28,14 @@ export const TextAreaHeight = (
   const [height, setHeight] = useState(minHeight);
   //
   useEffect(() => {
-    const length = ComputeLength({ watch: watch, type: 'content' });
+    const length = Length({ watch: watch, type: 'content' });
     if (length) setHeight(minHeight + length * 0.1);
-  }, [watch('content'), setHeight, ComputeLength]);
+  }, [watch('content'), setHeight, Length]);
   //
   const [save, setSave] = useState(false);
-  const TitleLength = ComputeLength({ watch: watch, type: 'title' });
-  const MovieLength = ComputeLength({ watch: watch, type: 'movieTitle' });
-  const ContentLength = ComputeLength({ watch: watch, type: 'content' });
+  const TitleLength = Length({ watch: watch, type: 'title' });
+  const MovieLength = Length({ watch: watch, type: 'movieTitle' });
+  const ContentLength = Length({ watch: watch, type: 'content' });
   //
   const clickSave = () => {
     if (TitleLength === 0)
@@ -72,7 +72,7 @@ export const TextAreaHeight = (
     clearErrors,
     TitleLength,
     MovieLength,
-    ComputeLength,
+    Length,
     ContentLength,
     maxTitle,
     minContent,

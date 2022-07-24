@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
-interface IFollowCountsProps {
+interface IFollowCounts {
   counts?: {
     posts: number;
     followers: number;
   };
 }
-export const FollowCounts = ({ counts }: IFollowCountsProps) => {
+export const FollowCounts = ({ counts }: IFollowCounts) => {
   return (
     <Cont className="follow-counts">
       <Box>
@@ -27,7 +27,13 @@ const Cont = styled.article`
   align-items: center;
 `;
 const Box = styled.div`
+  span {
+    font-size: 1.2rem;
+  }
   .number {
+    font-weight: 500;
     margin-left: 10px;
+    font-size: 1.3rem;
+    color: ${(p) => p.theme.color.logo};
   }
 `;

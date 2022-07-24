@@ -1,5 +1,5 @@
 import {
-  ICommentRes,
+  ICmtRes,
   CommentWithUser,
   IEditCommentForm,
 } from '../../../../types/comments';
@@ -14,7 +14,7 @@ import { IconBtn } from '../../../Style/Button/IconBtn';
 import { TextArea } from '../../../Style/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { CapFirstLetter, ComputeLength, ReadDate } from '../../../Tools';
+import { CapFirstLetter, Length, ReadDate } from '../../../Tools';
 
 interface IEditComments extends IReview {
   editCmt: boolean;
@@ -29,7 +29,7 @@ export const EditComment = ({
   setEditCmt,
   setSelectId,
 }: IEditComments) => {
-  const [EditComment, { loading, data }] = useMutation<ICommentRes>(
+  const [EditComment, { loading, data }] = useMutation<ICmtRes>(
     `/api/user/${review?.UserID}/review/${review?.id}/comment/${comment?.id}/edit`
   );
   const {
@@ -51,9 +51,9 @@ export const EditComment = ({
   const maxHeight = 100;
   const [height, setHeight] = useState(minHeight);
   useEffect(() => {
-    const length = ComputeLength({ watch: watch, type: 'content' });
+    const length = Length({ watch: watch, type: 'content' });
     if (length) setHeight(minHeight + length);
-  }, [watch('content'), setHeight, ComputeLength]);
+  }, [watch('content'), setHeight, Length]);
 
   useEffect(() => {
     if (data?.ok) {

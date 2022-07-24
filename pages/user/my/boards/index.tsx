@@ -5,8 +5,8 @@ import { Page } from '../../../../styles/global';
 import { IGetBoards } from '../../../../src/types/board';
 import useUser from '../../../../src/libs/client/useUser';
 import { Title, TitleSign } from '../../../../src/components/Layout/Title';
-import { BoardList } from '../../../../src/components/Board/Read/Page/Boards';
-import { FixedBtn } from '../../../../src/components/Board/Read/Page/Boards/FixedBtn';
+import { BoardList } from '../../../../src/components/Board/Read/Page/List';
+import { FixedBtn } from '../../../../src/components/Board/Read/Page/List/FixedBtn';
 
 const MyBoardsPage: NextPage = () => {
   const { loggedInUser } = useUser();

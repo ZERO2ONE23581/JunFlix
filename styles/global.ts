@@ -65,65 +65,54 @@ export const Info = styled.div`
 `;
 export const Modal = styled.article`
   min-width: 330px;
-  z-index: 100;
-  position: fixed;
   top: 50%;
   left: 50%;
+  z-index: 100;
+  position: fixed;
   transform: translate(-50%, -50%);
-  //
   gap: 20px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  //
+  border: none;
   padding: 30px;
   overflow: hidden;
   font-size: 1.2rem;
-  border: none;
   border-radius: 5px;
   color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
-  .btn-wrap {
-    gap: 1em;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    button {
-      min-width: 100px;
-      width: 100%;
-      padding: 5px;
-    }
-  }
-  .wrap {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
 `;
 export const AnswerModal = styled(Modal)`
   gap: 8px;
   padding: 40px;
-  line-height: 25px;
-  text-align: center;
-  align-items: flex-start;
+  line-height: 20px;
   border: ${(p) => p.theme.border.thin};
-  li {
-    span {
-      opacity: 0.8;
-      font-size: 1.2rem;
-      font-style: italic;
-    }
+  span {
+    opacity: 0.8;
+    font-size: 1.2rem;
+    font-style: italic;
   }
-  .eng {
-    margin-bottom: 10px;
+  .small {
+    opacity: 0.5;
+    font-size: 1.1rem;
+  }
+  .btn-wrap {
+    gap: 1em;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    button {
+      width: 100%;
+      padding: 5px;
+      min-width: 100px;
+    }
   }
 `;
 
 export const DimBackground = styled.article<{ zIndex: number }>`
-  z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
   top: 0;
   left: 0;
   width: 100vw;
@@ -131,6 +120,7 @@ export const DimBackground = styled.article<{ zIndex: number }>`
   position: fixed;
   background-color: #ffeaa7;
   background-color: rgba(0, 0, 0, 0.8);
+  z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
 `;
 export const Grid = styled.article<{ size: number }>`
   gap: 25px;

@@ -1,13 +1,12 @@
+import { Input } from '.';
 import { useState } from 'react';
 import { ErrorMsg } from '../ErrMsg';
 import styled from '@emotion/styled';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { Input } from '.';
 
 export interface ITitleInput {
   id: string;
   type?: string;
-  label?: string;
   watch?: string;
   error?: string;
   isValue?: boolean;
@@ -19,7 +18,6 @@ export interface ITitleInput {
 export const TitleInput = ({
   id,
   type,
-  label,
   error,
   disabled,
   register,
@@ -28,7 +26,7 @@ export const TitleInput = ({
   const [isFocus, setIsFocus] = useState(false);
   return (
     <Cont isFocus={isFocus} className={id}>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} />
       <Input
         {...register}
         id={id}
@@ -44,6 +42,7 @@ export const TitleInput = ({
   );
 };
 const Cont = styled.article<{ isFocus: boolean }>`
+  width: 100%;
   label {
     display: none;
   }
@@ -52,11 +51,14 @@ const Cont = styled.article<{ isFocus: boolean }>`
     padding: 3px 5px;
     box-shadow: none;
     border-radius: 0;
-    font-size: 1.3rem;
-    border-bottom: thick double ${(p) => p.theme.color.font};
+    font-size: 1.5rem;
+    ::placeholder {
+      font-size: 1.3rem;
+    }
     :focus {
       outline: none;
       border-bottom: thick double ${(p) => p.theme.color.logo};
     }
+    border-bottom: thick double ${(p) => p.theme.color.font};
   }
 `;

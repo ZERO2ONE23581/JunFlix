@@ -54,7 +54,7 @@ const Cont = styled.article<{ isFocus: boolean; isWatch: boolean }>`
   gap: 10px;
   width: 100%;
   display: flex;
-  padding: 10px 20px;
+  padding: 15px 20px;
   border-radius: 3px;
   flex-direction: column;
   box-shadow: ${(p) => p.theme.boxShadow.input};
@@ -76,7 +76,7 @@ export const TextArea = styled.textarea<{
   background-color: ${(p) => p.theme.color.bg};
   height: ${(p) => p.height && `${p.height}px`};
   :focus {
-    outline: ${(p) => `thick double ${p.theme.color.logo}`};
+    outline: ${(p) => `2px double ${p.theme.color.logo}`};
   }
   ::placeholder {
     font-style: italic;

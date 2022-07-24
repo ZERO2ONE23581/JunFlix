@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Genre } from '../../Board/Read/Page/Board/Info/Genre';
+import { Genre } from '../../Board/Read/Board/Info/Genre';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface ISelectWrap {

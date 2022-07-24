@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
-import { BtnWrap } from './Edit/Btns';
+import { BtnWrap } from './Btns';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { Svg } from '../../../Style/Svg/Svg';
-import { DelModal } from './DelModal';
+import { DelModal } from './Modal/delete';
 import { LoadingModal } from '../../../LoadingModal';
 import { IBoardForm } from '../../../../types/board';
 import { MutationRes } from '../../../../types/mutation';
-import { EditModal } from './Edit/EditModal';
+import { EditModal } from './Modal/edit';
 import useMutation from '../../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 

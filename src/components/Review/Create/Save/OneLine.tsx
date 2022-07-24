@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ComputeLength } from '../../../Tools';
+import { Length } from '../../../Tools';
 import { ErrorMsg } from '../../../Style/ErrMsg';
 import { InputWrap } from '../../../Style/Input';
 import { IUseform } from '../../../../types/global';
@@ -22,7 +22,7 @@ export const OneLineModal = ({
   setScore,
 }: IOneLine) => {
   const MaxOneLine = 30;
-  const OneLineLength = ComputeLength({ watch: watch, type: 'oneline' });
+  const OneLineLength = Length({ watch: watch, type: 'oneline' });
   const clickNext = () => {
     if (OneLineLength > MaxOneLine) {
       return setError('oneline', {

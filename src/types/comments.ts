@@ -29,10 +29,10 @@ export interface IGetCommentInfo {
 export interface CommentWithUser extends Comment {
   user: User;
 }
-export interface ICreateCommentsForm {
+export interface ICmtForm {
   content?: string;
 }
-export interface ICommentRes {
+export interface ICmtRes {
   ok: boolean;
   error?: string;
   DeletedID?: number;
