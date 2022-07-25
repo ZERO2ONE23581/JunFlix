@@ -1,23 +1,18 @@
-import { Info } from './Info';
-import { useEffect } from 'react';
-import { SaveReivew } from './Save';
+import { useEffect, useState } from 'react';
+import { SaveModal } from './Modal';
 import styled from '@emotion/styled';
 import { Avatar } from '../../Avatar';
 import { Review } from '@prisma/client';
 import { useRouter } from 'next/router';
-import { Btn } from '../../Style/Button';
 import { useForm } from 'react-hook-form';
-import { CreatePreivew } from './Preview';
-import { InputWrap } from '../../Style/Input';
-import { ErrorMsg } from '../../Style/ErrMsg';
-import { TextAreaHeight } from './TextAreaHeight';
 import useUser from '../../../libs/client/useUser';
 import { IReviewForm } from '../../../types/review';
-import { IconBtn } from '../../Style/Button/IconBtn';
 import { Container } from '../../../../styles/global';
 import { TextAreaWrap } from '../../Style/Input/TextArea';
-import { SelectWrap } from '../../Style/Input/SelectWrap';
 import useMutation from '../../../libs/client/useMutation';
+import { Length } from '../../Tools';
+import { Inputs } from './Inputs';
+import { Errors } from './Error';
 
 interface ICreateReviewRes {
   ok: boolean;
@@ -28,6 +23,9 @@ export const CreateReview = () => {
   const router = useRouter();
   const { user_id } = router.query;
   const { loggedInUser } = useUser();
+  const [CreateReview, { loading, data }] = useMutation<ICreateReviewRes>(
+    `/api/user/${user_id}/review/create`
+  );
   const {
     watch,
     register,
@@ -37,23 +35,59 @@ export const CreateReview = () => {
     clearErrors,
     handleSubmit,
     formState: { errors },
-  } = useForm<IReviewForm>({ mode: 'onChange' });
-  //
-  const [createReview, { loading, data }] = useMutation<ICreateReviewRes>(
-    `/api/user/${user_id}/review/create`
-  );
-  const [
-    preview,
-    Loading,
-    openAvatar,
-    setPreview,
-    setOpenAvatar,
-    setAvatarLoading,
-  ] = CreatePreivew(watch, loading);
-
-  const [clickSave, setSave, save, height, minHeight, maxHeight] =
-    TextAreaHeight(watch, setError, clearErrors);
-
+  } = useForm<IReviewForm>({ mode: 'onSubmit' });
+  const [maxTitle] = useState(30);
+  const [maxContent] = useState(4000);
+  const [maxMovieTitle] = useState(30);
+  const [height, setHeight] = useState(40);
+  useEffect(() => {
+    const content = watch!('content');
+    setHeight(content?.length! * 0.2);
+  }, [setHeight, watch!('content')]);
+  const TitleLen = Length(watch('title'));
+  const CntLen = Length(watch('content'));
+  const MovieLen = Length(watch('movieTitle'));
+  useEffect(() => {
+    if (TitleLen! !== 0 && TitleLen! < maxTitle) clearErrors('title');
+    if (MovieLen! !== 0 && MovieLen! < maxMovieTitle) clearErrors('movieTitle');
+    if (CntLen! > 50 && CntLen! < maxContent) clearErrors('content');
+  }, [
+    CntLen,
+    TitleLen,
+    MovieLen,
+    maxTitle,
+    maxContent,
+    clearErrors,
+    maxMovieTitle,
+  ]);
+  const [save, setSave] = useState(false);
+  const clickSave = () => {
+    if (!TitleLen)
+      return setError('title', { message: '리뷰제목을 입력해주세요.' });
+    if (TitleLen! > maxTitle)
+      return setError('title', {
+        message: `리뷰제목의 길이는 ${maxTitle}자 이하입니다.`,
+      });
+    if (!MovieLen)
+      return setError('movieTitle', { message: '영화제목을 입력해주세요.' });
+    if (MovieLen! > maxMovieTitle)
+      return setError('movieTitle', {
+        message: `영화제목의 길이는 ${maxMovieTitle}자 이하입니다.`,
+      });
+    if (!CntLen)
+      return setError('content', { message: '리뷰를 입력해주세요.' });
+    if (CntLen! <= 50)
+      return setError('content', {
+        message: `리뷰의 최소길이는 50자 이상입니다.`,
+      });
+    if (CntLen! > maxContent)
+      return setError('content', {
+        message: `리뷰의 최대길이는 ${maxContent}자 이하입니다.`,
+      });
+    setSave(true);
+  };
+  const [avatarLoading, setAvatarLoading] = useState(false);
+  const Loading = avatarLoading ? avatarLoading : loading ? loading : false;
   const onValid = async ({
     title,
     genre,
@@ -78,7 +112,7 @@ export const CreateReview = () => {
           body: form,
         })
       ).json();
-      createReview({
+      CreateReview({
         avatar: id,
         title,
         movieTitle,
@@ -90,7 +124,7 @@ export const CreateReview = () => {
       });
       setAvatarLoading((p) => !p);
     } else {
-      createReview({
+      CreateReview({
         title,
         movieTitle,
         genre,
@@ -101,91 +135,34 @@ export const CreateReview = () => {
       });
     }
   };
-
   useEffect(() => {
+    if (data?.error) alert(data.error);
     if (data?.ok && data.review)
       router.replace(`/user/${data.review.UserID}/review/${data.review.id}`);
   }, [data, router]);
-  //
+
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
-        <Cont isPreview={Boolean(preview)}>
+        <ReviewCont>
           <h1>Create Review</h1>
-          <Flex>
-            <InputWrap
-              id="title"
-              type="text"
-              label="Review Title"
-              watch={watch('title')}
-              register={register('title')}
-            />
-            <InputWrap
-              type="text"
-              id="movieTitle"
-              label="Movie Title"
-              watch={watch('movieTitle')}
-              register={register('movieTitle')}
-            />
-            <SelectWrap
-              id="genre"
-              watch={watch('genre')}
-              register={register('genre')}
-            />
-            <IconBtn
-              size="2rem"
-              type="button"
-              svgType="file-upload"
-              isClicked={Boolean(preview)}
-              onClick={() => setOpenAvatar(true)}
-            />
-            <IconBtn
-              size="2rem"
-              type="button"
-              svgType="undo"
-              onClick={() => {
-                setPreview('');
-                setOpenAvatar(false);
-              }}
-            />
-          </Flex>
-          <>
-            {data?.error && <ErrorMsg error={data?.error} />}
-            {errors.title && <ErrorMsg error={errors.title.message} />}
-            {errors.content && <ErrorMsg error={errors.content.message} />}
-            {errors.movieTitle && (
-              <ErrorMsg error={errors.movieTitle.message} />
-            )}
-          </>
-          {openAvatar && (
-            <Avatar
-              avatar=""
-              id="avatar"
-              preview={preview}
-              register={register('avatar')}
-              size={{ width: '60vw', height: '60vh' }}
-            />
-          )}
+          <Inputs watch={watch} register={register} clickSave={clickSave} />
+          <Avatar
+            id="avatar"
+            avatarWatch={watch('avatar')}
+            register={register('avatar')}
+          />
           <TextAreaWrap
             id="content"
             height={height}
             user={loggedInUser}
-            minHeight={minHeight}
-            maxHeight={maxHeight}
             watch={watch('content')}
             placeholder="리뷰 작성하기..."
-            register={register('content', {
-              required: '리뷰를 작성해주세요.',
-            })}
+            register={register('content')}
           />
-          <Flex>
-            <Info />
-            <Btn type="button" name="SAVE" onClick={clickSave} />
-          </Flex>
-        </Cont>
-
+        </ReviewCont>
         {save && (
-          <SaveReivew
+          <SaveModal
             watch={watch}
             loading={Loading}
             setSave={setSave}
@@ -194,52 +171,45 @@ export const CreateReview = () => {
             setValue={setValue}
             getValues={getValues}
             clearErrors={clearErrors}
-            OneLineError={errors.oneline?.message}
           />
         )}
       </form>
+      <Errors errors={errors} />
     </>
   );
 };
-const Cont = styled(Container)<{ isPreview: boolean }>`
-  padding: 0;
+export const ReviewCont = styled(Container)`
   gap: 20px;
+  padding: 0;
   display: flex;
+  box-shadow: none;
   flex-direction: column;
   justify-content: center;
-  box-shadow: none;
   h1 {
     font-size: 1.8rem;
     margin-top: 20px;
   }
   .avatar {
     label {
+      border-right: none;
+    }
+    .isImageTag,
+    .isPreivewTag,
+    .noImageDiv {
+      width: 80vw;
+      min-height: 500px;
+      border: ${(p) => p.theme.border.thick};
       box-shadow: ${(p) => p.theme.boxShadow.nav};
-      border: ${(p) => !p.isPreview && p.theme.border.thin};
     }
   }
   .content {
-    border: 1px solid #dfe6e9;
     textarea {
-      font-size: 1.1rem;
+      min-height: 300px;
+      max-height: 500px;
+      font-size: 1.2rem;
+      :focus {
+        outline: none;
+      }
     }
-  }
-`;
-const Flex = styled.article`
-  gap: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  label {
-    padding: 10px;
-  }
-  input {
-    padding: 11px 20px;
-  }
-  .upload {
-    gap: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 `;

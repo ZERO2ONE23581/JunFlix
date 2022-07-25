@@ -12,7 +12,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!title)
     return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
   if (user.id !== +user_id)
-    return res.json({ ok: false, error: '유저불일치. 수정권한이 없습니다.!' });
+    return res.json({ ok: false, error: '유저불일치. 수정권한이 없습니다.' });
   //
   const dupData = Boolean(
     await client.board.findUnique({

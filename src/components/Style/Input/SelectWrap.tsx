@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { Genre } from '../../Board/Read/Board/Info/Genre';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import { Svg } from '../Svg/Svg';
 
 interface ISelectWrap {
   id: string;
@@ -10,6 +10,7 @@ interface ISelectWrap {
 }
 
 export const SelectWrap = ({ id, register, disabled, watch }: ISelectWrap) => {
+  console.log(watch);
   return (
     <Cont className="select-wrap" isWatch={Boolean(watch)}>
       <Select {...register} id={id} name={id} disabled={disabled}>
@@ -34,25 +35,41 @@ export const SelectWrap = ({ id, register, disabled, watch }: ISelectWrap) => {
           </>
         )}
       </Select>
-      {id === 'genre' && <Genre genre={watch} size="2rem" />}
+
+      {id === 'genre' && (
+        <>
+          {watch === 'SF' && <Svg type="SF" size="2rem" />}
+          {watch === 'Action' && <Svg type="Action" size="2rem" />}
+          {watch === 'Drama' && <Svg type="Drama" size="2rem" />}
+          {watch === 'Horror' && <Svg type="Horror" size="2rem" />}
+          {watch === 'Thriller' && <Svg type="Thriller" size="2rem" />}
+          {watch === 'Mystery' && <Svg type="Mystery" size="2rem" />}
+          {watch === 'Comedy' && <Svg type="Comedy" size="2rem" />}
+          {watch === 'Fantasy' && <Svg type="Fantasy" size="2rem" />}
+        </>
+      )}
     </Cont>
   );
 };
 const Cont = styled.div<{ isWatch: boolean }>`
-  padding: 0 10px;
-  gap: 10px;
+  gap: 5px;
   display: flex;
+  padding: 1px 10px;
+  border-radius: 3px;
   align-items: center;
   justify-content: center;
-  border-radius: 3px;
   box-shadow: ${(p) => p.theme.boxShadow.input};
   border: ${(p) =>
     p.isWatch ? `1px solid ${p.theme.color.logo}` : p.theme.border.thin};
+  svg {
+    fill: ${(p) => p.theme.color.font};
+  }
 `;
 const Select = styled.select`
   border: none;
   outline: none;
-  padding: 10px;
+  max-width: 170px;
+  padding: 10px 0;
   font-size: 1rem;
   text-align: center;
   background-color: inherit;

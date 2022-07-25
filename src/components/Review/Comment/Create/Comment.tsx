@@ -8,6 +8,7 @@ import { IReview } from '../../../../types/review';
 import { TextArea } from '../../../Style/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
 import { ICmtRes, ICmtForm } from '../../../../types/comments';
+import { IconBtn } from '../../../Style/Button/IconBtn';
 
 export const CreateComment = ({ review }: IReview) => {
   const [CreateComment, { loading, data }] = useMutation<ICmtRes>(
@@ -37,7 +38,7 @@ export const CreateComment = ({ review }: IReview) => {
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
-        <Cont height={height}>
+        <Cont height={height} className="create-cmt">
           <Svg type="smile" size="3rem" />
           <TextArea
             {...register('content', { required: '댓글을 입력해주세요.' })}
@@ -46,7 +47,9 @@ export const CreateComment = ({ review }: IReview) => {
             placeholder="댓글 달기..."
           />
           {loading && <Svg type="loading" size="2rem" />}
-          {!loading && <Btn name="Post" type="submit" CLASSNAME="submit-btn" />}
+          {!loading && (
+            <IconBtn type="submit" size="2.2rem" svgType="paper-plane" />
+          )}
         </Cont>
       </form>
       {data?.error && <ErrorMsg error={data.error} />}
@@ -55,21 +58,21 @@ export const CreateComment = ({ review }: IReview) => {
   );
 };
 const Cont = styled.div<{ height: number }>`
-  margin-bottom: 20px;
   gap: 20px;
   display: flex;
-  align-items: center;
-  border: none;
+  padding: 20px 40px;
   border-radius: 5px;
-  svg {
+  align-items: center;
+  border: 2px solid ${(p) => p.theme.color.font};
+  .smile {
     pointer-events: none;
   }
   textarea {
     cursor: auto;
+    padding: 10px;
     min-height: 50px;
     max-height: 120px;
-    padding-top: 20px;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     height: ${(p) => p.height && `${p.height}px`};
   }
   .submit-btn {

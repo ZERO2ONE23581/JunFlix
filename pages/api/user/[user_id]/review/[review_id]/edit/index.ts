@@ -23,24 +23,19 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!isInput) return res.json({ ok: false, error: 'no input data.' });
   if (user.id !== +user_id)
     return res.json({ ok: false, error: 'invalid user. no rights to edit.' });
-  //
-  const isUpdated = Boolean(
-    await client.review.update({
-      where: { id: +review_id },
-      data: {
-        avatar,
-        title,
-        movieTitle,
-        genre,
-        content,
-        score: +score,
-        oneline,
-        recommend,
-      },
-    })
-  );
-  if (!isUpdated) return res.json({ ok: false, error: 'update fail!' });
-  //
+  await client.review.update({
+    where: { id: +review_id },
+    data: {
+      avatar,
+      title,
+      movieTitle,
+      genre,
+      content,
+      score: +score,
+      oneline,
+      recommend,
+    },
+  });
   return res.json({ ok: true });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

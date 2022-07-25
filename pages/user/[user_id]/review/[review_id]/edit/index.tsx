@@ -1,36 +1,36 @@
 import { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Page } from '../../../../../../styles/global';
 import { Title } from '../../../../../../src/components/Layout/Title';
-import { EditReview } from '../../../../../../src/components/Review/Edit/EditReview';
+import { EditReview } from '../../../../../../src/components/Review/Edit';
 import { IconBtn } from '../../../../../../src/components/Style/Button/IconBtn';
 import { useState } from 'react';
-import { ReviewAnswer } from '../../../../../../src/components/Review/Edit/ReviewAnswer';
+import { Answer } from '../../../../../../src/components/Review/Read/modal/answer';
+import { ReviewPG } from '../../create';
 
 const EditReviewPage: NextPage = () => {
   const [answer, setAnswer] = useState(false);
   return (
     <>
       <Title title="리뷰수정" />
-      <PageCont>
+      <Cont>
         <EditReview />
         <IconBtn
+          size="3.3rem"
           type="button"
           svgType="question"
           onClick={() => setAnswer(true)}
         />
-        {answer && <ReviewAnswer openModal={setAnswer} />}
-      </PageCont>
+        {answer && <Answer openModal={setAnswer} />}
+      </Cont>
     </>
   );
 };
 export default EditReviewPage;
 
-const PageCont = styled(Page)`
-  padding: 2% 5%;
+const Cont = styled(ReviewPG)`
   .question {
-    right: 5rem;
-    bottom: 5rem;
+    right: 30px;
+    bottom: 50px;
     position: fixed;
   }
 `;

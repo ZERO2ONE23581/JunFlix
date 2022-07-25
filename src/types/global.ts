@@ -27,9 +27,11 @@ export interface IUseform {
   setValue?: UseFormSetValue<any>;
   getValues?: UseFormGetValues<any>;
   clearErrors?: UseFormClearErrors<any>;
-  errors: {
+  errors?: {
     title?: FieldError | undefined;
     content?: FieldError | undefined;
+    oneline?: FieldError | undefined;
+    movieTitle?: FieldError | undefined;
     createdAt?: FieldError | undefined;
     createAvatar?: FieldError | undefined;
   };

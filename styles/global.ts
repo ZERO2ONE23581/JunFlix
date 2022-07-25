@@ -54,15 +54,6 @@ export const Form = styled.form`
     }
   }
 `;
-export const Info = styled.div`
-  font-size: 1rem;
-  font-style: italic;
-  color: ${(p) => p.theme.color.logo};
-  span {
-    display: block;
-    margin-bottom: 5px;
-  }
-`;
 export const Modal = styled.article`
   min-width: 330px;
   top: 50%;
@@ -99,14 +90,14 @@ export const AnswerModal = styled(Modal)`
     font-size: 1.1rem;
   }
   .btn-wrap {
-    gap: 1em;
+    gap: 20px;
     width: 100%;
     display: flex;
     align-items: center;
     margin-top: 10px;
     button {
       width: 100%;
-      padding: 5px;
+      padding: 8px;
       min-width: 100px;
     }
   }
@@ -133,18 +124,19 @@ const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
 export const AVATAR_URL = (avatar: string) => `${base}/${avatar}/${variant}`;
 
 export const AVATAR_BG = styled.article<{ avatar: string }>`
-  background: ${(p) =>
-    p.avatar && `url(${AVATAR_URL(p.avatar)}) no-repeat center center `};
-  min-height: 440px;
   border: none;
   overflow: hidden;
+  min-height: 440px;
   position: relative;
+  background: ${(p) =>
+    p.avatar && `url(${AVATAR_URL(p.avatar)}) no-repeat center center `};
   -o-background-size: cover;
   background-size: 100% 100%;
   -moz-background-size: cover;
   -webkit-background-size: cover;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.font};
+
   .post-list {
     .POST {
       background-color: ${(p) => p.theme.color.bg};

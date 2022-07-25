@@ -7,7 +7,6 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 interface IAvatar {
   id: string;
   avatar?: string;
-  preview?: string;
   disabled?: boolean;
   avatarWatch?: FileList;
   register?: UseFormRegisterReturn;
@@ -57,17 +56,18 @@ export const Avatar = ({
 };
 
 const Cont = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(p) => p.theme.color.bg};
   label {
+    display: block;
     cursor: pointer;
     border-right: ${(p) => '1px dotted #ecf0f1'};
   }
   input {
     display: none;
   }
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: ${(p) => p.theme.color.bg};
 `;
 const NoImage = styled.div<{ disabled: boolean }>`
   display: flex;

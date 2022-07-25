@@ -29,8 +29,8 @@ export const Btns = ({ setTheme, isLight }: IBtns) => {
   );
 };
 const Cont = styled.div`
-  top: 30%;
-  left: 3%;
+  top: 200px;
+  left: 30px;
   position: fixed;
   z-index: 999;
 `;

@@ -8,7 +8,6 @@ import { Svg } from '../../../Style/Svg/Svg';
 import { ReviewModel } from '../../../../types/post';
 import { CapFirstLetter, ReadDate } from '../../../Tools';
 import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
-import { Genre } from '../../../Board/Read/Board/Info/Genre';
 
 export interface IReviewList {
   reviews: ReviewModel[];
@@ -18,6 +17,11 @@ export const ReviewList = ({ reviews }: IReviewList) => {
     return reviews.length - reviews.indexOf(item);
   };
   const isReview = Boolean(reviews?.length > 0);
+  const ReadTitle = (title: string) => {
+    if (Boolean(title.length >= 10))
+      return CapFirstLetter(title.slice(0, 10) + '...');
+    if (Boolean(title.length < 10)) return CapFirstLetter(title);
+  };
   return (
     <>
       {isReview && (
@@ -25,22 +29,23 @@ export const ReviewList = ({ reviews }: IReviewList) => {
           <Layer />
           {reviews?.map((review) => (
             <Lists key={review.id} isFirst={Boolean(Order(review) === 1)}>
-              <BtnWrap userId={review.UserID} />
               <li className="number">{Order(review)}</li>
               <li className="title">
                 <Link href={`/user/${review.UserID}/review/${review.id}`}>
-                  <a>#{CapFirstLetter(review.title)}</a>
+                  <a>#{ReadTitle(review.title)}</a>
                 </Link>
               </li>
               <li className="author">
                 <ProfileAvatar avatar={review?.user?.avatar} size="2rem" />
                 <span>@{review?.user?.userId}</span>
               </li>
-              <li className="movie">"{review.movieTitle.toUpperCase()}"</li>
+              <li className="movie">
+                "<a>{ReadTitle(review.movieTitle)}</a>"
+              </li>
               <li className="genre">
                 <span>{review.genre}</span>
                 <span>
-                  <Genre genre={review.genre} size="1.6rem" />
+                  <Svg type={review.genre} size="1.6rem" />
                 </span>
               </li>
               <li className="stars">
@@ -63,11 +68,19 @@ export const ReviewList = ({ reviews }: IReviewList) => {
                 />
               </li>
               <li className="createdAt date">
-                <ReadDate CREATEDAT={review.createdAt} isList />
+                <ReadDate
+                  isList
+                  UPDATEDAT={null}
+                  CREATEDAT={review.createdAt}
+                />
               </li>
               <li className="updatedAt date">
                 <span>
-                  <ReadDate UPDATEDAT={review.updatedAt} isList />
+                  <ReadDate
+                    isList
+                    CREATEDAT={null}
+                    UPDATEDAT={review.updatedAt}
+                  />
                 </span>
               </li>
             </Lists>
@@ -103,7 +116,6 @@ const Lists = styled(ListWrap)<{ isFirst: boolean }>`
       pointer-events: none;
     }
   }
-  .date,
   .title,
   .movie {
     padding-left: 15px;
@@ -111,7 +123,7 @@ const Lists = styled(ListWrap)<{ isFirst: boolean }>`
   }
   .title,
   .movie {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
   .title {
     :hover {
@@ -134,6 +146,6 @@ const Lists = styled(ListWrap)<{ isFirst: boolean }>`
     gap: 20px;
   }
   .date {
-    padding-right: 10px;
+    justify-content: center;
   }
 `;

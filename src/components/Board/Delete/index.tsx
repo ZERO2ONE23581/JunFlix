@@ -54,28 +54,18 @@ export const DeleteBoard = ({ setDeleteBoard }: IDeleteBoard) => {
         <Cont>
           {!confirm && (
             <>
-              <ul>
-                <li>
-                  <IconBtn
-                    size="1.8rem"
-                    type="button"
-                    svgType="close"
-                    onClick={() => setDeleteBoard(false)}
-                  />
-                </li>
-                <li>
-                  <span>이 포스트를 삭제 하시겠습니까?</span>
-                </li>
-                <li>
-                  <span>포스트 삭제후 복구가 불가합니다.</span>
-                </li>
-                <li>
-                  <span>Are you sure to delete this post?</span>
-                </li>
-                <li>
-                  <span>You cant' recover the post once it is deleted.</span>
-                </li>
-              </ul>
+              <IconBtn
+                size="1.8rem"
+                type="button"
+                svgType="close"
+                onClick={() => setDeleteBoard(false)}
+              />
+              <span>이 포스트를 삭제 하시겠습니까?</span>
+              <span className="small">* 포스트 삭제후 복구가 불가합니다.</span>
+              <span>Are you sure to delete this post?</span>
+              <span className="small">
+                You cant' recover the post once it is deleted.
+              </span>
               <div className="btn-wrap">
                 <Btn name="YES" type="button" onClick={clickYes} />
                 <Btn
@@ -88,22 +78,14 @@ export const DeleteBoard = ({ setDeleteBoard }: IDeleteBoard) => {
           )}
           {confirm && (
             <>
-              <ul>
-                <li>
-                  <IconBtn
-                    size="1.8rem"
-                    type="button"
-                    svgType="close"
-                    onClick={() => setDeleteBoard(false)}
-                  />
-                </li>
-                <li>
-                  <span>삭제확인을 위해 회원님의 아이디를 입력해주세요.</span>
-                </li>
-                <li>
-                  <span>Please type the your ID to confirm delete.</span>
-                </li>
-              </ul>
+              <IconBtn
+                size="1.8rem"
+                type="button"
+                svgType="close"
+                onClick={() => setDeleteBoard(false)}
+              />
+              <span>삭제확인을 위해 회원님의 아이디를 입력해주세요.</span>
+              <span>Please type the your ID to confirm delete.</span>
               <Form onSubmit={handleSubmit(onValid)}>
                 <TitleInput
                   id="userId"

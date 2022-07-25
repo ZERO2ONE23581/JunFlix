@@ -41,25 +41,25 @@ export const ListWrap = styled.ul`
     font-size: 1rem;
   }
   .title {
-    width: 17%;
+    width: 15%;
   }
   .author {
-    width: 11%;
+    width: 12%;
   }
   .movie {
-    width: 20%;
+    width: 15%;
   }
   .genre {
-    width: 8%;
+    width: 10%;
   }
   .stars {
     width: 10%;
   }
   .recommend {
-    width: 3%;
+    width: 4%;
   }
   .icons {
-    width: 8%;
+    width: 10%;
   }
   .date {
     width: 10.5%;

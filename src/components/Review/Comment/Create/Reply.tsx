@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../Style/Button';
-import { Svg } from '../../../Style/Svg/Svg';
+import { AltSvg, Svg } from '../../../Style/Svg/Svg';
 import { ErrorMsg } from '../../../Style/ErrMsg';
 import { IReview } from '../../../../types/review';
 import useUser from '../../../../libs/client/useUser';
@@ -11,18 +10,19 @@ import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ICmtRes, ICmtForm } from '../../../../types/comments';
 import { Length } from '../../../Tools';
+import { IconBtn } from '../../../Style/Button/IconBtn';
 
-interface ICreateReviewReply extends IReview {
+interface IReplyCmt extends IReview {
   comment_id: number;
   setSelectId: Dispatch<SetStateAction<number>>;
-  setReplyCmt: Dispatch<SetStateAction<boolean>>;
+  setReply: Dispatch<SetStateAction<boolean>>;
 }
 export const CreateReply = ({
   review,
   comment_id,
   setSelectId,
-  setReplyCmt,
-}: ICreateReviewReply) => {
+  setReply,
+}: IReplyCmt) => {
   const [CreateReply, { loading, data }] = useMutation<ICmtRes>(
     `/api/user/${review?.UserID}/review/${review?.id}/comment/${comment_id}/create`
   );
@@ -37,35 +37,38 @@ export const CreateReply = ({
     return CreateReply({ content });
   };
   const minHeight = 50;
-  const maxHeight = 100;
   const [height, setHeight] = useState(minHeight);
   useEffect(() => {
-    const length = Length({ watch: watch, type: 'content' });
+    const length = Length(watch('content'));
     if (length) setHeight(minHeight + length);
   }, [watch('content'), setHeight, Length]);
-  //
+
   useEffect(() => {
     if (data?.ok) {
       setSelectId(0);
-      setReplyCmt(false);
+      setReply(false);
       alert('새로운 댓글을 생성합니다.');
     }
-  }, [data, setReplyCmt, setSelectId]);
+  }, [data, setReply, setSelectId]);
   const { loggedInUser } = useUser();
   return (
     <>
       <form onSubmit={handleSubmit(onValid)}>
         <Cont>
-          <Flex height={height}>
-            <ProfileAvatar avatar={loggedInUser?.avatar} size="3rem" />
+          <AltSvg type="reply" size="1.4rem" />
+          <ProfileAvatar avatar={loggedInUser?.avatar} size="3rem" />
+          <Flex>
             <TextArea
               {...register('content', { required: '댓글을 입력해주세요.' })}
               id="content"
               name="content"
+              height={height}
               placeholder="답글 달기..."
             />
             {loading && <Svg type="loading" size="2rem" />}
-            {!loading && <Btn name="Post" type="submit" />}
+            {!loading && (
+              <IconBtn type="submit" size="2rem" svgType="paper-plane" />
+            )}
           </Flex>
         </Cont>
       </form>
@@ -75,21 +78,28 @@ export const CreateReply = ({
   );
 };
 const Cont = styled.div`
-  padding: 12px 20px;
-  button {
-    width: 10%;
-    height: 100%;
-    color: inherit;
-    background-color: inherit;
-  }
-`;
-const Flex = styled.div<{ height: number }>`
   gap: 20px;
   display: flex;
-  align-items: flex-start;
+  padding: 12px 20px;
+  margin-bottom: 15px;
+  align-items: center;
+  border: 2px dashed ${(p) => p.theme.color.logo};
+  .reply {
+    margin-top: 5px;
+  }
+`;
+const Flex = styled.div`
+  width: 90%;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   textarea {
-    min-height: 40px;
+    min-height: 10px;
     max-height: 100px;
-    height: ${(p) => p.height && `${p.height}px`};
+    padding: 20px 10px 0;
+    :focus {
+      outline: none;
+    }
   }
 `;

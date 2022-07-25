@@ -5,8 +5,8 @@ import styled from '@emotion/styled';
 import { FixedBtn } from '../FixedBtn';
 import { IPostList, PostModel } from '../../../../types/post';
 import { PostIcons } from '../Modal/Info/Comment/Read/List/Icons';
-import { Genre } from '../../../Board/Read/Board/Info/Genre';
 import { AVATAR_BG, Grid, NoAvatar } from '../../../../../styles/global';
+import { Svg } from '../../../Style/Svg/Svg';
 
 export const PostList = ({ posts }: IPostList) => {
   const [userId, setUserId] = useState(0);
@@ -41,7 +41,7 @@ export const PostList = ({ posts }: IPostList) => {
             >
               {!post.avatar && (
                 <NoAvatar>
-                  <Genre size="2rem" genre={post.board.genre} />
+                  <Svg size="2rem" type={post.board.genre} />
                 </NoAvatar>
               )}
               {postId === post.id && !close && <PostIcons post={post} />}

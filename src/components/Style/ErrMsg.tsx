@@ -2,11 +2,12 @@ import { Svg } from './Svg/Svg';
 import styled from '@emotion/styled';
 
 interface IErrorMsgProps {
+  type?: string;
   error?: string;
 }
-export const ErrorMsg = ({ error }: IErrorMsgProps) => {
+export const ErrorMsg = ({ type, error }: IErrorMsgProps) => {
   return (
-    <Cont className="error-msg">
+    <Cont className={type}>
       <span>
         <Svg type="warn" size="2rem" />
       </span>

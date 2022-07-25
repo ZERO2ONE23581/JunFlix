@@ -1,15 +1,24 @@
-import styled from '@emotion/styled';
+import useSWR from 'swr';
 import type { NextPage } from 'next';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { Page } from '../../../../../styles/global';
+import { IGetReview } from '../../../../../src/types/review';
 import { Title } from '../../../../../src/components/Layout/Title';
-import { ReadReview } from '../../../../../src/components/Review/Read';
+import { Info } from '../../../../../src/components/Review/Read/Info';
 
 const ReviewPage: NextPage = () => {
+  const router = useRouter();
+  const { user_id, review_id } = router.query;
+  const { data } = useSWR<IGetReview>(
+    user_id && review_id && `/api/user/${user_id}/review/${review_id}`
+  );
   return (
     <>
       <Title title="MOVIE REVIEW" />
       <Cont>
-        <ReadReview />
+        {data && <Info review={data.review!} />}
+        {!data && <h1>No data found..</h1>}
       </Cont>
     </>
   );
@@ -19,5 +28,4 @@ export default ReviewPage;
 const Cont = styled(Page)`
   padding: 2% 0;
   min-height: 100%;
-  padding-bottom: 0;
 `;

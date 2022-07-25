@@ -15,10 +15,10 @@ const Create_Board: NextPage = () => {
       <Cont>
         <Background bg={preview}>
           <CreateBoard
-            isPreivew={Boolean(preview)}
             answer={answer}
             setAnswer={setAnswer}
             setPreview={setPreview}
+            isPreivew={Boolean(preview)}
           />
         </Background>
         <IconBtn
@@ -36,14 +36,14 @@ export default Create_Board;
 const Cont = styled(Page)`
   padding-bottom: 0;
   .question {
-    right: 6%;
-    bottom: 20%;
+    right: 60px;
+    bottom: 60px;
     position: fixed;
   }
 `;
 const Background = styled.section<{ bg?: string }>`
   min-height: 100vh;
   padding: 3% 12%;
-  background: url('/img/random/1.png ') center/cover no-repeat;
+  background-color: ${(p) => p.theme.color.font};
   background: ${(p) => p.bg && `url(${p.bg}) center / cover no-repeat`};
 `;

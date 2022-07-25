@@ -5,14 +5,14 @@ import { CreateReview } from '../../../../../src/components/Review/Create';
 
 const CreateReviewPage: NextPage = () => {
   return (
-    <PageCont>
+    <ReviewPG>
       <CreateReview />
-    </PageCont>
+    </ReviewPG>
   );
 };
 export default CreateReviewPage;
 
-const PageCont = styled(Page)`
-  padding: 0% 20%;
+export const ReviewPG = styled(Page)`
+  padding: 0% 10% 3%;
   padding-bottom: 5%;
 `;

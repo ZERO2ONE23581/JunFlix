@@ -13,8 +13,8 @@ export const CapFirstLetter = (word: string) => {
 
 interface IReadDate {
   isList?: boolean;
-  CREATEDAT?: Date;
-  UPDATEDAT?: Date;
+  CREATEDAT?: Date | null;
+  UPDATEDAT?: Date | null;
 }
 export const ReadDate = ({ CREATEDAT, UPDATEDAT, isList }: IReadDate) => {
   const Compute = (date: string) => {
@@ -30,25 +30,31 @@ export const ReadDate = ({ CREATEDAT, UPDATEDAT, isList }: IReadDate) => {
     Compute(CREATEDAT?.toString()!) !== Compute(UPDATEDAT?.toString()!)
   );
   return (
-    <Container className="read-date">
+    <Container className="read-date" isList={isList}>
       <span className="create">
-        <span>{Compute(CREATEDAT?.toString()!)}</span>
+        {CREATEDAT && <span>{Compute(CREATEDAT?.toString()!)}</span>}
         {!isList && <span>작성</span>}
       </span>
-      {isUpdate && (
-        <span className="update">
+      <span className="update">
+        {UPDATEDAT && isUpdate && (
           <span>{Compute(UPDATEDAT?.toString()!)}</span>
-          {!isList && <span>수정</span>}
-        </span>
-      )}
+        )}
+        {!isList && <span>수정</span>}
+      </span>
     </Container>
   );
 };
-const Container = styled.article`
+const Container = styled.article<{ isList?: boolean }>`
   margin-left: 10px;
   font-size: 0.8rem;
   font-style: italic;
   display: inline-block;
+  display: ${(p) => p.isList && 'flex'};
+  gap: 3px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
   span {
     margin-right: 3px;
   }

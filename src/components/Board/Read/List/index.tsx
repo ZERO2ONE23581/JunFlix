@@ -1,9 +1,8 @@
-import { ListInfo } from './Info';
+import { ListInfo } from './Detail/Info';
 import styled from '@emotion/styled';
-import { FixedBtn } from './FixedBtn';
-import { FollowBoard } from './Follow';
+import { FixedBtn } from './Fixed';
+import { FollowBoard } from './Detail/Follow';
 import { useRouter } from 'next/router';
-import { Genre } from '../Board/Info/Genre';
 import { IBoardListProps } from '../../../../types/board';
 import useUser from '../../../../libs/client/useUser';
 import { AVATAR_BG, Grid, NoAvatar } from '../../../../../styles/global';
@@ -36,7 +35,7 @@ export const BoardList = ({ boards }: IBoardListProps) => {
               >
                 {!board.avatar && (
                   <NoAvatar>
-                    <Genre size="2rem" genre={board.genre} />
+                    <Svg size="2rem" type={board.genre} />
                   </NoAvatar>
                 )}
               </LinkBtn>

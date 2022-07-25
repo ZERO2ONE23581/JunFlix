@@ -12,7 +12,8 @@ export const Icons = ({ review }: IReview) => {
   );
 };
 const Cont = styled.article`
-  padding: 2rem;
+  border-top: 1px dotted #ecf0f1;
+  padding: 25px;
   gap: 50px;
   display: flex;
   align-items: center;

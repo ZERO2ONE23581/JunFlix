@@ -5,9 +5,9 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { IGetBoard } from '../../../../../../src/types/board';
 import { AVATAR_BG, Page } from '../../../../../../styles/global';
-import { Board } from '../../../../../../src/components/Board/Read';
+import { Board } from '../../../../../../src/components/Board/Read/Board';
 import { Title } from '../../../../../../src/components/Layout/Title';
-import { FixedBtn } from '../../../../../../src/components/Board/Read/Board/FixedBtn';
+import { FixedBtn } from '../../../../../../src/components/Board/Read/Board/Fixed';
 
 const BoardPage: NextPage = () => {
   const router = useRouter();
@@ -49,16 +49,9 @@ const Cont = styled(Page)`
   }
 `;
 const BG = styled(AVATAR_BG)<{ preview: string }>`
+  height: 100vh;
   padding: 3% 12%;
   background-color: ${(p) => p.theme.color.font};
   background: ${(p) =>
     p.preview && `url(${p.preview}) center / cover no-repeat`};
-`;
-const Btns = styled.div`
-  bottom: 50%;
-  right: -6%;
-  position: absolute;
-  gap: 2rem;
-  display: flex;
-  flex-direction: column;
 `;

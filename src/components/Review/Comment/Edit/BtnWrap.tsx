@@ -7,57 +7,61 @@ interface IBtnWrap {
   commentId: number;
   isMyComment: boolean;
   setSelectId: Dispatch<SetStateAction<number>>;
-  setEditCmt: Dispatch<SetStateAction<boolean>>;
-  setReplyCmt: Dispatch<SetStateAction<boolean>>;
-  setDeleteCmt: Dispatch<SetStateAction<boolean>>;
+  setEdit: Dispatch<SetStateAction<boolean>>;
+  setReply: Dispatch<SetStateAction<boolean>>;
+  setDel: Dispatch<SetStateAction<boolean>>;
 }
 export const BtnWrap = ({
   selectId,
   commentId,
   isMyComment,
   setSelectId,
-  setEditCmt,
-  setReplyCmt,
-  setDeleteCmt,
+  setEdit,
+  setReply,
+  setDel,
 }: IBtnWrap) => {
   const handleClick = (ID: number, type: string) => {
     setSelectId(ID);
-    if (type === 'reply') setReplyCmt(true);
-    if (type === 'edit') setEditCmt(true);
-    if (type === 'delete') setDeleteCmt(true);
+    if (type === 'reply') setReply(true);
+    if (type === 'edit') setEdit(true);
+    if (type === 'delete') setDel(true);
     if (type === 'cancel') {
       setSelectId(0);
-      setEditCmt(false);
-      setReplyCmt(false);
-      setDeleteCmt(false);
+      setEdit(false);
+      setReply(false);
+      setDel(false);
     }
   };
   return (
-    <Cont className="edit-comment-btns">
+    <Cont>
       <IconBtn
-        svgType="reply"
         type="button"
-        disabled={selectId !== 0}
+        size="1.3rem"
+        svgType="reply"
+        isDisable={Boolean(selectId)}
         onClick={() => handleClick(commentId, 'reply')}
       />
       <IconBtn
-        svgType="close"
         type="button"
-        disabled={selectId === 0}
+        size="1.3rem"
+        svgType="close"
+        isDisable={!Boolean(selectId)}
         onClick={() => handleClick(commentId, 'cancel')}
       />
       {isMyComment && (
         <>
           <IconBtn
-            svgType="pen"
             type="button"
-            disabled={selectId !== 0}
+            size="1.3rem"
+            svgType="pen"
+            isDisable={Boolean(selectId)}
             onClick={() => handleClick(commentId, 'edit')}
           />
           <IconBtn
-            svgType="trash"
             type="button"
-            disabled={selectId !== 0}
+            size="1.3rem"
+            svgType="trash"
+            isDisable={Boolean(selectId)}
             onClick={() => handleClick(commentId, 'delete')}
           />
         </>
@@ -66,25 +70,9 @@ export const BtnWrap = ({
   );
 };
 const Cont = styled.article`
-  gap: 10px;
+  gap: 12px;
   display: flex;
   align-items: center;
   justify-content: end;
   margin-bottom: 5px;
-  svg {
-    :hover {
-      fill: ${(p) => p.theme.color.logo};
-    }
-  }
-  button {
-    :disabled {
-      cursor: default;
-      opacity: 0.4;
-      svg {
-        :hover {
-          fill: ${(p) => p.theme.color.font};
-        }
-      }
-    }
-  }
 `;

@@ -36,7 +36,7 @@ export const EditInfo = ({ board, setEdit }: IEditInfo) => {
     `/api/user/${board?.UserID}/board/${board?.id}/edit`
   );
   const [maxTitle] = useState(30);
-  const [maxContent] = useState(300);
+  const [maxIntro] = useState(300);
   const [height, setHeight] = useState(40);
 
   useEffect(() => {
@@ -52,9 +52,9 @@ export const EditInfo = ({ board, setEdit }: IEditInfo) => {
       return setError!('title', {
         message: `포스트 제목의 길이는 ${maxTitle}자 이하입니다.`,
       });
-    if (Length(watch!('intro'))! > maxContent)
+    if (Length(watch!('intro'))! > maxIntro)
       return setError!('intro', {
-        message: `포스트 길이는 ${maxContent}자 이하입니다.`,
+        message: `포스트 길이는 ${maxIntro}자 이하입니다.`,
       });
     return EditBoard({ title, genre, intro });
   };
