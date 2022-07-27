@@ -2,8 +2,10 @@ import styled from '@emotion/styled';
 import { ReviewWithUser } from '../../../../types/review';
 import { Fixed } from '../Fixed';
 import { Avatar } from '../../../Avatar';
-import { CmtWrap } from './CmtWrap';
 import { Top } from './Detail/Top';
+import { CreateComment } from '../../Comment/Create/Comment';
+import { CommentList } from '../../Comment/Read/List';
+import { Icons } from '../../Comment/Read/Icons';
 
 export interface IInfo {
   review: ReviewWithUser;
@@ -18,7 +20,11 @@ export const Info = ({ review }: IInfo) => {
       )}
       <Wrap>
         <Content>{review?.content}</Content>
-        <CmtWrap review={review!} />
+        <Wrap>
+          <Icons review={review!} />
+          <CreateComment review={review!} />
+          <CommentList review={review!} />
+        </Wrap>
       </Wrap>
     </Cont>
   );
@@ -27,18 +33,11 @@ export const Info = ({ review }: IInfo) => {
 const Cont = styled.article`
   margin: 0 10%;
   padding: 0 12%;
+  min-width: 1200px;
   min-height: 100vh;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  .fixed-btn {
-    top: 100px;
-    right: -100px;
-    position: absolute;
-  }
   .avatar {
-    margin: 20px 0;
+    margin: 10% 0 5%;
     pointer-events: none;
     .isImageTag {
       width: 100vw;

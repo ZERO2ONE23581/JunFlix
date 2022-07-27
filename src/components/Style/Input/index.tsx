@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { ErrorMsg } from '../ErrMsg';
 import styled from '@emotion/styled';
-import { UseFormRegisterReturn, UseFormWatch } from 'react-hook-form';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import { Svg } from '../Svg/Svg';
 
 export interface IInputWrapProps {
   id: string;
   type?: string;
   label?: string;
-  error?: string;
   watch?: string;
   disabled?: boolean;
   placeholder?: string;
@@ -17,7 +16,6 @@ export const InputWrap = ({
   id,
   type,
   label,
-  error,
   watch,
   disabled,
   register,
@@ -26,7 +24,9 @@ export const InputWrap = ({
   const [isFocus, setIsFocus] = useState(false);
   return (
     <Cont className={id} isFocus={isFocus || Boolean(watch)}>
-      <label htmlFor={id}>{label}</label>
+      <label className={id} htmlFor={id}>
+        {label}
+      </label>
       <Input
         {...register}
         id={id}
@@ -37,7 +37,6 @@ export const InputWrap = ({
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
       />
-      {error && <ErrorMsg error={error} />}
     </Cont>
   );
 };
@@ -45,13 +44,13 @@ const Cont = styled.article<{ isFocus: boolean }>`
   width: 100%;
   position: relative;
   label {
-    padding: 5px 10px;
-    display: inline-block;
+    left: 3%;
     border: none;
+    padding: 5px 10px;
     font-size: 0.9rem;
     border-radius: 5px;
-    left: 3%;
     position: absolute;
+    display: inline-block;
     transform: translateY(-50%);
     background-color: ${(p) => p.theme.color.bg};
     top: ${(p) => (p.isFocus ? '-10%' : '50%')};
@@ -62,6 +61,19 @@ const Cont = styled.article<{ isFocus: boolean }>`
   input {
     border: ${(p) =>
       p.isFocus ? `1px solid ${p.theme.color.logo}` : p.theme.border.thin};
+  }
+  input[type='date'] {
+    padding: 11px;
+  }
+  input[type='date']::-webkit-calendar-picker-indicator {
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 10%;
+    background-color: white;
+  }
+  .birth {
+    text-align: center;
+    width: ${(p) => (p.isFocus ? '60px' : '100px')};
   }
 `;
 export const Input = styled.input`

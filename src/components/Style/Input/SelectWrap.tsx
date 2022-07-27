@@ -10,15 +10,14 @@ interface ISelectWrap {
 }
 
 export const SelectWrap = ({ id, register, disabled, watch }: ISelectWrap) => {
-  console.log(watch);
   return (
     <Cont className="select-wrap" isWatch={Boolean(watch)}>
       <Select {...register} id={id} name={id} disabled={disabled}>
         {id === 'gender' && (
           <>
-            <option value="">성별을 선택해주세요.</option>
-            <option value="male">남</option>
-            <option value="female">여</option>
+            <option value="">Sex (성별)</option>
+            <option value="male">Male (남)</option>
+            <option value="female">Female (여)</option>
           </>
         )}
         {id === 'genre' && (
@@ -54,7 +53,7 @@ export const SelectWrap = ({ id, register, disabled, watch }: ISelectWrap) => {
 const Cont = styled.div<{ isWatch: boolean }>`
   gap: 5px;
   display: flex;
-  padding: 1px 10px;
+  padding: 0 10px;
   border-radius: 3px;
   align-items: center;
   justify-content: center;
@@ -68,9 +67,9 @@ const Cont = styled.div<{ isWatch: boolean }>`
 const Select = styled.select`
   border: none;
   outline: none;
-  max-width: 170px;
-  padding: 10px 0;
   font-size: 1rem;
+  padding: 10px 0;
+  max-width: 170px;
   text-align: center;
   background-color: inherit;
   color: ${(p) => p.theme.color.font};

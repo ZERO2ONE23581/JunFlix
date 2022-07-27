@@ -15,7 +15,7 @@ export const Fixed = () => {
   const [delReview, setDelReivew] = useState(false);
   const isMyReview = String(loggedInUser?.id) === user_id;
   return (
-    <Cont className="fixed-btn">
+    <Cont>
       <IconBtn
         size="2.5rem"
         type="button"
@@ -60,7 +60,10 @@ export const Fixed = () => {
   );
 };
 const Cont = styled.div`
-  gap: 20px;
+  top: 100px;
+  right: -80px;
+  position: absolute;
+  gap: 30px;
   display: flex;
   align-items: center;
   flex-direction: column;

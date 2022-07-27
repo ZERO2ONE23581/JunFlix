@@ -12,12 +12,14 @@ export const Title = ({ genre, movieTitle, reivewTitle }: ITtitle) => {
   const ReivewTitle = CapFirstLetter(reivewTitle);
   return (
     <Cont>
-      <Movie>{MovieTitle}</Movie>
+      <Movie>
+        <span>{MovieTitle}</span>
+        <Svg size="3.3rem" type={genre} />
+      </Movie>
       <Review>
         <span>'s Review:</span>
         <span className="review-title">"{ReivewTitle}"</span>
       </Review>
-      <Svg size="4rem" type={genre} />
     </Cont>
   );
 };
@@ -25,19 +27,20 @@ const Cont = styled.div`
   width: 100%;
   display: block;
   line-height: 44px;
-  position: relative;
   overflow-wrap: break-word;
+  text-align: center;
+`;
+const Movie = styled.span`
+  font-size: 3.6rem;
+  position: relative;
   svg {
-    top: 0;
-    right: -100px;
+    top: 8px;
+    left: -80px;
     position: absolute;
   }
 `;
-const Movie = styled.span`
-  font-size: 4rem;
-`;
 const Review = styled.span`
-  font-size: 2.8rem;
+  font-size: 2.4rem;
   font-style: italic;
   .review-title {
     color: ${(p) => p.theme.color.logo};

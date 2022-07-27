@@ -21,9 +21,16 @@ export const Top = ({ review }: IReview) => {
   );
 };
 const Cont = styled.article`
+  min-width: 846px;
   pointer-events: none;
   .read-date {
     font-size: 1.1rem;
+    span {
+      opacity: 0.9;
+    }
+    .create {
+      margin-right: 10px;
+    }
   }
 `;
 const Flex = styled.div`

@@ -4,46 +4,22 @@ import styled from '@emotion/styled';
 import { Page } from '../../../../../styles/global';
 import { Title } from '../../../../../src/components/Layout/Title';
 import { CreateBoard } from '../../../../../src/components/Board/Create';
-import { IconBtn } from '../../../../../src/components/Style/Button/IconBtn';
 
-const Create_Board: NextPage = () => {
+const Create: NextPage = () => {
   const [preview, setPreview] = useState('');
-  const [answer, setAnswer] = useState(false);
   return (
     <>
       <Title title="보드생성" />
-      <Cont>
-        <Background bg={preview}>
-          <CreateBoard
-            answer={answer}
-            setAnswer={setAnswer}
-            setPreview={setPreview}
-            isPreivew={Boolean(preview)}
-          />
-        </Background>
-        <IconBtn
-          size="3rem"
-          type="button"
-          svgType="question"
-          onClick={() => setAnswer(true)}
-        />
+      <Cont bg={preview}>
+        <CreateBoard setPreview={setPreview} isPreview={Boolean(preview)} />
       </Cont>
     </>
   );
 };
-export default Create_Board;
+export default Create;
 
-const Cont = styled(Page)`
-  padding-bottom: 0;
-  .question {
-    right: 60px;
-    bottom: 60px;
-    position: fixed;
-  }
-`;
-const Background = styled.section<{ bg?: string }>`
-  min-height: 100vh;
+const Cont = styled(Page)<{ bg?: string }>`
   padding: 3% 12%;
-  background-color: ${(p) => p.theme.color.font};
+  min-height: 100vh;
   background: ${(p) => p.bg && `url(${p.bg}) center / cover no-repeat`};
 `;

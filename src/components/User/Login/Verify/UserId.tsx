@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Style/Button';
 import { ErrorMsg } from '../../../Style/ErrMsg';
@@ -6,14 +5,13 @@ import { InputWrap } from '../../../Style/Input';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
 import { IFindForm, IFindPostRes } from '../../../../types/login';
-import { Form, Info, JoinCont } from '../../../../../styles/global';
+import { Form } from '../../../../../styles/global';
+import { Heading } from '../../Join/Heading';
 
-interface IVerifyPasswordFormProps {
-  setOpenTokenForm: Dispatch<SetStateAction<boolean>>;
+interface IVerify {
+  setToken: Dispatch<SetStateAction<boolean>>;
 }
-export const VerifyPasswordForm = ({
-  setOpenTokenForm,
-}: IVerifyPasswordFormProps) => {
+export const UserId = ({ setToken }: IVerify) => {
   const [verifyUserId, { loading, data }] = useMutation<IFindPostRes>(
     `/api/user/login/verify/user_id`
   );
@@ -28,31 +26,29 @@ export const VerifyPasswordForm = ({
     return verifyUserId(userId);
   };
   useEffect(() => {
-    if (data?.ok) setOpenTokenForm(data?.ok);
-  }, [data, , setOpenTokenForm]);
+    if (data?.error) alert(data.error);
+    if (data?.ok) setToken(data?.ok);
+  }, [data, setToken]);
   return (
-    <Cont>
-      <h1>Find Password</h1>
-      <h2>Step 1. Confirm User ID</h2>
+    <>
+      <Heading
+        type="verifyId"
+        h1="Find Password (비밀번호 찾기)"
+        h2="Step 1. Verify ID (아이디 인증)"
+      />
       <Form onSubmit={handleSubmit(onValid)}>
         <InputWrap
           watch={watch('userId')}
           type="text"
           id="userId"
           label="USER ID"
-          inputErrMsg={errors.userId?.message}
           register={register('userId', {
             required: '아이디를 입력해주세요.',
           })}
         />
-        {data?.error && <ErrorMsg error={data.error} />}
         <Btn type="submit" name="아이디로 인증하기" loading={loading} />
-        <Info>
-          <span>* Please type your ID for verification.</span>
-          <span>* 인증을 위하여 아이디를 입력해주세요.</span>
-        </Info>
       </Form>
-    </Cont>
+      {errors.userId && <ErrorMsg error={errors.userId.message} />}
+    </>
   );
 };
-const Cont = styled(JoinCont)``;

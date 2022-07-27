@@ -6,19 +6,19 @@ import { IBoardForm } from '../../../types/board';
 import { IconBtn } from '../../Style/Button/IconBtn';
 
 interface IBoardAvatar {
-  isPreivew: boolean;
+  isPreview: boolean;
   register: UseFormRegister<IBoardForm>;
   setPreview: Dispatch<SetStateAction<string>>;
 }
 export const BoardAvatar = ({
-  isPreivew,
+  isPreview,
   register,
   setPreview,
 }: IBoardAvatar) => {
   return (
     <Cont>
       <label htmlFor="avatar">
-        <Svg type="landscape" size="50px" />
+        <Svg type="landscape" size="3rem" />
         <input
           {...register('avatar')}
           id="avatar"
@@ -27,9 +27,9 @@ export const BoardAvatar = ({
           accept="image/*"
         />
       </label>
-      {isPreivew && (
+      {isPreview && (
         <IconBtn
-          size="33px"
+          size="2rem"
           type="button"
           svgType="undo"
           onClick={() => setPreview('')}

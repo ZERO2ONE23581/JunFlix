@@ -16,7 +16,7 @@ export const Modal = ({ setOpen }: any) => {
               </li>
             </a>
           </Link>
-          <Link href="/user/my/profile/edit">
+          <Link href="/user/setting">
             <a>
               <li>
                 <Svg type="setting" size="2rem" />

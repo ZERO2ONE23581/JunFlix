@@ -1,20 +1,23 @@
-import {
-  ICreateProfileAvatarProps,
-  IProfileAvatarForm,
-} from '../../../../types/avatar';
+import { IProfileAvatarForm } from '../../../../types/avatar';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../../Style/Button';
-import { ErrorMsg } from '../../../Style/ErrMsg';
 import { MutationRes } from '../../../../types/mutation';
 import useMutation from '../../../../libs/client/useMutation';
-import { Form, Info, JoinCont } from '../../../../../styles/global';
-import { AvatarLabel, ProfileAvatar } from '../../../Avatar/ProfileAvatar';
+import { Form, FormCont } from '../../../../../styles/global';
+import { Label, ProfileAvatar } from '../../../Avatar/ProfileAvatar';
+import { IconBtn } from '../../../Style/Button/IconBtn';
+import { Errors } from '../../../Review/Create/Error';
+import { Answer } from '../Answer';
 
-export const CreateProfileAvatar = ({
-  createdID,
-}: ICreateProfileAvatarProps) => {
+import styled from '@emotion/styled';
+import { Heading } from '../Heading';
+
+interface ICreateAvatar {
+  createdId: number;
+}
+export const CreateAvatar = ({ createdId }: ICreateAvatar) => {
   const router = useRouter();
   const [createAvatar, { loading, data }] = useMutation<MutationRes>(
     '/api/user/create/avatar'
@@ -29,14 +32,15 @@ export const CreateProfileAvatar = ({
   });
   const avatar = watch('avatar');
   const [avatarLoading, setAvatarLoading] = useState(false);
+
   const onValid = async ({ avatar }: IProfileAvatarForm) => {
     if (loading) return;
     setAvatarLoading((p) => !p);
-    if (!createdID) return router.replace('/login');
-    if (avatar && avatar.length > 0 && createdID) {
+    if (!createdId) return router.replace('/login');
+    if (avatar && avatar.length > 0 && createdId) {
       const { uploadURL } = await (await fetch(`/api/file`)).json();
       const form = new FormData();
-      form.append('file', avatar[0], createdID.toString());
+      form.append('file', avatar[0], createdId.toString());
       const {
         result: { id },
       } = await (
@@ -45,7 +49,7 @@ export const CreateProfileAvatar = ({
           body: form,
         })
       ).json();
-      createAvatar({ avatar: id, createdID });
+      createAvatar({ avatar: id, createdId });
     }
   };
   const [preview, setPreview] = useState('');
@@ -54,46 +58,61 @@ export const CreateProfileAvatar = ({
       const file = avatar[0];
       setPreview(URL.createObjectURL(file));
     }
+  }, [avatar, watch, setAvatarLoading]);
+
+  useEffect(() => {
+    if (data?.error) alert(data.error);
     if (data?.ok) {
-      setAvatarLoading((p) => !p);
       alert(
         `회원가입을 성공적으로 완료하였습니다. 로그인 페이지로 이동합니다.`
       );
       router.replace('/user/login');
     }
-  }, [avatar, watch, data, router, setAvatarLoading]);
+  }, [data, router]);
+  const [answer, setAnswer] = useState(false);
   return (
-    <JoinCont>
-      <h1>Profile Avatar</h1>
-      <h2>Step 3. 프로필 사진 설정 (선택사항)</h2>
-      <Form onSubmit={handleSubmit(onValid)}>
-        <AvatarLabel htmlFor="avatar">
-          <ProfileAvatar preview={preview} size={130} />
-          <input
-            {...register('avatar', {
-              required: '프로필 사진 파일을 업로드해주세요.',
-            })}
-            id="avatar"
-            name="avatar"
-            type="file"
-            accept="image/*"
-          />
-        </AvatarLabel>
-        <Info>
-          <span>* 샤진을 추가하려면 아이콘을 클릭하세요.</span>
-          <span>* 프로필 사진은 추후에 수정 가능합니다.</span>
-        </Info>
-        {errors.avatar && <ErrorMsg error={errors.avatar.message} />}
-        {data?.error && <ErrorMsg error={data.error} />}
-        <div className="flex">
-          <Btn type="submit" name="사진 저장" loading={avatarLoading} />
-          <Btn
-            type="button"
-            name="나중에 설정"
-            onClick={() => router.replace('/user/login')}
-          />
-        </div>
-      </Form>
-    </JoinCont>
+    <>
+      <>
+        <Heading
+          type="avatar"
+          h1="Step 3. Optional (선택사항)"
+          h2="Profile Picture (프로필 사진)"
+        />
+        <Form onSubmit={handleSubmit(onValid)}>
+          <Label htmlFor="avatar">
+            <ProfileAvatar preview={preview} size="8rem" />
+            <input
+              {...register('avatar', {
+                required: '프로필 사진 파일을 업로드해주세요.',
+              })}
+              id="avatar"
+              name="avatar"
+              type="file"
+              accept="image/*"
+            />
+          </Label>
+          <Flex>
+            <Btn
+              type="button"
+              name="나중에 설정"
+              onClick={() => router.replace('/user/login')}
+            />
+            <Btn type="submit" name="사진 저장" loading={avatarLoading} />
+          </Flex>
+        </Form>
+        <Errors errors={errors} />
+        {answer && <Answer setAnswer={setAnswer} isSetpTwo />}
+      </>
+    </>
   );
 };
+const Flex = styled.div`
+  gap: 20px;
+  width: 300px;
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  button {
+    width: 100%;
+  }
+`;

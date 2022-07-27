@@ -3,38 +3,40 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Style/Button';
 import { useForm } from 'react-hook-form';
-import { ErrorMsg } from '../../Style/ErrMsg';
 import { InputWrap } from '../../Style/Input';
 import { MutationRes } from '../../../types/mutation';
-import { IEditProfileProps } from '../../../types/user';
-import { Form, Container } from '../../../../styles/global';
+import { Form, Container, FormCont } from '../../../../styles/global';
 import useMutation from '../../../libs/client/useMutation';
 import { SelectWrap } from '../../Style/Input/SelectWrap';
+import useUser from '../../../libs/client/useUser';
+import { Errors } from '../../Review/Create/Error';
+import { Heading } from '../Join/Heading';
+import { IUserForm } from '../../../types/user';
+import { Box } from './UserId';
 
-interface IEditUserInfoForm {
-  username?: string;
-  email?: string;
-  name?: string;
-  birth?: string;
-  gender?: string;
-  location?: string;
-  NoInputError?: string;
-}
-export const EditUserInfo = ({ user }: IEditProfileProps) => {
+export const UserInfo = () => {
   const router = useRouter();
-  const [editUserInfo, { loading, data }] = useMutation<MutationRes>(
-    `/api/user/${user?.id}/edit/user_info`
+  const { loggedInUser } = useUser();
+  const [Edit, { loading, data }] = useMutation<MutationRes>(
+    `/api/user/${loggedInUser?.id}/edit/user_info`
   );
   const {
     watch,
     register,
-    setError,
     setValue,
-    getValues,
     handleSubmit,
     formState: { errors },
-  } = useForm<IEditUserInfoForm>({ mode: 'onBlur' });
-  const isValue = (type: string | any) => Boolean(getValues(type));
+  } = useForm<IUserForm>({ mode: 'onBlur' });
+
+  const user = loggedInUser;
+  useEffect(() => {
+    if (user?.email) setValue('email', user?.email);
+    if (user?.username) setValue('username', user?.username);
+    if (user?.name) setValue('name', user?.name);
+    if (user?.birth) setValue('birth', user?.birth);
+    if (user?.gender) setValue('gender', user?.gender);
+    if (user?.location) setValue('location', user?.location);
+  }, [user, setValue]);
 
   const onValid = ({
     name,
@@ -43,114 +45,89 @@ export const EditUserInfo = ({ user }: IEditProfileProps) => {
     gender,
     location,
     username,
-  }: IEditUserInfoForm) => {
-    const NoInput = Boolean(
-      !name && !email && !birth && !gender && !location && !username
-    );
-    if (NoInput)
-      return setError('NoInputError', { message: '수정할 항목이 없습니다.' });
+  }: IUserForm) => {
     if (loading) return;
-    editUserInfo({ name, email, birth, gender, location, username });
+    Edit({ name, email, birth, gender, location, username });
   };
+
   useEffect(() => {
-    if (user?.username) setValue('username', user?.username);
-    if (user?.email) setValue('email', user?.email);
-    if (user?.name) setValue('name', user?.name);
-    if (user?.birth) setValue('birth', user?.birth);
-    if (user?.gender) setValue('gender', user?.gender);
-    if (user?.location) setValue('location', user?.location);
-    if (data?.ok) {
-      alert('회원님의 정보가 수정되었습니다.');
-      router.reload();
-    }
-  }, [user, data, router, setValue]);
+    if (data?.error) alert(data.error);
+    if (data?.ok) alert('회원정보를 업데이트 했습니다.');
+  }, [data, router]);
+
   return (
-    <Cont>
-      <h1>Edit User Information</h1>
-      <Form onSubmit={handleSubmit(onValid)}>
-        <InputWrap
-          id="username"
-          type="text"
-          label="Username"
-          watch={watch('username')}
-          isValue={isValue('username')}
-          inputErrMsg={errors.username?.message}
-          register={register('username', {
-            maxLength: {
-              value: 10,
-              message: '유저의 이름은 10자를 초과할수 없습니다.',
-            },
-          })}
-        />
-        <InputWrap
-          watch={watch('email')}
-          id="email"
-          type="email"
-          label="Email"
-          isValue={isValue('email')}
-          inputErrMsg={errors.email?.message}
-          register={register('email', {
-            pattern: {
-              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-              message: '이메일 형식이 올바르지 않습니다.',
-            },
-          })}
-        />
-        <div className="flex">
+    <>
+      <Cont>
+        <Heading type="edit-userInfo" h1="Info (회원정보)" />
+        <Form onSubmit={handleSubmit(onValid)}>
           <InputWrap
-            id="name"
+            id="username"
             type="text"
-            label="Name"
-            watch={watch('name')}
-            isValue={isValue('name')}
-            inputErrMsg={errors.name?.message}
-            register={register('name', {
+            label="Username"
+            watch={watch('username')}
+            register={register('username', {
               maxLength: {
                 value: 10,
-                message: '이름은 10자를 초과할수 없습니다.',
+                message: '유저의 이름은 10자를 초과할수 없습니다.',
               },
             })}
           />
           <InputWrap
-            id="birth"
-            type="date"
-            label="Birth"
-            watch={watch('birth')}
-            isValue={isValue('birth')}
-            register={register('birth')}
-            inputErrMsg={errors.birth?.message}
+            id="email"
+            type="email"
+            label="Email"
+            watch={watch('email')}
+            register={register('email', {
+              required: '이메일을 입력해주세요.',
+              pattern: {
+                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                message: '이메일 형식이 올바르지 않습니다.',
+              },
+            })}
           />
-        </div>
-        <div className="flex">
-          <SelectWrap
-            id="gender"
-            label="Gender"
-            watch={watch('gender')}
-            isValue={isValue('gender')}
-            register={register('gender')}
-            inputErrMsg={errors.gender?.message}
-          />
-          <InputWrap
-            id="location"
-            type="text"
-            label="Location"
-            watch={watch('location')}
-            isValue={isValue('location')}
-            inputErrMsg={errors.location?.message}
-            register={register('location')}
-          />
-        </div>
-        <HiddenInput disabled {...register('NoInputError')} />
-        {errors.NoInputError && (
-          <ErrorMsg error={errors.NoInputError.message} />
-        )}
-        {data?.error && <ErrorMsg error={data.error} />}
-        <Btn name="유저정보 수정" type="submit" loading={loading} />
-      </Form>
-    </Cont>
+          <div className="flex">
+            <InputWrap
+              id="name"
+              type="text"
+              label="Name"
+              watch={watch('name')}
+              register={register('name', {
+                maxLength: {
+                  value: 10,
+                  message: '이름은 10자를 초과할수 없습니다.',
+                },
+              })}
+            />
+            <InputWrap
+              id="birth"
+              type="date"
+              label="Birth"
+              watch={watch('birth')}
+              register={register('birth')}
+            />
+          </div>
+          <div className="flex">
+            <SelectWrap
+              id="gender"
+              watch={watch('gender')!}
+              register={register('gender')}
+            />
+            <InputWrap
+              id="location"
+              type="text"
+              label="Location"
+              watch={watch('location')}
+              register={register('location')}
+            />
+          </div>
+          <Btn name="유저정보 수정" type="submit" loading={loading} />
+        </Form>
+      </Cont>
+      <Errors errors={errors} />
+    </>
   );
 };
-const Cont = styled(Container)``;
-const HiddenInput = styled.input`
-  display: none;
+const Cont = styled(Box)`
+  width: 400px;
+  max-width: 400px;
 `;

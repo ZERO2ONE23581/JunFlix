@@ -1,39 +1,33 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Page } from '../../../styles/global';
+import { FormCont, Page } from '../../../styles/global';
 import { Title } from '../../../src/components/Layout/Title';
-import { LinkWrap } from '../../../src/components/Style/Button/Link';
 import { CreateUser } from '../../../src/components/User/Join/Create/User';
-import { CheckUserId } from '../../../src/components/User/Join/CheckUserId';
-import { CreateProfileAvatar } from '../../../src/components/User/Join/Create/Avatar';
+import { UserId } from '../../../src/components/User/Join/UserId';
+import { CreateAvatar } from '../../../src/components/User/Join/Create/Avatar';
 
 const Join: NextPage = () => {
-  const [createdID, setCreatedID] = useState(0);
-  const [savedUserID, setSavedUserID] = useState('');
-  const [openCreateUser, setOpenCreateUser] = useState(false);
-  const [openCreateAvatar, setOpenCreateAvatar] = useState(false);
+  const [saveId, setSaveId] = useState('');
+  const [userId, setUserId] = useState(false);
+  const [avatar, setAvatar] = useState(false);
+  const [createdId, setCreatedId] = useState(0);
+
   return (
     <>
       <Title title="회원가입" />
       <Cont>
-        <Wrapper>
-          {!openCreateUser && (
-            <CheckUserId
-              setSavedUserID={setSavedUserID}
-              setOpenCreateUser={setOpenCreateUser}
-            />
-          )}
-          {openCreateUser && !openCreateAvatar && (
+        <Box>
+          {!userId && <UserId setSaveId={setSaveId} setUserId={setUserId} />}
+          {userId && !avatar && (
             <CreateUser
-              savedUserID={savedUserID}
-              setCreatedID={setCreatedID}
-              setOpenCreateAvatar={setOpenCreateAvatar}
+              saveId={saveId}
+              setAvatar={setAvatar}
+              setCreatedId={setCreatedId}
             />
           )}
-          {openCreateAvatar && <CreateProfileAvatar createdID={createdID} />}
-          <LinkWrap isJoin />
-        </Wrapper>
+          {avatar && <CreateAvatar createdId={createdId} />}
+        </Box>
       </Cont>
     </>
   );
@@ -41,12 +35,8 @@ const Join: NextPage = () => {
 export default Join;
 
 const Cont = styled(Page)`
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 10% 34%;
 `;
-const Wrapper = styled.article`
-  margin: 0 auto;
-  max-width: 620px;
+const Box = styled(FormCont)`
+  min-width: 450px;
 `;

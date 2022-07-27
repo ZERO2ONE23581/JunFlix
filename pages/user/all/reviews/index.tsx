@@ -31,7 +31,7 @@ const AllReviews: NextPage = () => {
 export default AllReviews;
 
 export const Cont = styled(Page)`
-  padding: 0% 6%;
+  padding: 0% 8%;
   .review-list {
     min-width: 1200px;
   }

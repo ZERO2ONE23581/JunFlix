@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Svg } from '../Style/Svg/Svg';
 
 interface IProfile {
   size?: string;
@@ -20,9 +21,7 @@ export const ProfileAvatar = ({ size, avatar, preview, onClick }: IProfile) => {
       {avatar && !preview && (
         <img src={`${`${base}/${avatar}/${variant}`}`} alt="프로필 이미지" />
       )}
-      {!avatar && !preview && (
-        <img src="/img/profile.svg" alt="프로필 이미지" />
-      )}
+      {!avatar && !preview && <Svg size={size!} type="profile" />}
     </Cont>
   );
 };
@@ -39,8 +38,8 @@ const Cont = styled.div<{ size: string; isAvatar: boolean }>`
     height: 100%;
   }
 `;
-export const AvatarLabel = styled.label`
-  display: block;
+export const Label = styled.label`
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;

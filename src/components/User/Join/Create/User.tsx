@@ -1,21 +1,29 @@
-import {
-  IJoinForm,
-  IJoinFormProps,
-  IJoinFormRes,
-} from '../../../../types/join';
-import { useEffect } from 'react';
+import { IJoinForm, IJoinFormRes } from '../../../../types/join';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Style/Button';
 import { InputWrap } from '../../../Style/Input';
 import { ErrorMsg } from '../../../Style/ErrMsg';
 import useMutation from '../../../../libs/client/useMutation';
-import { Form, Info, JoinCont } from '../../../../../styles/global';
+import { Form, FormCont } from '../../../../../styles/global';
+import { IconBtn } from '../../../Style/Button/IconBtn';
+import { Answer } from '../Answer';
+import styled from '@emotion/styled';
+
+import { Errors } from '../../../Review/Create/Error';
+import { Heading } from '../Heading';
+
+export interface ICreateUser {
+  saveId: string;
+  setAvatar: Dispatch<SetStateAction<boolean>>;
+  setCreatedId: Dispatch<SetStateAction<number>>;
+}
 
 export const CreateUser = ({
-  setCreatedID,
-  savedUserID,
-  setOpenCreateAvatar,
-}: IJoinFormProps) => {
+  saveId,
+  setAvatar,
+  setCreatedId,
+}: ICreateUser) => {
   const {
     watch,
     setError,
@@ -45,16 +53,21 @@ export const CreateUser = ({
   const [createUser, { loading, data }] =
     useMutation<IJoinFormRes>('/api/user/create');
   useEffect(() => {
-    if (savedUserID) setValue('userId', savedUserID);
+    if (saveId) setValue('userId', saveId);
+    if (data?.error) alert(data.error);
     if (data?.ok) {
-      setOpenCreateAvatar((p: boolean) => !p);
-      setCreatedID(data.createdID);
+      setAvatar((p: boolean) => !p);
+      setCreatedId(data.createdID);
     }
-  }, [savedUserID, setOpenCreateAvatar, setValue, data, setCreatedID]);
+  }, [saveId, setAvatar, setValue, data, setCreatedId]);
+
   return (
-    <JoinCont>
-      <h1>Create Your Account</h1>
-      <h2>Step 2. 회원정보를 입력해 주세요.</h2>
+    <>
+      <Heading
+        type="userInfo"
+        h1="Create Account"
+        h2="Step 2. Information (회원정보)"
+      />
       <Form onSubmit={handleSubmit(onValid)}>
         <InputWrap
           watch={watch('userId')}
@@ -62,7 +75,6 @@ export const CreateUser = ({
           type="text"
           label="ID"
           disabled
-          inputErrMsg={errors.userId?.message}
           register={register('userId', { required: true })}
         />
         <div className="flex">
@@ -71,7 +83,6 @@ export const CreateUser = ({
             id="password"
             type="password"
             label="Password"
-            inputErrMsg={errors.password?.message}
             register={register('password', {
               required: '비밀번호를 입력해주세요.',
               minLength: {
@@ -95,12 +106,24 @@ export const CreateUser = ({
             id="confirmPassword"
             type="password"
             label="Confirm Password"
-            inputErrMsg={errors.confirmPassword?.message}
             register={register('confirmPassword', {
               required: '비밀번호를 재입력해주세요.',
             })}
           />
         </div>
+        <InputWrap
+          watch={watch('email')}
+          id="email"
+          type="email"
+          label="Email"
+          register={register('email', {
+            required: '이메일을 입력해주세요.',
+            pattern: {
+              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              message: '이메일 형식이 올바르지 않습니다.',
+            },
+          })}
+        />
         <h3>* Option (선택사항)</h3>
         <div className="flex">
           <InputWrap
@@ -108,7 +131,6 @@ export const CreateUser = ({
             id="username"
             type="text"
             label="Username"
-            inputErrMsg={errors.username?.message}
             register={register('username', {
               maxLength: {
                 value: 10,
@@ -116,27 +138,10 @@ export const CreateUser = ({
               },
             })}
           />
-          <InputWrap
-            watch={watch('email')}
-            id="email"
-            type="email"
-            label="Email"
-            inputErrMsg={errors.email?.message}
-            register={register('email', {
-              pattern: {
-                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                message: '이메일 형식이 올바르지 않습니다.',
-              },
-            })}
-          />
         </div>
-        {data?.error && <ErrorMsg error={data.error} />}
         <Btn type="submit" name="회원가입" loading={loading} />
-        <Info>
-          <span>* 이름을 적지 않으면 'Anonymous'로 자동저장 됩니다.</span>
-          <span>* 이름은 추후에 수정 가능합니다.</span>
-        </Info>
       </Form>
-    </JoinCont>
+      <Errors errors={errors} />
+    </>
   );
 };

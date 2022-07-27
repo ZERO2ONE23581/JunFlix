@@ -28,11 +28,25 @@ export interface IUseform {
   getValues?: UseFormGetValues<any>;
   clearErrors?: UseFormClearErrors<any>;
   errors?: {
+    userId?: FieldError | undefined;
+    password?: FieldError | undefined;
+    newPassword?: FieldError | undefined;
+    confirmPassword?: FieldError | undefined;
+    email?: FieldError | undefined;
+    username?: FieldError | undefined;
+    name?: FieldError | undefined;
+    birth?: FieldError | undefined;
+    gender?: FieldError | undefined;
+    location?: FieldError | undefined;
+
     title?: FieldError | undefined;
     content?: FieldError | undefined;
     oneline?: FieldError | undefined;
     movieTitle?: FieldError | undefined;
     createdAt?: FieldError | undefined;
     createAvatar?: FieldError | undefined;
+    genre?: FieldError | undefined;
+    intro?: FieldError | undefined;
+    avatar?: FieldError | undefined;
   };
 }

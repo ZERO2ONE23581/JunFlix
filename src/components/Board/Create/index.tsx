@@ -1,32 +1,22 @@
-import { Answer } from './Answer';
+import { Title } from './Title';
+import { Inputs } from './Inputs';
+import { Length } from '../../Tools';
 import styled from '@emotion/styled';
-import { BoardAvatar } from './Avatar';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { ErrorMsg } from '../../Style/ErrMsg';
-import { InputWrap } from '../../Style/Input';
 import { LoadingModal } from '../../LoadingModal';
+import { Errors } from '../../Review/Create/Error';
 import { Container } from '../../../../styles/global';
 import { TextAreaWrap } from '../../Style/Input/TextArea';
-import { SelectWrap } from '../../Style/Input/SelectWrap';
 import useMutation from '../../../libs/client/useMutation';
 import { IBoardForm, IBoardFormRes } from '../../../types/board';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Length } from '../../Tools';
-import { IconBtn } from '../../Style/Button/IconBtn';
 
 interface ICreateBoard {
-  answer: boolean;
-  isPreivew: boolean;
-  setAnswer: Dispatch<SetStateAction<boolean>>;
+  isPreview: boolean;
   setPreview: Dispatch<SetStateAction<string>>;
 }
-export const CreateBoard = ({
-  answer,
-  isPreivew,
-  setAnswer,
-  setPreview,
-}: ICreateBoard) => {
+export const CreateBoard = ({ isPreview, setPreview }: ICreateBoard) => {
   const router = useRouter();
   const { user_id } = router.query;
   const [CreateBoard, { loading, data }] = useMutation<IBoardFormRes>(
@@ -45,7 +35,7 @@ export const CreateBoard = ({
   const [height, setHeight] = useState(40);
   useEffect(() => {
     const intro = watch!('intro');
-    setHeight(intro?.length!);
+    setHeight(intro?.length * 0.2);
   }, [setHeight, watch!('intro')]);
   //
   const onValid = async ({ title, genre, intro, avatar }: IBoardForm) => {
@@ -96,88 +86,54 @@ export const CreateBoard = ({
       );
     }
   }, [data, router]);
+  const [answer, setAnswer] = useState(false);
   return (
-    <>
-      {!Loading && (
-        <form onSubmit={handleSubmit(onValid)}>
-          <Cont>
-            <h1>Create Board</h1>
-            <Flex>
-              <InputWrap
-                id="title"
-                type="text"
-                label="Title"
-                watch={watch('title')}
-                register={register('title', {
-                  required: '보드의 제목을 입력하세요.',
-                })}
-              />
-              <SelectWrap
-                id="genre"
-                watch={watch('genre')}
-                register={register('genre')}
-              />
-              <BoardAvatar
-                register={register}
-                isPreivew={isPreivew}
-                setPreview={setPreview}
-              />
-              <IconBtn type="submit" svgType="save" size="2.6rem" />
-            </Flex>
-            <TextAreaWrap
-              id="intro"
-              height={height}
-              register={register('intro')}
-              placeholder="이 보드의 소개글을 작성해주세요."
-            />
-          </Cont>
-        </form>
-      )}
-      {errors?.title && <ErrorMsg error={errors.title.message} />}
-      {errors?.genre && <ErrorMsg error={errors.genre.message} />}
-      {errors?.intro && <ErrorMsg error={errors.intro.message} />}
-      {errors?.avatar && <ErrorMsg error={errors.avatar.message} />}
-
-      {answer && (
-        <Answer openModal={setAnswer} maxTitle={maxTitle} maxIntro={maxIntro} />
-      )}
+    <form onSubmit={handleSubmit(onValid)}>
+      <Cont>
+        <Title
+          answer={answer}
+          maxTitle={maxTitle}
+          maxIntro={maxIntro}
+          setAnswer={setAnswer}
+        />
+        <Inputs
+          watch={watch}
+          register={register}
+          isPreview={isPreview}
+          setPreview={setPreview}
+        />
+        <TextAreaWrap
+          id="intro"
+          height={height}
+          register={register('intro')}
+          placeholder="이 보드의 소개글을 작성해주세요."
+        />
+      </Cont>
+      <Errors errors={errors} />
       {Loading && (
         <LoadingModal
           zIndex={100}
           text={{ kor: '보드 생성중...', eng: 'Creating Board...' }}
         />
       )}
-    </>
+    </form>
   );
 };
-
 const Cont = styled(Container)`
   gap: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  h1 {
-    font-size: 1.8rem;
-  }
+  justify-content: flex-start;
+  border: ${(p) => p.theme.border.thick};
   .intro {
     textarea {
       border: none;
       font-size: 1.2rem;
-      min-height: 100px;
+      min-height: 150px;
       max-height: 400px;
       :focus {
         outline: none;
       }
     }
-  }
-`;
-const Flex = styled.div`
-  width: 100%;
-  gap: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .create-board {
-    min-width: 100px;
   }
 `;

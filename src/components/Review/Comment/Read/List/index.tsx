@@ -23,6 +23,7 @@ export const CommentList = ({ review }: IReview) => {
   );
 };
 const Cont = styled.article`
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;

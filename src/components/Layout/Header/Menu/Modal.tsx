@@ -72,6 +72,7 @@ const List = styled.ul`
     align-items: center;
     justify-content: center;
     padding: 8px 0;
+    padding: 8px 10px;
     font-size: 1.1rem;
     &:hover {
       color: ${(p) => p.theme.color.logo};

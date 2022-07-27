@@ -17,43 +17,33 @@ export const Layout = styled.section`
   background-color: ${(p) => p.theme.color.bg};
 `;
 export const Container = styled.article`
-  border: none;
   padding: 30px 40px;
-  border-radius: 3px;
+  border-radius: 5px;
   color: ${(p) => p.theme.color.font};
+  border: ${(p) => p.theme.border.thick};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
 `;
-export const JoinCont = styled(Container)`
-  h2,
-  h3 {
-    opacity: 0.8;
-    font-weight: 500;
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-  }
-  h3 {
-    opacity: 0.6;
-    font-size: 1.3rem;
+export const FormCont = styled(Container)`
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+  select,
+  input {
+    padding: 15px;
   }
 `;
 export const Form = styled.form`
-  gap: 20px;
+  gap: 23px;
   display: flex;
   flex-direction: column;
   .flex {
     gap: 12px;
-    width: 100%;
     display: flex;
     align-items: center;
-    button {
-      width: 100%;
-    }
-    input {
-      width: 100%;
-    }
   }
 `;
+
 export const Modal = styled.article`
   min-width: 330px;
   top: 50%;
@@ -81,7 +71,7 @@ export const AnswerModal = styled(Modal)`
   line-height: 20px;
   border: ${(p) => p.theme.border.thin};
   span {
-    opacity: 0.8;
+    opacity: 0.9;
     font-size: 1.2rem;
     font-style: italic;
   }

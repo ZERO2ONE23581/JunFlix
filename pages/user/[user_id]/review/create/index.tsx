@@ -3,16 +3,16 @@ import type { NextPage } from 'next';
 import { Page } from '../../../../../styles/global';
 import { CreateReview } from '../../../../../src/components/Review/Create';
 
-const CreateReviewPage: NextPage = () => {
+const Create: NextPage = () => {
   return (
-    <ReviewPG>
+    <Cont>
       <CreateReview />
-    </ReviewPG>
+    </Cont>
   );
 };
-export default CreateReviewPage;
+export default Create;
 
-export const ReviewPG = styled(Page)`
-  padding: 0% 10% 3%;
+export const Cont = styled(Page)`
+  padding: 0% 10%;
   padding-bottom: 5%;
 `;

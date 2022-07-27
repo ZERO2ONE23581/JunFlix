@@ -1,8 +1,13 @@
-import { User } from '@prisma/client';
-
-export interface IEditUserIdForm {
+export interface IUserForm {
   userId?: string;
-}
-export interface IEditProfileProps {
-  user?: User;
+  password?: string;
+  newPassword?: string;
+  confirmPassword?: string;
+  email: string;
+  name?: string;
+  birth?: string;
+  gender?: string;
+  location?: string;
+  username?: string;
+  avatar?: FileList;
 }

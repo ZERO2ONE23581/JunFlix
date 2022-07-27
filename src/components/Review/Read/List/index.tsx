@@ -100,7 +100,6 @@ const Cont = styled.section`
   font-size: 1rem;
   position: relative;
 `;
-
 const Lists = styled(ListWrap)<{ isFirst: boolean }>`
   border: none;
   li {
@@ -123,7 +122,7 @@ const Lists = styled(ListWrap)<{ isFirst: boolean }>`
   }
   .title,
   .movie {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
   .title {
     :hover {

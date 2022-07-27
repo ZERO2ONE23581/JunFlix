@@ -22,8 +22,7 @@ export const Layer = () => {
 };
 const Cont = styled.div`
   font-size: 1rem;
-  margin-top: 30px;
-  margin-bottom: 15px;
+  margin: 20px 0;
 `;
 export const ListWrap = styled.ul`
   display: flex;
