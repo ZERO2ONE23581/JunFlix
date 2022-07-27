@@ -7,42 +7,40 @@ interface IBtnWrap {
 }
 export const BtnWrap = ({ type, SelectType }: IBtnWrap) => {
   return (
-    <>
-      <Cont type={type}>
-        <Btn
-          type="button"
-          name="My Boards"
-          CLASSNAME="board"
-          onClick={() => SelectType('board')}
-        />
-        <Btn
-          type="button"
-          name="My Posts"
-          CLASSNAME="post"
-          onClick={() => SelectType('post')}
-        />
-        <Btn
-          type="button"
-          name="My Reviews"
-          CLASSNAME="review"
-          onClick={() => SelectType('review')}
-        />
-        <Btn
-          type="button"
-          name="My Likes"
-          CLASSNAME="likes"
-          onClick={() => SelectType('likes')}
-        />
-      </Cont>
-    </>
+    <Cont type={type}>
+      <Btn
+        type="button"
+        name="My Boards"
+        CLASSNAME="board"
+        onClick={() => SelectType('board')}
+      />
+      <Btn
+        type="button"
+        name="My Posts"
+        CLASSNAME="post"
+        onClick={() => SelectType('post')}
+      />
+      <Btn
+        type="button"
+        name="My Reviews"
+        CLASSNAME="review"
+        onClick={() => SelectType('review')}
+      />
+      <Btn
+        type="button"
+        name="My Likes"
+        CLASSNAME="likes"
+        onClick={() => SelectType('likes')}
+      />
+    </Cont>
   );
 };
 const Cont = styled.div<{ type: string }>`
   gap: 10rem;
   display: flex;
+  margin: 20px 0 30px;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
   button {
     min-width: 130px;
     border-radius: 8px;

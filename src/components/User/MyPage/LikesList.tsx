@@ -30,6 +30,7 @@ export const LikesList = () => {
           <span className="username">{loggedInUser?.username}</span>
           <span>님이 좋아하는 포스트</span>
         </Button>
+
         <Button
           Type={type}
           type="button"
@@ -40,8 +41,8 @@ export const LikesList = () => {
           <span>님이 좋아하는 리뷰</span>
         </Button>
       </BtnWrap>
-      {type === 'post' && <PostList posts={LikedPosts!} />}
-      {type === 'review' && <ReviewList reviews={LikedReviews!} />}
+      {type === 'post' && <PostList isMyPage posts={LikedPosts!} />}
+      {type === 'review' && <ReviewList isMyPage reviews={LikedReviews!} />}
     </Cont>
   );
 };
@@ -49,33 +50,23 @@ const Cont = styled.article`
   margin-top: 30px;
 `;
 const BtnWrap = styled.div`
-  /* width: 90%; */
+  gap: 20px;
+  width: 100%;
   display: flex;
+  margin: 0 auto 20px;
   align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  margin-bottom: 20px;
-  overflow: hidden;
-  border-radius: 3px;
-  border: 3px solid ${(p) => p.theme.color.logo};
+  justify-content: space-around;
 `;
 const Button = styled.button<{ Type: string; likeType: string }>`
-  width: 100%;
   border: none;
   outline: none;
   font-size: 1rem;
   font-weight: 550;
-  padding: 12px;
+  padding-bottom: 5px;
   background-color: inherit;
-  font-size: ${(p) => p.Type === p.likeType && '1.1rem'};
+  border-bottom: ${(p) =>
+    p.Type === p.likeType && `3px double ${p.theme.color.logo}`};
+  font-size: ${(p) => p.Type === p.likeType && '1.3rem'};
   color: ${(p) =>
     p.Type === p.likeType ? p.theme.color.logo : p.theme.color.font};
-  :nth-of-type(1) {
-    border-right: 3px solid ${(p) => p.theme.color.logo};
-  }
-  .username {
-    font-size: 1.2rem;
-    margin-right: 4px;
-    font-style: italic;
-  }
 `;

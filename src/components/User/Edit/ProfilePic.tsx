@@ -6,13 +6,11 @@ import { ErrorMsg } from '../../Style/ErrMsg';
 import { Label, ProfileAvatar } from '../../Avatar/ProfileAvatar';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
-import { Form, Container, FormCont } from '../../../../styles/global';
 import useUser from '../../../libs/client/useUser';
 import { LoadingModal } from '../../LoadingModal';
 import { IUserForm } from '../../../types/user';
 import { Heading } from '../Join/Heading';
 import { Box } from './UserId';
-import { IconBtn } from '../../Style/Button/IconBtn';
 
 export const ProfilePic = () => {
   const { loggedInUser } = useUser();
@@ -38,7 +36,7 @@ export const ProfilePic = () => {
       setPreview(URL.createObjectURL(file));
     }
   }, [avatar]);
-  console.log(avatar);
+
   const onValid = async ({ avatar }: IUserForm) => {
     if (loading) return;
     setAvatarLoading((p) => !p);

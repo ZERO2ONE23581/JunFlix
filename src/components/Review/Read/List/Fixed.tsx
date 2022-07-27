@@ -5,10 +5,7 @@ import { useRouter } from 'next/router';
 import { IconBtn } from '../../../Style/Button/IconBtn';
 import useUser from '../../../../libs/client/useUser';
 
-interface IBtnWrap {
-  userId: number;
-}
-export const BtnWrap = ({ userId }: IBtnWrap) => {
+export const Fixed = () => {
   const router = useRouter();
   const { loggedInUser } = useUser();
   const [answer, setAnswer] = useState(false);
@@ -33,8 +30,8 @@ export const BtnWrap = ({ userId }: IBtnWrap) => {
   );
 };
 const Cont = styled.div`
-  right: -5%;
-  bottom: 20%;
+  bottom: 150px;
+  right: 50px;
   position: absolute;
   display: flex;
   flex-direction: column;

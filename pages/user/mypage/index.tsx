@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
-import { Page } from '../../../../styles/global';
-import useUser from '../../../../src/libs/client/useUser';
-import { Title } from '../../../../src/components/Layout/Title';
-import { MyList } from '../../../../src/components/User/MyPage/MyList';
-import { TopLayer } from '../../../../src/components/User/MyPage/TopLayer';
+import { Page } from '../../../styles/global';
+import useUser from '../../../src/libs/client/useUser';
+import { Title } from '../../../src/components/Layout/Title';
+import { MyList } from '../../../src/components/User/MyPage/MyList';
+import { Info } from '../../../src/components/User/MyPage/Info';
 
 const MyPage: NextPage = () => {
   const { isLoggedIn, loggedInUser } = useUser();
@@ -13,10 +13,13 @@ const MyPage: NextPage = () => {
       <Title title={`${loggedInUser?.username}'s Page`} />
       {isLoggedIn && (
         <Cont>
-          <TopLayer />
-          <MyList />
+          <section className="wrap">
+            <Info />
+            <MyList />
+          </section>
         </Cont>
       )}
+
       {!isLoggedIn && (
         <>
           <h1>로그인이 필요합니다!</h1>
@@ -28,5 +31,8 @@ const MyPage: NextPage = () => {
 export default MyPage;
 
 const Cont = styled(Page)`
-  padding: 2% 7%;
+  padding: 3% 12% 5%;
+  .wrap {
+    min-width: 1200px;
+  }
 `;

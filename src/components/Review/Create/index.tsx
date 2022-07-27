@@ -181,6 +181,7 @@ export const CreateReview = () => {
 export const ReviewCont = styled(Container)`
   gap: 20px;
   padding: 0;
+  border: none;
   display: flex;
   box-shadow: none;
   flex-direction: column;
@@ -197,7 +198,8 @@ export const ReviewCont = styled(Container)`
     .isPreivewTag,
     .noImageDiv {
       width: 80vw;
-      min-height: 500px;
+      min-height: 300px;
+      max-height: 700px;
       border: ${(p) => p.theme.border.thick};
       box-shadow: ${(p) => p.theme.boxShadow.nav};
     }

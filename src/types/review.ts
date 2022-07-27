@@ -1,5 +1,10 @@
 import { Review, User } from '@prisma/client';
+import { ReviewModel } from './post';
 
+export interface IReviewList {
+  isMyPage?: boolean;
+  reviews: ReviewModel[];
+}
 export interface IReviewForm {
   title: string;
   movieTitle: string;

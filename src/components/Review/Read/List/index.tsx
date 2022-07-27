@@ -1,18 +1,16 @@
 import Link from 'next/link';
 import { Stars } from './Stars';
 import { Icons } from './Icons';
-import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
 import { ListWrap, Layer } from './Layer';
 import { Svg } from '../../../Style/Svg/Svg';
 import { ReviewModel } from '../../../../types/post';
 import { CapFirstLetter, ReadDate } from '../../../Tools';
 import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
+import { IReviewList } from '../../../../types/review';
+import { Fixed } from './Fixed';
 
-export interface IReviewList {
-  reviews: ReviewModel[];
-}
-export const ReviewList = ({ reviews }: IReviewList) => {
+export const ReviewList = ({ reviews, isMyPage }: IReviewList) => {
   const Order = (item: ReviewModel) => {
     return reviews.length - reviews.indexOf(item);
   };
@@ -24,6 +22,7 @@ export const ReviewList = ({ reviews }: IReviewList) => {
   };
   return (
     <>
+      {!isMyPage && <Fixed />}
       {isReview && (
         <Cont className="review-list">
           <Layer />

@@ -96,8 +96,8 @@ export const Info = ({
       </Main>
       <>
         {dataError && <ErrorMsg error={dataError} />}
-        {errors.title && <ErrorMsg error={errors.title.message} />}
-        {errors.content && <ErrorMsg error={errors.content.message} />}
+        {errors?.title && <ErrorMsg error={errors.title.message} />}
+        {errors?.content && <ErrorMsg error={errors.content.message} />}
       </>
     </Cont>
   );

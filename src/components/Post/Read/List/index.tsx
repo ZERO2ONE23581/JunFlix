@@ -8,7 +8,7 @@ import { PostIcons } from '../Modal/Info/Comment/Read/List/Icons';
 import { AVATAR_BG, Grid, NoAvatar } from '../../../../../styles/global';
 import { Svg } from '../../../Style/Svg/Svg';
 
-export const PostList = ({ posts }: IPostList) => {
+export const PostList = ({ posts, isMyPage }: IPostList) => {
   const [userId, setUserId] = useState(0);
   const [postId, setPostId] = useState(0);
   const [boardId, setBoardId] = useState(0);
@@ -29,7 +29,7 @@ export const PostList = ({ posts }: IPostList) => {
     <>
       {isPost && (
         <Cont className="post-list" size={3}>
-          <FixedBtn />
+          {!isMyPage && <FixedBtn />}
           {posts?.slice(0, length).map((post) => (
             <Post
               className="POST"

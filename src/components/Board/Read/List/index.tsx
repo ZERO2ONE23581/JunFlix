@@ -3,12 +3,12 @@ import styled from '@emotion/styled';
 import { FixedBtn } from './Fixed';
 import { FollowBoard } from './Detail/Follow';
 import { useRouter } from 'next/router';
-import { IBoardListProps } from '../../../../types/board';
+import { IBoardList } from '../../../../types/board';
 import useUser from '../../../../libs/client/useUser';
 import { AVATAR_BG, Grid, NoAvatar } from '../../../../../styles/global';
 import { Svg } from '../../../Style/Svg/Svg';
 
-export const BoardList = ({ boards }: IBoardListProps) => {
+export const BoardList = ({ boards, isMyPage }: IBoardList) => {
   const router = useRouter();
   const isBoard = Boolean(boards?.length > 0);
   const { isLoggedIn, loggedInUser } = useUser();
@@ -17,7 +17,7 @@ export const BoardList = ({ boards }: IBoardListProps) => {
     <>
       {isBoard && (
         <Cont size={4} className="board-list">
-          <FixedBtn />
+          {!isMyPage && <FixedBtn />}
           {boards?.map((board) => (
             <Board key={board.id} avatar={board.avatar!}>
               <Follow>

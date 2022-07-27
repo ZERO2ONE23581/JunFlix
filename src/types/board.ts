@@ -51,6 +51,7 @@ export interface IBoardFormRes {
   error?: string;
   board: Board;
 }
-export interface IBoardListProps {
+export interface IBoardList {
+  isMyPage?: boolean;
   boards: IBoardWithAttrs[];
 }

@@ -8,7 +8,7 @@ export const Modal = ({ setOpen }: any) => {
     <>
       <Cont onClick={() => setOpen(false)}>
         <List>
-          <Link href="/user/my/page">
+          <Link href="/user/mypage">
             <a>
               <li>
                 <Svg type="home" size="2rem" />
