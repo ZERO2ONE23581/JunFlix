@@ -3,16 +3,17 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../../styles/global';
 import { IGetBoards } from '../../../../src/types/board';
-import { Title, TitleSign } from '../../../../src/components/Layout/Title';
+import { Title } from '../../../../src/components/Title';
 import { BoardList } from '../../../../src/components/Board/Read/List';
+import { HeadTitle } from '../../../../src/components/Title/Head';
 
 const All_Boards: NextPage = () => {
   const { data } = useSWR<IGetBoards>(`/api/user/all/boards`);
   return (
     <>
-      <Title title="All Boards" />
+      <HeadTitle title="All Boards" />
       <Cont>
-        <TitleSign type="Boards" width="220px" svgSize="2rem" svg="board" />
+        <Title kind="Boards" svg={{ type: 'board', size: '2rem' }} />
         <BoardList boards={data?.boards!} />
       </Cont>
     </>

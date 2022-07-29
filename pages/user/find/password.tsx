@@ -2,12 +2,12 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { FormCont, Page } from '../../../styles/global';
-import { Title } from '../../../src/components/Layout/Title';
 import { FindLink } from '../../../src/components/User/Links/Find';
 import { Result } from '../../../src/components/User/Login/Find/Result';
 import { Token } from '../../../src/components/User/Login/Verify/Token';
 import { UserId } from '../../../src/components/User/Login/Verify/UserId';
 import { CreatePassword } from '../../../src/components/User/Login/Verify/Create/Password';
+import { HeadTitle } from '../../../src/components/Title/Head';
 
 const FindUserPassword: NextPage = () => {
   const [userId, setUserId] = useState('');
@@ -16,7 +16,7 @@ const FindUserPassword: NextPage = () => {
   const [openModal, setOpenModal] = useState(false);
   return (
     <>
-      <Title title="비밀번호 찾기" />
+      <HeadTitle title="비밀번호 찾기" />
       <Cont>
         <Box>
           {!token && <UserId setToken={setToken} />}

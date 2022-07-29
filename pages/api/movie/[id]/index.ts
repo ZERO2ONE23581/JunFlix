@@ -8,46 +8,31 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const LANGUAGE = 'language=en-US&page=1';
   //
   if (id === 'trending') {
-    const trendingData = await (
-      await fetch(
-        `${BASE_URL}/trending/akk/day?api_key=${process.env.THE_MOVIE_DB_API_KEY}`
-      )
-    ).json();
-    return res.json({ ok: true, trendingData });
+    const api = `${BASE_URL}/trending/all/day?api_key=${process.env.THE_MOVIE_DB_API_KEY}`;
+    const arr = await (await fetch(api)).json();
+    return res.json({ ok: true, arr });
   }
-  if (id === 'now_playing') {
-    const nowPlayingMovies = await (
-      await fetch(
-        `${BASE_URL}/movie/now_playing?api_key=${process.env.THE_MOVIE_DB_API_KEY}&${LANGUAGE}`
-      )
-    ).json();
-    return res.json({ ok: true, nowPlayingMovies });
+  if (id === 'now') {
+    const api = `${BASE_URL}/movie/now_playing?api_key=${process.env.THE_MOVIE_DB_API_KEY}&${LANGUAGE}`;
+    const arr = await (await fetch(api)).json();
+    return res.json({ ok: true, arr });
   }
-  if (id === 'popular_tv') {
-    const popularTvShows = await (
-      await fetch(
-        `${BASE_URL}/tv/popular?api_key=${process.env.THE_MOVIE_DB_API_KEY}&${LANGUAGE}`
-      )
-    ).json();
-    return res.json({ ok: true, popularTvShows });
+  if (id === 'tv') {
+    const api = `${BASE_URL}/tv/popular?api_key=${process.env.THE_MOVIE_DB_API_KEY}&${LANGUAGE}`;
+    const arr = await (await fetch(api)).json();
+    return res.json({ ok: true, arr });
   }
   if (id === 'upcoming') {
-    const upcomingMovies = await (
-      await fetch(
-        ` ${BASE_URL}/movie/upcoming?api_key=${process.env.THE_MOVIE_DB_API_KEY}&${LANGUAGE}`
-      )
-    ).json();
-    return res.json({ ok: true, upcomingMovies });
+    const api = ` ${BASE_URL}/movie/upcoming?api_key=${process.env.THE_MOVIE_DB_API_KEY}&${LANGUAGE}`;
+    const arr = await (await fetch(api)).json();
+    return res.json({ ok: true, arr });
   }
-  if (id === 'top_rated') {
-    const topRatedMovies = await (
-      await fetch(
-        ` ${BASE_URL}/movie/top_rated?api_key=${process.env.THE_MOVIE_DB_API_KEY}&${LANGUAGE}`
-      )
-    ).json();
-    return res.json({ ok: true, topRatedMovies });
+  if (id === 'top') {
+    const api = ` ${BASE_URL}/movie/top_rated?api_key=${process.env.THE_MOVIE_DB_API_KEY}&${LANGUAGE}`;
+    const arr = await (await fetch(api)).json();
+    return res.json({ ok: true, arr });
   }
-  return res.json({ ok: false, error: 'NO MOVIE API!' });
+  return res.json({ ok: false, error: 'api error!' });
 }
 export default withApiSession(
   withHandler({ methods: ['GET'], handler, isPrivate: false })

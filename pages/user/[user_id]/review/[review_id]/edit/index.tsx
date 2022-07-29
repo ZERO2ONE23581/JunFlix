@@ -1,17 +1,17 @@
 import { NextPage } from 'next';
+import { useState } from 'react';
 import styled from '@emotion/styled';
-import { Title } from '../../../../../../src/components/Layout/Title';
+import { Page } from '../../../../../../styles/global';
+import { HeadTitle } from '../../../../../../src/components/Title/Head';
 import { EditReview } from '../../../../../../src/components/Review/Edit';
 import { IconBtn } from '../../../../../../src/components/Style/Button/IconBtn';
-import { useState } from 'react';
 import { Answer } from '../../../../../../src/components/Review/Read/modal/answer';
-import { ReviewPG } from '../../create';
 
 const EditReviewPage: NextPage = () => {
   const [answer, setAnswer] = useState(false);
   return (
     <>
-      <Title title="리뷰수정" />
+      <HeadTitle title="리뷰수정" />
       <Cont>
         <EditReview />
         <IconBtn
@@ -27,7 +27,9 @@ const EditReviewPage: NextPage = () => {
 };
 export default EditReviewPage;
 
-const Cont = styled(ReviewPG)`
+const Cont = styled(Page)`
+  padding: 2% 0;
+  min-height: 100%;
   .question {
     right: 30px;
     bottom: 50px;

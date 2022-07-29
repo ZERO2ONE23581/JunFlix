@@ -2,22 +2,18 @@ import useSWR from 'swr';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../../../styles/global';
+import { Title } from '../../../../src/components/Title';
 import { IGetReviews } from '../../../../src/types/review';
+import { HeadTitle } from '../../../../src/components/Title/Head';
 import { ReviewList } from '../../../../src/components/Review/Read/List';
-import { Title, TitleSign } from '../../../../src/components/Layout/Title';
 
 const AllReviews: NextPage = () => {
   const { data } = useSWR<IGetReviews>(`/api/user/all/reviews`);
   return (
     <>
-      <Title title="All Reviews" />
+      <HeadTitle title="All Reviews" />
       <Cont>
-        <TitleSign
-          width="250px"
-          svg="clapper"
-          svgSize="1.8rem"
-          type="Movie Reviews"
-        />
+        <Title kind="Reviews" svg={{ type: 'clapper', size: '2rem' }} />
         {data?.reviews && <ReviewList reviews={data?.reviews} />}
         {!data?.reviews && (
           <>

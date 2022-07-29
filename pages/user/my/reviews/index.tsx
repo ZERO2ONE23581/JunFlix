@@ -5,21 +5,20 @@ import { Page } from '../../../../styles/global';
 import useUser from '../../../../src/libs/client/useUser';
 import { IGetReviews } from '../../../../src/types/review';
 import { ReviewList } from '../../../../src/components/Review/Read/List';
-import { Title, TitleSign } from '../../../../src/components/Layout/Title';
+import { HeadTitle } from '../../../../src/components/Title/Head';
+import { Title } from '../../../../src/components/Title';
 
 const MyReviews: NextPage = () => {
   const { loggedInUser } = useUser();
   const { data } = useSWR<IGetReviews>(`/api/user/my/reviews`);
   return (
     <>
-      <Title title={`${loggedInUser?.username}'s Reviews`} />
+      <HeadTitle title={`${loggedInUser?.username}'s Reviews`} />
       <Cont>
-        <TitleSign
-          width="400px"
-          svg="clapper"
-          svgSize="1.8rem"
-          type="Movie Reviews"
+        <Title
+          kind="Reviews"
           name={loggedInUser?.username!}
+          svg={{ type: 'clapper', size: '2rem' }}
         />
         {data?.reviews && <ReviewList reviews={data?.reviews} />}
         {!data?.reviews && (

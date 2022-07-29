@@ -4,16 +4,16 @@ import type { NextPage } from 'next';
 import { Page } from '../../../../styles/global';
 import { IGetAllPosts } from '../../../../src/types/post';
 import { PostList } from '../../../../src/components/Post/Read/List';
-import { Title, TitleSign } from '../../../../src/components/Layout/Title';
-import { FixedBtn } from '../../../../src/components/Post/Read/FixedBtn';
+import { HeadTitle } from '../../../../src/components/Title/Head';
+import { Title } from '../../../../src/components/Title';
 
 const AllPosts: NextPage = () => {
   const { data } = useSWR<IGetAllPosts>(`/api/user/all/posts`);
   return (
     <>
-      <Title title="모든 포스트" />
+      <HeadTitle title="모든 포스트" />
       <PostListPage>
-        <TitleSign type="Posts" width="180px" svg="post" svgSize="2rem" />
+        <Title kind="Posts" svg={{ type: 'post', size: '2rem' }} />
         <PostList posts={data?.posts!} />
       </PostListPage>
     </>

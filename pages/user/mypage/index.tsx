@@ -2,15 +2,15 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../../styles/global';
 import useUser from '../../../src/libs/client/useUser';
-import { Title } from '../../../src/components/Layout/Title';
 import { MyList } from '../../../src/components/User/MyPage/MyList';
 import { Info } from '../../../src/components/User/MyPage/Info';
+import { HeadTitle } from '../../../src/components/Title/Head';
 
 const MyPage: NextPage = () => {
   const { isLoggedIn, loggedInUser } = useUser();
   return (
     <>
-      <Title title={`${loggedInUser?.username}'s Page`} />
+      <HeadTitle title={`${loggedInUser?.username}'s Page`} />
       {isLoggedIn && (
         <Cont>
           <section className="wrap">

@@ -3,18 +3,14 @@ import { Page } from '../../styles/global';
 import { MovieAPI } from '../../src/components/Movie';
 import { HeadTitle } from '../../src/components/Title/Head';
 
-const All: NextPage = () => {
+const Top: NextPage = () => {
   return (
     <>
-      <HeadTitle title="영화정보" />
+      <HeadTitle title="명작영화" />
       <Page>
-        <MovieAPI type="trending" />
-        <MovieAPI type="now" />
-        <MovieAPI type="upcoming" />
-        <MovieAPI type="tv" />
         <MovieAPI type="top" />
       </Page>
     </>
   );
 };
-export default All;
+export default Top;

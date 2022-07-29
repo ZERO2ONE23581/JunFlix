@@ -2,11 +2,11 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { FormCont, Page } from '../../../styles/global';
-import { Title } from '../../../src/components/Layout/Title';
 import { Token } from '../../../src/components/User/Login/Verify/Token';
 import { Email } from '../../../src/components/User/Login/Verify/Email';
 import { FindLink } from '../../../src/components/User/Links/Find';
 import { Result } from '../../../src/components/User/Login/Find/Result';
+import { HeadTitle } from '../../../src/components/Title/Head';
 
 const FindUserId: NextPage = () => {
   const [userId, setUserId] = useState('');
@@ -14,7 +14,7 @@ const FindUserId: NextPage = () => {
   const [confirm, setConfirm] = useState(false);
   return (
     <>
-      <Title title="아이디 찾기" />
+      <HeadTitle title="아이디 찾기" />
       <Cont>
         <Box>
           {!token && <Email setToken={setToken} />}

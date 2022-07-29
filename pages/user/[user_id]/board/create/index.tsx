@@ -2,14 +2,14 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../../../styles/global';
-import { Title } from '../../../../../src/components/Layout/Title';
 import { CreateBoard } from '../../../../../src/components/Board/Create';
+import { HeadTitle } from '../../../../../src/components/Title/Head';
 
 const Create: NextPage = () => {
   const [preview, setPreview] = useState('');
   return (
     <>
-      <Title title="보드생성" />
+      <HeadTitle title="보드생성" />
       <Cont bg={preview}>
         <CreateBoard setPreview={setPreview} isPreview={Boolean(preview)} />
       </Cont>

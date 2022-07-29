@@ -6,8 +6,8 @@ import { useRouter } from 'next/router';
 import { IGetBoard } from '../../../../../../src/types/board';
 import { AVATAR_BG, Page } from '../../../../../../styles/global';
 import { Board } from '../../../../../../src/components/Board/Read/Board';
-import { Title } from '../../../../../../src/components/Layout/Title';
 import { FixedBtn } from '../../../../../../src/components/Board/Read/Board/Fixed';
+import { HeadTitle } from '../../../../../../src/components/Title/Head';
 
 const BoardPage: NextPage = () => {
   const router = useRouter();
@@ -19,7 +19,7 @@ const BoardPage: NextPage = () => {
   );
   return (
     <>
-      <Title title={data?.board?.title!} />
+      <HeadTitle title={data?.board?.title!} />
       <Cont>
         <section className="wrap">
           <BG avatar={data?.board?.avatar!} preview={preview}>

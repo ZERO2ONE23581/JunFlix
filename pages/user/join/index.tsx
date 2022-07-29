@@ -2,10 +2,10 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { FormCont, Page } from '../../../styles/global';
-import { Title } from '../../../src/components/Layout/Title';
 import { CreateUser } from '../../../src/components/User/Join/Create/User';
 import { UserId } from '../../../src/components/User/Join/UserId';
 import { CreateAvatar } from '../../../src/components/User/Join/Create/Avatar';
+import { HeadTitle } from '../../../src/components/Title/Head';
 
 const Join: NextPage = () => {
   const [saveId, setSaveId] = useState('');
@@ -15,7 +15,7 @@ const Join: NextPage = () => {
 
   return (
     <>
-      <Title title="회원가입" />
+      <HeadTitle title="회원가입" />
       <Cont>
         <Box>
           {!userId && <UserId setSaveId={setSaveId} setUserId={setUserId} />}

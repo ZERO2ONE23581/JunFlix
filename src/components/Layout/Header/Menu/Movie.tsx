@@ -11,21 +11,21 @@ export const Movie = ({ setSelect }: any) => {
           </li>
         </a>
       </Link>
-      <Link href={`/movie/trends`}>
+      <Link href={`/movie/trending`}>
         <a>
           <li onClick={() => setSelect('')}>
             <span>Trends</span>
           </li>
         </a>
       </Link>
-      <Link href={`/movie/now-playing`}>
+      <Link href={`/movie/now`}>
         <a>
           <li onClick={() => setSelect('')}>
             <span>Now Playing</span>
           </li>
         </a>
       </Link>
-      <Link href={`/movie/tv-shows`}>
+      <Link href={`/movie/tv`}>
         <a>
           <li onClick={() => setSelect('')}>
             <span>Tv Shows</span>
@@ -39,7 +39,7 @@ export const Movie = ({ setSelect }: any) => {
           </li>
         </a>
       </Link>
-      <Link href={`/movie/top-rated`}>
+      <Link href={`/movie/top`}>
         <a>
           <li onClick={() => setSelect('')}>
             <span>Top Rated</span>

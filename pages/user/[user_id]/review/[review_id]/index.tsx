@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Page } from '../../../../../styles/global';
 import { IGetReview } from '../../../../../src/types/review';
-import { Title } from '../../../../../src/components/Layout/Title';
 import { Info } from '../../../../../src/components/Review/Read/Info';
+import { HeadTitle } from '../../../../../src/components/Title/Head';
 
 const ReviewPage: NextPage = () => {
   const router = useRouter();
@@ -15,7 +15,7 @@ const ReviewPage: NextPage = () => {
   );
   return (
     <>
-      <Title title="MOVIE REVIEW" />
+      <HeadTitle title="MOVIE REVIEW" />
       <Cont>
         {data && <Info review={data.review!} />}
         {!data && <h1>No data found..</h1>}
