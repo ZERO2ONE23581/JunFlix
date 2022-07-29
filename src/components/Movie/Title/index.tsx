@@ -6,7 +6,7 @@ interface ITitle {
 }
 export const MovieTitle = ({ type }: ITitle) => {
   return (
-    <Cont>
+    <Cont className="movie-title">
       {type === 'trending' && (
         <Title type="trending" svg={{ type: 'fire', size: '1.7rem' }} />
       )}
@@ -27,10 +27,6 @@ export const MovieTitle = ({ type }: ITitle) => {
 };
 const Cont = styled.h1`
   font-weight: 500;
-  margin-top: 20px;
-  :first-of-type {
-    margin-top: 0;
-  }
   .eng {
     font-size: 1.5rem;
   }

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { MouseEventHandler } from 'react';
+import { Svg } from '../Svg/Svg';
 
 interface IBtnProps {
   name?: string;
@@ -9,6 +10,7 @@ interface IBtnProps {
   loading?: boolean | null;
   type: 'button' | 'submit' | 'reset';
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
+  svg?: string;
 }
 
 export const Btn = ({
@@ -19,6 +21,7 @@ export const Btn = ({
   isClicked,
   CLASSNAME,
   disabled,
+  svg,
 }: IBtnProps) => {
   return (
     <>
@@ -29,6 +32,7 @@ export const Btn = ({
         isClicked={isClicked}
         className={CLASSNAME}
       >
+        {svg && <Svg type={svg} size="1.3rem" />}
         {loading ? 'Loading...' : name}
       </Button>
     </>
@@ -36,7 +40,7 @@ export const Btn = ({
 };
 export const Button = styled.button<{ isClicked?: boolean }>`
   padding: 10px;
-  gap: 10px;
+  gap: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,7 +58,7 @@ export const Button = styled.button<{ isClicked?: boolean }>`
     }
   }
   svg {
+    opacity: 0.8;
     fill: ${(p) => p.theme.color.bg};
-    padding-bottom: 3px;
   }
 `;

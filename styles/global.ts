@@ -5,7 +5,7 @@ export const Page = styled.section`
   height: 100%;
   min-width: 100vw;
   min-height: 100vh;
-  padding: 0 10% 5%;
+  padding: 0 3% 5%;
   position: relative;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};

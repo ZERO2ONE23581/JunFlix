@@ -1,8 +1,6 @@
 import useSWR from 'swr';
-import styled from '@emotion/styled';
-import { MovieTitle } from './Title';
-import { useEffect, useState } from 'react';
 import { List } from './List';
+import { useEffect, useState } from 'react';
 
 interface IMovieApi {
   type?: string;
@@ -18,12 +16,7 @@ export const MovieAPI = ({ type }: IMovieApi) => {
   const array = data?.arr?.results?.slice(0, 8);
   return (
     <>
-      {isData && (
-        <>
-          <MovieTitle type={type!} />
-          <List array={array} />
-        </>
-      )}
+      {isData && <List array={array} />}
       {!isData && <h1>NO MOVIE API...</h1>}
     </>
   );
