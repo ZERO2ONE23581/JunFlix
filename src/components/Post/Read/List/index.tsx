@@ -1,4 +1,4 @@
-import { Post } from './Post';
+import { Item } from './Item';
 import { Fold } from './Fold';
 import { useState } from 'react';
 import styled from '@emotion/styled';
@@ -15,7 +15,7 @@ export const PostList = ({ size, posts, isMyPage }: IPostList) => {
         <>
           <Cont className="post-list" size={size}>
             {posts?.slice(0, length).map((post) => (
-              <Post post={post} />
+              <Item post={post} />
             ))}
           </Cont>
           <Fold

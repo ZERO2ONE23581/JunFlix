@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Btn } from '../../Style/Button';
+import { Btn } from '../../Tools/Button';
 import useUser from '../../../libs/client/useUser';
-import { IconBtn } from '../../Style/Button/IconBtn';
-import { DeleteReivew } from '../Delete';
+import { IconBtn } from '../../Tools/Button/IconBtn';
+import { DeleteReivew } from '../../Tools/Modal/delete_review_modal';
 import { DimBackground, Modal } from '../../../../styles/global';
 
 export const Fixed = () => {

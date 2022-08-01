@@ -4,10 +4,11 @@ import styled from '@emotion/styled';
 import { Page } from '../../../../styles/global';
 import { IGetAllPosts } from '../../../../src/types/post';
 import useUser from '../../../../src/libs/client/useUser';
-import { Title } from '../../../../src/components/Title';
-import { HeadTitle } from '../../../../src/components/Title/Head';
-import { Fixed } from '../../../../src/components/Board/Read/Fixed';
+import { Title } from '../../../../src/components/Tools/Title';
+import { HeadTitle } from '../../../../src/components/Layout/Head';
+
 import { PostList } from '../../../../src/components/Post/Read/List';
+import { Fixed } from '../../../../src/components/Tools/Modal/Fixed';
 
 const MyPosts: NextPage = () => {
   const { loggedInUser } = useUser();

@@ -3,9 +3,9 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
 import { IGetBoards } from '../../../src/types/board';
-import { Title } from '../../../src/components/Title';
-import { HeadTitle } from '../../../src/components/Title/Head';
-import { Fixed } from '../../../src/components/Fixed';
+import { Title } from '../../../src/components/Tools/Title';
+import { HeadTitle } from '../../../src/components/Layout/Head';
+import { Fixed } from '../../../src/components/Tools/Modal/Fixed';
 import { BoardList } from '../../../src/components/Board/Read/List';
 
 const AllBoards: NextPage = () => {

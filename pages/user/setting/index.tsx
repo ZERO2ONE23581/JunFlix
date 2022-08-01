@@ -1,12 +1,12 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
-import { UserId } from '../../../src/components/User/Edit/UserId';
-import { UserInfo } from '../../../src/components/User/Edit/UserInfo';
-import { Password } from '../../../src/components/User/Edit/Password';
-import { ProfilePic } from '../../../src/components/User/Edit/ProfilePic';
-import { DeleteAccount } from '../../../src/components/User/Delete/Account';
-import { HeadTitle } from '../../../src/components/Title/Head';
+import { UserId } from '../../../src/components/User/Update/UserId';
+import { UserInfo } from '../../../src/components/User/Update/UserInfo';
+import { Password } from '../../../src/components/User/Update/Password';
+import { Avatar } from '../../../src/components/Avatar/user_edit';
+import { DeleteUser } from '../../../src/components/User/Delete';
+import { HeadTitle } from '../../../src/components/Layout/Head';
 
 const EditProfile: NextPage = () => {
   return (
@@ -16,9 +16,9 @@ const EditProfile: NextPage = () => {
         <Flex>
           <UserId />
           <Password />
-          <ProfilePic />
+          <Avatar />
           <UserInfo />
-          <DeleteAccount />
+          <DeleteUser />
         </Flex>
       </Cont>
     </>

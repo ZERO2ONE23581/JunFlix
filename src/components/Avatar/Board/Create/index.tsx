@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../Style/Svg/Svg';
+import { Svg } from '../../../Tools/Svg';
 import { Dispatch, SetStateAction } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import { IBoardForm } from '../../../../types/board';
-import { IconBtn } from '../../../Style/Button/IconBtn';
+import { IconBtn } from '../../../Tools/Button/IconBtn';
 
 interface ICreateBoardAvatar {
   isPreview: boolean;

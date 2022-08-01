@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { CreateAvatar } from '../../Avatar/Board/Create';
-import { InputWrap } from '../../Style/Input';
+import { InputWrap } from '../../Tools/Input';
 import { IUseform } from '../../../types/global';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../Style/Button/IconBtn';
-import { SelectWrap } from '../../Style/Input/SelectWrap';
+import { IconBtn } from '../../Tools/Button/IconBtn';
+import { SelectWrap } from '../../Tools/Input/SelectWrap';
 
 interface IInputs extends IUseform {
   isPreview: boolean;

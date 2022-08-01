@@ -1,6 +1,10 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../../Style/Svg/Svg';
-import { CapFirstLetter, CapFirstLetters, ReadDate } from '../../../../Tools';
+import { Svg } from '../../../../Tools/Svg';
+import {
+  CapFirstLetter,
+  CapFirstLetters,
+  ReadDate,
+} from '../../../../Tools/Tools';
 
 interface ITtitle {
   genre: string;

@@ -1,7 +1,7 @@
 import { Info } from './Info';
 import { OnAir } from './OnAir';
 import styled from '@emotion/styled';
-import { NoAvatar } from '../../../../NoAvatar';
+import { NoAvatar } from '../../../../Avatar/NoAvatar';
 import { AVATAR_BG } from '../../../../../../styles/global';
 
 interface IItem {

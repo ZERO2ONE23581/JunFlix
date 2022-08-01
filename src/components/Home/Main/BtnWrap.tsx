@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Answer } from '../Answer';
+import { Answer } from '../../Tools/Modal/home_qna';
 import styled from '@emotion/styled';
-import { Btn } from '../../Style/Button';
+import { Btn } from '../../Tools/Button';
 import { useRouter } from 'next/router';
 import useUser from '../../../libs/client/useUser';
 

@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { SaveModal } from '../../../Modal/Save';
-import { DelModal } from '../../../Modal/delete';
-import { Svg } from '../../../Style/Svg/Svg';
+import { SaveModal } from '../../../Tools/Modal/Save';
+import { DelModal } from '../../../Tools/Modal/delete';
+import { Svg } from '../../../Tools/Svg';
 import { IBoardForm } from '../../../../types/board';
 import { MutationRes } from '../../../../types/mutation';
 import useMutation from '../../../../libs/client/useMutation';

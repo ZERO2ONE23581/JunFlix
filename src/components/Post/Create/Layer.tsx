@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../Style/Button/IconBtn';
+import { IconBtn } from '../../Tools/Button/IconBtn';
 
 interface IBtnWrapProps {
   next: boolean;

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../../Style/Svg/Svg';
-import { CapFirstLetters } from '../../../../Tools';
+import { Svg } from '../../../../Tools/Svg';
+import { CapFirstLetters } from '../../../../Tools/Tools';
 import useUser from '../../../../../libs/client/useUser';
 
 interface IInfo {

@@ -2,8 +2,8 @@ import { BtnWrap } from '../../Update/BtnWrap';
 import { EditAvatar } from '../../../Avatar/Board/Edit';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { IconBtn } from '../../../Style/Button/IconBtn';
-import { CancelModal } from '../../../Modal/Board/Edit/cancel';
+import { IconBtn } from '../../../Tools/Button/IconBtn';
+import { CancelModal } from '../../../Tools/Modal/Board/Edit/cancel';
 
 interface ISetting {
   edit: boolean;

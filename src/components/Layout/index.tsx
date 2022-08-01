@@ -2,7 +2,7 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import { ReactElement } from 'react';
 import styled from '@emotion/styled';
-import { Fixed, IBtns } from './Fixed';
+import { Fixed, IBtns } from '../Tools/themeBtn';
 
 interface ILayoutProps extends IBtns {
   children: ReactElement;

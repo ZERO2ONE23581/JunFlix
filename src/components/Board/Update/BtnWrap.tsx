@@ -1,11 +1,11 @@
-import { EditBtns } from '../../Modal/Board/ButtonModal';
+import { EditBtns } from '../../Tools/Modal/Board/ButtonModal';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { CreatePost } from '../../Post/Create';
 import { Dispatch, SetStateAction, useState } from 'react';
 import useUser from '../../../libs/client/useUser';
-import { IconBtn } from '../../Style/Button/IconBtn';
-import { Answer } from '../../Modal/Board/QnA';
+import { IconBtn } from '../../Tools/Button/IconBtn';
+import { Answer } from '../../Tools/Modal/Board/QnA';
 
 interface IBtnWrap {
   setEdit: Dispatch<SetStateAction<boolean>>;

@@ -2,9 +2,9 @@ import { NextPage } from 'next';
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Page } from '../../../../../../styles/global';
-import { HeadTitle } from '../../../../../../src/components/Title/Head';
-import { EditReview } from '../../../../../../src/components/Review/Edit';
-import { IconBtn } from '../../../../../../src/components/Style/Button/IconBtn';
+import { HeadTitle } from '../../../../../../src/components/Layout/Head';
+import { EditReview } from '../../../../../../src/components/Review/Update';
+import { IconBtn } from '../../../../../../src/components/Tools/Button/IconBtn';
 import { Answer } from '../../../../../../src/components/Review/Read/modal/answer';
 
 const EditReviewPage: NextPage = () => {

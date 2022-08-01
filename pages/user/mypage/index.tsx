@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../../styles/global';
 import useUser from '../../../src/libs/client/useUser';
-import { MyList } from '../../../src/components/User/MyPage/MyList';
-import { Info } from '../../../src/components/User/MyPage/Info';
-import { HeadTitle } from '../../../src/components/Title/Head';
+import { MyList } from '../../../src/components/User/Read/MyPage/List';
+import { Info } from '../../../src/components/User/Read/MyPage/Info';
+import { HeadTitle } from '../../../src/components/Layout/Head';
 
 const MyPage: NextPage = () => {
   const { isLoggedIn, loggedInUser } = useUser();

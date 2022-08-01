@@ -5,8 +5,8 @@ import { Page } from '../../../../styles/global';
 import useUser from '../../../../src/libs/client/useUser';
 import { IGetReviews } from '../../../../src/types/review';
 import { ReviewList } from '../../../../src/components/Review/Read/List';
-import { HeadTitle } from '../../../../src/components/Title/Head';
-import { Title } from '../../../../src/components/Title';
+import { HeadTitle } from '../../../../src/components/Layout/Head';
+import { Title } from '../../../../src/components/Tools/Title';
 
 const MyReviews: NextPage = () => {
   const { loggedInUser } = useUser();

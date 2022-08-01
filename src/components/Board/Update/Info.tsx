@@ -1,16 +1,16 @@
-import { Length } from '../../Tools';
+import { Length } from '../../Tools/Tools';
 import styled from '@emotion/styled';
-import { Btn } from '../../Style/Button';
-import { Input } from '../../Style/Input';
+import { Btn } from '../../Tools/Button';
+import { Input } from '../../Tools/Input';
 import { useForm } from 'react-hook-form';
 import { IQuery } from '../../../types/global';
-import { LoadingModal } from '../../LoadingModal';
+import { LoadingModal } from '../../Tools/Modal/LoadingModal';
 import { IBoardForm } from '../../../types/board';
-import { Errors } from '../../Review/Create/Error';
+import { Errors } from '../../Tools/Error';
 import { MutationRes } from '../../../types/mutation';
 import { DimBackground } from '../../../../styles/global';
-import { TextAreaWrap } from '../../Style/Input/TextArea';
-import { SelectWrap } from '../../Style/Input/SelectWrap';
+import { TextAreaWrap } from '../../Tools/Input/TextArea';
+import { SelectWrap } from '../../Tools/Input/SelectWrap';
 import useMutation from '../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 

@@ -3,9 +3,9 @@ import { ReviewWithUser } from '../../../../types/review';
 import { Fixed } from '../Fixed';
 import { Avatar } from '../../../Avatar';
 import { Top } from './Detail/Top';
-import { CreateComment } from '../../Comment/Create/Comment';
-import { CommentList } from '../../Comment/Read/List';
-import { Icons } from '../../Comment/Read/Icons';
+import { CreateComment } from '../../../Comment/Review/Create/Comment';
+import { CommentList } from '../../../Comment/Review/Read/List';
+import { Icons } from '../../../Comment/Review/Read/Icons';
 
 export interface IInfo {
   review: ReviewWithUser;

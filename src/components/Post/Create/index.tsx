@@ -3,15 +3,15 @@ import { Layer } from './Layer';
 import styled from '@emotion/styled';
 import { Avatar } from '../../Avatar';
 import { useRouter } from 'next/router';
-import { SaveModal } from '../../Modal/Board/CreateBoardModal';
+import { SaveModal } from '../../Tools/Modal/Board/CreateBoardModal';
 import { useForm } from 'react-hook-form';
-import { CancelModal } from '../Edit/Modal/Cancel';
-import { ErrorMsg } from '../../Style/ErrMsg';
+import { ErrorMsg } from '../../Tools/ErrMsg';
 import { IPostForm } from '../../../types/post';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
 import { Modal, DimBackground } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { CancelModal } from '../../Tools/Modal/post_update_cancel';
 
 interface ICreatePost {
   setCreate: Dispatch<SetStateAction<boolean>>;
@@ -126,11 +126,11 @@ const Main = styled.article<{ isNext: boolean }>`
     .isPreivewTag,
     .isImageTag,
     .noImageDiv {
-      width: 40vw;
       height: 75vh;
       min-width: 600px;
       min-height: 580px;
       border-right: ${(p) => !p.isNext && 'none'};
+      width: ${(p) => (!p.isNext ? '35vw' : '40vw')};
     }
   }
   .create-post-info {

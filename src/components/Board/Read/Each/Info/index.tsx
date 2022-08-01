@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import useUser from '../../../../../libs/client/useUser';
 import { IQuery } from '../../../../../types/global';
-import { Svg } from '../../../../Style/Svg/Svg';
-import { CapFirstLetters } from '../../../../Tools';
+import { Svg } from '../../../../Tools/Svg';
+import { CapFirstLetters } from '../../../../Tools/Tools';
 import { Follow } from '../../../Follow';
 import { Counts } from './Counts';
 

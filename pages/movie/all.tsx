@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { MovieAPI } from '../../src/components/Movie';
-import { HeadTitle } from '../../src/components/Title/Head';
+import { HeadTitle } from '../../src/components/Layout/Head';
 import { MovieTitle } from '../../src/components/Movie/Title';
 import styled from '@emotion/styled';
 

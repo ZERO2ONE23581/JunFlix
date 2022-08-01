@@ -1,4 +1,4 @@
-import { Title } from '../../Title';
+import { Title } from '../../Tools/Title';
 import styled from '@emotion/styled';
 
 interface ITitle {

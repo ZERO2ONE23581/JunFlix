@@ -1,6 +1,6 @@
 import { Modal } from './Modal';
 import styled from '@emotion/styled';
-import { CapFirstLetter } from '../../../../Tools';
+import { CapFirstLetter } from '../../../../Tools/Tools';
 import { Dispatch, SetStateAction } from 'react';
 
 interface IEach {

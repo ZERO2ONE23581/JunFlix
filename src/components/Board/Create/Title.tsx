@@ -1,7 +1,7 @@
-import { Answer } from '../../Modal/Board/CreateBoardQnA';
+import { Answer } from '../../Tools/Modal/Board/CreateBoardQnA';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../Style/Button/IconBtn';
+import { IconBtn } from '../../Tools/Button/IconBtn';
 
 interface ITitle {
   answer: boolean;

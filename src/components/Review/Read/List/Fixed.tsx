@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Answer } from './Answer';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { IconBtn } from '../../../Style/Button/IconBtn';
+import { IconBtn } from '../../../Tools/Button/IconBtn';
 import useUser from '../../../../libs/client/useUser';
 
 export const Fixed = () => {

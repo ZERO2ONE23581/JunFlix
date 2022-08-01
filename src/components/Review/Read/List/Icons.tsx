@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../Style/Svg/Svg';
+import { Svg } from '../../../Tools/Svg';
 
 interface IIconCount {
   isLike?: boolean;

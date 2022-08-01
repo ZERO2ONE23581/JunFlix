@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
-import { LoginForm } from '../../../src/components/User/Login';
-import { HeadTitle } from '../../../src/components/Title/Head';
+import { LoginForm } from '../../../src/components/User/Read';
+import { HeadTitle } from '../../../src/components/Layout/Head';
 
 const Login: NextPage = () => {
   return (

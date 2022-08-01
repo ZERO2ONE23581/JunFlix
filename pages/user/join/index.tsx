@@ -2,10 +2,10 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { FormCont, Page } from '../../../styles/global';
-import { CreateUser } from '../../../src/components/User/Join/Create/User';
-import { UserId } from '../../../src/components/User/Join/UserId';
-import { CreateAvatar } from '../../../src/components/User/Join/Create/Avatar';
-import { HeadTitle } from '../../../src/components/Title/Head';
+import { CreateUser } from '../../../src/components/User/Create';
+import { CreateAvatar } from '../../../src/components/Avatar/create_user_avatar';
+import { HeadTitle } from '../../../src/components/Layout/Head';
+import { CreateId } from '../../../src/components/User/Create/UserId';
 
 const Join: NextPage = () => {
   const [saveId, setSaveId] = useState('');
@@ -18,7 +18,7 @@ const Join: NextPage = () => {
       <HeadTitle title="회원가입" />
       <Cont>
         <Box>
-          {!userId && <UserId setSaveId={setSaveId} setUserId={setUserId} />}
+          {!userId && <CreateId setSaveId={setSaveId} setUserId={setUserId} />}
           {userId && !avatar && (
             <CreateUser
               saveId={saveId}

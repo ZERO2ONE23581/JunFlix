@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { Length } from '../../Tools';
+import { Length } from '../../Tools/Tools';
 import { IUseform } from '../../../types/global';
 import useUser from '../../../libs/client/useUser';
-import { TitleInput } from '../../Style/Input/Title';
-import { IconBtn } from '../../Style/Button/IconBtn';
-import { TextAreaWrap } from '../../Style/Input/TextArea';
+import { TitleInput } from '../../Tools/Input/Title';
+import { IconBtn } from '../../Tools/Button/IconBtn';
+import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IInfo extends IUseform {

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import useMutation from '../../libs/client/useMutation';
 import { MutationRes } from '../../types/mutation';
 import { IGetFollowingBoard } from '../../types/follow';
-import { Btn } from '../Style/Button';
+import { Btn } from '../Tools/Button';
 
 interface IFollowBoard {
   userId: number;

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { Svg } from '../../../Style/Svg/Svg';
+import { Svg } from '../../../Tools/Svg';
 import { DimBackground } from '../../../../../styles/global';
 
 export const Modal = ({ setOpen }: any) => {

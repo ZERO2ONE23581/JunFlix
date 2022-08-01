@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../../Style/Button';
+import { Btn } from '../../../Tools/Button';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../../Style/Button/IconBtn';
+import { IconBtn } from '../../../Tools/Button/IconBtn';
 
 interface IFold {
   max: number;

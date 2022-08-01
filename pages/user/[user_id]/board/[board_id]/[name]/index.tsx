@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { AVATAR_BG } from '../../../../../../styles/global';
 import { IGetBoard } from '../../../../../../src/types/board';
 import { IGetAllPosts } from '../../../../../../src/types/post';
-import { HeadTitle } from '../../../../../../src/components/Title/Head';
+import { HeadTitle } from '../../../../../../src/components/Layout/Head';
 import { Board } from '../../../../../../src/components/Board/Read/Each';
 import { PostList } from '../../../../../../src/components/Post/Read/List';
 

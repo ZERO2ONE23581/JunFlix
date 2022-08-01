@@ -1,13 +1,13 @@
 import { Title } from './Title';
 import { Inputs } from './Inputs';
-import { Length } from '../../Tools';
+import { Length } from '../../Tools/Tools';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { LoadingModal } from '../../LoadingModal';
-import { Errors } from '../../Review/Create/Error';
+import { LoadingModal } from '../../Tools/Modal/LoadingModal';
+import { Errors } from '../../Tools/Error';
 import { Container } from '../../../../styles/global';
-import { TextAreaWrap } from '../../Style/Input/TextArea';
+import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import useMutation from '../../../libs/client/useMutation';
 import { IBoardForm, IBoardFormRes } from '../../../types/board';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';

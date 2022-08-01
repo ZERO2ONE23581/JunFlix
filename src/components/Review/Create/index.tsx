@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SaveModal } from './Modal';
+import { SaveModal } from '../../Tools/Modal/review_create';
 import styled from '@emotion/styled';
 import { Avatar } from '../../Avatar';
 import { Review } from '@prisma/client';
@@ -8,11 +8,11 @@ import { useForm } from 'react-hook-form';
 import useUser from '../../../libs/client/useUser';
 import { IReviewForm } from '../../../types/review';
 import { Container } from '../../../../styles/global';
-import { TextAreaWrap } from '../../Style/Input/TextArea';
+import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import useMutation from '../../../libs/client/useMutation';
-import { Length } from '../../Tools';
-import { Inputs } from './Inputs';
-import { Errors } from './Error';
+import { Length } from '../../Tools/Tools';
+import { Inputs } from '../Inputs';
+import { Errors } from '../../Tools/Error';
 
 interface ICreateReviewRes {
   ok: boolean;
