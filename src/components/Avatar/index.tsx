@@ -73,7 +73,7 @@ const NoImage = styled.div<{ disabled: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  box-shadow: ${(p) => p.theme.boxShadow.input};
   pointer-events: ${(p) => p.disabled && 'none'};
   :hover {
     svg {

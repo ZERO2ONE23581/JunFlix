@@ -1,9 +1,9 @@
 import { Info } from './Info';
-import { Layer } from './Info/Layer';
+import { Layer } from './Layer';
 import styled from '@emotion/styled';
 import { Avatar } from '../../Avatar';
 import { useRouter } from 'next/router';
-import { SaveModal } from './Modal/Save';
+import { SaveModal } from '../../Modal/Board/CreateBoardModal';
 import { useForm } from 'react-hook-form';
 import { CancelModal } from '../Edit/Modal/Cancel';
 import { ErrorMsg } from '../../Style/ErrMsg';
@@ -14,9 +14,9 @@ import { Modal, DimBackground } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface ICreatePost {
-  openCreatePost: Dispatch<SetStateAction<boolean>>;
+  setCreate: Dispatch<SetStateAction<boolean>>;
 }
-export const CreatePost = ({ openCreatePost }: ICreatePost) => {
+export const CreatePost = ({ setCreate }: ICreatePost) => {
   const {
     watch,
     register,
@@ -67,10 +67,10 @@ export const CreatePost = ({ openCreatePost }: ICreatePost) => {
   useEffect(() => {
     if (data?.ok) {
       setSave(false);
-      openCreatePost(false);
+      setCreate(false);
       alert('새로운 포스트를 생성했습니다.');
     }
-  }, [data, openCreatePost, setSave]);
+  }, [data, setCreate, setSave]);
 
   return (
     <form onSubmit={handleSubmit(onValid)}>
@@ -104,9 +104,7 @@ export const CreatePost = ({ openCreatePost }: ICreatePost) => {
         {errors.content && <ErrorMsg error={errors?.content?.message!} />}
       </Cont>
       {save && <SaveModal loading={Loading} setSave={setSave} />}
-      {cancel && (
-        <CancelModal closePost={openCreatePost} setCancel={setCancel} />
-      )}
+      {cancel && <CancelModal closePost={setCreate} setCancel={setCancel} />}
       <DimBackground zIndex={101} onClick={() => setCancel(true)} />
     </form>
   );

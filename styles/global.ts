@@ -1,26 +1,31 @@
-import { ThemeContext } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const Page = styled.section`
-  height: 100%;
+  padding: 0 5% 5%;
   min-width: 100vw;
   min-height: 100vh;
-  padding: 0 3% 5%;
   position: relative;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
+  .board-list {
+    .board {
+      min-height: 440px;
+    }
+  }
+  .post-list {
+    .post {
+      min-height: 400px;
+    }
+  }
 `;
 export const Layout = styled.section`
   min-width: 100vw;
-  padding: 10px 5%;
-  color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
+  padding: 10px 8%;
 `;
 export const Container = styled.article`
   padding: 30px 40px;
   border-radius: 5px;
   color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border.thick};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
 `;
@@ -126,7 +131,6 @@ export const AVATAR_BG = styled.article<{ avatar: string }>`
   -webkit-background-size: cover;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.font};
-
   .post-list {
     .POST {
       background-color: ${(p) => p.theme.color.bg};
@@ -134,15 +138,5 @@ export const AVATAR_BG = styled.article<{ avatar: string }>`
         fill: ${(p) => p.theme.color.font};
       }
     }
-  }
-`;
-export const NoAvatar = styled.div`
-  svg {
-    top: 50%;
-    left: 50%;
-    opacity: 0.9;
-    position: absolute;
-    fill: ${(p) => p.theme.color.bg};
-    transform: translate(-50%, -50%);
   }
 `;

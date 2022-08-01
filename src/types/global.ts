@@ -11,9 +11,10 @@ import { Dispatch, SetStateAction } from 'react';
 
 export interface IQuery {
   query: {
-    userId: number;
-    boardId: number;
-    postId: number;
+    userId?: number;
+    boardId?: number;
+    postId?: number;
+    reveiwId?: number;
   };
 }
 export interface ModalProps {

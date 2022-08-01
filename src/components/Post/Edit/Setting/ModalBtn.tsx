@@ -9,7 +9,7 @@ import { IQuery } from '../../../../types/global';
 export interface IModalBtn extends IQuery {
   title: string;
   setSetting: Dispatch<SetStateAction<boolean>>;
-  setReadPost: Dispatch<SetStateAction<boolean>>;
+  setModal: Dispatch<SetStateAction<boolean>>;
   setEdit: Dispatch<SetStateAction<boolean>>;
   setDelete: Dispatch<SetStateAction<boolean>>;
 }
@@ -17,7 +17,7 @@ export const ModalBtn = ({
   query,
   title,
   setSetting,
-  setReadPost,
+  setModal,
   setEdit,
   setDelete,
 }: IModalBtn) => {
@@ -29,7 +29,7 @@ export const ModalBtn = ({
     if (type === 'edit') return setEdit(true);
     if (type === 'delete') return setDelete(true);
     if (type === 'board') {
-      setReadPost(false);
+      setModal(false);
       router.push(`/user/${query.userId}/board/${query.boardId}/${title}`);
     }
   };

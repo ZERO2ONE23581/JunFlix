@@ -13,8 +13,8 @@ export const Title = ({ genre, movieTitle, reivewTitle }: ITtitle) => {
   return (
     <Cont>
       <Movie>
+        <Svg size="2.5rem" type={genre} />
         <span>{MovieTitle}</span>
-        <Svg size="3.3rem" type={genre} />
       </Movie>
       <Review>
         <span>'s Review:</span>
@@ -34,8 +34,9 @@ const Movie = styled.span`
   font-size: 3.6rem;
   position: relative;
   svg {
-    top: 8px;
-    left: -80px;
+    top: 55%;
+    left: -60px;
+    transform: translateY(-50%);
     position: absolute;
   }
 `;
@@ -43,6 +44,7 @@ const Review = styled.span`
   font-size: 2.4rem;
   font-style: italic;
   .review-title {
+    margin-left: 10px;
     color: ${(p) => p.theme.color.logo};
   }
 `;

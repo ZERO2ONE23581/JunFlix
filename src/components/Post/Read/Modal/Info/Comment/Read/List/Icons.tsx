@@ -3,10 +3,10 @@ import styled from '@emotion/styled';
 import { Svg } from '../../../../../../../Style/Svg/Svg';
 import { IGetPost, PostModel } from '../../../../../../../../types/post';
 
-interface IIsMyPostProps {
+interface IPostIcons {
   post: PostModel;
 }
-export const PostIcons = ({ post }: IIsMyPostProps) => {
+export const PostIcons = ({ post }: IPostIcons) => {
   const { data } = useSWR<IGetPost>(
     `/api/user/${post.UserID}/board/${post.BoardID}/post/${post.id}`
   );

@@ -10,9 +10,9 @@ import { Modal, DimBackground } from '../../../../../styles/global';
 import { IQuery } from '../../../../types/global';
 
 interface IPostModal extends IQuery {
-  setReadPost: Dispatch<SetStateAction<boolean>>;
+  setModal: Dispatch<SetStateAction<boolean>>;
 }
-export const PostModal = ({ query, setReadPost }: IPostModal) => {
+export const PostModal = ({ query, setModal }: IPostModal) => {
   const { data } = useSWR<IGetPost>(
     `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}`
   );
@@ -25,7 +25,7 @@ export const PostModal = ({ query, setReadPost }: IPostModal) => {
         <Info
           query={query}
           post={data?.post!}
-          setReadPost={setReadPost}
+          setModal={setModal}
           setEdit={setEdit}
           setDelete={setDelete}
         />
@@ -47,7 +47,7 @@ export const PostModal = ({ query, setReadPost }: IPostModal) => {
         )}
       </Cont>
       {del && <DeleteModal query={query} setDelete={setDelete} />}
-      <DimBackground zIndex={99} onClick={() => setReadPost(false)} />
+      <DimBackground zIndex={99} onClick={() => setModal(false)} />
     </>
   );
 };

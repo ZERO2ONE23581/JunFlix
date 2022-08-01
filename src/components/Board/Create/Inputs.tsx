@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { BoardAvatar } from './Avatar';
+import { CreateAvatar } from '../../Avatar/Board/Create';
 import { InputWrap } from '../../Style/Input';
 import { IUseform } from '../../../types/global';
 import { Dispatch, SetStateAction } from 'react';
@@ -27,7 +27,7 @@ export const Inputs = ({ watch, register, isPreview, setPreview }: IInputs) => {
         watch={watch!('genre')}
         register={register!('genre')}
       />
-      <BoardAvatar
+      <CreateAvatar
         register={register!}
         isPreview={isPreview}
         setPreview={setPreview}

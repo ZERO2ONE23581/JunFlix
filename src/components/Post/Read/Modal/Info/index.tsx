@@ -12,16 +12,10 @@ import { IQuery } from '../../../../../types/global';
 export interface IInfo extends IQuery {
   post: PostModel;
   setEdit: Dispatch<SetStateAction<boolean>>;
-  setReadPost: Dispatch<SetStateAction<boolean>>;
+  setModal: Dispatch<SetStateAction<boolean>>;
   setDelete: Dispatch<SetStateAction<boolean>>;
 }
-export const Info = ({
-  post,
-  query,
-  setReadPost,
-  setEdit,
-  setDelete,
-}: IInfo) => {
+export const Info = ({ post, query, setModal, setEdit, setDelete }: IInfo) => {
   const [setting, setSetting] = useState(false);
   return (
     <>
@@ -31,7 +25,7 @@ export const Info = ({
             title={post.title}
             setting={setting}
             setSetting={setSetting}
-            setReadPost={setReadPost}
+            setModal={setModal}
           />
           <Main>
             <Content
@@ -57,7 +51,7 @@ export const Info = ({
           query={query}
           title={post?.title!}
           setSetting={setSetting}
-          setReadPost={setReadPost}
+          setModal={setModal}
           setEdit={setEdit}
           setDelete={setDelete}
         />

@@ -30,6 +30,7 @@ const Item = styled.article`
   img {
     width: 100%;
     min-height: 130px;
+    border-radius: 3px;
   }
   .red {
     color: ${(p) => p.theme.color.logo};

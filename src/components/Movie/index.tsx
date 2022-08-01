@@ -13,7 +13,7 @@ export const MovieAPI = ({ type }: IMovieApi) => {
   const { data } = useSWR(api);
   const isData = Boolean(data?.arr?.results.length !== 0);
   //const array = data?.arr?.results?.slice(0, 8)?.reverse();
-  const array = data?.arr?.results?.slice(0, 8);
+  const array = data?.arr?.results?.slice(0, 5);
   return (
     <>
       {isData && <List array={array} />}

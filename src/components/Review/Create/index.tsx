@@ -201,7 +201,6 @@ export const ReviewCont = styled(Container)`
       min-height: 300px;
       max-height: 700px;
       border: ${(p) => p.theme.border.thick};
-      box-shadow: ${(p) => p.theme.boxShadow.nav};
     }
   }
   .content {

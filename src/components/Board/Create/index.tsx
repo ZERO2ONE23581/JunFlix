@@ -31,7 +31,7 @@ export const CreateBoard = ({ isPreview, setPreview }: ICreateBoard) => {
   } = useForm<IBoardForm>({ mode: 'onBlur' });
   //
   const [maxTitle] = useState(30);
-  const [maxIntro] = useState(500);
+  const [maxIntro] = useState(1000);
   const [height, setHeight] = useState(40);
   useEffect(() => {
     const intro = watch!('intro');
@@ -89,7 +89,7 @@ export const CreateBoard = ({ isPreview, setPreview }: ICreateBoard) => {
   const [answer, setAnswer] = useState(false);
   return (
     <form onSubmit={handleSubmit(onValid)}>
-      <Cont>
+      <Cont isAvatar={Boolean(avatar?.length! > 0)}>
         <Title
           answer={answer}
           maxTitle={maxTitle}
@@ -119,12 +119,12 @@ export const CreateBoard = ({ isPreview, setPreview }: ICreateBoard) => {
     </form>
   );
 };
-const Cont = styled(Container)`
+const Cont = styled(Container)<{ isAvatar: boolean }>`
   gap: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  border: ${(p) => p.theme.border.thick};
+  border: ${(p) => !p.isAvatar && p.theme.border.thick};
   .intro {
     textarea {
       border: none;

@@ -2,7 +2,7 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import { ReactElement } from 'react';
 import styled from '@emotion/styled';
-import { Btns, IBtns } from './Btns';
+import { Fixed, IBtns } from './Fixed';
 
 interface ILayoutProps extends IBtns {
   children: ReactElement;
@@ -11,12 +11,15 @@ export const Layout = ({ children, setTheme, isLight }: ILayoutProps) => {
   return (
     <Cont>
       <Header />
-      <section className="children">{children}</section>
+      <Children>{children}</Children>
       <Footer />
-      <Btns isLight={isLight} setTheme={setTheme} />
+      <Fixed isLight={isLight} setTheme={setTheme} />
     </Cont>
   );
 };
 const Cont = styled.section`
+  min-width: 1500px;
+  color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
+const Children = styled.section``;

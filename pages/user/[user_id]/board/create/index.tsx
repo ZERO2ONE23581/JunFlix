@@ -20,6 +20,6 @@ export default Create;
 
 const Cont = styled(Page)<{ bg?: string }>`
   padding: 3% 12%;
-  min-height: 100vh;
+  background-color: black;
   background: ${(p) => p.bg && `url(${p.bg}) center / cover no-repeat`};
 `;

@@ -6,10 +6,10 @@ import { IconBtn } from '../../../../../../../../Style/Button/IconBtn';
 export interface ITop {
   title: string;
   setting: boolean;
-  setReadPost: Dispatch<SetStateAction<boolean>>;
+  setModal: Dispatch<SetStateAction<boolean>>;
   setSetting: Dispatch<SetStateAction<boolean>>;
 }
-export const Top = ({ title, setting, setSetting, setReadPost }: ITop) => {
+export const Top = ({ title, setting, setSetting, setModal }: ITop) => {
   return (
     <Cont>
       <IconBtn
@@ -24,7 +24,7 @@ export const Top = ({ title, setting, setSetting, setReadPost }: ITop) => {
         size="1.5rem"
         type="button"
         svgType="close"
-        onClick={() => setReadPost(false)}
+        onClick={() => setModal(false)}
       />
     </Cont>
   );

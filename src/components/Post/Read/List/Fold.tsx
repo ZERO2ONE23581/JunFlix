@@ -1,14 +1,15 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../../Style/Button';
 import { Dispatch, SetStateAction } from 'react';
+import { IconBtn } from '../../../Style/Button/IconBtn';
 
 interface IFold {
-  Max: number;
+  max: number;
   length: number;
   postLength: number;
   setLength: Dispatch<SetStateAction<number>>;
 }
-export const Fold = ({ Max, postLength, setLength, length }: IFold) => {
+export const Fold = ({ max, postLength, setLength, length }: IFold) => {
   const noFold = Boolean(postLength < length);
   const unFold = Boolean(length !== postLength);
   const Fold = Boolean(length === postLength);
@@ -17,14 +18,20 @@ export const Fold = ({ Max, postLength, setLength, length }: IFold) => {
       {!noFold && (
         <Cont className="post-fold">
           {unFold && (
-            <Btn
+            <IconBtn
+              size="2.5rem"
               type="button"
-              name="펼치기"
+              svgType="ellipsis"
               onClick={() => setLength(postLength)}
             />
           )}
           {Fold && (
-            <Btn type="button" name="접기" onClick={() => setLength(Max)} />
+            <IconBtn
+              size="2rem"
+              type="button"
+              svgType="caret"
+              onClick={() => setLength(max)}
+            />
           )}
         </Cont>
       )}
@@ -32,13 +39,8 @@ export const Fold = ({ Max, postLength, setLength, length }: IFold) => {
   );
 };
 const Cont = styled.div`
-  margin-top: 20px;
   display: flex;
+  margin-top: 20px;
   align-content: center;
   justify-content: end;
-  button {
-    width: 80px;
-    color: ${(p) => p.theme.color.font};
-    background-color: ${(p) => p.theme.color.bg};
-  }
 `;

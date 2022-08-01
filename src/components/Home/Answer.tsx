@@ -11,7 +11,7 @@ export const Answer = ({ setAnswer }: IAnswer) => {
       <Cont>
         <span>
           * 인기콘텐츠, 개봉예정작, 현재상영작 등 다양한 영화관련 정보를 얻으실
-          수 있습니다..
+          수 있습니다.
         </span>
         <span>
           * 보드는 영화와 관련된 사진이나 정보를 공유할수 있는 공간입니다.

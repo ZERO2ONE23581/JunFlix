@@ -2,7 +2,8 @@ import { Board, Following, Post, User } from '@prisma/client';
 import { Dispatch, SetStateAction } from 'react';
 
 export interface IBoard {
-  board?: IBoardWithAttrs;
+  board: IBoardWithAttrs;
+  setPreview: Dispatch<SetStateAction<string>>;
 }
 export interface IBoardForm {
   title: string;
@@ -52,6 +53,7 @@ export interface IBoardFormRes {
   board: Board;
 }
 export interface IBoardList {
+  size: number;
   isMyPage?: boolean;
   boards: IBoardWithAttrs[];
 }

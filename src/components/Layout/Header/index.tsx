@@ -1,37 +1,42 @@
 import { Logo } from './Logo';
 import { Menu } from './Menu';
-import { Profile } from './Profile';
 import styled from '@emotion/styled';
 import { Layout } from '../../../../styles/global';
+import useUser from '../../../libs/client/useUser';
+import { LoggedIn } from './Logged';
+import { UnLoggedIn } from './UnLogged';
 
 export const Header = () => {
+  const { isLoggedIn } = useUser();
   return (
     <Cont>
       <Logo />
       <div className="flex">
         <Menu />
-        <Profile />
+        <article className="isLoggedIn">
+          {isLoggedIn && <LoggedIn />}
+          {!isLoggedIn && <UnLoggedIn />}
+        </article>
       </div>
     </Cont>
   );
 };
 const Cont = styled(Layout)`
-  position: relative;
-  margin-bottom: 5px;
-  min-height: 74px;
+  gap: 50px;
   display: flex;
+  margin-bottom: 5px;
   align-items: center;
-  border-bottom: ${(p) => p.theme.border.thin};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
+  border-bottom: ${(p) => p.theme.border.thin};
   .flex {
-    width: 100%;
-    min-width: 600px;
-    margin-left: 160px;
-    margin-right: 70px;
     gap: 40px;
+    width: 100%;
     display: flex;
+    font-size: 1.2rem;
     align-items: center;
     justify-content: space-between;
-    font-size: 1.2rem;
+    .isLoggedIn {
+      position: relative;
+    }
   }
 `;

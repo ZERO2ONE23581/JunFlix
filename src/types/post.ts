@@ -2,6 +2,7 @@ import { LikesWithPost, LikesWithReview } from './likes';
 import { Board, Comment, Likes, Post, Review, User } from '@prisma/client';
 
 export interface IPostList {
+  size: number;
   isMyPage?: boolean;
   posts: PostModel[];
 }
