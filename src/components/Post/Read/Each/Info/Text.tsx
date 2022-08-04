@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { CapFirstLetter, ReadDate } from '../../../../Tools/Tools';
+import { useCapLetter } from '../../../../../libs/client/useTools';
+import { ReadDate } from '../../../../Tools/Date';
 
 interface IText {
   date: {
@@ -42,7 +43,7 @@ export const PostText = ({ date, content, username, sliceFrom }: IText) => {
   return (
     <Cont>
       <span className="username">@{username?.toUpperCase()}</span>
-      <span className="text-content">{CapFirstLetter(text)}</span>
+      <span className="text-content">{useCapLetter(text)}</span>
       {isLongLength && (
         <span>
           {fold && (

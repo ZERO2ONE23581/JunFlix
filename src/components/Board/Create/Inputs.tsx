@@ -3,8 +3,8 @@ import { CreateAvatar } from '../../Avatar/Board/Create';
 import { InputWrap } from '../../Tools/Input';
 import { IUseform } from '../../../types/global';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../Tools/Button/IconBtn';
-import { SelectWrap } from '../../Tools/Input/SelectWrap';
+import { IconBtn } from '../../Tools/Button/Icon';
+import { SelectWrap } from '../../Tools/Input/Select';
 
 interface IInputs extends IUseform {
   isPreview: boolean;

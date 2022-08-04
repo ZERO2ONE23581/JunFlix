@@ -25,7 +25,7 @@ export const Btn = ({
 }: IBtnProps) => {
   return (
     <>
-      <Button
+      <Cont
         type={type}
         disabled={disabled}
         onClick={onClick}
@@ -34,13 +34,13 @@ export const Btn = ({
       >
         {svg && <Svg type={svg} size="1.3rem" />}
         {loading ? 'Loading...' : name}
-      </Button>
+      </Cont>
     </>
   );
 };
-export const Button = styled.button<{ isClicked?: boolean }>`
-  padding: 10px;
+export const Cont = styled.button<{ isClicked?: boolean }>`
   gap: 8px;
+  padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;

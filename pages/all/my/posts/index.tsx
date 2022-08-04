@@ -6,9 +6,8 @@ import { IGetAllPosts } from '../../../../src/types/post';
 import useUser from '../../../../src/libs/client/useUser';
 import { Title } from '../../../../src/components/Tools/Title';
 import { HeadTitle } from '../../../../src/components/Layout/Head';
-
 import { PostList } from '../../../../src/components/Post/Read/List';
-import { Fixed } from '../../../../src/components/Tools/Modal/Fixed';
+import { Fixed } from '../../../../src/components/Tools/Button/Fixed';
 
 const MyPosts: NextPage = () => {
   const { loggedInUser } = useUser();
@@ -23,7 +22,7 @@ const MyPosts: NextPage = () => {
           svg={{ type: 'post', size: '2rem' }}
         />
         <PostList size={4} posts={data?.posts!} />
-        <Fixed type={{ isBoard: false, isPost: true }} />
+        <Fixed type="post" />
       </Cont>
     </>
   );

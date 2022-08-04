@@ -14,24 +14,22 @@ interface ITitle {
 }
 export const Title = ({ name, type, kind, svg }: ITitle) => {
   return (
-    <>
-      <Cont>
-        <Wrapper>
-          <Ropes />
-          <H1>
-            <Movie type={type!} />
-            {!name && kind && `All ${kind}`}
-            {name && kind && `${name}님의 ${kind}`}
-            {svg && <Svg type={svg?.type} size={svg?.size} />}
-          </H1>
-        </Wrapper>
-      </Cont>
-    </>
+    <Cont>
+      <Wrapper>
+        <Ropes />
+        <H1>
+          <Movie type={type!} />
+          {!name && kind && `All ${kind}`}
+          {name && kind && `${name}님의 ${kind}`}
+          {svg && <Svg type={svg?.type} size={svg?.size} />}
+        </H1>
+      </Wrapper>
+    </Cont>
   );
 };
 const Cont = styled.article`
   display: flex;
-  margin: 0 0 1rem 1.5rem;
+  margin-bottom: 20px;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;

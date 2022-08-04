@@ -1,14 +1,13 @@
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../../Tools/Button';
 import { Svg } from '../../../Tools/Svg';
-import { ErrorMsg } from '../../../Tools/ErrMsg';
+import { ErrorMsg } from '../../../Tools/Errors';
 import { IReview } from '../../../../types/review';
 import { TextArea } from '../../../Tools/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
 import { ICmtRes, ICmtForm } from '../../../../types/comments';
-import { IconBtn } from '../../../Tools/Button/IconBtn';
+import { IconBtn } from '../../../Tools/Button/Icon';
 
 export const CreateComment = ({ review }: IReview) => {
   const [CreateComment, { loading, data }] = useMutation<ICmtRes>(

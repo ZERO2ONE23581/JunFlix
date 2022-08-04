@@ -11,3 +11,43 @@ export interface IUserForm {
   username?: string;
   avatar?: FileList;
 }
+export interface IJoinForm {
+  userId: string;
+  password: string;
+  confirmPassword: string;
+  username?: string;
+  email?: string;
+}
+export interface IJoinFormRes extends MutationRes {
+  createdID: number;
+}
+export interface IUserIdCheckForm {
+  userId: string;
+}
+
+export interface IUserIdCheckRes extends MutationRes {
+  userId?: string;
+}
+import { User } from '@prisma/client';
+import { MutationRes } from './global';
+
+export interface ILoginForm {
+  userId?: string;
+  password?: string;
+}
+export interface ILoggedInUser {
+  ok: boolean;
+  loggedInUser?: User;
+}
+export interface IFindForm {
+  email?: string;
+  userId?: string;
+  token?: string;
+  password?: string;
+  confirmPassword?: string;
+}
+export interface IFindPostRes {
+  ok?: boolean;
+  error?: string;
+  FoundUserID?: string;
+}

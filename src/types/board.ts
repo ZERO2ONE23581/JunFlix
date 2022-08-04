@@ -1,5 +1,5 @@
-import { Board, Following, Post, User } from '@prisma/client';
 import { Dispatch, SetStateAction } from 'react';
+import { Board, Following, Post, User } from '@prisma/client';
 
 export interface IBoard {
   board: IBoardWithAttrs;
@@ -26,26 +26,13 @@ export interface IBoardWithAttrs extends Board {
     followers: number;
   };
 }
-export interface IPostListProps {
-  posts: Post[];
+interface FollowingWithUser extends Following {
+  user: User;
 }
 export interface IGetBoards {
   ok: boolean;
   error: string;
   boards?: IBoardWithAttrs[];
-}
-export interface BoardWithUser extends Board {
-  user: User;
-  followers: FollowingWithUser[];
-}
-interface FollowingWithUser extends Following {
-  user: User;
-}
-export interface IEditBoardFormProps {
-  setAvatar?: Dispatch<SetStateAction<string>> | any;
-  setPreview: any;
-  isEdit?: boolean;
-  isCreate?: boolean;
 }
 export interface IBoardFormRes {
   ok: boolean;
@@ -56,4 +43,33 @@ export interface IBoardList {
   size: number;
   isMyPage?: boolean;
   boards: IBoardWithAttrs[];
+}
+export interface IGetFollowingBoard {
+  ok: boolean;
+  error?: string;
+  isFollowing?: boolean;
+  board: BoardWithRecords;
+}
+export interface BoardWithRecords extends Board {
+  user: User;
+  followers?: Following[];
+  post?: Post[];
+  _count: {
+    followers: number;
+    posts: number;
+  };
+}
+export interface IFollowBoardProps {
+  isMyBoard?: boolean;
+  user_id?: number | null;
+  board_id?: number | null;
+}
+export interface IGetFollowInfo {
+  ok: boolean;
+  error?: string;
+  following?: FollowingWith[];
+}
+export interface FollowingWith extends Following {
+  board: Board;
+  user: User;
 }

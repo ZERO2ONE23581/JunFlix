@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { AltSvg } from '../../../../../Tools/Svg';
-import { ProfileAvatar } from '../../../../../Avatar/ProfileAvatar';
+import { ProfileAvatar } from '../../../../../Avatar/Profile';
 
 export interface IProfile {
   size?: string;

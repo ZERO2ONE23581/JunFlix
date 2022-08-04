@@ -1,7 +1,7 @@
-import { Answer } from '../../Tools/Modal/Board/CreateBoardQnA';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../Tools/Button/IconBtn';
+import { IconBtn } from '../../Tools/Button/Icon';
+import { Answer } from '../../Tools/Modal/Answer';
 
 interface ITitle {
   answer: boolean;
@@ -23,7 +23,8 @@ export const Title = ({ answer, maxIntro, maxTitle, setAnswer }: ITitle) => {
       </Cont>
       {answer && (
         <Answer
-          openModal={setAnswer}
+          type="create-board"
+          closeModal={setAnswer}
           max={{ title: maxTitle, intro: maxIntro }}
         />
       )}

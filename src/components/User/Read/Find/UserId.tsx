@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
-import { ErrorMsg } from '../../../Tools/ErrMsg';
+import { ErrorMsg } from '../../../Tools/Errors';
 import { InputWrap } from '../../../Tools/Input';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import useMutation from '../../../../libs/client/useMutation';

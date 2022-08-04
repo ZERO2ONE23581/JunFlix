@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ErrorMsg } from '../ErrMsg';
+import { ErrorMsg } from '../Errors';
 import styled from '@emotion/styled';
 import { User } from '@prisma/client';
 import { Creator } from '../../../../Creator';

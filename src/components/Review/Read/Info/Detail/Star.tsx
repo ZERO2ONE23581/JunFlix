@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Stars } from '../../../../Tools/Modal/review_create/Score/Stars';
+import { Stars } from '../../../../Tools/Stars';
 
 interface IStarWrap {
   score: number;

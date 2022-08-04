@@ -6,7 +6,6 @@ interface IList {
   array: [];
 }
 export const List = ({ array }: IList) => {
-  console.log(array);
   return (
     <Cont size={5}>
       {array?.map((item: any) => (
@@ -25,7 +24,9 @@ export const List = ({ array }: IList) => {
     </Cont>
   );
 };
-const Cont = styled(Grid)``;
+const Cont = styled(Grid)`
+  margin-bottom: 50px;
+`;
 const Item = styled.article`
   img {
     width: 100%;

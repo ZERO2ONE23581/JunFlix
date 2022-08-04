@@ -1,7 +1,7 @@
 import { Modal } from './Modal';
 import { useState } from 'react';
 import useUser from '../../../../libs/client/useUser';
-import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
+import { ProfileAvatar } from '../../../Avatar/Profile';
 
 export const LoggedIn = () => {
   const { loggedInUser } = useUser();

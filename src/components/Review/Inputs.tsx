@@ -1,32 +1,27 @@
 import styled from '@emotion/styled';
 import { InputWrap } from '../Tools/Input';
+import { ConfirmModal } from '../Tools/Modal';
 import { IUseform } from '../../types/global';
-import { IconBtn } from '../Tools/Button/IconBtn';
-import { SelectWrap } from '../Tools/Input/SelectWrap';
-import { MutationRes } from '../../types/mutation';
-import { DeleteBG } from '../Tools/Modal/review_delete_avatar';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
+import { IconBtn } from '../Tools/Button/Icon';
+import { SelectWrap } from '../Tools/Input/Select';
 
 interface IInputs extends IUseform {
   isEdit?: boolean;
+  loading?: boolean;
+  delAvatar?: boolean;
   clickSave: () => void;
-  delData?: MutationRes;
-  setRemoveBG?: Dispatch<SetStateAction<boolean>>;
+  setDelAvatar?: Dispatch<SetStateAction<boolean>>;
 }
 export const Inputs = ({
   watch,
-  register,
   isEdit,
-  delData,
+  register,
   clickSave,
-  setRemoveBG,
+  loading,
+  delAvatar,
+  setDelAvatar,
 }: IInputs) => {
-  const [modal, setModal] = useState(false);
-  useEffect(() => {
-    if (delData?.data) setModal(false);
-    if (delData?.data?.ok) alert('사진을 삭제했습니다.');
-  }, [delData?.data]);
-
   return (
     <>
       <Cont>
@@ -54,7 +49,7 @@ export const Inputs = ({
             size="2.5rem"
             type="button"
             svgType="eraser"
-            onClick={() => setModal((p) => !p)}
+            onClick={() => setDelAvatar!((p) => !p)}
           />
         )}
         <IconBtn
@@ -64,11 +59,11 @@ export const Inputs = ({
           onClick={clickSave}
         />
       </Cont>
-      {modal && (
-        <DeleteBG
-          delData={delData}
-          setModal={setModal}
-          setRemoveBG={setRemoveBG}
+      {delAvatar && (
+        <ConfirmModal
+          loading={loading}
+          closeModal={setDelAvatar}
+          type="delete-review-avatar"
         />
       )}
     </>

@@ -1,9 +1,9 @@
 import { BtnWrap } from '../../Update/BtnWrap';
-import { EditAvatar } from '../../../Avatar/Board/Edit';
+import { EditBoardAvatar } from '../../../Avatar/Board/Edit';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { IconBtn } from '../../../Tools/Button/IconBtn';
-import { CancelModal } from '../../../Tools/Modal/Board/Edit/cancel';
+import { IconBtn } from '../../../Tools/Button/Icon';
+import { ConfirmModal } from '../../../Tools/Modal';
 
 interface ISetting {
   edit: boolean;
@@ -25,11 +25,17 @@ export const Setting = ({ edit, setEdit, setPreview }: ISetting) => {
             isClicked={edit}
             onClick={() => setCancel(true)}
           />
-          {cancel && <CancelModal setEdit={setEdit} setCancel={setCancel} />}
+          {cancel && (
+            <ConfirmModal
+              setEdit={setEdit}
+              closeModal={setCancel}
+              type="cancel-update-board"
+            />
+          )}
         </>
       )}
       {avatar && (
-        <EditAvatar
+        <EditBoardAvatar
           avatar={avatar}
           setAvatar={setAvatar}
           setPreview={setPreview}

@@ -1,13 +1,12 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { SaveModal } from '../../../Tools/Modal/Save';
-import { DelModal } from '../../../Tools/Modal/delete';
-import { Svg } from '../../../Tools/Svg';
-import { IBoardForm } from '../../../../types/board';
-import { MutationRes } from '../../../../types/mutation';
-import useMutation from '../../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import useMutation from '../../../../libs/client/useMutation';
+import { MutationRes } from '../../../../types/global';
+import { IBoardForm } from '../../../../types/board';
+import { Svg } from '../../../Tools/Svg';
+import { ConfirmModal } from '../../../Tools/Modal';
 
 interface IAvatarForm {
   delModal: boolean;
@@ -18,7 +17,7 @@ interface IAvatarForm {
   setIsClicked: Dispatch<SetStateAction<boolean>>;
   setSaveModal: Dispatch<SetStateAction<boolean>>;
 }
-export const AvatarForm = ({
+export const EditBoardAvatarForm = ({
   delModal,
   saveModal,
   setAvatar,
@@ -46,8 +45,7 @@ export const AvatarForm = ({
   }, [BoardAvatar, setPreview, setIsClicked, isWatch]);
 
   const onValid = async ({ boardAvatar }: IBoardForm) => {
-    if (delAvatar) return edit({ avatar: '' });
-
+    if (delModal) return edit({ avatar: '' });
     if (loading) return;
     if (boardAvatar && boardAvatar.length > 0) {
       setAvatarLoading((p) => !p);
@@ -67,7 +65,6 @@ export const AvatarForm = ({
     }
   };
   const Loading = avatarLoading ? avatarLoading : loading ? loading : false;
-  const [delAvatar, setDelAvatar] = useState(false);
   useEffect(() => {
     if (data?.ok) {
       setAvatar(false);
@@ -81,30 +78,32 @@ export const AvatarForm = ({
   }, [data, setAvatar]);
 
   return (
-    <>
-      <Cont isWatch={isWatch} onSubmit={handleSubmit(onValid)}>
-        <label htmlFor="boardAvatar">
-          <Svg type="landscape" size="2.2rem" />
-        </label>
-        <input
-          {...register!('boardAvatar')}
-          type="file"
-          accept="image/*"
-          id="boardAvatar"
-          name="boardAvatar"
+    <Cont isWatch={isWatch} onSubmit={handleSubmit(onValid)}>
+      <label htmlFor="boardAvatar">
+        <Svg type="landscape" size="2.2rem" />
+      </label>
+      <input
+        {...register!('boardAvatar')}
+        type="file"
+        accept="image/*"
+        id="boardAvatar"
+        name="boardAvatar"
+      />
+      {saveModal && (
+        <ConfirmModal
+          loading={Loading}
+          closeModal={setSaveModal}
+          type="update-board-avatar"
         />
-        {saveModal && (
-          <SaveModal Loading={Loading} setSaveModal={setSaveModal} />
-        )}
-        {delModal && (
-          <DelModal
-            Loading={Loading}
-            setDelModal={setDelModal}
-            setDelAvatar={setDelAvatar}
-          />
-        )}
-      </Cont>
-    </>
+      )}
+      {delModal && (
+        <ConfirmModal
+          loading={Loading}
+          type="delete-board-avatar"
+          closeModal={setDelModal}
+        />
+      )}
+    </Cont>
   );
 };
 const Cont = styled.form<{ isWatch: boolean }>`

@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../../Tools/Svg';
 import {
-  CapFirstLetter,
-  CapFirstLetters,
-  ReadDate,
-} from '../../../../Tools/Tools';
+  useCapLetter,
+  useCapLetters,
+} from '../../../../../libs/client/useTools';
+import { Svg } from '../../../../Tools/Svg';
 
 interface ITtitle {
   genre: string;
@@ -12,8 +11,8 @@ interface ITtitle {
   reivewTitle: string;
 }
 export const Title = ({ genre, movieTitle, reivewTitle }: ITtitle) => {
-  const MovieTitle = CapFirstLetters(movieTitle);
-  const ReivewTitle = CapFirstLetter(reivewTitle);
+  const MovieTitle = useCapLetters(movieTitle);
+  const ReivewTitle = useCapLetter(reivewTitle);
   return (
     <Cont>
       <Movie>

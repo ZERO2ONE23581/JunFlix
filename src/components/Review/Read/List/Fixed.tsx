@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Answer } from './Answer';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { IconBtn } from '../../../Tools/Button/IconBtn';
+import { IconBtn } from '../../../Tools/Button/Icon';
 import useUser from '../../../../libs/client/useUser';
+import { Answer } from '../../../Tools/Modal/Answer';
 
 export const Fixed = () => {
   const router = useRouter();
@@ -25,7 +25,7 @@ export const Fixed = () => {
           onClick={() => setAnswer(true)}
         />
       </Cont>
-      {answer && <Answer setAnswer={setAnswer} />}
+      {answer && <Answer type="read-review" closeModal={setAnswer} />}
     </>
   );
 };

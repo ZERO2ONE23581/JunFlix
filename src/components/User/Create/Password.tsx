@@ -4,17 +4,17 @@ import { Btn } from '../../Tools/Button';
 import { Form } from '../../../../styles/global';
 import useMutation from '../../../libs/client/useMutation';
 import { IFindForm, IFindPostRes } from '../../../types/login';
-import { ErrorMsg } from '../../Tools/ErrMsg';
+import { ErrorMsg } from '../../Tools/Errors';
 import { InputWrap } from '../../Tools/Input';
 import { Heading } from './Heading';
 
 interface ICreateNewPasswordFormProps {
   userId: string;
-  setOpenModal: Dispatch<SetStateAction<boolean>>;
+  setcloseModal: Dispatch<SetStateAction<boolean>>;
 }
 export const CreatePassword = ({
   userId,
-  setOpenModal,
+  setcloseModal,
 }: ICreateNewPasswordFormProps) => {
   const [create, { loading, data }] = useMutation<IFindPostRes>(
     `/api/user/login/create/new_password`
@@ -36,8 +36,8 @@ export const CreatePassword = ({
   };
   useEffect(() => {
     if (data?.error) alert(data.error);
-    if (data?.ok) setOpenModal(data?.ok);
-  }, [data, setOpenModal]);
+    if (data?.ok) setcloseModal(data?.ok);
+  }, [data, setcloseModal]);
   return (
     <>
       <Heading

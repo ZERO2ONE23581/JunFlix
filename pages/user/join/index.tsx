@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { FormCont, Page } from '../../../styles/global';
 import { CreateUser } from '../../../src/components/User/Create';
-import { CreateAvatar } from '../../../src/components/Avatar/create_user_avatar';
+import { CreateUserAvatar } from '../../../src/components/Avatar/User/Create';
 import { HeadTitle } from '../../../src/components/Layout/Head';
 import { CreateId } from '../../../src/components/User/Create/UserId';
 
@@ -26,7 +26,7 @@ const Join: NextPage = () => {
               setCreatedId={setCreatedId}
             />
           )}
-          {avatar && <CreateAvatar createdId={createdId} />}
+          {avatar && <CreateUserAvatar createdId={createdId} />}
         </Box>
       </Cont>
     </>
@@ -39,4 +39,5 @@ const Cont = styled(Page)`
 `;
 const Box = styled(FormCont)`
   min-width: 450px;
+  border: ${(p) => p.theme.border.thick};
 `;

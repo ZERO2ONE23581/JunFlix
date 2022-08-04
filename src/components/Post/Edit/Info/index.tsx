@@ -1,13 +1,13 @@
 import { Layer } from './Layer';
 import styled from '@emotion/styled';
-import { ErrorMsg } from '../../../Tools/ErrMsg';
+import { ErrorMsg } from '../../../Tools/Errors';
 import { IUseform } from '../../../../types/global';
 import useUser from '../../../../libs/client/useUser';
-import { TitleInput } from '../../../Tools/Input/Title';
-import { IconBtn } from '../../../Tools/Button/IconBtn';
 import { TextAreaWrap } from '../../../Tools/Input/TextArea';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Length } from '../../../Tools/Tools';
+import { InputWrap } from '../../../Tools/Input';
+import { Btn } from '../../../Tools/Button';
+import { useLength } from '../../../../libs/client/useTools';
 
 interface IInfo extends IUseform {
   title: string;
@@ -47,13 +47,13 @@ export const Info = ({
   }, [setValue, title, content]);
 
   const clickSave = () => {
-    if (Length(watch!('title'))! === 0)
+    if (useLength(watch!('title'))! === 0)
       return setError!('title', { message: '제목을 입력해주세요.' });
-    if (Length(watch!('title'))! > maxTitle)
+    if (useLength(watch!('title'))! > maxTitle)
       return setError!('title', {
         message: `포스트 제목의 길이는 ${maxTitle}자 이하입니다.`,
       });
-    if (Length(watch!('content'))! > maxContent)
+    if (useLength(watch!('content'))! > maxContent)
       return setError!('content', {
         message: `포스트 길이는 ${maxContent}자 이하입니다.`,
       });
@@ -61,17 +61,18 @@ export const Info = ({
   };
 
   useEffect(() => {
-    if (Length(watch!('title'))! !== 0) clearErrors!('title');
-    if (Length(watch!('title'))! < maxTitle) clearErrors!('MaxTitle');
-    if (Length(watch!('content'))! < maxContent) clearErrors!('content');
-  }, [Length, clearErrors, watch!('title'), watch!('content')]);
+    if (useLength(watch!('title'))! !== 0) clearErrors!('title');
+    if (useLength(watch!('title'))! < maxTitle) clearErrors!('MaxTitle');
+    if (useLength(watch!('content'))! < maxContent) clearErrors!('content');
+  }, [useLength, clearErrors, watch!('title'), watch!('content')]);
 
   return (
     <Cont className="edit-post-info">
       <Layer setEdit={setEdit} />
       <Main>
         <Flex>
-          <TitleInput
+          <InputWrap
+            isAlt
             id="title"
             type="text"
             placeholder={'포스트 제목을 입력해 주세요.'}
@@ -79,12 +80,7 @@ export const Info = ({
               required: '포스트 제목을 입력해 주세요.',
             })}
           />
-          <IconBtn
-            size="2.6rem"
-            type="button"
-            svgType="save"
-            onClick={clickSave}
-          />
+          <Btn type="button" name="EDIT" onClick={clickSave} />
         </Flex>
         <TextAreaWrap
           id="content"
@@ -122,13 +118,15 @@ const Main = styled.article`
   }
 `;
 const Flex = styled.div`
-  gap: 40px;
+  gap: 20px;
   display: flex;
-  padding: 0 20px;
-  margin-bottom: 20px;
+  padding: 0 10px;
+  margin: 5px 0 13px;
   align-items: center;
-  input {
-    text-align: center;
-    padding: 5px 0;
+  justify-content: space-between;
+  button {
+    width: 100px;
+    height: 38px;
+    font-weight: 00;
   }
 `;

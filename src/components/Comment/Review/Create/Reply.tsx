@@ -1,16 +1,17 @@
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { AltSvg, Svg } from '../../../Tools/Svg';
-import { ErrorMsg } from '../../../Tools/ErrMsg';
+import { ErrorMsg } from '../../../Tools/Errors';
 import { IReview } from '../../../../types/review';
 import useUser from '../../../../libs/client/useUser';
 import { TextArea } from '../../../Tools/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
-import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
+import { ProfileAvatar } from '../../../Avatar/Profile';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ICmtRes, ICmtForm } from '../../../../types/comments';
-import { Length } from '../../../Tools/Tools';
-import { IconBtn } from '../../../Tools/Button/IconBtn';
+
+import { IconBtn } from '../../../Tools/Button/Icon';
+import { useLength } from '../../../../libs/client/useTools';
 
 interface IReplyCmt extends IReview {
   comment_id: number;
@@ -39,9 +40,9 @@ export const CreateReply = ({
   const minHeight = 50;
   const [height, setHeight] = useState(minHeight);
   useEffect(() => {
-    const length = Length(watch('content'));
+    const length = useLength(watch('content'));
     if (length) setHeight(minHeight + length);
-  }, [watch('content'), setHeight, Length]);
+  }, [watch('content'), setHeight, useLength]);
 
   useEffect(() => {
     if (data?.ok) {

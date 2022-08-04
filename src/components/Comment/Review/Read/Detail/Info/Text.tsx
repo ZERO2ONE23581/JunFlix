@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { CapFirstLetter } from '../../../../../Tools/Tools';
+import { useCapLetter } from '../../../../../../libs/client/useTools';
 
 interface IText {
   content: string;
@@ -40,7 +40,7 @@ export const Text = ({ content, username }: IText) => {
       <Cont className="TEXT">
         <div>
           <Name>@{username?.toUpperCase()}</Name>
-          <span className="text-content">{CapFirstLetter(text)}</span>
+          <span className="text-content">{useCapLetter(text)}</span>
           {isLongLength && (
             <span>
               {fold && (

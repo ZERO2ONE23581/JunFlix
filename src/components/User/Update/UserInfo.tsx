@@ -7,12 +7,12 @@ import { InputWrap } from '../../Tools/Input';
 import { MutationRes } from '../../../types/mutation';
 import { Form } from '../../../../styles/global';
 import useMutation from '../../../libs/client/useMutation';
-import { SelectWrap } from '../../Tools/Input/SelectWrap';
+import { SelectWrap } from '../../Tools/Input/Select';
 import useUser from '../../../libs/client/useUser';
-import { Errors } from '../../Tools/Error';
 import { Heading } from '../Create/Heading';
 import { IUserForm } from '../../../types/user';
 import { Box } from './UserId';
+import { Errors } from '../../Tools/Errors';
 
 export const UserInfo = () => {
   const router = useRouter();

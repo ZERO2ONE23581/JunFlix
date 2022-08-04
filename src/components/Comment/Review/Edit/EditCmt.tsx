@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
+import { useLength } from '../../../../libs/client/useTools';
 import { IUseform } from '../../../../types/global';
-import { IconBtn } from '../../../Tools/Button/IconBtn';
+import { IconBtn } from '../../../Tools/Button/Icon';
 import { TextArea } from '../../../Tools/Input/TextArea';
 import { Svg } from '../../../Tools/Svg';
-import { Length } from '../../../Tools/Tools';
 
 interface IInfo extends IUseform {
   loading: boolean;
@@ -13,9 +13,9 @@ export const EditCmt = ({ register, watch, loading }: IInfo) => {
   const minHeight = 20;
   const [height, setHeight] = useState(minHeight);
   useEffect(() => {
-    const length = Length(watch!('content'));
+    const length = useLength(watch!('content'));
     if (length) setHeight(minHeight + length);
-  }, [watch!('content'), setHeight, Length]);
+  }, [watch!('content'), setHeight, useLength]);
   return (
     <Cont>
       <TextArea

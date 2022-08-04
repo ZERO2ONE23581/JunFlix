@@ -5,17 +5,15 @@ import {
 } from '../../../../../../types/comments';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
-import { AltSvg, Svg } from '../../../../../Tools/Svg';
 import { Creator } from '../../../../../../../Creator';
-import { ErrorMsg } from '../../../../../Tools/ErrMsg';
+import { ErrorMsg } from '../../../../../Tools/Errors';
 import { IReview } from '../../../../../../types/review';
-import { IconBtn } from '../../../../../Tools/Button/IconBtn';
-import { TextArea } from '../../../../../Tools/Input/TextArea';
 import useMutation from '../../../../../../libs/client/useMutation';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { CapFirstLetter, Length, ReadDate } from '../../../../../Tools/Tools';
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import { ReadDate } from '../../../../../Tools/Date';
 import { Text } from './Text';
 import { EditCmt } from '../../../Edit/EditCmt';
+import { useCapLetter } from '../../../../../../libs/client/useTools';
 
 interface IEditComments extends IReview {
   edit: boolean;
@@ -46,7 +44,7 @@ export const Info = ({
     EditComment({ content });
   };
   useEffect(() => {
-    if (comment?.content) setValue('content', CapFirstLetter(comment.content));
+    if (comment?.content) setValue('content', useCapLetter(comment.content));
   }, [setValue, comment]);
 
   useEffect(() => {

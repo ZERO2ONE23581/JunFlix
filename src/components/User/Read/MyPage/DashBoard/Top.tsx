@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import useUser from '../../../../../libs/client/useUser';
-import { IconBtn } from '../../../../Tools/Button/IconBtn';
+import { IconBtn } from '../../../../Tools/Button/Icon';
 
 export const Top = () => {
   const router = useRouter();

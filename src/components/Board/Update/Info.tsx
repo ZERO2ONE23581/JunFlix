@@ -1,28 +1,24 @@
-import { Length } from '../../Tools/Tools';
 import styled from '@emotion/styled';
 import { Btn } from '../../Tools/Button';
-import { Input } from '../../Tools/Input';
+import { InputWrap } from '../../Tools/Input';
 import { useForm } from 'react-hook-form';
-import { IQuery } from '../../../types/global';
-import { LoadingModal } from '../../Tools/Modal/LoadingModal';
+import { IQuery, MutationRes } from '../../../types/global';
+import { LoadingModal } from '../../Tools/Modal/Loading';
 import { IBoardForm } from '../../../types/board';
-import { Errors } from '../../Tools/Error';
-import { MutationRes } from '../../../types/mutation';
-import { DimBackground } from '../../../../styles/global';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
-import { SelectWrap } from '../../Tools/Input/SelectWrap';
+import { SelectWrap } from '../../Tools/Input/Select';
 import useMutation from '../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Errors } from '../../Tools/Errors';
+import { useLength } from '../../../libs/client/useTools';
 
 interface IEditInfo extends IQuery {
-  edit: boolean;
   title: string;
   genre: string;
   intro: string;
   setEdit: Dispatch<SetStateAction<boolean>>;
 }
 export const EditInfo = ({
-  edit,
   query,
   title,
   genre,
@@ -57,13 +53,13 @@ export const EditInfo = ({
 
   const onValid = async ({ title, genre, intro }: IBoardForm) => {
     if (loading) return;
-    if (Length(watch!('title'))! === 0)
+    if (useLength(watch!('title'))! === 0)
       return setError!('title', { message: '제목을 입력해주세요.' });
-    if (Length(watch!('title'))! > maxTitle)
+    if (useLength(watch!('title'))! > maxTitle)
       return setError!('title', {
         message: `포스트 제목의 길이는 ${maxTitle}자 이하입니다.`,
       });
-    if (Length(watch!('intro'))! > maxIntro)
+    if (useLength(watch!('intro'))! > maxIntro)
       return setError!('intro', {
         message: `포스트 길이는 ${maxIntro}자 이하입니다.`,
       });
@@ -85,9 +81,7 @@ export const EditInfo = ({
         <form onSubmit={handleSubmit(onValid)}>
           <Cont>
             <Flex>
-              <Title>
-                <Input type="text" {...register('title')} />
-              </Title>
+              <InputWrap id="title" type="text" register={register('title')} />
               <SelectWrap
                 id="genre"
                 watch={watch('genre')}
@@ -105,12 +99,7 @@ export const EditInfo = ({
           </Cont>
         </form>
       )}
-      {loading && (
-        <LoadingModal
-          zIndex={100}
-          text={{ kor: '보드 업데이트중...', eng: 'Updating Board...' }}
-        />
-      )}
+      {loading && <LoadingModal zIndex={100} type="update-board" />}
     </>
   );
 };
@@ -145,12 +134,5 @@ const Flex = styled.div`
       padding: 0px;
       height: 44px;
     }
-  }
-`;
-const Title = styled.h1`
-  input {
-    max-width: 250px;
-    font-size: 1.7rem;
-    padding: 5px 10px;
   }
 `;

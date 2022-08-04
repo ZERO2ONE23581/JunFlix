@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import { Page } from '../../../../../../styles/global';
 import { HeadTitle } from '../../../../../../src/components/Layout/Head';
 import { EditReview } from '../../../../../../src/components/Review/Update';
-import { IconBtn } from '../../../../../../src/components/Tools/Button/IconBtn';
-import { Answer } from '../../../../../../src/components/Review/Read/modal/answer';
+import { IconBtn } from '../../../../../../src/components/Tools/Button/Icon';
+import { Answer } from '../../../../../../src/components/Tools/Modal/Answer';
 
 const EditReviewPage: NextPage = () => {
   const [answer, setAnswer] = useState(false);
@@ -20,7 +20,7 @@ const EditReviewPage: NextPage = () => {
           svgType="question"
           onClick={() => setAnswer(true)}
         />
-        {answer && <Answer openModal={setAnswer} />}
+        {answer && <Answer type="edit-review" closeModal={setAnswer} />}
       </Cont>
     </>
   );

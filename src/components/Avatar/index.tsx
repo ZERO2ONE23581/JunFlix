@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import { Svg } from '../Tools/Svg';
+import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { AVATAR_URL } from '../../../styles/global';
 import { UseFormRegisterReturn } from 'react-hook-form';

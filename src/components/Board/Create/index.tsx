@@ -1,16 +1,18 @@
 import { Title } from './Title';
 import { Inputs } from './Inputs';
-import { Length } from '../../Tools/Tools';
+
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { LoadingModal } from '../../Tools/Modal/LoadingModal';
-import { Errors } from '../../Tools/Error';
+import { LoadingModal } from '../../Tools/Modal/Loading';
+
 import { Container } from '../../../../styles/global';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import useMutation from '../../../libs/client/useMutation';
 import { IBoardForm, IBoardFormRes } from '../../../types/board';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useLength } from '../../../libs/client/useTools';
+import { Errors } from '../../Tools/Errors';
 
 interface ICreateBoard {
   isPreview: boolean;
@@ -40,13 +42,13 @@ export const CreateBoard = ({ isPreview, setPreview }: ICreateBoard) => {
   //
   const onValid = async ({ title, genre, intro, avatar }: IBoardForm) => {
     if (loading) return;
-    if (Length(watch!('title'))! === 0)
+    if (useLength(watch!('title'))! === 0)
       return setError!('title', { message: '제목을 입력해주세요.' });
-    if (Length(watch!('title'))! > maxTitle)
+    if (useLength(watch!('title'))! > maxTitle)
       return setError!('title', {
         message: `포스트 제목의 길이는 ${maxTitle}자 이하입니다.`,
       });
-    if (Length(watch!('intro'))! > maxIntro)
+    if (useLength(watch!('intro'))! > maxIntro)
       return setError!('intro', {
         message: `포스트 길이는 ${maxIntro}자 이하입니다.`,
       });
@@ -110,12 +112,7 @@ export const CreateBoard = ({ isPreview, setPreview }: ICreateBoard) => {
         />
       </Cont>
       <Errors errors={errors} />
-      {Loading && (
-        <LoadingModal
-          zIndex={100}
-          text={{ kor: '보드 생성중...', eng: 'Creating Board...' }}
-        />
-      )}
+      {Loading && <LoadingModal zIndex={100} type="create-board" />}
     </form>
   );
 };

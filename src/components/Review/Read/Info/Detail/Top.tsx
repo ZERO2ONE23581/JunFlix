@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Star } from './Star';
 import { Title } from './Title';
 import { IReview } from '../../../../../types/review';
-import { ReadDate } from '../../../../Tools/Tools';
+import { ReadDate } from '../../../../Tools/Date';
 
 export const Top = ({ review }: IReview) => {
   return (
@@ -15,7 +15,7 @@ export const Top = ({ review }: IReview) => {
       {review?.oneline && <OneLine>"{review?.oneline}"</OneLine>}
       <Flex>
         <Star score={review?.score!} userId={review?.user?.userId!} />
-        <ReadDate CREATEDAT={review.createdAt} UPDATEDAT={review.updatedAt} />
+        <ReadDate CREATEDAT={review?.createdAt} UPDATEDAT={review?.updatedAt} />
       </Flex>
     </Cont>
   );

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Answer } from '../../Tools/Modal/home_qna';
 import styled from '@emotion/styled';
 import { Btn } from '../../Tools/Button';
 import { useRouter } from 'next/router';
 import useUser from '../../../libs/client/useUser';
+import { Answer } from '../../Tools/Modal/Answer';
 
 export const BtnWrap = () => {
   const { isLoggedIn } = useUser();
@@ -37,7 +37,7 @@ export const BtnWrap = () => {
           onClick={() => setAnswer(true)}
         />
       </Cont>
-      {answer && <Answer setAnswer={setAnswer} />}
+      {answer && <Answer type="home" closeModal={setAnswer} />}
     </>
   );
 };

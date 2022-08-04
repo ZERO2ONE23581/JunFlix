@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
-import { Top } from '../../../../Comment/Post/Read/Info/Layer/Top';
+import { Top } from '../../../../Comment/Post/Read/Info/Top';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { ModalBtn } from '../../../../Tools/Modal/post_buttonModal';
 import { Icons } from '../../../../Comment/Post/Create/Wrap/Icons';
 import { CreateComment } from '../../../../Comment/Post/Create/Wrap/Comment';
 import { Content } from '../../../../Comment/Post/Read/Info/Content';
 import { CommentList } from '../../../../Comment/Post/Read/List';
 import { PostModel } from '../../../../../types/post';
 import { IQuery } from '../../../../../types/global';
+import { ModalBtn } from '../../../../Tools/Modal/Btn/Post';
 
 export interface IInfo extends IQuery {
   post: PostModel;

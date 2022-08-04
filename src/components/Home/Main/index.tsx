@@ -1,13 +1,13 @@
 import { Intro } from './Intro';
 import styled from '@emotion/styled';
-import { MovieAPI } from '../../Movie';
+import { Movie } from '../../Movie';
 import { Page } from '../../../../styles/global';
 
 export const Main = () => {
   return (
     <Cont>
       <Intro />
-      <MovieAPI type="trending" />
+      <Movie type="trending" />
     </Cont>
   );
 };

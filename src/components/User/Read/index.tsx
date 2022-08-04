@@ -7,8 +7,8 @@ import { MutationRes } from '../../../types/mutation';
 import { Btn } from '../../Tools/Button';
 import useMutation from '../../../libs/client/useMutation';
 import { InputWrap } from '../../Tools/Input';
-import { Errors } from '../../Tools/Error';
 import { FindLink } from './Links/Find';
+import { Errors } from '../../Tools/Errors';
 
 export const LoginForm = () => {
   const router = useRouter();

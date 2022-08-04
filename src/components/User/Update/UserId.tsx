@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
-import { ErrorMsg } from '../../Tools/ErrMsg';
+import { ErrorMsg } from '../../Tools/Errors';
 import { InputWrap } from '../../Tools/Input';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
@@ -71,6 +71,7 @@ export const Box = styled(FormCont)`
   width: 300px;
   max-width: 300px;
   min-height: 100px;
+  border: ${(p) => p.theme.border.thick};
 `;
 const Flex = styled.div`
   gap: 15px;

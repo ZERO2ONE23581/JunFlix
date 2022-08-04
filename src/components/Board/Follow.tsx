@@ -1,9 +1,10 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import useMutation from '../../libs/client/useMutation';
-import { MutationRes } from '../../types/mutation';
-import { IGetFollowingBoard } from '../../types/follow';
+
 import { Btn } from '../Tools/Button';
+import { MutationRes } from '../../types/global';
+import { IGetFollowingBoard } from '../../types/board';
 
 interface IFollowBoard {
   userId: number;

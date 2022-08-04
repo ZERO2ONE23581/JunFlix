@@ -1,10 +1,18 @@
-import { LikesWithPost, LikesWithReview } from './likes';
+import { LikesWithReview } from './review';
 import { Board, Comment, Likes, Post, Review, User } from '@prisma/client';
 
+export interface IPostComment {
+  ok?: boolean;
+  error?: string;
+  post: PostModel;
+}
 export interface IPostList {
   size: number;
   isMyPage?: boolean;
   posts: PostModel[];
+}
+export interface LikesWithPost extends Likes {
+  post: Post;
 }
 export interface PostModel extends Post {
   user: User;

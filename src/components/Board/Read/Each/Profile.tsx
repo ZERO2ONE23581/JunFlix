@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Svg } from '../../../Tools/Svg';
-import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
+import { ProfileAvatar } from '../../../Avatar/Profile';
 
 interface IProfile {
   isMyBoard: boolean;

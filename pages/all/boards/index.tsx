@@ -5,7 +5,7 @@ import { Page } from '../../../styles/global';
 import { IGetBoards } from '../../../src/types/board';
 import { Title } from '../../../src/components/Tools/Title';
 import { HeadTitle } from '../../../src/components/Layout/Head';
-import { Fixed } from '../../../src/components/Tools/Modal/Fixed';
+import { Fixed } from '../../../src/components/Tools/Button/Fixed';
 import { BoardList } from '../../../src/components/Board/Read/List';
 
 const AllBoards: NextPage = () => {
@@ -17,7 +17,7 @@ const AllBoards: NextPage = () => {
         <Title kind="Boards" svg={{ type: 'board', size: '2rem' }} />
         <BoardList size={5} boards={data?.boards!} />
       </Cont>
-      <Fixed type={{ isBoard: true, isPost: false }} />
+      <Fixed type="board" />
     </>
   );
 };

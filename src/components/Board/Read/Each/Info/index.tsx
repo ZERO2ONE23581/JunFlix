@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
+import { useCapLetters } from '../../../../../libs/client/useTools';
 import useUser from '../../../../../libs/client/useUser';
 import { IQuery } from '../../../../../types/global';
 import { Svg } from '../../../../Tools/Svg';
-import { CapFirstLetters } from '../../../../Tools/Tools';
+
 import { Follow } from '../../../Follow';
 import { Counts } from './Counts';
 
@@ -28,7 +29,7 @@ export const Info = ({
   return (
     <Cont>
       <Flex>
-        <Title>{CapFirstLetters(title)}</Title>
+        <Title>{useCapLetters(title)}</Title>
         <Svg type={genre} size="2.2rem" />
         {isLoggedIn && !isMyBoard && (
           <Follow userId={query.userId!} boardId={query.boardId!} />

@@ -1,11 +1,12 @@
 import useSWR from 'swr';
 import { List } from './List';
 import { useEffect, useState } from 'react';
+import { PageTitle } from './Title';
 
-interface IMovieApi {
-  type?: string;
+interface IMovie {
+  type: string;
 }
-export const MovieAPI = ({ type }: IMovieApi) => {
+export const Movie = ({ type }: IMovie) => {
   const [api, setApi] = useState('');
   useEffect(() => {
     if (type) setApi(`/api/movie/${type}`);
@@ -16,7 +17,12 @@ export const MovieAPI = ({ type }: IMovieApi) => {
   const array = data?.arr?.results?.slice(0, 5);
   return (
     <>
-      {isData && <List array={array} />}
+      {isData && (
+        <>
+          <PageTitle type={type} />
+          <List array={array} />
+        </>
+      )}
       {!isData && <h1>NO MOVIE API...</h1>}
     </>
   );

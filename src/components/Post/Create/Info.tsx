@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import { Length } from '../../Tools/Tools';
+import { Btn } from '../../Tools/Button';
+import { InputWrap } from '../../Tools/Input';
 import { IUseform } from '../../../types/global';
 import useUser from '../../../libs/client/useUser';
-import { TitleInput } from '../../Tools/Input/Title';
-import { IconBtn } from '../../Tools/Button/IconBtn';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useLength } from '../../../libs/client/useTools';
 
 interface IInfo extends IUseform {
   setSave: Dispatch<SetStateAction<boolean>>;
@@ -26,8 +26,8 @@ export const Info = ({
     const content = watch!('content');
     setHeight(content?.length!);
   }, [setHeight, watch!('content')]);
-  const TitleLen = Length(watch!('title'))!;
-  const ContentLen = Length(watch!('content'))!;
+  const TitleLen = useLength(watch!('title'))!;
+  const ContentLen = useLength(watch!('content'))!;
 
   useEffect(() => {
     if (TitleLen !== 0 && TitleLen < maxTitle) clearErrors!('title');
@@ -51,19 +51,15 @@ export const Info = ({
   return (
     <Cont className="create-post-info">
       <Flex>
-        <TitleInput
+        <InputWrap
+          isAlt
           id="title"
           type="text"
           watch={watch!('title')}
           register={register!('title')}
           placeholder="포스트 제목을 입력해 주세요."
         />
-        <IconBtn
-          size="2.4rem"
-          type="button"
-          svgType="save"
-          onClick={clickSave}
-        />
+        <Btn type="button" onClick={clickSave} name="SAVE" />
       </Flex>
       <TextAreaWrap
         id="content"
@@ -90,12 +86,15 @@ const Cont = styled.article`
   }
 `;
 const Flex = styled.div`
-  gap: 50px;
+  gap: 20px;
   display: flex;
-  padding: 0 20px;
+  padding: 0 10px;
+  margin: 5px 0 13px;
   align-items: center;
-  margin-bottom: 20px;
-  .save {
-    margin-top: 5px;
+  justify-content: space-between;
+  button {
+    width: 100px;
+    height: 38px;
+    font-weight: 00;
   }
 `;

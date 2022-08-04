@@ -5,9 +5,8 @@ import { Page } from '../../../styles/global';
 import { IGetAllPosts } from '../../../src/types/post';
 import { Title } from '../../../src/components/Tools/Title';
 import { HeadTitle } from '../../../src/components/Layout/Head';
-
 import { PostList } from '../../../src/components/Post/Read/List';
-import { Fixed } from '../../../src/components/Tools/Modal/Fixed';
+import { Fixed } from '../../../src/components/Tools/Button/Fixed';
 
 const AllPosts: NextPage = () => {
   const { data } = useSWR<IGetAllPosts>(`/api/user/all/posts`);
@@ -17,7 +16,7 @@ const AllPosts: NextPage = () => {
       <Cont>
         <Title kind="Posts" svg={{ type: 'post', size: '2rem' }} />
         <PostList size={4} posts={data?.posts!} />
-        <Fixed type={{ isBoard: false, isPost: true }} />
+        <Fixed type="post" />
       </Cont>
     </>
   );

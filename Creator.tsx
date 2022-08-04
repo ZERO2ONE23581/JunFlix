@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ProfileAvatar } from './src/components/Avatar/ProfileAvatar';
+import { ProfileAvatar } from './src/components/Avatar/Profile';
 
 interface ICreator {
   size?: string;

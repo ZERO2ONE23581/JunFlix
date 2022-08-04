@@ -5,10 +5,11 @@ import styled from '@emotion/styled';
 import { ListWrap, Layer } from './Layer';
 import { Svg } from '../../../Tools/Svg';
 import { ReviewModel } from '../../../../types/post';
-import { CapFirstLetter, ReadDate } from '../../../Tools/Tools';
-import { ProfileAvatar } from '../../../Avatar/ProfileAvatar';
+import { ReadDate } from '../../../Tools/Date';
+import { ProfileAvatar } from '../../../Avatar/Profile';
 import { IReviewList } from '../../../../types/review';
 import { Fixed } from './Fixed';
+import { useCapLetter } from '../../../../libs/client/useTools';
 
 export const ReviewList = ({ reviews, isMyPage }: IReviewList) => {
   const Order = (item: ReviewModel) => {
@@ -17,8 +18,8 @@ export const ReviewList = ({ reviews, isMyPage }: IReviewList) => {
   const isReview = Boolean(reviews?.length > 0);
   const ReadTitle = (title: string) => {
     if (Boolean(title.length >= 10))
-      return CapFirstLetter(title.slice(0, 10) + '...');
-    if (Boolean(title.length < 10)) return CapFirstLetter(title);
+      return useCapLetter(title.slice(0, 10) + '...');
+    if (Boolean(title.length < 10)) return useCapLetter(title);
   };
   return (
     <>

@@ -3,15 +3,14 @@ import { Layer } from './Layer';
 import styled from '@emotion/styled';
 import { Avatar } from '../../Avatar';
 import { useRouter } from 'next/router';
-import { SaveModal } from '../../Tools/Modal/Board/CreateBoardModal';
 import { useForm } from 'react-hook-form';
-import { ErrorMsg } from '../../Tools/ErrMsg';
+import { ErrorMsg } from '../../Tools/Errors';
 import { IPostForm } from '../../../types/post';
 import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
 import { Modal, DimBackground } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { CancelModal } from '../../Tools/Modal/post_update_cancel';
+import { ConfirmModal } from '../../Tools/Modal';
 
 interface ICreatePost {
   setCreate: Dispatch<SetStateAction<boolean>>;
@@ -103,8 +102,21 @@ export const CreatePost = ({ setCreate }: ICreatePost) => {
         {errors.title && <ErrorMsg error={errors?.title?.message!} />}
         {errors.content && <ErrorMsg error={errors?.content?.message!} />}
       </Cont>
-      {save && <SaveModal loading={Loading} setSave={setSave} />}
-      {cancel && <CancelModal closePost={setCreate} setCancel={setCancel} />}
+      {save && (
+        <ConfirmModal
+          loading={Loading}
+          type="create-post"
+          closeModal={setSave}
+        />
+      )}
+      {cancel && (
+        <ConfirmModal
+          loading={Loading}
+          closeModal={setCancel}
+          closePost={setCreate}
+          type="cancel-create-post"
+        />
+      )}
       <DimBackground zIndex={101} onClick={() => setCancel(true)} />
     </form>
   );

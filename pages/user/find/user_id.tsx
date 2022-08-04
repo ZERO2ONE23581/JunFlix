@@ -4,9 +4,9 @@ import styled from '@emotion/styled';
 import { FormCont, Page } from '../../../styles/global';
 import { Token } from '../../../src/components/User/Read/Find/Token';
 import { Email } from '../../../src/components/User/Read/Find/Email';
-import { FindLink } from '../../../src/components/User/Read/Links/Find';
-import { Result } from '../../../src/components/Tools/Modal/user_find_result';
 import { HeadTitle } from '../../../src/components/Layout/Head';
+import { ConfirmModal } from '../../../src/components/Tools/Modal';
+import { FindLink } from '../../../src/components/User/Read/Links/Find';
 
 const FindUserId: NextPage = () => {
   const [userId, setUserId] = useState('');
@@ -22,7 +22,7 @@ const FindUserId: NextPage = () => {
           <FindLink />
         </Box>
       </Cont>
-      {confirm && <Result isUserID foundUserID={userId} />}
+      {confirm && <ConfirmModal type="find-user-id" USERID={userId} />}
     </>
   );
 };

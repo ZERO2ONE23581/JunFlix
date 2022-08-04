@@ -1,17 +1,5 @@
-import { PostModel } from './post';
 import { Comment, User } from '@prisma/client';
 
-export interface IPostComment {
-  ok?: boolean;
-  error?: string;
-  post: PostModel;
-}
-export interface IDataID {
-  USERID: number;
-  BOARDID: number;
-  POSTID: number;
-  REVIEWID: number;
-}
 export interface IGetAllComments {
   ok: boolean;
   error?: string;

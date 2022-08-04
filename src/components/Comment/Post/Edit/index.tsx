@@ -6,13 +6,13 @@ import {
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Svg } from '../../../Tools/Svg';
-import { CapFirstLetter } from '../../../Tools/Tools';
-import { ErrorMsg } from '../../../Tools/ErrMsg';
+import { ErrorMsg } from '../../../Tools/Errors';
 import { IQuery } from '../../../../types/global';
-import { IconBtn } from '../../../Tools/Button/IconBtn';
+import { IconBtn } from '../../../Tools/Button/Icon';
 import { TextArea } from '../../../Tools/Input/TextArea';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
+import { useCapLetter } from '../../../../libs/client/useTools';
 
 interface IEditComments extends IQuery {
   chosenId: number;
@@ -41,7 +41,7 @@ export const EditComment = ({
     Edit({ content });
   };
   useEffect(() => {
-    if (comment?.content) setValue('content', CapFirstLetter(comment.content));
+    if (comment?.content) setValue('content', useCapLetter(comment.content));
   }, [setValue, comment]);
   const [height, setHeight] = useState(0);
   useEffect(() => {

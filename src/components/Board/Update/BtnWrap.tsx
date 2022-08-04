@@ -1,11 +1,11 @@
-import { EditBtns } from '../../Tools/Modal/Board/ButtonModal';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { CreatePost } from '../../Post/Create';
 import { Dispatch, SetStateAction, useState } from 'react';
 import useUser from '../../../libs/client/useUser';
-import { IconBtn } from '../../Tools/Button/IconBtn';
-import { Answer } from '../../Tools/Modal/Board/QnA';
+import { IconBtn } from '../../Tools/Button/Icon';
+import { Answer } from '../../Tools/Modal/Answer';
+import { ModalBtn } from '../../Tools/Modal/Btn/Board';
 
 interface IBtnWrap {
   setEdit: Dispatch<SetStateAction<boolean>>;
@@ -54,10 +54,14 @@ export const BtnWrap = ({ setEdit, setAvatar }: IBtnWrap) => {
           </>
         )}
       </Cont>
-      {modal && (
-        <EditBtns setEdit={setEdit} setModal={setModal} setAvatar={setAvatar} />
-      )}
-      {answer && <Answer openModal={setAnwser} />}
+      <ModalBtn
+        modal={modal}
+        setEdit={setEdit}
+        setModal={setModal}
+        setAvatar={setAvatar}
+      />
+
+      {answer && <Answer type="edit-board" closeModal={setAnwser} />}
       {create && <CreatePost setCreate={setCreate} />}
     </>
   );

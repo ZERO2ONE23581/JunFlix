@@ -1,12 +1,12 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
+import { HeadTitle } from '../../../src/components/Layout/Head';
+import { DeleteUser } from '../../../src/components/User/Delete';
 import { UserId } from '../../../src/components/User/Update/UserId';
 import { UserInfo } from '../../../src/components/User/Update/UserInfo';
 import { Password } from '../../../src/components/User/Update/Password';
-import { Avatar } from '../../../src/components/Avatar/user_edit';
-import { DeleteUser } from '../../../src/components/User/Delete';
-import { HeadTitle } from '../../../src/components/Layout/Head';
+import { EditUserAvatar } from '../../../src/components/Avatar/User/Edit';
 
 const EditProfile: NextPage = () => {
   return (
@@ -16,7 +16,7 @@ const EditProfile: NextPage = () => {
         <Flex>
           <UserId />
           <Password />
-          <Avatar />
+          <EditUserAvatar />
           <UserInfo />
           <DeleteUser />
         </Flex>

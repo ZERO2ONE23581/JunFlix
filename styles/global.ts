@@ -48,9 +48,7 @@ export const Form = styled.form`
     align-items: center;
   }
 `;
-
 export const Modal = styled.article`
-  min-width: 330px;
   top: 50%;
   left: 50%;
   z-index: 100;
@@ -70,34 +68,42 @@ export const Modal = styled.article`
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
 `;
-export const AnswerModal = styled(Modal)`
+export const SmallModal = styled(Modal)`
   gap: 8px;
   padding: 40px;
+  padding-top: 55px;
   line-height: 20px;
-  border: ${(p) => p.theme.border.thin};
+  align-items: flex-start;
+  border: ${(p) => p.theme.border.thick};
   span {
-    opacity: 0.9;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-style: italic;
   }
+  .close {
+    top: 7px;
+    right: 10px;
+    position: absolute;
+  }
   .small {
-    opacity: 0.5;
+    opacity: 0.7;
     font-size: 1.1rem;
   }
-  .btn-wrap {
-    gap: 20px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-    button {
-      width: 100%;
-      padding: 8px;
-      min-width: 100px;
-    }
+  .red {
+    margin-left: 10px;
+    color: ${(p) => p.theme.color.logo};
   }
 `;
-
+export const BtnWrap = styled.div`
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  button {
+    width: 100%;
+    padding: 5px;
+    min-width: 80px;
+  }
+`;
 export const DimBackground = styled.article<{ zIndex: number }>`
   top: 0;
   left: 0;
@@ -114,23 +120,23 @@ export const Grid = styled.article<{ size: number }>`
   position: relative;
   grid-template-columns: ${(p) => p.size && `repeat(${p.size}, 1fr)`};
 `;
+
 const variant = 'public';
 const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
 export const AVATAR_URL = (avatar: string) => `${base}/${avatar}/${variant}`;
-
 export const AVATAR_BG = styled.article<{ avatar: string }>`
   border: none;
   overflow: hidden;
   min-height: 440px;
   position: relative;
-  background: ${(p) =>
-    p.avatar && `url(${AVATAR_URL(p.avatar)}) no-repeat center center `};
   -o-background-size: cover;
   background-size: 100% 100%;
   -moz-background-size: cover;
   -webkit-background-size: cover;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.font};
+  background: ${(p) =>
+    p.avatar && `url(${AVATAR_URL(p.avatar)}) no-repeat center center `};
   .post-list {
     .POST {
       background-color: ${(p) => p.theme.color.bg};

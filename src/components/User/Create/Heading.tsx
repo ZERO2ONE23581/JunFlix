@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import { IconBtn } from '../../Tools/Button/IconBtn';
+import { IconBtn } from '../../Tools/Button/Icon';
+import { Answer } from '../../Tools/Modal/Answer';
 import { Svg } from '../../Tools/Svg';
-import { Answer } from '../../Tools/Modal/user_qna';
 
 interface IHeading {
   h1?: string;
@@ -26,7 +26,7 @@ export const Heading = ({ h1, h2, type }: IHeading) => {
         />
       </div>
       {h2 && <H2>{h2}</H2>}
-      {answer && <Answer type={type} setAnswer={setAnswer} />}
+      {answer && <Answer type={type} closeModal={setAnswer} />}
     </Cont>
   );
 };

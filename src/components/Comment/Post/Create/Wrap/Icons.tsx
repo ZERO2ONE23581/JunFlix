@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { LikeIcon } from '../../../../Post/Read/PostLikes';
-import { CommentIcon } from '../../CommentIcon';
+import { CommentIcon } from '../../Read/Icon';
 import { IQuery } from '../../../../../types/global';
 
 export const Icons = ({ query }: IQuery) => {

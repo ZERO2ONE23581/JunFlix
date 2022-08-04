@@ -1,7 +1,8 @@
 import { Modal } from './Modal';
 import styled from '@emotion/styled';
-import { CapFirstLetter } from '../../../../Tools/Tools';
+
 import { Dispatch, SetStateAction } from 'react';
+import { useCapLetter } from '../../../../../libs/client/useTools';
 
 interface IEach {
   type: string;
@@ -11,9 +12,9 @@ interface IEach {
 export const Each = ({ select, setSelect, type }: IEach) => {
   return (
     <Cont>
-      <Item onClick={() => setSelect(type)}>{CapFirstLetter(type)}</Item>
+      <Item onClick={() => setSelect(type)}>{useCapLetter(type)}</Item>
       {select === type && (
-        <Modal type={type} setSelect={setSelect} text={CapFirstLetter(type)} />
+        <Modal type={type} setSelect={setSelect} text={useCapLetter(type)} />
       )}
     </Cont>
   );

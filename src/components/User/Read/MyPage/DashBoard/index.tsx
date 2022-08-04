@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import useUser from '../../../../../libs/client/useUser';
-import { ProfileAvatar } from '../../../../Avatar/ProfileAvatar';
+import { ProfileAvatar } from '../../../../Avatar/Profile';
 import { Counts } from './Counts';
 import { Detail } from './Detail';
 import { Top } from './Top';

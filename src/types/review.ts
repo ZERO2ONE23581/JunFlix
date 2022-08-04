@@ -1,9 +1,12 @@
-import { Review, User } from '@prisma/client';
 import { ReviewModel } from './post';
+import { Likes, Review, User } from '@prisma/client';
 
 export interface IReviewList {
   isMyPage?: boolean;
   reviews: ReviewModel[];
+}
+export interface LikesWithReview extends Likes {
+  review: ReviewWithUser;
 }
 export interface IReviewForm {
   title: string;

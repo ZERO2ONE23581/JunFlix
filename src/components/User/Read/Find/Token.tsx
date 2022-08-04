@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
 import { InputWrap } from '../../../Tools/Input';
-import { ErrorMsg } from '../../../Tools/ErrMsg';
+import { ErrorMsg } from '../../../Tools/Errors';
 import { Dispatch, SetStateAction } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
 import { IFindForm, IFindPostRes } from '../../../../types/login';

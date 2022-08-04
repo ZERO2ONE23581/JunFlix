@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SaveModal } from '../../Tools/Modal/review_create';
+import { ReviewModal } from '../Modal';
 import styled from '@emotion/styled';
 import { Avatar } from '../../Avatar';
 import { Review } from '@prisma/client';
@@ -10,9 +10,9 @@ import { IReviewForm } from '../../../types/review';
 import { Container } from '../../../../styles/global';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import useMutation from '../../../libs/client/useMutation';
-import { Length } from '../../Tools/Tools';
 import { Inputs } from '../Inputs';
-import { Errors } from '../../Tools/Error';
+import { useLength } from '../../../libs/client/useTools';
+import { Errors } from '../../Tools/Errors';
 
 interface ICreateReviewRes {
   ok: boolean;
@@ -44,9 +44,9 @@ export const CreateReview = () => {
     const content = watch!('content');
     setHeight(content?.length! * 0.2);
   }, [setHeight, watch!('content')]);
-  const TitleLen = Length(watch('title'));
-  const CntLen = Length(watch('content'));
-  const MovieLen = Length(watch('movieTitle'));
+  const TitleLen = useLength(watch('title'));
+  const CntLen = useLength(watch('content'));
+  const MovieLen = useLength(watch('movieTitle'));
   useEffect(() => {
     if (TitleLen! !== 0 && TitleLen! < maxTitle) clearErrors('title');
     if (MovieLen! !== 0 && MovieLen! < maxMovieTitle) clearErrors('movieTitle');
@@ -146,7 +146,12 @@ export const CreateReview = () => {
       <form onSubmit={handleSubmit(onValid)}>
         <ReviewCont>
           <h1>Create Review</h1>
-          <Inputs watch={watch} register={register} clickSave={clickSave} />
+          <Inputs
+            watch={watch}
+            loading={false}
+            register={register}
+            clickSave={clickSave}
+          />
           <Avatar
             id="avatar"
             avatarWatch={watch('avatar')}
@@ -162,7 +167,7 @@ export const CreateReview = () => {
           />
         </ReviewCont>
         {save && (
-          <SaveModal
+          <ReviewModal
             watch={watch}
             loading={Loading}
             setSave={setSave}

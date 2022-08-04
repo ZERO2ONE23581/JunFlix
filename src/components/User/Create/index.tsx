@@ -5,8 +5,8 @@ import { Btn } from '../../Tools/Button';
 import { InputWrap } from '../../Tools/Input';
 import useMutation from '../../../libs/client/useMutation';
 import { Form } from '../../../../styles/global';
-import { Errors } from '../../Tools/Error';
 import { Heading } from './Heading';
+import { Errors } from '../../Tools/Errors';
 
 export interface ICreateUser {
   saveId: string;

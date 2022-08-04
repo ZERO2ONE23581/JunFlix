@@ -8,7 +8,7 @@ import { Modal } from '../../../../styles/global';
 import { IEditPostForm } from '../../../types/post';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IQuery } from '../../../types/global';
-import { SaveEdit } from '../../Tools/Modal/post_update_save';
+import { ConfirmModal } from '../../Tools/Modal';
 
 interface IEditPost extends IQuery {
   title: string;
@@ -60,7 +60,7 @@ export const EditPost = ({
     }
   };
   const [avatarLoading, setAvatarLoading] = useState(false);
-  const Loading = avatarLoading ? avatarLoading : loading ? loading : null;
+  const Loading = avatarLoading ? avatarLoading : loading ? loading : false;
   useEffect(() => {
     if (data?.ok) {
       setEdit(false);
@@ -92,7 +92,13 @@ export const EditPost = ({
             setEdit={setEdit}
           />
         </Cont>
-        {update && <SaveEdit loading={Loading} closeModal={setUpdate} />}
+        {update && (
+          <ConfirmModal
+            loading={Loading}
+            type="update-post"
+            closeModal={setUpdate}
+          />
+        )}
       </form>
     </>
   );

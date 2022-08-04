@@ -1,21 +1,25 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { IconBtn } from '../../../Tools/Button/IconBtn';
-import { AvatarForm } from './Form';
+import { IconBtn } from '../../../Tools/Button/Icon';
+import { EditBoardAvatarForm } from './Form';
 
 interface IEditAvatar {
   avatar: boolean;
   setPreview: Dispatch<SetStateAction<string>>;
   setAvatar: Dispatch<SetStateAction<boolean>>;
 }
-export const EditAvatar = ({ avatar, setPreview, setAvatar }: IEditAvatar) => {
+export const EditBoardAvatar = ({
+  avatar,
+  setPreview,
+  setAvatar,
+}: IEditAvatar) => {
   const [delModal, setDelModal] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [saveModal, setSaveModal] = useState(false);
   return (
     <>
       <Cont>
-        <AvatarForm
+        <EditBoardAvatarForm
           saveModal={saveModal}
           setSaveModal={setSaveModal}
           delModal={delModal}

@@ -2,7 +2,7 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import { ReactElement } from 'react';
 import styled from '@emotion/styled';
-import { Fixed, IBtns } from '../Tools/themeBtn';
+import { ThemeBtn, IBtns } from '../Tools/Button/Theme';
 
 interface ILayoutProps extends IBtns {
   children: ReactElement;
@@ -13,7 +13,7 @@ export const Layout = ({ children, setTheme, isLight }: ILayoutProps) => {
       <Header />
       <Children>{children}</Children>
       <Footer />
-      <Fixed isLight={isLight} setTheme={setTheme} />
+      <ThemeBtn isLight={isLight} setTheme={setTheme} />
     </Cont>
   );
 };

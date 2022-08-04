@@ -1,3 +1,4 @@
+import { PostModel } from './post';
 import {
   UseFormWatch,
   UseFormSetError,
@@ -7,7 +8,6 @@ import {
   UseFormClearErrors,
   FieldError,
 } from 'react-hook-form';
-import { Dispatch, SetStateAction } from 'react';
 
 export interface IQuery {
   query: {
@@ -16,10 +16,6 @@ export interface IQuery {
     postId?: number;
     reveiwId?: number;
   };
-}
-export interface ModalProps {
-  openModal: Dispatch<SetStateAction<boolean>>;
-  onClick?: Dispatch<SetStateAction<boolean>>;
 }
 export interface IUseform {
   watch?: UseFormWatch<any>;
@@ -39,7 +35,6 @@ export interface IUseform {
     birth?: FieldError | undefined;
     gender?: FieldError | undefined;
     location?: FieldError | undefined;
-
     title?: FieldError | undefined;
     content?: FieldError | undefined;
     oneline?: FieldError | undefined;
@@ -50,4 +45,11 @@ export interface IUseform {
     intro?: FieldError | undefined;
     avatar?: FieldError | undefined;
   };
+}
+export interface MutationRes {
+  ok?: boolean;
+  error?: string;
+  message?: string;
+  post?: PostModel;
+  [key: string]: any;
 }

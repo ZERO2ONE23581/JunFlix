@@ -1,13 +1,17 @@
 import useSWR from 'swr';
 import { Info } from './Info';
 import styled from '@emotion/styled';
-import { Avatar } from '../../../Avatar';
 import { EditPost } from '../../Edit';
-import { DeleteModal } from '../../../Tools/Modal/DeletePostModal';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Avatar } from '../../../Avatar';
 import { IGetPost } from '../../../../types/post';
-import { Modal, DimBackground } from '../../../../../styles/global';
 import { IQuery } from '../../../../types/global';
+import { ConfirmModal } from '../../../Tools/Modal';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Modal, DimBackground } from '../../../../../styles/global';
+import { useRouter } from 'next/router';
+import useUser from '../../../../libs/client/useUser';
+import useMutation from '../../../../libs/client/useMutation';
+import { MutationRes } from '../../../../types/mutation';
 
 interface IPostModal extends IQuery {
   setModal: Dispatch<SetStateAction<boolean>>;
@@ -18,6 +22,22 @@ export const PostModal = ({ query, setModal }: IPostModal) => {
   );
   const [edit, setEdit] = useState(false);
   const [del, setDelete] = useState(false);
+  //
+  const router = useRouter();
+  const { loggedInUser } = useUser();
+  const isMyPost = Boolean(loggedInUser?.id === query.userId);
+  const [deletePost, { data: DelPostData, loading: DelLoading }] =
+    useMutation<MutationRes>(
+      `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}/delete`
+    );
+  const clickDelPost = () => {
+    if (!isMyPost) alert('삭제권한이 없습니다.');
+    deletePost({});
+  };
+  useEffect(() => {
+    if (DelPostData?.error) alert(DelPostData.error);
+    if (DelPostData?.ok) alert('포스트가 삭제되었습니다.');
+  }, [DelPostData, router]);
   return (
     <>
       <Cont isAvatar={Boolean(data?.post?.avatar)}>
@@ -46,7 +66,14 @@ export const PostModal = ({ query, setModal }: IPostModal) => {
           </>
         )}
       </Cont>
-      {del && <DeleteModal query={query} setDelete={setDelete} />}
+      {del && (
+        <ConfirmModal
+          type="delete-post"
+          loading={DelLoading}
+          closeModal={setDelete}
+          clickDelPost={clickDelPost}
+        />
+      )}
       <DimBackground zIndex={99} onClick={() => setModal(false)} />
     </>
   );

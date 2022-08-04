@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form';
 import { InputWrap } from '../../Tools/Input';
 import useMutation from '../../../libs/client/useMutation';
 import { IUserIdCheckForm, IUserIdCheckRes } from '../../../types/join';
-import { IconBtn } from '../../Tools/Button/IconBtn';
+import { IconBtn } from '../../Tools/Button/Icon';
 import styled from '@emotion/styled';
 import { LoginLink } from '../Read/Links/Login';
-import { Errors } from '../../Tools/Error';
 import { Heading } from './Heading';
+import { Errors } from '../../Tools/Errors';
 
 interface ICreateId {
   setUserId: Dispatch<SetStateAction<boolean>>;

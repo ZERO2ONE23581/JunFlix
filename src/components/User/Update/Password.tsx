@@ -6,11 +6,11 @@ import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
 import { Form } from '../../../../styles/global';
 import { Heading } from '../Create/Heading';
-import { Errors } from '../../Tools/Error';
 import useUser from '../../../libs/client/useUser';
 import { IUserForm } from '../../../types/user';
 import styled from '@emotion/styled';
 import { Box } from './UserId';
+import { Errors } from '../../Tools/Errors';
 
 export const Password = () => {
   const { loggedInUser } = useUser();

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Svg } from '../../../../Tools/Svg';
-import { CapFirstLetters } from '../../../../Tools/Tools';
 import useUser from '../../../../../libs/client/useUser';
+import { useCapLetters } from '../../../../../libs/client/useTools';
 
 interface IInfo {
   title: string;
@@ -12,7 +12,7 @@ interface IInfo {
 }
 export const Info = ({ avatar, title, username, userId, genre }: IInfo) => {
   const { loggedInUser } = useUser();
-  const TITLE = CapFirstLetters(title);
+  const TITLE = useCapLetters(title);
   const Shotened = title.length > 15 ? TITLE.slice(0, 10) + '...' : TITLE;
   return (
     <Cont isAvatar={Boolean(avatar)}>
