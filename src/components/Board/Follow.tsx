@@ -34,7 +34,7 @@ export const Follow = ({ userId, boardId }: IFollowBoard) => {
   return (
     <Cont className="follow-board" isFollow={data?.isFollowing!}>
       {data?.isFollowing && (
-        <Btn type="button" name="ON AIR" onClick={onClick} />
+        <Btn type="button" name="ON AIR" onClick={onClick} svg="check" />
       )}
       {!data?.isFollowing && (
         <Btn type="button" name="Follow" onClick={onClick} />
@@ -45,11 +45,14 @@ export const Follow = ({ userId, boardId }: IFollowBoard) => {
 const Cont = styled.article<{ isFollow: boolean }>`
   button {
     padding: 8px 10px;
-    font-size: 0.9rem;
+    /* font-size: 0.9rem; */
     font-weight: 600;
     background-color: inherit;
     color: ${(p) => (p.isFollow ? p.theme.color.logo : p.theme.color.font)};
     border: 3px solid
       ${(p) => (p.isFollow ? p.theme.color.logo : p.theme.color.font)};
+    svg {
+      fill: ${(p) => p.theme.color.logo};
+    }
   }
 `;

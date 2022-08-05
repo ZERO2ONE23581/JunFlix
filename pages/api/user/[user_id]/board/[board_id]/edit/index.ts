@@ -22,7 +22,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!FoundBoard)
     return res.json({ ok: false, error: '보드가 존재하지 않습니다.' });
 
-  if (title !== FoundBoard.title) {
+  if (title.toUpperCase() !== FoundBoard.title.toUpperCase()) {
     const alreadyExists = Boolean(
       await client.board.findUnique({
         where: { title },

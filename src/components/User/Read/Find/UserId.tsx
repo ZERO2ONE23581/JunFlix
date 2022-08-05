@@ -4,9 +4,9 @@ import { ErrorMsg } from '../../../Tools/Errors';
 import { InputWrap } from '../../../Tools/Input';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
-import { IFindForm, IFindPostRes } from '../../../../types/login';
 import { Form } from '../../../../../styles/global';
 import { Heading } from '../../Create/Heading';
+import { IFindForm, IFindPostRes } from '../../../../types/user';
 
 interface IVerify {
   setToken: Dispatch<SetStateAction<boolean>>;
@@ -46,7 +46,12 @@ export const UserId = ({ setToken }: IVerify) => {
             required: '아이디를 입력해주세요.',
           })}
         />
-        <Btn type="submit" name="아이디로 인증하기" loading={loading} />
+        <Btn
+          type="submit"
+          loading={loading}
+          name="아이디로 인증하기"
+          CLASSNAME="submit-btn"
+        />
       </Form>
       {errors.userId && <ErrorMsg error={errors.userId.message} />}
     </>

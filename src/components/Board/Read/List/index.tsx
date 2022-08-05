@@ -12,6 +12,7 @@ export const BoardList = ({ size, boards }: IBoardList) => {
         <Cont size={size} className="board-list">
           {boards?.map((board) => (
             <Link
+              key={board.id}
               href={`/user/${board.UserID}/board/${board.id}/${board.title}`}
             >
               <a>
@@ -32,6 +33,4 @@ export const BoardList = ({ size, boards }: IBoardList) => {
     </>
   );
 };
-const Cont = styled(Grid)`
-  min-width: 1200px;
-`;
+const Cont = styled(Grid)``;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ReviewModal } from './Modal';
+import { ReviewModal } from './Create/Modal';
 import { Avatar } from '../Avatar';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -9,10 +9,10 @@ import { TextAreaWrap } from '../Tools/Input/TextArea';
 import useMutation from '../../libs/client/useMutation';
 import { Inputs } from './Inputs';
 import useSWR from 'swr';
-import { MutationRes } from '../../types/mutation';
 import { ReviewCont } from './Create';
 import { useLength } from '../../libs/client/useTools';
 import { Errors } from '../Tools/Errors';
+import { MutationRes } from '../../types/global';
 
 export const EditReview = () => {
   const router = useRouter();

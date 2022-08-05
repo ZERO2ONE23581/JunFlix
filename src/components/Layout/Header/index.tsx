@@ -1,10 +1,10 @@
-import { Logo } from './Logo';
 import { Menu } from './Menu';
 import styled from '@emotion/styled';
 import { Layout } from '../../../../styles/global';
 import useUser from '../../../libs/client/useUser';
-import { LoggedIn } from './Logged';
-import { UnLoggedIn } from './NotLogged';
+import { LoggedIn } from './LoggedIn';
+import { UnLoggedIn } from './UnLogged';
+import { Logo } from './Logo';
 
 export const Header = () => {
   const { isLoggedIn } = useUser();

@@ -3,11 +3,11 @@ import { OneLine } from './OneLine';
 import styled from '@emotion/styled';
 import { ReviewStars } from './Stars';
 import { Recommend } from './Recommend';
-import { LoadingModal } from '../../Tools/Modal/Loading';
-import { IconBtn } from '../../Tools/Button/Icon';
-import { IUseform } from '../../../types/global';
+import { LoadingModal } from '../../../Tools/Modal/Loading';
+import { IconBtn } from '../../../Tools/Button/Icon';
+import { IUseform } from '../../../../types/global';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { DimBackground, SmallModal } from '../../../../styles/global';
+import { DimBackground, SmallModal } from '../../../../../styles/global';
 
 interface ISave extends IUseform {
   isEdit?: boolean;

@@ -2,7 +2,7 @@ import { Info } from './Info';
 import { OnAir } from './OnAir';
 import styled from '@emotion/styled';
 import { NoAvatar } from '../../../../Avatar/NoAvatar';
-import { AVATAR_BG } from '../../../../../../styles/global';
+import { AVATAR_BG } from '../../../../Avatar';
 
 interface IItem {
   userId: number;
@@ -21,7 +21,7 @@ export const Item = ({
   username,
 }: IItem) => {
   return (
-    <Cont key={boardId} avatar={avatar} className="board">
+    <Cont key={boardId} avatar={avatar} className="board" preview="">
       <OnAir userId={userId} boardId={boardId} />
       <NoAvatar genre={genre} avatar={avatar} />
       <Info

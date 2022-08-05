@@ -10,7 +10,7 @@ import { SelectWrap } from '../../Tools/Input/Select';
 import useMutation from '../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Errors } from '../../Tools/Errors';
-import { useLength } from '../../../libs/client/useTools';
+import { useCapLetters, useLength } from '../../../libs/client/useTools';
 
 interface IEditInfo extends IQuery {
   title: string;
@@ -35,7 +35,7 @@ export const EditInfo = ({
   } = useForm<IBoardForm>({ mode: 'onSubmit' });
 
   useEffect(() => {
-    if (title) setValue('title', title);
+    if (title) setValue('title', useCapLetters(title));
     if (genre) setValue('genre', genre);
     if (intro) setValue('intro', intro);
   }, [title, genre, intro, setValue]);
@@ -81,12 +81,18 @@ export const EditInfo = ({
         <form onSubmit={handleSubmit(onValid)}>
           <Cont>
             <Flex>
-              <InputWrap id="title" type="text" register={register('title')} />
+              <InputWrap
+                isAlt
+                id="title"
+                type="text"
+                register={register('title')}
+              />
               <SelectWrap
                 id="genre"
                 watch={watch('genre')}
                 register={register('genre')}
               />
+              <Btn type="submit" name="SAVE" />
             </Flex>
             <TextAreaWrap
               id="intro"
@@ -94,9 +100,8 @@ export const EditInfo = ({
               register={register!('intro')}
               placeholder="포스트의 내용을 적어주세요."
             />
-            <Btn type="submit" name="SAVE" />
-            <Errors errors={errors} />
           </Cont>
+          <Errors errors={errors} />
         </form>
       )}
       {loading && <LoadingModal zIndex={100} type="update-board" />}
@@ -104,16 +109,17 @@ export const EditInfo = ({
   );
 };
 const Cont = styled.article`
-  z-index: 3;
   gap: 15px;
+  z-index: 3;
   display: flex;
-  min-width: 980px;
-  max-width: 980px;
+  width: 800px;
+  min-width: 800px;
   flex-direction: column;
   .intro {
     textarea {
       border: none;
       font-size: 1.2rem;
+      min-height: 100px;
       max-height: 300px;
       :focus {
         outline: none;
@@ -125,14 +131,13 @@ const Flex = styled.div`
   gap: 1rem;
   display: flex;
   align-items: center;
-  input,
-  .select-wrap {
-    border: 1px dashed ${(p) => p.theme.color.logo};
-  }
-  .select-wrap {
-    select {
-      padding: 0px;
-      height: 44px;
+  .title {
+    width: 400px;
+    input {
+      font-size: 2.2rem;
     }
+  }
+  button {
+    width: 20%;
   }
 `;

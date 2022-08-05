@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { FormCont, Page } from '../../../styles/global';
+import { Container, Page } from '../../../styles/global';
 import { FindLink } from '../../../src/components/User/Read/Links/Find';
 import { Token } from '../../../src/components/User/Read/Find/Token';
 import { UserId } from '../../../src/components/User/Read/Find/UserId';
@@ -37,8 +37,11 @@ const FindUserPassword: NextPage = () => {
 export default FindUserPassword;
 
 const Cont = styled(Page)`
-  padding: 10% 32%;
+  padding: 10% 34%;
 `;
-const Box = styled(FormCont)`
+const Box = styled(Container)`
   min-width: 450px;
+  .submit-btn {
+    padding: 10px;
+  }
 `;

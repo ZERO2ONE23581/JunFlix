@@ -1,14 +1,16 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
-import { Page } from '../../../../styles/global';
-import useUser from '../../../../src/libs/client/useUser';
-import { IGetReviews } from '../../../../src/types/review';
-import { ReviewList } from '../../../../src/components/Review/Read/List';
-import { HeadTitle } from '../../../../src/components/Layout/Head';
-import { Title } from '../../../../src/components/Tools/Title';
+import { Page } from '../../styles/global';
+import useUser from '../../src/libs/client/useUser';
+import { IGetReviews } from '../../src/types/review';
+import { ReviewList } from '../../src/components/Review/Read/List';
+import { HeadTitle } from '../../src/components/Layout/Head';
+import { Title } from '../../src/components/Tools/Title';
+import { useNeedLogin } from '../../src/libs/client/useTools';
 
 const MyReviews: NextPage = () => {
+  useNeedLogin();
   const { loggedInUser } = useUser();
   const { data } = useSWR<IGetReviews>(`/api/user/my/reviews`);
   return (

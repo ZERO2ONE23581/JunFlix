@@ -8,7 +8,7 @@ export interface IPostComment {
 }
 export interface IPostList {
   size: number;
-  isMyPage?: boolean;
+  from: number;
   posts: PostModel[];
 }
 export interface LikesWithPost extends Likes {

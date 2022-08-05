@@ -3,14 +3,16 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { AVATAR_BG } from '../../../../../../styles/global';
 import { IGetBoard } from '../../../../../../src/types/board';
 import { IGetAllPosts } from '../../../../../../src/types/post';
 import { HeadTitle } from '../../../../../../src/components/Layout/Head';
 import { Board } from '../../../../../../src/components/Board/Read/Each';
 import { PostList } from '../../../../../../src/components/Post/Read/List';
+import { AVATAR_BG } from '../../../../../../src/components/Avatar';
+import { useNeedLogin } from '../../../../../../src/libs/client/useTools';
 
 const BoardPage: NextPage = () => {
+  useNeedLogin();
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const queryIds = user_id && board_id;
@@ -30,7 +32,9 @@ const BoardPage: NextPage = () => {
         <>
           <Cont avatar={data?.board?.avatar!} preview={preview}>
             <Board board={data?.board!} setPreview={setPreview} />
-            {isAnyPost && <PostList size={4} posts={PostData?.posts!} />}
+            {isAnyPost && (
+              <PostList from={6} size={3} posts={PostData?.posts!} />
+            )}
             {!isAnyPost && <h1>no post found</h1>}
           </Cont>
         </>
@@ -42,9 +46,7 @@ const BoardPage: NextPage = () => {
 export default BoardPage;
 
 const Cont = styled(AVATAR_BG)<{ preview: string }>`
-  height: 100vh;
-  padding: 3% 12%;
-  background-color: ${(p) => p.theme.color.font};
-  background: ${(p) =>
-    p.preview && `url(${p.preview}) center / cover no-repeat`};
+  height: 100%;
+  min-height: 100vh;
+  padding: 3% 10% 10%;
 `;

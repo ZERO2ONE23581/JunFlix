@@ -2,9 +2,9 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { PostModal } from '../Each';
 import { PostModel } from '../../../../types/post';
-import { AVATAR_BG } from '../../../../../styles/global';
 import { PostIcons } from '../../../Comment/Post/Read/List/Icons';
 import { NoAvatar } from '../../../Avatar/NoAvatar';
+import { AVATAR_BG } from '../../../Avatar';
 
 interface IItem {
   post: PostModel;
@@ -26,6 +26,7 @@ export const Item = ({ post }: IItem) => {
   return (
     <>
       <Cont
+        preview=""
         key={post?.id}
         className="post"
         avatar={post?.avatar!}

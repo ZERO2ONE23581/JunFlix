@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { IconBtn } from '../../../Tools/Button/Icon';
 import { ConfirmModal } from '../../../Tools/Modal';
+import { useRouter } from 'next/router';
+import { Answer } from '../../../Tools/Modal/Answer';
 
 interface ISetting {
   edit: boolean;
@@ -11,11 +13,30 @@ interface ISetting {
   setPreview: Dispatch<SetStateAction<string>>;
 }
 export const Setting = ({ edit, setEdit, setPreview }: ISetting) => {
+  const router = useRouter();
   const [avatar, setAvatar] = useState(false);
+  const [answer, setAnwser] = useState(false);
   const [cancel, setCancel] = useState(false);
   return (
     <Cont>
+      {!(edit || avatar) && (
+        <>
+          <IconBtn
+            size="2.2rem"
+            type="button"
+            svgType="question"
+            onClick={() => setAnwser((p) => !p)}
+          />
+          <IconBtn
+            size="2.2rem"
+            type="button"
+            svgType="compass"
+            onClick={() => router.push(`/all/boards`)}
+          />
+        </>
+      )}
       {!(edit || avatar) && <BtnWrap setEdit={setEdit} setAvatar={setAvatar} />}
+      {answer && <Answer type="edit-board" closeModal={setAnwser} />}
       {edit && (
         <>
           <IconBtn
@@ -45,7 +66,8 @@ export const Setting = ({ edit, setEdit, setPreview }: ISetting) => {
   );
 };
 const Cont = styled.article`
-  top: 35px;
-  right: 80px;
-  position: absolute;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

@@ -14,6 +14,6 @@ async function handler(
   if (!user)
     return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
   await req.session.destroy();
-  return res.redirect('/user/login');
+  return res.redirect('/');
 }
 export default withApiSession(withHandler({ methods: ['GET'], handler }));

@@ -29,6 +29,7 @@ export const Title = ({ name, type, kind, svg }: ITitle) => {
 };
 const Cont = styled.article`
   display: flex;
+  margin-left: 20px;
   margin-bottom: 20px;
   flex-direction: column;
   justify-content: center;

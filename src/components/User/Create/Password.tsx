@@ -3,10 +3,11 @@ import { useForm } from 'react-hook-form';
 import { Btn } from '../../Tools/Button';
 import { Form } from '../../../../styles/global';
 import useMutation from '../../../libs/client/useMutation';
-import { IFindForm, IFindPostRes } from '../../../types/login';
+
 import { ErrorMsg } from '../../Tools/Errors';
 import { InputWrap } from '../../Tools/Input';
 import { Heading } from './Heading';
+import { IFindForm, IFindPostRes } from '../../../types/user';
 
 interface ICreateNewPasswordFormProps {
   userId: string;
@@ -78,7 +79,12 @@ export const CreatePassword = ({
             required: '새 비밀번호 재입력하세요.',
           })}
         />
-        <Btn type="submit" loading={loading} name="새로운 비밀번호 만들기" />
+        <Btn
+          type="submit"
+          loading={loading}
+          CLASSNAME="submit-btn"
+          name="새로운 비밀번호 만들기"
+        />
       </Form>
       {errors.password && <ErrorMsg error={errors.password?.message} />}
       {errors.confirmPassword && (

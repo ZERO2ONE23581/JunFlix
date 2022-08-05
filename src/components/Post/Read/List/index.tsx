@@ -5,8 +5,8 @@ import styled from '@emotion/styled';
 import { IPostList } from '../../../../types/post';
 import { Grid } from '../../../../../styles/global';
 
-export const PostList = ({ size, posts, isMyPage }: IPostList) => {
-  const max = 8;
+export const PostList = ({ size, from, posts }: IPostList) => {
+  const max = from;
   const isPost = Boolean(posts?.length > 0);
   const [length, setLength] = useState(max);
   return (
@@ -15,9 +15,10 @@ export const PostList = ({ size, posts, isMyPage }: IPostList) => {
         <>
           <Cont className="post-list" size={size}>
             {posts?.slice(0, length).map((post) => (
-              <Item post={post} />
+              <Item post={post} key={post.id} />
             ))}
           </Cont>
+
           <Fold
             max={max}
             length={length}

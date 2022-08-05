@@ -1,4 +1,3 @@
-import { IJoinForm, IJoinFormRes } from '../../../types/join';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../Tools/Button';
@@ -7,6 +6,7 @@ import useMutation from '../../../libs/client/useMutation';
 import { Form } from '../../../../styles/global';
 import { Heading } from './Heading';
 import { Errors } from '../../Tools/Errors';
+import { IJoinForm, IJoinFormRes } from '../../../types/user';
 
 export interface ICreateUser {
   saveId: string;
@@ -59,7 +59,7 @@ export const CreateUser = ({
   return (
     <>
       <Heading
-        type="userInfo"
+        type="create-userinfo"
         h1="Create Account"
         h2="Step 2. Information (회원정보)"
       />

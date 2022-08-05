@@ -16,24 +16,12 @@ export const BtnWrap = ({ setEdit, setAvatar }: IBtnWrap) => {
   const { user_id } = router.query;
   const { loggedInUser } = useUser();
   const [modal, setModal] = useState(false);
-  const [answer, setAnwser] = useState(false);
+
   const [create, setCreate] = useState(false);
   const isMyBoard = Boolean(loggedInUser?.id === Number(user_id));
   return (
     <>
       <Cont>
-        <IconBtn
-          size="2.2rem"
-          type="button"
-          svgType="question"
-          onClick={() => setAnwser((p) => !p)}
-        />
-        <IconBtn
-          size="2.2rem"
-          type="button"
-          svgType="compass"
-          onClick={() => router.push(`/all/boards`)}
-        />
         {isMyBoard && (
           <>
             <IconBtn
@@ -61,7 +49,6 @@ export const BtnWrap = ({ setEdit, setAvatar }: IBtnWrap) => {
         setAvatar={setAvatar}
       />
 
-      {answer && <Answer type="edit-board" closeModal={setAnwser} />}
       {create && <CreatePost setCreate={setCreate} />}
     </>
   );

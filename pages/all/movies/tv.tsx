@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
-import { Page } from '../../styles/global';
-import { Movie } from '../../src/components/Movie';
-import { HeadTitle } from '../../src/components/Layout/Head';
+import { HeadTitle } from '../../../src/components/Layout/Head';
+import { Movie } from '../../../src/components/Movie';
+import { Page } from '../../../styles/global';
 
 const TV: NextPage = () => {
   return (

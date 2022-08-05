@@ -1,7 +1,6 @@
 import { Svg } from '../Tools/Svg';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { AVATAR_URL } from '../../../styles/global';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface IAvatar {
@@ -63,7 +62,6 @@ const Cont = styled.div`
   label {
     display: block;
     cursor: pointer;
-    border-right: ${(p) => '1px dotted #ecf0f1'};
   }
   input {
     display: none;
@@ -73,6 +71,7 @@ const NoImage = styled.div<{ disabled: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  border-right: 2px dotted #ecf0f1;
   box-shadow: ${(p) => p.theme.boxShadow.input};
   pointer-events: ${(p) => p.disabled && 'none'};
   :hover {
@@ -80,4 +79,20 @@ const NoImage = styled.div<{ disabled: boolean }>`
       fill: ${(p) => p.theme.color.logo};
     }
   }
+`;
+const variant = 'public';
+const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
+const AVATAR_URL = (avatar: string) => `${base}/${avatar}/${variant}`;
+
+export const AVATAR_BG = styled.article<{ avatar: string; preview: string }>`
+  border: none;
+  overflow: hidden;
+  min-height: 440px;
+  position: relative;
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background-color: ${(p) => p.theme.color.font};
+  background: ${(p) =>
+    p.avatar && `url(${AVATAR_URL(p.avatar)}) center / cover no-repeat `};
+  background: ${(p) =>
+    p.preview && `url(${p.preview}) center / cover no-repeat`};
 `;

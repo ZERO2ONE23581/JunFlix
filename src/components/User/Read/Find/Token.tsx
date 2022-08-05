@@ -5,9 +5,9 @@ import { InputWrap } from '../../../Tools/Input';
 import { ErrorMsg } from '../../../Tools/Errors';
 import { Dispatch, SetStateAction } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
-import { IFindForm, IFindPostRes } from '../../../../types/login';
 import { Form } from '../../../../../styles/global';
 import { Heading } from '../../Create/Heading';
+import { IFindForm, IFindPostRes } from '../../../../types/user';
 
 interface IToken {
   setUserId: Dispatch<SetStateAction<string>> | any;
@@ -55,7 +55,12 @@ export const Token = ({ setUserId, setConfirm }: IToken) => {
             },
           })}
         />
-        <Btn type="submit" name="토큰 인증하기" loading={loading} />
+        <Btn
+          type="submit"
+          name="토큰 인증하기"
+          loading={loading}
+          CLASSNAME="submit-btn"
+        />
       </Form>
       {errors.token && <ErrorMsg error={errors.token.message} />}
     </>

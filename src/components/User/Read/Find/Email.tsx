@@ -4,9 +4,9 @@ import { InputWrap } from '../../../Tools/Input';
 import { ErrorMsg } from '../../../Tools/Errors';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
-import { IFindForm, IFindPostRes } from '../../../../types/login';
 import { Form } from '../../../../../styles/global';
 import { Heading } from '../../Create/Heading';
+import { IFindForm, IFindPostRes } from '../../../../types/user';
 
 interface IEmail {
   setToken: Dispatch<SetStateAction<boolean>>;
@@ -33,7 +33,7 @@ export const Email = ({ setToken }: IEmail) => {
   return (
     <>
       <Heading
-        type="verifyEmail"
+        type="verify-id"
         h1="Find ID (아이디 찾기)"
         h2="Step 1. Verify Email (이메일 인증)"
       />
@@ -51,7 +51,12 @@ export const Email = ({ setToken }: IEmail) => {
             },
           })}
         />
-        <Btn type="submit" name="이메일로 인증하기" loading={loading} />
+        <Btn
+          type="submit"
+          loading={loading}
+          name="이메일로 인증하기"
+          CLASSNAME="submit-btn"
+        />
         {errors.email && <ErrorMsg error={errors.email.message} />}
       </Form>
     </>

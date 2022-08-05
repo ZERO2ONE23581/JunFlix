@@ -4,13 +4,13 @@ import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { ErrorMsg } from '../../Tools/Errors';
 import { InputWrap } from '../../Tools/Input';
-import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
-import { Form, FormCont } from '../../../../styles/global';
+import { Container, Form } from '../../../../styles/global';
 import { Heading } from '../Create/Heading';
 import useUser from '../../../libs/client/useUser';
 import { IUserForm } from '../../../types/user';
 import styled from '@emotion/styled';
+import { MutationRes } from '../../../types/global';
 
 export const UserId = () => {
   const router = useRouter();
@@ -66,13 +66,7 @@ export const UserId = () => {
     </>
   );
 };
-export const Box = styled(FormCont)`
-  gap: 20px;
-  width: 300px;
-  max-width: 300px;
-  min-height: 100px;
-  border: ${(p) => p.theme.border.thick};
-`;
+export const Box = styled(Container)``;
 const Flex = styled.div`
   gap: 15px;
   display: flex;

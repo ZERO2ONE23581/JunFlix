@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { Btn } from '../../Tools/Button';
+import { Btn } from '../Tools/Button';
 import { useRouter } from 'next/router';
-import useUser from '../../../libs/client/useUser';
-import { Answer } from '../../Tools/Modal/Answer';
+import { Answer } from '../Tools/Modal/Answer';
+import useUser from '../../libs/client/useUser';
 
 export const BtnWrap = () => {
   const { isLoggedIn } = useUser();
@@ -14,23 +14,24 @@ export const BtnWrap = () => {
       <Cont>
         {isLoggedIn && (
           <Btn
+            size="1.6rem"
             type="button"
-            svg="circle-arrow"
             name="Dashboard"
-            onClick={() => {
-              router.push('/user/mypage');
-            }}
+            svg="circle-arrow"
+            onClick={() => router.push('/my/page')}
           />
         )}
         {!isLoggedIn && (
           <Btn
             name="Start"
             type="button"
+            size="1.6rem"
             svg="circle-arrow"
-            onClick={() => {}}
+            onClick={() => router.push('/join')}
           />
         )}
         <Btn
+          size="1.6rem"
           type="button"
           name="More Info"
           svg="exclamation"
@@ -43,15 +44,19 @@ export const BtnWrap = () => {
 };
 
 const Cont = styled.div`
-  margin-top: 20px;
-  gap: 15px;
+  gap: 20px;
   display: flex;
   align-items: center;
+  margin: 50px 0 100px;
   justify-content: flex-start;
   padding: 10px;
   button {
-    width: 150px;
-    height: 40px;
-    font-size: 1.2rem;
+    width: 160px;
+    height: 45px;
+    font-weight: 500;
+    font-size: 1.3rem;
+    svg {
+      fill: ${(p) => p.theme.color.bg};
+    }
   }
 `;

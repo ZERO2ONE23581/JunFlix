@@ -1,6 +1,6 @@
-import { Btn } from '../../Tools/Button';
+import { Btn } from '../../../Tools/Button';
 import { Dispatch, SetStateAction } from 'react';
-import { BtnWrap } from '../../../../styles/global';
+import { BtnWrap } from '../../../../../styles/global';
 
 interface IUpload {
   isEdit?: boolean;

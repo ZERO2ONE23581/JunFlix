@@ -31,6 +31,9 @@ export const Heading = ({ h1, h2, type }: IHeading) => {
   );
 };
 const Cont = styled.div`
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
   .flex {
     gap: 20px;
     display: flex;

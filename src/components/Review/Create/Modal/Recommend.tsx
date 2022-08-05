@@ -1,9 +1,9 @@
-import { Svg } from '../../Tools/Svg';
-import { Btn } from '../../Tools/Button';
+import { Svg } from '../../../Tools/Svg';
+import { Btn } from '../../../Tools/Button';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IUseform } from '../../../types/global';
-import { BtnWrap } from '../../../../styles/global';
+import { IUseform } from '../../../../types/global';
+import { BtnWrap } from '../../../../../styles/global';
 
 interface IRecommend extends IUseform {
   setUpload: Dispatch<SetStateAction<boolean>>;

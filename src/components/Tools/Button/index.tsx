@@ -11,6 +11,7 @@ interface IBtnProps {
   type: 'button' | 'submit' | 'reset';
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
   svg?: string;
+  size?: string;
 }
 
 export const Btn = ({
@@ -22,31 +23,33 @@ export const Btn = ({
   CLASSNAME,
   disabled,
   svg,
+  size,
 }: IBtnProps) => {
   return (
     <>
       <Cont
         type={type}
-        disabled={disabled}
         onClick={onClick}
+        disabled={disabled}
         isClicked={isClicked}
         className={CLASSNAME}
       >
-        {svg && <Svg type={svg} size="1.3rem" />}
         {loading ? 'Loading...' : name}
+        {svg && <Svg type={svg} size={size!} />}
       </Cont>
     </>
   );
 };
 export const Cont = styled.button<{ isClicked?: boolean }>`
-  gap: 8px;
-  padding: 5px;
+  gap: 15px;
+  border: none;
   display: flex;
+  padding: 10px;
+  font-weight: 500;
+  font-size: 1.1rem;
+  border-radius: 3px;
   align-items: center;
   justify-content: center;
-  border: none;
-  font-size: 1rem;
-  border-radius: 3px;
   color: ${(p) => p.theme.color.bg};
   background-color: ${(p) =>
     p.isClicked ? p.theme.color.logo : p.theme.color.font};
@@ -58,7 +61,9 @@ export const Cont = styled.button<{ isClicked?: boolean }>`
     }
   }
   svg {
-    opacity: 0.8;
-    fill: ${(p) => p.theme.color.bg};
+    fill: ${(p) => p.theme.color.font};
+  }
+  .edit {
+    margin-bottom: 3px;
   }
 `;

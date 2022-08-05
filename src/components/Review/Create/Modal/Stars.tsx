@@ -1,9 +1,9 @@
-import { Btn } from '../../Tools/Button';
-import { Stars } from '../../Tools/Stars';
+import { Btn } from '../../../Tools/Button';
+import { Stars } from '../../../Tools/Stars';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IUseform } from '../../../types/global';
-import { BtnWrap } from '../../../../styles/global';
+import { IUseform } from '../../../../types/global';
+import { BtnWrap } from '../../../../../styles/global';
 
 interface IScoreModal extends IUseform {
   setScore: Dispatch<SetStateAction<boolean>>;

@@ -1,11 +1,11 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
-import { Page } from '../../../styles/global';
-import { Title } from '../../../src/components/Tools/Title';
-import { IGetReviews } from '../../../src/types/review';
-import { HeadTitle } from '../../../src/components/Layout/Head';
-import { ReviewList } from '../../../src/components/Review/Read/List';
+import { Page } from '../../styles/global';
+import { Title } from '../../src/components/Tools/Title';
+import { IGetReviews } from '../../src/types/review';
+import { HeadTitle } from '../../src/components/Layout/Head';
+import { ReviewList } from '../../src/components/Review/Read/List';
 
 const AllReviews: NextPage = () => {
   const { data } = useSWR<IGetReviews>(`/api/user/all/reviews`);

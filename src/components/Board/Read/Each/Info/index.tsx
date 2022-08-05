@@ -1,17 +1,21 @@
-import styled from '@emotion/styled';
-import { useCapLetters } from '../../../../../libs/client/useTools';
-import useUser from '../../../../../libs/client/useUser';
-import { IQuery } from '../../../../../types/global';
-import { Svg } from '../../../../Tools/Svg';
-
-import { Follow } from '../../../Follow';
 import { Counts } from './Counts';
+import styled from '@emotion/styled';
+import { Follow } from '../../../Follow';
+import { Svg } from '../../../../Tools/Svg';
+import { IQuery } from '../../../../../types/global';
+import useUser from '../../../../../libs/client/useUser';
+import { useCapLetters } from '../../../../../libs/client/useTools';
+import { Setting } from '../Setting';
+import { Dispatch, SetStateAction } from 'react';
 
 interface IInfo extends IQuery {
-  isMyBoard: boolean;
   title: string;
   genre: string;
   intro: string;
+  edit: boolean;
+  isMyBoard: boolean;
+  setEdit: Dispatch<SetStateAction<boolean>>;
+  setPreview: Dispatch<SetStateAction<string>>;
   counts: {
     posts: number;
     followers: number;
@@ -24,16 +28,22 @@ export const Info = ({
   intro,
   counts,
   isMyBoard,
+  edit,
+  setEdit,
+  setPreview,
 }: IInfo) => {
   const { isLoggedIn } = useUser();
   return (
     <Cont>
       <Flex>
-        <Title>{useCapLetters(title)}</Title>
-        <Svg type={genre} size="2.2rem" />
-        {isLoggedIn && !isMyBoard && (
-          <Follow userId={query.userId!} boardId={query.boardId!} />
-        )}
+        <div className="flex">
+          <Title>{useCapLetters(title)}</Title>
+          <Svg type={genre} size="2.2rem" />
+          {isLoggedIn && !isMyBoard && (
+            <Follow userId={query.userId!} boardId={query.boardId!} />
+          )}
+        </div>
+        <Setting edit={edit} setEdit={setEdit} setPreview={setPreview!} />
       </Flex>
       <Counts counts={counts} />
       <Intro isIntro={Boolean(intro)}>"{intro}"</Intro>
@@ -49,7 +59,14 @@ const Cont = styled.article`
 const Flex = styled.div`
   gap: 1rem;
   display: flex;
+  min-width: 900px;
   align-items: center;
+  justify-content: space-between;
+  .flex {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+  }
 `;
 const Title = styled.h1`
   font-size: 2.2rem;

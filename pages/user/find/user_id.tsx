@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { FormCont, Page } from '../../../styles/global';
+import { Container, Page } from '../../../styles/global';
 import { Token } from '../../../src/components/User/Read/Find/Token';
 import { Email } from '../../../src/components/User/Read/Find/Email';
 import { HeadTitle } from '../../../src/components/Layout/Head';
@@ -22,7 +22,9 @@ const FindUserId: NextPage = () => {
           <FindLink />
         </Box>
       </Cont>
-      {confirm && <ConfirmModal type="find-user-id" USERID={userId} />}
+      {confirm && (
+        <ConfirmModal USERID={userId} type="find-user-id" closeModal={null} />
+      )}
     </>
   );
 };
@@ -31,6 +33,8 @@ export default FindUserId;
 const Cont = styled(Page)`
   padding: 10% 35%;
 `;
-const Box = styled(FormCont)`
-  min-width: 450px;
+const Box = styled(Container)`
+  .submit-btn {
+    padding: 10px;
+  }
 `;

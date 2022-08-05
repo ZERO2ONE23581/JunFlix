@@ -15,7 +15,6 @@ export const Board = ({ board, setPreview }: IBoard) => {
   return (
     <>
       <Cont>
-        <Setting edit={edit} setEdit={setEdit} setPreview={setPreview!} />
         <Profile
           isMyBoard={isMyBoard}
           userAvatar={board?.user?.avatar!}
@@ -23,17 +22,19 @@ export const Board = ({ board, setPreview }: IBoard) => {
         />
         {!edit && (
           <Info
+            edit={edit}
+            setEdit={setEdit}
             title={board.title}
             genre={board.genre}
             intro={board.intro}
             counts={board._count}
             isMyBoard={isMyBoard}
+            setPreview={setPreview}
             query={{ userId: board.UserID, boardId: board.id }}
           />
         )}
         {edit && (
           <EditInfo
-            edit={edit}
             setEdit={setEdit}
             title={board.title}
             genre={board.genre}
@@ -48,11 +49,15 @@ export const Board = ({ board, setPreview }: IBoard) => {
 };
 
 const Cont = styled(Container)`
-  gap: 30px;
+  gap: 40px;
   z-index: 2;
+  border: none;
   display: flex;
+  box-shadow: none;
   position: relative;
   padding: 30px 100px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
 `;

@@ -50,7 +50,7 @@ export const Info = ({
 
   return (
     <Cont className="create-post-info">
-      <Flex>
+      <div className="flex">
         <InputWrap
           isAlt
           id="title"
@@ -60,7 +60,7 @@ export const Info = ({
           placeholder="포스트 제목을 입력해 주세요."
         />
         <Btn type="button" onClick={clickSave} name="SAVE" />
-      </Flex>
+      </div>
       <TextAreaWrap
         id="content"
         height={height}
@@ -74,6 +74,19 @@ export const Info = ({
 const Cont = styled.article`
   overflow-y: auto;
   padding: 10px 20px;
+  .flex {
+    gap: 20px;
+    display: flex;
+    padding: 0 10px;
+    margin: 5px 0 20px;
+    align-items: center;
+    justify-content: space-between;
+    button {
+      width: 100px;
+      height: 38px;
+      font-weight: 00;
+    }
+  }
   .content {
     min-height: 330px;
     max-height: 420px;
@@ -83,18 +96,5 @@ const Cont = styled.article`
       font-size: 1.1rem;
       min-height: 100px;
     }
-  }
-`;
-const Flex = styled.div`
-  gap: 20px;
-  display: flex;
-  padding: 0 10px;
-  margin: 5px 0 13px;
-  align-items: center;
-  justify-content: space-between;
-  button {
-    width: 100px;
-    height: 38px;
-    font-weight: 00;
   }
 `;

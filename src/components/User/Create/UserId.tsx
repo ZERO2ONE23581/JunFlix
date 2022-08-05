@@ -1,13 +1,13 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputWrap } from '../../Tools/Input';
 import useMutation from '../../../libs/client/useMutation';
-import { IUserIdCheckForm, IUserIdCheckRes } from '../../../types/join';
-import { IconBtn } from '../../Tools/Button/Icon';
 import styled from '@emotion/styled';
 import { LoginLink } from '../Read/Links/Login';
 import { Heading } from './Heading';
 import { Errors } from '../../Tools/Errors';
+import { IUserIdCheckForm, IUserIdCheckRes } from '../../../types/user';
+import { Btn } from '../../Tools/Button';
 
 interface ICreateId {
   setUserId: Dispatch<SetStateAction<boolean>>;
@@ -40,7 +40,7 @@ export const CreateId = ({ setSaveId, setUserId }: ICreateId) => {
   return (
     <>
       <Heading
-        type="createId"
+        type="create-id"
         h1="Create Account"
         h2="Step 1. Check ID (아이디 중복확인)"
       />
@@ -60,7 +60,8 @@ export const CreateId = ({ setSaveId, setUserId }: ICreateId) => {
               },
             })}
           />
-          <IconBtn size="2.5rem" type="submit" svgType="circle-arrow" />
+          {/* <IconBtn size="2.5rem" type="submit" svgType="circle-arrow" /> */}
+          <Btn name="SUBMIT" type="submit" loading={loading} />
         </Flex>
       </form>
       <LoginLink />

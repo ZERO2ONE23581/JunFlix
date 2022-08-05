@@ -6,8 +6,10 @@ import { Page } from '../../../../../styles/global';
 import { IGetReview } from '../../../../../src/types/review';
 import { Info } from '../../../../../src/components/Review/Read/Info';
 import { HeadTitle } from '../../../../../src/components/Layout/Head';
+import { useNeedLogin } from '../../../../../src/libs/client/useTools';
 
 const ReviewPage: NextPage = () => {
+  useNeedLogin();
   const router = useRouter();
   const { user_id, review_id } = router.query;
   const { data } = useSWR<IGetReview>(

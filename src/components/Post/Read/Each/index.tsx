@@ -4,27 +4,27 @@ import styled from '@emotion/styled';
 import { EditPost } from '../../Edit';
 import { Avatar } from '../../../Avatar';
 import { IGetPost } from '../../../../types/post';
-import { IQuery } from '../../../../types/global';
+import { IQuery, MutationRes } from '../../../../types/global';
 import { ConfirmModal } from '../../../Tools/Modal';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Modal, DimBackground } from '../../../../../styles/global';
 import { useRouter } from 'next/router';
 import useUser from '../../../../libs/client/useUser';
 import useMutation from '../../../../libs/client/useMutation';
-import { MutationRes } from '../../../../types/mutation';
+import { useNeedLogin } from '../../../../libs/client/useTools';
 
 interface IPostModal extends IQuery {
   setModal: Dispatch<SetStateAction<boolean>>;
 }
 export const PostModal = ({ query, setModal }: IPostModal) => {
+  useNeedLogin();
   const { data } = useSWR<IGetPost>(
     `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}`
   );
-  const [edit, setEdit] = useState(false);
-  const [del, setDelete] = useState(false);
-  //
   const router = useRouter();
   const { loggedInUser } = useUser();
+  const [edit, setEdit] = useState(false);
+  const [del, setDelete] = useState(false);
   const isMyPost = Boolean(loggedInUser?.id === query.userId);
   const [deletePost, { data: DelPostData, loading: DelLoading }] =
     useMutation<MutationRes>(

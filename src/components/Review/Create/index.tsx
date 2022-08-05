@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ReviewModal } from '../Modal';
+import { ReviewModal } from './Modal';
 import styled from '@emotion/styled';
 import { Avatar } from '../../Avatar';
 import { Review } from '@prisma/client';

@@ -10,19 +10,16 @@ interface IModal {
   setSelect: Dispatch<SetStateAction<string>>;
 }
 export const Modal = ({ type, text, setSelect }: IModal) => {
-  const { isLoggedIn, loggedInUser } = useUser();
   const router = useRouter();
-  const onClick = (needLogin: boolean, Type: string) => {
+  const { isLoggedIn, loggedInUser } = useUser();
+  const onClick = (Type: string) => {
     setSelect('');
-    if (needLogin && !isLoggedIn) {
-      alert('로그인이 필요합니다.');
-      return router.push('/user/login');
-    }
     if (Type === 'all') router.push(`/all/${type}s`);
-    if (Type === 'my') router.push(`/all/my/${type}s`);
+    if (Type === 'my') router.push(`/my/${type}s`);
     if (Type === 'create' && type === 'post') {
-      alert('포스트를 생성할 보드를 선택해주세요.');
-      return router.push(`/all/my/boards`);
+      if (!isLoggedIn) alert('로그인 해주세요.');
+      else alert('포스트를 생성할 보드를 선택해주세요.');
+      return router.push(`/my/boards`);
     }
     if (Type === 'create')
       router.push(`/user/${loggedInUser?.id}/${type}/create`);
@@ -32,15 +29,15 @@ export const Modal = ({ type, text, setSelect }: IModal) => {
     <Cont>
       {!isMovie && (
         <List>
-          <li onClick={() => onClick(false, 'all')}>
+          <li onClick={() => onClick('all')}>
             <span>All</span>
             <span>{text}s</span>
           </li>
-          <li onClick={() => onClick(true, 'my')}>
+          <li onClick={() => onClick('my')}>
             <span>My</span>
             <span>{text}</span>
           </li>
-          <li onClick={() => onClick(true, 'create')}>
+          <li onClick={() => onClick('create')}>
             <span>Create</span>
             <span>{text}</span>
           </li>

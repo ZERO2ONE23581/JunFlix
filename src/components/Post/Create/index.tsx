@@ -4,13 +4,13 @@ import styled from '@emotion/styled';
 import { Avatar } from '../../Avatar';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { ErrorMsg } from '../../Tools/Errors';
+import { ErrorMsg, Errors } from '../../Tools/Errors';
 import { IPostForm } from '../../../types/post';
-import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
 import { Modal, DimBackground } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ConfirmModal } from '../../Tools/Modal';
+import { MutationRes } from '../../../types/global';
 
 interface ICreatePost {
   setCreate: Dispatch<SetStateAction<boolean>>;
@@ -63,7 +63,9 @@ export const CreatePost = ({ setCreate }: ICreatePost) => {
       clearErrors!('content');
     }
   }, [next, clearErrors]);
+
   useEffect(() => {
+    if (data?.error) alert(data.error);
     if (data?.ok) {
       setSave(false);
       setCreate(false);
@@ -98,10 +100,9 @@ export const CreatePost = ({ setCreate }: ICreatePost) => {
             />
           )}
         </Main>
-        {data?.error && <ErrorMsg error={data?.error} />}
-        {errors.title && <ErrorMsg error={errors?.title?.message!} />}
-        {errors.content && <ErrorMsg error={errors?.content?.message!} />}
+        {errors && <Errors errors={errors} />}
       </Cont>
+
       {save && (
         <ConfirmModal
           loading={Loading}
@@ -123,32 +124,33 @@ export const CreatePost = ({ setCreate }: ICreatePost) => {
 };
 const Cont = styled(Modal)<{ isNext: boolean }>`
   padding: 0;
-  height: 80vh;
   z-index: 102;
   border: none;
   display: block;
   border-radius: 5px;
-  width: ${(p) => (!p.isNext ? '35vw' : '70vw')};
-  min-width: ${(p) => (p.isNext ? '1000px' : '600px')};
 `;
 const Main = styled.article<{ isNext: boolean }>`
   display: flex;
   align-items: center;
+  justify-content: center;
   .createAvatar {
     .isPreivewTag,
     .isImageTag,
     .noImageDiv {
-      height: 75vh;
-      min-width: 600px;
-      min-height: 580px;
+      width: 45vw;
+      height: 80vh;
+      min-width: 500px;
+      min-height: 500px;
       border-right: ${(p) => !p.isNext && 'none'};
-      width: ${(p) => (!p.isNext ? '35vw' : '40vw')};
+      /* width: ${(p) => (!p.isNext ? '35vw' : '40vw')}; */
     }
   }
   .create-post-info {
     width: 30vw;
-    height: 75vh;
-    min-width: 400px;
-    min-height: 580px;
+    height: 80vh;
+    min-width: 500px;
+    min-height: 500px;
+    /* min-width: 400px;
+    min-height: 580px; */
   }
 `;

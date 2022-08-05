@@ -4,8 +4,10 @@ import styled from '@emotion/styled';
 import { Page } from '../../../../../styles/global';
 import { CreateBoard } from '../../../../../src/components/Board/Create';
 import { HeadTitle } from '../../../../../src/components/Layout/Head';
+import { useNeedLogin } from '../../../../../src/libs/client/useTools';
 
 const Create: NextPage = () => {
+  useNeedLogin();
   const [preview, setPreview] = useState('');
   return (
     <>
@@ -19,7 +21,6 @@ const Create: NextPage = () => {
 export default Create;
 
 const Cont = styled(Page)<{ bg?: string }>`
-  padding: 3% 12%;
-  background-color: black;
+  padding: 3% 10% 10%;
   background: ${(p) => p.bg && `url(${p.bg}) center / cover no-repeat`};
 `;

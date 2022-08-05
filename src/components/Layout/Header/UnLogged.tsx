@@ -4,14 +4,14 @@ import styled from '@emotion/styled';
 export const UnLoggedIn = () => {
   return (
     <Cont>
-      <Link href="/user/join">
+      <Link href="/join">
         <a>
-          <span className="hover">Join</span>
+          <span>Join</span>
         </a>
       </Link>
-      <Link href="/user/login">
+      <Link href="/login">
         <a>
-          <span className="hover">Login</span>
+          <span>Login</span>
         </a>
       </Link>
     </Cont>
@@ -23,8 +23,10 @@ const Cont = styled.nav`
   align-items: center;
   justify-content: center;
   a {
-    &:hover {
-      color: ${(p) => p.theme.color.logo};
+    span {
+      :hover {
+        color: ${(p) => p.theme.color.logo};
+      }
     }
   }
 `;

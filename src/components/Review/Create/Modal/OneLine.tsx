@@ -1,9 +1,9 @@
-import { Btn } from '../../Tools/Button';
-import { InputWrap } from '../../Tools/Input';
-import { IUseform } from '../../../types/global';
+import { Btn } from '../../../Tools/Button';
+import { InputWrap } from '../../../Tools/Input';
+import { IUseform } from '../../../../types/global';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { BtnWrap } from '../../../../styles/global';
-import { useLength } from '../../../libs/client/useTools';
+import { BtnWrap } from '../../../../../styles/global';
+import { useLength } from '../../../../libs/client/useTools';
 
 interface IOneLine extends IUseform {
   isEdit?: boolean;

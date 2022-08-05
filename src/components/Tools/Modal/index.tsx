@@ -1,13 +1,13 @@
 import { Btn } from '../Button';
+import { InputWrap } from '../Input';
+import { ErrorMsg } from '../Errors';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { LoadingModal } from './Loading';
 import { IconBtn } from '../Button/Icon';
-import { Dispatch, SetStateAction, useEffect } from 'react';
-import { SmallModal, BtnWrap, DimBackground } from '../../../../styles/global';
-import { InputWrap } from '../Input';
+import { Dispatch, SetStateAction } from 'react';
 import { IUseform } from '../../../types/global';
-import { useRouter } from 'next/router';
-import { ErrorMsg } from '../Errors';
+import { SmallModal, BtnWrap, DimBackground } from '../../../../styles/global';
 
 interface IConfirmModal extends IUseform {
   type: string;
@@ -18,7 +18,7 @@ interface IConfirmModal extends IUseform {
   setEdit?: Dispatch<SetStateAction<boolean>>;
   closePost?: Dispatch<SetStateAction<boolean>>;
   setConfirm?: Dispatch<SetStateAction<boolean>>;
-  closeModal?: Dispatch<SetStateAction<boolean>>;
+  closeModal?: Dispatch<SetStateAction<boolean>> | null;
 }
 
 export const ConfirmModal = ({
@@ -72,9 +72,7 @@ export const ConfirmModal = ({
 
       <DimBackground
         zIndex={102}
-        onClick={() => {
-          closeModal!(false);
-        }}
+        onClick={() => closeModal !== null && closeModal!(false)}
       />
     </>
   );
@@ -190,12 +188,6 @@ const Texts = (type: string, USERID: string) => {
           <span className="small">
             * Current post is going to be lost once it is canceled.
           </span>
-        </>
-      )}
-      {type === 'update-board-avatar' && (
-        <>
-          <span>배경을 업데이트 하시겠습니까?</span>
-          <span>Would you like to update the backgroud?</span>
         </>
       )}
       {type === 'update-board-avatar' && (

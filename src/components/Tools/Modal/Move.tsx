@@ -17,7 +17,7 @@ export const Move = ({ type, closeModal }: IMoveToCreate) => {
   const onClick = () => {
     if (type === 'board')
       return router.push(`/user/${loggedInUser?.id}/board/create`);
-    if (type === 'post') return router.push(`/all/my/boards`);
+    if (type === 'post') return router.push(`/my/boards`);
   };
   return (
     <>

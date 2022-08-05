@@ -41,7 +41,6 @@ export interface IBoardFormRes {
 }
 export interface IBoardList {
   size: number;
-  isMyPage?: boolean;
   boards: IBoardWithAttrs[];
 }
 export interface IGetFollowingBoard {

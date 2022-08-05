@@ -42,6 +42,11 @@ const Button = styled.button<{ isClicked?: boolean }>`
       opacity: 0.5;
     }
   }
+  :hover {
+    svg {
+      fill: red;
+    }
+  }
   svg {
     fill: ${(p) => p.isClicked && p.theme.color.logo};
   }

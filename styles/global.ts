@@ -1,31 +1,25 @@
 import styled from '@emotion/styled';
 
 export const Page = styled.section`
-  padding: 0 5% 5%;
+  padding: 0 6% 10%;
   min-width: 100vw;
   min-height: 100vh;
   position: relative;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
-  .board-list {
-    .board {
-      min-height: 440px;
-    }
-  }
-  .post-list {
-    .post {
-      min-height: 400px;
-    }
-  }
 `;
 export const Layout = styled.section`
   min-width: 100vw;
   padding: 10px 8%;
 `;
 export const Container = styled.article`
+  gap: 20px;
+  display: flex;
   padding: 30px 40px;
   border-radius: 5px;
+  flex-direction: column;
   color: ${(p) => p.theme.color.font};
+  border: ${(p) => p.theme.border.thick};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
 `;
@@ -115,34 +109,8 @@ export const DimBackground = styled.article<{ zIndex: number }>`
   z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
 `;
 export const Grid = styled.article<{ size: number }>`
-  gap: 25px;
+  gap: 20px;
   display: grid;
   position: relative;
   grid-template-columns: ${(p) => p.size && `repeat(${p.size}, 1fr)`};
-`;
-
-const variant = 'public';
-const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
-export const AVATAR_URL = (avatar: string) => `${base}/${avatar}/${variant}`;
-export const AVATAR_BG = styled.article<{ avatar: string }>`
-  border: none;
-  overflow: hidden;
-  min-height: 440px;
-  position: relative;
-  -o-background-size: cover;
-  background-size: 100% 100%;
-  -moz-background-size: cover;
-  -webkit-background-size: cover;
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background-color: ${(p) => p.theme.color.font};
-  background: ${(p) =>
-    p.avatar && `url(${AVATAR_URL(p.avatar)}) no-repeat center center `};
-  .post-list {
-    .POST {
-      background-color: ${(p) => p.theme.color.bg};
-      svg {
-        fill: ${(p) => p.theme.color.font};
-      }
-    }
-  }
 `;
