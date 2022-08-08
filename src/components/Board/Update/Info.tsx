@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Btn } from '../../Tools/Button';
 import { InputWrap } from '../../Tools/Input';
 import { useForm } from 'react-hook-form';
-import { IQuery, MutationRes } from '../../../types/global';
+import { MutationRes } from '../../../types/global';
 import { LoadingModal } from '../../Tools/Modal/Loading';
 import { IBoardForm } from '../../../types/board';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
@@ -11,20 +11,17 @@ import useMutation from '../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Errors } from '../../Tools/Errors';
 import { useCapLetters, useLength } from '../../../libs/client/useTools';
+import { useRouter } from 'next/router';
 
-interface IEditInfo extends IQuery {
+interface IEditInfo {
   title: string;
   genre: string;
   intro: string;
   setEdit: Dispatch<SetStateAction<boolean>>;
 }
-export const EditInfo = ({
-  query,
-  title,
-  genre,
-  intro,
-  setEdit,
-}: IEditInfo) => {
+export const EditInfo = ({ title, genre, intro, setEdit }: IEditInfo) => {
+  const router = useRouter();
+  const { user_id, board_id } = router.query;
   const {
     watch,
     setValue,
@@ -40,7 +37,7 @@ export const EditInfo = ({
     if (intro) setValue('intro', intro);
   }, [title, genre, intro, setValue]);
   const [EditBoard, { data, loading }] = useMutation<MutationRes>(
-    `/api/user/${query.userId}/board/${query.boardId}/edit`
+    `/api/user/${user_id}/board/${board_id}/edit`
   );
   const [maxTitle] = useState(30);
   const [maxIntro] = useState(1000);

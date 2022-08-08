@@ -7,11 +7,9 @@ interface INoAvatar {
 }
 export const NoAvatar = ({ genre, avatar }: INoAvatar) => {
   return (
-    <>
-      <Cont isAvatar={Boolean(avatar)}>
-        <Svg size="2rem" type={genre!} />
-      </Cont>
-    </>
+    <Cont isAvatar={Boolean(avatar)}>
+      <Svg size="2rem" type={genre!} />
+    </Cont>
   );
 };
 const Cont = styled.div<{ isAvatar: boolean }>`

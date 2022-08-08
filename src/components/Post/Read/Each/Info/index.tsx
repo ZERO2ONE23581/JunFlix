@@ -7,7 +7,7 @@ import { Content } from '../../../../Comment/Post/Read/Info/Content';
 import { CommentList } from '../../../../Comment/Post/Read/List';
 import { PostModel } from '../../../../../types/post';
 import { IQuery } from '../../../../../types/global';
-import { ModalBtn } from '../../../../Tools/Modal/Btn/Post';
+import { ModalBtn } from '../../../../Tools/Button/Modal/Post';
 
 export interface IInfo extends IQuery {
   post: PostModel;

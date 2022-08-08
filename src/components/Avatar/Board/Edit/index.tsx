@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { IconBtn } from '../../../Tools/Button/Icon';
 import { EditBoardAvatarForm } from './Form';
@@ -7,12 +8,15 @@ interface IEditAvatar {
   avatar: boolean;
   setPreview: Dispatch<SetStateAction<string>>;
   setAvatar: Dispatch<SetStateAction<boolean>>;
+  setCancel: Dispatch<SetStateAction<boolean>>;
 }
 export const EditBoardAvatar = ({
   avatar,
-  setPreview,
+  setCancel,
   setAvatar,
+  setPreview,
 }: IEditAvatar) => {
+  const router = useRouter();
   const [delModal, setDelModal] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [saveModal, setSaveModal] = useState(false);
@@ -51,6 +55,7 @@ export const EditBoardAvatar = ({
           isClicked={avatar}
           onClick={() => {
             setPreview('');
+            setCancel(false);
             setAvatar(false);
           }}
         />

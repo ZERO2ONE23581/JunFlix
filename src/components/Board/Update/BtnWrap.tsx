@@ -1,11 +1,10 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { CreatePost } from '../../Post/Create';
-import { Dispatch, SetStateAction, useState } from 'react';
 import useUser from '../../../libs/client/useUser';
 import { IconBtn } from '../../Tools/Button/Icon';
-import { Answer } from '../../Tools/Modal/Answer';
-import { ModalBtn } from '../../Tools/Modal/Btn/Board';
+import { ModalBtn } from '../../Tools/Button/Modal/Board';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 interface IBtnWrap {
   setEdit: Dispatch<SetStateAction<boolean>>;
@@ -16,7 +15,6 @@ export const BtnWrap = ({ setEdit, setAvatar }: IBtnWrap) => {
   const { user_id } = router.query;
   const { loggedInUser } = useUser();
   const [modal, setModal] = useState(false);
-
   const [create, setCreate] = useState(false);
   const isMyBoard = Boolean(loggedInUser?.id === Number(user_id));
   return (
@@ -48,7 +46,6 @@ export const BtnWrap = ({ setEdit, setAvatar }: IBtnWrap) => {
         setModal={setModal}
         setAvatar={setAvatar}
       />
-
       {create && <CreatePost setCreate={setCreate} />}
     </>
   );

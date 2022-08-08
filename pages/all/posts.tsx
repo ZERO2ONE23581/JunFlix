@@ -26,7 +26,7 @@ export default AllPosts;
 export const PostCont = styled(Page)`
   .post-list {
     .post {
-      min-height: 380px;
+      min-height: 330px;
     }
   }
 `;

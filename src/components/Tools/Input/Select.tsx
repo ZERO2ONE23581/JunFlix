@@ -22,7 +22,7 @@ export const SelectWrap = ({ id, register, disabled, watch }: ISelectWrap) => {
         )}
         {id === 'genre' && (
           <>
-            <option value="">영화장르</option>
+            <option value="">장르</option>
             <option value="SF">SF (SF)</option>
             <option value="Action">Action (액션)</option>
             <option value="Drama">Drama (드라마)</option>
@@ -31,6 +31,7 @@ export const SelectWrap = ({ id, register, disabled, watch }: ISelectWrap) => {
             <option value="Mystery">Mystery (미스터리)</option>
             <option value="Comedy">Comedy (코미디)</option>
             <option value="Fantasy">Fantasy (판타지)</option>
+            <option value="Adventure">Adventure (모험)</option>
           </>
         )}
       </Select>
@@ -45,6 +46,7 @@ export const SelectWrap = ({ id, register, disabled, watch }: ISelectWrap) => {
           {watch === 'Mystery' && <Svg type="Mystery" size="2rem" />}
           {watch === 'Comedy' && <Svg type="Comedy" size="2rem" />}
           {watch === 'Fantasy' && <Svg type="Fantasy" size="2rem" />}
+          {watch === 'Adventure' && <Svg type="dragon" size="2rem" />}
         </>
       )}
     </Cont>

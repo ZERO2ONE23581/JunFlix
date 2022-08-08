@@ -25,11 +25,7 @@ export const InputWrap = ({
   const [isFocus, setIsFocus] = useState(false);
   return (
     <Cont className={id} isFocus={isFocus || Boolean(watch)}>
-      {label && (
-        <label className={id} htmlFor={id}>
-          {label}
-        </label>
-      )}
+      {label && <label htmlFor={id}>{label}</label>}
       {!isAlt && (
         <Input
           {...register}

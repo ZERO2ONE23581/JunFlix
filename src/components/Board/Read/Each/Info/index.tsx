@@ -1,53 +1,49 @@
 import { Counts } from './Counts';
 import styled from '@emotion/styled';
-import { Follow } from '../../../Follow';
+import { useRouter } from 'next/router';
 import { Svg } from '../../../../Tools/Svg';
-import { IQuery } from '../../../../../types/global';
+import { FollowBtn } from '../../../FollowBtn';
+import { Dispatch, SetStateAction } from 'react';
 import useUser from '../../../../../libs/client/useUser';
 import { useCapLetters } from '../../../../../libs/client/useTools';
-import { Setting } from '../Setting';
-import { Dispatch, SetStateAction } from 'react';
 
-interface IInfo extends IQuery {
-  title: string;
-  genre: string;
-  intro: string;
-  edit: boolean;
-  isMyBoard: boolean;
-  setEdit: Dispatch<SetStateAction<boolean>>;
-  setPreview: Dispatch<SetStateAction<string>>;
+interface IInfo {
   counts: {
     posts: number;
     followers: number;
   };
+  title: string;
+  genre: string;
+  intro: string;
+  setText: Dispatch<SetStateAction<boolean>>;
 }
-export const Info = ({
-  query,
-  title,
-  genre,
-  intro,
-  counts,
-  isMyBoard,
-  edit,
-  setEdit,
-  setPreview,
-}: IInfo) => {
-  const { isLoggedIn } = useUser();
+export const Info = ({ title, genre, intro, counts, setText }: IInfo) => {
+  const router = useRouter();
+  const { loggedInUser } = useUser();
+  const { user_id, board_id } = router.query;
+  const isMyBoard = Boolean(loggedInUser?.id === Number(user_id));
   return (
-    <Cont>
-      <Flex>
+    <>
+      <Cont>
         <div className="flex">
-          <Title>{useCapLetters(title)}</Title>
-          <Svg type={genre} size="2.2rem" />
-          {isLoggedIn && !isMyBoard && (
-            <Follow userId={query.userId!} boardId={query.boardId!} />
+          <Title>
+            <span>{useCapLetters(title)}</span>
+            <span>
+              <Svg type={genre} size="2.2rem" />
+            </span>
+          </Title>
+          {!isMyBoard && (
+            <FollowBtn
+              setText={setText}
+              userId={Number(user_id)}
+              boardId={Number(board_id)}
+            />
           )}
         </div>
-        <Setting edit={edit} setEdit={setEdit} setPreview={setPreview!} />
-      </Flex>
-      <Counts counts={counts} />
-      <Intro isIntro={Boolean(intro)}>"{intro}"</Intro>
-    </Cont>
+        <Counts counts={counts} />
+        <Intro isIntro={Boolean(intro)}>"{intro}"</Intro>
+      </Cont>
+    </>
   );
 };
 const Cont = styled.article`
@@ -55,21 +51,21 @@ const Cont = styled.article`
   display: flex;
   max-width: 980px;
   flex-direction: column;
-`;
-const Flex = styled.div`
-  gap: 1rem;
-  display: flex;
-  min-width: 900px;
-  align-items: center;
-  justify-content: space-between;
   .flex {
-    gap: 10px;
+    gap: 20px;
     display: flex;
+    max-width: 700px;
     align-items: center;
   }
 `;
 const Title = styled.h1`
   font-size: 2.2rem;
+  span {
+    margin-right: 10px;
+    svg {
+      pointer-events: none;
+    }
+  }
 `;
 const Intro = styled.p<{ isIntro: boolean }>`
   font-size: 1.3rem;

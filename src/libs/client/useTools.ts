@@ -19,7 +19,10 @@ export const useNeedLogin = () => {
   const router = useRouter();
   const { isLoggedIn } = useUser();
   useEffect(() => {
-    if (!isLoggedIn) router.push('/login');
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다. You need to sign in first.');
+      router.push('/login');
+    }
   }, [isLoggedIn, router]);
 };
 export const useNeedLogout = () => {

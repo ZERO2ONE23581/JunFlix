@@ -1,5 +1,5 @@
+import { Btn } from '..';
 import styled from '@emotion/styled';
-import { Btn } from '../../Button';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import { IQuery } from '../../../../types/global';
@@ -8,18 +8,18 @@ import { DimBackground, Modal } from '../../../../../styles/global';
 
 export interface IModalBtn extends IQuery {
   title: string;
-  setSetting: Dispatch<SetStateAction<boolean>>;
-  setModal: Dispatch<SetStateAction<boolean>>;
   setEdit: Dispatch<SetStateAction<boolean>>;
+  setModal: Dispatch<SetStateAction<boolean>>;
   setDelete: Dispatch<SetStateAction<boolean>>;
+  setSetting: Dispatch<SetStateAction<boolean>>;
 }
 export const ModalBtn = ({
-  query,
   title,
-  setSetting,
-  setModal,
+  query,
   setEdit,
+  setModal,
   setDelete,
+  setSetting,
 }: IModalBtn) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
@@ -35,49 +35,55 @@ export const ModalBtn = ({
   };
   return (
     <>
-      <Cont>
+      <ModalBtnCont>
         {isMyPost && (
           <>
             <Btn
               svg="edit"
+              size="1.7rem"
               type="button"
-              name="포스트 수정 (Edit POST)"
+              name="포스트 수정 (Edit Post)"
               onClick={() => handleClick('edit')}
             />
             <Btn
               svg="trash"
+              size="1.7rem"
               type="button"
-              name="포스트 삭제 (Delete POST)"
+              name="포스트 삭제 (Delete Post)"
               CLASSNAME="delete-post-btn"
               onClick={() => handleClick('delete')}
             />
           </>
         )}
         <Btn
+          size="1.7rem"
           svg="board"
           type="button"
-          name="보드로 이동하기 (Move to BOARD)"
+          name="보드 이동 (Move to Board)"
           onClick={() => handleClick('board')}
         />
-      </Cont>
+      </ModalBtnCont>
       <DimBackground zIndex={1} onClick={() => setSetting(false)} />
     </>
   );
 };
-const Cont = styled(Modal)`
-  width: 40vw;
+export const ModalBtnCont = styled(Modal)`
   gap: 0;
-  padding: 0;
+  width: 60vw;
+  z-index: 201;
   border: none;
   overflow: hidden;
-  border-radius: 3px;
+  border-radius: 5px;
+  background-color: transparent;
   button {
     width: 100%;
-    font-weight: 500;
+    padding: 5px;
+    font-weight: 400;
     border-radius: 0%;
-    border-bottom: 1px solid ${(p) => p.theme.color.bg};
-    svg {
-      margin-bottom: 3px;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #2d3436;
+    :nth-of-type(3) {
+      border: none;
     }
   }
 `;

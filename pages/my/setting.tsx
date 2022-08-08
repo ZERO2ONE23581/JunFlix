@@ -15,26 +15,24 @@ const EditProfile: NextPage = () => {
     <>
       <HeadTitle title="프로필 편집" />
       <Cont>
-        <Flex>
+        <div className="flex">
           <UserId />
           <Password />
           <EditUserAvatar />
           <UserInfo />
           <DeleteUser />
-        </Flex>
+        </div>
       </Cont>
     </>
   );
 };
 export default EditProfile;
 
-const Cont = styled(Page)``;
-const Flex = styled.div`
-  gap: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  .delete {
-    top: 70%;
+const Cont = styled(Page)`
+  .flex {
+    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
   }
 `;

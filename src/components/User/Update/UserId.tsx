@@ -2,15 +2,16 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
-import { ErrorMsg } from '../../Tools/Errors';
+import { ErrorMsg, Errors } from '../../Tools/Errors';
 import { InputWrap } from '../../Tools/Input';
 import useMutation from '../../../libs/client/useMutation';
-import { Container, Form } from '../../../../styles/global';
-import { Heading } from '../Create/Heading';
+import { Box } from '../../../../styles/global';
 import useUser from '../../../libs/client/useUser';
 import { IUserForm } from '../../../types/user';
-import styled from '@emotion/styled';
 import { MutationRes } from '../../../types/global';
+import { Title } from '../Create/Title';
+import { LoadingModal } from '../../Tools/Modal/Loading';
+import styled from '@emotion/styled';
 
 export const UserId = () => {
   const router = useRouter();
@@ -45,10 +46,10 @@ export const UserId = () => {
 
   return (
     <>
-      <Box>
-        <Heading type="edit-userId" h1="ID (아이디)" />
-        <Form onSubmit={handleSubmit(onValid)}>
-          <Flex>
+      {!loading && (
+        <form onSubmit={handleSubmit(onValid)}>
+          <UserBox>
+            <Title type="edit-user-id" eng="User ID" />
             <InputWrap
               id="userId"
               type="text"
@@ -58,21 +59,16 @@ export const UserId = () => {
                 required: '새로운 아이디를 입력해주세요.',
               })}
             />
-            <Btn name="Edit" type="submit" loading={loading} />
-          </Flex>
-        </Form>
-      </Box>
-      {errors.userId && <ErrorMsg error={errors.userId?.message} />}
+            <Btn name="Edit" type="submit" />
+            <Errors errors={errors} />
+          </UserBox>
+        </form>
+      )}
+      {loading && <LoadingModal type="loading" zIndex={99} />}
     </>
   );
 };
-export const Box = styled(Container)``;
-const Flex = styled.div`
-  gap: 15px;
-  display: flex;
-  align-items: center;
-  button {
-    width: 80px;
-    height: 50px;
-  }
+export const UserBox = styled(Box)`
+  width: 300px;
+  height: 300px;
 `;

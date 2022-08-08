@@ -12,30 +12,28 @@ export const Layout = styled.section`
   min-width: 100vw;
   padding: 10px 8%;
 `;
-export const Container = styled.article`
-  gap: 20px;
+export const Box = styled.article`
+  gap: 12px;
   display: flex;
-  padding: 30px 40px;
+  padding: 40px;
+  margin: 10% auto;
   border-radius: 5px;
   flex-direction: column;
   color: ${(p) => p.theme.color.font};
   border: ${(p) => p.theme.border.thick};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
-`;
-export const FormCont = styled(Container)`
-  gap: 15px;
-  display: flex;
-  flex-direction: column;
-  select,
-  input {
-    padding: 15px;
+  h2 {
+    margin-bottom: 10px;
+    span {
+      font-size: 1.2rem;
+      margin-right: 10px;
+      font-style: italic;
+    }
+    .kor {
+      font-size: 1.1rem;
+    }
   }
-`;
-export const Form = styled.form`
-  gap: 23px;
-  display: flex;
-  flex-direction: column;
   .flex {
     gap: 12px;
     display: flex;
@@ -43,10 +41,10 @@ export const Form = styled.form`
   }
 `;
 export const Modal = styled.article`
-  top: 50%;
-  left: 50%;
   z-index: 100;
   position: fixed;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   gap: 20px;
   display: flex;
@@ -88,7 +86,7 @@ export const SmallModal = styled(Modal)`
   }
 `;
 export const BtnWrap = styled.div`
-  gap: 20px;
+  gap: 15px;
   display: flex;
   align-items: center;
   justify-content: center;

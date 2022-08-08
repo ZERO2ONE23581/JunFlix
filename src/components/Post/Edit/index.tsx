@@ -121,6 +121,7 @@ const Cont = styled(Modal)`
       height: 80vh;
       min-width: 600px;
       min-height: 580px;
+      border-right: ${(p) => p.theme.border.thick};
     }
   }
   .edit-post-info {

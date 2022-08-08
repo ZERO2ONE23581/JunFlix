@@ -7,12 +7,12 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import useUser from '../../../libs/client/useUser';
 import { IReviewForm } from '../../../types/review';
-import { Container } from '../../../../styles/global';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import useMutation from '../../../libs/client/useMutation';
 import { Inputs } from '../Inputs';
 import { useLength } from '../../../libs/client/useTools';
 import { Errors } from '../../Tools/Errors';
+import { Box } from '../../../../styles/global';
 
 interface ICreateReviewRes {
   ok: boolean;
@@ -36,9 +36,9 @@ export const CreateReview = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IReviewForm>({ mode: 'onSubmit' });
-  const [maxTitle] = useState(30);
+  const [maxTitle] = useState(50);
   const [maxContent] = useState(4000);
-  const [maxMovieTitle] = useState(30);
+  const [maxMovieTitle] = useState(50);
   const [height, setHeight] = useState(40);
   useEffect(() => {
     const content = watch!('content');
@@ -183,7 +183,8 @@ export const CreateReview = () => {
     </>
   );
 };
-export const ReviewCont = styled(Container)`
+export const ReviewCont = styled(Box)`
+  margin: 0;
   gap: 20px;
   padding: 0;
   border: none;

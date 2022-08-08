@@ -43,7 +43,7 @@ const Cont = styled.article`
       width: 100vw;
       min-width: 1500px;
       min-height: 500px;
-      max-height: 600px;
+      max-height: 700px;
     }
   }
 `;

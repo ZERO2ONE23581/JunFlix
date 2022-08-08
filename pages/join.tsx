@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Container, Page } from '../styles/global';
+import { Page } from '../styles/global';
 import { CreateUser } from '../src/components/User/Create';
 import { CreateUserAvatar } from '../src/components/Avatar/User/Create';
 import { HeadTitle } from '../src/components/Layout/Head';
@@ -18,17 +18,15 @@ const Join: NextPage = () => {
     <>
       <HeadTitle title="회원가입" />
       <Cont>
-        <Box>
-          {!userId && <CreateId setSaveId={setSaveId} setUserId={setUserId} />}
-          {userId && !avatar && (
-            <CreateUser
-              saveId={saveId}
-              setAvatar={setAvatar}
-              setCreatedId={setCreatedId}
-            />
-          )}
-          {avatar && <CreateUserAvatar createdId={createdId} />}
-        </Box>
+        {!userId && <CreateId setSaveId={setSaveId} setUserId={setUserId} />}
+        {userId && !avatar && (
+          <CreateUser
+            saveId={saveId}
+            setAvatar={setAvatar}
+            setCreatedId={setCreatedId}
+          />
+        )}
+        {avatar && <CreateUserAvatar createdId={createdId} />}
       </Cont>
     </>
   );
@@ -36,6 +34,5 @@ const Join: NextPage = () => {
 export default Join;
 
 const Cont = styled(Page)`
-  padding: 10% 34%;
+  padding: 0;
 `;
-const Box = styled(Container)``;

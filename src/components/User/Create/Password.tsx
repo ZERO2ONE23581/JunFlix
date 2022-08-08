@@ -1,13 +1,14 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../Tools/Button';
-import { Form } from '../../../../styles/global';
 import useMutation from '../../../libs/client/useMutation';
-
-import { ErrorMsg } from '../../Tools/Errors';
+import { ErrorMsg, Errors } from '../../Tools/Errors';
 import { InputWrap } from '../../Tools/Input';
-import { Heading } from './Heading';
 import { IFindForm, IFindPostRes } from '../../../types/user';
+import { Title } from './Title';
+import { Box } from '../../../../styles/global';
+import { LoadingModal } from '../../Tools/Modal/Loading';
+import styled from '@emotion/styled';
 
 interface ICreateNewPasswordFormProps {
   userId: string;
@@ -41,55 +42,53 @@ export const CreatePassword = ({
   }, [data, setcloseModal]);
   return (
     <>
-      <Heading
-        type="newPassword"
-        h1="Find Password (비밀번호 찾기)"
-        h2="Step 3. Create New Password (새 비밀번호 만들기)"
-      />
-      <Form onSubmit={handleSubmit(onValid)}>
-        <InputWrap
-          id="password"
-          type="password"
-          label="New Password"
-          watch={watch('password')}
-          register={register('password', {
-            required: '새 비밀번호 입력하세요.',
-            minLength: {
-              value: 8,
-              message: '비밀번호는 최소 8자리여야 합니다.',
-            },
-            maxLength: {
-              value: 16,
-              message: '비밀번호는 최대 16자리여야 합니다.',
-            },
-            pattern: {
-              value:
-                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
-              message:
-                '비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야 합니다.',
-            },
-          })}
-        />
-        <InputWrap
-          type="password"
-          id="confirmPassword"
-          label="Confirm Password"
-          watch={watch('confirmPassword')}
-          register={register('confirmPassword', {
-            required: '새 비밀번호 재입력하세요.',
-          })}
-        />
-        <Btn
-          type="submit"
-          loading={loading}
-          CLASSNAME="submit-btn"
-          name="새로운 비밀번호 만들기"
-        />
-      </Form>
-      {errors.password && <ErrorMsg error={errors.password?.message} />}
-      {errors.confirmPassword && (
-        <ErrorMsg error={errors.confirmPassword?.message} />
+      {!loading && (
+        <form onSubmit={handleSubmit(onValid)}>
+          <Cont>
+            <Title
+              type="create-password"
+              eng="Create Password"
+              kor="새 비밀번호 생성"
+            />
+            <InputWrap
+              id="password"
+              type="password"
+              label="New Password"
+              watch={watch('password')}
+              register={register('password', {
+                required: '새 비밀번호 입력하세요.',
+                minLength: {
+                  value: 8,
+                  message: '비밀번호는 최소 8자리여야 합니다.',
+                },
+                maxLength: {
+                  value: 16,
+                  message: '비밀번호는 최대 16자리여야 합니다.',
+                },
+                pattern: {
+                  value:
+                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
+                  message:
+                    '비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야 합니다.',
+                },
+              })}
+            />
+            <InputWrap
+              type="password"
+              id="confirmPassword"
+              label="Confirm Password"
+              watch={watch('confirmPassword')}
+              register={register('confirmPassword', {
+                required: '새 비밀번호 재입력하세요.',
+              })}
+            />
+            <Btn type="submit" CLASSNAME="submit-btn" name="CREATE" />
+            <Errors errors={errors} />
+          </Cont>
+        </form>
       )}
+      {loading && <LoadingModal type="create-password" zIndex={1} />}
     </>
   );
 };
+const Cont = styled(Box)``;

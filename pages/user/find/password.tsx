@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Container, Page } from '../../../styles/global';
+import { Box, Page } from '../../../styles/global';
 import { FindLink } from '../../../src/components/User/Read/Links/Find';
-import { Token } from '../../../src/components/User/Read/Find/Token';
-import { UserId } from '../../../src/components/User/Read/Find/UserId';
+import { Token } from '../../../src/components/User/Read/Verify/Token';
+import { VerifyUserId } from '../../../src/components/User/Read/Verify/UserID';
 import { CreatePassword } from '../../../src/components/User/Create/Password';
 import { HeadTitle } from '../../../src/components/Layout/Head';
 import { ConfirmModal } from '../../../src/components/Tools/Modal';
@@ -18,16 +18,13 @@ const FindUserPassword: NextPage = () => {
     <>
       <HeadTitle title="비밀번호 찾기" />
       <Cont>
-        <Box>
-          {!token && <UserId setToken={setToken} />}
-          {token && !confirm && (
-            <Token setConfirm={setConfirm} setUserId={setUserId} />
-          )}
-          {confirm && (
-            <CreatePassword userId={userId} setcloseModal={setcloseModal} />
-          )}
-          <FindLink />
-        </Box>
+        {!token && <VerifyUserId setToken={setToken} />}
+        {token && !confirm && (
+          <Token isFindPW setConfirm={setConfirm} setUserId={setUserId} />
+        )}
+        {confirm && (
+          <CreatePassword userId={userId} setcloseModal={setcloseModal} />
+        )}
       </Cont>
       {closeModal && <ConfirmModal type="find-user-password" />}
     </>
@@ -38,10 +35,4 @@ export default FindUserPassword;
 
 const Cont = styled(Page)`
   padding: 10% 34%;
-`;
-const Box = styled(Container)`
-  min-width: 450px;
-  .submit-btn {
-    padding: 10px;
-  }
 `;

@@ -3,14 +3,15 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../Tools/Button';
 import useMutation from '../../../libs/client/useMutation';
-import { Form } from '../../../../styles/global';
+import { Box, BtnWrap } from '../../../../styles/global';
 import { Label, ProfileAvatar } from '../Profile';
 import styled from '@emotion/styled';
-import { Heading } from '../../User/Create/Heading';
 import { IUserForm } from '../../../types/user';
 import { Answer } from '../../Tools/Modal/Answer';
 import { Errors } from '../../Tools/Errors';
 import { MutationRes } from '../../../types/global';
+import { Title } from '../../User/Create/Title';
+import { LoadingModal } from '../../Tools/Modal/Loading';
 
 interface ICreateAvatar {
   createdId: number;
@@ -30,7 +31,7 @@ export const CreateUserAvatar = ({ createdId }: ICreateAvatar) => {
   });
   const avatar = watch('avatar');
   const [avatarLoading, setAvatarLoading] = useState(false);
-
+  const Loading = avatarLoading ? avatarLoading : loading ? loading : false;
   const onValid = async ({ avatar }: IUserForm) => {
     if (loading) return;
     setAvatarLoading((p) => !p);
@@ -70,47 +71,53 @@ export const CreateUserAvatar = ({ createdId }: ICreateAvatar) => {
   const [answer, setAnswer] = useState(false);
   return (
     <>
-      <>
-        <Heading
-          type="avatar"
-          h1="Step 3. Optional (선택사항)"
-          h2="Profile Picture (프로필 사진)"
-        />
-        <Form onSubmit={handleSubmit(onValid)}>
-          <Label htmlFor="avatar">
-            <ProfileAvatar preview={preview} size="8rem" />
-            <input
-              {...register('avatar', {
-                required: '프로필 사진 파일을 업로드해주세요.',
-              })}
-              id="avatar"
-              name="avatar"
-              type="file"
-              accept="image/*"
-            />
-          </Label>
-          <Flex>
-            <Btn
-              type="button"
-              name="나중에 설정"
-              onClick={() => router.replace('/user/login')}
-            />
-            <Btn type="submit" name="사진 저장" loading={avatarLoading} />
-          </Flex>
-        </Form>
-        <Errors errors={errors} />
-        {answer && <Answer type="create-useravatar" closeModal={setAnswer} />}
-      </>
+      {!Loading && (
+        <Cont>
+          <Title
+            type="create-user-avatar"
+            eng="Create Account"
+            kor="계정생성"
+          />
+          <h2>
+            <span>Step 3.</span>
+            <span className="kor">프로필 사진</span>
+            <span>Profile Picture</span>
+          </h2>
+          <form onSubmit={handleSubmit(onValid)}>
+            <Label htmlFor="avatar">
+              <ProfileAvatar preview={preview} size="8rem" />
+              <input
+                {...register('avatar', {
+                  required: '프로필 사진 파일을 업로드해주세요.',
+                })}
+                id="avatar"
+                name="avatar"
+                type="file"
+                accept="image/*"
+              />
+            </Label>
+            <BtnWrap className="btn-wrap">
+              <Btn
+                name="SKIP"
+                type="button"
+                onClick={() => router.replace('/user/login')}
+              />
+              <Btn type="submit" name="SAVE" />
+            </BtnWrap>
+          </form>
+          <Errors errors={errors} />
+          {answer && <Answer type="create-useravatar" closeModal={setAnswer} />}
+        </Cont>
+      )}
+      {Loading && <LoadingModal type="loading" zIndex={1} />}
     </>
   );
 };
-const Flex = styled.div`
-  gap: 20px;
-  width: 300px;
-  display: flex;
-  margin: 0 auto;
-  align-items: center;
-  button {
-    width: 100%;
+const Cont = styled(Box)`
+  padding: 30px;
+  max-width: 360px;
+  .btn-wrap {
+    margin-top: 30px;
+    padding: 0px 40px;
   }
 `;

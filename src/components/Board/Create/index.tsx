@@ -1,18 +1,16 @@
 import { Title } from './Title';
 import { Inputs } from './Inputs';
-
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { LoadingModal } from '../../Tools/Modal/Loading';
-
-import { Container } from '../../../../styles/global';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import useMutation from '../../../libs/client/useMutation';
 import { IBoardForm, IBoardFormRes } from '../../../types/board';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useLength } from '../../../libs/client/useTools';
 import { Errors } from '../../Tools/Errors';
+import { Box } from '../../../../styles/global';
 
 interface ICreateBoard {
   isPreview: boolean;
@@ -116,7 +114,8 @@ export const CreateBoard = ({ isPreview, setPreview }: ICreateBoard) => {
     </form>
   );
 };
-const Cont = styled(Container)<{ isAvatar: boolean }>`
+const Cont = styled(Box)<{ isAvatar: boolean }>`
+  margin: 0;
   gap: 20px;
   display: flex;
   flex-direction: column;

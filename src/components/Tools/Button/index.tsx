@@ -43,8 +43,8 @@ export const Btn = ({
 export const Cont = styled.button<{ isClicked?: boolean }>`
   gap: 15px;
   border: none;
+  padding: 8px;
   display: flex;
-  padding: 10px;
   font-weight: 500;
   font-size: 1.1rem;
   border-radius: 3px;

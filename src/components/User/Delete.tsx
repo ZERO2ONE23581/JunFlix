@@ -1,15 +1,17 @@
 import styled from '@emotion/styled';
-import { Box } from './Update/UserId';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { Heading } from './Create/Heading';
 import { useEffect, useState } from 'react';
 import { IUserForm } from '../../types/user';
 import { ConfirmModal } from '../Tools/Modal';
 import useUser from '../../libs/client/useUser';
 import { IconBtn } from '../Tools/Button/Icon';
 import useMutation from '../../libs/client/useMutation';
-import { ErrorMsg } from '../Tools/Errors';
+import { Errors } from '../Tools/Errors';
+import { Title } from './Create/Title';
+import { Box } from '../../../styles/global';
+import { UserBox } from './Update/UserId';
+import { Svg } from '../Tools/Svg';
 
 export const DeleteUser = () => {
   const [delModal, setDelModal] = useState(false);
@@ -38,43 +40,38 @@ export const DeleteUser = () => {
   }, [data, router]);
   return (
     <>
-      <Cont>
-        <form onSubmit={handleSubmit(onValid)}>
-          <Heading type="delete-acct" h1="Delete Account (계정삭제)" />
+      <form onSubmit={handleSubmit(onValid)}>
+        <Cont>
+          <Svg type="danger" size="2rem" fill={'red'} />
+          <Title type="delete-account" eng="Delete Account" />
           <IconBtn
             size="2rem"
             type="button"
             svgType="trash"
             onClick={() => setDelModal((p: boolean) => !p)}
           />
-          {delModal && (
-            <ConfirmModal
-              watch={watch}
-              loading={loading}
-              type="delete-user"
-              register={register}
-              closeModal={setDelModal}
-            />
-          )}
-        </form>
-        {errors.userId && <ErrorMsg error={errors.userId.message} />}
-      </Cont>
+        </Cont>
+        {delModal && (
+          <ConfirmModal
+            watch={watch}
+            loading={loading}
+            type="delete-user"
+            register={register}
+            closeModal={setDelModal}
+          />
+        )}
+        <Errors errors={errors} />
+      </form>
     </>
   );
 };
-const Cont = styled(Box)`
+const Cont = styled(UserBox)`
   width: 400px;
+  height: 100px;
   padding: 20px;
-  max-width: 400px;
-  min-height: 100px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   color: ${(p) => p.theme.color.logo};
-  .heading {
-    margin: 0 auto;
-    .flex {
-      gap: 8px;
-      h1 {
-        font-size: 1.4rem;
-      }
-    }
-  }
+  border: thick double ${(p) => p.theme.color.logo};
 `;

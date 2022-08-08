@@ -2,12 +2,14 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputWrap } from '../../Tools/Input';
 import useMutation from '../../../libs/client/useMutation';
-import styled from '@emotion/styled';
-import { LoginLink } from '../Read/Links/Login';
-import { Heading } from './Heading';
 import { Errors } from '../../Tools/Errors';
-import { IUserIdCheckForm, IUserIdCheckRes } from '../../../types/user';
 import { Btn } from '../../Tools/Button';
+import { IUserIdCheckForm, IUserIdCheckRes } from '../../../types/user';
+import { Box } from '../../../../styles/global';
+import { LoginLink } from '../Read/Links/Login';
+import styled from '@emotion/styled';
+import { Title } from './Title';
+import { LoadingModal } from '../../Tools/Modal/Loading';
 
 interface ICreateId {
   setUserId: Dispatch<SetStateAction<boolean>>;
@@ -39,38 +41,42 @@ export const CreateId = ({ setSaveId, setUserId }: ICreateId) => {
 
   return (
     <>
-      <Heading
-        type="create-id"
-        h1="Create Account"
-        h2="Step 1. Check ID (아이디 중복확인)"
-      />
-      <form onSubmit={handleSubmit(onValid)}>
-        <Flex>
-          <InputWrap
-            id="userId"
-            type="text"
-            label="USER ID"
-            watch={watch('userId')}
-            register={register('userId', {
-              required: '아이디를 입력해주세요.',
-              pattern: {
-                value: /^[A-Za-z]+[A-Za-z0-9]{5,19}$/g,
-                message:
-                  '* 아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.',
-              },
-            })}
-          />
-          {/* <IconBtn size="2.5rem" type="submit" svgType="circle-arrow" /> */}
-          <Btn name="SUBMIT" type="submit" loading={loading} />
-        </Flex>
-      </form>
-      <LoginLink />
-      <Errors errors={errors} />
+      {!loading && (
+        <form onSubmit={handleSubmit(onValid)}>
+          <Cont>
+            <Title type="create-user-id" eng="Create Account" kor="계정생성" />
+            <h2>
+              <span>Step 1.</span>
+              <span className="kor">아이디 중복확인</span>
+              <span>Check your ID</span>
+            </h2>
+            <InputWrap
+              id="userId"
+              type="text"
+              label="USER ID"
+              watch={watch('userId')}
+              register={register('userId', {
+                required: '아이디를 입력해주세요.',
+                pattern: {
+                  value: /^[A-Za-z]+[A-Za-z0-9]{5,19}$/g,
+                  message:
+                    '* 아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.',
+                },
+              })}
+            />
+            <Btn name="Check" type="submit" CLASSNAME="submit" />
+            <LoginLink />
+            <Errors errors={errors} />
+          </Cont>
+        </form>
+      )}
+      {loading && <LoadingModal type="loading" zIndex={1} />}
     </>
   );
 };
-const Flex = styled.div`
-  gap: 20px;
-  display: flex;
-  align-items: center;
+const Cont = styled(Box)`
+  max-width: 440px;
+  .submit {
+    margin-top: 12px;
+  }
 `;

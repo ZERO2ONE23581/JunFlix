@@ -59,6 +59,7 @@ export const Setting = ({ edit, setEdit, setPreview }: ISetting) => {
         <EditBoardAvatar
           avatar={avatar}
           setAvatar={setAvatar}
+          setCancel={setCancel}
           setPreview={setPreview}
         />
       )}
@@ -66,6 +67,9 @@ export const Setting = ({ edit, setEdit, setPreview }: ISetting) => {
   );
 };
 const Cont = styled.article`
+  top: 35px;
+  right: 40px;
+  position: absolute;
   gap: 20px;
   display: flex;
   align-items: center;

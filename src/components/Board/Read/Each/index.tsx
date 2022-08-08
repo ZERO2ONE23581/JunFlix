@@ -1,63 +1,58 @@
 import { Info } from './Info';
 import { useState } from 'react';
-import { Setting } from './Setting';
 import styled from '@emotion/styled';
-import { EditInfo } from '../../Update/Info';
 import { Profile } from './Profile';
+import { Setting } from './Setting';
+import { EditInfo } from '../../Update/Info';
 import { IBoard } from '../../../../types/board';
-import { Container, DimBackground } from '../../../../../styles/global';
-import useUser from '../../../../libs/client/useUser';
+import { Box, DimBackground } from '../../../../../styles/global';
 
-export const Board = ({ board, setPreview }: IBoard) => {
+export const Board = ({ board, setPreview, setText }: IBoard) => {
   const [edit, setEdit] = useState(false);
-  const { loggedInUser } = useUser();
-  const isMyBoard = Boolean(loggedInUser?.id === board.UserID);
   return (
     <>
-      <Cont>
-        <Profile
-          isMyBoard={isMyBoard}
-          userAvatar={board?.user?.avatar!}
-          username={board?.user?.username!}
-        />
-        {!edit && (
-          <Info
-            edit={edit}
-            setEdit={setEdit}
-            title={board.title}
-            genre={board.genre}
-            intro={board.intro}
-            counts={board._count}
-            isMyBoard={isMyBoard}
-            setPreview={setPreview}
-            query={{ userId: board.UserID, boardId: board.id }}
+      {board && (
+        <Cont>
+          <Profile
+            userAvatar={board?.user?.avatar!}
+            username={board?.user?.username!}
           />
-        )}
-        {edit && (
-          <EditInfo
-            setEdit={setEdit}
-            title={board.title}
-            genre={board.genre}
-            intro={board.intro}
-            query={{ userId: board.UserID, boardId: board.id }}
-          />
-        )}
-      </Cont>
+          <Setting edit={edit} setEdit={setEdit} setPreview={setPreview!} />
+          {!edit && (
+            <Info
+              setText={setText}
+              title={board.title}
+              genre={board.genre}
+              intro={board.intro}
+              counts={board._count}
+            />
+          )}
+          {edit && (
+            <EditInfo
+              setEdit={setEdit}
+              title={board.title}
+              genre={board.genre}
+              intro={board.intro}
+            />
+          )}
+        </Cont>
+      )}
       {edit && <DimBackground zIndex={1} />}
     </>
   );
 };
 
-const Cont = styled(Container)`
+const Cont = styled(Box)`
+  margin: 0;
   gap: 40px;
   z-index: 2;
   border: none;
   display: flex;
   box-shadow: none;
+  max-width: 1200px;
   position: relative;
   padding: 30px 100px;
   margin-bottom: 40px;
-  align-items: center;
   flex-direction: row;
-  justify-content: flex-start;
+  margin: 50px auto 0;
 `;

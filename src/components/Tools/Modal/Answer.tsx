@@ -29,7 +29,9 @@ export const Answer = ({ type, closeModal, max }: IAnswer) => {
     </>
   );
 };
-const Cont = styled(SmallModal)``;
+const Cont = styled(SmallModal)`
+  align-items: center;
+`;
 
 const Texts = (
   type: string,
@@ -37,27 +39,25 @@ const Texts = (
 ) => {
   return (
     <>
-      {type === 'edit-review' && (
+      {type === 'update-review' && (
         <>
           <span>리뷰제목과 영화제목은 30자를 넘을수 없습니다.</span>
           <span>리뷰는 최소 50자 이상이어야 합니다.</span>
           <span>별점은 0부터 5까지 선택가능합니다.</span>
           <span>한줄평은 30자 이내 작성할 수 있습니다.</span>
-          <span className="red">
-            리뷰제목, 영화제목, 장르선택을 입력해주세요. (필수사항)
-          </span>
+          <span>리뷰제목, 영화제목, 장르선택을 입력해주세요. (필수사항)</span>
           <span>
-            Maximum length of review title and movie title are no longer than 30
+            Max length of review title and movie title are no longer than 30
             letters.
           </span>
           <span>
-            Minimun length of review should be more or equal to 50 letters.
+            Min length of review should be more or equal to 50 letters.
           </span>
           <span> You can give stars from 0 to 5.</span>
           <span>
-            Maximum length of one line review is no longer than 30 letters.
+            Max length of one line review is no longer than 30 letters.
           </span>
-          <span className="red">
+          <span>
             Please type review title, movie title and select movie genre.
             (REQUIRED)
           </span>
@@ -104,7 +104,7 @@ const Texts = (
           <span>Please type your ID for verification.</span>
         </>
       )}
-      {type === 'create-useravatar' && (
+      {type === 'create-user-avatar' && (
         <>
           <span>프로필 사진을 추가하려면 아이콘을 클릭하세요.</span>
           <span>프로필 사진은 추후에 수정 가능합니다.</span>
@@ -112,17 +112,19 @@ const Texts = (
           <span>You can edit picture later.</span>
         </>
       )}
-      {type === 'create-userinfo' && (
+      {type === 'create-user-info' && (
         <>
+          <span>이름 (username)은 옵션사항 입니다.</span>
           <span>이름을 적지 않으면 'Anonymous'로 자동저장 됩니다.</span>
           <span>이름은 추후에 수정 가능합니다.</span>
+          <span>Username is optional.</span>
           <span>
             Username is going to be saved as 'Anonymous' if you don't put any.
           </span>
           <span>You can edit your username after register.</span>
         </>
       )}
-      {type === 'create-id' && (
+      {type === 'create-user-id' && (
         <>
           <span>
             * 아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.
@@ -141,7 +143,7 @@ const Texts = (
           <span>새로운 비밀번호를 입력해주세요.</span>
         </>
       )}
-      {type === 'edit-userinfo' && (
+      {type === 'edit-user-info' && (
         <>
           <span>이름과 유저이름은 10자를 초과할수 없습니다.</span>
           <span>올바른 이메일 형식을 입력해야 합니다.</span>
@@ -168,7 +170,7 @@ const Texts = (
           </span>
         </>
       )}
-      {type === 'edit-useravatar' && (
+      {type === 'edit-user-avatar' && (
         <>
           <span>
             프로필 사진을 수정하거나 만드려면 아이콘 (프로필 사진)을 누르세요.
@@ -272,11 +274,10 @@ const Texts = (
             새로운 사진을 업로드 하시길 원하면 왼쪽 사진을 클릭하세요.
           </span>
           <span>
-            Maximum length of the post title is less than {max?.title} words.
+            Max length of the post title is less than {max?.title} words.
           </span>
           <span>
-            Maximum length of the post content is less than {max?.content}{' '}
-            words.
+            Max length of the post content is less than {max?.content} words.
           </span>
           <span>
             Click the picture on your left if you'd like to pick a new one.
@@ -286,8 +287,10 @@ const Texts = (
       {type === 'post' && (
         <>
           <span>포스트 내용을 보려면 각 포스트를 클릭하세요.</span>
+          <span>포스트를 보려면 포스트의 보드를 팔로우해야 합니다.</span>
           <span>새로운 게시물을 생성하려면 보드를 선택해주세요.</span>
           <span>Click the post to see the content.</span>
+          <span>To see a post you need to follow the board of the post.</span>
           <span>Please select the board to create new POST.</span>
         </>
       )}

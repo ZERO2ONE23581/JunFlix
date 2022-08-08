@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Container, Page } from '../../../styles/global';
-import { Token } from '../../../src/components/User/Read/Find/Token';
-import { Email } from '../../../src/components/User/Read/Find/Email';
+import { Page } from '../../../styles/global';
+import { Token } from '../../../src/components/User/Read/Verify/Token';
+import { Email } from '../../../src/components/User/Read/Verify/Email';
 import { HeadTitle } from '../../../src/components/Layout/Head';
 import { ConfirmModal } from '../../../src/components/Tools/Modal';
-import { FindLink } from '../../../src/components/User/Read/Links/Find';
 
 const FindUserId: NextPage = () => {
   const [userId, setUserId] = useState('');
@@ -16,11 +15,10 @@ const FindUserId: NextPage = () => {
     <>
       <HeadTitle title="아이디 찾기" />
       <Cont>
-        <Box>
-          {!token && <Email setToken={setToken} />}
-          {token && <Token setUserId={setUserId} setConfirm={setConfirm} />}
-          <FindLink />
-        </Box>
+        {!token && <Email setToken={setToken} />}
+        {token && (
+          <Token isFindID setUserId={setUserId} setConfirm={setConfirm} />
+        )}
       </Cont>
       {confirm && (
         <ConfirmModal USERID={userId} type="find-user-id" closeModal={null} />
@@ -32,9 +30,4 @@ export default FindUserId;
 
 const Cont = styled(Page)`
   padding: 10% 35%;
-`;
-const Box = styled(Container)`
-  .submit-btn {
-    padding: 10px;
-  }
 `;

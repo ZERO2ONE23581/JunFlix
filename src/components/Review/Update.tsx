@@ -13,6 +13,7 @@ import { ReviewCont } from './Create';
 import { useLength } from '../../libs/client/useTools';
 import { Errors } from '../Tools/Errors';
 import { MutationRes } from '../../types/global';
+import styled from '@emotion/styled';
 
 export const EditReview = () => {
   const router = useRouter();
@@ -47,14 +48,16 @@ export const EditReview = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IReviewForm>({ mode: 'onSubmit' });
-  const [maxTitle] = useState(30);
+
+  const [maxTitle] = useState(50);
   const [maxContent] = useState(4000);
-  const [maxMovieTitle] = useState(30);
+  const [maxMovieTitle] = useState(50);
   const [height, setHeight] = useState(40);
   useEffect(() => {
     const content = watch!('content');
     setHeight(content?.length! * 0.2);
   }, [setHeight, watch!('content')]);
+
   const TitleLen = useLength(watch('title'));
   const CntLen = useLength(watch('content'));
   const MovieLen = useLength(watch('movieTitle'));
@@ -98,6 +101,7 @@ export const EditReview = () => {
       });
     setSave(true);
   };
+
   const [delAvatar, setDelAvatar] = useState(false);
   const [avatarLoading, setAvatarLoading] = useState(false);
   const Loading = avatarLoading ? avatarLoading : loading ? loading : false;
@@ -105,6 +109,7 @@ export const EditReview = () => {
     useMutation<MutationRes>(
       `/api/user/${user_id}/review/${review_id}/delete/bg`
     );
+
   const onValid = async ({
     title,
     genre,
@@ -153,6 +158,7 @@ export const EditReview = () => {
       });
     }
   };
+
   useEffect(() => {
     if (res?.error) alert(res.error);
     if (res?.ok) router.replace(`/user/${user_id}/review/${review_id}`);
@@ -162,8 +168,9 @@ export const EditReview = () => {
     if (delRes?.error) alert(delRes?.error);
     if (delRes?.ok) router.reload();
   }, [delRes, router]);
+
   return (
-    <>
+    <Cont>
       <form onSubmit={handleSubmit(onValid)}>
         <ReviewCont>
           <h1>Edit Review</h1>
@@ -200,12 +207,25 @@ export const EditReview = () => {
             setError={setError}
             register={register}
             setValue={setValue}
+            stars={review?.score!}
             getValues={getValues}
             clearErrors={clearErrors}
           />
         )}
       </form>
       <Errors errors={errors} />
-    </>
+    </Cont>
   );
 };
+const Cont = styled.section`
+  .avatar {
+    .isPreivewTag,
+    .isImageTag,
+    .noImageDiv {
+      border: none;
+      width: 100vw;
+      min-height: 300px;
+      max-height: 700px;
+    }
+  }
+`;

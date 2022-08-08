@@ -1,4 +1,4 @@
-import { Follow } from '../../../Follow';
+import { FollowBtn } from '../../../FollowBtn';
 import styled from '@emotion/styled';
 import useUser from '../../../../../libs/client/useUser';
 
@@ -11,7 +11,7 @@ export const OnAir = ({ userId, boardId }: IOnAir) => {
   return (
     <Cont>
       {isLoggedIn && loggedInUser?.id !== userId && (
-        <Follow userId={userId} boardId={boardId} />
+        <FollowBtn userId={userId} boardId={boardId} />
       )}
     </Cont>
   );

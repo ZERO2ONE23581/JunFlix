@@ -12,17 +12,15 @@ export const FindLink = () => {
         <a>비밀번호 찾기</a>
       </Link>
       <span>|</span>
-      <Link href="/user/join">
+      <Link href="/join">
         <a>회원가입</a>
       </Link>
     </Cont>
   );
 };
 const Cont = styled.article`
-  padding: 5px;
   display: flex;
-  margin-top: 10px;
-  border-radius: 5px;
+  margin-top: 15px;
   align-items: center;
   justify-content: space-around;
   a {

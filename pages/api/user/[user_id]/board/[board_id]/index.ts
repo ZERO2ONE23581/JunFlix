@@ -43,9 +43,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.json({ ok: false, error: 'INVALID USER!' });
   //
   if (user) {
-    const isFollowing = await client.following.findFirst({
-      where: { UserID: user.id, BoardID: board.id },
-    });
+    const isFollowing = Boolean(
+      await client.following.findFirst({
+        where: { UserID: user.id, BoardID: board.id },
+      })
+    );
     return res.json({ ok: true, board, isFollowing });
   }
   //

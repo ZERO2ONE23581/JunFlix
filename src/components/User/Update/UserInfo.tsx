@@ -4,15 +4,15 @@ import { useRouter } from 'next/router';
 import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { InputWrap } from '../../Tools/Input';
-import { MutationRes } from '../../../types/mutation';
-import { Form } from '../../../../styles/global';
 import useMutation from '../../../libs/client/useMutation';
 import { SelectWrap } from '../../Tools/Input/Select';
 import useUser from '../../../libs/client/useUser';
-import { Heading } from '../Create/Heading';
 import { IUserForm } from '../../../types/user';
-import { Box } from './UserId';
 import { Errors } from '../../Tools/Errors';
+import { MutationRes } from '../../../types/global';
+import { Box } from '../../../../styles/global';
+import { Title } from '../Create/Title';
+import { UserBox } from './UserId';
 
 export const UserInfo = () => {
   const router = useRouter();
@@ -56,78 +56,82 @@ export const UserInfo = () => {
   }, [data, router]);
 
   return (
-    <>
+    <form onSubmit={handleSubmit(onValid)}>
       <Cont>
-        <Heading type="edit-userInfo" h1="Info (회원정보)" />
-        <Form onSubmit={handleSubmit(onValid)}>
+        <Title type="edit-user-info" eng="User Info" />
+        <InputWrap
+          id="username"
+          type="text"
+          label="Username"
+          watch={watch('username')}
+          register={register('username', {
+            maxLength: {
+              value: 10,
+              message: '유저의 이름은 10자를 초과할수 없습니다.',
+            },
+          })}
+        />
+        <InputWrap
+          id="email"
+          type="email"
+          label="Email"
+          watch={watch('email')}
+          register={register('email', {
+            required: '이메일을 입력해주세요.',
+            pattern: {
+              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              message: '이메일 형식이 올바르지 않습니다.',
+            },
+          })}
+        />
+        <Flex>
           <InputWrap
-            id="username"
+            id="name"
             type="text"
-            label="Username"
-            watch={watch('username')}
-            register={register('username', {
+            label="Name"
+            watch={watch('name')}
+            register={register('name', {
               maxLength: {
                 value: 10,
-                message: '유저의 이름은 10자를 초과할수 없습니다.',
+                message: '이름은 10자를 초과할수 없습니다.',
               },
             })}
           />
           <InputWrap
-            id="email"
-            type="email"
-            label="Email"
-            watch={watch('email')}
-            register={register('email', {
-              required: '이메일을 입력해주세요.',
-              pattern: {
-                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                message: '이메일 형식이 올바르지 않습니다.',
-              },
-            })}
+            id="birth"
+            type="date"
+            label="Birth"
+            watch={watch('birth')}
+            register={register('birth')}
           />
-          <div className="flex">
-            <InputWrap
-              id="name"
-              type="text"
-              label="Name"
-              watch={watch('name')}
-              register={register('name', {
-                maxLength: {
-                  value: 10,
-                  message: '이름은 10자를 초과할수 없습니다.',
-                },
-              })}
-            />
-            <InputWrap
-              id="birth"
-              type="date"
-              label="Birth"
-              watch={watch('birth')}
-              register={register('birth')}
-            />
-          </div>
-          <div className="flex">
-            <SelectWrap
-              id="gender"
-              watch={watch('gender')!}
-              register={register('gender')}
-            />
-            <InputWrap
-              id="location"
-              type="text"
-              label="Location"
-              watch={watch('location')}
-              register={register('location')}
-            />
-          </div>
-          <Btn name="유저정보 수정" type="submit" loading={loading} />
-        </Form>
+        </Flex>
+        <Flex>
+          <SelectWrap
+            id="gender"
+            watch={watch('gender')!}
+            register={register('gender')}
+          />
+          <InputWrap
+            id="location"
+            type="text"
+            label="Location"
+            watch={watch('location')}
+            register={register('location')}
+          />
+        </Flex>
+        <Btn name="유저정보 수정" type="submit" loading={loading} />
       </Cont>
       <Errors errors={errors} />
-    </>
+    </form>
   );
 };
-const Cont = styled(Box)`
-  width: 400px;
-  max-width: 400px;
+const Cont = styled(UserBox)`
+  gap: 20px;
+  width: 440px;
+  height: 440px;
+`;
+const Flex = styled.div`
+  gap: 15px;
+  display: flex;
+  align-items: center;
 `;

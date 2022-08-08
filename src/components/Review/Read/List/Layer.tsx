@@ -40,10 +40,10 @@ export const ListWrap = styled.ul`
     font-size: 1rem;
   }
   .title {
-    width: 15%;
+    width: 16%;
   }
   .author {
-    width: 12%;
+    width: 11%;
   }
   .movie {
     width: 15%;

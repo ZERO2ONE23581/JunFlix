@@ -5,10 +5,10 @@ import { LikesList } from './Likes';
 import { PostList } from '../../../../Post/Read/List';
 import { ReviewList } from '../../../../Review/Read/List';
 import { IBoardWithAttrs } from '../../../../../types/board';
-import { ReviewWithUser } from '../../../../../types/review';
-import { LikesWithPost, LikesWithReview } from '../../../../../types/likes';
-import { PostModel } from '../../../../../types/post';
+import { LikesWithReview, ReviewWithUser } from '../../../../../types/review';
+import { LikesWithPost, PostModel } from '../../../../../types/post';
 import { BoardList } from '../../../../Board/Read/List';
+import styled from '@emotion/styled';
 
 export interface IGet {
   ok: boolean;
@@ -30,14 +30,19 @@ export const MyList = () => {
   const { data } = useSWR<IGet>(GetAPI(type));
   const SelectType = (type: string) => setType(type);
   return (
-    <>
+    <Cont>
       <BtnWrap type={type} SelectType={SelectType} />
-      {type === 'board' && (
-        <BoardList isMyPage boards={data?.boards!} size={4} />
-      )}
-      {type === 'post' && <PostList isMyPage posts={data?.posts!} size={4} />}
-      {type === 'review' && <ReviewList isMyPage reviews={data?.reviews!} />}
+      {type === 'board' && <BoardList boards={data?.boards!} size={4} />}
+      {type === 'post' && <PostList from={8} posts={data?.posts!} size={4} />}
+      {type === 'review' && <ReviewList reviews={data?.reviews!} />}
       {type === 'likes' && <LikesList />}
-    </>
+    </Cont>
   );
 };
+const Cont = styled.article`
+  .post-list {
+    .post {
+      min-height: 310px;
+    }
+  }
+`;

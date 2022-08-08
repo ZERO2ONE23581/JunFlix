@@ -2,15 +2,15 @@ import { useEffect } from 'react';
 import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { InputWrap } from '../../Tools/Input';
-import { MutationRes } from '../../../types/mutation';
 import useMutation from '../../../libs/client/useMutation';
-import { Form } from '../../../../styles/global';
-import { Heading } from '../Create/Heading';
 import useUser from '../../../libs/client/useUser';
 import { IUserForm } from '../../../types/user';
 import styled from '@emotion/styled';
-import { Box } from './UserId';
 import { Errors } from '../../Tools/Errors';
+import { Title } from '../Create/Title';
+import { Box } from '../../../../styles/global';
+import { MutationRes } from '../../../types/global';
+import { UserBox } from './UserId';
 
 export const Password = () => {
   const { loggedInUser } = useUser();
@@ -43,9 +43,9 @@ export const Password = () => {
   }, [data]);
   return (
     <>
-      <Cont>
-        <Heading type="edit-password" h1="Password (비밀번호)" />
-        <Form onSubmit={handleSubmit(onValid)}>
+      <form onSubmit={handleSubmit(onValid)}>
+        <Cont>
+          <Title type="edit-password" eng="Password" />
           <InputWrap
             watch={watch('password')}
             id="password"
@@ -83,30 +83,24 @@ export const Password = () => {
               watch={watch('confirmPassword')}
               id="confirmPassword"
               type="password"
-              label="Confirm"
+              label="Confirm Password"
               register={register('confirmPassword', {
                 required: '새로운 비밀번호를 재입력해주세요.',
               })}
             />
-            <Btn name="Edit" type="submit" loading={loading} />
           </Flex>
-        </Form>
-      </Cont>
-      <Errors errors={errors} />
+          <Btn name="Edit" type="submit" loading={loading} />
+        </Cont>
+        <Errors errors={errors} />
+      </form>
     </>
   );
 };
-const Cont = styled(Box)`
-  width: 440px;
-  max-width: 440px;
-  min-height: 100px;
+const Cont = styled(UserBox)`
+  width: 420px;
 `;
 const Flex = styled.div`
   gap: 15px;
   display: flex;
   align-items: center;
-  button {
-    width: 100px;
-    height: 50px;
-  }
 `;

@@ -10,11 +10,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       title: true,
       content: true,
       avatar: true,
-      follow: true,
       UserID: true,
       BoardID: true,
       user: { select: { username: true } },
-      board: { select: { title: true, genre: true } },
+      board: { select: { title: true, genre: true, UserID: true } },
     },
     orderBy: {
       id: 'desc',

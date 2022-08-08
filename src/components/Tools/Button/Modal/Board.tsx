@@ -1,14 +1,15 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../Button';
+import { Btn } from '..';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { DimBackground, Modal } from '../../../../../styles/global';
-import { ConfirmModal } from '..';
+import { ConfirmModal } from '../../Modal';
 import { useRouter } from 'next/router';
 import useUser from '../../../../libs/client/useUser';
 import useMutation from '../../../../libs/client/useMutation';
 import { useForm } from 'react-hook-form';
 import { IUserForm } from '../../../../types/user';
 import { MutationRes } from '../../../../types/global';
+import { ModalBtnCont } from './Post';
 
 interface IEditBtns {
   modal: boolean;
@@ -61,29 +62,29 @@ export const ModalBtn = ({
     <>
       {modal && (
         <>
-          <Cont>
+          <ModalBtnCont>
             <Btn
               svg="edit"
-              size="2rem"
               type="button"
-              name="보드 수정하기"
+              size="1.7rem"
+              name="보드 수정 (Edit Board)"
               onClick={() => handleClick('edit-board')}
             />
             <Btn
-              size="2rem"
               type="button"
+              size="1.7rem"
               svg="landscape"
-              name="보드 배경수정하기"
+              name="배경 수정 (Edit Background)"
               onClick={() => handleClick('edit-background')}
             />
             <Btn
               svg="trash"
-              size="1.6rem"
+              size="1.7rem"
               type="button"
-              name="보드 삭제하기"
+              name="보드 삭제 (Delete Board)"
               onClick={() => handleClick('delete-board')}
             />
-          </Cont>
+          </ModalBtnCont>
           <DimBackground zIndex={100} onClick={() => setModal(false)} />
         </>
       )}
@@ -110,22 +111,3 @@ export const ModalBtn = ({
     </>
   );
 };
-const Cont = styled(Modal)`
-  z-index: 201;
-  gap: 0;
-  width: 60vw;
-  border: none;
-  overflow: hidden;
-  border-radius: 5px;
-  background-color: transparent;
-  button {
-    width: 100%;
-    padding: 6px;
-    font-size: 1.3rem;
-    border-radius: 0%;
-    border-bottom: 1px solid #2d3436;
-    :nth-of-type(3) {
-      border: none;
-    }
-  }
-`;

@@ -18,6 +18,8 @@ export const Move = ({ type, closeModal }: IMoveToCreate) => {
     if (type === 'board')
       return router.push(`/user/${loggedInUser?.id}/board/create`);
     if (type === 'post') return router.push(`/my/boards`);
+    if (type === 'read-review')
+      return router.push(`/user/${loggedInUser?.id}/review/create`);
   };
   return (
     <>
@@ -28,6 +30,12 @@ export const Move = ({ type, closeModal }: IMoveToCreate) => {
           svgType="close"
           onClick={() => closeModal(false)}
         />
+        {type === 'read-review' && (
+          <>
+            <span>리뷰 페이지로 이동</span>
+            <span>Move to create review</span>
+          </>
+        )}
         {type === 'board' && (
           <>
             <span>보드작성 페이지로 이동</span>

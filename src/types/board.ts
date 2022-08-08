@@ -3,6 +3,8 @@ import { Board, Following, Post, User } from '@prisma/client';
 
 export interface IBoard {
   board: IBoardWithAttrs;
+  isFollowing: boolean;
+  setText: Dispatch<SetStateAction<boolean>>;
   setPreview: Dispatch<SetStateAction<string>>;
 }
 export interface IBoardForm {
@@ -15,6 +17,7 @@ export interface IBoardForm {
 export interface IGetBoard {
   ok?: boolean;
   error?: string;
+  isFollowing?: boolean;
   board?: IBoardWithAttrs;
 }
 export interface IBoardWithAttrs extends Board {

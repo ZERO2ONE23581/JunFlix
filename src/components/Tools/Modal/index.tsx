@@ -15,12 +15,12 @@ interface IConfirmModal extends IUseform {
   loading?: boolean;
   clickDelPost?: any;
   clickDelReview?: any;
+  boardUrl: string;
   setEdit?: Dispatch<SetStateAction<boolean>>;
   closePost?: Dispatch<SetStateAction<boolean>>;
   setConfirm?: Dispatch<SetStateAction<boolean>>;
   closeModal?: Dispatch<SetStateAction<boolean>> | null;
 }
-
 export const ConfirmModal = ({
   type,
   errors,
@@ -33,6 +33,7 @@ export const ConfirmModal = ({
   clickDelPost,
   clickDelReview,
   register,
+  boardUrl,
 }: IConfirmModal) => {
   const isClose = !Boolean(
     type === 'find-user-id' || type === 'find-user-password'
@@ -40,7 +41,7 @@ export const ConfirmModal = ({
   return (
     <>
       {!loading && (
-        <Cont type={type}>
+        <Cont type={type} className="confirm-modal">
           {isClose && (
             <IconBtn
               size="2rem"
@@ -52,6 +53,7 @@ export const ConfirmModal = ({
           {Texts(type, USERID!)}
           <BtnWrap>
             <Btns
+              boardUrl={boardUrl}
               type={type}
               errors={errors}
               setEdit={setEdit}
@@ -114,10 +116,22 @@ const Cont = styled(SmallModal)<{ type: string }>`
       font-size: 1rem;
     }
   }
+  .follow {
+    margin-top: 10px;
+    width: 200px;
+  }
 `;
 const Texts = (type: string, USERID: string) => {
   return (
     <>
+      {type === 'lock' && (
+        <>
+          <span>포스트를 보려면 해당포스트의 보드를 팔로우 하세요.</span>
+          <span>보드로 이동하겠습니까?</span>
+          <span>Please follow the board to see the POST.</span>
+          <span>Would you like to move to the BOARD?</span>
+        </>
+      )}
       {(type === 'confirm-delete-board' || type === 'delete-user') && (
         <>
           <span>삭제를 위해 회원님의 아이디를 입력해주세요.</span>
@@ -227,7 +241,6 @@ const Texts = (type: string, USERID: string) => {
 };
 const Btns = ({
   type,
-  errors,
   setEdit,
   register,
   closePost,
@@ -235,10 +248,17 @@ const Btns = ({
   closeModal,
   clickDelPost,
   clickDelReview,
+  boardUrl,
 }: IConfirmModal) => {
   const router = useRouter();
   return (
     <>
+      {type === 'lock' && (
+        <>
+          <Btn name="YES" type="button" onClick={() => router.push(boardUrl)} />
+          <Btn name="NO" type="button" onClick={() => closeModal!(false)} />
+        </>
+      )}
       {(type === 'find-user-id' || type === 'find-user-password') && (
         <>
           <Btn
@@ -265,17 +285,7 @@ const Btns = ({
               } 삭제하려면 아이디를 입력해주세요.`,
             })}
           />
-          <Btn
-            name={
-              type === 'delete-user'
-                ? '계정삭제 (DELETE ACCOUNT)'
-                : type === 'confirm-delete-board'
-                ? '보드삭제 (DELETE BOARD)'
-                : ''
-            }
-            type="submit"
-            svg="trash"
-          />
+          <Btn name="DELETE" type="submit" />
         </div>
       )}
       {type === 'delete-board' && (

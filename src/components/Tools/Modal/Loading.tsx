@@ -26,6 +26,42 @@ const Cont = styled(SmallModal)<{ zIndex?: number }>`
 const Texts = (type: string) => {
   return (
     <>
+      {type === 'loading' && (
+        <>
+          <span>로딩 중...</span>
+          <span>Sign in...</span>
+        </>
+      )}
+      {type === 'login' && (
+        <>
+          <span>로그인중...</span>
+          <span>Sign in...</span>
+        </>
+      )}
+      {type === 'create-password' && (
+        <>
+          <span>새 비밀번호 생성중...</span>
+          <span>Creating new password...</span>
+        </>
+      )}
+      {type === 'verify-token' && (
+        <>
+          <span>토큰 확인중...</span>
+          <span>Confirming token...</span>
+        </>
+      )}
+      {type === 'verify-email' && (
+        <>
+          <span>이메일 확인중...</span>
+          <span>Verifying Email...</span>
+        </>
+      )}
+      {type === 'verify-id' && (
+        <>
+          <span>아이디 확인중...</span>
+          <span>Verifying ID...</span>
+        </>
+      )}
       {type === 'update' && (
         <>
           <span>업데이트중...</span>
@@ -50,10 +86,10 @@ const Texts = (type: string) => {
           <span>Deleting Account...</span>
         </>
       )}
-      {type === 'update-board' && (
+      {(type === 'update-board' || type === 'update-post') && (
         <>
-          <span>보드 업데이트...</span>
-          <span>Updating BOARD...</span>
+          <span>업데이트...</span>
+          <span>Updating...</span>
         </>
       )}
       {type === 'update-review' && (

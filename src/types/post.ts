@@ -9,6 +9,7 @@ export interface IPostComment {
 export interface IPostList {
   size: number;
   from: number;
+  isBlur?: boolean;
   posts: PostModel[];
 }
 export interface LikesWithPost extends Likes {

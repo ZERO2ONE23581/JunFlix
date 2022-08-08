@@ -7,9 +7,10 @@ import useMutation from '../../../libs/client/useMutation';
 import useUser from '../../../libs/client/useUser';
 import { LoadingModal } from '../../Tools/Modal/Loading';
 import { IUserForm } from '../../../types/user';
-import { Heading } from '../../User/Create/Heading';
-import { Box } from '../../User/Update/UserId';
 import { MutationRes } from '../../../types/global';
+import { Title } from '../../User/Create/Title';
+import { Box } from '../../../../styles/global';
+import { UserBox } from '../../User/Update/UserId';
 
 export const EditUserAvatar = () => {
   const { loggedInUser } = useUser();
@@ -59,7 +60,7 @@ export const EditUserAvatar = () => {
     <>
       <form onSubmit={handleSubmit(onValid)}>
         <Cont>
-          <Heading type="edit-picture" h1="Profile Pic" />
+          <Title type="edit-user-avatar" eng="Profile Picture" />
           <Label>
             <ProfileAvatar
               size="8rem"
@@ -84,11 +85,4 @@ export const EditUserAvatar = () => {
     </>
   );
 };
-const Cont = styled(Box)`
-  width: 250px;
-  max-width: 250px;
-  min-height: 100px;
-  .submit {
-    width: 100%;
-  }
-`;
+const Cont = styled(UserBox)``;

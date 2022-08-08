@@ -98,6 +98,7 @@ const Cont = styled(Modal)<{ isAvatar: boolean }>`
       height: 90vh;
       min-width: 680px;
       min-height: 600px;
+      border-right: ${(p) => p.theme.border.thick};
     }
   }
   .read-post-info {

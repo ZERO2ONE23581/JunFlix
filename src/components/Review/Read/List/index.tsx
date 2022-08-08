@@ -17,13 +17,13 @@ export const ReviewList = ({ reviews, isMyPage }: IReviewList) => {
   };
   const isReview = Boolean(reviews?.length > 0);
   const ReadTitle = (title: string) => {
-    if (Boolean(title.length >= 10))
-      return useCapLetter(title.slice(0, 10) + '...');
-    if (Boolean(title.length < 10)) return useCapLetter(title);
+    const num = 15;
+    if (Boolean(title.length >= num))
+      return useCapLetter(title.slice(0, num) + '...');
+    if (Boolean(title.length < num)) return useCapLetter(title);
   };
   return (
     <>
-      {!isMyPage && <Fixed />}
       {isReview && (
         <Cont className="review-list">
           <Layer />
@@ -117,7 +117,7 @@ const Lists = styled(ListWrap)<{ isFirst: boolean }>`
   }
   .title,
   .movie {
-    padding-left: 15px;
+    padding-left: 10px;
     justify-content: flex-start;
   }
   .title,

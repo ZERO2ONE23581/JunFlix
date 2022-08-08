@@ -6,6 +6,7 @@ import { Title } from '../../src/components/Tools/Title';
 import { IGetReviews } from '../../src/types/review';
 import { HeadTitle } from '../../src/components/Layout/Head';
 import { ReviewList } from '../../src/components/Review/Read/List';
+import { Fixed } from '../../src/components/Tools/Button/Fixed';
 
 const AllReviews: NextPage = () => {
   const { data } = useSWR<IGetReviews>(`/api/user/all/reviews`);
@@ -13,6 +14,7 @@ const AllReviews: NextPage = () => {
     <>
       <HeadTitle title="All Reviews" />
       <Cont>
+        <Fixed type="read-review" />
         <Title kind="Reviews" svg={{ type: 'clapper', size: '2rem' }} />
         {data?.reviews && <ReviewList reviews={data?.reviews} />}
         {!data?.reviews && (

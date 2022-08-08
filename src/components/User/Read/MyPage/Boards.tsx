@@ -1,8 +1,8 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { ProfileAvatar } from '../../../../Avatar/Profile';
-import { IGetFollowInfo } from '../../../../../types/board';
+import { ProfileAvatar } from '../../../Avatar/Profile';
+import { IGetFollowInfo } from '../../../../types/board';
 
 interface IBoardLink {
   USERID: number;

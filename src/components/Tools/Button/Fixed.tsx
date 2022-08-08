@@ -21,7 +21,7 @@ export const Fixed = ({ type }: IFixed) => {
           svgType="question"
           onClick={() => setAnswer(true)}
         />
-        {isLoggedIn && (
+        {isLoggedIn && type !== 'update-review' && (
           <IconBtn
             size="2.5rem"
             type="button"

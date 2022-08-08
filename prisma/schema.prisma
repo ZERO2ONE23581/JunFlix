@@ -70,7 +70,6 @@ model Post {
   title        String     
   content      String?     @db.LongText
   avatar       String?
-  follow       String?
   user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID       Int   
   board        Board        @relation(fields: [BoardID], references: [id], onDelete: Cascade)

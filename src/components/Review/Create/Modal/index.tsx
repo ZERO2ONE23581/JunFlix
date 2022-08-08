@@ -9,21 +9,24 @@ import { IUseform } from '../../../../types/global';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { DimBackground, SmallModal } from '../../../../../styles/global';
 
-interface ISave extends IUseform {
+interface IReviewModal extends IUseform {
   isEdit?: boolean;
+  stars: number;
   loading: boolean | null;
   setSave: Dispatch<SetStateAction<boolean>>;
 }
 export const ReviewModal = ({
   isEdit,
+  stars,
   watch,
   setSave,
   loading,
   setError,
+  getValues,
   register,
   setValue,
   clearErrors,
-}: ISave) => {
+}: IReviewModal) => {
   const [score, setScore] = useState(false);
   const [upload, setUpload] = useState(false);
   const [recommend, setRecommend] = useState(false);
@@ -51,6 +54,7 @@ export const ReviewModal = ({
             )}
             {score && !recommend && (
               <ReviewStars
+                stars={stars}
                 watch={watch}
                 register={register}
                 setScore={setScore}
