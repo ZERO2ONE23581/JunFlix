@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 import { IUseform } from '../../../../types/global';
 import { BtnWrap } from '../../../../../styles/global';
-import reviews from '../../../../../pages/api/user/all/reviews';
 
 interface IScoreModal extends IUseform {
   stars: number;

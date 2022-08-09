@@ -6,12 +6,19 @@ interface IBtnProps {
   name?: string;
   CLASSNAME?: string;
   disabled?: boolean;
+  isUserList?: boolean;
   isClicked?: boolean;
   loading?: boolean | null;
   type: 'button' | 'submit' | 'reset';
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
-  svg?: string;
-  size?: string;
+  svg?: {
+    size?: string;
+    type?: string;
+    location?: {
+      left?: boolean;
+      right?: boolean;
+    };
+  };
 }
 
 export const Btn = ({
@@ -22,26 +29,31 @@ export const Btn = ({
   isClicked,
   CLASSNAME,
   disabled,
+  isUserList,
   svg,
-  size,
 }: IBtnProps) => {
   return (
     <>
-      <Cont
+      <Button
         type={type}
         onClick={onClick}
         disabled={disabled}
         isClicked={isClicked}
         className={CLASSNAME}
+        isUserList={isUserList!}
       >
+        {svg?.location?.left && <Svg type={svg.type!} size={svg.size!} />}
         {loading ? 'Loading...' : name}
-        {svg && <Svg type={svg} size={size!} />}
-      </Cont>
+        {svg?.location?.right && <Svg type={svg.type!} size={svg.size!} />}
+      </Button>
     </>
   );
 };
-export const Cont = styled.button<{ isClicked?: boolean }>`
-  gap: 15px;
+export const Button = styled.button<{
+  isClicked?: boolean;
+  isUserList: boolean;
+}>`
+  gap: 10px;
   border: none;
   padding: 8px;
   display: flex;
@@ -51,9 +63,27 @@ export const Cont = styled.button<{ isClicked?: boolean }>`
   align-items: center;
   justify-content: center;
   color: ${(p) => p.theme.color.bg};
+  font-weight: ${(p) => p.isClicked && 550};
+  color: ${(p) =>
+    p.isUserList
+      ? p.isClicked
+        ? 'white'
+        : p.theme.color.font
+      : p.theme.color.bg};
   background-color: ${(p) =>
-    p.isClicked ? p.theme.color.logo : p.theme.color.font};
-  &:hover {
+    p.isUserList
+      ? p.isClicked
+        ? p.theme.color.logo
+        : p.theme.color.bg
+      : p.theme.color.font};
+  border: 2px solid
+    ${(p) =>
+      p.isUserList
+        ? p.isClicked
+          ? p.theme.color.logo
+          : p.theme.color.font
+        : 'none'};
+  :hover {
     color: white;
     background-color: ${(p) => p.theme.color.logo};
     svg {
@@ -62,8 +92,5 @@ export const Cont = styled.button<{ isClicked?: boolean }>`
   }
   svg {
     fill: ${(p) => p.theme.color.font};
-  }
-  .edit {
-    margin-bottom: 3px;
   }
 `;

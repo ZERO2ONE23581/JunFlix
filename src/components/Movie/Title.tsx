@@ -1,20 +1,22 @@
 import styled from '@emotion/styled';
 import { Svg } from '../Tools/Svg';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 interface IPageTitle {
   type: string;
 }
 export const PageTitle = ({ type }: IPageTitle) => {
+  const router = useRouter();
   const [eng, setEng] = useState('');
   const [kor, setKor] = useState('');
   useEffect(() => {
     if (type) {
-      if (type === 'all-posts') {
+      if (type === 'posts') {
         setEng('All Posts');
         setKor('모든 포스트');
       }
-      if (type === 'all-boards') {
+      if (type === 'boards') {
         setEng('All Boards');
         setKor('모든 보드');
       }
@@ -42,17 +44,23 @@ export const PageTitle = ({ type }: IPageTitle) => {
   }, [setEng, setKor, type]);
 
   const SVG = (type: string) => {
-    if (type === 'all-posts') return 'post';
-    if (type === 'all-boards') return 'board';
-    if (type === 'trending') return 'fire';
     if (type === 'tv') return 'tv';
+    if (type === 'posts') return 'post';
+    if (type === 'boards') return 'board';
+    if (type === 'trending') return 'fire';
     else return 'film';
   };
   return (
     <Cont className={type}>
       <span>{eng}</span>
       <span className="kor">{kor}</span>
-      <Svg type={SVG(type)} size="1.5rem" />
+      <Svg
+        size="1.5rem"
+        type={SVG(type)}
+        onClick={() =>
+          router.push(`/${type === 'trending' ? `movies/${type}` : type}`)
+        }
+      />
     </Cont>
   );
 };
@@ -73,5 +81,6 @@ const Cont = styled.h1`
   }
   svg {
     margin-top: 7px;
+    cursor: pointer;
   }
 `;

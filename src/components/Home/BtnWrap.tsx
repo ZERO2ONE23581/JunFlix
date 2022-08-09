@@ -6,7 +6,7 @@ import { Answer } from '../Tools/Modal/Answer';
 import useUser from '../../libs/client/useUser';
 
 export const BtnWrap = () => {
-  const { isLoggedIn } = useUser();
+  const { isLoggedIn, loggedInUser } = useUser();
   const router = useRouter();
   const [answer, setAnswer] = useState(false);
   return (
@@ -14,28 +14,41 @@ export const BtnWrap = () => {
       <Cont>
         {isLoggedIn && (
           <Btn
-            size="1.6rem"
             type="button"
             name="Dashboard"
-            svg="circle-arrow"
-            onClick={() => router.push('/my/page')}
+            onClick={() =>
+              router.push(
+                `/user/${loggedInUser?.id}/${loggedInUser?.username}/dashboard`
+              )
+            }
+            svg={{
+              size: '1.6rem',
+              type: 'home',
+              location: { right: true },
+            }}
           />
         )}
         {!isLoggedIn && (
           <Btn
             name="Start"
             type="button"
-            size="1.6rem"
-            svg="circle-arrow"
             onClick={() => router.push('/join')}
+            svg={{
+              size: '1.6rem',
+              type: 'circle-arrow',
+              location: { right: true },
+            }}
           />
         )}
         <Btn
-          size="1.6rem"
           type="button"
           name="More Info"
-          svg="exclamation"
           onClick={() => setAnswer(true)}
+          svg={{
+            size: '1.6rem',
+            type: 'exclamation',
+            location: { right: true },
+          }}
         />
       </Cont>
       {answer && <Answer type="home" closeModal={setAnswer} />}
@@ -52,11 +65,10 @@ const Cont = styled.div`
   padding: 10px;
   button {
     width: 160px;
-    height: 45px;
-    font-weight: 500;
-    font-size: 1.3rem;
-    svg {
-      fill: ${(p) => p.theme.color.bg};
-    }
+    padding: 10px;
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: ${(p) => p.theme.color.font};
+    background-color: ${(p) => p.theme.color.bg};
   }
 `;

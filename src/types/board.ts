@@ -4,7 +4,6 @@ import { Board, Following, Post, User } from '@prisma/client';
 export interface IBoard {
   board: IBoardWithAttrs;
   isFollowing: boolean;
-  setText: Dispatch<SetStateAction<boolean>>;
   setPreview: Dispatch<SetStateAction<string>>;
 }
 export interface IBoardForm {

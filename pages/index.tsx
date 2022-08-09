@@ -13,8 +13,8 @@ import { PostList } from '../src/components/Post/Read/List';
 import { IGetAllPosts } from '../src/types/post';
 
 const Home: NextPage = () => {
-  const { data } = useSWR<IGetBoards>(`/api/user/all/boards`);
-  const { data: postData } = useSWR<IGetAllPosts>(`/api/user/all/posts`);
+  const { data } = useSWR<IGetBoards>(`/api/boards`);
+  const { data: postData } = useSWR<IGetAllPosts>(`/api/posts`);
   return (
     <>
       <HeadTitle title="HOME" />
@@ -24,9 +24,9 @@ const Home: NextPage = () => {
         <Movie type="trending" />
       </Main>
       <Item>
-        <PageTitle type="all-boards" />
+        <PageTitle type="boards" />
         <BoardList size={4} boards={data?.boards!} />
-        <PageTitle type="all-posts" />
+        <PageTitle type="posts" />
         <PostList from={10} size={5} posts={postData?.posts!} />
       </Item>
     </>
@@ -45,6 +45,10 @@ const Item = styled(Page)`
   padding-bottom: 100px;
   .all-posts {
     margin-top: 100px;
+  }
+  .board-list,
+  .post-list {
+    margin-bottom: 100px;
   }
   .board-list {
     .board {

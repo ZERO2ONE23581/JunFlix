@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
-import { MutationRes } from '../../../../types/global';
+import { IData } from '../../../../types/global';
 import { IBoardForm } from '../../../../types/board';
 import { Svg } from '../../../Tools/Svg';
 import { ConfirmModal } from '../../../Tools/Modal';
@@ -28,7 +28,7 @@ export const EditBoardAvatarForm = ({
 }: IAvatarForm) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
-  const [edit, { data, loading }] = useMutation<MutationRes>(
+  const [edit, { data, loading }] = useMutation<IData>(
     `/api/user/${user_id}/board/${board_id}/edit/avatar`
   );
   const { watch, register, handleSubmit } = useForm<IBoardForm>();

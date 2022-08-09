@@ -20,7 +20,9 @@ export const LoggedIn = () => {
         <>
           <Modal onClick={() => setOpen(false)}>
             <List>
-              <Link href="/my/page">
+              <Link
+                href={`/user/${loggedInUser?.id}/${loggedInUser?.username}/dashboard`}
+              >
                 <a>
                   <li>
                     <Svg type="home" size="2rem" />
@@ -28,7 +30,9 @@ export const LoggedIn = () => {
                   </li>
                 </a>
               </Link>
-              <Link href="/my/setting">
+              <Link
+                href={`/user/${loggedInUser?.id}/${loggedInUser?.username}/setting`}
+              >
                 <a>
                   <li>
                     <Svg type="setting" size="2rem" />

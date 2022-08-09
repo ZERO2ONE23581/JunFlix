@@ -9,7 +9,7 @@ import styled from '@emotion/styled';
 import { IUserForm } from '../../../types/user';
 import { Answer } from '../../Tools/Modal/Answer';
 import { Errors } from '../../Tools/Errors';
-import { MutationRes } from '../../../types/global';
+import { IData } from '../../../types/global';
 import { Title } from '../../User/Create/Title';
 import { LoadingModal } from '../../Tools/Modal/Loading';
 
@@ -18,7 +18,7 @@ interface ICreateAvatar {
 }
 export const CreateUserAvatar = ({ createdId }: ICreateAvatar) => {
   const router = useRouter();
-  const [createAvatar, { loading, data }] = useMutation<MutationRes>(
+  const [createAvatar, { loading, data }] = useMutation<IData>(
     '/api/user/create/avatar'
   );
   const {

@@ -11,18 +11,20 @@ export const ProfileAvatar = ({ size, avatar, preview, onClick }: IProfile) => {
   const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
   const variant = 'public';
   return (
-    <Cont
-      size={size!}
-      onClick={onClick}
-      className="profile-avatar"
-      isAvatar={Boolean(avatar)}
-    >
-      {preview && <img src={preview} alt="프로필 이미지" />}
-      {avatar && !preview && (
-        <img src={`${`${base}/${avatar}/${variant}`}`} alt="프로필 이미지" />
-      )}
-      {!avatar && !preview && <Svg size={size!} type="profile" />}
-    </Cont>
+    <>
+      <Cont
+        size={size!}
+        onClick={onClick}
+        className="profile-avatar"
+        isAvatar={Boolean(avatar)}
+      >
+        {preview && <img src={preview} alt="프로필 이미지" />}
+        {avatar && !preview && (
+          <img src={`${`${base}/${avatar}/${variant}`}`} alt="프로필 이미지" />
+        )}
+        {!avatar && !preview && <Svg size={size!} type="profile" />}
+      </Cont>
+    </>
   );
 };
 const Cont = styled.div<{ size: string; isAvatar: boolean }>`

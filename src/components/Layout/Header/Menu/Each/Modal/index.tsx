@@ -14,8 +14,11 @@ export const Modal = ({ type, text, setSelect }: IModal) => {
   const { isLoggedIn, loggedInUser } = useUser();
   const onClick = (Type: string) => {
     setSelect('');
-    if (Type === 'all') router.push(`/all/${type}s`);
-    if (Type === 'my') router.push(`/my/${type}s`);
+    if (Type === 'all') router.push(`/${type}s`);
+    if (Type === 'my')
+      router.push(
+        `/user/${loggedInUser?.id}/${loggedInUser?.username}/${type}s`
+      );
     if (Type === 'create' && type === 'post') {
       if (!isLoggedIn) alert('로그인 해주세요.');
       else alert('포스트를 생성할 보드를 선택해주세요.');

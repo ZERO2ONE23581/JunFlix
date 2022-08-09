@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Btn } from '../../Tools/Button';
 import { InputWrap } from '../../Tools/Input';
 import { useForm } from 'react-hook-form';
-import { MutationRes } from '../../../types/global';
+import { IData } from '../../../types/global';
 import { LoadingModal } from '../../Tools/Modal/Loading';
 import { IBoardForm } from '../../../types/board';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
@@ -36,7 +36,7 @@ export const EditInfo = ({ title, genre, intro, setEdit }: IEditInfo) => {
     if (genre) setValue('genre', genre);
     if (intro) setValue('intro', intro);
   }, [title, genre, intro, setValue]);
-  const [EditBoard, { data, loading }] = useMutation<MutationRes>(
+  const [EditBoard, { data, loading }] = useMutation<IData>(
     `/api/user/${user_id}/board/${board_id}/edit`
   );
   const [maxTitle] = useState(30);

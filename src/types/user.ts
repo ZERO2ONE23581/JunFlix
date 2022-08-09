@@ -1,3 +1,9 @@
+import { User } from '@prisma/client';
+import { IData } from './global';
+
+export interface IGetUser extends IData {
+  user: User;
+}
 export interface IUserForm {
   userId?: string;
   password?: string;
@@ -18,19 +24,16 @@ export interface IJoinForm {
   username?: string;
   email?: string;
 }
-export interface IJoinFormRes extends MutationRes {
+export interface IJoinFormRes extends IData {
   createdID: number;
 }
 export interface IUserIdCheckForm {
   userId: string;
 }
 
-export interface IUserIdCheckRes extends MutationRes {
+export interface IUserIdCheckRes extends IData {
   userId?: string;
 }
-import { User } from '@prisma/client';
-import { MutationRes } from './global';
-
 export interface ILoginForm {
   userId?: string;
   password?: string;

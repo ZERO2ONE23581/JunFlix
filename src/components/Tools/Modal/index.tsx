@@ -15,7 +15,7 @@ interface IConfirmModal extends IUseform {
   loading?: boolean;
   clickDelPost?: any;
   clickDelReview?: any;
-  boardUrl: string;
+  boardUrl?: string;
   setEdit?: Dispatch<SetStateAction<boolean>>;
   closePost?: Dispatch<SetStateAction<boolean>>;
   setConfirm?: Dispatch<SetStateAction<boolean>>;
@@ -255,7 +255,11 @@ const Btns = ({
     <>
       {type === 'lock' && (
         <>
-          <Btn name="YES" type="button" onClick={() => router.push(boardUrl)} />
+          <Btn
+            name="YES"
+            type="button"
+            onClick={() => router.push(boardUrl!)}
+          />
           <Btn name="NO" type="button" onClick={() => closeModal!(false)} />
         </>
       )}

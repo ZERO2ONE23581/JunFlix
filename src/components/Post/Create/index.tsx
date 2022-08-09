@@ -10,7 +10,7 @@ import useMutation from '../../../libs/client/useMutation';
 import { Modal, DimBackground } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ConfirmModal } from '../../Tools/Modal';
-import { MutationRes } from '../../../types/global';
+import { IData } from '../../../types/global';
 
 interface ICreatePost {
   setCreate: Dispatch<SetStateAction<boolean>>;
@@ -26,7 +26,7 @@ export const CreatePost = ({ setCreate }: ICreatePost) => {
   } = useForm<IPostForm>({ mode: 'onBlur' });
   const router = useRouter();
   const { user_id, board_id } = router.query;
-  const [createPost, { data, loading }] = useMutation<MutationRes>(
+  const [createPost, { data, loading }] = useMutation<IData>(
     `/api/user/${user_id}/board/${board_id}/post/create`
   );
   const [next, setNext] = useState(false);

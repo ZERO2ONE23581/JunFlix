@@ -8,7 +8,7 @@ import useMutation from '../../../libs/client/useMutation';
 import { Box } from '../../../../styles/global';
 import useUser from '../../../libs/client/useUser';
 import { IUserForm } from '../../../types/user';
-import { MutationRes } from '../../../types/global';
+import { IData } from '../../../types/global';
 import { Title } from '../Create/Title';
 import { LoadingModal } from '../../Tools/Modal/Loading';
 import styled from '@emotion/styled';
@@ -16,7 +16,7 @@ import styled from '@emotion/styled';
 export const UserId = () => {
   const router = useRouter();
   const { loggedInUser } = useUser();
-  const [editUserId, { loading, data }] = useMutation<MutationRes>(
+  const [editUserId, { loading, data }] = useMutation<IData>(
     `/api/user/${loggedInUser?.id}/edit/user_id`
   );
   const {

@@ -6,11 +6,10 @@ import { IPostList } from '../../../../types/post';
 import { Grid } from '../../../../../styles/global';
 
 export const PostList = ({ size, from, posts, isBlur }: IPostList) => {
-  const max = from;
-  const [length, setLength] = useState(max);
+  const [length, setLength] = useState(from);
   useEffect(() => {
-    if (isBlur) setLength(max);
-  }, [isBlur, setLength, max]);
+    if (isBlur) setLength(from);
+  }, [isBlur, setLength, from]);
 
   return (
     <>
@@ -18,18 +17,16 @@ export const PostList = ({ size, from, posts, isBlur }: IPostList) => {
         {posts?.slice(0, length).map((post) => (
           <Item post={post} key={post.id} />
         ))}
+        {!isBlur && (
+          <Fold
+            from={from}
+            length={length}
+            setLength={setLength}
+            postLength={posts?.length}
+          />
+        )}
       </Cont>
-      {!isBlur && (
-        <Fold
-          max={max}
-          length={length}
-          setLength={setLength}
-          postLength={posts?.length}
-        />
-      )}
     </>
   );
 };
-const Cont = styled(Grid)`
-  margin-top: 30px;
-`;
+const Cont = styled(Grid)``;

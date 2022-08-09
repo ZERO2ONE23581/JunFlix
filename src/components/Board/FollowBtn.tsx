@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { Dispatch, SetStateAction, useState } from 'react';
 import styled from '@emotion/styled';
 import { Btn } from '../Tools/Button';
-import { MutationRes } from '../../types/global';
+import { IData } from '../../types/global';
 import { FollowModal } from '../Tools/Modal/Follow';
 import { IGetFollowingBoard } from '../../types/board';
 import useMutation from '../../libs/client/useMutation';
@@ -10,10 +10,9 @@ import useMutation from '../../libs/client/useMutation';
 interface IFollowBoard {
   userId: number;
   boardId: number;
-  setText: Dispatch<SetStateAction<boolean>>;
 }
-export const FollowBtn = ({ userId, boardId, setText }: IFollowBoard) => {
-  const [FollowBoard] = useMutation<MutationRes>(
+export const FollowBtn = ({ userId, boardId }: IFollowBoard) => {
+  const [FollowBoard] = useMutation<IData>(
     `/api/user/${userId}/board/${boardId}/follow/create`
   );
   const { data, mutate } = useSWR<IGetFollowingBoard>(
@@ -23,7 +22,6 @@ export const FollowBtn = ({ userId, boardId, setText }: IFollowBoard) => {
   const [unfollow, setUnFollow] = useState(false);
 
   const onClick = () => {
-    setText(false);
     setFollow(false);
     setUnFollow(false);
     if (!data) return;
@@ -44,14 +42,13 @@ export const FollowBtn = ({ userId, boardId, setText }: IFollowBoard) => {
       <Cont className="follow-board" isFollow={data?.isFollowing!}>
         {data?.isFollowing && (
           <Btn
-            svg="check"
             type="button"
             name="ON AIR"
             CLASSNAME="follow-btn"
             onClick={() => {
-              setText(true);
               setUnFollow(true);
             }}
+            svg={{ type: 'check', size: '1.2rem', location: { right: true } }}
           />
         )}
         {!data?.isFollowing && (
@@ -60,7 +57,6 @@ export const FollowBtn = ({ userId, boardId, setText }: IFollowBoard) => {
             name="Follow"
             CLASSNAME="follow-btn"
             onClick={() => {
-              setText(true);
               setFollow(true);
             }}
           />

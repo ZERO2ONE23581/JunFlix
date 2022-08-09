@@ -1,36 +1,31 @@
 import styled from '@emotion/styled';
+import { Svg } from '../../../Tools/Svg';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../../Tools/Button/Icon';
 
 interface IFold {
-  max: number;
+  from: number;
   length: number;
   postLength: number;
   setLength: Dispatch<SetStateAction<number>>;
 }
-export const Fold = ({ max, postLength, setLength, length }: IFold) => {
-  const noFold = Boolean(postLength < length);
-  const unFold = Boolean(length !== postLength);
+export const Fold = ({ from, postLength, setLength, length }: IFold) => {
+  const noFold = Boolean(from >= postLength);
+  const unFold = Boolean(length < postLength);
   const Fold = Boolean(length === postLength);
+  console.log(unFold);
   return (
     <>
       {!noFold && (
-        <Cont className="post-fold">
+        <Cont>
           {unFold && (
-            <IconBtn
-              size="2.5rem"
-              type="button"
-              svgType="ellipsis"
+            <Svg
+              size="2rem"
+              type="ellipsis"
               onClick={() => setLength(postLength)}
             />
           )}
           {Fold && (
-            <IconBtn
-              size="2rem"
-              type="button"
-              svgType="caret"
-              onClick={() => setLength(max)}
-            />
+            <Svg size="2rem" type="caret" onClick={() => setLength(from)} />
           )}
         </Cont>
       )}
@@ -38,8 +33,14 @@ export const Fold = ({ max, postLength, setLength, length }: IFold) => {
   );
 };
 const Cont = styled.div`
+  position: relative;
+  padding: 0 10px;
+  /* border: 1px solid red; */
   display: flex;
-  margin-top: 20px;
-  align-content: center;
+  align-items: flex-end;
   justify-content: end;
+  svg {
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
 `;

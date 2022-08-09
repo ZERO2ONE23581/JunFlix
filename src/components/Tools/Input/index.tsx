@@ -25,7 +25,11 @@ export const InputWrap = ({
   const [isFocus, setIsFocus] = useState(false);
   return (
     <Cont className={id} isFocus={isFocus || Boolean(watch)}>
-      {label && <label htmlFor={id}>{label}</label>}
+      {label && (
+        <label htmlFor={id} className={label}>
+          {label}
+        </label>
+      )}
       {!isAlt && (
         <Input
           {...register}
@@ -81,8 +85,7 @@ const Cont = styled.article<{ isFocus: boolean }>`
     border-radius: 10%;
     background-color: white;
   }
-  .birth {
-    text-align: center;
+  .Birth {
     width: ${(p) => (p.isFocus ? '60px' : '100px')};
   }
 `;

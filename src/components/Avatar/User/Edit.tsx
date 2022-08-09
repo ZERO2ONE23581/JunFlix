@@ -7,14 +7,14 @@ import useMutation from '../../../libs/client/useMutation';
 import useUser from '../../../libs/client/useUser';
 import { LoadingModal } from '../../Tools/Modal/Loading';
 import { IUserForm } from '../../../types/user';
-import { MutationRes } from '../../../types/global';
+import { IData } from '../../../types/global';
 import { Title } from '../../User/Create/Title';
 import { Box } from '../../../../styles/global';
 import { UserBox } from '../../User/Update/UserId';
 
 export const EditUserAvatar = () => {
   const { loggedInUser } = useUser();
-  const [EditAvatar, { loading, data }] = useMutation<MutationRes>(
+  const [EditAvatar, { loading, data }] = useMutation<IData>(
     `/api/user/${loggedInUser?.id}/edit/avatar`
   );
   const { watch, register, handleSubmit } = useForm<IUserForm>({

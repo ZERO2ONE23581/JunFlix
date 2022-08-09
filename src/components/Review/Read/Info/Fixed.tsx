@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { ConfirmModal } from '../../../Tools/Modal';
 import { IconBtn } from '../../../Tools/Button/Icon';
 import useUser from '../../../../libs/client/useUser';
-import { MutationRes } from '../../../../types/mutation';
+import { IData } from '../../../../types/mutation';
 import useMutation from '../../../../libs/client/useMutation';
 
 export const Fixed = () => {
@@ -14,7 +14,7 @@ export const Fixed = () => {
   const [onSetting, setOnSetting] = useState(false);
   const [delModal, setDelModal] = useState(false);
   const isMyReview = String(loggedInUser?.id) === user_id;
-  const [deleteReview, { data, loading }] = useMutation<MutationRes>(
+  const [deleteReview, { data, loading }] = useMutation<IData>(
     `/api/user/${user_id}/review/${review_id}/delete`
   );
   const clickDelReview = () => {

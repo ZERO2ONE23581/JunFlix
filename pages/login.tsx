@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { MutationRes } from '../src/types/global';
+import { IData } from '../src/types/global';
 import useMutation from '../src/libs/client/useMutation';
 import { ILoginForm } from '../src/types/user';
 import { useForm } from 'react-hook-form';
@@ -18,8 +18,7 @@ import { LoadingModal } from '../src/components/Tools/Modal/Loading';
 const Login: NextPage = () => {
   useNeedLogout();
   const router = useRouter();
-  const [login, { loading, data }] =
-    useMutation<MutationRes>(`/api/user/login`);
+  const [login, { loading, data }] = useMutation<IData>(`/api/user/login`);
   const {
     watch,
     register,

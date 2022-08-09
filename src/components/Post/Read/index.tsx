@@ -29,7 +29,7 @@ export const IsPost = ({ text, isMyBoard, isFollowing }: IIsPost) => {
             </div>
           )}
           <div className="list">
-            <PostList from={6} size={3} isBlur={isBlur} posts={data?.posts!} />
+            <PostList from={8} size={4} isBlur={isBlur} posts={data?.posts!} />
           </div>
         </Blur>
       )}
@@ -82,9 +82,11 @@ const Blur = styled.div<{ isBlur: boolean }>`
   .list {
     filter: ${(p) => p.isBlur && 'blur(6px)'};
     .post-list {
+      gap: 22px;
+      margin-top: 30px;
       pointer-events: ${(p) => p.isBlur && 'none'};
       .post {
-        min-height: 400px;
+        min-height: 280px;
       }
     }
   }

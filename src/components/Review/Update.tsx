@@ -12,7 +12,7 @@ import useSWR from 'swr';
 import { ReviewCont } from './Create';
 import { useLength } from '../../libs/client/useTools';
 import { Errors } from '../Tools/Errors';
-import { MutationRes } from '../../types/global';
+import { IData } from '../../types/global';
 import styled from '@emotion/styled';
 
 export const EditReview = () => {
@@ -35,7 +35,7 @@ export const EditReview = () => {
     }
   }, [review]);
 
-  const [EditReview, { loading, data: res }] = useMutation<MutationRes>(
+  const [EditReview, { loading, data: res }] = useMutation<IData>(
     `/api/user/${user_id}/review/${review_id}/edit`
   );
   const {
@@ -105,10 +105,9 @@ export const EditReview = () => {
   const [delAvatar, setDelAvatar] = useState(false);
   const [avatarLoading, setAvatarLoading] = useState(false);
   const Loading = avatarLoading ? avatarLoading : loading ? loading : false;
-  const [deleteBG, { loading: delLoading, data: delRes }] =
-    useMutation<MutationRes>(
-      `/api/user/${user_id}/review/${review_id}/delete/bg`
-    );
+  const [deleteBG, { loading: delLoading, data: delRes }] = useMutation<IData>(
+    `/api/user/${user_id}/review/${review_id}/delete/bg`
+  );
 
   const onValid = async ({
     title,

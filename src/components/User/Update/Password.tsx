@@ -9,12 +9,12 @@ import styled from '@emotion/styled';
 import { Errors } from '../../Tools/Errors';
 import { Title } from '../Create/Title';
 import { Box } from '../../../../styles/global';
-import { MutationRes } from '../../../types/global';
+import { IData } from '../../../types/global';
 import { UserBox } from './UserId';
 
 export const Password = () => {
   const { loggedInUser } = useUser();
-  const [editPassword, { loading, data }] = useMutation<MutationRes>(
+  const [editPassword, { loading, data }] = useMutation<IData>(
     `/api/user/${loggedInUser?.id}/edit/password`
   );
 

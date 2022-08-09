@@ -9,7 +9,7 @@ import { SelectWrap } from '../../Tools/Input/Select';
 import useUser from '../../../libs/client/useUser';
 import { IUserForm } from '../../../types/user';
 import { Errors } from '../../Tools/Errors';
-import { MutationRes } from '../../../types/global';
+import { IData } from '../../../types/global';
 import { Box } from '../../../../styles/global';
 import { Title } from '../Create/Title';
 import { UserBox } from './UserId';
@@ -17,7 +17,7 @@ import { UserBox } from './UserId';
 export const UserInfo = () => {
   const router = useRouter();
   const { loggedInUser } = useUser();
-  const [Edit, { loading, data }] = useMutation<MutationRes>(
+  const [Edit, { loading, data }] = useMutation<IData>(
     `/api/user/${loggedInUser?.id}/edit/user_info`
   );
   const {

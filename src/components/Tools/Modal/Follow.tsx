@@ -5,7 +5,17 @@ import { Dispatch, SetStateAction } from 'react';
 import { DimBackground, SmallModal } from '../../../../styles/global';
 
 interface IFollowModal {
-  type: string;
+  type: {
+    board?: {
+      follow?: boolean;
+      unfollow?: boolean;
+    };
+    user?: {
+      name: string;
+      follow?: boolean;
+      unfollow?: boolean;
+    };
+  };
   onClick: any;
   closeModal?: Dispatch<SetStateAction<boolean>>;
 }
@@ -19,13 +29,13 @@ export const FollowModal = ({ type, closeModal, onClick }: IFollowModal) => {
           svgType="close"
           onClick={() => closeModal!(false)}
         />
-        {type === 'follow' && (
+        {type.board?.follow && (
           <>
             <span>이 보드를 팔로우 하겠습니까?</span>
             <span>Would you like to follow this board?</span>
           </>
         )}
-        {type === 'unfollow' && (
+        {type.board?.unfollow && (
           <>
             <span>이 보드를 팔로우를 취소 하겠습니까?</span>
             <span className="small">
@@ -38,7 +48,34 @@ export const FollowModal = ({ type, closeModal, onClick }: IFollowModal) => {
             </span>
           </>
         )}
-        {type === 'follow' && (
+        {type.user?.follow && (
+          <>
+            <span>유저를 팔로우 하면 콘텐츠를 열람할 수 있습니다.</span>
+            <span>
+              <span className="red">{type.user.name}</span> 님을 팔로우
+              하겠습니까?
+            </span>
+            <span>You can see contents by following user.</span>
+            <span>
+              Would you like to follow
+              <span className="red">{type.user.name}</span> ?
+            </span>
+          </>
+        )}
+        {type.user?.unfollow && (
+          <>
+            <span>이 보드를 팔로우를 취소 하겠습니까?</span>
+            <span className="small">
+              팔로우를 취소하면 이 보드의 포스트를 더이상 볼 수 없습니다.
+            </span>
+            <span>Would you like to unfollow this board?</span>
+            <span className="small">
+              You are no longer able to see the posts of this board if you
+              unfollow.
+            </span>
+          </>
+        )}
+        {(type.board?.follow || type.user?.follow) && (
           <Btn
             name="Follow"
             type="button"
@@ -46,7 +83,7 @@ export const FollowModal = ({ type, closeModal, onClick }: IFollowModal) => {
             onClick={onClick}
           />
         )}
-        {type === 'unfollow' && (
+        {(type.board?.unfollow || type.user?.unfollow) && (
           <Btn
             type="button"
             name="Unfollow"
@@ -60,6 +97,7 @@ export const FollowModal = ({ type, closeModal, onClick }: IFollowModal) => {
   );
 };
 const Cont = styled(SmallModal)`
+  z-index: 2;
   align-items: center;
   .follow {
     width: 200px;

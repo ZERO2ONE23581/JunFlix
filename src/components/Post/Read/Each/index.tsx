@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { EditPost } from '../../Edit';
 import { Avatar } from '../../../Avatar';
 import { IGetPost } from '../../../../types/post';
-import { IQuery, MutationRes } from '../../../../types/global';
+import { IQuery, IData } from '../../../../types/global';
 import { ConfirmModal } from '../../../Tools/Modal';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Modal, DimBackground } from '../../../../../styles/global';
@@ -27,7 +27,7 @@ export const PostModal = ({ query, setModal }: IPostModal) => {
   const [del, setDelete] = useState(false);
   const isMyPost = Boolean(loggedInUser?.id === query.userId);
   const [deletePost, { data: DelPostData, loading: DelLoading }] =
-    useMutation<MutationRes>(
+    useMutation<IData>(
       `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}/delete`
     );
   const clickDelPost = () => {

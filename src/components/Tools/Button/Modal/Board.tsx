@@ -8,7 +8,7 @@ import useUser from '../../../../libs/client/useUser';
 import useMutation from '../../../../libs/client/useMutation';
 import { useForm } from 'react-hook-form';
 import { IUserForm } from '../../../../types/user';
-import { MutationRes } from '../../../../types/global';
+import { IData } from '../../../../types/global';
 import { ModalBtnCont } from './Post';
 
 interface IEditBtns {
@@ -37,7 +37,7 @@ export const ModalBtn = ({
     if (type === 'delete-board') return setDelModal(true);
     if (type === 'edit-background') return setAvatar(true);
   };
-  const [deleteBoard, { data, loading }] = useMutation<MutationRes>(
+  const [deleteBoard, { data, loading }] = useMutation<IData>(
     `/api/user/${user_id}/board/${board_id}/delete`
   );
   const {
@@ -54,7 +54,7 @@ export const ModalBtn = ({
     if (data?.error) alert(data.error);
     if (data?.ok) {
       alert('보드를 삭제했습니다.');
-      router.push('/all/boards');
+      router.push('/boards');
     }
   }, [data, router]);
 
@@ -64,25 +64,26 @@ export const ModalBtn = ({
         <>
           <ModalBtnCont>
             <Btn
-              svg="edit"
               type="button"
-              size="1.7rem"
               name="보드 수정 (Edit Board)"
               onClick={() => handleClick('edit-board')}
+              svg={{ type: 'edit', size: '1.4rem', location: { left: true } }}
             />
             <Btn
               type="button"
-              size="1.7rem"
-              svg="landscape"
               name="배경 수정 (Edit Background)"
               onClick={() => handleClick('edit-background')}
+              svg={{
+                type: 'landscape',
+                size: '1.4rem',
+                location: { left: true },
+              }}
             />
             <Btn
-              svg="trash"
-              size="1.7rem"
               type="button"
               name="보드 삭제 (Delete Board)"
               onClick={() => handleClick('delete-board')}
+              svg={{ type: 'trash', size: '1.4rem', location: { left: true } }}
             />
           </ModalBtnCont>
           <DimBackground zIndex={100} onClick={() => setModal(false)} />

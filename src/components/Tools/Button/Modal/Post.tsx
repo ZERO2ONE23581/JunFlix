@@ -39,28 +39,25 @@ export const ModalBtn = ({
         {isMyPost && (
           <>
             <Btn
-              svg="edit"
-              size="1.7rem"
               type="button"
               name="포스트 수정 (Edit Post)"
               onClick={() => handleClick('edit')}
+              svg={{ type: 'edit', size: '1.4rem', location: { left: true } }}
             />
             <Btn
-              svg="trash"
-              size="1.7rem"
               type="button"
               name="포스트 삭제 (Delete Post)"
               CLASSNAME="delete-post-btn"
               onClick={() => handleClick('delete')}
+              svg={{ type: 'trash', size: '1.4rem', location: { left: true } }}
             />
           </>
         )}
         <Btn
-          size="1.7rem"
-          svg="board"
           type="button"
           name="보드 이동 (Move to Board)"
           onClick={() => handleClick('board')}
+          svg={{ type: 'board', size: '1.4rem', location: { left: true } }}
         />
       </ModalBtnCont>
       <DimBackground zIndex={1} onClick={() => setSetting(false)} />
@@ -81,7 +78,8 @@ export const ModalBtnCont = styled(Modal)`
     font-weight: 400;
     border-radius: 0%;
     font-size: 1.2rem;
-    border-bottom: 1px solid #2d3436;
+    box-shadow: none;
+    border-bottom: ${(p) => p.theme.border.thin};
     :nth-of-type(3) {
       border: none;
     }

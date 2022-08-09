@@ -1,4 +1,4 @@
-import { PostModel } from './post';
+import { PostModel, ReviewModel } from './post';
 import {
   UseFormWatch,
   UseFormSetError,
@@ -8,6 +8,7 @@ import {
   UseFormClearErrors,
   FieldError,
 } from 'react-hook-form';
+import { User } from '@prisma/client';
 
 export interface IQuery {
   query: {
@@ -46,10 +47,11 @@ export interface IUseform {
     avatar?: FieldError | undefined;
   };
 }
-export interface MutationRes {
+export interface IData {
   ok?: boolean;
   error?: string;
-  message?: string;
-  post?: PostModel;
+  User?: User;
+  MyPostLikes?: PostModel[];
+  MyReviewLikes?: ReviewModel[];
   [key: string]: any;
 }
