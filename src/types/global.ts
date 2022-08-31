@@ -8,7 +8,7 @@ import {
   UseFormClearErrors,
   FieldError,
 } from 'react-hook-form';
-import { User } from '@prisma/client';
+import { Board, Following, Post, Review, User } from '@prisma/client';
 
 export interface IQuery {
   query: {
@@ -50,8 +50,18 @@ export interface IUseform {
 export interface IData {
   ok?: boolean;
   error?: string;
-  User?: User;
+  User?: TheUser;
+  isFollowing?: boolean;
+  FollowingUser?: Following;
+  Followers?: Following[];
+  Followings?: Following[];
   MyPostLikes?: PostModel[];
   MyReviewLikes?: ReviewModel[];
   [key: string]: any;
+}
+interface TheUser extends User {
+  posts: Post[];
+  boards: Board[];
+  reviews: Review[];
+  following: Following[];
 }

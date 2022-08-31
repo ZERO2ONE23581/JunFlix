@@ -65,7 +65,7 @@ export const CreateUserAvatar = ({ createdId }: ICreateAvatar) => {
       alert(
         `회원가입을 성공적으로 완료하였습니다. 로그인 페이지로 이동합니다.`
       );
-      router.replace('/user/login');
+      router.replace('/login');
     }
   }, [data, router]);
   const [answer, setAnswer] = useState(false);
@@ -74,9 +74,9 @@ export const CreateUserAvatar = ({ createdId }: ICreateAvatar) => {
       {!Loading && (
         <Cont>
           <Title
-            type="create-user-avatar"
-            eng="Create Account"
             kor="계정생성"
+            eng="Create Account"
+            type="create-user-avatar"
           />
           <h2>
             <span>Step 3.</span>
@@ -100,7 +100,7 @@ export const CreateUserAvatar = ({ createdId }: ICreateAvatar) => {
               <Btn
                 name="SKIP"
                 type="button"
-                onClick={() => router.replace('/user/login')}
+                onClick={() => router.replace('/login')}
               />
               <Btn type="submit" name="SAVE" />
             </BtnWrap>
@@ -116,6 +116,11 @@ export const CreateUserAvatar = ({ createdId }: ICreateAvatar) => {
 const Cont = styled(Box)`
   padding: 30px;
   max-width: 360px;
+  .profile-avatar {
+    .profile {
+      pointer-events: all;
+    }
+  }
   .btn-wrap {
     margin-top: 30px;
     padding: 0px 40px;

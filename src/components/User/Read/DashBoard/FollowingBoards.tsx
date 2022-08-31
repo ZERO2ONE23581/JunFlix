@@ -2,42 +2,40 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { ProfileAvatar } from '../../../../Avatar/Profile';
-import { IGetFollowInfo } from '../../../../../types/board';
+import { ProfileAvatar } from '../../../Avatar/Profile';
+import { IGetFollowInfo } from '../../../../types/board';
 
-interface IBoardLink {
-  userId: number;
-  boardId: number;
-  title: string;
-}
-export const Boards = () => {
+export const FollowingBoards = () => {
   const router = useRouter();
   const { user_id } = router.query;
   const { data } = useSWR<IGetFollowInfo>(
-    `/api/user/${user_id}/following/boards`
+    user_id && `/api/user/${user_id}/following/boards`
   );
   const following = data?.following;
   return (
-    <Cont className="box-followingBoards">
+    <Cont>
       <h1>
         <span>Following Boards</span>
         <span className="kor">팔로우중인 보드</span>
+        <span className="count">({following?.length})</span>
       </h1>
       <Grid>
-        {following?.map((follow) => (
-          <Icon key={follow.board?.id}>
-            <Link
-              href={`/user/${follow.UserID}/board/${follow.BoardID}/${follow.board.title}`}
-            >
-              <a>
-                <ProfileAvatar size="5rem" avatar={follow.board?.avatar} />
-                <span className="title">
-                  {follow.board?.title.toUpperCase()}
-                </span>
-              </a>
-            </Link>
-          </Icon>
-        ))}
+        {following
+          ?.filter((p) => p.BoardID)
+          .map((follow) => (
+            <Icon key={follow?.board?.id}>
+              <Link
+                href={`/user/${follow?.board?.UserID}/board/${follow?.BoardID}/${follow?.board?.title}`}
+              >
+                <a>
+                  <ProfileAvatar size="80px" avatar={follow?.board?.avatar} />
+                  <span className="title">
+                    {follow?.board?.title.toUpperCase()}
+                  </span>
+                </a>
+              </Link>
+            </Icon>
+          ))}
       </Grid>
     </Cont>
   );
@@ -48,9 +46,10 @@ const Cont = styled.article`
     font-size: 1.6rem;
     margin-bottom: 15px;
     span {
-      margin-right: 20px;
+      margin-right: 5px;
     }
-    .kor {
+    .kor,
+    .count {
       font-size: 1.4rem;
     }
   }

@@ -90,6 +90,7 @@ const Cont = styled(Modal)<{ isAvatar: boolean }>`
   border-radius: 8px;
   flex-direction: row;
   border: ${(p) => !p.isAvatar && p.theme.border.thick};
+  border: none;
   .postAvatar {
     pointer-events: none;
     .noImageDiv,

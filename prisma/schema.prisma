@@ -23,15 +23,15 @@ model User {
   gender              String?
   location            String?
   avatar              String?
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  posts               Post[]
   tokens              Token[]  
   boards              Board[]     
-  followingBoards     Following[]
-  posts               Post[]
   reviews             Review[]  
   likes               Likes[]  
   comments            Comment[]
-  createdAt           DateTime    @default(now())
-  updatedAt           DateTime    @updatedAt
+  following           Following[]
 }
 
 model Token {
@@ -57,13 +57,14 @@ model Board {
   updatedAt    DateTime    @updatedAt
 }
 model Following {
-  id           Int         @id @default(autoincrement()) 
-  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
-  UserID       Int
-  board        Board       @relation(fields: [BoardID], references: [id], onDelete: Cascade)
-  BoardID      Int
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  id                Int         @id @default(autoincrement()) 
+  UserID            Int  
+  BoardID           Int?
+  FollowingUserID   Int?
+  updatedAt         DateTime    @updatedAt
+  createdAt         DateTime    @default(now())
+  user              User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
+  board             Board?      @relation(fields: [BoardID], references: [id], onDelete: Cascade)
 }
 model Post {
   id           Int         @id @default(autoincrement())

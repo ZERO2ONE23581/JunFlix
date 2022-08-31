@@ -5,6 +5,7 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user_id } = req.query;
+  if (!user_id) return res.json({ ok: false, error: 'query error' });
   const boards = await client.board.findMany({
     where: { UserID: +user_id },
     include: { user: true, followers: { select: { user: true } } },

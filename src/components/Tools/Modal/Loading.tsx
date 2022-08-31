@@ -13,7 +13,7 @@ export const LoadingModal = ({ type, zIndex }: ILoadingModal) => {
         {Texts(type)}
         <Svg type="loading" size="2rem" />
       </Cont>
-      <DimBackground zIndex={99} />
+      <DimBackground zIndex={1} />
     </>
   );
 };

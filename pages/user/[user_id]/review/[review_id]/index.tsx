@@ -7,6 +7,7 @@ import { IGetReview } from '../../../../../src/types/review';
 import { Info } from '../../../../../src/components/Review/Read/Info';
 import { HeadTitle } from '../../../../../src/components/Layout/Head';
 import { useNeedLogin } from '../../../../../src/libs/client/useTools';
+import { NoData } from '../../../../../src/components/Tools/NoData';
 
 const ReviewPage: NextPage = () => {
   useNeedLogin();
@@ -20,7 +21,7 @@ const ReviewPage: NextPage = () => {
       <HeadTitle title="MOVIE REVIEW" />
       <Cont>
         {data && <Info review={data.review!} />}
-        {!data && <h1>No data found..</h1>}
+        {!data && <NoData type="review" />}
       </Cont>
     </>
   );

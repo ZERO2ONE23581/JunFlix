@@ -12,7 +12,6 @@ export const Fold = ({ from, postLength, setLength, length }: IFold) => {
   const noFold = Boolean(from >= postLength);
   const unFold = Boolean(length < postLength);
   const Fold = Boolean(length === postLength);
-  console.log(unFold);
   return (
     <>
       {!noFold && (

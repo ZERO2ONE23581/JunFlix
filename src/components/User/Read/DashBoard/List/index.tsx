@@ -27,7 +27,9 @@ export const UserList = ({ username }: IUserList) => {
   const router = useRouter();
   const { user_id } = router.query;
   const [type, setType] = useState('board');
-  const { data } = useSWR<IGet>(type && `/api/user/${user_id}/${type}s`);
+  const { data } = useSWR<IGet>(
+    user_id && type && `/api/user/${user_id}/${type}s`
+  );
   return (
     <Cont>
       <BtnWrap username={username} type={type} setType={setType} />

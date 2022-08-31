@@ -95,7 +95,9 @@ const Texts = (
       {type === 'verify-token' && (
         <>
           <span>인증을 위하여 6자리 인증번호를 입력해주세요.</span>
+          <span>번호는 이메일을 통하여 확인할 수 있습니다.</span>
           <span>Please type 6 digit number for verification.</span>
+          <span>The number is sent to you email.</span>
         </>
       )}
       {type === 'verify-id' && (

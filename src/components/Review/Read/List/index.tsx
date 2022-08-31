@@ -10,8 +10,9 @@ import { ProfileAvatar } from '../../../Avatar/Profile';
 import { IReviewList } from '../../../../types/review';
 import { Fixed } from './Fixed';
 import { useCapLetter } from '../../../../libs/client/useTools';
+import { NoData } from '../../../Tools/NoData';
 
-export const ReviewList = ({ reviews, isMyPage }: IReviewList) => {
+export const ReviewList = ({ reviews, isLikesType }: IReviewList) => {
   const Order = (item: ReviewModel) => {
     return reviews.length - reviews.indexOf(item);
   };
@@ -87,12 +88,7 @@ export const ReviewList = ({ reviews, isMyPage }: IReviewList) => {
           ))}
         </Cont>
       )}
-
-      {!isReview && (
-        <>
-          <h1>리뷰가 존재하지 않습니다...</h1>
-        </>
-      )}
+      {!isReview && <NoData type={isLikesType ? 'likes-review' : 'review'} />}
     </>
   );
 };

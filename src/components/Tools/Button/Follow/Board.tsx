@@ -1,25 +1,25 @@
+import { Btn } from '..';
 import useSWR from 'swr';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
-import { Btn } from '../Tools/Button';
-import { IData } from '../../types/global';
-import { FollowModal } from '../Tools/Modal/Follow';
-import { IGetFollowingBoard } from '../../types/board';
-import useMutation from '../../libs/client/useMutation';
+import { IData } from '../../../../types/global';
+import { FollowBoardModal } from '../../Modal/Follow/Board';
+import { IGetFollowingBoard } from '../../../../types/board';
+import useMutation from '../../../../libs/client/useMutation';
 
-interface IFollowBoard {
+interface IFollowBtn {
   userId: number;
   boardId: number;
 }
-export const FollowBtn = ({ userId, boardId }: IFollowBoard) => {
+export const FollowBtn = ({ userId, boardId }: IFollowBtn) => {
   const [FollowBoard] = useMutation<IData>(
-    `/api/user/${userId}/board/${boardId}/follow/create`
+    `/api/user/${userId}/follow/board/${boardId}`
   );
   const { data, mutate } = useSWR<IGetFollowingBoard>(
     `/api/user/${userId}/board/${boardId}`
   );
   const [follow, setFollow] = useState(false);
-  const [unfollow, setUnFollow] = useState(false);
+  const [unFollow, setUnFollow] = useState(false);
 
   const onClick = () => {
     setFollow(false);
@@ -45,10 +45,13 @@ export const FollowBtn = ({ userId, boardId }: IFollowBoard) => {
             type="button"
             name="ON AIR"
             CLASSNAME="follow-btn"
-            onClick={() => {
-              setUnFollow(true);
+            onClick={() => setUnFollow(true)}
+            svg={{
+              type: 'check',
+              size: '1.2rem',
+              fill: '#e50815',
+              location: { right: true },
             }}
-            svg={{ type: 'check', size: '1.2rem', location: { right: true } }}
           />
         )}
         {!data?.isFollowing && (
@@ -56,31 +59,24 @@ export const FollowBtn = ({ userId, boardId }: IFollowBoard) => {
             type="button"
             name="Follow"
             CLASSNAME="follow-btn"
-            onClick={() => {
-              setFollow(true);
-            }}
+            onClick={() => setFollow(true)}
           />
         )}
       </Cont>
       {follow && (
-        <FollowModal type="follow" closeModal={setFollow} onClick={onClick} />
+        <FollowBoardModal closeModal={setFollow} onClick={onClick} isFollow />
       )}
-      {unfollow && (
-        <FollowModal type="unfollow" closeModal={setFollow} onClick={onClick} />
+      {unFollow && (
+        <FollowBoardModal closeModal={setFollow} onClick={onClick} isUnFollow />
       )}
     </>
   );
 };
 const Cont = styled.article<{ isFollow: boolean }>`
-  .follow-btn {
-    padding: 8px 10px;
-    font-weight: 600;
-    background-color: inherit;
+  button {
     color: ${(p) => (p.isFollow ? p.theme.color.logo : p.theme.color.font)};
-    border: 3px solid
+    background-color: ${(p) => p.theme.color.bg};
+    border: 2px solid
       ${(p) => (p.isFollow ? p.theme.color.logo : p.theme.color.font)};
-    svg {
-      fill: ${(p) => p.theme.color.logo};
-    }
   }
 `;

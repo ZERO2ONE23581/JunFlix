@@ -38,10 +38,10 @@ export const LikesList = ({ username, data }: ILikesList) => {
         </Button>
       </BtnWrap>
       {type === 'post' && (
-        <PostList from={4} size={4} posts={data?.MyPostLikes!} />
+        <PostList from={4} size={4} isLikesType posts={data?.MyPostLikes!} />
       )}
       {type === 'review' && (
-        <ReviewList isMyPage reviews={data?.MyReviewLikes!} />
+        <ReviewList isMyPage reviews={data?.MyReviewLikes!} isLikesType />
       )}
     </Cont>
   );

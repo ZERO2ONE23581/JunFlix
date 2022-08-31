@@ -2,7 +2,7 @@ import { Counts } from './Counts';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Svg } from '../../../Tools/Svg';
-import { FollowBtn } from '../../FollowBtn';
+import { FollowBtn } from '../../../Tools/Button/Follow/Board';
 import useUser from '../../../../libs/client/useUser';
 import { useCapLetters } from '../../../../libs/client/useTools';
 
@@ -24,12 +24,8 @@ export const Info = ({ title, genre, intro, counts }: IInfo) => {
     <>
       <Cont>
         <div className="flex">
-          <Title>
-            <span>{useCapLetters(title)}</span>
-            <span>
-              <Svg type={genre} size="2.2rem" />
-            </span>
-          </Title>
+          <Title>{useCapLetters(title)}</Title>
+          <Svg type={genre} size="2.4rem" />
           {!isMyBoard && (
             <FollowBtn userId={Number(user_id)} boardId={Number(board_id)} />
           )}

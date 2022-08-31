@@ -29,15 +29,19 @@ export const ProfileAvatar = ({ size, avatar, preview, onClick }: IProfile) => {
 };
 const Cont = styled.div<{ size: string; isAvatar: boolean }>`
   display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
   border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  border: ${(p) => p.theme.border.thin};
   width: ${(p) => p.size && `${p.size}`};
   height: ${(p) => p.size && `${p.size}`};
   img {
     width: 100%;
     height: 100%;
+  }
+  .profile {
+    pointer-events: none;
   }
 `;
 export const Label = styled.label`

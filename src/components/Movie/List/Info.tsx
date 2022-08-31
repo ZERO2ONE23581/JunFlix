@@ -14,7 +14,7 @@ export const Info = ({ item }: IInfo) => {
       </li>
       <li>
         <span>Overview (줄거리): </span>
-        {/* <p>{item.overview}</p> */}
+        <p>{item.overview}</p>
       </li>
     </Cont>
   );

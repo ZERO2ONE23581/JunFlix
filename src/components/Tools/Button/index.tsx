@@ -14,6 +14,7 @@ interface IBtnProps {
   svg?: {
     size?: string;
     type?: string;
+    fill?: string;
     location?: {
       left?: boolean;
       right?: boolean;
@@ -42,9 +43,13 @@ export const Btn = ({
         className={CLASSNAME}
         isUserList={isUserList!}
       >
-        {svg?.location?.left && <Svg type={svg.type!} size={svg.size!} />}
+        {svg?.location?.left && (
+          <Svg type={svg.type!} size={svg.size!} fill={svg?.fill} />
+        )}
         {loading ? 'Loading...' : name}
-        {svg?.location?.right && <Svg type={svg.type!} size={svg.size!} />}
+        {svg?.location?.right && (
+          <Svg type={svg.type!} size={svg.size!} fill={svg?.fill} />
+        )}
       </Button>
     </>
   );
@@ -83,6 +88,9 @@ export const Button = styled.button<{
           ? p.theme.color.logo
           : p.theme.color.font
         : 'none'};
+  opacity: ${(p) => p.isClicked && '0.9'};
+  color: ${(p) => p.isClicked && 'white'};
+  background-color: ${(p) => p.isClicked && p.theme.color.logo};
   :hover {
     color: white;
     background-color: ${(p) => p.theme.color.logo};
@@ -91,6 +99,6 @@ export const Button = styled.button<{
     }
   }
   svg {
-    fill: ${(p) => p.theme.color.font};
+    /* fill: ${(p) => p.theme.color.font}; */
   }
 `;

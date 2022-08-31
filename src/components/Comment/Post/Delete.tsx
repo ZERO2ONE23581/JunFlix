@@ -71,10 +71,14 @@ const Cont = styled(Modal)`
     }
   }
   .btn-wrap {
-    width: 80%;
+    gap: 10px;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     button {
-      padding: 8px;
       width: 100%;
+      padding: 5px;
     }
   }
 `;

@@ -7,6 +7,7 @@ import { Title } from '../src/components/Tools/Title';
 import { HeadTitle } from '../src/components/Layout/Head';
 import { Fixed } from '../src/components/Tools/Button/Fixed';
 import { ReviewList } from '../src/components/Review/Read/List';
+import { NoData } from '../src/components/Tools/NoData';
 
 const AllReviews: NextPage = () => {
   const { data } = useSWR<IGetReviews>(`/api/reviews`);
@@ -17,11 +18,7 @@ const AllReviews: NextPage = () => {
         <Fixed type="read-review" />
         <Title kind="Reviews" svg={{ type: 'clapper', size: '2rem' }} />
         {data?.reviews && <ReviewList reviews={data?.reviews} />}
-        {!data?.reviews && (
-          <>
-            <h1>NO REVIES FOUND...</h1>
-          </>
-        )}
+        {!data?.reviews && <NoData type="review" />}
       </Cont>
     </>
   );

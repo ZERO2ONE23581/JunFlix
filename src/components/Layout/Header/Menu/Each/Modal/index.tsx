@@ -22,7 +22,9 @@ export const Modal = ({ type, text, setSelect }: IModal) => {
     if (Type === 'create' && type === 'post') {
       if (!isLoggedIn) alert('로그인 해주세요.');
       else alert('포스트를 생성할 보드를 선택해주세요.');
-      return router.push(`/my/boards`);
+      return router.push(
+        `/user/${loggedInUser?.id}/${loggedInUser?.username}/boards`
+      );
     }
     if (Type === 'create')
       router.push(`/user/${loggedInUser?.id}/${type}/create`);

@@ -14,7 +14,7 @@ export const Icons = ({ query }: IQuery) => {
 const Cont = styled.article`
   gap: 2rem;
   display: flex;
-  padding: 10px 20px;
+  padding: 5px 20px;
   align-items: center;
   .counts {
     top: -8px;

@@ -225,8 +225,8 @@ const Texts = (type: string, USERID: string) => {
       {type === 'create-post' && (
         <>
           <span>포스트를 해당 보드에 올리시겠습니까?</span>
+          <span>Would you like to post this on your board?</span>
           <span className="small">* 포스트는 추후에 수정이 가능합니다.</span>
-          <span>Would you like to post on your board?</span>
           <span className="small">* You can edit your post later.</span>
         </>
       )}
@@ -268,7 +268,7 @@ const Btns = ({
           <Btn
             name="YES"
             type="button"
-            onClick={() => router.replace('/user/login')}
+            onClick={() => router.replace('/login')}
           />
           <Btn name="NO" type="button" onClick={() => router.reload()} />
         </>

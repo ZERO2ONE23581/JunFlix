@@ -7,10 +7,10 @@ import { UserId } from '../../../../src/components/User/Update/UserId';
 import { UserInfo } from '../../../../src/components/User/Update/UserInfo';
 import { Password } from '../../../../src/components/User/Update/Password';
 import { EditUserAvatar } from '../../../../src/components/Avatar/User/Edit';
-import { useNeedLogin } from '../../../../src/libs/client/useTools';
+import { useNoAuthority } from '../../../../src/libs/client/useTools';
 
 const EditProfile: NextPage = () => {
-  useNeedLogin();
+  useNoAuthority();
   return (
     <>
       <HeadTitle title="프로필 편집" />

@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import useUser from './useUser';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export const useCapLetters = (word: string) => {
   return word?.replace(/(?:^|\s)\S/g, function (a) {
@@ -24,6 +24,15 @@ export const useNeedLogin = () => {
       router.push('/login');
     }
   }, [isLoggedIn, router]);
+};
+export const useNoAuthority = () => {
+  const router = useRouter();
+  const { user_id } = router.query;
+  const { loggedInUser } = useUser();
+  const isMyPage = Boolean(loggedInUser?.id === Number(user_id));
+  useEffect(() => {
+    if (!isMyPage) router.push('/');
+  }, [router, isMyPage]);
 };
 export const useNeedLogout = () => {
   const router = useRouter();

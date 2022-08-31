@@ -12,7 +12,6 @@ import { Board } from '../../../../../src/components/Board/Read';
 import { IsPost } from '../../../../../src/components/Post/Read';
 
 const BoardPage: NextPage = () => {
-  useNeedLogin();
   const { loggedInUser } = useUser();
   const router = useRouter();
   const { user_id, board_id } = router.query;

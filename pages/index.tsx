@@ -21,11 +21,11 @@ const Home: NextPage = () => {
       <Main>
         <Texts />
         <BtnWrap />
-        <Movie type="trending" />
-      </Main>
-      <Item>
         <PageTitle type="boards" />
         <BoardList size={4} boards={data?.boards!} />
+      </Main>
+      <Item>
+        <Movie type="trending" />
         <PageTitle type="posts" />
         <PostList from={10} size={5} posts={postData?.posts!} />
       </Item>
@@ -35,10 +35,25 @@ const Home: NextPage = () => {
 export default Home;
 
 const Main = styled(Page)`
-  padding-top: 200px;
+  padding-top: 150px;
   padding-bottom: 50px;
   color: #ecf0f1;
   background: url('/img/1.jpeg') center / cover no-repeat;
+  .board-list {
+    .board {
+      min-height: 200px;
+      border-radius: 8px;
+      .board-title {
+        font-size: 1.4rem;
+      }
+      .isOwner {
+        top: 0px;
+        right: -20px;
+        position: absolute;
+        fill: ${(p) => p.theme.color.green};
+      }
+    }
+  }
 `;
 const Item = styled(Page)`
   padding-top: 20px;
@@ -49,20 +64,6 @@ const Item = styled(Page)`
   .board-list,
   .post-list {
     margin-bottom: 100px;
-  }
-  .board-list {
-    .board {
-      min-height: 250px;
-      .board-title {
-        font-size: 1.6rem;
-      }
-      .isOwner {
-        top: 0px;
-        right: -20px;
-        position: absolute;
-        fill: ${(p) => p.theme.color.logo};
-      }
-    }
   }
   .post-list {
     .post {

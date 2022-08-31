@@ -9,9 +9,11 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import { IJoinForm, IJoinFormRes } from '../../../types/user';
 import { Title } from './Title';
 import { LoadingModal } from '../../Tools/Modal/Loading';
+import { Svg } from '../../Tools/Svg';
 
 export interface ICreateUser {
   saveId: string;
+  setUserId: Dispatch<SetStateAction<boolean>>;
   setAvatar: Dispatch<SetStateAction<boolean>>;
   setCreatedId: Dispatch<SetStateAction<number>>;
 }
@@ -19,6 +21,7 @@ export interface ICreateUser {
 export const CreateUser = ({
   saveId,
   setAvatar,
+  setUserId,
   setCreatedId,
 }: ICreateUser) => {
   const {
@@ -63,6 +66,11 @@ export const CreateUser = ({
       {!loading && (
         <form onSubmit={handleSubmit(onValid)}>
           <Cont>
+            <Svg
+              size="1.4rem"
+              type="left-arrow"
+              onClick={() => setUserId(false)}
+            />
             <div className="wrap">
               <Title
                 kor="계정생성"
@@ -161,6 +169,12 @@ export const CreateUser = ({
 const Cont = styled(Box)`
   gap: 18px;
   max-width: 440px;
+  position: relative;
+  .left-arrow {
+    top: 30px;
+    right: 30px;
+    position: absolute;
+  }
   .submit-btn {
     margin-top: 12px;
   }

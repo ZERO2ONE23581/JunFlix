@@ -17,9 +17,10 @@ export const PostText = ({ date, content, username, sliceFrom }: IText) => {
   const [fold, setFold] = useState(false);
   const Sliced = content?.slice(0, sliceFrom) + '...';
   const [isLongLength, setIsLongLength] = useState(false);
+
   useEffect(() => {
     const Length = content?.length;
-    if (Length! >= 50) {
+    if (Length! > sliceFrom) {
       setText(Sliced?.toString());
       setFold(true);
       setIsLongLength(true);
@@ -28,7 +29,7 @@ export const PostText = ({ date, content, username, sliceFrom }: IText) => {
       setFold(false);
       setIsLongLength(false);
     }
-  }, [content, setText, setFold]);
+  }, [content, setText, setFold, setIsLongLength, sliceFrom]);
 
   const handleClick = (type: string) => {
     if (type === 'unfold') {
@@ -71,6 +72,10 @@ const Cont = styled.article`
     font-weight: 400;
     font-style: italic;
     margin-right: 7px;
+    color: ${(p) => p.theme.color.logo};
+  }
+  .text-content {
+    font-size: 1.05rem;
   }
 `;
 const More = styled.button`

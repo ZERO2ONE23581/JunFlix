@@ -112,3 +112,7 @@ export const Grid = styled.article<{ size: number }>`
   position: relative;
   grid-template-columns: ${(p) => p.size && `repeat(${p.size}, 1fr)`};
 `;
+export const Blur = styled.div<{ isBlur: boolean }>`
+  pointer-events: ${(p) => p.isBlur && 'none'};
+  filter: ${(p) => p.isBlur && 'blur(5px)'};
+`;

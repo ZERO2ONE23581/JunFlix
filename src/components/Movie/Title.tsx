@@ -17,12 +17,12 @@ export const PageTitle = ({ type }: IPageTitle) => {
         setKor('모든 포스트');
       }
       if (type === 'boards') {
-        setEng('All Boards');
-        setKor('모든 보드');
+        setEng('Movie Boards');
+        setKor('보드 둘러보기');
       }
       if (type === 'trending') {
-        setEng('Trending');
-        setKor('현재 인기');
+        setEng('Trending Movies');
+        setKor('현재 인기영화');
       }
       if (type === 'now') {
         setEng('Now Playing');

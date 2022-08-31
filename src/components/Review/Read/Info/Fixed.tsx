@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { IData } from '../../../../types/global';
 import { ConfirmModal } from '../../../Tools/Modal';
 import { IconBtn } from '../../../Tools/Button/Icon';
 import useUser from '../../../../libs/client/useUser';
-import { IData } from '../../../../types/mutation';
 import useMutation from '../../../../libs/client/useMutation';
 
 export const Fixed = () => {
@@ -24,7 +24,7 @@ export const Fixed = () => {
   useEffect(() => {
     if (data?.error) alert(data.error);
     if (data?.ok) {
-      router.replace('/all/reviews');
+      router.replace('/reviews');
     }
   }, [data, router]);
   return (
@@ -33,7 +33,7 @@ export const Fixed = () => {
         size="2.5rem"
         type="button"
         svgType="compass"
-        onClick={() => router.push(`/all/reviews`)}
+        onClick={() => router.push(`/reviews`)}
       />
       {isMyReview && (
         <>

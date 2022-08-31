@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { Btn } from '../../../Tools/Button';
-import { InputWrap } from '../../../Tools/Input';
-import { Errors } from '../../../Tools/Errors';
-import { Dispatch, SetStateAction } from 'react';
-import useMutation from '../../../../libs/client/useMutation';
-import { IFindForm, IFindPostRes } from '../../../../types/user';
 import styled from '@emotion/styled';
+import { FindLink } from '../Links/Find';
+import { useForm } from 'react-hook-form';
 import { Title } from '../../Create/Title';
+import { Btn } from '../../../Tools/Button';
+import { Errors } from '../../../Tools/Errors';
+import { InputWrap } from '../../../Tools/Input';
+import { Dispatch, SetStateAction } from 'react';
 import { Box } from '../../../../../styles/global';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
-import { FindLink } from '../Links/Find';
+import useMutation from '../../../../libs/client/useMutation';
+import { IFindForm, IFindPostRes } from '../../../../types/user';
 
 interface IToken {
   isFindID?: boolean;
@@ -33,6 +33,7 @@ export const Token = ({
     handleSubmit,
     formState: { errors },
   } = useForm<IFindForm>({ mode: 'onSubmit' });
+
   const onValid = ({ token }: IFindForm) => {
     if (loading) return;
     return verifyToken(token);

@@ -1,4 +1,4 @@
-import { FollowBtn } from '../../../FollowBtn';
+import { FollowBtn } from '../../../../Tools/Button/Follow/Board';
 import styled from '@emotion/styled';
 import useUser from '../../../../../libs/client/useUser';
 

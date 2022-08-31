@@ -8,6 +8,7 @@ import { HeadTitle } from '../../../../src/components/Layout/Head';
 import { useNeedLogin } from '../../../../src/libs/client/useTools';
 import { ReviewList } from '../../../../src/components/Review/Read/List';
 import { Page } from '../../../../styles/global';
+import { NoData } from '../../../../src/components/Tools/NoData';
 
 const MyReviews: NextPage = () => {
   useNeedLogin();
@@ -23,11 +24,7 @@ const MyReviews: NextPage = () => {
           svg={{ type: 'clapper', size: '2rem' }}
         />
         {data?.reviews && <ReviewList reviews={data?.reviews} />}
-        {!data?.reviews && (
-          <>
-            <h1>NO REVIES FOUND...</h1>
-          </>
-        )}
+        {!data?.reviews && <NoData type="review" />}
       </Cont>
     </>
   );

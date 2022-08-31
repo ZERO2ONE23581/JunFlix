@@ -36,7 +36,7 @@ export const Fixed = ({ type }: IFixed) => {
   );
 };
 const Cont = styled.article`
-  right: 1%;
+  right: 30px;
   bottom: 20%;
   position: fixed;
   gap: 20px;

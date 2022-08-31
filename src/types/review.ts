@@ -3,6 +3,7 @@ import { Likes, Review, User } from '@prisma/client';
 
 export interface IReviewList {
   isMyPage?: boolean;
+  isLikesType?: boolean;
   reviews: ReviewModel[];
 }
 export interface LikesWithReview extends Likes {

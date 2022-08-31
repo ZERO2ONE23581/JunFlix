@@ -10,6 +10,7 @@ export interface IPostList {
   size: number;
   from: number;
   isBlur?: boolean;
+  isLikesType?: boolean;
   posts: PostModel[];
 }
 export interface LikesWithPost extends Likes {

@@ -28,10 +28,11 @@ export const Content = ({ date, content, username, userAvatar }: IContent) => {
   );
 };
 const Cont = styled.div`
-  padding: 20px;
-  min-height: 70%;
+  margin-top: 13px;
   gap: 20px;
   display: flex;
+  padding: 20px;
+  min-height: 70%;
   align-items: flex-start;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   border-bottom: ${(p) => p.theme.border.thin};

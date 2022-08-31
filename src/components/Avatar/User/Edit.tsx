@@ -85,4 +85,10 @@ export const EditUserAvatar = () => {
     </>
   );
 };
-const Cont = styled(UserBox)``;
+const Cont = styled(UserBox)`
+  .profile-avatar {
+    .profile {
+      pointer-events: all;
+    }
+  }
+`;

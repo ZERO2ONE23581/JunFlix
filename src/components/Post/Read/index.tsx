@@ -22,14 +22,12 @@ export const IsPost = ({ text, isMyBoard, isFollowing }: IIsPost) => {
     <>
       {isPost && (
         <Blur isBlur={isBlur}>
-          {!text && (
-            <div className="text">
-              <span>포스트를 보려면 보드를 팔로우 하세요.</span>
-              <span>Follow the board to see POSTS.</span>
-            </div>
-          )}
+          <div className="text">
+            <span>! 포스트를 보려면 해당 보드를 팔로우 하세요.</span>
+            <span>! Follow this BOARD to see these POSTS.</span>
+          </div>
           <div className="list">
-            <PostList from={8} size={4} isBlur={isBlur} posts={data?.posts!} />
+            <PostList from={8} size={3} isBlur={isBlur} posts={data?.posts!} />
           </div>
         </Blur>
       )}
@@ -73,10 +71,16 @@ const Blur = styled.div<{ isBlur: boolean }>`
     flex-direction: column;
     justify-content: center;
     display: ${(p) => !p.isBlur && 'none'};
+    background-color: black;
+    padding: 15px;
+    width: 500px;
+    border-radius: 10px;
     span {
+      font-weight: 400;
+      font-size: 1.5rem;
       font-style: italic;
       text-align: center;
-      font-size: 1.5rem;
+      color: ${(p) => p.theme.color.logo};
     }
   }
   .list {

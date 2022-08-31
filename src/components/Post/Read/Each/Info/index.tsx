@@ -39,6 +39,7 @@ export const Info = ({ post, query, setModal, setEdit, setDelete }: IInfo) => {
             />
             <CommentList query={query} />
           </Main>
+
           <Bottom>
             <Icons query={query} />
             <CreateComment query={query} />

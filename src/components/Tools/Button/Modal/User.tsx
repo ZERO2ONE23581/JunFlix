@@ -19,7 +19,7 @@ export const ModalBtn = ({ setSetting }: IModalBtn) => {
       );
     if (type === 'profile')
       router.push(
-        `/user/${loggedInUser?.id}/${loggedInUser?.username}/profile`
+        `/user/${loggedInUser?.id}/${loggedInUser?.username}/dashboard/profile`
       );
   };
   return (
@@ -34,8 +34,7 @@ export const ModalBtn = ({ setSetting }: IModalBtn) => {
         <Btn
           type="button"
           name="프로필 보기 (See Profile)"
-          CLASSNAME="delete-post-btn"
-          onClick={() => handleClick('delete')}
+          onClick={() => handleClick('profile')}
           svg={{ type: 'profile', size: '1.4rem', location: { left: true } }}
         />
       </ModalBtnCont>

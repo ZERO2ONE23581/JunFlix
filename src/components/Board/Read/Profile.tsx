@@ -23,13 +23,11 @@ export const Profile = ({ userAvatar, username }: IProfile) => {
           onClick={() => router.push(`/user/${user_id}/${username}/dashboard`)}
         />
       </div>
-      <span className="username">
-        <span>@{username}</span>
-        {!isMyBoard && (
-          <span>
-            <Svg type="user-plus" size="1.5rem" />
-          </span>
-        )}
+      <span
+        className="username"
+        onClick={() => router.push(`/user/${user_id}/${username}/dashboard`)}
+      >
+        @{username}
       </span>
     </Cont>
   );
@@ -53,11 +51,10 @@ const Cont = styled.article`
     }
   }
   .username {
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    span {
-      font-size: 1.2rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    :hover {
+      color: ${(p) => p.theme.color.logo};
     }
   }
 `;
