@@ -1,4 +1,4 @@
-import { Item } from './Item';
+import { PostBox } from './PostBox';
 import { Fold } from './Fold';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
@@ -23,7 +23,7 @@ export const PostList = ({
       {isPost && (
         <Cont className="post-list" size={size}>
           {posts?.slice(0, length).map((post) => (
-            <Item post={post} key={post.id} />
+            <PostBox post={post} key={post.id} />
           ))}
           {!isBlur && (
             <Fold

@@ -51,8 +51,8 @@ const Cont = styled.ul<{ isAvatar: boolean }>`
   }
 `;
 const Title = styled.span`
+  font-size: 1.6rem;
   font-weight: 500;
-  font-size: 2rem;
   position: relative;
 `;
 const Detail = styled.li`

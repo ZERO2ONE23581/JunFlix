@@ -13,31 +13,31 @@ export const PageTitle = ({ type }: IPageTitle) => {
   useEffect(() => {
     if (type) {
       if (type === 'posts') {
-        setEng('All Posts');
-        setKor('모든 포스트');
+        setEng('POSTS');
+        setKor('포스트');
       }
       if (type === 'boards') {
-        setEng('Movie Boards');
-        setKor('보드 둘러보기');
+        setEng('BOARDS');
+        setKor('보드');
       }
       if (type === 'trending') {
-        setEng('Trending Movies');
-        setKor('현재 인기영화');
+        setEng('MOVIES');
+        setKor('인기상영작');
       }
       if (type === 'now') {
-        setEng('Now Playing');
+        setEng('NOW PLAYING');
         setKor('현재 상영작');
       }
       if (type === 'upcoming') {
-        setEng('Upcoming');
+        setEng('UPCOMING');
         setKor('개봉 예정작');
       }
       if (type === 'tv') {
-        setEng('TV Shows');
+        setEng('TV SHOWS');
         setKor('티비·드라마');
       }
       if (type === 'top') {
-        setEng('Classic');
+        setEng('CLASSIC');
         setKor('명작·클래식');
       }
     }
@@ -51,11 +51,11 @@ export const PageTitle = ({ type }: IPageTitle) => {
     else return 'film';
   };
   return (
-    <Cont className={type}>
+    <Cont className="title">
       <span>{eng}</span>
       <span className="kor">{kor}</span>
       <Svg
-        size="1.5rem"
+        size="2rem"
         type={SVG(type)}
         onClick={() =>
           router.push(`/${type === 'trending' ? `movies/${type}` : type}`)
@@ -67,20 +67,14 @@ export const PageTitle = ({ type }: IPageTitle) => {
 const Cont = styled.h1`
   gap: 8px;
   display: flex;
-  margin-left: 15px;
   align-items: center;
   padding: 10px 0 15px;
   justify-content: flex-start;
   span {
     font-weight: 500;
-    font-size: 1.7rem;
-  }
-  .kor {
-    margin-top: 7px;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
   svg {
-    margin-top: 7px;
     cursor: pointer;
   }
 `;

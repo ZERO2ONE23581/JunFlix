@@ -6,12 +6,16 @@ import { IData } from '../../../../types/global';
 import { FollowBoardModal } from '../../Modal/Follow/Board';
 import { IGetFollowingBoard } from '../../../../types/board';
 import useMutation from '../../../../libs/client/useMutation';
+import useUser from '../../../../libs/client/useUser';
+import { useRouter } from 'next/router';
 
 interface IFollowBtn {
   userId: number;
   boardId: number;
 }
 export const FollowBtn = ({ userId, boardId }: IFollowBtn) => {
+  const { isLoggedIn } = useUser();
+  const router = useRouter();
   const [FollowBoard] = useMutation<IData>(
     `/api/user/${userId}/follow/board/${boardId}`
   );
@@ -22,6 +26,10 @@ export const FollowBtn = ({ userId, boardId }: IFollowBtn) => {
   const [unFollow, setUnFollow] = useState(false);
 
   const onClick = () => {
+    if (!isLoggedIn) {
+      alert(`You need to login (로그인이 필요합니다.)`);
+      router.push(`/login`);
+    }
     setFollow(false);
     setUnFollow(false);
     if (!data) return;

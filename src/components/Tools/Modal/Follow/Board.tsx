@@ -62,7 +62,7 @@ export const FollowBoardModal = ({
   );
 };
 const Cont = styled(SmallModal)`
-  z-index: 2;
+  z-index: 222;
   align-items: center;
   .follow {
     width: 200px;

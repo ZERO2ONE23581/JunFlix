@@ -7,21 +7,23 @@ interface IList {
 }
 export const List = ({ array }: IList) => {
   return (
-    <Cont size={5}>
-      {array?.map((item: any) => (
-        <Item key={item.id}>
-          <img
-            src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}
-            alt="영화포스터1"
-          />
-          {/* <img
+    <>
+      <Cont size={5}>
+        {array?.map((item: any) => (
+          <Item key={item.id}>
+            <img
+              src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}
+              alt="영화포스터1"
+            />
+            {/* <img
             src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
             alt="영화포스터1"
           /> */}
-          <Info item={item} />
-        </Item>
-      ))}
-    </Cont>
+            <Info item={item} />
+          </Item>
+        ))}
+      </Cont>
+    </>
   );
 };
 const Cont = styled(Grid)`

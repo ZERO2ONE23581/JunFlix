@@ -29,8 +29,11 @@ export const ThemeBtn = ({ setTheme, isLight }: IBtns) => {
   );
 };
 const Cont = styled.div`
-  top: 15px;
+  top: 100px;
   right: 40px;
   z-index: 999;
   position: fixed;
+  .sun {
+    fill: whitesmoke;
+  }
 `;

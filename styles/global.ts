@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 
 export const Page = styled.section`
   padding: 0 6% 10%;
@@ -10,7 +11,7 @@ export const Page = styled.section`
 `;
 export const Layout = styled.section`
   min-width: 100vw;
-  padding: 10px 8%;
+  padding: 10px 80px;
 `;
 export const Box = styled.article`
   gap: 12px;
@@ -115,4 +116,56 @@ export const Grid = styled.article<{ size: number }>`
 export const Blur = styled.div<{ isBlur: boolean }>`
   pointer-events: ${(p) => p.isBlur && 'none'};
   filter: ${(p) => p.isBlur && 'blur(5px)'};
+`;
+
+export const rowVars = {
+  hidden: {
+    x: 1512,
+  },
+  visible: {
+    x: 0,
+  },
+  exit: {
+    x: -1512,
+  },
+};
+export const boxVars = {
+  initial: {
+    scale: 1,
+  },
+  hover: {
+    y: -20,
+    scale: 1.3,
+    transition: {
+      delay: 0.2,
+      duration: 0.3,
+    },
+  },
+};
+
+export const MotionBox = styled(motion.div)<{
+  avatar?: string;
+  preview?: string;
+}>`
+  border: none;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  border-radius: 5px;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background-color: ${(p) => p.theme.color.font};
+  background: ${(p) =>
+    `url(${
+      p.avatar
+        ? `https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/${p.avatar}/public`
+        : p.preview && p.preview
+    }) center / cover no-repeat `};
+  &:first-of-type {
+    transform-origin: center left;
+  }
+  &:last-of-type {
+    transform-origin: center right;
+  }
 `;

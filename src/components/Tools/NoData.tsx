@@ -7,7 +7,6 @@ interface INoData {
   type: string;
 }
 export const NoData = ({ type }: INoData) => {
-  console.log(type);
   const router = useRouter();
   const { loggedInUser } = useUser();
   const [text, setText] = useState('');
@@ -15,6 +14,7 @@ export const NoData = ({ type }: INoData) => {
     if (type === 'post') setText('Post');
     if (type === 'board') setText('Board');
     if (type === 'review') setText('Review');
+    if (type === 'movie') setText('Movie');
   }, [type, setText]);
   const onClick = () => {
     if (type === 'board') router.push(`/user/${loggedInUser?.id}/board/create`);

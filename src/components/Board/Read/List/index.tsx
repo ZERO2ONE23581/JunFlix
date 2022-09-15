@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { Item } from './Item';
+import { BoardBox } from './Board';
 import styled from '@emotion/styled';
 import { IBoardList } from '../../../../types/board';
 import { Grid } from '../../../../../styles/global';
@@ -7,12 +6,13 @@ import { NoData } from '../../../Tools/NoData';
 
 export const BoardList = ({ size, boards }: IBoardList) => {
   const isBoard = Boolean(boards?.length > 0);
+
   return (
     <>
       {isBoard && (
         <Cont size={size} className="board-list">
-          {boards?.map((board) => (
-            <Item
+          {boards.slice(0, 6)?.map((board) => (
+            <BoardBox
               key={board.id}
               boardId={board.id}
               userId={board.UserID}

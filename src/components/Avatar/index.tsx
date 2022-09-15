@@ -84,7 +84,7 @@ const variant = 'public';
 const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
 const AVATAR_URL = (avatar: string) => `${base}/${avatar}/${variant}`;
 
-export const AVATAR_BG = styled.article<{ avatar: string; preview: string }>`
+export const AVATAR_BG = styled.article<{ avatar?: string; preview?: string }>`
   border: none;
   overflow: hidden;
   min-height: 440px;

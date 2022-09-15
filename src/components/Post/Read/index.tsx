@@ -6,11 +6,10 @@ import { useRouter } from 'next/router';
 import { IGetAllPosts } from '../../../types/post';
 
 interface IIsPost {
-  text: boolean;
   isMyBoard: boolean;
   isFollowing: boolean;
 }
-export const IsPost = ({ text, isMyBoard, isFollowing }: IIsPost) => {
+export const IsPost = ({ isMyBoard, isFollowing }: IIsPost) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const { data } = useSWR<IGetAllPosts>(

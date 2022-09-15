@@ -10,11 +10,12 @@ import { PostIcons } from '../../../Comment/Post/Read/List/Icons';
 import { Svg } from '../../../Tools/Svg';
 import { ConfirmModal } from '../../../Tools/Modal';
 import useUser from '../../../../libs/client/useUser';
+import { boxVars, MotionBox } from '../../../../../styles/global';
 
-interface IItem {
+interface IPostBox {
   post: PostModel;
 }
-export const Item = ({ post }: IItem) => {
+export const PostBox = ({ post }: IPostBox) => {
   const { data } = useSWR<IGetBoard>(
     `/api/user/${post.UserID}/board/${post.BoardID}`
   );
@@ -41,13 +42,17 @@ export const Item = ({ post }: IItem) => {
   };
   return (
     <>
-      <Cont>
+      <Cont
+        variants={boxVars}
+        initial="initial"
+        whileHover="hover"
+        className="post-box"
+      >
         {isBlur && <Svg type="lock" size="2rem" onClick={clickLocker} />}
         <Blur isBlur={isBlur}>
-          <Background
-            preview=""
+          <PostBG
+            className="post-bg"
             key={post?.id}
-            className="post"
             avatar={post?.avatar!}
             onClick={() => setModal(true)}
             onMouseOver={() => onMouse('over', post)}
@@ -55,7 +60,7 @@ export const Item = ({ post }: IItem) => {
           >
             <NoAvatar avatar={post.avatar!} />
             {postId === post.id && !close && <PostIcons post={post} />}
-          </Background>
+          </PostBG>
         </Blur>
       </Cont>
 
@@ -69,7 +74,7 @@ export const Item = ({ post }: IItem) => {
     </>
   );
 };
-const Cont = styled.article`
+const Cont = styled(MotionBox)`
   position: relative;
   .lock {
     top: 50%;
@@ -83,23 +88,16 @@ const Cont = styled.article`
 const Blur = styled.div<{ isBlur: boolean }>`
   position: relative;
   filter: ${(p) => p.isBlur && 'blur(5px)'};
-  .post {
-    pointer-events: ${(p) => p.isBlur && 'none'};
-  }
   .text {
     top: 0;
     right: 0;
     width: 200px;
-    height: 100px;
-    border: 2px solid blue;
     text-align: center;
     position: absolute;
-    display: flex;
   }
 `;
-const Background = styled(AVATAR_BG)`
+const PostBG = styled(AVATAR_BG)`
   display: flex;
-  height: 350px;
   cursor: pointer;
   position: relative;
   border-radius: 5px;

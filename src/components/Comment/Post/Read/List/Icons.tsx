@@ -15,7 +15,7 @@ export const PostIcons = ({ post }: IPostIcons) => {
   const isLiked = Boolean(data?.post.likes.length! > 0);
   const isComment = Boolean(data?.post.comments.length! > 0);
   return (
-    <Cont>
+    <Cont className="post-icon">
       <li>
         {isLiked ? (
           <>
@@ -40,11 +40,10 @@ export const PostIcons = ({ post }: IPostIcons) => {
   );
 };
 const Cont = styled.ul`
+  gap: 50px;
   z-index: 1;
   width: 100%;
-  height: 100%;
   opacity: 0.7;
-  gap: 50px;
   display: flex;
   align-items: center;
   justify-content: center;

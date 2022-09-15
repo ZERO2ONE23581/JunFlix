@@ -2,9 +2,11 @@ import { Info } from './Info';
 import { OnAir } from './OnAir';
 import styled from '@emotion/styled';
 import { NoAvatar } from '../../../../Avatar/NoAvatar';
-import { AVATAR_BG } from '../../../../Avatar';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { motion } from 'framer-motion';
+import { NoData } from '../../../../Tools/NoData';
+import { boxVars, MotionBox } from '../../../../../../styles/global';
 
 interface IItem {
   userId: number;
@@ -14,17 +16,24 @@ interface IItem {
   avatar: string;
   username: string;
 }
-export const Item = ({
-  userId,
-  boardId,
+export const BoardBox = ({
   title,
   genre,
   avatar,
+  userId,
+  boardId,
   username,
 }: IItem) => {
   const router = useRouter();
   return (
-    <Cont key={boardId} avatar={avatar} className="board" preview="">
+    <MotionBox
+      preview=""
+      avatar={avatar}
+      variants={boxVars}
+      initial="initial"
+      whileHover="hover"
+      className="board-box"
+    >
       <OnAir userId={userId} boardId={boardId} />
       <MoveBtn
         onClick={() => router.push(`/user/${userId}/board/${boardId}/${title}`)}
@@ -41,16 +50,10 @@ export const Item = ({
           />
         </a>
       </Link>
-    </Cont>
+    </MotionBox>
   );
 };
-const Cont = styled(AVATAR_BG)`
-  display: flex;
-  position: relative;
-  border-radius: 5px;
-  flex-direction: column;
-  justify-content: space-between;
-`;
+
 const MoveBtn = styled.button`
   width: 100%;
   height: 100%;

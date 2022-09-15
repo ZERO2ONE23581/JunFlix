@@ -21,7 +21,6 @@ const BoardPage: NextPage = () => {
   );
   const [preview, setPreview] = useState('');
   const isMyBoard = Boolean(Number(user_id) === loggedInUser?.id);
-  const [text, setText] = useState(false);
   return (
     <>
       <HeadTitle title={data?.board?.title!} />
@@ -31,11 +30,7 @@ const BoardPage: NextPage = () => {
           setPreview={setPreview}
           isFollowing={data?.isFollowing!}
         />
-        <IsPost
-          text={text}
-          isMyBoard={isMyBoard}
-          isFollowing={data?.isFollowing!}
-        />
+        <IsPost isMyBoard={isMyBoard} isFollowing={data?.isFollowing!} />
       </Cont>
     </>
   );
