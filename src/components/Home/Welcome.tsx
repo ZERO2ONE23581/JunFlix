@@ -60,13 +60,13 @@ export const Welcome = () => {
   );
 };
 const Cont = styled.article`
-  padding: 150px 80px 50px;
+  padding: 150px 40px 50px;
   .btn-wrap {
     gap: 20px;
     display: flex;
     align-items: center;
     margin-top: 40px;
-    margin-left: 40px;
+    margin-left: 20px;
     button {
       width: 120px;
       padding: 8px;

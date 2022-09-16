@@ -1,23 +1,29 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
-import { Movie } from '../../src/components/Movie';
 import { HeadTitle } from '../../src/components/Layout/Head';
+import { MovieSlider } from '../../src/components/Tools/Slider/movie';
 
-const All: NextPage = () => {
+const Movies: NextPage = () => {
   return (
     <>
       <HeadTitle title="영화" />
       <Cont>
-        <Movie type="trending" />
-        <Movie type="now" />
-        <Movie type="upcoming" />
-        <Movie type="tv" />
-        <Movie type="top" />
+        <MovieSlider type="trending" />
+        <MovieSlider type="now" />
+        <MovieSlider type="tv" />
+        <MovieSlider type="upcoming" />
+        <MovieSlider type="top" />
       </Cont>
     </>
   );
 };
-export default All;
+export default Movies;
 
-const Cont = styled(Page)``;
+const Cont = styled(Page)`
+  padding: 10px 20px 100px;
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;

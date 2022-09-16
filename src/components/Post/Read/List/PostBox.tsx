@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { PostModal } from '../Each';
 import { AVATAR_BG } from '../../../Avatar';
@@ -11,6 +11,7 @@ import { Svg } from '../../../Tools/Svg';
 import { ConfirmModal } from '../../../Tools/Modal';
 import useUser from '../../../../libs/client/useUser';
 import { boxVars, MotionBox } from '../../../../../styles/global';
+import { motion } from 'framer-motion';
 
 interface IPostBox {
   post: PostModel;
@@ -74,7 +75,8 @@ export const PostBox = ({ post }: IPostBox) => {
     </>
   );
 };
-const Cont = styled(MotionBox)`
+
+const Cont = styled(motion.div)`
   position: relative;
   .lock {
     top: 50%;

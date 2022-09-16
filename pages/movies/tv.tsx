@@ -1,14 +1,14 @@
 import type { NextPage } from 'next';
-import { HeadTitle } from '../../src/components/Layout/Head';
-import { Movie } from '../../src/components/Movie';
 import { Page } from '../../styles/global';
+import { HeadTitle } from '../../src/components/Layout/Head';
+import { MovieSlider } from '../../src/components/Tools/Slider/movie';
 
 const TV: NextPage = () => {
   return (
     <>
       <HeadTitle title="드라마 콘텐츠" />
       <Page>
-        <Movie type="tv" />
+        <MovieSlider type="tv" />
       </Page>
     </>
   );

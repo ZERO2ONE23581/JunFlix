@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { HeadTitle } from '../../src/components/Layout/Head';
-import { Movie } from '../../src/components/Movie';
+import { MovieSlider } from '../../src/components/Tools/Slider/movie';
 import { Page } from '../../styles/global';
 
 const Trending: NextPage = () => {
@@ -8,7 +8,7 @@ const Trending: NextPage = () => {
     <>
       <HeadTitle title="인기 콘텐츠" />
       <Page>
-        <Movie type="trending" />
+        <MovieSlider type="trending" />
       </Page>
     </>
   );

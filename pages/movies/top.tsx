@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { HeadTitle } from '../../src/components/Layout/Head';
-import { Movie } from '../../src/components/Movie';
+import { MovieSlider } from '../../src/components/Tools/Slider/movie';
 import { Page } from '../../styles/global';
 
 const Top: NextPage = () => {
@@ -8,7 +8,7 @@ const Top: NextPage = () => {
     <>
       <HeadTitle title="명작영화" />
       <Page>
-        <Movie type="top" />
+        <MovieSlider type="top" />
       </Page>
     </>
   );

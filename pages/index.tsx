@@ -13,9 +13,8 @@ const Home: NextPage = () => {
       <Cont>
         <section className="top">
           <Welcome />
-          <MovieSlider />
+          <MovieSlider type="trending" />
         </section>
-
         <section className="middle">
           <PostSlide />
           <BoardSlide />
@@ -29,15 +28,22 @@ export default Home;
 const Cont = styled.section`
   gap: 30px;
   display: flex;
+  padding: 0 10px 100px;
   flex-direction: column;
   justify-content: center;
-  padding-bottom: 10%;
+  .top,
+  .middle {
+    padding: 0 10px;
+  }
   .top {
     color: #ecf0f1;
     padding-bottom: 50px;
     background: url('/img/1.jpeg') center / cover no-repeat;
   }
   .middle {
-    padding-bottom: 50px;
+    gap: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 `;

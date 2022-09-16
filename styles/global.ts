@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
 export const Page = styled.section`
-  padding: 0 6% 10%;
   min-width: 100vw;
   min-height: 100vh;
   position: relative;
+  padding-bottom: 10%;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
@@ -135,7 +135,7 @@ export const boxVars = {
   },
   hover: {
     y: -20,
-    scale: 1.3,
+    scale: 1.5,
     transition: {
       delay: 0.2,
       duration: 0.3,

@@ -1,14 +1,14 @@
 import type { NextPage } from 'next';
-import { HeadTitle } from '../../src/components/Layout/Head';
-import { Movie } from '../../src/components/Movie';
 import { Page } from '../../styles/global';
+import { HeadTitle } from '../../src/components/Layout/Head';
+import { MovieSlider } from '../../src/components/Tools/Slider/movie';
 
 const NowPlaying: NextPage = () => {
   return (
     <>
       <HeadTitle title="현재상영작" />
       <Page>
-        <Movie type="now" />
+        <MovieSlider type="now" />
       </Page>
     </>
   );

@@ -37,8 +37,8 @@ export const BoardSlide = () => {
       </h1>
       {isData && (
         <Wrap>
-          <Svg size="2.5rem" type="chev-left-arrow" onClick={() => {}} />
-          <Row>
+          <Svg size="2rem" type="chev-left-arrow" onClick={() => {}} />
+          <Row className="board-row">
             <AnimatePresence
               initial={false}
               onExitComplete={() => setLeave((p) => !p)}
@@ -66,7 +66,7 @@ export const BoardSlide = () => {
               </Slide>
             </AnimatePresence>
           </Row>
-          <Svg size="2.5rem" type="chev-right-arrow" onClick={increaseIndex} />
+          <Svg size="2rem" type="chev-right-arrow" onClick={increaseIndex} />
         </Wrap>
       )}
       {!isData && <NoData type="board" />}
@@ -75,10 +75,13 @@ export const BoardSlide = () => {
 };
 
 const Cont = styled(SliderCont)`
-  .board-slide {
-    grid-template-columns: repeat(5, 1fr);
-    .board-box {
-      height: 250px;
+  .board-row {
+    height: 250px;
+    .board-slide {
+      grid-template-columns: repeat(5, 1fr);
+      .board-box {
+        height: 250px;
+      }
     }
   }
 `;

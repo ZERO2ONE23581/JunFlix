@@ -1,4 +1,3 @@
-import { Info } from './Info';
 import styled from '@emotion/styled';
 import { Grid } from '../../../../styles/global';
 

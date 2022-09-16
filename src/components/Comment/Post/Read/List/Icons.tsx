@@ -12,7 +12,7 @@ export const PostIcons = ({ post }: IPostIcons) => {
   );
   const LikesCount = data?.post?._count.likes;
   const CommentsCount = data?.post?._count.comments;
-  const isLiked = Boolean(data?.post.likes.length! > 0);
+  const isLiked = Boolean(data?.post?.likes.length! > 0);
   const isComment = Boolean(data?.post.comments.length! > 0);
   return (
     <Cont className="post-icon">

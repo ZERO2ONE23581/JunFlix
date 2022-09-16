@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Svg } from '../Svg';
 import styled from '@emotion/styled';
 import { NoData } from '../NoData';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { rowVars } from '../../../../styles/global';
 import { IPostList } from '../../../types/post';
 import { PostBox } from '../../Post/Read/List/PostBox';
@@ -37,8 +37,8 @@ export const PostSlide = () => {
       </h1>
       {isData && (
         <Wrap>
-          <Svg size="2.5rem" type="chev-left-arrow" onClick={() => {}} />
-          <Row>
+          <Svg size="2rem" type="chev-left-arrow" onClick={() => {}} />
+          <Row className="post-row">
             <AnimatePresence
               initial={false}
               onExitComplete={() => setLeave((p) => !p)}
@@ -58,7 +58,7 @@ export const PostSlide = () => {
               </Slide>
             </AnimatePresence>
           </Row>
-          <Svg size="2.5rem" type="chev-right-arrow" onClick={increaseIndex} />
+          <Svg size="2rem" type="chev-right-arrow" onClick={increaseIndex} />
         </Wrap>
       )}
       {!isData && <NoData type="board" />}
@@ -66,15 +66,17 @@ export const PostSlide = () => {
   );
 };
 const Cont = styled(SliderCont)`
-  margin-bottom: 120px;
-  .post-slide {
-    grid-template-columns: repeat(4, 1fr);
-    .post-box {
-      min-height: 250px;
-      .post-bg {
-        min-height: 250px;
-        .post-icon {
-          min-height: 250px;
+  .post-row {
+    min-height: 330px;
+    .post-slide {
+      grid-template-columns: repeat(4, 1fr);
+      .post-box {
+        min-height: 330px;
+        .post-bg {
+          min-height: 330px;
+          .post-icon {
+            min-height: 330px;
+          }
         }
       }
     }
