@@ -6,9 +6,9 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { AnimatePresence } from 'framer-motion';
 import { IGetBoards } from '../../../types/board';
-import { rowVars } from '../../../../styles/global';
+import { slideVars } from '../../../../styles/global';
 import { BoardBox } from '../../Board/Read/List/Board';
-import { Row, Slide, SliderCont, Wrap } from './movie';
+import { Row, Slide, SliderWrap, Wrap } from './Movie';
 
 export const BoardSlide = () => {
   const { data } = useSWR<IGetBoards>(`/api/boards`);
@@ -46,7 +46,7 @@ export const BoardSlide = () => {
               <Slide
                 className="board-slide"
                 key={page}
-                variants={rowVars}
+                variants={slideVars}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
@@ -74,7 +74,7 @@ export const BoardSlide = () => {
   );
 };
 
-const Cont = styled(SliderCont)`
+const Cont = styled(SliderWrap)`
   .board-row {
     height: 250px;
     .board-slide {

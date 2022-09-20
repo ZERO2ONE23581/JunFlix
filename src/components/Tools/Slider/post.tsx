@@ -4,16 +4,16 @@ import { Svg } from '../Svg';
 import styled from '@emotion/styled';
 import { NoData } from '../NoData';
 import { AnimatePresence } from 'framer-motion';
-import { rowVars } from '../../../../styles/global';
+import { slideVars } from '../../../../styles/global';
 import { IPostList } from '../../../types/post';
 import { PostBox } from '../../Post/Read/List/PostBox';
 import { useRouter } from 'next/router';
-import { Row, Slide, SliderCont, Wrap } from './movie';
+import { Row, Slide, SliderWrap, Wrap } from './Movie';
 
 export const PostSlide = () => {
   const { data } = useSWR<IPostList>(`/api/posts`);
   //
-  const offset = 4;
+  const offset = 5;
   const [page, setPage] = useState(0);
   const array = data?.posts;
   const slicedArray = array?.slice(offset * page, offset + offset * page);
@@ -46,7 +46,7 @@ export const PostSlide = () => {
               <Slide
                 className="post-slide"
                 key={page}
-                variants={rowVars}
+                variants={slideVars}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
@@ -65,17 +65,17 @@ export const PostSlide = () => {
     </Cont>
   );
 };
-const Cont = styled(SliderCont)`
+const Cont = styled(SliderWrap)`
   .post-row {
-    min-height: 330px;
+    min-height: 300px;
     .post-slide {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       .post-box {
-        min-height: 330px;
+        min-height: 300px;
         .post-bg {
-          min-height: 330px;
+          min-height: 300px;
           .post-icon {
-            min-height: 330px;
+            min-height: 300px;
           }
         }
       }

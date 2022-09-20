@@ -1,27 +1,34 @@
 import useSWR from 'swr';
-import { useEffect, useState } from 'react';
-import { Svg } from '../Svg';
+import { Svg } from '../../Svg';
+import { MovieHover } from './hover';
 import styled from '@emotion/styled';
-import { NoData } from '../NoData';
-import { AnimatePresence, motion } from 'framer-motion';
-import { rowVars } from '../../../../styles/global';
+import { MovieModal } from './modal';
+import { NoData } from '../../NoData';
 import { useRouter } from 'next/router';
-import { MovieHover } from './movieHover';
+import { useEffect, useState } from 'react';
+import { slideVars } from '../../../../../styles/global';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface IMovieSlider {
   type: string;
 }
-export interface IMovie {
-  id: number;
-  title?: string;
-  overview?: string;
-  vote_average?: number;
-  release_date?: string;
-  original_title?: string;
-  original_language?: string;
-  original_name?: string;
-  poster_path?: string;
-  backdrop_path?: string;
+interface IMovieApi {
+  arr: {
+    results: [
+      {
+        id: number;
+        title?: string;
+        overview?: string;
+        vote_average?: number;
+        release_date?: string;
+        original_title?: string;
+        original_language?: string;
+        original_name?: string;
+        poster_path?: string;
+        backdrop_path?: string;
+      }
+    ];
+  };
 }
 export const MovieSlider = ({ type }: IMovieSlider) => {
   const router = useRouter();
@@ -35,7 +42,7 @@ export const MovieSlider = ({ type }: IMovieSlider) => {
     if (type === 'upcoming') setTitle('Upcoming');
     if (type === 'trending') setTitle('Trending Now');
   }, [type, setApi, setTitle]);
-  const { data } = useSWR(api);
+  const { data } = useSWR<IMovieApi>(api);
   //
   const offset = 6;
   const [page, setPage] = useState(0);
@@ -44,73 +51,88 @@ export const MovieSlider = ({ type }: IMovieSlider) => {
   const isData = Boolean(array?.length! > 0);
   const Length = Number(array?.length);
   const MaxIndex = Math.floor(Length / offset) - 1;
-  //
   const [leave, setLeave] = useState(false);
-  const increaseIndex = () => {
+  const [reverse, setReverse] = useState(false);
+  useEffect(() => {
+    if (page === 0) setReverse(false);
+  }, [page, setReverse]);
+  const clickRight = () => {
+    setReverse(false);
     if (leave) return;
     setLeave((p) => !p);
     setPage((p) => (p === MaxIndex ? 0 : p + 1));
   };
-  console.log(data?.arr?.results);
+  const clickLeft = () => {
+    setReverse(true);
+    if (leave) return;
+    setLeave((p) => !p);
+    setPage((p) => p - 1);
+  };
+  //
+  const onBoxClick = (movieId: number) => {
+    router.push(`/home/${movieId}`);
+  };
+  const chosenId = Number(
+    router?.query?.movie_id && router?.query?.movie_id![0]
+  );
+  const clickedMovie = () => {
+    if (chosenId) return array?.find((movie) => movie.id === chosenId);
+  };
   return (
-    <SliderCont>
+    <SliderWrap>
       <h1 onClick={() => router.push(`/movies`)}>
         <span>{title}</span>
       </h1>
       {isData && (
         <Wrap>
-          <Svg size="2rem" type="chev-left-arrow" onClick={() => {}} />
+          {page !== 0 && (
+            <Svg size="2rem" type="chev-left-arrow" onClick={clickLeft} />
+          )}
           <Row>
             <AnimatePresence
               initial={false}
+              custom={reverse}
               onExitComplete={() => setLeave((p) => !p)}
             >
               <Slide
                 key={page}
-                variants={rowVars}
-                initial="hidden"
-                animate="visible"
+                custom={reverse}
+                variants={slideVars}
                 exit="exit"
+                initial="initial"
+                animate="animate"
                 transition={{ type: 'tween', duration: 1 }}
               >
-                {slicedArray?.map((item: IMovie) => (
+                {slicedArray?.map((movie) => (
                   <Box
-                    key={item.id}
-                    className="movie-box"
-                    variants={movieBoxVars}
+                    custom={reverse}
+                    key={movie.id}
                     initial="initial"
                     whileHover="hover"
-                    bg={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}
+                    className="movie-box"
+                    layoutId={movie.id + ''}
+                    variants={movieBoxVars}
+                    onClick={() => onBoxClick(movie.id)}
+                    bg={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
                   >
-                    <MovieHover
-                      title={
-                        item.original_name
-                          ? item.original_name!
-                          : item.original_title!
-                      }
-                      date={item.release_date!}
-                      rate={item.vote_average!}
-                      lang={item.original_language!}
-                    />
-                    {/* <MovieInfo
-                      title={
-                        item.original_name
-                          ? item.original_name!
-                          : item.original_title!
-                      }
-                      date={item.release_date!}
-                      rate={item.vote_average!}
-                    /> */}
+                    <MovieHover data={movie} />
                   </Box>
                 ))}
               </Slide>
             </AnimatePresence>
           </Row>
-          <Svg size="2rem" type="chev-right-arrow" onClick={increaseIndex} />
+          <Svg size="2rem" type="chev-right-arrow" onClick={clickRight} />
         </Wrap>
       )}
+      <MovieModal
+        movieId={chosenId!}
+        data={clickedMovie()!}
+        isBoxClicked={Boolean(
+          router.query.movie_id && Number(router.query.movie_id) !== 0
+        )}
+      />
       {!isData && <NoData type="movie" />}
-    </SliderCont>
+    </SliderWrap>
   );
 };
 export const movieBoxVars = {
@@ -127,7 +149,7 @@ export const movieBoxVars = {
     },
   },
 };
-export const SliderCont = styled.section`
+export const SliderWrap = styled.section`
   .chev-right-arrow,
   .chev-left-arrow {
     opacity: 0.8;
@@ -138,7 +160,7 @@ export const SliderCont = styled.section`
     align-items: center;
     font-size: 1.5rem;
     margin-left: 40px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     :hover {
       cursor: pointer;
       color: ${(p) => p.theme.color.logo};

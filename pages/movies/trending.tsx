@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { HeadTitle } from '../../src/components/Layout/Head';
-import { MovieSlider } from '../../src/components/Tools/Slider/movie';
+import { MovieSlider } from '../../src/components/Tools/Slider/Movie';
 import { Page } from '../../styles/global';
 
 const Trending: NextPage = () => {

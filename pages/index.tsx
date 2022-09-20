@@ -1,49 +1,63 @@
+import { useEffect } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Welcome } from '../src/components/Home/Welcome';
+import { useRouter } from 'next/router';
+import useUser from '../src/libs/client/useUser';
+import { AnimatePresence, motion } from 'framer-motion';
 import { HeadTitle } from '../src/components/Layout/Head';
-import { PostSlide } from '../src/components/Tools/Slider/post';
-import { MovieSlider } from '../src/components/Tools/Slider/movie';
-import { BoardSlide } from '../src/components/Tools/Slider/board';
 
-const Home: NextPage = () => {
+const Entrance: NextPage = () => {
+  const router = useRouter();
+  const { isLoggedIn } = useUser();
+  useEffect(() => {
+    if (isLoggedIn) router.replace(`/home/0`);
+    setTimeout(() => {
+      router.replace(`/home/0`);
+    }, 3000);
+  }, [router, isLoggedIn]);
   return (
     <>
-      <HeadTitle title="HOME" />
-      <Cont>
-        <section className="top">
-          <Welcome />
-          <MovieSlider type="trending" />
-        </section>
-        <section className="middle">
-          <PostSlide />
-          <BoardSlide />
-        </section>
-      </Cont>
+      <HeadTitle title="Welcome Page" />
+      <AnimatePresence>
+        <Cont
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          variants={welcomeVar}
+        >
+          <h1>Welcome</h1>
+        </Cont>
+      </AnimatePresence>
     </>
   );
 };
-export default Home;
+export default Entrance;
 
-const Cont = styled.section`
-  gap: 30px;
+const welcomeVar = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+  },
+  exit: {
+    opacity: 0,
+  },
+};
+
+const Cont = styled(motion.section)`
+  gap: 20px;
   display: flex;
-  padding: 0 10px 100px;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
-  .top,
-  .middle {
-    padding: 0 10px;
-  }
-  .top {
-    color: #ecf0f1;
-    padding-bottom: 50px;
-    background: url('/img/1.jpeg') center / cover no-repeat;
-  }
-  .middle {
-    gap: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  min-width: 100vw;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 10%;
+  color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
+  h1 {
+    font-size: 5rem;
   }
 `;

@@ -6,7 +6,7 @@ import { Item } from './Post/Read/List/PostBox';
 import { IBoardWithAttrs } from '../types/board';
 import { BoardBox } from './Board/Read/List/Board';
 import { AnimatePresence, motion } from 'framer-motion';
-import { boxVars, MotionBox, rowVars } from '../../styles/global';
+import { boxVars, MotionBox, slideVars } from '../../styles/global';
 
 interface ISlider {
   type: string;
@@ -44,7 +44,7 @@ export const Slide = ({ array, type }: ISlider) => {
           <Row
             className="row"
             key={page}
-            variants={rowVars}
+            variants={slideVars}
             initial="hidden"
             animate="visible"
             exit="exit"

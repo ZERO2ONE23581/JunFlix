@@ -18,7 +18,7 @@ export const Welcome = () => {
           {isLoggedIn && (
             <Btn
               type="button"
-              name="Home"
+              name="Dash"
               onClick={() =>
                 router.push(
                   `/user/${loggedInUser?.id}/${loggedInUser?.username}/dashboard`
@@ -60,7 +60,7 @@ export const Welcome = () => {
   );
 };
 const Cont = styled.article`
-  padding: 150px 40px 50px;
+  padding: 200px 40px 70px;
   .btn-wrap {
     gap: 20px;
     display: flex;

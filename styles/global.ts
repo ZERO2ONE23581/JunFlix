@@ -97,7 +97,7 @@ export const BtnWrap = styled.div`
     min-width: 80px;
   }
 `;
-export const DimBackground = styled.article<{ zIndex: number }>`
+export const DimBackground = styled.article<{ zIndex?: number }>`
   top: 0;
   left: 0;
   width: 100vw;
@@ -118,16 +118,16 @@ export const Blur = styled.div<{ isBlur: boolean }>`
   filter: ${(p) => p.isBlur && 'blur(5px)'};
 `;
 
-export const rowVars = {
-  hidden: {
-    x: 1512,
-  },
-  visible: {
+export const slideVars = {
+  initial: (reverse: boolean) => ({
+    x: reverse ? -1512 : 1512,
+  }),
+  animate: {
     x: 0,
   },
-  exit: {
-    x: -1512,
-  },
+  exit: (reverse: boolean) => ({
+    x: reverse ? 1512 : -1512,
+  }),
 };
 export const boxVars = {
   initial: {
