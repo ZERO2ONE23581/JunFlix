@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { HeadTitle } from '../../src/components/Layout/Head';
-import { MovieSlider } from '../../src/components/Tools/Slider/Movie';
+import { MovieSlider } from '../../src/components/Tools/Slider';
 
 const NowPlaying: NextPage = () => {
   return (

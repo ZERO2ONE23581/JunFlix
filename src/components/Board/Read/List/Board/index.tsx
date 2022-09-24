@@ -1,5 +1,5 @@
 import { Info } from './Info';
-import { OnAir } from './OnAir';
+import { Follow } from './Follow';
 import styled from '@emotion/styled';
 import { NoAvatar } from '../../../../Avatar/NoAvatar';
 import Link from 'next/link';
@@ -34,7 +34,7 @@ export const BoardBox = ({
       whileHover="hover"
       className="board-box"
     >
-      <OnAir userId={userId} boardId={boardId} />
+      <Follow userId={userId} boardId={boardId} />
       <MoveBtn
         onClick={() => router.push(`/user/${userId}/board/${boardId}/${title}`)}
       />

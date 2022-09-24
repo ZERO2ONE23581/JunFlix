@@ -7,6 +7,11 @@ export const lightTheme: Theme = {
     btn: 'black',
     logo: '#E50914',
     green: '#2ecc71',
+    grey: {
+      reg: '#4b4b4b',
+      dark: '#262626',
+      light: '#434343',
+    },
   },
   border: {
     thin: 'none',
@@ -27,6 +32,11 @@ export const darkTheme: Theme = {
     btn: '#dfe6e9',
     logo: '#E50914',
     green: '#2ecc71',
+    grey: {
+      reg: '#4b4b4b',
+      dark: '#262626',
+      light: '#434343',
+    },
   },
   border: {
     thin: '1px solid #2D2C2C',

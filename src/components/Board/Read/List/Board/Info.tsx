@@ -18,26 +18,26 @@ export const Info = ({ avatar, title, username, userId, genre }: IInfo) => {
   return (
     <Cont isAvatar={Boolean(avatar)}>
       <li>
-        <Title>
-          <span className="board-title">{Shotened}</span>
-          {loggedInUser?.id === userId && (
-            <Svg type="isOwner" size="1rem" fill={'red'} />
-          )}
-        </Title>
+        <h1>
+          <span>{Shotened}</span>
+          {loggedInUser?.id === userId && <Svg type="isOwner" size="1rem" />}
+        </h1>
       </li>
       <Detail>
-        <span>@{username}</span>
+        <span>Made by</span>
+        <span className="name">{username}</span>
         <span className="dot">•</span>
         <span className="board-genre">{genre}</span>
-        <Svg type={genre!} size="1.4rem" />
+        <Svg type={genre!} size="1.2rem" />
       </Detail>
     </Cont>
   );
 };
 const Cont = styled.ul<{ isAvatar: boolean }>`
   gap: 8px;
+  width: 100%;
   display: flex;
-  padding: 30px 15px;
+  padding: 15px;
   font-style: italic;
   flex-direction: column;
   justify-content: center;
@@ -49,11 +49,18 @@ const Cont = styled.ul<{ isAvatar: boolean }>`
       fill: ${(p) => p.theme.color.logo};
     }
   }
-`;
-const Title = styled.span`
-  font-size: 1.6rem;
-  font-weight: 500;
-  position: relative;
+  h1 {
+    width: fit-content;
+    font-weight: 400;
+    font-size: 1.4rem;
+    position: relative;
+    .isOwner {
+      top: -5px;
+      right: -20px;
+      position: absolute;
+      fill: ${(p) => p.theme.color.green};
+    }
+  }
 `;
 const Detail = styled.li`
   gap: 7px;
@@ -62,5 +69,9 @@ const Detail = styled.li`
   svg {
     fill: white;
     margin-left: 10px;
+  }
+  .name {
+    font-size: 1.2rem;
+    color: ${(p) => p.theme.color.logo};
   }
 `;

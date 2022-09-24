@@ -2,7 +2,6 @@ import { Svg } from '../../Svg';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Overlay } from '../../../../../styles/global';
 
 interface IMovieModal {
   data: {
@@ -25,68 +24,70 @@ export const MovieModal = ({ data, movieId, isBoxClicked }: IMovieModal) => {
   const Title = data?.original_name ? data?.original_name : data?.title;
   return (
     <>
-      {data && isBoxClicked && (
-        <>
-          <Cont
-            exit="exit"
-            initial="initial"
-            animate="animate"
-            variants={modalVar}
-            layoutId={movieId + ''}
-            transition={{ type: 'tween', duration: 0.4 }}
-          >
-            <MovieInfo
-              bg={`https://image.tmdb.org/t/p/original${data.backdrop_path!}`}
+      <AnimatePresence>
+        {data && isBoxClicked && (
+          <>
+            <Cont
+              exit="exit"
+              initial="initial"
+              animate="animate"
+              variants={modalVar}
+              layoutId={movieId + ''}
+              transition={{ type: 'tween', duration: 0.4 }}
             >
-              <div className="bg-title-wrap">
-                <Svg
-                  size="2rem"
-                  type="close"
-                  onClick={() => router.replace(`/home/0`)}
-                />
-                <h1>{Title}</h1>
-              </div>
-              <ul>
-                <li>
-                  <span>Language (언어):</span>
-                  <span>{data.original_language?.toUpperCase()}</span>
-                </li>
-                <li>
-                  <span>Release Date (개봉일):</span>
-                  <span>{data.release_date}</span>
-                </li>
-                {data.vote_average && (
+              <MovieInfo
+                bg={`https://image.tmdb.org/t/p/original${data.backdrop_path!}`}
+              >
+                <div className="bg-title-wrap">
+                  <Svg
+                    size="2rem"
+                    type="close"
+                    onClick={() => router.replace(`/home/0`)}
+                  />
+                  <h1>{Title}</h1>
+                </div>
+                <ul>
                   <li>
-                    <span>Rate (평점):</span>
-                    <span>{Math.round(data.vote_average * 100) / 100}</span>
+                    <span>Language (언어):</span>
+                    <span>{data.original_language?.toUpperCase()}</span>
                   </li>
-                )}
-                <li>
-                  <span>Overview (줄거리):</span>
-                  <span className="overview">{data.overview}</span>
-                </li>
-              </ul>
-            </MovieInfo>
-          </Cont>
-          <Overlay
-            exit={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            onClick={() => router.replace(`/home/0`)}
-          />
-        </>
-      )}
+                  <li>
+                    <span>Release Date (개봉일):</span>
+                    <span>{data.release_date}</span>
+                  </li>
+                  {data.vote_average && (
+                    <li>
+                      <span>Rate (평점):</span>
+                      <span>{Math.round(data.vote_average * 100) / 100}</span>
+                    </li>
+                  )}
+                  <li>
+                    <span>Overview (줄거리):</span>
+                    <span className="overview">{data.overview}</span>
+                  </li>
+                </ul>
+              </MovieInfo>
+            </Cont>
+            <Overlay
+              exit={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              onClick={() => router.replace(`/home/0`)}
+            />
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 };
 const Cont = styled(motion.article)`
-  top: 50px;
+  top: 20px;
   left: 0;
   right: 0;
   z-index: 100;
   margin: 0 auto;
   position: fixed;
   width: 45vw;
-  max-height: 650px;
+  max-height: 700px;
   overflow-y: auto;
   border-radius: 5px;
   color: ${(p) => p.theme.color.font};
@@ -142,8 +143,17 @@ const MovieInfo = styled.div<{ bg: string }>`
     }
   }
 `;
-
-export const modalVar = {
+const Overlay = styled(motion.div)`
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 99;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8);
+`;
+const modalVar = {
   initial: {
     opacity: 0,
   },

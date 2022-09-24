@@ -81,7 +81,7 @@ const NoImage = styled.div<{ disabled: boolean }>`
   }
 `;
 const variant = 'public';
-const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
+const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg';
 const AVATAR_URL = (avatar: string) => `${base}/${avatar}/${variant}`;
 
 export const AVATAR_BG = styled.article<{ avatar?: string; preview?: string }>`

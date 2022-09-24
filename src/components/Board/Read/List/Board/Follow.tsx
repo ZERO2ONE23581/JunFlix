@@ -6,7 +6,7 @@ interface IOnAir {
   userId: number;
   boardId: number;
 }
-export const OnAir = ({ userId, boardId }: IOnAir) => {
+export const Follow = ({ userId, boardId }: IOnAir) => {
   const { isLoggedIn, loggedInUser } = useUser();
   return (
     <Cont>

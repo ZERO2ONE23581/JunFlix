@@ -1,10 +1,9 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
+import { Page } from '../../../styles/global';
+import { Slider } from '../../../src/components/Tools/Slider';
 import { Welcome } from '../../../src/components/Home/Welcome';
 import { HeadTitle } from '../../../src/components/Layout/Head';
-import { PostSlide } from '../../../src/components/Tools/Slider/post';
-import { MovieSlider } from '../../../src/components/Tools/Slider/Movie';
-import { BoardSlide } from '../../../src/components/Tools/Slider/board';
 
 const Home: NextPage = () => {
   return (
@@ -13,11 +12,11 @@ const Home: NextPage = () => {
       <Cont>
         <Top>
           <Welcome />
-          <MovieSlider type="trending" />
+          <Slider type="movie" movieType="trending" />
         </Top>
         <Bottom>
-          <PostSlide />
-          <BoardSlide />
+          <Slider type="post" />
+          <Slider type="board" />
         </Bottom>
       </Cont>
     </>
@@ -25,22 +24,20 @@ const Home: NextPage = () => {
 };
 export default Home;
 
-const Cont = styled.section`
-  display: flex;
-  padding: 0 50px;
-  margin-bottom: 100px;
-  flex-direction: column;
-  justify-content: center;
+const Cont = styled(Page)``;
+const Wrap = styled.section`
+  padding: 0 3%;
   background: ${(p) =>
-    `linear-gradient(to top, ${p.theme.color.bg}, transparent), url('/img/home-bg-up.jpg') center / cover no-repeat`};
+    `linear-gradient(90deg, ${p.theme.color.grey.dark},${p.theme.color.bg}, transparent), url('/img/home-bg-up.jpg') center / cover no-repeat`};
 `;
-const Top = styled.section`
-  color: #ecf0f1;
-  margin-bottom: 50px;
+const Top = styled(Wrap)`
+  padding-bottom: 40px;
 `;
-const Bottom = styled.section`
+const Bottom = styled(Wrap)`
   gap: 40px;
   display: flex;
+  margin-top: 0px;
+  padding-bottom: 10%;
   flex-direction: column;
   justify-content: center;
 `;

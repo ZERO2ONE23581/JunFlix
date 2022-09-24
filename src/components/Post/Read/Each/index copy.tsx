@@ -7,13 +7,11 @@ import { IGetPost } from '../../../../types/post';
 import { IQuery, IData } from '../../../../types/global';
 import { ConfirmModal } from '../../../Tools/Modal';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Modal, DimBackground, Overlay } from '../../../../../styles/global';
+import { Modal, DimBackground } from '../../../../../styles/global';
 import { useRouter } from 'next/router';
 import useUser from '../../../../libs/client/useUser';
 import useMutation from '../../../../libs/client/useMutation';
 import { useNeedLogin } from '../../../../libs/client/useTools';
-import { AnimatePresence, motion } from 'framer-motion';
-import { modalVar } from '../../../Tools/Slider/Movie/modal';
 
 interface IPostModal extends IQuery {
   setModal: Dispatch<SetStateAction<boolean>>;
@@ -42,78 +40,58 @@ export const PostModal = ({ query, setModal }: IPostModal) => {
   }, [DelPostData, router]);
   return (
     <>
-      <AnimatePresence>
-        <Cont
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          variants={modalVar}
-          layoutId={data?.post?.id + ''}
-          transition={{ type: 'tween', duration: 0.4 }}
-        >
-          <Avatar id="postAvatar" avatar={data?.post?.avatar!} disabled />
-          <Info
-            query={query}
-            post={data?.post!}
-            setModal={setModal}
-            setEdit={setEdit}
-            setDelete={setDelete}
-          />
-          {edit && (
-            <>
-              <EditPost
-                query={query}
-                setEdit={setEdit}
-                title={data?.post?.title!}
-                content={data?.post?.content!}
-                postAvatar={data?.post?.avatar!}
-              />
-              <DimBackground
-                zIndex={102}
-                className="dim"
-                onClick={() => setEdit(false)}
-              />
-            </>
-          )}
-        </Cont>
-
-        {del && (
-          <ConfirmModal
-            type="delete-post"
-            loading={DelLoading}
-            closeModal={setDelete}
-            clickDelPost={clickDelPost}
-          />
-        )}
-        <Overlay
-          exit={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          onClick={() => setModal(false)}
+      <Cont isAvatar={Boolean(data?.post?.avatar)}>
+        <Avatar id="postAvatar" avatar={data?.post?.avatar!} disabled />
+        <Info
+          query={query}
+          post={data?.post!}
+          setModal={setModal}
+          setEdit={setEdit}
+          setDelete={setDelete}
         />
-      </AnimatePresence>
+        {edit && (
+          <>
+            <EditPost
+              query={query}
+              setEdit={setEdit}
+              title={data?.post?.title!}
+              content={data?.post?.content!}
+              postAvatar={data?.post?.avatar!}
+            />
+            <DimBackground
+              zIndex={102}
+              className="dim"
+              onClick={() => setEdit(false)}
+            />
+          </>
+        )}
+      </Cont>
+      {del && (
+        <ConfirmModal
+          type="delete-post"
+          loading={DelLoading}
+          closeModal={setDelete}
+          clickDelPost={clickDelPost}
+        />
+      )}
+      <DimBackground zIndex={99} onClick={() => setModal(false)} />
     </>
   );
 };
-const Cont = styled(motion.article)`
-  left: 0;
-  right: 0;
-  top: 1.5rem;
+const Cont = styled(Modal)<{ isAvatar: boolean }>`
+  gap: 0;
+  padding: 0;
   z-index: 102;
-  position: fixed;
+  width: 80vw;
+  height: 90vh;
   display: flex;
   overflow: hidden;
-  flex-direction: row;
-  width: 45vw;
-  height: 90vh;
-  margin: 0 auto;
-  overflow-y: auto;
   min-width: 1200px;
-  max-height: 700px;
   border-radius: 8px;
-  background-color: ${(p) => p.theme.color.bg};
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  flex-direction: row;
+  border: ${(p) => !p.isAvatar && p.theme.border.thick};
+  border: none;
+
   .postAvatar {
     pointer-events: none;
     .noImageDiv,

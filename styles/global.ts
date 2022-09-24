@@ -5,7 +5,6 @@ export const Page = styled.section`
   min-width: 100vw;
   min-height: 100vh;
   position: relative;
-  padding-bottom: 10%;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
@@ -106,6 +105,16 @@ export const DimBackground = styled.article<{ zIndex?: number }>`
   background-color: #ffeaa7;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
+`;
+export const Overlay = styled(motion.div)`
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 99;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8);
 `;
 export const Grid = styled.article<{ size: number }>`
   gap: 20px;

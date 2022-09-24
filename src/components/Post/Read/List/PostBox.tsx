@@ -12,11 +12,13 @@ import { ConfirmModal } from '../../../Tools/Modal';
 import useUser from '../../../../libs/client/useUser';
 import { boxVars, MotionBox } from '../../../../../styles/global';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 
 interface IPostBox {
   post: PostModel;
+  reverse: boolean;
 }
-export const PostBox = ({ post }: IPostBox) => {
+export const PostBox = ({ post, reverse }: IPostBox) => {
   const { data } = useSWR<IGetBoard>(
     `/api/user/${post.UserID}/board/${post.BoardID}`
   );
@@ -41,18 +43,25 @@ export const PostBox = ({ post }: IPostBox) => {
   const clickLocker = () => {
     setLock(true);
   };
+  const router = useRouter();
   return (
     <>
       <Cont
+        key={post.id}
+        custom={reverse}
         variants={boxVars}
         initial="initial"
         whileHover="hover"
-        className="post-box"
+        layoutId={post.id + ''}
+        bg={post?.avatar!}
+        onClick={() => setModal(true)}
+        //onClick={() => router.push(`/home/${post.id}`)}
       >
-        {isBlur && <Svg type="lock" size="2rem" onClick={clickLocker} />}
-        <Blur isBlur={isBlur}>
+        {/* {isBlur && (
+          <Svg type="lock" size="2rem" onClick={clickLocker} fill="white" />
+        )} */}
+        {/* <Blur isBlur={isBlur}>
           <PostBG
-            className="post-bg"
             key={post?.id}
             avatar={post?.avatar!}
             onClick={() => setModal(true)}
@@ -62,7 +71,7 @@ export const PostBox = ({ post }: IPostBox) => {
             <NoAvatar avatar={post.avatar!} />
             {postId === post.id && !close && <PostIcons post={post} />}
           </PostBG>
-        </Blur>
+        </Blur> */}
       </Cont>
 
       {lock && (
@@ -75,18 +84,33 @@ export const PostBox = ({ post }: IPostBox) => {
     </>
   );
 };
-
-const Cont = styled(motion.div)`
-  position: relative;
-  .lock {
-    top: 50%;
-    left: 50%;
-    z-index: 1;
-    cursor: pointer;
-    position: absolute;
-    transform: translate(-50%, -50%);
+const Cont = styled(motion.div)<{ bg: string }>`
+  display: flex;
+  cursor: pointer;
+  border-radius: 5px;
+  align-items: flex-end;
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  background: ${(p) =>
+    p.bg &&
+    `url(https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/${p.bg}/public) center / cover no-repeat `};
+  &:first-of-type {
+    transform-origin: center left;
+  }
+  &:last-of-type {
+    transform-origin: center right;
   }
 `;
+// const Cont = styled(motion.div)`
+//   position: relative;
+//   .lock {
+//     top: 50%;
+//     left: 50%;
+//     z-index: 1;
+//     cursor: pointer;
+//     position: absolute;
+//     transform: translate(-50%, -50%);
+//   }
+// `;
 const Blur = styled.div<{ isBlur: boolean }>`
   position: relative;
   filter: ${(p) => p.isBlur && 'blur(5px)'};
