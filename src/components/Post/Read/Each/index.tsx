@@ -103,12 +103,12 @@ const Cont = styled(motion.article)`
   display: flex;
   overflow: hidden;
   flex-direction: row;
-  width: 45vw;
-  height: 90vh;
   margin: 0 auto;
   overflow-y: auto;
+  width: 80vw;
+  height: 90vh;
   min-width: 1200px;
-  max-height: 700px;
+  max-height: 90vh;
   border-radius: 8px;
   background-color: ${(p) => p.theme.color.bg};
   ::-webkit-scrollbar {

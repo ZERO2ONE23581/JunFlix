@@ -24,7 +24,9 @@ const Home: NextPage = () => {
 };
 export default Home;
 
-const Cont = styled(Page)``;
+const Cont = styled(Page)`
+  padding: 0;
+`;
 const Wrap = styled.section`
   padding: 0 3%;
   background: ${(p) =>

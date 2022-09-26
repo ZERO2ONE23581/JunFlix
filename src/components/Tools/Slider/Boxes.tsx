@@ -1,20 +1,17 @@
 import { useState } from 'react';
-import { MovieHover } from './hover';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { PostModal } from '../../../Post/Read/Each';
+import { BoardBoxInfo } from './Board/BoardBoxInfo';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Follow } from '../../../Board/Read/List/Board/Follow';
-import Link from 'next/link';
-import { NoAvatar } from '../../../Avatar/NoAvatar';
-import { Info } from '../../../Board/Read/List/Board/Info';
+import { PostModal } from '../../Post/Read/Each';
+import { MovieHover } from './Movie/MovieHover';
 
 interface IMovieSlider {
   array: [];
   type: string;
   reverse: boolean;
 }
-interface IData {
+export interface IData {
   id: number;
   title?: string;
   overview?: string;
@@ -28,6 +25,7 @@ interface IData {
   content?: string | null;
   avatar?: string | null;
   genre?: string;
+  intro?: string;
   user?: {
     username?: string;
   };
@@ -36,10 +34,7 @@ interface IData {
   createdAt?: Date;
   updatedAt?: Date;
 }
-interface IBgUrl {
-  movie?: string;
-  avatar?: string;
-}
+
 export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
   const router = useRouter();
   const [query, setQuery] = useState({
@@ -55,6 +50,8 @@ export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
       setPostModal(true);
     }
   };
+  const isBoard = Boolean(type === 'board' || type === 'all-boards');
+
   return (
     <>
       <AnimatePresence>
@@ -66,7 +63,7 @@ export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
             initial="initial"
             whileHover="hover"
             layoutId={data.id + ''}
-            //
+            transition={{ type: 'spring', stiffness: 50 }}
             type={type}
             className={type}
             length={array.length}
@@ -75,27 +72,7 @@ export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
             onClick={() => handleClick(data.id, data?.UserID!, data?.BoardID!)}
           >
             {type === 'movie' && <MovieHover data={data} />}
-            {type === 'board' && (
-              <>
-                <Link
-                  href={`/user/${data?.UserID}/board/${data?.id}/${data?.title}`}
-                >
-                  <a>
-                    <BoardWrap>
-                      <Follow userId={data?.UserID!} boardId={data?.id} />
-                      <NoAvatar genre={data?.genre} avatar={data?.avatar!} />
-                      <Info
-                        title={data?.title!}
-                        genre={data?.genre!}
-                        userId={data?.UserID!}
-                        avatar={data?.avatar!}
-                        username={data?.user?.username!}
-                      />
-                    </BoardWrap>
-                  </a>
-                </Link>
-              </>
-            )}
+            {isBoard && <BoardBoxInfo data={data} />}
           </Box>
         ))}
         {postModal && <PostModal setModal={setPostModal} query={query} />}
@@ -111,21 +88,13 @@ const boxVars = {
   hover: {
     zIndex: 11,
     y: -20,
-    scale: 1.5,
+    scale: 1.35,
     transition: {
-      delay: 0.2,
+      delay: 0.3,
       duration: 0.3,
     },
   },
 };
-const BoardWrap = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
 const Box = styled(motion.div)<{
   type: string;
   length: number;
@@ -136,9 +105,8 @@ const Box = styled(motion.div)<{
   cursor: pointer;
   overflow: hidden;
   border-radius: 5px;
-  flex-direction: column;
   align-items: flex-end;
-  /* border: ${(p) => p.type === 'board' && `1px solid grey`}; */
+  flex-direction: column;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   :nth-of-type(1) {
     transform-origin: center left;

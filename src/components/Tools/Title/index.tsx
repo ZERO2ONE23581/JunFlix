@@ -28,6 +28,9 @@ export const Title = ({ name, type, kind, svg }: ITitle) => {
   );
 };
 const Cont = styled.article`
+  top: 0;
+  left: 8rem;
+  position: absolute;
   display: flex;
   margin-left: 20px;
   margin-bottom: 20px;
@@ -50,7 +53,7 @@ const H1 = styled.div`
   display: flex;
   align-items: center;
   padding: 10px;
-  font-size: 1.6rem;
+  font-size: 2rem;
   text-align: center;
   border-radius: 5px;
   border: 4px solid ${(p) => p.theme.color.logo};

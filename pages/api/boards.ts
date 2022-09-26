@@ -5,17 +5,11 @@ import { withApiSession } from '../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const boards = await client.board.findMany({
-    select: {
-      id: true,
-      title: true,
-      genre: true,
-      avatar: true,
-      UserID: true,
-      followers: true,
-      user: { select: { username: true } },
-    },
     orderBy: {
       id: 'desc',
+    },
+    include: {
+      user: { select: { username: true } },
     },
   });
   if (!boards) return res.json({ ok: false, error: 'NO BOARDS FOUND' });

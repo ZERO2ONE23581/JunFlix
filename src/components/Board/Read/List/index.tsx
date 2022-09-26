@@ -6,7 +6,6 @@ import { NoData } from '../../../Tools/NoData';
 
 export const BoardList = ({ size, boards }: IBoardList) => {
   const isBoard = Boolean(boards?.length > 0);
-
   return (
     <>
       {isBoard && (

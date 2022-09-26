@@ -1,6 +1,7 @@
 import { FollowBtn } from '../../../../Tools/Button/Follow/Board';
 import styled from '@emotion/styled';
 import useUser from '../../../../../libs/client/useUser';
+import { motion } from 'framer-motion';
 
 interface IOnAir {
   userId: number;
@@ -20,16 +21,14 @@ const Cont = styled.article`
   display: flex;
   align-items: center;
   justify-content: end;
+  border: 3px solid yellow;
   .follow-board {
     button {
       border: none;
       border-radius: 0;
-      padding: 7px 15px;
+      padding: 0 2rem;
       border-bottom-left-radius: 20px;
       background-color: ${(p) => p.theme.color.bg};
-      &:hover {
-        background-color: ${(p) => p.theme.color.logo};
-      }
     }
   }
 `;

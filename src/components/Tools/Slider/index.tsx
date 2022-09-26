@@ -1,16 +1,14 @@
 import useSWR from 'swr';
 import { Svg } from '../Svg';
-import { MovieHover } from './Movie/hover';
 import styled from '@emotion/styled';
-import { MovieModal } from './Movie/modal';
 import { NoData } from '../NoData';
 import { useRouter } from 'next/router';
+import { MovieModal } from './Movie/modal';
 import { useEffect, useState } from 'react';
-import { slideVars } from '../../../../styles/global';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Boxes } from './Movie/Boxes';
 import { PostModel } from '../../../types/post';
+import { AnimatePresence, motion } from 'framer-motion';
 import { IBoardWithAttrs } from '../../../types/board';
+import { Boxes } from './Boxes';
 
 interface ISlider {
   type: string;
@@ -47,31 +45,9 @@ export const Slider = ({ type, movieType }: ISlider) => {
   const [reverse, setReverse] = useState(false);
   const Array = array?.slice(boxnum * page, boxnum + boxnum * page);
 
-  useEffect(() => {
-    if (page === 0) setReverse(false);
-  }, [page, setReverse]);
-
-  const ArrowClick = (type: string) => {
-    if (leave) return;
-    setLeave((p) => !p);
-    if (type === 'right') {
-      setReverse(false);
-      setPage((p) =>
-        p === Math.floor(array?.length / boxnum) - 1 ? 0 : p + 1
-      );
-    }
-    if (type === 'left') {
-      setReverse(true);
-      setPage((p) => p - 1);
-    }
-  };
-  const titleClick = () => {
-    if (type === 'movie') return router.push(`/movies`);
-    if (type === 'post') return router.push(`/posts`);
-    if (type === 'board') return router.push(`/boards`);
-  };
   //api
   const { data } = useSWR<IApi>(api);
+
   useEffect(() => {
     if (type === 'movie' && movieType) {
       setBoxnum(6);
@@ -95,18 +71,49 @@ export const Slider = ({ type, movieType }: ISlider) => {
       setApi(`/api/boards`);
       setArray(data?.boards);
     }
+    if (type === 'all-boards') {
+      setBoxnum(4);
+      setTitle('All Boards');
+      setTitle('');
+      setApi(`/api/boards`);
+      setArray(data?.boards);
+    }
   }, [type, setApi, setTitle, movieType, setArray, data, setBoxnum]);
-
   const movieId = Number(
     router?.query?.movie_id && router?.query?.movie_id![0]
   );
+  useEffect(() => {
+    if (page === 0) setReverse(false);
+  }, [page, setReverse]);
+
+  const ArrowClick = (type: string) => {
+    if (leave) return;
+    setLeave((p) => !p);
+    if (type === 'right') {
+      setReverse(false);
+      setPage((p) => (p === Math.round(array?.length / boxnum) ? 0 : p + 1));
+      // setPage((p) =>
+      //   p === Math.floor(array?.length / boxnum) - 1 ? 0 : p + 1
+      // );
+    }
+    if (type === 'left') {
+      setReverse(true);
+      setPage((p) => p - 1);
+    }
+  };
+  const titleClick = () => {
+    if (type === 'movie') return router.push(`/movies`);
+    if (type === 'post') return router.push(`/posts`);
+    if (type === 'board' || type === 'all-boards')
+      return router.push(`/boards`);
+  };
   return (
-    <Cont>
+    <Cont className="slider">
       <Title onClick={titleClick}>
         <span>{title}</span>
       </Title>
       {isArray && (
-        <Flex>
+        <Flex className="flex">
           {page !== 0 && (
             <Svg
               size="2rem"
@@ -129,6 +136,7 @@ export const Slider = ({ type, movieType }: ISlider) => {
                 initial="initial"
                 animate="animate"
                 transition={{ type: 'tween', duration: 1 }}
+                className="slide"
               >
                 <Boxes type={type} array={Array} reverse={reverse} />
               </Slide>
@@ -155,8 +163,19 @@ export const Slider = ({ type, movieType }: ISlider) => {
     </Cont>
   );
 };
-
+const slideVars = {
+  initial: (reverse: boolean) => ({
+    x: reverse ? -1512 : 1512,
+  }),
+  animate: (reverse: boolean) => ({
+    x: 0,
+  }),
+  exit: (reverse: boolean) => ({
+    x: reverse ? 1512 : -1512,
+  }),
+};
 const Cont = styled.section`
+  width: 100%;
   padding: 0 10px;
   a {
     width: 100%;
@@ -168,6 +187,7 @@ const Cont = styled.section`
   .post {
     height: 200px;
   }
+
   .board {
     height: 300px;
   }
@@ -180,6 +200,7 @@ const Title = styled.h1`
   gap: 10px;
   display: flex;
   align-items: center;
+  width: fit-content;
   font-size: 1.6rem;
   margin-bottom: 1rem;
   :hover {
@@ -192,6 +213,7 @@ const Title = styled.h1`
 `;
 const Flex = styled.article`
   gap: 5px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -200,6 +222,7 @@ const Row = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  gap: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -212,7 +235,6 @@ const Slide = styled(motion.div)<{ boxnum?: number }>`
   height: 100%;
   gap: 10px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
   grid-template-columns: ${(p) => `repeat(${p?.boxnum},1fr)`};
   .movie-box {
     z-index: 1;

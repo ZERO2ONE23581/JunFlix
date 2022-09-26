@@ -1,12 +1,10 @@
-import { Info } from './Info';
-import { Follow } from './Follow';
+import { HoverBox } from './BoardHoverBox';
 import styled from '@emotion/styled';
 import { NoAvatar } from '../../../../Avatar/NoAvatar';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { motion } from 'framer-motion';
-import { NoData } from '../../../../Tools/NoData';
 import { boxVars, MotionBox } from '../../../../../../styles/global';
+import { FollowBtn } from '../../../../Tools/Button/Follow/BoardFollowBtn';
 
 interface IItem {
   userId: number;
@@ -27,21 +25,21 @@ export const BoardBox = ({
   const router = useRouter();
   return (
     <MotionBox
-      preview=""
-      avatar={avatar}
-      variants={boxVars}
-      initial="initial"
-      whileHover="hover"
-      className="board-box"
+    // preview=""
+    // avatar={avatar}
+    // variants={boxVars}
+    // initial="initial"
+    // whileHover="hover"
+    // className="board-box"
     >
-      <Follow userId={userId} boardId={boardId} />
+      <FollowBtn userId={userId} boardId={boardId} />
       <MoveBtn
         onClick={() => router.push(`/user/${userId}/board/${boardId}/${title}`)}
       />
       <Link href={`/user/${userId}/board/${boardId}/${title}`}>
         <a>
           <NoAvatar genre={genre} avatar={avatar} />
-          <Info
+          <HoverBox
             title={title}
             genre={genre}
             userId={userId}

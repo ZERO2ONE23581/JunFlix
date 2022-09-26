@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 import { MouseEventHandler } from 'react';
 import { Svg } from '../Svg';
 
@@ -36,6 +37,16 @@ export const Btn = ({
   return (
     <>
       <Button
+        variants={{
+          hover: {
+            backgroundColor: '#E50914',
+            transition: {
+              delay: 0.3,
+              duration: 0.3,
+            },
+          },
+        }}
+        //
         type={type}
         onClick={onClick}
         disabled={disabled}
@@ -54,7 +65,7 @@ export const Btn = ({
     </>
   );
 };
-export const Button = styled.button<{
+export const Button = styled(motion.button)<{
   isClicked?: boolean;
   isUserList: boolean;
 }>`

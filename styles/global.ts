@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
 export const Page = styled.section`
+  padding: 0 5% 10%;
   min-width: 100vw;
   min-height: 100vh;
   position: relative;
@@ -127,17 +128,6 @@ export const Blur = styled.div<{ isBlur: boolean }>`
   filter: ${(p) => p.isBlur && 'blur(5px)'};
 `;
 
-export const slideVars = {
-  initial: (reverse: boolean) => ({
-    x: reverse ? -1512 : 1512,
-  }),
-  animate: {
-    x: 0,
-  },
-  exit: (reverse: boolean) => ({
-    x: reverse ? 1512 : -1512,
-  }),
-};
 export const boxVars = {
   initial: {
     scale: 1,

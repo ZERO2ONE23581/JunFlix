@@ -2,7 +2,7 @@ import { Counts } from './Counts';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Svg } from '../../../Tools/Svg';
-import { FollowBtn } from '../../../Tools/Button/Follow/Board';
+import { FollowBtn } from '../../../Tools/Button/Follow/BoardFollowBtn';
 import useUser from '../../../../libs/client/useUser';
 import { useCapLetters } from '../../../../libs/client/useTools';
 
@@ -37,6 +37,7 @@ export const Info = ({ title, genre, intro, counts }: IInfo) => {
   );
 };
 const Cont = styled.article`
+  border: 10px solid pink;
   gap: 15px;
   display: flex;
   max-width: 980px;
