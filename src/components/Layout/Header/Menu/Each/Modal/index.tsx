@@ -1,10 +1,9 @@
 import { Movie } from './Movie';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
+import { GenreBoardModalBtn } from './GenreBtn';
 import useUser from '../../../../../../libs/client/useUser';
-import { useCapLetter } from '../../../../../../libs/client/useTools';
-import { GenreBoardModalBtn } from './GenreBoardModalBtn';
 
 interface IModal {
   type: string;
@@ -13,9 +12,7 @@ interface IModal {
 }
 export const Modal = ({ type, text, setSelect }: IModal) => {
   const router = useRouter();
-  const { isLoggedIn, loggedInUser } = useUser();
-  const [btnName, setBtnName] = useState('Boards');
-
+  const { loggedInUser } = useUser();
   const handleClick = (btnType: string) => {
     setSelect('');
     if (type === 'board') {
@@ -23,16 +20,21 @@ export const Modal = ({ type, text, setSelect }: IModal) => {
       else if (btnType === 'my') router.push(`/boards/my`);
       else router.push(`/boards/${btnType}`);
     }
-    if (btnType === 'create')
-      router.push(`/user/${loggedInUser?.id}/${type}/create`);
-    // if (name === 'all') router.push(`/${type}s`);
-    // if (name === 'my') router.push(`/${type}s/my`);
-    if (btnType === 'create' && type === 'post') {
-      if (!isLoggedIn) alert('로그인 해주세요.');
-      else alert('포스트를 생성할 보드를 선택해주세요.');
-      return router.push(
-        `/user/${loggedInUser?.id}/${loggedInUser?.username}/boards`
-      );
+    if (type === 'post') {
+      if (btnType === 'all') router.push(`/posts`);
+      else if (btnType === 'my') router.push(`/posts/my`);
+    }
+    if (type === 'review') {
+      if (btnType === 'all') router.push(`/reviews`);
+      else if (btnType === 'my') router.push(`/reviews/my`);
+    }
+    if (btnType === 'create') {
+      if (type === 'post') {
+        alert('포스트를 생성할 보드를 선택해주세요.');
+        router.push(`/boards/my`);
+      } else {
+        router.push(`/user/${loggedInUser?.id}/${type}/create`);
+      }
     }
   };
   const isMovie = Boolean(type === 'movie');
@@ -40,13 +42,38 @@ export const Modal = ({ type, text, setSelect }: IModal) => {
     <Cont>
       {!isMovie && (
         <List>
-          <li onClick={() => handleClick('all')}>
-            <span>All Boards</span>
-          </li>
-          <li onClick={() => handleClick('my')}>
-            <span>My Boards</span>
-          </li>
-          {type === 'board' && <GenreBoardModalBtn handleClick={handleClick} />}
+          {type === 'board' && (
+            <>
+              <li onClick={() => handleClick('all')}>
+                <span>All Boards</span>
+              </li>
+              <li onClick={() => handleClick('my')}>
+                <span>My Boards</span>
+              </li>
+              <GenreBoardModalBtn handleClick={handleClick} />
+            </>
+          )}
+          {type === 'post' && (
+            <>
+              <li onClick={() => handleClick('all')}>
+                <span>All Posts</span>
+              </li>
+              <li onClick={() => handleClick('my')}>
+                <span>My Posts</span>
+              </li>
+            </>
+          )}
+          {type === 'review' && (
+            <>
+              <li onClick={() => handleClick('all')}>
+                <span>All Reviews</span>
+              </li>
+              <li onClick={() => handleClick('my')}>
+                <span>My Reviews</span>
+              </li>
+            </>
+          )}
+
           <li onClick={() => handleClick('create')}>
             <span>Create</span>
             <span>{text}</span>

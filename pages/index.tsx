@@ -10,9 +10,9 @@ const Entrance: NextPage = () => {
   const router = useRouter();
   const { isLoggedIn } = useUser();
   useEffect(() => {
-    if (isLoggedIn) router.replace(`/home/0`);
+    if (isLoggedIn) router.replace(`/home`);
     setTimeout(() => {
-      router.replace(`/home/0`);
+      router.replace(`/home`);
     }, 3000);
   }, [router, isLoggedIn]);
   return (

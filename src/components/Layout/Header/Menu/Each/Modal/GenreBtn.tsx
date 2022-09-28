@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-
 interface IGenreBoardModalBtn {
   handleClick: (btnType: string) => void;
 }

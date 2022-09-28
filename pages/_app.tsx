@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@emotion/react';
 import { Layout } from '../src/components/Layout';
 import { darkTheme, lightTheme } from '../styles/theme';
+import { AnimatePresence } from 'framer-motion';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState(false);
@@ -15,9 +16,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SWRConfig value={Fetcher}>
       <ThemeProvider theme={theme ? lightTheme : darkTheme}>
-        <Layout isLight={theme} setTheme={setTheme}>
-          <Component {...pageProps} key={url} />
-        </Layout>
+        <AnimatePresence>
+          <Layout isLight={theme} setTheme={setTheme}>
+            <Component {...pageProps} key={url} />
+          </Layout>
+        </AnimatePresence>
       </ThemeProvider>
     </SWRConfig>
   );

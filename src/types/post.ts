@@ -11,7 +11,7 @@ export interface IPostList {
   from: number;
   isBlur?: boolean;
   isLikesType?: boolean;
-  posts: PostModel[];
+  postsArray: PostModel[];
 }
 export interface LikesWithPost extends Likes {
   post: Post;

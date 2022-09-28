@@ -22,7 +22,7 @@ export default AllBoards;
 
 export const BoardPage = styled(Page)`
   background-color: #130f40;
-  padding-top: 20vh;
+  padding-top: 10%;
   .slider {
     .flex {
       gap: 5px;

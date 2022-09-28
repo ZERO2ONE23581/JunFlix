@@ -14,8 +14,8 @@ interface IInfo extends IUseform {
   content: string;
   dataError: string;
   postAvatar: string;
-  setEdit: Dispatch<SetStateAction<boolean>>;
   setUpdate: Dispatch<SetStateAction<boolean>>;
+  setEdit: Dispatch<SetStateAction<{ update: boolean; delete: boolean }>>;
 }
 export const Info = ({
   title,

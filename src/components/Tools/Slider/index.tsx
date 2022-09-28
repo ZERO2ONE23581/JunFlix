@@ -13,8 +13,9 @@ import { useCapLetter } from '../../../libs/client/useTools';
 
 interface ISlider {
   type: string;
-  movieType?: string;
+  postType?: string;
   boardType?: string;
+  movieType?: string;
 }
 interface IApi {
   arr?: {
@@ -35,18 +36,16 @@ export interface IMovie {
   poster_path?: string;
   backdrop_path?: string;
 }
-export const Slider = ({ type, movieType, boardType }: ISlider) => {
+export const Slider = ({ type, movieType, postType, boardType }: ISlider) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
-
-  //BOARD api
   const [api, setApi] = useState('');
+  const { data } = useSWR<IApi>(api);
+
+  //BOARD
   useEffect(() => {
     if (type === 'board') setApi(`/api/boards`);
   }, [type, setApi]);
-  const { data } = useSWR<IApi>(api);
-
-  //BOARD Array
   const [array, setArray] = useState<any>([]);
   useEffect(() => {
     if (type === 'board') {
@@ -62,8 +61,6 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
     }
   }, [type, boardType, data, setArray, useCapLetter]);
   const isArray = Boolean(array?.length! > 0);
-
-  //BOARD Boxes
   const [boxes, setBoxes] = useState(6);
   useEffect(() => {
     if (type === 'board') {
@@ -74,8 +71,6 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
       }
     }
   }, [type, boardType, setBoxes]);
-
-  //BOARD title
   const [title, setTitle] = useState('');
   useEffect(() => {
     if (type === 'board') {
@@ -85,7 +80,7 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
     }
   }, [type, boardType, setTitle]);
 
-  //MOVIE api
+  //MOVIE
   const isTypeMovie = Boolean(type === 'movie' || type === 'movie-page');
   useEffect(() => {
     if (isTypeMovie && movieType) {
@@ -96,15 +91,11 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
       }
     }
   }, [isTypeMovie, movieType, setApi]);
-
-  //movie array
   useEffect(() => {
     if (isTypeMovie) {
       setArray(data?.arr?.results!);
     }
   }, [isTypeMovie, setArray, data]);
-
-  //movie boxes
   useEffect(() => {
     if (type === 'movie-page') setBoxes(5);
     if (type === 'movie') {
@@ -115,8 +106,6 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
       }
     }
   }, [type, setBoxes, movieType]);
-
-  //movie title
   useEffect(() => {
     if (type === 'movie-page' && movieType) {
       if (movieType === 'home') setTitle('Trending');
@@ -128,14 +117,24 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
     } else setTitle('');
   }, [type, setTitle, movieType]);
 
+  //Post
+  useEffect(() => {
+    if (type === 'post') {
+      setApi(`/api/posts`);
+      setArray(data?.posts);
+    }
+  }, [setApi, setArray]);
   useEffect(() => {
     if (type === 'post') {
       setBoxes(5);
-      setTitle('Posts');
-      setArray(data?.posts);
     }
-  }, [type, setTitle, setArray, data, setBoxes]);
-  //
+  }, [setBoxes]);
+  useEffect(() => {
+    if (type === 'post') {
+      if (postType === 'home') setTitle('All Posts');
+      else setTitle('');
+    }
+  }, [setTitle]);
 
   const [page, setPage] = useState(0);
   const [leave, setLeave] = useState(false);

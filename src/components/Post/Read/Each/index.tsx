@@ -1,134 +1,167 @@
-import useSWR from 'swr';
-import { Info } from './Info';
 import styled from '@emotion/styled';
-import { EditPost } from '../../Edit';
-import { Avatar } from '../../../Avatar';
-import { IGetPost } from '../../../../types/post';
-import { IQuery, IData } from '../../../../types/global';
-import { ConfirmModal } from '../../../Tools/Modal';
+import { motion } from 'framer-motion';
+import { PosInfo } from './Info/PosInfo';
+import { Svg } from '../../../Tools/Svg';
+import { AVATAR_URL } from '../../../Avatar';
+import { PostModel } from '../../../../types/post';
+import { ERROR, Overlay } from '../../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Modal, DimBackground, Overlay } from '../../../../../styles/global';
-import { useRouter } from 'next/router';
-import useUser from '../../../../libs/client/useUser';
-import useMutation from '../../../../libs/client/useMutation';
-import { useNeedLogin } from '../../../../libs/client/useTools';
-import { AnimatePresence, motion } from 'framer-motion';
 import { modalVar } from '../../../Tools/Slider/Movie/modal';
+import { PostSettingBtn } from '../../../Tools/Button/Modal/Post';
+import { EditPost } from '../../Edit';
+import { ConfirmModal } from '../../../Tools/Modal';
+import useMutation from '../../../../libs/client/useMutation';
+import useUser from '../../../../libs/client/useUser';
+import { useRouter } from 'next/router';
+import { Btn } from '../../../Tools/Button';
+import { IData } from '../../../../types/global';
 
-interface IPostModal extends IQuery {
+interface IPostModal {
+  data: PostModel;
   setModal: Dispatch<SetStateAction<boolean>>;
 }
-export const PostModal = ({ query, setModal }: IPostModal) => {
-  useNeedLogin();
-  const { data } = useSWR<IGetPost>(
-    `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}`
-  );
+export const PostModal = ({ data, setModal }: IPostModal) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
-  const [edit, setEdit] = useState(false);
-  const [del, setDelete] = useState(false);
-  const isMyPost = Boolean(loggedInUser?.id === query.userId);
-  const [deletePost, { data: DelPostData, loading: DelLoading }] =
+  const [setting, setSetting] = useState(false);
+  const [edit, setEdit] = useState({
+    update: false,
+    delete: false,
+  });
+
+  const editableData = {
+    userId: data.UserID,
+    boardId: data.BoardID,
+    postId: data.id,
+    title: data.title,
+    content: data.content!,
+    postAvatar: data.avatar!,
+  };
+
+  const [deletePost, { data: delData, loading: delLoading }] =
     useMutation<IData>(
-      `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}/delete`
+      `/api/user/${data.UserID}/board/${data.BoardID}/post/${data.id}/delete`
     );
-  const clickDelPost = () => {
-    if (!isMyPost) alert('삭제권한이 없습니다.');
+
+  const [error, setError] = useState(false);
+  const deletePostClick = () => {
+    const isMyPost = Boolean(loggedInUser?.id === data.UserID);
+    if (!isMyPost) return setError(true);
     deletePost({});
   };
+
   useEffect(() => {
-    if (DelPostData?.error) alert(DelPostData.error);
-    if (DelPostData?.ok) alert('포스트가 삭제되었습니다.');
-  }, [DelPostData, router]);
+    if (delData?.ok) router.reload();
+    if (delData?.error) alert(delData?.error);
+  }, [delData]);
+
   return (
     <>
-      <AnimatePresence>
-        <Cont
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          variants={modalVar}
-          layoutId={data?.post?.id + ''}
-          transition={{ type: 'tween', duration: 0.4 }}
-        >
-          <Avatar id="postAvatar" avatar={data?.post?.avatar!} disabled />
-          <Info
-            query={query}
-            post={data?.post!}
-            setModal={setModal}
-            setEdit={setEdit}
-            setDelete={setDelete}
-          />
-          {edit && (
-            <>
-              <EditPost
-                query={query}
-                setEdit={setEdit}
-                title={data?.post?.title!}
-                content={data?.post?.content!}
-                postAvatar={data?.post?.avatar!}
-              />
-              <DimBackground
-                zIndex={102}
-                className="dim"
-                onClick={() => setEdit(false)}
-              />
-            </>
-          )}
-        </Cont>
+      <Cont
+        className="post-modal"
+        //
+        exit="exit"
+        initial="initial"
+        animate="animate"
+        variants={modalVar}
+        layoutId={data.id + ''}
+        transition={{ type: 'tween', duration: 0.4 }}
+      >
+        <Svg size="2rem" type="ellipsis" onClick={() => setSetting(true)} />
+        <PostAvatar background={AVATAR_URL(data?.avatar!)} />
+        <PosInfo data={data} />
+        <Svg size="2rem" type="X" onClick={() => setModal(false)} />
+      </Cont>
 
-        {del && (
-          <ConfirmModal
-            type="delete-post"
-            loading={DelLoading}
-            closeModal={setDelete}
-            clickDelPost={clickDelPost}
-          />
-        )}
-        <Overlay
-          exit={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          onClick={() => setModal(false)}
+      {setting && (
+        <PostSettingBtn
+          data={{
+            userId: data.UserID,
+            boardId: data.BoardID,
+            boardName: data?.board.title,
+          }}
+          setEdit={setEdit}
+          closeModal={setSetting}
         />
-      </AnimatePresence>
+      )}
+
+      <Overlay
+        exit={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        onClick={() => setModal(false)}
+      />
+
+      {edit.update && <EditPost setEdit={setEdit} ogData={editableData} />}
+
+      {edit.delete && (
+        <>
+          <ConfirmModal type="delete-post" clickDelPost={deletePostClick} />
+          {error && (
+            <ERROR>
+              <span>
+                삭제권한이 없습니다. (You don't have right to delete this post.
+              </span>
+              <Btn type="button" onClick={() => router.push('/login')} />
+            </ERROR>
+          )}
+        </>
+      )}
     </>
   );
 };
 const Cont = styled(motion.article)`
   left: 0;
   right: 0;
-  top: 1.5rem;
+  top: 5%;
   z-index: 102;
-  position: fixed;
-  display: flex;
-  overflow: hidden;
-  flex-direction: row;
   margin: 0 auto;
-  overflow-y: auto;
-  width: 80vw;
+  position: fixed;
+  //
+  width: 70vw;
   height: 90vh;
-  min-width: 1200px;
-  max-height: 90vh;
+  min-width: 600px;
+  min-height: 600px;
+  overflow: hidden;
+  overflow-y: auto;
+  //
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
   background-color: ${(p) => p.theme.color.bg};
   ::-webkit-scrollbar {
     display: none;
   }
-  .postAvatar {
-    pointer-events: none;
-    .noImageDiv,
-    .isImageTag {
-      width: 45vw;
-      height: 90vh;
-      min-width: 680px;
-      min-height: 600px;
-      border-right: ${(p) => p.theme.border.thick};
+  .post-info {
+    background: ${(p) =>
+      `linear-gradient(to right, ${p.theme.color.bg}, ${p.theme.color.grey.dark})`};
+    width: 30vw;
+    height: 90vh;
+    min-width: 300px;
+    min-height: 300px;
+    .post-content {
+      //border: 2px solid yellow;
     }
   }
-  .read-post-info {
-    width: 35vw;
-    height: 90vh;
-    min-width: 520px;
-    min-height: 300px;
+  .ellipsis {
+    top: 1em;
+    left: 1.5em;
+    position: absolute;
+    fill: ${(p) => p.theme.color.font};
   }
+  .X {
+    top: 1em;
+    right: 1em;
+    position: absolute;
+    fill: ${(p) => p.theme.color.font};
+  }
+`;
+const PostAvatar = styled.div<{ background: string }>`
+  width: 40vw;
+  height: 90vh;
+  min-width: 400px;
+  min-height: 400px;
+  background: ${(p) =>
+    p.background &&
+    `linear-gradient(to left, ${p.theme.color.bg} ,transparent), url(${p.background}) center / cover no-repeat `};
 `;

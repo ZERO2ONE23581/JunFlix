@@ -59,7 +59,7 @@ export const PostText = ({ date, content, username, sliceFrom }: IText) => {
           )}
         </span>
       )}
-      <ReadDate CREATEDAT={date?.createdAt} UPDATEDAT={date?.updatedAt} />
+      <ReadDate createdAt={date?.createdAt} updatedAt={date?.updatedAt} />
     </Cont>
   );
 };
@@ -69,13 +69,16 @@ const Cont = styled.article`
     word-break: break-word;
   }
   .username {
+    font-size: 1.4em;
     font-weight: 400;
     font-style: italic;
     margin-right: 7px;
     color: ${(p) => p.theme.color.logo};
   }
   .text-content {
-    font-size: 1.05rem;
+    font-size: 1.4em;
+    line-height: 1.3em;
+    word-break: break-all;
   }
 `;
 const More = styled.button`

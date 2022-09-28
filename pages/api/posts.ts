@@ -5,18 +5,12 @@ import { withApiSession } from '../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const posts = await client.post.findMany({
-    select: {
-      id: true,
-      title: true,
-      content: true,
-      avatar: true,
-      UserID: true,
-      BoardID: true,
-      user: { select: { username: true } },
-      board: { select: { title: true, genre: true, UserID: true } },
-    },
     orderBy: {
       id: 'desc',
+    },
+    include: {
+      user: true,
+      board: true,
     },
   });
   //

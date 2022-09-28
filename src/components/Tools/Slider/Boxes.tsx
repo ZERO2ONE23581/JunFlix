@@ -38,28 +38,10 @@ export interface IData {
 }
 
 export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
-  const router = useRouter();
-  const [query, setQuery] = useState({
-    userId: 0,
-    postId: 0,
-    boardId: 0,
-  });
-  const [postModal, setPostModal] = useState(false);
-  const handleClick = (id: number, userId: number, boardId: number) => {
-    if (type === 'movie') return router.push(`/home/${id}`);
-    if (type === 'post') {
-      setQuery({ userId, boardId, postId: id });
-      setPostModal(true);
-    }
-  };
-  const isBoard = Boolean(
-    type === 'board' || type === 'allBoards' || type === 'myBoards'
-  );
-
   const [boxID, setBoxID] = useState(0);
   const [movieModal, setMovieModal] = useState(false);
   const boxClick = (id: number) => {
-    if (type === 'movie') {
+    if (type === 'movie' || type === 'movie-page') {
       setBoxID(id);
       setMovieModal(true);
     }
@@ -87,10 +69,10 @@ export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
             {(type === 'movie' || type === 'movie-page') && (
               <MovieHover data={data} />
             )}
-            {isBoard && <BoardBoxInfo data={data} />}
+            {type === 'board' && <BoardBoxInfo data={data} />}
           </Box>
         ))}
-        {type === 'movie' && (
+        {(type === 'movie' || type === 'movie-page') && (
           <>
             {movieModal && (
               <MovieModal
@@ -101,7 +83,6 @@ export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
             )}
           </>
         )}
-        {postModal && <PostModal setModal={setPostModal} query={query} />}
       </AnimatePresence>
     </>
   );

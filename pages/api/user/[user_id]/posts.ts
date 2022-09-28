@@ -6,13 +6,13 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user_id } = req.query;
   const posts = await client.post.findMany({
-    where: { UserID: +user_id },
-    include: {
-      user: { select: { username: true } },
-      board: { select: { title: true, genre: true } },
-    },
     orderBy: {
       id: 'desc',
+    },
+    where: { UserID: +user_id },
+    include: {
+      user: true,
+      board: true,
     },
   });
   return res.json({ ok: true, posts });

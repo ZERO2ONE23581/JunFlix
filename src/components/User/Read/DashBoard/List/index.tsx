@@ -10,6 +10,7 @@ import { LikesWithPost, PostModel } from '../../../../../types/post';
 import { BoardList } from '../../../../Board/Read/List';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { Slider } from '../../../../Tools/Slider';
 
 export interface IGet {
   ok: boolean;
@@ -33,8 +34,8 @@ export const UserList = ({ username }: IUserList) => {
   return (
     <Cont>
       <BtnWrap username={username} type={type} setType={setType} />
-      {type === 'board' && <BoardList boards={data?.boards!} size={4} />}
-      {type === 'post' && <PostList from={8} posts={data?.posts!} size={4} />}
+      {type === 'board' && <Slider type="board" boardType="my" />}
+      {type === 'post' && <Slider type="post" boardType="my" />}
       {type === 'review' && <ReviewList reviews={data?.reviews!} />}
       {type === 'like' && <LikesList data={data!} username={username} />}
     </Cont>

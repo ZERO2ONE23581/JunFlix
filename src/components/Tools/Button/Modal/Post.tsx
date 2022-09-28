@@ -2,40 +2,41 @@ import { Btn } from '..';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import { IQuery } from '../../../../types/global';
 import useUser from '../../../../libs/client/useUser';
 import { DimBackground, Modal } from '../../../../../styles/global';
+import { Svg } from '../../Svg';
 
-export interface IModalBtn extends IQuery {
-  title: string;
-  setEdit: Dispatch<SetStateAction<boolean>>;
-  setModal: Dispatch<SetStateAction<boolean>>;
-  setDelete: Dispatch<SetStateAction<boolean>>;
-  setSetting: Dispatch<SetStateAction<boolean>>;
+export interface IPostSettingBtn {
+  data: {
+    userId: number;
+    boardId: number;
+    boardName: string;
+  };
+  closeModal: Dispatch<SetStateAction<boolean>>;
+  setEdit: Dispatch<SetStateAction<{ update: boolean; delete: boolean }>>;
 }
-export const ModalBtn = ({
-  title,
-  query,
+export const PostSettingBtn = ({
+  data,
   setEdit,
-  setModal,
-  setDelete,
-  setSetting,
-}: IModalBtn) => {
+  closeModal,
+}: IPostSettingBtn) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
-  const isMyPost = Boolean(loggedInUser?.id === query.userId);
+  const isMyPost = Boolean(loggedInUser?.id === data?.userId);
+
   const handleClick = (type: string) => {
-    setSetting(false);
-    if (type === 'edit') return setEdit(true);
-    if (type === 'delete') return setDelete(true);
-    if (type === 'board') {
-      setModal(false);
-      router.push(`/user/${query.userId}/board/${query.boardId}/${title}`);
-    }
+    closeModal(false);
+    if (type === 'edit') return setEdit({ update: true, delete: false });
+    if (type === 'delete') return setEdit({ update: false, delete: true });
+    if (type === 'board')
+      return router.push(
+        `/user/${data.userId}/board/${data.boardId}/${data.boardName}`
+      );
   };
   return (
     <>
       <ModalBtnCont>
+        <Svg type="close" size="2rem" onClick={() => closeModal(false)} />
         {isMyPost && (
           <>
             <Btn
@@ -60,11 +61,16 @@ export const ModalBtn = ({
           svg={{ type: 'board', size: '1.4rem', location: { left: true } }}
         />
       </ModalBtnCont>
-      <DimBackground zIndex={1} onClick={() => setSetting(false)} />
+      <DimBackground zIndex={1} onClick={() => closeModal(false)} />
     </>
   );
 };
 export const ModalBtnCont = styled(Modal)`
+  .close {
+    top: 2rem;
+    right: 2rem;
+    position: absolute;
+  }
   gap: 0;
   width: 60vw;
   z-index: 201;

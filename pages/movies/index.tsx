@@ -24,7 +24,7 @@ export default Movies;
 
 export const MoviePage = styled(Page)`
   background-color: #1e272e;
-  padding-top: 15vh;
+  padding-top: 8%;
   .slider {
     margin-bottom: 30px;
     .title {

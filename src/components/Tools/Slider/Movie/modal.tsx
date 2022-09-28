@@ -65,7 +65,11 @@ export const MovieModal = ({ data, movieId, setMovieModal }: IMovieModal) => {
           </ul>
         </MovieInfo>
       </Cont>
-      <Overlay exit={{ opacity: 0 }} animate={{ opacity: 1 }} />
+      <Overlay
+        exit={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        onClick={() => setMovieModal(false)}
+      />
     </>
   );
 };
@@ -82,7 +86,8 @@ const Cont = styled(motion.article)`
   background-color: ${(p) => p.theme.color.bg};
   width: 50vw;
   min-height: 600px;
-  max-height: 650px;
+  height: 88vh;
+  max-height: 90vh;
   ::-webkit-scrollbar {
     display: none;
   }

@@ -71,7 +71,6 @@ const NoImage = styled.div<{ disabled: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-right: 2px dotted #ecf0f1;
   box-shadow: ${(p) => p.theme.boxShadow.input};
   pointer-events: ${(p) => p.disabled && 'none'};
   :hover {
@@ -82,7 +81,7 @@ const NoImage = styled.div<{ disabled: boolean }>`
 `;
 const variant = 'public';
 const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg';
-const AVATAR_URL = (avatar: string) => `${base}/${avatar}/${variant}`;
+export const AVATAR_URL = (avatar: string) => `${base}/${avatar}/${variant}`;
 
 export const AVATAR_BG = styled.article<{ avatar?: string; preview?: string }>`
   border: none;

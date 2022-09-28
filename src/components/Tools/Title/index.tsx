@@ -8,16 +8,55 @@ import { Ropes } from './ropes';
 
 interface ITitle {
   type: string;
+  postType?: string;
+  reviewType?: string;
   movieType?: string;
   genreBoardType?: string;
 }
-export const Title = ({ type, movieType, genreBoardType }: ITitle) => {
+export const Title = ({
+  type,
+  postType,
+  movieType,
+  reviewType,
+  genreBoardType,
+}: ITitle) => {
   const { loggedInUser } = useUser();
   return (
     <Cont>
       <Wrapper>
         <Ropes />
         <H1>
+          {type === 'review' && (
+            <>
+              {reviewType === 'all' && (
+                <>
+                  <span>All Reviews</span>
+                  <Svg type="post" size="2rem" />
+                </>
+              )}
+              {reviewType === 'my' && (
+                <>
+                  <span>{loggedInUser?.username}'s Reviews</span>
+                  <Svg type="post" size="2rem" />
+                </>
+              )}
+            </>
+          )}
+          {type === 'post' && (
+            <>
+              {postType === 'all' && (
+                <>
+                  All Posts <Svg type="post" size="2rem" />
+                </>
+              )}
+              {postType === 'my' && (
+                <>
+                  {loggedInUser?.username}'s Posts
+                  <Svg type="post" size="2rem" />
+                </>
+              )}
+            </>
+          )}
           {type === 'movie' && (
             <>
               {movieType === 'trending' && (

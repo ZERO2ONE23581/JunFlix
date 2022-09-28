@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { User } from '@prisma/client';
 import { Creator } from '../../../../Creator';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import { motion } from 'framer-motion';
 
 interface ITextAreaWrap {
   id: string;
@@ -62,7 +63,7 @@ const Cont = styled.article<{ isFocus: boolean; isWatch: boolean }>`
   border: ${(p) =>
     p.isFocus ? `thick double ${p.theme.color.logo}` : p.theme.border.thick};
 `;
-export const TextArea = styled.textarea<{
+export const TextArea = styled(motion.textarea)<{
   height?: number;
 }>`
   width: 100%;
@@ -72,15 +73,10 @@ export const TextArea = styled.textarea<{
   cursor: auto;
   border: none;
   border-radius: 4px;
+  word-break: break-all;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
   height: ${(p) => p.height && `${p.height}px`};
-  :focus {
-    outline: ${(p) => `2px double ${p.theme.color.logo}`};
-  }
-  ::placeholder {
-    font-style: italic;
-  }
   ::-webkit-scrollbar {
     display: none;
   }

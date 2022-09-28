@@ -5,32 +5,45 @@ import { useEffect, useState } from 'react';
 import { NoData } from '../../../Tools/NoData';
 import { IPostList } from '../../../../types/post';
 import { Grid } from '../../../../../styles/global';
+import { PostModal } from '../Each';
 
 export const PostList = ({
   size,
   from,
-  posts,
   isBlur,
+  postsArray,
   isLikesType,
 }: IPostList) => {
   const [length, setLength] = useState(from);
-  const isPost = Boolean(posts?.length > 0);
+  const isPost = Boolean(postsArray?.length > 0);
   useEffect(() => {
     if (isBlur) setLength(from);
   }, [isBlur, setLength, from]);
+  //
+  const [modal, setModal] = useState(false);
+  const [postID, setPostID] = useState(0);
+  const clickBox = (id: number) => {
+    setPostID(id);
+    setModal(true);
+  };
+  const clickedPost = postsArray?.find((p) => p.id === postID);
+
   return (
     <>
       {isPost && (
         <Cont className="post-list" size={size}>
-          {posts?.slice(0, length).map((post) => (
-            <PostBox post={post} key={post.id} />
+          {postsArray?.slice(0, length).map((post) => (
+            <PostBox key={post.id} clickBox={clickBox} data={post} />
           ))}
+
+          {modal && <PostModal data={clickedPost!} setModal={setModal} />}
+
           {!isBlur && (
             <Fold
               from={from}
               length={length}
               setLength={setLength}
-              postLength={posts?.length}
+              postLength={postsArray?.length}
             />
           )}
         </Cont>
@@ -39,4 +52,8 @@ export const PostList = ({
     </>
   );
 };
-const Cont = styled(Grid)``;
+const Cont = styled(Grid)`
+  .post-edit-overlay {
+    z-index: 102;
+  }
+`;

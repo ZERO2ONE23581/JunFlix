@@ -2,11 +2,10 @@ import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { Svg } from '../../../Tools/Svg';
 import { useEffect, useState } from 'react';
-import { IPostComment } from '../../../../types/comments';
 import { IQuery } from '../../../../types/global';
 
 export const CommentIcon = ({ query }: IQuery) => {
-  const { data } = useSWR<IPostComment>(
+  const { data } = useSWR<any>(
     `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}`
   );
   const [counts, setCounts] = useState(0);

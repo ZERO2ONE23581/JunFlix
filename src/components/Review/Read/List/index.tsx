@@ -23,6 +23,7 @@ export const ReviewList = ({ reviews, isLikesType }: IReviewList) => {
       return useCapLetter(title.slice(0, num) + '...');
     if (Boolean(title.length < num)) return useCapLetter(title);
   };
+  console.log(reviews);
   return (
     <>
       {isReview && (
@@ -69,19 +70,11 @@ export const ReviewList = ({ reviews, isLikesType }: IReviewList) => {
                 />
               </li>
               <li className="createdAt date">
-                <ReadDate
-                  isList
-                  UPDATEDAT={null}
-                  CREATEDAT={review.createdAt}
-                />
+                <ReadDate updatedAt={null} createdAt={review.createdAt} />
               </li>
               <li className="updatedAt date">
                 <span>
-                  <ReadDate
-                    isList
-                    CREATEDAT={null}
-                    UPDATEDAT={review.updatedAt}
-                  />
+                  <ReadDate createdAt={null} updatedAt={review.updatedAt} />
                 </span>
               </li>
             </Lists>

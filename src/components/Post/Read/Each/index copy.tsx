@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { Info } from './Info';
+import { Info } from './Info/PosInfo';
 import styled from '@emotion/styled';
 import { EditPost } from '../../Edit';
 import { Avatar } from '../../../Avatar';

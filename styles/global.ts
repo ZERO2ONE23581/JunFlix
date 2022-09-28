@@ -1,6 +1,30 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
+export const ERROR = styled.div`
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: #d63031;
+  span {
+    font-size: 1.4em;
+    margin-right: 20px;
+    svg {
+      fill: white;
+      margin-top: 4px;
+      pointer-events: none;
+    }
+  }
+`;
+
 export const Page = styled.section`
   padding: 0 3rem;
   padding-bottom: 10%;

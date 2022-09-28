@@ -61,11 +61,11 @@ export const CreateComment = ({ query }: IQuery) => {
 const Cont = styled.article`
   gap: 1rem;
   display: flex;
-  padding: 5px 20px;
+  padding: 10px 20px;
   align-items: center;
   justify-content: flex-start;
-  border-top: 1px solid #dfe6e9;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
+  border-top: 1px solid ${(p) => p.theme.color.font};
 `;
 const Flex = styled.div`
   width: 100%;
