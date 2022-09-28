@@ -1,7 +1,7 @@
 import { Svg } from '../../Svg';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { Dispatch, SetStateAction } from 'react';
 import { Overlay } from '../../../../../styles/global';
 
 interface IMovieModal {
@@ -18,63 +18,54 @@ interface IMovieModal {
     backdrop_path?: string;
   };
   movieId: number;
-  isBoxClicked: boolean;
+  setMovieModal: Dispatch<SetStateAction<boolean>>;
 }
-export const MovieModal = ({ data, movieId, isBoxClicked }: IMovieModal) => {
-  const router = useRouter();
+export const MovieModal = ({ data, movieId, setMovieModal }: IMovieModal) => {
   const Title = data?.original_name ? data?.original_name : data?.title;
   return (
     <>
-      {data && isBoxClicked && (
-        <>
-          <Cont
-            exit="exit"
-            initial="initial"
-            animate="animate"
-            variants={modalVar}
-            layoutId={movieId + ''}
-            transition={{ type: 'tween', duration: 0.4 }}
-          >
-            <MovieInfo
-              bg={`https://image.tmdb.org/t/p/original${data.backdrop_path!}`}
-            >
-              <div className="bg-title-wrap">
-                <Svg
-                  size="2rem"
-                  type="close"
-                  onClick={() => router.replace(`/home/0`)}
-                />
-                <h1>{Title}</h1>
-              </div>
-              <ul>
-                <li>
-                  <span>Language (언어):</span>
-                  <span>{data.original_language?.toUpperCase()}</span>
-                </li>
-                <li>
-                  <span>Release Date (개봉일):</span>
-                  <span>{data.release_date}</span>
-                </li>
-                {data.vote_average && (
-                  <li>
-                    <span>Rate (평점):</span>
-                    <span>{Math.round(data.vote_average * 100) / 100}</span>
-                  </li>
-                )}
-                <li>
-                  <span>Overview (줄거리):</span>
-                  <span className="overview">{data.overview}</span>
-                </li>
-              </ul>
-            </MovieInfo>
-          </Cont>
-          <Overlay
-            exit={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            onClick={() => router.replace(`/home/0`)}
-          />
-        </>
-      )}
+      <Cont
+        exit="exit"
+        initial="initial"
+        animate="animate"
+        variants={modalVar}
+        layoutId={movieId + ''}
+        transition={{ type: 'tween', duration: 0.4 }}
+      >
+        <MovieInfo
+          bg={`https://image.tmdb.org/t/p/original${data.backdrop_path!}`}
+        >
+          <div className="bg-title-wrap">
+            <Svg
+              size="2rem"
+              type="close"
+              onClick={() => setMovieModal(false)}
+            />
+            <h1>{Title}</h1>
+          </div>
+          <ul>
+            <li>
+              <span>Language (언어):</span>
+              <span>{data.original_language?.toUpperCase()}</span>
+            </li>
+            <li>
+              <span>Release Date (개봉일):</span>
+              <span>{data.release_date}</span>
+            </li>
+            {data.vote_average && (
+              <li>
+                <span>Rate (평점):</span>
+                <span>{Math.round(data.vote_average * 100) / 100}</span>
+              </li>
+            )}
+            <li>
+              <span>Overview (줄거리):</span>
+              <span className="overview">{data.overview}</span>
+            </li>
+          </ul>
+        </MovieInfo>
+      </Cont>
+      <Overlay exit={{ opacity: 0 }} animate={{ opacity: 1 }} />
     </>
   );
 };
@@ -85,12 +76,13 @@ const Cont = styled(motion.article)`
   z-index: 100;
   margin: 0 auto;
   position: fixed;
-  width: 45vw;
-  max-height: 650px;
   overflow-y: auto;
   border-radius: 5px;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
+  width: 50vw;
+  min-height: 600px;
+  max-height: 650px;
   ::-webkit-scrollbar {
     display: none;
   }

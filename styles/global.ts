@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
 export const Page = styled.section`
-  padding: 0 5% 10%;
+  padding: 0 3rem;
+  padding-bottom: 10%;
+  height: 100%;
   min-width: 100vw;
   min-height: 100vh;
   position: relative;

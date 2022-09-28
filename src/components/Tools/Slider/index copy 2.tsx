@@ -3,6 +3,7 @@ import { Svg } from '../Svg';
 import styled from '@emotion/styled';
 import { NoData } from '../NoData';
 import { useRouter } from 'next/router';
+import { MovieModal } from './Movie/modal';
 import { useEffect, useState } from 'react';
 import { PostModel } from '../../../types/post';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -23,7 +24,7 @@ interface IApi {
   posts?: PostModel[];
   boards?: IBoardWithAttrs[];
 }
-export interface IMovie {
+interface IMovie {
   id: number;
   title?: string;
   overview?: string;
@@ -86,46 +87,46 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
   }, [type, boardType, setTitle]);
 
   //MOVIE api
-  const isTypeMovie = Boolean(type === 'movie' || type === 'movie-page');
+  const query = router?.query?.movie_id;
+  const movieId = Number(query && query![0]);
   useEffect(() => {
-    if (isTypeMovie && movieType) {
+    if (type === 'movie' && movieType) {
       if (movieType === 'home') {
         setApi(`/api/movie/trending`);
       } else {
         setApi(`/api/movie/${movieType}`);
       }
     }
-  }, [isTypeMovie, movieType, setApi]);
+  }, [type, movieType, setApi]);
 
   //movie array
   useEffect(() => {
-    if (isTypeMovie) {
+    if (type === 'movie') {
       setArray(data?.arr?.results!);
     }
-  }, [isTypeMovie, setArray, data]);
+  }, [type, setArray, data]);
 
   //movie boxes
   useEffect(() => {
-    if (type === 'movie-page') setBoxes(5);
     if (type === 'movie') {
       if (movieType === 'home') {
         setBoxes(6);
       } else {
-        setBoxes(4);
+        setBoxes(5);
       }
     }
   }, [type, setBoxes, movieType]);
 
   //movie title
   useEffect(() => {
-    if (type === 'movie-page' && movieType) {
+    if (type === 'movie' && movieType) {
       if (movieType === 'home') setTitle('Trending');
       if (movieType === 'tv') setTitle('TV Shows');
       if (movieType === 'top') setTitle('Classic');
       if (movieType === 'now') setTitle('Now Playing');
       if (movieType === 'upcoming') setTitle('Upcoming');
       if (movieType === 'trending') setTitle('Trending Now');
-    } else setTitle('');
+    }
   }, [type, setTitle, movieType]);
 
   useEffect(() => {
@@ -203,6 +204,15 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
         </Flex>
       )}
 
+      {type === 'movie' && (
+        <MovieModal
+          movieId={movieId!}
+          data={array?.find((movie: IMovie) => movie.id === movieId)}
+          isBoxClicked={Boolean(
+            router.query.movie_id && Number(router.query.movie_id) !== 0
+          )}
+        />
+      )}
       {!isArray && <NoData type="movie" />}
     </Cont>
   );

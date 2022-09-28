@@ -21,49 +21,27 @@ const AllBoards: NextPage = () => {
 export default AllBoards;
 
 export const BoardPage = styled(Page)`
-  background-color: ${(p) => p.theme.color.grey.dark};
-  display: flex;
-  padding: 0 7rem;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
+  background-color: #130f40;
+  padding-top: 20vh;
   .slider {
-    margin-bottom: 200px;
     .flex {
-      gap: 1em;
+      gap: 5px;
       .chev-left-arrow,
       .chev-right-arrow {
-        width: 55px;
-        height: 55px;
+        width: 50px;
+        height: 50px;
       }
-      .box {
-        min-width: 200px;
+      .row {
         min-height: 440px;
         .slide {
-          gap: 1em;
+          .box {
+            .slide {
+              gap: 20px;
+            }
+          }
         }
       }
     }
   }
 `;
-const Cont = styled(BoardPage)`
-  .slider {
-    margin-bottom: 200px;
-    .flex {
-      gap: 1em;
-      .chev-left-arrow,
-      .chev-right-arrow {
-        width: 55px;
-        height: 55px;
-      }
-      .box {
-        height: 100%;
-        min-width: 200px;
-        min-height: 440px;
-        .slide {
-          gap: 1em;
-        }
-      }
-    }
-  }
-`;
+const Cont = styled(BoardPage)``;

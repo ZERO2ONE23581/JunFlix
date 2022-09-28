@@ -8,15 +8,50 @@ import { Ropes } from './ropes';
 
 interface ITitle {
   type: string;
+  movieType?: string;
   genreBoardType?: string;
 }
-export const Title = ({ type, genreBoardType }: ITitle) => {
+export const Title = ({ type, movieType, genreBoardType }: ITitle) => {
   const { loggedInUser } = useUser();
   return (
     <Cont>
       <Wrapper>
         <Ropes />
         <H1>
+          {type === 'movie' && (
+            <>
+              {movieType === 'trending' && (
+                <>
+                  Trending Now <Svg type="film" size="2rem" />
+                </>
+              )}
+              {movieType === 'upcoming' && (
+                <>
+                  Upcoming <Svg type="film" size="2rem" />
+                </>
+              )}
+              {movieType === 'tv' && (
+                <>
+                  TV Shows <Svg type="film" size="2rem" />
+                </>
+              )}
+              {movieType === 'now' && (
+                <>
+                  Now Playing <Svg type="film" size="2rem" />
+                </>
+              )}
+              {movieType === 'top' && (
+                <>
+                  Classics <Svg type="film" size="2rem" />
+                </>
+              )}
+            </>
+          )}
+          {type === 'movie-page' && (
+            <>
+              Movie Page <Svg type="film" size="2rem" />
+            </>
+          )}
           {type === 'all-boards' && (
             <>
               All Boards <Svg type="board" size="2rem" />
@@ -31,7 +66,7 @@ export const Title = ({ type, genreBoardType }: ITitle) => {
           {type === 'genre-board' && (
             <>
               {genreBoardType?.toUpperCase()} Boards
-              <GenreIcons type={useCapLetter(genreBoardType)} />
+              <GenreIcons type={useCapLetter(genreBoardType!)} />
             </>
           )}
           <Movie type={type!} />

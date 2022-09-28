@@ -20,7 +20,6 @@ interface IMovieHover {
 export const MovieHover = ({ data }: IMovieHover) => {
   const [title, setTitle] = useState('');
   const [sliced, setSliced] = useState(title);
-  const isEng = Boolean(data.original_language === 'en');
 
   useEffect(() => {
     if (data) {
@@ -33,28 +32,23 @@ export const MovieHover = ({ data }: IMovieHover) => {
   }, [data, setTitle, setSliced, title]);
 
   return (
-    <>
-      {data && (
-        <Cont>
-          <Original className="original" variants={{ hover: { opacity: 0 } }}>
-            <h1>{sliced}</h1>
-          </Original>
+    <Cont className="movie-hover">
+      <Original
+        className="movie-box-unhover"
+        variants={{ hover: { opacity: 0 } }}
+      >
+        <h1>{sliced}</h1>
+      </Original>
 
-          <Hovered
-            isEng={isEng}
-            className="hover"
-            variants={{ hover: { opacity: 1 } }}
-          >
-            <h2>{title}</h2>
-            <MovieInfo
-              movieId={data.id}
-              date={data.release_date}
-              rate={data.vote_average}
-            />
-          </Hovered>
-        </Cont>
-      )}
-    </>
+      <Hovered className="movie-box-hover" variants={{ hover: { opacity: 1 } }}>
+        <h2>{title}</h2>
+        <MovieInfo
+          movieId={data.id}
+          date={data.release_date}
+          rate={data.vote_average}
+        />
+      </Hovered>
+    </Cont>
   );
 };
 const Cont = styled(motion.article)`
@@ -76,7 +70,7 @@ const Original = styled(motion.div)`
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
-const Hovered = styled(motion.div)<{ isEng: boolean }>`
+const Hovered = styled(motion.div)`
   opacity: 0;
   bottom: 0;
   width: 100%;
@@ -90,6 +84,6 @@ const Hovered = styled(motion.div)<{ isEng: boolean }>`
     padding: 10px;
     font-size: 1rem;
     text-align: center;
-    font-size: ${(p) => (!p.isEng ? '0.9rem' : '1rem')};
+    font-size: 1rem;
   }
 `;

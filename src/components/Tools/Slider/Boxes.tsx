@@ -5,6 +5,8 @@ import { BoardBoxInfo } from './Board/BoardBoxInfo';
 import { AnimatePresence, motion } from 'framer-motion';
 import { PostModal } from '../../Post/Read/Each';
 import { MovieHover } from './Movie/MovieHover';
+import { MovieModal } from './Movie/modal';
+import { IMovie } from '.';
 
 interface IMovieSlider {
   array: [];
@@ -54,12 +56,26 @@ export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
     type === 'board' || type === 'allBoards' || type === 'myBoards'
   );
 
+  const [boxID, setBoxID] = useState(0);
+  const [movieModal, setMovieModal] = useState(false);
+  const boxClick = (id: number) => {
+    if (type === 'movie') {
+      setBoxID(id);
+      setMovieModal(true);
+    }
+  };
   return (
     <>
       <AnimatePresence>
         {array?.map((data: IData) => (
           <Box
+            type={type}
             className="box"
+            onClick={() => boxClick(data.id)}
+            length={array.length}
+            avatar={data?.avatar! && data?.avatar!}
+            moviebg={data?.backdrop_path && data?.backdrop_path}
+            //
             key={data.id}
             custom={reverse}
             variants={boxVars}
@@ -67,16 +83,24 @@ export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
             whileHover="hover"
             layoutId={data.id + ''}
             transition={{ type: 'spring', stiffness: 50 }}
-            type={type}
-            length={array.length}
-            avatar={data?.avatar! && data?.avatar!}
-            moviebg={data?.backdrop_path && data?.backdrop_path}
-            onClick={() => handleClick(data.id, data?.UserID!, data?.BoardID!)}
           >
-            {type === 'movie' && <MovieHover data={data} />}
+            {(type === 'movie' || type === 'movie-page') && (
+              <MovieHover data={data} />
+            )}
             {isBoard && <BoardBoxInfo data={data} />}
           </Box>
         ))}
+        {type === 'movie' && (
+          <>
+            {movieModal && (
+              <MovieModal
+                movieId={boxID}
+                setMovieModal={setMovieModal}
+                data={array?.find((movie: IMovie) => movie.id === boxID)!}
+              />
+            )}
+          </>
+        )}
         {postModal && <PostModal setModal={setPostModal} query={query} />}
       </AnimatePresence>
     </>
