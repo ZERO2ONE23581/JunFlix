@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { NoData } from '../NoData';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { PostModel } from '../../../types/post';
+import { PostModel, ReviewModel } from '../../../types/post';
 import { AnimatePresence, motion } from 'framer-motion';
 import { IBoardWithAttrs } from '../../../types/board';
 import { Boxes } from './Boxes';
@@ -23,6 +23,8 @@ interface IApi {
   };
   posts?: PostModel[];
   boards?: IBoardWithAttrs[];
+  MyPostLikes?: PostModel[];
+  MyReviewLikes?: ReviewModel[];
 }
 export interface IMovie {
   id: number;
@@ -41,12 +43,38 @@ export const Slider = ({ type, movieType, postType, boardType }: ISlider) => {
   const { loggedInUser } = useUser();
   const [api, setApi] = useState('');
   const { data } = useSWR<IApi>(api);
+  const isTypeMovie = Boolean(type === 'movie' || type === 'movie-page');
 
-  //BOARD
+  //api
+  useEffect(() => {
+    if (isTypeMovie && movieType) {
+      if (movieType === 'home') {
+        setApi(`/api/movie/trending`);
+      } else {
+        setApi(`/api/movie/${movieType}`);
+      }
+    }
+  }, [isTypeMovie, movieType, setApi]);
+
+  const { user_id } = router.query;
   useEffect(() => {
     if (type === 'board') setApi(`/api/boards`);
-  }, [type, setApi]);
+    if (type === 'post') {
+      if (postType === 'likes' && user_id) {
+        setApi(`/api/user/${user_id}/likes`);
+      } else setApi(`/api/posts`);
+    }
+  }, [type, setApi, user_id, postType]);
+
   const [array, setArray] = useState<any>([]);
+  useEffect(() => {
+    if (type === 'post') {
+      if (postType === 'likes') {
+        setArray(data?.MyPostLikes);
+      } else setArray(data?.posts);
+    }
+  }, [setArray, type, data, postType]);
+
   useEffect(() => {
     if (type === 'board') {
       if (boardType === 'all' || boardType === 'home') {
@@ -81,16 +109,6 @@ export const Slider = ({ type, movieType, postType, boardType }: ISlider) => {
   }, [type, boardType, setTitle]);
 
   //MOVIE
-  const isTypeMovie = Boolean(type === 'movie' || type === 'movie-page');
-  useEffect(() => {
-    if (isTypeMovie && movieType) {
-      if (movieType === 'home') {
-        setApi(`/api/movie/trending`);
-      } else {
-        setApi(`/api/movie/${movieType}`);
-      }
-    }
-  }, [isTypeMovie, movieType, setApi]);
   useEffect(() => {
     if (isTypeMovie) {
       setArray(data?.arr?.results!);
@@ -118,23 +136,18 @@ export const Slider = ({ type, movieType, postType, boardType }: ISlider) => {
   }, [type, setTitle, movieType]);
 
   //Post
-  useEffect(() => {
-    if (type === 'post') {
-      setApi(`/api/posts`);
-      setArray(data?.posts);
-    }
-  }, [setApi, setArray]);
+
   useEffect(() => {
     if (type === 'post') {
       setBoxes(5);
     }
-  }, [setBoxes]);
+  }, [type, setBoxes]);
   useEffect(() => {
     if (type === 'post') {
       if (postType === 'home') setTitle('All Posts');
       else setTitle('');
     }
-  }, [setTitle]);
+  }, [type, setTitle, postType]);
 
   const [page, setPage] = useState(0);
   const [leave, setLeave] = useState(false);
@@ -163,6 +176,17 @@ export const Slider = ({ type, movieType, postType, boardType }: ISlider) => {
     if (type === 'movie') return router.push(`/movies`);
     if (type === 'post') return router.push(`/posts`);
     if (type === 'board' || type === 'allBoards') return router.push(`/boards`);
+  };
+  const slideVars = {
+    initial: (reverse: boolean) => ({
+      x: reverse ? -1512 : 1512,
+    }),
+    animate: (reverse: boolean) => ({
+      x: 0,
+    }),
+    exit: (reverse: boolean) => ({
+      x: reverse ? 1512 : -1512,
+    }),
   };
 
   return (
@@ -202,21 +226,11 @@ export const Slider = ({ type, movieType, postType, boardType }: ISlider) => {
         </Flex>
       )}
 
-      {!isArray && <NoData type="movie" />}
+      {/* {!isArray && <NoData type="movie" />} */}
     </Cont>
   );
 };
-const slideVars = {
-  initial: (reverse: boolean) => ({
-    x: reverse ? -1512 : 1512,
-  }),
-  animate: (reverse: boolean) => ({
-    x: 0,
-  }),
-  exit: (reverse: boolean) => ({
-    x: reverse ? 1512 : -1512,
-  }),
-};
+
 const Cont = styled.section`
   width: 100%;
   a {

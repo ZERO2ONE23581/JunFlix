@@ -35,7 +35,6 @@ export const PostList = ({
           {postsArray?.slice(0, length).map((post) => (
             <PostBox key={post.id} clickBox={clickBox} data={post} />
           ))}
-
           {modal && <PostModal data={clickedPost!} setModal={setModal} />}
 
           {!isBlur && (

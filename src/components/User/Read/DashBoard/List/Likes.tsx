@@ -7,6 +7,7 @@ import { PostModel, ReviewModel } from '../../../../../types/post';
 import useUser from '../../../../../libs/client/useUser';
 import { IData } from '../../../../../types/global';
 import { useRouter } from 'next/router';
+import { Slider } from '../../../../Tools/Slider';
 
 interface ILikesList {
   data: IData;
@@ -37,9 +38,8 @@ export const LikesList = ({ username, data }: ILikesList) => {
           <span>님이 좋아하는 리뷰</span>
         </Button>
       </BtnWrap>
-      {type === 'post' && (
-        <PostList from={4} size={4} isLikesType posts={data?.MyPostLikes!} />
-      )}
+
+      {type === 'post' && <Slider type="post" postType="likes" />}
       {type === 'review' && (
         <ReviewList isMyPage reviews={data?.MyReviewLikes!} isLikesType />
       )}

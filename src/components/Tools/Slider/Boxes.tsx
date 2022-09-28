@@ -1,55 +1,45 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { BoardBoxInfo } from './Board/BoardBoxInfo';
 import { AnimatePresence, motion } from 'framer-motion';
 import { PostModal } from '../../Post/Read/Each';
 import { MovieHover } from './Movie/MovieHover';
 import { MovieModal } from './Movie/modal';
 import { IMovie } from '.';
+import { PostBox } from '../../Post/Read/List/PostBox';
+import { Post } from '@prisma/client';
 
-interface IMovieSlider {
-  array: [];
+interface IBoxes {
+  array: [] | any;
   type: string;
   reverse: boolean;
 }
-export interface IData {
-  id: number;
-  title?: string;
-  overview?: string;
-  vote_average?: number;
-  release_date?: string;
-  original_title?: string;
-  original_language?: string;
-  original_name?: string;
-  poster_path?: string;
-  backdrop_path?: string;
-  content?: string | null;
-  avatar?: string | null;
-  genre?: string;
-  intro?: string;
-  user?: {
-    username?: string;
-  };
-  UserID?: number;
-  BoardID?: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
 
-export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
+export const Boxes = ({ type, array, reverse }: IBoxes) => {
   const [boxID, setBoxID] = useState(0);
+  const [postID, setPostID] = useState(0);
+  const [modal, setModal] = useState(false);
   const [movieModal, setMovieModal] = useState(false);
   const boxClick = (id: number) => {
     if (type === 'movie' || type === 'movie-page') {
       setBoxID(id);
       setMovieModal(true);
     }
+    if (type === 'post') {
+      setPostID(id);
+      setModal(true);
+    }
   };
+  const clickBox = (id: number) => {
+    setPostID(id);
+    setModal(true);
+  };
+  const clickedPost = array?.find((p: Post) => p.id === postID);
+  console.log(postID);
   return (
     <>
       <AnimatePresence>
-        {array?.map((data: IData) => (
+        {array?.map((data: any) => (
           <Box
             type={type}
             className="box"
@@ -70,6 +60,9 @@ export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
               <MovieHover data={data} />
             )}
             {type === 'board' && <BoardBoxInfo data={data} />}
+            {type === 'post' && (
+              <PostBox key={data.id} clickBox={clickBox} data={data} />
+            )}
           </Box>
         ))}
         {(type === 'movie' || type === 'movie-page') && (
@@ -83,6 +76,7 @@ export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
             )}
           </>
         )}
+        {modal && <PostModal data={clickedPost!} setModal={setModal} />}
       </AnimatePresence>
     </>
   );

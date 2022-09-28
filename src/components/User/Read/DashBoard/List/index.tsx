@@ -31,20 +31,36 @@ export const UserList = ({ username }: IUserList) => {
   const { data } = useSWR<IGet>(
     user_id && type && `/api/user/${user_id}/${type}s`
   );
+
   return (
     <Cont>
       <BtnWrap username={username} type={type} setType={setType} />
-      {type === 'board' && <Slider type="board" boardType="my" />}
-      {type === 'post' && <Slider type="post" boardType="my" />}
+      {type === 'board' && <Slider type={type} boardType="my" />}
+      {type === 'post' && <Slider type={type} boardType="my" />}
       {type === 'review' && <ReviewList reviews={data?.reviews!} />}
       {type === 'like' && <LikesList data={data!} username={username} />}
     </Cont>
   );
 };
 const Cont = styled.article`
-  .post-list {
-    .post {
-      min-height: 310px;
+  .slider {
+    .flex {
+      gap: 5px;
+      .chev-left-arrow,
+      .chev-right-arrow {
+        width: 50px;
+        height: 50px;
+      }
+      .row {
+        min-height: 400px;
+        .slide {
+          .box {
+            .slide {
+              gap: 20px;
+            }
+          }
+        }
+      }
     }
   }
 `;
