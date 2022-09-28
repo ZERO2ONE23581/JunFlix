@@ -50,13 +50,16 @@ export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
       setPostModal(true);
     }
   };
-  const isBoard = Boolean(type === 'board' || type === 'all-boards');
+  const isBoard = Boolean(
+    type === 'board' || type === 'allBoards' || type === 'myBoards'
+  );
 
   return (
     <>
       <AnimatePresence>
         {array?.map((data: IData) => (
           <Box
+            className="box"
             key={data.id}
             custom={reverse}
             variants={boxVars}
@@ -65,7 +68,6 @@ export const Boxes = ({ type, array, reverse }: IMovieSlider) => {
             layoutId={data.id + ''}
             transition={{ type: 'spring', stiffness: 50 }}
             type={type}
-            className={type}
             length={array.length}
             avatar={data?.avatar! && data?.avatar!}
             moviebg={data?.backdrop_path && data?.backdrop_path}

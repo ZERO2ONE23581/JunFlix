@@ -1,27 +1,40 @@
 import styled from '@emotion/styled';
+import { useCapLetter } from '../../../libs/client/useTools';
+import useUser from '../../../libs/client/useUser';
+import { GenreIcons } from '../GenreIcons';
 import { Svg } from '../Svg';
 import { Movie } from './movie';
 import { Ropes } from './ropes';
 
 interface ITitle {
-  type?: string;
-  kind?: string;
-  name?: string;
-  svg?: {
-    type: string;
-    size: string;
-  };
+  type: string;
+  genreBoardType?: string;
 }
-export const Title = ({ name, type, kind, svg }: ITitle) => {
+export const Title = ({ type, genreBoardType }: ITitle) => {
+  const { loggedInUser } = useUser();
   return (
     <Cont>
       <Wrapper>
         <Ropes />
         <H1>
+          {type === 'all-boards' && (
+            <>
+              All Boards <Svg type="board" size="2rem" />
+            </>
+          )}
+          {type === 'my-boards' && (
+            <>
+              {loggedInUser?.username}'s Boards
+              <Svg type="board" size="2rem" />
+            </>
+          )}
+          {type === 'genre-board' && (
+            <>
+              {genreBoardType?.toUpperCase()} Boards
+              <GenreIcons type={useCapLetter(genreBoardType)} />
+            </>
+          )}
           <Movie type={type!} />
-          {!name && kind && `All ${kind}`}
-          {name && kind && `${name}님의 ${kind}`}
-          {svg && <Svg type={svg?.type} size={svg?.size} />}
         </H1>
       </Wrapper>
     </Cont>

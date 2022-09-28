@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { IData } from '../Boxes';
 import styled from '@emotion/styled';
-import { NoAvatar } from '../../../Avatar/NoAvatar';
 import { HoverBox } from '../../../Board/Read/List/Board/BoardHoverBox';
 import { FollowBtn } from '../../Button/Follow/BoardFollowBtn';
 import useUser from '../../../../libs/client/useUser';

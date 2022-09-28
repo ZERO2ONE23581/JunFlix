@@ -13,6 +13,7 @@ import useUser from '../../../libs/client/useUser';
 import { useCapLetter } from '../../../libs/client/useTools';
 
 interface ISlider {
+  isBoardPage?: boolean;
   type: string;
   movieType?: string;
   boardType?: string;
@@ -36,7 +37,12 @@ interface IMovie {
   poster_path?: string;
   backdrop_path?: string;
 }
-export const Slider = ({ type, movieType, boardType }: ISlider) => {
+export const Slider = ({
+  type,
+  movieType,
+  boardType,
+  isBoardPage,
+}: ISlider) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
   //BOARD
@@ -48,19 +54,18 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
   }, [type, setApi]);
   const { data } = useSWR<IApi>(api);
 
-  //Filtered Array
+  //array 장르영화 빼고 전부 data통채로 들어감
   const [array, setArray] = useState<any>([]);
   useEffect(() => {
     if (type === 'board') {
-      if (boardType === 'all' || boardType === 'home') {
-        setArray(data?.boards);
-      } else if (boardType === 'my') {
-        setArray(data?.boards?.filter((p) => p.UserID === loggedInUser?.id));
-      } else {
+      const isGenre = !Boolean(
+        boardType === 'all' || boardType === 'home' || boardType === 'my'
+      );
+      if (isGenre)
         setArray(
           data?.boards?.filter((p) => p.genre === useCapLetter(boardType!))
         );
-      }
+      if (!isGenre) setArray(data?.boards);
     }
   }, [type, boardType, data, setArray, useCapLetter]);
   const isArray = Boolean(array?.length! > 0);
@@ -69,23 +74,31 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
   const [boxes, setBoxes] = useState(6);
   useEffect(() => {
     if (type === 'board') {
-      if (boardType === 'home') {
-        setBoxes(5);
-      } else {
-        setBoxes(4);
-      }
+      const fiveBoxes = Boolean(isBoardPage || boardType === 'home');
+      if (fiveBoxes) setBoxes(5);
+      if (!fiveBoxes) setBoxes(4);
     }
-  }, [type, boardType, setBoxes]);
+  }, [type, boardType, isBoardPage, setBoxes]);
 
   //title
   const [title, setTitle] = useState('');
   useEffect(() => {
     if (type === 'board') {
-      if (boardType === 'home') {
-        setTitle('All Boards');
+      if (boardType === 'home' || isBoardPage) {
+        if (boardType === 'all') setTitle('All Boards');
+        if (boardType === 'my') setTitle('My Boards');
+        if (boardType === 'Sf') setTitle('SF Boards');
+        if (boardType === 'Action') setTitle('Action Boards');
+        if (boardType === 'Drama') setTitle('Drama Boards');
+        if (boardType === 'Horror') setTitle('Horror Boards');
+        if (boardType === 'Thriller') setTitle('Thriller Boards');
+        if (boardType === 'Mystery') setTitle('Mystery Boards');
+        if (boardType === 'Comedy') setTitle('Comedy Boards');
+        if (boardType === 'Fantasy') setTitle('Fantasy Boards');
+        if (boardType === 'Adventure') setTitle('Adventure Boards');
       } else setTitle('');
     }
-  }, [type, boardType, setTitle]);
+  }, [type, boardType, isBoardPage]);
 
   //MOVIE
   useEffect(() => {
@@ -115,6 +128,60 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
     setBoxes,
     loggedInUser,
   ]);
+  // useEffect(() => {
+  //   if (type === 'board') {
+  //     if (isBoardPage) {
+  //       setBoxes(5);
+  //     } else if (boardType === 'home') {
+  //       setBoxes(5);
+  //       setTitle('Boards');
+  //       setArray(data?.boards);
+  //     } else if (boardType === 'all') {
+  //       setBoxes(4);
+  //       setTitle('All Boards');
+  //       setArray(data?.boards);
+  //     } else if (boardType === 'my') {
+  //       setBoxes(4);
+  //       setTitle('My Boards');
+  //       setArray(data?.boards);
+  //     }
+  //     // if (boardType !== 'all' && boardType !== 'my') {
+  //     //   setBoxes(4);
+  //     //   setTitle('');
+  //     //   setApi(`/api/boards`);
+  //     //   setArray(
+  //     //     data?.boards?.filter((p) => p.genre === useCapLetter(boardType!))
+  //     //   );
+  //     // }
+  //   }
+  //   if (type === 'movie' && movieType) {
+  //     setBoxes(6);
+  //     setApi(`/api/movie/${movieType}`);
+  //     setArray(data?.arr?.results!);
+  //     if (movieType === 'tv') setTitle('TV Shows');
+  //     if (movieType === 'top') setTitle('Classic');
+  //     if (movieType === 'now') setTitle('Now Playing');
+  //     if (movieType === 'upcoming') setTitle('Upcoming');
+  //     if (movieType === 'trending') setTitle('Trending Now');
+  //   }
+  //   if (type === 'post') {
+  //     setBoxes(5);
+  //     setTitle('Posts');
+  //     setApi(`/api/posts`);
+  //     setArray(data?.posts);
+  //   }
+  // }, [
+  //   useCapLetter,
+  //   boardType,
+  //   type,
+  //   setApi,
+  //   setTitle,
+  //   movieType,
+  //   setArray,
+  //   data,
+  //   setBoxes,
+  //   loggedInUser,
+  // ]);
   const movieId = Number(
     router?.query?.movie_id && router?.query?.movie_id![0]
   );
@@ -127,20 +194,29 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
     if (page === 0) setReverse(false);
   }, [page, setReverse]);
 
-  const isLessBoxes = !Boolean(array?.length <= boxes);
-  const isFirstPage = Boolean(page !== 0);
-  const clickRight = () => {
+  const ArrowClick = (arrow: string) => {
+    const showAll = Boolean(
+      type === 'allBoards' || type === 'myBoards' || boardType
+    );
     if (leave) return;
     setLeave((p) => !p);
-    setReverse(false);
-    setPage((p) => (p === Math.ceil(array?.length / boxes) - 1 ? 0 : p + 1));
+    if (arrow === 'right') {
+      setReverse(false);
+      if (showAll) {
+        setPage((p) => (p === Math.round(array?.length / boxes) ? 0 : p + 1));
+      } else {
+        setPage((p) =>
+          p === Math.floor(array?.length / boxes) - 1 ? 0 : p + 1
+        );
+      }
+    }
+    if (arrow === 'left') {
+      setReverse(true);
+      setPage((p) => p - 1);
+    }
   };
-  const clickLeft = () => {
-    if (leave) return;
-    setLeave((p) => !p);
-    setReverse(true);
-    setPage((p) => p - 1);
-  };
+  const isRightArrow = !Boolean(array?.length <= boxes);
+  const isLeftArrow = Boolean(page !== 0);
 
   const titleClick = () => {
     if (type === 'movie') return router.push(`/movies`);
@@ -154,8 +230,12 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
       </Title>
       {isArray && (
         <Flex className="flex">
-          {isFirstPage && (
-            <Svg size="2rem" type="chev-left-arrow" onClick={clickLeft} />
+          {isLeftArrow && (
+            <Svg
+              size="2rem"
+              type="chev-left-arrow"
+              onClick={() => ArrowClick('left')}
+            />
           )}
           <Row className={type}>
             <AnimatePresence
@@ -178,8 +258,12 @@ export const Slider = ({ type, movieType, boardType }: ISlider) => {
               </Slide>
             </AnimatePresence>
           </Row>
-          {isLessBoxes && (
-            <Svg size="2rem" type="chev-right-arrow" onClick={clickRight} />
+          {isRightArrow && (
+            <Svg
+              size="2rem"
+              type="chev-right-arrow"
+              onClick={() => ArrowClick('right')}
+            />
           )}
         </Flex>
       )}

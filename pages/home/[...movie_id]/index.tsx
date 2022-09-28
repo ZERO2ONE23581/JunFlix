@@ -16,7 +16,7 @@ const Home: NextPage = () => {
         </Top>
         <Bottom>
           <Slider type="post" />
-          <Slider type="board" />
+          <Slider type="board" boardType="home" />
         </Bottom>
       </Cont>
     </>

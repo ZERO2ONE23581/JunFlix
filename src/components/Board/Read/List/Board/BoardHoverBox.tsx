@@ -16,7 +16,7 @@ interface IHoverBox {
 }
 export const HoverBox = ({ data }: IHoverBox) => {
   const handleLongLetters = (type: string) => {
-    const maxTitle = 15;
+    const maxTitle = 12;
     const maxIntro = 20;
     const Title = useCapLetters(data?.title!);
     const Intro = useCapLetters(data?.intro!);
@@ -37,17 +37,7 @@ export const HoverBox = ({ data }: IHoverBox) => {
       variants={containerVars}
       transition={{ type: 'spring', stiffness: 60 }}
     >
-      <TitleWrap
-        variants={{
-          hover: {
-            fontSize: '22px',
-            flexDirection: 'row',
-            alignItems: 'flex-end',
-            justifyContent: 'space-between',
-            ...Trans,
-          },
-        }}
-      >
+      <TitleWrap variants={{ hover: { fontSize: '22px', ...Trans } }}>
         <Title
           variants={{
             initial: { fontSize: '2em' },
@@ -55,7 +45,7 @@ export const HoverBox = ({ data }: IHoverBox) => {
           }}
         >
           <span>{handleLongLetters('title')}</span>
-          {data.isOwner && <Svg type="isOwner" size="1.4rem" />}
+          {data?.isOwner && <Svg type="isOwner" size="5px" />}
         </Title>
         <Username
           initial="initial"
@@ -77,7 +67,7 @@ export const HoverBox = ({ data }: IHoverBox) => {
             <Svg type={data?.genre!} size="1.5em" />
           </li>
           <li className="intro">
-            {data.intro && <p>"{handleLongLetters('intro')}"</p>}
+            {data?.intro && <p>"{handleLongLetters('intro')}"</p>}
           </li>
         </Detail>
       </TitleWrap>
@@ -86,7 +76,7 @@ export const HoverBox = ({ data }: IHoverBox) => {
 };
 const Trans = {
   transition: {
-    delay: 0.3,
+    delay: 0.2,
     duration: 0.3,
   },
 };
@@ -101,7 +91,7 @@ const Cont = styled(motion.div)`
   justify-content: start;
   flex-direction: column;
   width: 100%;
-  min-height: 140px;
+  min-height: 150px;
   padding: 1.5em 2em;
   ul {
     li {
@@ -113,7 +103,7 @@ const Cont = styled(motion.div)`
 const TitleWrap = styled(motion.ul)`
   width: 100%;
   position: relative;
-  gap: 10px;
+  gap: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -148,7 +138,7 @@ const Username = styled(motion.li)`
 `;
 const Detail = styled(motion.ul)`
   opacity: 0;
-  top: 2.2em;
+  top: 50px;
   left: 0;
   position: absolute;
   gap: 5px;

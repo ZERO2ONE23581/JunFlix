@@ -1,8 +1,10 @@
 import { Movie } from './Movie';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import useUser from '../../../../../../libs/client/useUser';
+import { useCapLetter } from '../../../../../../libs/client/useTools';
+import { GenreBoardModalBtn } from './GenreBoardModalBtn';
 
 interface IModal {
   type: string;
@@ -12,37 +14,40 @@ interface IModal {
 export const Modal = ({ type, text, setSelect }: IModal) => {
   const router = useRouter();
   const { isLoggedIn, loggedInUser } = useUser();
-  const onClick = (Type: string) => {
+  const [btnName, setBtnName] = useState('Boards');
+
+  const handleClick = (btnType: string) => {
     setSelect('');
-    if (Type === 'all') router.push(`/${type}s`);
-    if (Type === 'my')
-      router.push(
-        `/user/${loggedInUser?.id}/${loggedInUser?.username}/${type}s`
-      );
-    if (Type === 'create' && type === 'post') {
+    if (type === 'board') {
+      if (btnType === 'all') router.push(`/boards`);
+      else if (btnType === 'my') router.push(`/boards/my`);
+      else router.push(`/boards/${btnType}`);
+    }
+    if (btnType === 'create')
+      router.push(`/user/${loggedInUser?.id}/${type}/create`);
+    // if (name === 'all') router.push(`/${type}s`);
+    // if (name === 'my') router.push(`/${type}s/my`);
+    if (btnType === 'create' && type === 'post') {
       if (!isLoggedIn) alert('로그인 해주세요.');
       else alert('포스트를 생성할 보드를 선택해주세요.');
       return router.push(
         `/user/${loggedInUser?.id}/${loggedInUser?.username}/boards`
       );
     }
-    if (Type === 'create')
-      router.push(`/user/${loggedInUser?.id}/${type}/create`);
   };
   const isMovie = Boolean(type === 'movie');
   return (
     <Cont>
       {!isMovie && (
         <List>
-          <li onClick={() => onClick('all')}>
-            <span>All</span>
-            <span>{text}s</span>
+          <li onClick={() => handleClick('all')}>
+            <span>All Boards</span>
           </li>
-          <li onClick={() => onClick('my')}>
-            <span>My</span>
-            <span>{text}</span>
+          <li onClick={() => handleClick('my')}>
+            <span>My Boards</span>
           </li>
-          <li onClick={() => onClick('create')}>
+          {type === 'board' && <GenreBoardModalBtn handleClick={handleClick} />}
+          <li onClick={() => handleClick('create')}>
             <span>Create</span>
             <span>{text}</span>
           </li>

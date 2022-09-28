@@ -1,8 +1,7 @@
-import { Modal } from './Modal';
 import styled from '@emotion/styled';
-
 import { Dispatch, SetStateAction } from 'react';
 import { useCapLetter } from '../../../../../libs/client/useTools';
+import { Modal } from './Modal';
 
 interface IEach {
   type: string;
