@@ -7,7 +7,6 @@ import { IReview } from '../../../../types/review';
 import { TextArea } from '../../../Tools/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
 import { ICmtRes, ICmtForm } from '../../../../types/comments';
-import { IconBtn } from '../../../Tools/Button/Icon';
 
 export const CreateComment = ({ review }: IReview) => {
   const [CreateComment, { loading, data }] = useMutation<ICmtRes>(
@@ -46,9 +45,7 @@ export const CreateComment = ({ review }: IReview) => {
             placeholder="댓글 달기..."
           />
           {loading && <Svg type="loading" size="2rem" />}
-          {!loading && (
-            <IconBtn type="submit" size="2.2rem" svgType="paper-plane" />
-          )}
+          {!loading && <Svg size="2.2rem" type="paper-plane" />}
         </Cont>
       </form>
       {data?.error && <ErrorMsg error={data.error} />}

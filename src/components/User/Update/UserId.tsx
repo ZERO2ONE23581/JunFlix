@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
@@ -12,6 +12,9 @@ import { IData } from '../../../types/global';
 import { Title } from '../Create/Title';
 import { LoadingModal } from '../../Tools/Modal/Loading';
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
+import { Answer } from '../../Tools/Modal/Answer';
+import { Svg } from '../../Tools/Svg';
 
 export const UserId = () => {
   const router = useRouter();
@@ -43,13 +46,22 @@ export const UserId = () => {
       router.reload();
     }
   }, [data, router]);
-
+  const [answer, setAnswer] = useState(false);
   return (
     <>
       {!loading && (
         <form onSubmit={handleSubmit(onValid)}>
-          <UserBox>
-            <Title type="edit-user-id" eng="User ID" />
+          {answer && <Answer type="edit-user-info" closeModal={setAnswer} />}
+          <UserBox className="user-box">
+            <h1>
+              <span>USER ID</span>
+              <span className="small">(유저 아이디)</span>
+              <Svg
+                size="2rem"
+                type="question"
+                onClick={() => setAnswer(true)}
+              />
+            </h1>
             <InputWrap
               id="userId"
               type="text"
@@ -68,7 +80,33 @@ export const UserId = () => {
     </>
   );
 };
-export const UserBox = styled(Box)`
-  width: 300px;
-  height: 300px;
+export const UserBox = styled(motion.div)`
+  border: 3px solid ${(p) => p.theme.color.font};
+  border-radius: 5px;
+  padding: 20px 30px;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  h1 {
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    span {
+      font-size: 1.5em;
+      margin-right: 5px;
+    }
+    .small {
+      font-size: 1.3em;
+    }
+  }
+  button {
+    width: 100%;
+  }
+  .flex {
+    gap: 15px;
+    display: flex;
+    align-items: center;
+  }
 `;

@@ -5,7 +5,6 @@ import { Profile } from '../Read/Info/Content/Profile';
 import { Svg } from '../../../Tools/Svg';
 import { ErrorMsg } from '../../../Tools/Errors';
 import useUser from '../../../../libs/client/useUser';
-import { IconBtn } from '../../../Tools/Button/Icon';
 import { TextArea } from '../../../Tools/Input/TextArea';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
@@ -62,9 +61,7 @@ export const CreateReply = ({
             height={height}
             placeholder="댓글 달기..."
           />
-          {!loading && (
-            <IconBtn size="1.5rem" type="submit" svgType="paper-plane" />
-          )}
+          {!loading && <Svg size="1.5rem" type="paper-plane" />}
           {loading && <Svg size="1.5rem" type="loading" />}
         </Cont>
       </form>

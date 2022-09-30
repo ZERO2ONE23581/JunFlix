@@ -23,7 +23,7 @@ export const ReviewList = ({ reviews, isLikesType }: IReviewList) => {
       return useCapLetter(title.slice(0, num) + '...');
     if (Boolean(title.length < num)) return useCapLetter(title);
   };
-  console.log(reviews);
+
   return (
     <>
       {isReview && (

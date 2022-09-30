@@ -1,6 +1,5 @@
 import { Btn } from '../../Button';
 import styled from '@emotion/styled';
-import { IconBtn } from '../../Button/Icon';
 import { useEffect } from 'react';
 import { DimBackground, SmallModal } from '../../../../../styles/global';
 import { IFollowModal } from './Board';
@@ -8,6 +7,7 @@ import { useRouter } from 'next/router';
 import useMutation from '../../../../libs/client/useMutation';
 import { IData } from '../../../../types/global';
 import { LoadingModal } from '../Loading';
+import { Svg } from '../../Svg';
 
 interface IFollowUserModal extends IFollowModal {
   userID: number;
@@ -41,12 +41,7 @@ export const FollowUserModal = ({
       {!loading && (
         <>
           <Cont>
-            <IconBtn
-              size="2rem"
-              type="button"
-              svgType="close"
-              onClick={() => closeModal!(false)}
-            />
+            <Svg size="2rem" type="close" onClick={() => closeModal!(false)} />
             {isFollow && (
               <>
                 <span>유저를 팔로우 하면 콘텐츠를 열람할 수 있습니다.</span>

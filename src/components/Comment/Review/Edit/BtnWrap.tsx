@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../../Tools/Button/Icon';
+import { Svg } from '../../../Tools/Svg';
 
 interface IBtnWrap {
   selectId: number;
@@ -21,11 +21,22 @@ export const BtnWrap = ({
   setDel,
 }: IBtnWrap) => {
   const handleClick = (ID: number, type: string) => {
+    const isDisable = Boolean(selectId);
     setSelectId(ID);
-    if (type === 'reply') setReply(true);
-    if (type === 'edit') setEdit(true);
-    if (type === 'delete') setDel(true);
+    if (type === 'reply') {
+      if (isDisable) return;
+      setReply(true);
+    }
+    if (type === 'edit') {
+      if (isDisable) return;
+      setEdit(true);
+    }
+    if (type === 'delete') {
+      if (isDisable) return;
+      setDel(true);
+    }
     if (type === 'cancel') {
+      if (!isDisable) return;
       setSelectId(0);
       setEdit(false);
       setReply(false);
@@ -34,34 +45,26 @@ export const BtnWrap = ({
   };
   return (
     <Cont>
-      <IconBtn
-        type="button"
+      <Svg
         size="1.3rem"
-        svgType="reply"
-        isDisable={Boolean(selectId)}
+        type="reply"
         onClick={() => handleClick(commentId, 'reply')}
       />
-      <IconBtn
-        type="button"
+      <Svg
         size="1.3rem"
-        svgType="close"
-        isDisable={!Boolean(selectId)}
+        type="close"
         onClick={() => handleClick(commentId, 'cancel')}
       />
       {isMyComment && (
         <>
-          <IconBtn
-            type="button"
+          <Svg
             size="1.3rem"
-            svgType="pen"
-            isDisable={Boolean(selectId)}
+            type="pen"
             onClick={() => handleClick(commentId, 'edit')}
           />
-          <IconBtn
-            type="button"
+          <Svg
             size="1.3rem"
-            svgType="trash"
-            isDisable={Boolean(selectId)}
+            type="trash"
             onClick={() => handleClick(commentId, 'delete')}
           />
         </>

@@ -3,7 +3,6 @@ import { Svg } from '../../Tools/Svg';
 import { Dispatch, SetStateAction } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import { IBoardForm } from '../../../types/board';
-import { IconBtn } from '../../Tools/Button/Icon';
 
 interface ICreateBoardAvatar {
   isPreview: boolean;
@@ -28,12 +27,7 @@ export const CreateAvatar = ({
         />
       </label>
       {isPreview && (
-        <IconBtn
-          size="2rem"
-          type="button"
-          svgType="undo"
-          onClick={() => setPreview('')}
-        />
+        <Svg size="2rem" type="undo" onClick={() => setPreview('')} />
       )}
     </Cont>
   );

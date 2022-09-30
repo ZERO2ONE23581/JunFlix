@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Answer } from '../Modal/Answer';
 import styled from '@emotion/styled';
 import useUser from '../../../libs/client/useUser';
-import { IconBtn } from './Icon';
 import { Move } from '../Modal/Move';
+import { Svg } from '../Svg';
 
 interface IFixed {
   type: string;
@@ -15,19 +15,9 @@ export const Fixed = ({ type }: IFixed) => {
   return (
     <>
       <Cont>
-        <IconBtn
-          size="2.5rem"
-          type="button"
-          svgType="question"
-          onClick={() => setAnswer(true)}
-        />
+        <Svg size="2.5rem" type="question" onClick={() => setAnswer(true)} />
         {isLoggedIn && type !== 'update-review' && (
-          <IconBtn
-            size="2.5rem"
-            type="button"
-            svgType="add"
-            onClick={() => setModal(true)}
-          />
+          <Svg size="2.5rem" type="add" onClick={() => setModal(true)} />
         )}
       </Cont>
       {answer && <Answer type={type} closeModal={setAnswer} />}

@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useLength } from '../../../../libs/client/useTools';
 import { IUseform } from '../../../../types/global';
-import { IconBtn } from '../../../Tools/Button/Icon';
 import { TextArea } from '../../../Tools/Input/TextArea';
 import { Svg } from '../../../Tools/Svg';
 
@@ -26,7 +25,7 @@ export const EditCmt = ({ register, watch, loading }: IInfo) => {
         placeholder="Add a comment..."
       />
       {loading && <Svg type="loading" size="2rem" />}
-      {!loading && <IconBtn type="submit" svgType="paper-plane" size="2rem" />}
+      {!loading && <Svg type="paper-plane" size="2rem" />}
     </Cont>
   );
 };

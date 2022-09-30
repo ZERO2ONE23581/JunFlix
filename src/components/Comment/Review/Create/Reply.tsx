@@ -9,8 +9,6 @@ import useMutation from '../../../../libs/client/useMutation';
 import { ProfileAvatar } from '../../../Avatar/Profile';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ICmtRes, ICmtForm } from '../../../../types/comments';
-
-import { IconBtn } from '../../../Tools/Button/Icon';
 import { useLength } from '../../../../libs/client/useTools';
 
 interface IReplyCmt extends IReview {
@@ -67,9 +65,7 @@ export const CreateReply = ({
               placeholder="답글 달기..."
             />
             {loading && <Svg type="loading" size="2rem" />}
-            {!loading && (
-              <IconBtn type="submit" size="2rem" svgType="paper-plane" />
-            )}
+            {!loading && <Svg size="2rem" type="paper-plane" />}
           </Flex>
         </Cont>
       </form>

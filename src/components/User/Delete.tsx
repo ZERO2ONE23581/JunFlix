@@ -5,13 +5,12 @@ import { useEffect, useState } from 'react';
 import { IUserForm } from '../../types/user';
 import { ConfirmModal } from '../Tools/Modal';
 import useUser from '../../libs/client/useUser';
-import { IconBtn } from '../Tools/Button/Icon';
 import useMutation from '../../libs/client/useMutation';
 import { Errors } from '../Tools/Errors';
-import { Title } from './Create/Title';
-import { Box } from '../../../styles/global';
 import { UserBox } from './Update/UserId';
 import { Svg } from '../Tools/Svg';
+import { Answer } from '../Tools/Modal/Answer';
+import { Btn } from '../Tools/Button';
 
 export const DeleteUser = () => {
   const [delModal, setDelModal] = useState(false);
@@ -38,18 +37,18 @@ export const DeleteUser = () => {
       router.push('/');
     }
   }, [data, router]);
+  const [answer, setAnswer] = useState(false);
   return (
     <>
+      {answer && <Answer type="delete-account" closeModal={setAnswer} />}
       <form onSubmit={handleSubmit(onValid)}>
         <Cont>
-          <Svg type="danger" size="2rem" fill={'red'} />
-          <Title type="delete-account" eng="Delete Account" />
-          <IconBtn
-            size="2rem"
-            type="button"
-            svgType="trash"
-            onClick={() => setDelModal((p: boolean) => !p)}
-          />
+          <h1>
+            <Svg size="2rem" type="danger" onClick={() => setAnswer(true)} />
+            <span>계정 삭제</span>
+            <span className="small">DELETE ACCOUNT</span>
+          </h1>
+          <Btn name="DELETE" type="button" onClick={() => setDelModal(true)} />
         </Cont>
         {delModal && (
           <ConfirmModal
@@ -66,12 +65,15 @@ export const DeleteUser = () => {
   );
 };
 const Cont = styled(UserBox)`
-  width: 400px;
-  height: 100px;
-  padding: 20px;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  color: ${(p) => p.theme.color.logo};
-  border: thick double ${(p) => p.theme.color.logo};
+  h1 {
+    span {
+      font-size: 1.3em;
+    }
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  width: 300px;
+  height: 200px;
 `;

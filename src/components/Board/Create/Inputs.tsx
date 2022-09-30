@@ -3,8 +3,8 @@ import { CreateAvatar } from '../../Avatar/Board/Create';
 import { InputWrap } from '../../Tools/Input';
 import { IUseform } from '../../../types/global';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../Tools/Button/Icon';
 import { SelectWrap } from '../../Tools/Input/Select';
+import { Svg } from '../../Tools/Svg';
 
 interface IInputs extends IUseform {
   isPreview: boolean;
@@ -32,7 +32,7 @@ export const Inputs = ({ watch, register, isPreview, setPreview }: IInputs) => {
         isPreview={isPreview}
         setPreview={setPreview}
       />
-      <IconBtn type="submit" svgType="save" size="2.6rem" />
+      <Svg type="save" size="2.6rem" />
     </Cont>
   );
 };

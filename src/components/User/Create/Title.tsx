@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import { IconBtn } from '../../Tools/Button/Icon';
 import { Answer } from '../../Tools/Modal/Answer';
+import { Svg } from '../../Tools/Svg';
 
 interface ITitle {
   type: string;
@@ -16,12 +16,7 @@ export const Title = ({ type, eng, kor }: ITitle) => {
       <Cont>
         {eng && <span className="eng">{eng}</span>}
         {kor && <span className="kor">{kor}</span>}
-        <IconBtn
-          type="button"
-          size="1.7rem"
-          svgType="question"
-          onClick={() => setAnswer(true)}
-        />
+        <Svg size="1.7rem" type="question" onClick={() => setAnswer(true)} />
       </Cont>
     </>
   );

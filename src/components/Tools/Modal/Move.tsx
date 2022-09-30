@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { SmallModal, DimBackground } from '../../../../styles/global';
 import useUser from '../../../libs/client/useUser';
 import { Btn } from '../Button';
-import { IconBtn } from '../Button/Icon';
+import { Svg } from '../Svg';
 
 interface IMoveToCreate {
   type: string;
@@ -24,12 +24,7 @@ export const Move = ({ type, closeModal }: IMoveToCreate) => {
   return (
     <>
       <Cont>
-        <IconBtn
-          size="2rem"
-          type="button"
-          svgType="close"
-          onClick={() => closeModal(false)}
-        />
+        <Svg size="2rem" type="close" onClick={() => closeModal(false)} />
         {type === 'read-review' && (
           <>
             <span>리뷰 페이지로 이동</span>

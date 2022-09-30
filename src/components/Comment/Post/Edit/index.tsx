@@ -8,7 +8,6 @@ import { useForm } from 'react-hook-form';
 import { Svg } from '../../../Tools/Svg';
 import { ErrorMsg } from '../../../Tools/Errors';
 import { IQuery } from '../../../../types/global';
-import { IconBtn } from '../../../Tools/Button/Icon';
 import { TextArea } from '../../../Tools/Input/TextArea';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
@@ -66,9 +65,7 @@ export const EditComment = ({
           height={height}
           placeholder="댓글 달기..."
         />
-        {!loading && (
-          <IconBtn size="1.5rem" type="submit" svgType="paper-plane" />
-        )}
+        {!loading && <Svg size="1.5rem" type="paper-plane" />}
         {loading && <Svg size="2rem" type="loading" />}
       </EditCont>
       {errors.content && <ErrorMsg error={errors.content.message} />}

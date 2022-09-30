@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IData } from '../../../../types/global';
 import { ConfirmModal } from '../../../Tools/Modal';
-import { IconBtn } from '../../../Tools/Button/Icon';
 import useUser from '../../../../libs/client/useUser';
 import useMutation from '../../../../libs/client/useMutation';
+import { Svg } from '../../../Tools/Svg';
 
 export const Fixed = () => {
   const router = useRouter();
@@ -29,35 +29,31 @@ export const Fixed = () => {
   }, [data, router]);
   return (
     <Cont>
-      <IconBtn
+      <Svg
         size="2.5rem"
-        type="button"
-        svgType="compass"
+        type="compass"
         onClick={() => router.push(`/reviews`)}
       />
       {isMyReview && (
         <>
-          <IconBtn
+          <Svg
             size="2.5rem"
-            type="button"
-            svgType="setting"
+            type="setting"
             onClick={() => setOnSetting((p) => !p)}
           />
           {onSetting && (
             <>
               <Wrap>
-                <IconBtn
-                  type="button"
+                <Svg
                   size="2.5rem"
-                  svgType="edit-board"
+                  type="edit-board"
                   onClick={() =>
                     router.push(`/user/${user_id}/review/${review_id}/edit`)
                   }
                 />
-                <IconBtn
-                  type="button"
+                <Svg
                   size="2.5rem"
-                  svgType="trash"
+                  type="trash"
                   onClick={() => setDelModal(true)}
                 />
               </Wrap>

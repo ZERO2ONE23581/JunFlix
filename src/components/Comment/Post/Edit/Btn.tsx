@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../../Tools/Button/Icon';
+import { Svg } from '../../../Tools/Svg';
 
 interface IBtnWrap {
   chosenId: number;
@@ -21,49 +21,52 @@ export const SettingBtns = ({
   setDelete,
 }: IBtnWrap) => {
   const handleClick = (chosen_Id: number, type: string) => {
+    const isChosen = Boolean(chosenId !== 0);
     setChosenId(chosen_Id);
-    if (type === 'edit') return setEdit(true);
-    if (type === 'reply') return setReply(true);
-    if (type === 'delete') return setDelete(true);
+    if (type === 'edit') {
+      if (isChosen) return;
+      setEdit(true);
+    }
+    if (type === 'reply') {
+      if (isChosen) return;
+      setReply(true);
+    }
+    if (type === 'delete') {
+      if (isChosen) return;
+      setDelete(true);
+    }
     if (type === 'cancel') {
+      if (!isChosen) return;
       setChosenId(0);
       setEdit(false);
       setReply(false);
       setDelete(false);
     }
   };
-  const isChosen = Boolean(chosenId !== 0);
+
   return (
     <Cont>
       <div className="btns">
-        <IconBtn
+        <Svg
           size="1.1rem"
-          type="button"
-          svgType="reply"
-          isDisable={isChosen}
+          type="reply"
           onClick={() => handleClick(comment_id, 'reply')}
         />
-        <IconBtn
+        <Svg
           size="1.1rem"
-          type="button"
-          svgType="close"
-          isDisable={!isChosen}
+          type="close"
           onClick={() => handleClick(comment_id, 'cancel')}
         />
         {isMyComment && (
           <>
-            <IconBtn
+            <Svg
               size="1.1rem"
-              svgType="pen"
-              type="button"
-              isDisable={isChosen}
+              type="pen"
               onClick={() => handleClick(comment_id, 'edit')}
             />
-            <IconBtn
+            <Svg
               size="1.1rem"
-              type="button"
-              svgType="trash"
-              isDisable={isChosen}
+              type="trash"
               onClick={() => handleClick(comment_id, 'delete')}
             />
           </>

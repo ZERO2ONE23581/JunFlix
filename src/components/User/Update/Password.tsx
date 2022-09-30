@@ -55,7 +55,7 @@ export const Password = () => {
               required: '현재 비밀번호를 입력해주세요.',
             })}
           />
-          <Flex>
+          <div className="flex">
             <InputWrap
               watch={watch('newPassword')}
               id="newPassword"
@@ -88,7 +88,7 @@ export const Password = () => {
                 required: '새로운 비밀번호를 재입력해주세요.',
               })}
             />
-          </Flex>
+          </div>
           <Btn name="Edit" type="submit" loading={loading} />
         </Cont>
         <Errors errors={errors} />
@@ -97,10 +97,5 @@ export const Password = () => {
   );
 };
 const Cont = styled(UserBox)`
-  width: 420px;
-`;
-const Flex = styled.div`
-  gap: 15px;
-  display: flex;
-  align-items: center;
+  width: 400px;
 `;

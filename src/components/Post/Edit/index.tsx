@@ -9,7 +9,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ConfirmModal } from '../../Tools/Modal';
 import { useCapLetters } from '../../../libs/client/useTools';
 import { Btn } from '../../Tools/Button';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { TextArea } from '../../Tools/Input/TextArea';
 import { Svg } from '../../Tools/Svg';
 import { Errors } from '../../Tools/Errors';

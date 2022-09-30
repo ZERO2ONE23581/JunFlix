@@ -4,10 +4,10 @@ import { ErrorMsg } from '../Errors';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { LoadingModal } from './Loading';
-import { IconBtn } from '../Button/Icon';
 import { Dispatch, SetStateAction } from 'react';
 import { IUseform } from '../../../types/global';
 import { SmallModal, BtnWrap, DimBackground } from '../../../../styles/global';
+import { Svg } from '../Svg';
 
 interface IConfirmModal extends IUseform {
   type: string;
@@ -43,12 +43,7 @@ export const ConfirmModal = ({
       {!loading && (
         <Cont type={type} className="confirm-modal">
           {isClose && (
-            <IconBtn
-              size="2rem"
-              type="button"
-              svgType="close"
-              onClick={() => closeModal!(false)}
-            />
+            <Svg size="2rem" type="close" onClick={() => closeModal!(false)} />
           )}
           {Texts(type, USERID!)}
           <BtnWrap>

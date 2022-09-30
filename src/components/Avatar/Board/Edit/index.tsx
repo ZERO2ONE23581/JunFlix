@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { IconBtn } from '../../../Tools/Button/Icon';
+import { Svg } from '../../../Tools/Svg';
 import { EditBoardAvatarForm } from './Form';
 
 interface IEditAvatar {
@@ -33,26 +33,12 @@ export const EditBoardAvatar = ({
           setIsClicked={setIsClicked}
         />
         {isClicked && (
-          <IconBtn
-            size="2rem"
-            type="button"
-            svgType="save"
-            isClicked={saveModal}
-            onClick={() => setSaveModal(true)}
-          />
+          <Svg size="2rem" type="save" onClick={() => setSaveModal(true)} />
         )}
-        <IconBtn
-          type="button"
-          size="2.2rem"
-          svgType="eraser"
-          isClicked={delModal}
-          onClick={() => setDelModal(true)}
-        />
-        <IconBtn
+        <Svg size="2.2rem" type="eraser" onClick={() => setDelModal(true)} />
+        <Svg
           size="2rem"
-          type="button"
-          svgType="undo"
-          isClicked={avatar}
+          type="undo"
           onClick={() => {
             setPreview('');
             setCancel(false);

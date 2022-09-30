@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../Tools/Button/Icon';
+import { Svg } from '../../Tools/Svg';
 
 interface IBtnWrapProps {
   next: boolean;
@@ -13,37 +13,16 @@ export const Layer = ({ next, setNext, cancel, setCancel }: IBtnWrapProps) => {
     <Cont>
       {!next && (
         <>
-          <IconBtn
-            type="button"
-            size="1.5rem"
-            svgType="close"
-            isClicked={cancel}
-            onClick={() => setCancel(true)}
-          />
+          <Svg size="1.5rem" type="close" onClick={() => setCancel(true)} />
           <h1>새 포스트 만들기</h1>
-          <IconBtn
-            type="button"
-            size="1.5rem"
-            svgType="right-arrow"
-            onClick={() => setNext(true)}
-          />
+          <Svg size="1.5rem" type="right-arrow" onClick={() => setNext(true)} />
         </>
       )}
       {next && (
         <>
-          <IconBtn
-            type="button"
-            size="1.5rem"
-            svgType="left-arrow"
-            onClick={() => setNext(false)}
-          />
+          <Svg size="1.5rem" type="left-arrow" onClick={() => setNext(false)} />
           <h1>새 포스트 만들기</h1>
-          <IconBtn
-            type="button"
-            size="1.5rem"
-            svgType="close"
-            onClick={() => setCancel(true)}
-          />
+          <Svg size="1.5rem" type="close" onClick={() => setCancel(true)} />
         </>
       )}
     </Cont>

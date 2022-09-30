@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Svg } from '../../../../Tools/Svg';
 import { ErrorMsg } from '../../../../Tools/Errors';
-import { IconBtn } from '../../../../Tools/Button/Icon';
 import { TextArea } from '../../../../Tools/Input/TextArea';
 import useMutation from '../../../../../libs/client/useMutation';
 import { ICmtForm, ICmtRes } from '../../../../../types/comments';
@@ -47,9 +46,7 @@ export const CreateComment = ({ query }: IQuery) => {
               placeholder="댓글 달기..."
             />
             {loading && <Svg type="loading" size="2rem" />}
-            {!loading && (
-              <IconBtn type="submit" svgType="paper-plane" size="1.8rem" />
-            )}
+            {!loading && <Svg type="paper-plane" size="1.8rem" />}
           </Flex>
         </Cont>
       </form>

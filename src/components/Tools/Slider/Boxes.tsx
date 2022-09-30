@@ -35,7 +35,7 @@ export const Boxes = ({ type, array, reverse }: IBoxes) => {
     setModal(true);
   };
   const clickedPost = array?.find((p: Post) => p.id === postID);
-  console.log(postID);
+
   return (
     <>
       <AnimatePresence>

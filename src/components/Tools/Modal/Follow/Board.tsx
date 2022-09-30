@@ -1,8 +1,8 @@
 import { Btn } from '../../Button';
 import styled from '@emotion/styled';
-import { IconBtn } from '../../Button/Icon';
 import { Dispatch, SetStateAction } from 'react';
 import { DimBackground, SmallModal } from '../../../../../styles/global';
+import { Svg } from '../../Svg';
 
 export interface IFollowModal {
   onClick?: any;
@@ -19,12 +19,7 @@ export const FollowBoardModal = ({
   return (
     <>
       <Cont>
-        <IconBtn
-          size="2rem"
-          type="button"
-          svgType="close"
-          onClick={() => closeModal!(false)}
-        />
+        <Svg size="2rem" type="close" onClick={() => closeModal!(false)} />
         {isFollow && (
           <>
             <span>이 보드를 팔로우 하겠습니까?</span>

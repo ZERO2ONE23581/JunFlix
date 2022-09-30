@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../../Tools/Button/Icon';
+import { Svg } from '../../../Tools/Svg';
 
 interface ITitle {
   setEdit: Dispatch<SetStateAction<boolean>>;
@@ -10,12 +10,7 @@ export const Layer = ({ setEdit }: ITitle) => {
     <Cont>
       <div />
       <h1>포스트 수정</h1>
-      <IconBtn
-        size="1.5rem"
-        type="button"
-        svgType="close"
-        onClick={() => setEdit(false)}
-      />
+      <Svg size="1.5rem" type="close" onClick={() => setEdit(false)} />
     </Cont>
   );
 };

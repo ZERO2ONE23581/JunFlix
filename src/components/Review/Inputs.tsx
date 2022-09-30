@@ -3,8 +3,8 @@ import { InputWrap } from '../Tools/Input';
 import { ConfirmModal } from '../Tools/Modal';
 import { IUseform } from '../../types/global';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../Tools/Button/Icon';
 import { SelectWrap } from '../Tools/Input/Select';
+import { Svg } from '../Tools/Svg';
 
 interface IInputs extends IUseform {
   isEdit?: boolean;
@@ -45,19 +45,13 @@ export const Inputs = ({
           register={register!('genre')}
         />
         {isEdit && (
-          <IconBtn
+          <Svg
             size="2.5rem"
-            type="button"
-            svgType="eraser"
+            type="eraser"
             onClick={() => setDelAvatar!((p) => !p)}
           />
         )}
-        <IconBtn
-          size="2.5rem"
-          type="button"
-          svgType="save"
-          onClick={clickSave}
-        />
+        <Svg size="2.5rem" type="save" onClick={clickSave} />
       </Cont>
       {delAvatar && (
         <ConfirmModal

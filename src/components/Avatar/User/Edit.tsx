@@ -8,9 +8,9 @@ import useUser from '../../../libs/client/useUser';
 import { LoadingModal } from '../../Tools/Modal/Loading';
 import { IUserForm } from '../../../types/user';
 import { IData } from '../../../types/global';
-import { Title } from '../../User/Create/Title';
-import { Box } from '../../../../styles/global';
 import { UserBox } from '../../User/Update/UserId';
+import { Svg } from '../../Tools/Svg';
+import { Answer } from '../../Tools/Modal/Answer';
 
 export const EditUserAvatar = () => {
   const { loggedInUser } = useUser();
@@ -55,37 +55,49 @@ export const EditUserAvatar = () => {
     if (data?.error) alert(data?.error);
     if (data?.ok) alert(`프로필 사진을 업데이트 했습니다.`);
   }, [avatar, data]);
-
+  const [answer, setAnswer] = useState(false);
   return (
     <>
-      <form onSubmit={handleSubmit(onValid)}>
-        <Cont>
-          <Title type="edit-user-avatar" eng="Profile Picture" />
-          <Label>
-            <ProfileAvatar
-              size="8rem"
-              preview={preview}
-              avatar={loggedInUser?.avatar}
-            />
-            <input
-              {...register('avatar', {
-                required: '프로필 사진 파일을 업로드해주세요.',
-              })}
-              type="file"
-              id="avatar"
-              name="avatar"
-              accept="image/*"
-            />
-          </Label>
-          <Btn CLASSNAME="submit" name="Edit" type="submit" loading={loading} />
-        </Cont>
-      </form>
-
+      {!Loading && (
+        <form onSubmit={handleSubmit(onValid)}>
+          <Cont className="avatar">
+            <h1>
+              <span>AVATAR</span>
+              <span className="small">(아바타)</span>
+              <Svg
+                size="2rem"
+                type="question"
+                onClick={() => setAnswer(true)}
+              />
+            </h1>
+            <Label>
+              <ProfileAvatar
+                size="8rem"
+                preview={preview}
+                avatar={loggedInUser?.avatar}
+              />
+              <input
+                {...register('avatar', {
+                  required: '프로필 사진 파일을 업로드해주세요.',
+                })}
+                type="file"
+                id="avatar"
+                name="avatar"
+                accept="image/*"
+              />
+            </Label>
+            <Btn name="Edit" type="submit" />
+          </Cont>
+        </form>
+      )}
       {Loading && <LoadingModal zIndex={100} type="update" />}
+      {answer && <Answer type="edit-user-avatar" closeModal={setAnswer} />}
     </>
   );
 };
 const Cont = styled(UserBox)`
+  align-items: center;
+  justify-content: center;
   .profile-avatar {
     .profile {
       pointer-events: all;

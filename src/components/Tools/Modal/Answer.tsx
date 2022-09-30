@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { IconBtn } from '../Button/Icon';
 import { Dispatch, SetStateAction } from 'react';
 import { SmallModal, DimBackground } from '../../../../styles/global';
+import { Svg } from '../Svg';
 
 interface IAnswer {
   max?: {
@@ -17,12 +17,7 @@ export const Answer = ({ type, closeModal, max }: IAnswer) => {
   return (
     <>
       <Cont>
-        <IconBtn
-          size="2rem"
-          type="button"
-          svgType="close"
-          onClick={() => closeModal(false)}
-        />
+        <Svg size="2rem" type="close" onClick={() => closeModal(false)} />
         {type && Texts(type, max!)}
       </Cont>
       <DimBackground zIndex={99} onClick={() => closeModal(false)} />

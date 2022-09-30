@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { CreatePost } from '../../Post/Create';
 import useUser from '../../../libs/client/useUser';
-import { IconBtn } from '../../Tools/Button/Icon';
 import { ModalBtn } from '../../Tools/Button/Modal/Board';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { Svg } from '../../Tools/Svg';
 
 interface IBtnWrap {
   setEdit: Dispatch<SetStateAction<boolean>>;
@@ -22,19 +22,17 @@ export const BtnWrap = ({ setEdit, setAvatar }: IBtnWrap) => {
       <Cont>
         {isMyBoard && (
           <>
-            <IconBtn
+            <Svg
               size="2.2rem"
-              type="button"
-              svgType="post"
+              type="post"
               onClick={() => {
                 setCreate(true);
                 setModal(false);
               }}
             />
-            <IconBtn
+            <Svg
               size="2.2rem"
-              type="button"
-              svgType="setting"
+              type="setting"
               onClick={() => setModal((p) => !p)}
             />
           </>

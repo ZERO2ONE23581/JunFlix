@@ -175,7 +175,7 @@ export const Slider = ({ type, movieType, postType, boardType }: ISlider) => {
       x: reverse ? 1512 : -1512,
     }),
   };
-  console.log(type, data);
+
   return (
     <Cont className="slider">
       <H1 onClick={titleClick} className="title">

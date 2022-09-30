@@ -4,10 +4,10 @@ import styled from '@emotion/styled';
 import { ReviewStars } from './Stars';
 import { Recommend } from './Recommend';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
-import { IconBtn } from '../../../Tools/Button/Icon';
 import { IUseform } from '../../../../types/global';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { DimBackground, SmallModal } from '../../../../../styles/global';
+import { Svg } from '../../../Tools/Svg';
 
 interface IReviewModal extends IUseform {
   isEdit?: boolean;
@@ -35,12 +35,7 @@ export const ReviewModal = ({
       {!loading && (
         <>
           <Cont>
-            <IconBtn
-              size="1.8rem"
-              type="button"
-              svgType="close"
-              onClick={() => setSave(false)}
-            />
+            <Svg size="1.8rem" type="close" onClick={() => setSave(false)} />
             {!score && (
               <OneLine
                 watch={watch}

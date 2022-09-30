@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { IconBtn } from '../../Tools/Button/Icon';
 import { Answer } from '../../Tools/Modal/Answer';
+import { Svg } from '../../Tools/Svg';
 
 interface ITitle {
   answer: boolean;
@@ -14,12 +14,7 @@ export const Title = ({ answer, maxIntro, maxTitle, setAnswer }: ITitle) => {
     <>
       <Cont>
         <span>Create Board</span>
-        <IconBtn
-          size="2rem"
-          type="button"
-          svgType="question"
-          onClick={() => setAnswer(true)}
-        />
+        <Svg size="2rem" type="question" onClick={() => setAnswer(true)} />
       </Cont>
       {answer && (
         <Answer
