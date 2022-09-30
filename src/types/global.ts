@@ -9,6 +9,30 @@ import {
   FieldError,
 } from 'react-hook-form';
 import { Board, Following, Post, Review, User } from '@prisma/client';
+import { IBoardWithAttrs } from './board';
+
+export interface IMovie {
+  id: number;
+  title?: string;
+  overview?: string;
+  vote_average?: number;
+  release_date?: string;
+  original_title?: string;
+  original_language?: string;
+  original_name?: string;
+  poster_path?: string;
+  backdrop_path?: string;
+}
+
+export interface IApi {
+  arr?: {
+    results?: [IMovie];
+  };
+  posts?: PostModel[];
+  boards?: IBoardWithAttrs[];
+  MyPostLikes?: PostModel[];
+  MyReviewLikes?: ReviewModel[];
+}
 
 export interface IQuery {
   query: {

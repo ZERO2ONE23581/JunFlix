@@ -15,7 +15,7 @@ const MyBoards: NextPage = () => {
       <HeadTitle title={`${loggedInUser?.username}'s Boards`} />
       <Cont>
         <Title type="my-boards" />
-        <Slider type="board" boardType="my" />
+        <Slider pageType="my-boards" sliderType="board" sliderDetail="my" />
       </Cont>
       <Fixed type="board" />
     </>

@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 interface ISvgProps {
   type: string;
   size: string;
-  isClicked?: boolean;
+  isclicked?: boolean;
   fill?: string | any;
   onClick?: () => void;
 }
-export const Svg = ({ isClicked, type, size, fill, onClick }: ISvgProps) => {
+export const Svg = ({ isclicked, type, size, fill, onClick }: ISvgProps) => {
   const XMLNS = 'http://www.w3.org/2000/svg';
   const [viewbox, setViewbox] = useState('0 0 0 0');
   const [path, setPath] = useState(
@@ -21,13 +21,13 @@ export const Svg = ({ isClicked, type, size, fill, onClick }: ISvgProps) => {
         'M296 32h192c13.255 0 24 10.745 24 24v160c0 13.255-10.745 24-24 24H296c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24zm-80 0H24C10.745 32 0 42.745 0 56v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24zM0 296v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm296 184h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H296c-13.255 0-24 10.745-24 24v160c0 13.255 10.745 24 24 24z'
       );
     }
-    if (type === 'chev-right-arrow') {
+    if (type === 'right-chevron') {
       setViewbox('0 0 320 512');
       setPath(
         'M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z'
       );
     }
-    if (type === 'chev-left-arrow') {
+    if (type === 'left-chevron') {
       setViewbox('0 0 320 512');
       setPath(
         'M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z'
@@ -506,20 +506,20 @@ export const Svg = ({ isClicked, type, size, fill, onClick }: ISvgProps) => {
       viewBox={viewbox}
       className={type}
       onClick={onClick}
-      isClicked={isClicked!}
+      isclicked={isclicked!}
     >
       <path d={path} />
     </Cont>
   );
 };
-const Cont = styled.svg<{ size?: string; fill?: string; isClicked: boolean }>`
+const Cont = styled.svg<{ size?: string; fill?: string; isclicked: boolean }>`
   min-width: 1rem;
   min-height: 1rem;
   cursor: pointer;
   width: ${(p) => (p.size ? p.size : '1rem')};
   height: ${(p) => (p.size ? p.size : '1rem')};
   fill: ${(p) =>
-    p.isClicked ? p.theme.color.logo : p.fill ? p.fill : p.theme.color.font};
+    p.isclicked ? p.theme.color.logo : p.fill ? p.fill : p.theme.color.font};
   :hover {
     fill: ${(p) => p.theme.color.logo};
   }

@@ -5,7 +5,7 @@ import { DimBackground } from '../../../../../styles/global';
 
 export const Menu = () => {
   const [select, setSelect] = useState('');
-  const isClicked = Boolean(select);
+  const isclicked = Boolean(select);
   return (
     <>
       <Cont>
@@ -14,7 +14,7 @@ export const Menu = () => {
         <Each select={select} setSelect={setSelect} type={'review'} />
         <Each select={select} setSelect={setSelect} type={'movie'} />
       </Cont>
-      {isClicked && <DimBackground zIndex={1} onClick={() => setSelect('')} />}
+      {isclicked && <DimBackground zIndex={1} onClick={() => setSelect('')} />}
     </>
   );
 };

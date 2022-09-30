@@ -33,9 +33,9 @@ const UserSettingPage: NextPage = () => {
   };
   const boxVars = {
     initial: (back: boolean) => ({
-      x: back ? -500 : 500,
-      opacity: 0,
       scale: 0,
+      opacity: 0,
+      x: back ? -500 : 500,
     }),
     animate: (back: boolean) => ({
       x: 0,
@@ -47,13 +47,13 @@ const UserSettingPage: NextPage = () => {
       },
     }),
     exit: (back: boolean) => ({
-      x: back ? 500 : -500,
-      opacity: 0,
       scale: 0,
+      opacity: 0,
       transition: {
         type: 'tween',
         duration: 1,
       },
+      x: back ? 500 : -500,
     }),
   };
   return (
@@ -65,7 +65,7 @@ const UserSettingPage: NextPage = () => {
           <Flex>
             <Svg
               size="2rem"
-              type="chev-left-arrow"
+              type="left-chevron"
               onClick={() => clickArrow('left')}
             />
             <div className="wrap">
@@ -91,7 +91,7 @@ const UserSettingPage: NextPage = () => {
             </div>
             <Svg
               size="2rem"
-              type="chev-right-arrow"
+              type="right-chevron"
               onClick={() => clickArrow('right')}
             />
           </Flex>

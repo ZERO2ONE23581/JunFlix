@@ -11,11 +11,11 @@ const Movies: NextPage = () => {
       <HeadTitle title="영화" />
       <Cont>
         <Title type="movie-page" />
-        <Slider type="movie-page" movieType="trending" />
-        <Slider type="movie-page" movieType="upcoming" />
-        <Slider type="movie-page" movieType="tv" />
-        <Slider type="movie-page" movieType="now" />
-        <Slider type="movie-page" movieType="top" />
+        <Slider pageType="movie" sliderType="movie" sliderDetail="trending" />
+        <Slider pageType="movie" sliderType="movie" sliderDetail="upcoming" />
+        <Slider pageType="movie" sliderType="movie" sliderDetail="tv" />
+        <Slider pageType="movie" sliderType="movie" sliderDetail="now" />
+        <Slider pageType="movie" sliderType="movie" sliderDetail="top" />
       </Cont>
     </>
   );
@@ -23,7 +23,6 @@ const Movies: NextPage = () => {
 export default Movies;
 
 export const MoviePage = styled(Page)`
-  background-color: #1e272e;
   padding-top: 8%;
   .slider {
     margin-bottom: 30px;
@@ -32,8 +31,8 @@ export const MoviePage = styled(Page)`
     }
     .flex {
       gap: 5px;
-      .chev-left-arrow,
-      .chev-right-arrow {
+      .left-chevron,
+      .right-chevron {
         width: 50px;
         height: 50px;
       }

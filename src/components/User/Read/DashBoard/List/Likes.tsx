@@ -1,13 +1,8 @@
-import useSWR from 'swr';
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { PostList } from '../../../../Post/Read/List';
-import { ReviewList } from '../../../../Review/Read/List';
-import { PostModel, ReviewModel } from '../../../../../types/post';
-import useUser from '../../../../../libs/client/useUser';
 import { IData } from '../../../../../types/global';
-import { useRouter } from 'next/router';
 import { Slider } from '../../../../Tools/Slider';
+import { ReviewList } from '../../../../Review/Read/List';
 
 interface ILikesList {
   data: IData;
@@ -39,7 +34,7 @@ export const LikesList = ({ username, data }: ILikesList) => {
         </Button>
       </BtnWrap>
 
-      {type === 'post' && <Slider type="post" postType="likes" />}
+      {type === 'post' && <Slider sliderType="post" sliderDetail="likes" />}
       {type === 'review' && (
         <ReviewList isMyPage reviews={data?.MyReviewLikes!} isLikesType />
       )}

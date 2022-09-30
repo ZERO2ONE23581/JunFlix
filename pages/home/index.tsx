@@ -10,14 +10,18 @@ const Home: NextPage = () => {
     <>
       <HeadTitle title="HOME" />
       <Cont>
-        <Top>
+        <div className="movie-wrap">
           <Welcome />
-          <Slider type="movie" movieType="trending" />
-        </Top>
-        <Bottom>
-          <Slider type="post" />
-          <Slider type="board" boardType="home" />
-        </Bottom>
+          <Slider pageType="home" sliderType="movie" />
+        </div>
+        <div className="post-board-wrap">
+          <div className="board-wrap">
+            <Slider pageType="home" sliderType="board" />
+          </div>
+          <div className="post-wrap">
+            <Slider pageType="home" sliderType="post" />
+          </div>
+        </div>
       </Cont>
     </>
   );
@@ -26,20 +30,58 @@ export default Home;
 
 const Cont = styled(Page)`
   padding: 0;
-`;
-const Wrap = styled.section`
-  padding: 0 3%;
-  background: ${(p) =>
-    `linear-gradient(90deg, ${p.theme.color.grey.dark},${p.theme.color.bg}, transparent), url('/img/home-bg-up.jpg') center / cover no-repeat`};
-`;
-const Top = styled(Wrap)`
-  padding-bottom: 40px;
-`;
-const Bottom = styled(Wrap)`
-  gap: 40px;
-  display: flex;
-  margin-top: 0px;
-  padding-bottom: 10%;
-  flex-direction: column;
-  justify-content: center;
+  .movie-wrap,
+  .post-board-wrap {
+    gap: 40px;
+    padding: 0 4%;
+    display: flex;
+    margin-top: 0px;
+    padding-bottom: 10%;
+    flex-direction: column;
+    justify-content: center;
+    background: ${(p) =>
+      `linear-gradient(90deg, ${p.theme.color.grey.dark},${p.theme.color.bg}, transparent), url('/img/home-bg-up.jpg') center / cover no-repeat`};
+    .slider {
+      margin-bottom: 50px;
+      .flex {
+        gap: 10px;
+        .row {
+          .slide {
+            height: 100%;
+            .box {
+              width: 100%;
+              height: 100%;
+              .post-box {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .movie-wrap {
+    padding-bottom: 40px;
+    .slider {
+      .flex {
+        .row {
+          min-height: 10em;
+        }
+      }
+    }
+  }
+  .post-board-wrap {
+    padding-bottom: 10%;
+    .board-wrap {
+      .row {
+        min-height: 15em;
+      }
+    }
+    .post-wrap {
+      .row {
+        min-height: 30em;
+      }
+    }
+  }
 `;

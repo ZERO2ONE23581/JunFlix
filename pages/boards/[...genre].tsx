@@ -17,7 +17,11 @@ const GenreBoards: NextPage = () => {
       <HeadTitle title={`${BoardType?.toUpperCase()} Boards`} />
       <Cont>
         <Title type="genre-board" genreBoardType={BoardType!} />
-        <Slider type="board" boardType={BoardType} />
+        <Slider
+          sliderType="board"
+          pageType="genre-boards"
+          sliderDetail={BoardType}
+        />
       </Cont>
       <Fixed type="board" />
     </>

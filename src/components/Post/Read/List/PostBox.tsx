@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { Post } from '@prisma/client';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { AVATAR_BG } from '../../../Avatar';
-import { boxVars } from '../../../../../styles/global';
+import { boxVars, postVars, SpringTrans } from '../../../../../styles/variants';
 
 interface IPostBox {
   data: Post;
@@ -12,19 +12,18 @@ interface IPostBox {
 export const PostBox = ({ data, clickBox, reverse }: IPostBox) => {
   return (
     <>
-      {data && (
-        <Box
-          bg={data?.avatar!}
-          className="post-box"
-          onClick={() => clickBox(data.id)}
-          //FramerMotion
-          custom={reverse}
-          variants={boxVars}
-          initial="initial"
-          whileHover="hover"
-          layoutId={data.id + ''}
-        ></Box>
-      )}
+      <Box
+        bg={data?.avatar!}
+        className="post-box"
+        onClick={() => clickBox(data.id)}
+        //
+        initial="initial"
+        whileHover="hover"
+        custom={reverse}
+        variants={boxVars}
+        layoutId={data.id + ''}
+        transition={SpringTrans}
+      />
     </>
   );
 };

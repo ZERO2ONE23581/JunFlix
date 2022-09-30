@@ -16,7 +16,7 @@ interface IHoverBox {
 }
 export const HoverBox = ({ data }: IHoverBox) => {
   const handleLongLetters = (type: string) => {
-    const maxTitle = 12;
+    const maxTitle = 20;
     const maxIntro = 20;
     const Title = useCapLetters(data?.title!);
     const Intro = useCapLetters(data?.intro!);

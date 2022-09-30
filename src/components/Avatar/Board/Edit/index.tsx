@@ -18,7 +18,7 @@ export const EditBoardAvatar = ({
 }: IEditAvatar) => {
   const router = useRouter();
   const [delModal, setDelModal] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
+  const [isclicked, setisclicked] = useState(false);
   const [saveModal, setSaveModal] = useState(false);
   return (
     <>
@@ -30,9 +30,9 @@ export const EditBoardAvatar = ({
           setDelModal={setDelModal}
           setAvatar={setAvatar}
           setPreview={setPreview}
-          setIsClicked={setIsClicked}
+          setisclicked={setisclicked}
         />
-        {isClicked && (
+        {isclicked && (
           <Svg size="2rem" type="save" onClick={() => setSaveModal(true)} />
         )}
         <Svg size="2.2rem" type="eraser" onClick={() => setDelModal(true)} />

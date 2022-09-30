@@ -14,7 +14,7 @@ interface IAvatarForm {
   setPreview: Dispatch<SetStateAction<string>>;
   setDelModal: Dispatch<SetStateAction<boolean>>;
   setAvatar: Dispatch<SetStateAction<boolean>>;
-  setIsClicked: Dispatch<SetStateAction<boolean>>;
+  setisclicked: Dispatch<SetStateAction<boolean>>;
   setSaveModal: Dispatch<SetStateAction<boolean>>;
 }
 export const EditBoardAvatarForm = ({
@@ -24,7 +24,7 @@ export const EditBoardAvatarForm = ({
   setDelModal,
   setSaveModal,
   setPreview,
-  setIsClicked,
+  setisclicked,
 }: IAvatarForm) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
@@ -40,9 +40,9 @@ export const EditBoardAvatarForm = ({
     if (BoardAvatar && BoardAvatar.length > 0) {
       const file = BoardAvatar[0];
       setPreview(URL.createObjectURL(file));
-      setIsClicked(isWatch);
+      setisclicked(isWatch);
     }
-  }, [BoardAvatar, setPreview, setIsClicked, isWatch]);
+  }, [BoardAvatar, setPreview, setisclicked, isWatch]);
 
   const onValid = async ({ boardAvatar }: IBoardForm) => {
     if (delModal) return edit({ avatar: '' });

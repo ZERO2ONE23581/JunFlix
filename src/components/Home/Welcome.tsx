@@ -60,7 +60,7 @@ export const Welcome = () => {
   );
 };
 const Cont = styled.article`
-  padding: 200px 40px 70px;
+  padding: 10% 5% 3%;
   .btn-wrap {
     gap: 20px;
     display: flex;

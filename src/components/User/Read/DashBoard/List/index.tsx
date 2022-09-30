@@ -35,8 +35,8 @@ export const UserList = ({ username }: IUserList) => {
   return (
     <Cont>
       <BtnWrap username={username} type={type} setType={setType} />
-      {type === 'board' && <Slider type={type} boardType="my" />}
-      {type === 'post' && <Slider type={type} boardType="my" />}
+      {type === 'board' && <Slider sliderType={type} sliderDetail="my" />}
+      {type === 'post' && <Slider sliderType={type} sliderDetail="my" />}
       {type === 'review' && <ReviewList reviews={data?.reviews!} />}
       {type === 'like' && <LikesList data={data!} username={username} />}
     </Cont>
@@ -46,15 +46,15 @@ const Cont = styled.article`
   .slider {
     .flex {
       gap: 5px;
-      .chev-left-arrow,
-      .chev-right-arrow {
+      .left-chevron,
+      .right-chevron {
         width: 50px;
         height: 50px;
       }
       .row {
         min-height: 400px;
         .slide {
-          .box {
+          .box-array {
             .slide {
               gap: 20px;
             }

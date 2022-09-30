@@ -154,20 +154,6 @@ export const Blur = styled.div<{ isBlur: boolean }>`
   filter: ${(p) => p.isBlur && 'blur(5px)'};
 `;
 
-export const boxVars = {
-  initial: {
-    scale: 1,
-  },
-  hover: {
-    y: -20,
-    scale: 1.5,
-    transition: {
-      delay: 0.2,
-      duration: 0.3,
-    },
-  },
-};
-
 export const MotionBox = styled(motion.div)<{
   avatar?: string;
   preview?: string;

@@ -1,12 +1,11 @@
 import Link from 'next/link';
-import { IData } from '../Boxes';
 import styled from '@emotion/styled';
 import { HoverBox } from '../../../Board/Read/List/Board/BoardHoverBox';
 import { FollowBtn } from '../../Button/Follow/BoardFollowBtn';
 import useUser from '../../../../libs/client/useUser';
 
 interface IBoardBoxInfo {
-  data: IData;
+  data: any;
 }
 export const BoardBoxInfo = ({ data }: IBoardBoxInfo) => {
   const { loggedInUser } = useUser();

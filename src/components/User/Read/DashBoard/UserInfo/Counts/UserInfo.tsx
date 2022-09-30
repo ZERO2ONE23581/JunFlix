@@ -43,7 +43,7 @@ export const UserInfo = ({ userID, setModal }: IUserInfo) => {
             <Btn
               type="button"
               name="Following"
-              isClicked={followData?.isFollowing}
+              isclicked={followData?.isFollowing}
               onClick={() => setUnFollowModal(true)}
             />
           )}
@@ -51,7 +51,7 @@ export const UserInfo = ({ userID, setModal }: IUserInfo) => {
             <Btn
               type="button"
               name="Follow"
-              isClicked={followData?.isFollowing}
+              isclicked={followData?.isFollowing}
               onClick={() => setFollowModal(true)}
             />
           )}

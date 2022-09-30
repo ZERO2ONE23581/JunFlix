@@ -12,7 +12,7 @@ const AllBoards: NextPage = () => {
       <HeadTitle title="All Boards" />
       <Cont>
         <Title type="all-boards" />
-        <Slider type="board" boardType="all" />
+        <Slider pageType="all-boards" sliderType="board" sliderDetail="all" />
       </Cont>
       <Fixed type="board" />
     </>
@@ -21,20 +21,19 @@ const AllBoards: NextPage = () => {
 export default AllBoards;
 
 export const BoardPage = styled(Page)`
-  background-color: #130f40;
   padding-top: 10%;
   .slider {
     .flex {
       gap: 5px;
-      .chev-left-arrow,
-      .chev-right-arrow {
+      .left-chevron,
+      .right-chevron {
         width: 50px;
         height: 50px;
       }
       .row {
         min-height: 440px;
         .slide {
-          .box {
+          .box-array {
             .slide {
               gap: 20px;
             }

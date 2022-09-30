@@ -7,8 +7,8 @@ interface IBtnProps {
   name?: string;
   CLASSNAME?: string;
   disabled?: boolean;
-  isUserList?: boolean;
-  isClicked?: boolean;
+  isuserlist?: boolean;
+  isclicked?: boolean;
   loading?: boolean | null;
   type: 'button' | 'submit' | 'reset';
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
@@ -28,10 +28,10 @@ export const Btn = ({
   name,
   loading,
   onClick,
-  isClicked,
+  isclicked,
   CLASSNAME,
   disabled,
-  isUserList,
+  isuserlist,
   svg,
 }: IBtnProps) => {
   return (
@@ -50,9 +50,9 @@ export const Btn = ({
         type={type}
         onClick={onClick}
         disabled={disabled}
-        isClicked={isClicked}
+        isclicked={isclicked}
         className={CLASSNAME}
-        isUserList={isUserList!}
+        isuserlist={isuserlist!}
       >
         {svg?.location?.left && (
           <Svg type={svg.type!} size={svg.size!} fill={svg?.fill} />
@@ -66,8 +66,8 @@ export const Btn = ({
   );
 };
 export const Button = styled(motion.button)<{
-  isClicked?: boolean;
-  isUserList: boolean;
+  isclicked?: boolean;
+  isuserlist: boolean;
 }>`
   gap: 10px;
   border: none;
@@ -79,29 +79,29 @@ export const Button = styled(motion.button)<{
   align-items: center;
   justify-content: center;
   color: ${(p) => p.theme.color.bg};
-  font-weight: ${(p) => p.isClicked && 550};
+  font-weight: ${(p) => p.isclicked && 550};
   color: ${(p) =>
-    p.isUserList
-      ? p.isClicked
+    p.isuserlist
+      ? p.isclicked
         ? 'white'
         : p.theme.color.font
       : p.theme.color.bg};
   background-color: ${(p) =>
-    p.isUserList
-      ? p.isClicked
+    p.isuserlist
+      ? p.isclicked
         ? p.theme.color.logo
         : p.theme.color.bg
       : p.theme.color.font};
   border: 2px solid
     ${(p) =>
-      p.isUserList
-        ? p.isClicked
+      p.isuserlist
+        ? p.isclicked
           ? p.theme.color.logo
           : p.theme.color.font
         : 'none'};
-  opacity: ${(p) => p.isClicked && '0.9'};
-  color: ${(p) => p.isClicked && 'white'};
-  background-color: ${(p) => p.isClicked && p.theme.color.logo};
+  opacity: ${(p) => p.isclicked && '0.9'};
+  color: ${(p) => p.isclicked && 'white'};
+  background-color: ${(p) => p.isclicked && p.theme.color.logo};
   :hover {
     color: white;
     background-color: ${(p) => p.theme.color.logo};

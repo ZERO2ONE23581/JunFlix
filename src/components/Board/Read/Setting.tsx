@@ -37,12 +37,7 @@ export const Setting = ({ edit, setEdit, setPreview }: ISetting) => {
       {answer && <Answer type="edit-board" closeModal={setAnwser} />}
       {edit && (
         <>
-          <Svg
-            size="2rem"
-            type="undo"
-            isClicked={edit}
-            onClick={() => setCancel(true)}
-          />
+          <Svg size="2rem" type="undo" onClick={() => setCancel(true)} />
           {cancel && (
             <ConfirmModal
               setEdit={setEdit}
