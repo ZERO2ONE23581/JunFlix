@@ -26,18 +26,12 @@ export const ERROR = styled.div`
 `;
 
 export const Page = styled.section`
-  padding: 0 3rem;
-  padding-bottom: 10%;
   height: 100%;
   min-width: 100vw;
   min-height: 100vh;
   position: relative;
-  color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
-`;
-export const Layout = styled.section`
-  min-width: 100vw;
-  padding: 10px 80px;
+  /* color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg}; */
 `;
 export const Box = styled.article`
   gap: 12px;

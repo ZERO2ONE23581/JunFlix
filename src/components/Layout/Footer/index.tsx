@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import { Layout } from '../../../../styles/global';
+import { Page } from '../../../../styles/global';
 
 export const Footer = () => {
   const date = new Date();
   const currentYear = date.getFullYear();
   return (
-    <Cont>
+    <Cont className="footer">
       <h1>Footer</h1>
       <div>Nav Bar Scroll to Top</div>
       <div>SNS</div>
@@ -20,12 +20,7 @@ export const Footer = () => {
   );
 };
 
-const Cont = styled(Layout)`
-  padding: 10px 8%;
-  border-top: ${(p) => p.theme.border};
-  color: whitesmoke;
-  background-color: #262424;
-`;
+const Cont = styled.footer``;
 const CopyRight = styled.article`
   font-style: italic;
   color: ${(p) => p.theme.color.logo};

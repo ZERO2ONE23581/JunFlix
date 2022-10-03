@@ -8,7 +8,7 @@ import { MovieModal } from './Movie/modal';
 import { PostBox } from '../../Post/Read/List/PostBox';
 import { Post } from '@prisma/client';
 import { IMovie } from '../../../types/global';
-import { boxVars, postVars, SpringTrans } from '../../../../styles/variants';
+import { boxVars, SpringTrans } from '../../../../styles/variants';
 
 interface IBoxArray {
   array: [] | any;

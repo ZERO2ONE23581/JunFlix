@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Post } from '@prisma/client';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { AVATAR_BG } from '../../../Avatar';
 import { boxVars, postVars, SpringTrans } from '../../../../../styles/variants';
 

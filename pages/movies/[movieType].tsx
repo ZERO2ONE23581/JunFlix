@@ -14,7 +14,7 @@ const MovieTypes: NextPage = () => {
       <HeadTitle title="인기 콘텐츠" />
       <Cont>
         <Title type="movie" movieType={type} />
-        <Slider type="movie" movieType={type} />
+        <Slider pageType="movie" sliderDetail={type} sliderType="movie" />
       </Cont>
     </>
   );

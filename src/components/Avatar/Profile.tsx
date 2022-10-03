@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 import { Svg } from '../Tools/Svg';
 
 interface IProfile {
@@ -27,7 +28,7 @@ export const ProfileAvatar = ({ size, avatar, preview, onClick }: IProfile) => {
     </>
   );
 };
-const Cont = styled.div<{ size: string; isAvatar: boolean }>`
+const Cont = styled(motion.div)<{ size: string; isAvatar: boolean }>`
   display: flex;
   overflow: hidden;
   border-radius: 50%;

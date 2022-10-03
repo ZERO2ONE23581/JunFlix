@@ -1,3 +1,6 @@
+export const motionDuration = { duration: 0.5 };
+export const SpringTrans = { type: 'spring', stiffness: 50 };
+export const TweenTrans = { type: 'tween', stiffness: 50 };
 export const boxVars = {
   initial: {
     scale: 1,
@@ -43,4 +46,36 @@ export const slideVars = {
     x: reverse ? 2000 : -2000,
   }),
 };
-export const SpringTrans = { type: 'spring', stiffness: 50 };
+
+export const eachMenuVar = {
+  initial: (isChosen: boolean) => ({
+    //scale: !isChosen ? 1 : 2,
+  }),
+};
+export const menuModalVar = {
+  hover: (isAnimate: boolean) => ({
+    color: 'blue',
+  }),
+  initial: (isAnimate: boolean) => ({
+    opacity: 0,
+    x: '-50%',
+    y: '0',
+  }),
+  animate: (isAnimate: boolean) => ({
+    x: '-50%',
+    y: '30px',
+    opacity: 1,
+    transition: { delay: 0, duration: 0.3 },
+  }),
+  exit: (isAnimate: boolean) => ({
+    y: '0',
+    opacity: 0,
+    transition: { delay: 0, duration: 0.3 },
+  }),
+};
+export const ListHover = {
+  backgroundColor: '#E50914',
+  transition: {
+    duration: 0.2,
+  },
+};

@@ -13,6 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     fetcher: (url: string) => fetch(url).then((res) => res.json()),
   };
   const url = 'junflix.com';
+  console.log('THEME', theme);
   return (
     <SWRConfig value={Fetcher}>
       <ThemeProvider theme={theme ? lightTheme : darkTheme}>

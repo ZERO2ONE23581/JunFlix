@@ -1,6 +1,6 @@
+import { Svg } from '../Svg';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { Svg } from '../Svg';
 
 export interface IBtns {
   isLight: boolean;
@@ -19,9 +19,9 @@ export const ThemeBtn = ({ setTheme, isLight }: IBtns) => {
   );
 };
 const Cont = styled.div`
-  top: 100px;
-  right: 40px;
-  z-index: 999;
+  top: 10em;
+  right: 3em;
+  z-index: 9999;
   position: fixed;
   .sun {
     fill: whitesmoke;

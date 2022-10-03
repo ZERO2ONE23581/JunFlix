@@ -1,15 +1,15 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Page } from '../../styles/global';
-import { Slider } from '../../src/components/Tools/Slider';
-import { Welcome } from '../../src/components/Home/Welcome';
-import { HeadTitle } from '../../src/components/Layout/Head';
+import { Page } from '../styles/global';
+import { Slider } from '../src/components/Tools/Slider';
+import { Welcome } from '../src/components/Home/Welcome';
+import { HeadTitle } from '../src/components/Layout/Head';
 
 const Home: NextPage = () => {
   return (
     <>
       <HeadTitle title="HOME" />
-      <Cont>
+      <Cont className="home">
         <div className="movie-wrap">
           <Welcome />
           <Slider pageType="home" sliderType="movie" />
@@ -33,7 +33,6 @@ const Cont = styled(Page)`
   .movie-wrap,
   .post-board-wrap {
     gap: 40px;
-    padding: 0 4%;
     display: flex;
     margin-top: 0px;
     padding-bottom: 10%;
