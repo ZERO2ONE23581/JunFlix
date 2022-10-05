@@ -8,6 +8,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { username, userID, password, confirmPassword, email } = req.body;
   const isInputData = Boolean(userID && password && confirmPassword);
+
   if (user) return res.json({ ok: false, error: '로그아웃 하셔야 합니다.' });
   if (!isInputData)
     return res.json({ ok: false, error: '데이터가 미입력 되었습니다.' });
@@ -22,6 +23,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     );
     if (EmailExists)
       return res.json({ ok: false, error: '이미 등록된 이메일 입니다.' });
+
     hash(password, 10, async function (err, hasedPassword) {
       if (err) return console.log('HASH PASSWORD FAIL');
       if (!username) {

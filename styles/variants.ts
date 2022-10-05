@@ -47,14 +47,12 @@ export const slideVars = {
   }),
 };
 
-export const eachMenuVar = {
-  initial: (isChosen: boolean) => ({
-    //scale: !isChosen ? 1 : 2,
-  }),
-};
 export const menuModalVar = {
   hover: (isAnimate: boolean) => ({
-    color: 'blue',
+    backgroundColor: '#E50914',
+    transition: {
+      duration: 0.2,
+    },
   }),
   initial: (isAnimate: boolean) => ({
     opacity: 0,

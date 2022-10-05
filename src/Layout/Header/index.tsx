@@ -4,87 +4,102 @@ import { MenuModal } from './modal';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useCapLetter } from '../../libs/client/useTools';
-import { eachMenuVar, TweenTrans } from '../../../styles/variants';
+import { TweenTrans } from '../../../styles/variants';
 import { UserMenu } from './User';
 
 export const Header = ({ theme }: any) => {
   const [selected, setSelected] = useState('');
   const menuArr = ['board', 'post', 'review', 'movie'];
   const index = (item: string) => Number(menuArr.indexOf(item));
-  const isMatch = (item: string) => Boolean(selected === item);
+  const isModal = (i: string) => Boolean(selected === i);
+  //
+  const menuTextVar = {
+    initial: (darkTheme: boolean) => ({
+      scale: 1,
+      color: darkTheme ? '#000000' : '#ffffff',
+    }),
+    animate: (darkTheme: boolean) => ({
+      scale: 1,
+      color: darkTheme ? '#000000' : '#ffffff',
+    }),
+    hover: (darkTheme: boolean) => ({
+      scale: 1.25,
+      color: '#E50914',
+    }),
+  };
   return (
     <Cont className="header">
       <Logo />
-      <Flex className="flex">
-        <Menu className="menu">
-          {menuArr.map((item) => (
-            <Each
-              key={index(item)}
-              variants={eachMenuVar}
-              transition={TweenTrans}
-            >
-              <Title
-                onClick={() => setSelected(item)}
-                whileHover={{ color: '#E50914', scale: 1.25 }}
+      <div className="flex">
+        <MainMenu className="main-menu">
+          {menuArr.map((i) => (
+            <div key={index(i)}>
+              <motion.span
+                custom={theme}
+                initial="initial"
+                animate="animate"
+                whileHover={'hover'}
+                className="menu-text"
+                variants={menuTextVar}
+                transition={TweenTrans}
+                onClick={() => setSelected(i)}
               >
-                {useCapLetter(item)}
-              </Title>
+                {useCapLetter(i)}
+              </motion.span>
               <MenuModal
+                isModal={isModal(i)}
                 selected={selected}
-                isModal={isMatch(item)}
                 setSelected={setSelected}
               />
-            </Each>
+            </div>
           ))}
-        </Menu>
+        </MainMenu>
         <UserMenu theme={theme} />
-      </Flex>
+      </div>
     </Cont>
   );
 };
 const Cont = styled.header`
-  gap: 50px;
+  gap: 3em;
   display: flex;
+  font-size: 1.3em;
   margin-bottom: 5px;
   align-items: center;
   justify-content: space-between;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   border-bottom: ${(p) => p.theme.border.thin};
-  background-color: ${(p) => p.theme.color.background};
+  background-color: ${(p) => p.theme.color.bg};
   .flex {
-    border: 5px solid blue;
-    .menu {
-      border: 2px solid yellow;
+    width: 100%;
+    gap: 10em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    //border: 5px solid cornflowerblue;
+    .main-menu {
+      width: 70%;
+      //border: 2px solid yellow;
     }
     .user-menu {
-      border: 2px solid red;
+      width: 30%;
+      //border: 2px solid red;
       .isNotLogged {
       }
     }
+    span {
+      cursor: pointer;
+    }
   }
 `;
-const Flex = styled.div`
-  width: 100%;
-  padding-left: 5em;
-  padding-right: 2em;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-const Menu = styled(motion.article)`
-  gap: 3rem;
+const MainMenu = styled(motion.article)`
   display: flex;
   align-content: center;
-  justify-content: center;
-`;
-
-const Each = styled(motion.div)`
-  cursor: pointer;
-  position: relative;
-  text-align: center;
-  min-width: 100px;
-`;
-const Title = styled(motion.span)`
-  display: block;
-  color: white;
+  justify-content: space-around;
+  > div {
+    position: relative;
+    .menu-text {
+      display: block;
+      cursor: pointer;
+    }
+  }
 `;

@@ -20,62 +20,47 @@ export const UserMenu = ({ theme }: ITheme) => {
   return (
     <Cont className="user-menu">
       {isLoggedIn && (
-        <>
+        <div className="logged-in">
           <UserIcon
             theme={theme}
             setModal={setModal}
             avatar={loggedInUser?.avatar}
           />
           <UserMenuModal modal={modal} setModal={setModal} />
-        </>
+        </div>
       )}
       {!isLoggedIn && (
-        <LoginMenu className="login-menu">
+        <div className="unlogged-in">
+          <motion.span
+            whileHover={textHover}
+            onClick={() => router.push(`/login`)}
+          >
+            Login
+          </motion.span>
           <motion.span
             whileHover={textHover}
             onClick={() => router.push(`/join`)}
           >
             Join
           </motion.span>
-          <motion.span
-            whileHover={textHover}
-            onClick={() => router.push(`/login`)}
-          >
-            Join
-          </motion.span>
-        </LoginMenu>
+        </div>
       )}
     </Cont>
   );
 };
 
 const Cont = styled.article`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const LoginMenu = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const Modal = styled(motion.div)`
-  z-index: 999;
-  top: 60%;
-  left: 50%;
-  transform: translateX(-50%);
-  position: absolute;
-  border-radius: 5px;
-  color: ${(p) => p.theme.color.font};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background-color: ${(p) => p.theme.color.bg};
-  border: 2px solid ${(p) => p.theme.color.font};
-  ul {
-    padding: 5px 0;
-    min-width: 10em;
+  > div {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
   }
-`;
-const Text = styled(motion.div)`
-  cursor: pointer;
+  .logged-in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .unlogged-in {
+  }
 `;
