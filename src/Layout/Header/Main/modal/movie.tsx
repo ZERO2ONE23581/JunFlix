@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import { ListHover } from '../../../../styles/variants';
+import { ListHover } from '../../../../../styles/variants';
 
 interface IMovieMenu {
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
 }
-export const MovieMenu = ({ selected, setSelected }: IMovieMenu) => {
+export const MovieMenuModal = ({ selected, setSelected }: IMovieMenu) => {
   const router = useRouter();
   const onClick = (btnType: string, detail?: string) => {
     setSelected('');

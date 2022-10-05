@@ -3,13 +3,13 @@ import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { Errors } from '../../Tools/Errors';
 import { InputWrap } from '../../Tools/Input';
-import { Box } from '../../../../styles/global';
 import useMutation from '../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { IJoinForm, IJoinFormRes } from '../../../types/user';
 import { Title } from './Title';
 import { LoadingModal } from '../../Tools/Modal/Loading';
 import { Svg } from '../../Tools/Svg';
+import { motion } from 'framer-motion';
 
 export interface ICreateUser {
   saveId: string;
@@ -166,7 +166,7 @@ export const CreateUser = ({
     </>
   );
 };
-const Cont = styled(Box)`
+const Cont = styled(motion.div)`
   gap: 18px;
   max-width: 440px;
   position: relative;

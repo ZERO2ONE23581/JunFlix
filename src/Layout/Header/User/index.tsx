@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { ListWrap } from './ListWrap';
-import { useRouter } from 'next/router';
-import useUser from '../../../libs/client/useUser';
-import { Overlay } from '../../../../styles/global';
-import { AnimatePresence, motion } from 'framer-motion';
-import { UserIcon } from './userIcon';
+import { motion } from 'framer-motion';
 import { UserMenuModal } from './modal';
+import { useRouter } from 'next/router';
 import { ITheme } from '../../../../styles/theme';
+import useUser from '../../../libs/client/useUser';
+import { UserAvatarIcon } from './avatar';
 
 export const UserMenu = ({ theme }: ITheme) => {
   const router = useRouter();
@@ -21,7 +19,7 @@ export const UserMenu = ({ theme }: ITheme) => {
     <Cont className="user-menu">
       {isLoggedIn && (
         <div className="logged-in">
-          <UserIcon
+          <UserAvatarIcon
             theme={theme}
             setModal={setModal}
             avatar={loggedInUser?.avatar}

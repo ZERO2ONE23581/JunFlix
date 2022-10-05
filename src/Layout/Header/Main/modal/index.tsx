@@ -1,10 +1,10 @@
-import { MainMenu } from './main';
-import { MovieMenu } from './movie';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { MovieMenuModal } from './movie';
 import { Dispatch, SetStateAction } from 'react';
-import { Overlay } from '../../../../styles/global';
-import { menuModalVar, TweenTrans } from '../../../../styles/variants';
+import { Overlay } from '../../../../../styles/global';
+import { menuModalVar, TweenTrans } from '../../../../../styles/variants';
+import { MainMenuModal } from './main';
 
 interface IMenuModal {
   selected: string;
@@ -26,10 +26,10 @@ export const MenuModal = ({ selected, setSelected, isModal }: IMenuModal) => {
           >
             <ul>
               {!isMovie && (
-                <MainMenu selected={selected} setSelected={setSelected} />
+                <MainMenuModal selected={selected} setSelected={setSelected} />
               )}
               {isMovie && (
-                <MovieMenu selected={selected} setSelected={setSelected} />
+                <MovieMenuModal selected={selected} setSelected={setSelected} />
               )}
             </ul>
           </Cont>

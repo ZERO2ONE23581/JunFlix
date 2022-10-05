@@ -3,15 +3,16 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../Tools/Button';
 import useMutation from '../../../libs/client/useMutation';
-import { Box, BtnWrap } from '../../../../styles/global';
-import { Label, ProfileAvatar } from '../Profile';
+import { BtnWrap } from '../../../../styles/global';
+import { Label, ProfileAvatar } from '../../Avatar/Profile';
 import styled from '@emotion/styled';
 import { IUserForm } from '../../../types/user';
 import { Answer } from '../../Tools/Modal/Answer';
 import { Errors } from '../../Tools/Errors';
 import { IData } from '../../../types/global';
-import { Title } from '../../User/Create/Title';
+import { Title } from './Title';
 import { LoadingModal } from '../../Tools/Modal/Loading';
+import { motion } from 'framer-motion';
 
 interface ICreateAvatar {
   createdId: number;
@@ -72,7 +73,7 @@ export const CreateUserAvatar = ({ createdId }: ICreateAvatar) => {
   return (
     <>
       {!Loading && (
-        <Cont>
+        <Cont className="box">
           <Title
             kor="계정생성"
             eng="Create Account"
@@ -113,7 +114,7 @@ export const CreateUserAvatar = ({ createdId }: ICreateAvatar) => {
     </>
   );
 };
-const Cont = styled(Box)`
+const Cont = styled(motion.div)`
   padding: 30px;
   max-width: 360px;
   .profile-avatar {

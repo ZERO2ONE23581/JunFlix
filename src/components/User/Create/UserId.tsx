@@ -5,17 +5,17 @@ import useMutation from '../../../libs/client/useMutation';
 import { Errors } from '../../Tools/Errors';
 import { Btn } from '../../Tools/Button';
 import { IUserIdCheckForm, IUserIdCheckRes } from '../../../types/user';
-import { Box } from '../../../../styles/global';
 import { LoginLink } from '../Read/Links/Login';
 import styled from '@emotion/styled';
-import { Title } from './Title';
 import { LoadingModal } from '../../Tools/Modal/Loading';
+import { motion } from 'framer-motion';
+import { ITheme } from '../../../../styles/theme';
 
-interface ICreateId {
-  setUserId: Dispatch<SetStateAction<boolean>>;
+interface ICreateId extends ITheme {
+  setSecond: Dispatch<SetStateAction<boolean>>;
   setSaveId: Dispatch<SetStateAction<string>>;
 }
-export const CreateId = ({ setSaveId, setUserId }: ICreateId) => {
+export const CreateId = ({ theme, setSaveId, setSecond }: ICreateId) => {
   const [checkUserId, { loading, data }] = useMutation<IUserIdCheckRes>(
     '/api/user/check/user_id'
   );
@@ -34,23 +34,23 @@ export const CreateId = ({ setSaveId, setUserId }: ICreateId) => {
   useEffect(() => {
     if (data?.error) alert(data.error);
     if (data?.ok && data.userId) {
-      setUserId((p: boolean) => !p);
+      setSecond((p: boolean) => !p);
       setSaveId(data.userId);
     }
-  }, [data, setUserId, setSaveId]);
+  }, [data, setSecond, setSaveId]);
 
   return (
     <>
       {!loading && (
         <form onSubmit={handleSubmit(onValid)}>
-          <Cont>
-            <Title type="create-user-id" eng="Create Account" kor="계정생성" />
-            <h2>
-              <span>Step 1.</span>
-              <span className="kor">아이디 중복확인</span>
-              <span>Check your ID</span>
-            </h2>
+          <Cont className="box">
+            <h1>
+              <span>Create Account</span>
+              <span>Step 1. 아이디 체크 (Check your ID)</span>
+            </h1>
+
             <InputWrap
+              theme={theme}
               id="userId"
               type="text"
               label="USER ID"
@@ -74,9 +74,4 @@ export const CreateId = ({ setSaveId, setUserId }: ICreateId) => {
     </>
   );
 };
-const Cont = styled(Box)`
-  max-width: 440px;
-  .submit {
-    margin-top: 12px;
-  }
-`;
+const Cont = styled(motion.div)``;

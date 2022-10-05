@@ -6,9 +6,9 @@ import { ErrorMsg, Errors } from '../../Tools/Errors';
 import { InputWrap } from '../../Tools/Input';
 import { IFindForm, IFindPostRes } from '../../../types/user';
 import { Title } from './Title';
-import { Box } from '../../../../styles/global';
 import { LoadingModal } from '../../Tools/Modal/Loading';
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 
 interface ICreateNewPasswordFormProps {
   userId: string;
@@ -91,4 +91,4 @@ export const CreatePassword = ({
     </>
   );
 };
-const Cont = styled(Box)``;
+const Cont = styled(motion.div)``;

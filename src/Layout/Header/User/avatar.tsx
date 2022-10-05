@@ -1,14 +1,14 @@
-import { Svg } from '../../../components/Tools/Svg';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { ITheme } from '../../../../styles/theme';
+import { Svg } from '../../../components/Tools/Svg';
 
 interface IUserAvatar extends ITheme {
   avatar?: string | null;
   setModal: Dispatch<SetStateAction<boolean>>;
 }
-export const UserIcon = ({ avatar, setModal, theme }: IUserAvatar) => {
+export const UserAvatarIcon = ({ avatar, setModal, theme }: IUserAvatar) => {
   const variant = 'public';
   const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
   const url = `${base}/${avatar}/${variant}`;

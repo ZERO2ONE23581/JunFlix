@@ -26,40 +26,13 @@ export const ERROR = styled.div`
 `;
 
 export const Page = styled.section`
+  width: 100%;
   height: 100%;
   min-width: 100vw;
   min-height: 100vh;
   position: relative;
-  /* color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg}; */
-`;
-export const Box = styled.article`
-  gap: 12px;
-  display: flex;
-  padding: 40px;
-  margin: 10% auto;
-  border-radius: 5px;
-  flex-direction: column;
   color: ${(p) => p.theme.color.font};
-  border: ${(p) => p.theme.border.thick};
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};
-  h2 {
-    margin-bottom: 10px;
-    span {
-      font-size: 1.2rem;
-      margin-right: 10px;
-      font-style: italic;
-    }
-    .kor {
-      font-size: 1.1rem;
-    }
-  }
-  .flex {
-    gap: 12px;
-    display: flex;
-    align-items: center;
-  }
 `;
 export const Modal = styled.article`
   z-index: 100;

@@ -1,19 +1,15 @@
-import {
-  ListHover,
-  menuModalVar,
-  TweenTrans,
-} from '../../../../styles/variants';
+import { ListHover } from '../../../../../styles/variants';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import useUser from '../../../libs/client/useUser';
-import { useCapLetter } from '../../../libs/client/useTools';
+import useUser from '../../../../libs/client/useUser';
+import { useCapLetter } from '../../../../libs/client/useTools';
 
-interface IMainMenu {
+interface IMainMenuModal {
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
 }
-export const MainMenu = ({ selected, setSelected }: IMainMenu) => {
+export const MainMenuModal = ({ selected, setSelected }: IMainMenuModal) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
   //

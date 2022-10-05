@@ -1,12 +1,9 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import styled from '@emotion/styled';
-import { ListWrap } from './ListWrap';
-import { useRouter } from 'next/router';
-import useUser from '../../../libs/client/useUser';
-import { Overlay } from '../../../../styles/global';
+import { Overlay } from '../../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
-import { menuModalVar, TweenTrans } from '../../../../styles/variants';
-import { UserIcon } from './userIcon';
+import { menuModalVar, TweenTrans } from '../../../../../styles/variants';
+import { ListWrap } from './list_wrap';
 
 interface IUserMenuModal {
   modal: boolean;
