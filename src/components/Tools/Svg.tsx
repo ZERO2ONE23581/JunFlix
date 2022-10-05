@@ -1,14 +1,15 @@
 import styled from '@emotion/styled';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 interface ISvgProps {
   type: string;
   size: string;
-  isclicked?: boolean;
+  theme?: boolean;
   fill?: string | any;
   onClick?: () => void;
 }
-export const Svg = ({ isclicked, type, size, fill, onClick }: ISvgProps) => {
+export const Svg = ({ theme, type, size, fill, onClick }: ISvgProps) => {
   const XMLNS = 'http://www.w3.org/2000/svg';
   const [viewbox, setViewbox] = useState('0 0 0 0');
   const [path, setPath] = useState(
@@ -498,48 +499,45 @@ export const Svg = ({ isclicked, type, size, fill, onClick }: ISvgProps) => {
       );
     }
   }, [setViewbox, setPath]);
+  //
+  const pathVars = {
+    initial: (darkTheme: boolean) => ({
+      fill: fill ? fill : darkTheme ? '#ffffff' : '#000000',
+    }),
+    animate: (darkTheme: boolean) => ({
+      fill: fill ? fill : darkTheme ? '#ffffff' : '#000000',
+    }),
+    hover: (darkTheme: boolean) => ({
+      scale: 1.1,
+      fill: '#E50914',
+    }),
+  };
+  //
   return (
-    <Cont
-      size={size}
-      fill={fill}
-      xmlns={XMLNS}
-      viewBox={viewbox}
-      className={type}
-      onClick={onClick}
-      isclicked={isclicked!}
-    >
-      <path d={path} />
-    </Cont>
+    <AnimatePresence>
+      <Cont
+        size={size}
+        xmlns={XMLNS}
+        viewBox={viewbox}
+        className={type}
+        onClick={onClick}
+      >
+        <motion.path
+          d={path}
+          custom={!theme}
+          initial="initial"
+          animate="animate"
+          whileHover="hover"
+          variants={pathVars}
+        />
+      </Cont>
+    </AnimatePresence>
   );
 };
-const Cont = styled.svg<{ size?: string; fill?: string; isclicked: boolean }>`
+const Cont = styled(motion.svg)<{ size?: string }>`
   min-width: 1rem;
   min-height: 1rem;
   cursor: pointer;
   width: ${(p) => (p.size ? p.size : '1rem')};
   height: ${(p) => (p.size ? p.size : '1rem')};
-  fill: ${(p) =>
-    p.isclicked ? p.theme.color.logo : p.fill ? p.fill : p.theme.color.font};
-  :hover {
-    fill: ${(p) => p.theme.color.logo};
-  }
-`;
-interface IAltSvg {
-  type: string;
-  size: string;
-}
-export const AltSvg = ({ type, size }: IAltSvg) => {
-  return (
-    <>
-      <Container type={type}>
-        <Svg size={size} type={type} />
-      </Container>
-    </>
-  );
-};
-const Container = styled.div<{ type: string }>`
-  svg {
-    pointer-events: none;
-    transform: ${(p) => p.type === 'reply' && 'rotateX(180deg)'};
-  }
 `;

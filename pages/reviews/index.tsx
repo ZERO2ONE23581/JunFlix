@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { IGetReviews } from '../../src/types/review';
 import { Title } from '../../src/components/Tools/Title';
-import { HeadTitle } from '../../src/components/Layout/Head';
+import { HeadTitle } from '../../src/components/Head';
 import { Fixed } from '../../src/components/Tools/Button/Fixed';
 import { ReviewList } from '../../src/components/Review/Read/List';
 import { NoData } from '../../src/components/Tools/NoData';

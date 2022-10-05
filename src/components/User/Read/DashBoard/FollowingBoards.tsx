@@ -19,7 +19,7 @@ export const FollowingBoards = () => {
         <span className="kor">팔로우중인 보드</span>
         <span className="count">({following?.length})</span>
       </h1>
-      <Grid>
+      {/* <Grid>
         {following
           ?.filter((p) => p.BoardID)
           .map((follow) => (
@@ -36,7 +36,7 @@ export const FollowingBoards = () => {
               </Link>
             </Icon>
           ))}
-      </Grid>
+      </Grid> */}
     </Cont>
   );
 };

@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Title } from '../../src/components/Tools/Title';
 import { Slider } from '../../src/components/Tools/Slider';
-import { HeadTitle } from '../../src/components/Layout/Head';
+import { HeadTitle } from '../../src/components/Head';
 
 const MovieTypes: NextPage = () => {
   const router = useRouter();

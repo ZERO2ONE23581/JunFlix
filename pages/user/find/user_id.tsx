@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
 import { Token } from '../../../src/components/User/Read/Verify/Token';
 import { Email } from '../../../src/components/User/Read/Verify/Email';
-import { HeadTitle } from '../../../src/components/Layout/Head';
+import { HeadTitle } from '../../../src/components/Head';
 import { ConfirmModal } from '../../../src/components/Tools/Modal';
 
 const FindUserId: NextPage = () => {

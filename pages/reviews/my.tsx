@@ -6,7 +6,7 @@ import useUser from '../../src/libs/client/useUser';
 import { IGetReviews } from '../../src/types/review';
 import { Title } from '../../src/components/Tools/Title';
 import { NoData } from '../../src/components/Tools/NoData';
-import { HeadTitle } from '../../src/components/Layout/Head';
+import { HeadTitle } from '../../src/components/Head';
 import { useNeedLogin } from '../../src/libs/client/useTools';
 import { ReviewList } from '../../src/components/Review/Read/List';
 

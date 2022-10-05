@@ -1,15 +1,11 @@
-import {
-  ListHover,
-  menuModalVar,
-  TweenTrans,
-} from '../../../../styles/variants';
+import { ListHover, menuModalVar, TweenTrans } from '../../../styles/variants';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import useUser from '../../../libs/client/useUser';
-import { Overlay } from '../../../../styles/global';
+import useUser from '../../libs/client/useUser';
+import { Overlay } from '../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useCapLetter } from '../../../libs/client/useTools';
+import { useCapLetter } from '../../libs/client/useTools';
 
 interface IMenuModal {
   selected: string;

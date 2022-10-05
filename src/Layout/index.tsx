@@ -2,23 +2,22 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import styled from '@emotion/styled';
 import { ReactElement, useEffect, useState } from 'react';
-import { ThemeBtn, IBtns } from '../Tools/Button/Theme';
+import { ThemeBtn, IBtns } from '../components/Tools/Button/Theme';
 
 interface ILayoutProps extends IBtns {
   children: ReactElement;
 }
-export const Layout = ({ children, setTheme, isLight }: ILayoutProps) => {
+export const Layout = ({ theme, children, setTheme }: ILayoutProps) => {
   const [width, setWidth] = useState(0);
   useEffect(() => {
     if (typeof window !== undefined) setWidth(window?.innerWidth);
   }, [setWidth]);
-
   return (
     <Cont width={width}>
-      <Header />
+      <Header theme={theme} />
       <section className="children">{children}</section>
-      <Footer />
-      <ThemeBtn isLight={isLight} setTheme={setTheme} />
+      <Footer theme={theme} />
+      <ThemeBtn theme={theme} setTheme={setTheme} />
     </Cont>
   );
 };

@@ -1,5 +1,9 @@
 import { Theme } from '@emotion/react';
 
+export interface ITheme {
+  theme: boolean;
+}
+
 export const lightTheme: Theme = {
   color: {
     bg: 'white',

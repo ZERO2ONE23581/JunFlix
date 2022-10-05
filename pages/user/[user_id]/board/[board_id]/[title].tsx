@@ -7,7 +7,7 @@ import { IGetBoard } from '../../../../../src/types/board';
 import useUser from '../../../../../src/libs/client/useUser';
 import { AVATAR_BG } from '../../../../../src/components/Avatar';
 import { useNeedLogin } from '../../../../../src/libs/client/useTools';
-import { HeadTitle } from '../../../../../src/components/Layout/Head';
+import { HeadTitle } from '../../../../../src/components/Head';
 import { Board } from '../../../../../src/components/Board/Read';
 import { IsPost } from '../../../../../src/components/Post/Read';
 

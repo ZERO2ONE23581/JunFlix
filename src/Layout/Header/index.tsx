@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { MenuModal } from './modal';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { LoginMenu } from './loginMenu';
-import { useCapLetter } from '../../../libs/client/useTools';
-import { eachMenuVar, TweenTrans } from '../../../../styles/variants';
+import { useCapLetter } from '../../libs/client/useTools';
+import { eachMenuVar, TweenTrans } from '../../../styles/variants';
+import { UserMenu } from './User';
 
-export const Header = () => {
+export const Header = ({ theme }: any) => {
   const [selected, setSelected] = useState('');
   const menuArr = ['board', 'post', 'review', 'movie'];
   const index = (item: string) => Number(menuArr.indexOf(item));
@@ -15,8 +15,7 @@ export const Header = () => {
   return (
     <Cont className="header">
       <Logo />
-
-      <div className="flex">
+      <Flex className="flex">
         <Menu className="menu">
           {menuArr.map((item) => (
             <Each
@@ -38,9 +37,8 @@ export const Header = () => {
             </Each>
           ))}
         </Menu>
-
-        <LoginMenu />
-      </div>
+        <UserMenu theme={theme} />
+      </Flex>
     </Cont>
   );
 };
@@ -54,21 +52,24 @@ const Cont = styled.header`
   border-bottom: ${(p) => p.theme.border.thin};
   background-color: ${(p) => p.theme.color.background};
   .flex {
-    width: 100%;
-    padding-left: 5em;
-    padding-right: 2em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    border: 5px solid blue;
     .menu {
-      font-size: 1.3em;
+      border: 2px solid yellow;
     }
-    .login-menu {
+    .user-menu {
+      border: 2px solid red;
       .isNotLogged {
-        font-size: 1.4em;
       }
     }
   }
+`;
+const Flex = styled.div`
+  width: 100%;
+  padding-left: 5em;
+  padding-right: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 const Menu = styled(motion.article)`
   gap: 3rem;

@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../Tools/Svg';
+import { Svg } from '../../../components/Tools/Svg';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import useUser from '../../../../libs/client/useUser';
-import { ListHover, SpringTrans } from '../../../../../styles/variants';
+import useUser from '../../../libs/client/useUser';
+import { ListHover, SpringTrans } from '../../../../styles/variants';
 
 export const ListWrap = () => {
   const router = useRouter();

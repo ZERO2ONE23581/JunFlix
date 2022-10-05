@@ -6,7 +6,7 @@ import useMutation from '../src/libs/client/useMutation';
 import { ILoginForm } from '../src/types/user';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import { HeadTitle } from '../src/components/Layout/Head';
+import { HeadTitle } from '../src/components/Head';
 import { InputWrap } from '../src/components/Tools/Input';
 import { Btn } from '../src/components/Tools/Button';
 import { FindLink } from '../src/components/User/Read/Links/Find';

@@ -7,7 +7,7 @@ import useUser from '../../src/libs/client/useUser';
 import { Title } from '../../src/components/Tools/Title';
 import { PostList } from '../../src/components/Post/Read/List';
 import { Fixed } from '../../src/components/Tools/Button/Fixed';
-import { HeadTitle } from '../../src/components/Layout/Head';
+import { HeadTitle } from '../../src/components/Head';
 
 const MyPosts: NextPage = () => {
   const { loggedInUser } = useUser();

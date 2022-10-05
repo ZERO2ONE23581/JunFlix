@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { Blur, Page } from '../../../../../styles/global';
 import { IData } from '../../../../../src/types/global';
 import { Svg } from '../../../../../src/components/Tools/Svg';
-import { HeadTitle } from '../../../../../src/components/Layout/Head';
+import { HeadTitle } from '../../../../../src/components/Head';
 import { UserList } from '../../../../../src/components/User/Read/DashBoard/List';
 import { UserInfo } from '../../../../../src/components/User/Read/DashBoard/UserInfo';
 import { FollowUserModal } from '../../../../../src/components/Tools/Modal/Follow/User';

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
-import { HeadTitle } from '../../src/components/Layout/Head';
+import { HeadTitle } from '../../src/components/Head';
 import { Slider } from '../../src/components/Tools/Slider';
 import { Title } from '../../src/components/Tools/Title';
 

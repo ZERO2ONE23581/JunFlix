@@ -1,18 +1,18 @@
 import { Svg } from '../Svg';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
+import { ITheme } from '../../../../styles/theme';
 
-export interface IBtns {
-  isLight: boolean;
+export interface IBtns extends ITheme {
   setTheme: Dispatch<SetStateAction<boolean>>;
 }
-export const ThemeBtn = ({ setTheme, isLight }: IBtns) => {
+export const ThemeBtn = ({ setTheme, theme }: IBtns) => {
   return (
     <Cont>
-      {!isLight && (
+      {!theme && (
         <Svg size="2.5rem" type="moon" onClick={() => setTheme(true)} />
       )}
-      {isLight && (
+      {theme && (
         <Svg size="2.5rem" type="sun" onClick={() => setTheme(false)} />
       )}
     </Cont>

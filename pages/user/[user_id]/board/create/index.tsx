@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../../../styles/global';
 import { CreateBoard } from '../../../../../src/components/Board/Create';
-import { HeadTitle } from '../../../../../src/components/Layout/Head';
+import { HeadTitle } from '../../../../../src/components/Head';
 import { useNeedLogin } from '../../../../../src/libs/client/useTools';
 
 const Create: NextPage = () => {

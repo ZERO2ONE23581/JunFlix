@@ -6,7 +6,7 @@ import { FindLink } from '../../../src/components/User/Read/Links/Find';
 import { Token } from '../../../src/components/User/Read/Verify/Token';
 import { VerifyUserId } from '../../../src/components/User/Read/Verify/UserID';
 import { CreatePassword } from '../../../src/components/User/Create/Password';
-import { HeadTitle } from '../../../src/components/Layout/Head';
+import { HeadTitle } from '../../../src/components/Head';
 import { ConfirmModal } from '../../../src/components/Tools/Modal';
 
 const FindUserPassword: NextPage = () => {

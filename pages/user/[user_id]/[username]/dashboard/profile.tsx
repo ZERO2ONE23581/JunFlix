@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Page } from '../../../../../styles/global';
 import { IData } from '../../../../../src/types/global';
 import { Svg } from '../../../../../src/components/Tools/Svg';
-import { HeadTitle } from '../../../../../src/components/Layout/Head';
+import { HeadTitle } from '../../../../../src/components/Head';
 import { useNoAuthority } from '../../../../../src/libs/client/useTools';
 import { ProfileAvatar } from '../../../../../src/components/Avatar/Profile';
 import { Info } from '../../../../../src/components/User/Read/DashBoard/Profile/Info';

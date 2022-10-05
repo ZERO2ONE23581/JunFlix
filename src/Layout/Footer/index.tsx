@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
-import { Page } from '../../../../styles/global';
+import { Page } from '../../../styles/global';
+import { ITheme } from '../../../styles/theme';
 
-export const Footer = () => {
+export const Footer = ({ theme }: ITheme) => {
   const date = new Date();
   const currentYear = date.getFullYear();
   return (

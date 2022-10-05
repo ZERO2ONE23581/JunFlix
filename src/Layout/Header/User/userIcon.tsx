@@ -1,13 +1,14 @@
-import { Svg } from '../../../Tools/Svg';
+import { Svg } from '../../../components/Tools/Svg';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
+import { ITheme } from '../../../../styles/theme';
 
-interface IUserAvatar {
+interface IUserAvatar extends ITheme {
   avatar?: string | null;
   setModal: Dispatch<SetStateAction<boolean>>;
 }
-export const UserAvatar = ({ avatar, setModal }: IUserAvatar) => {
+export const UserIcon = ({ avatar, setModal, theme }: IUserAvatar) => {
   const variant = 'public';
   const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
   const url = `${base}/${avatar}/${variant}`;
@@ -23,18 +24,27 @@ export const UserAvatar = ({ avatar, setModal }: IUserAvatar) => {
   };
   return (
     <>
-      <Cont
-        url={url}
-        className="menu-profile"
-        onClick={() => setModal((p) => !p)}
-        exit="exit"
-        variants={proVar}
-        initial="initial"
-        animate="animate"
-        whileHover={'hover'}
-        transition={{ type: 'spring', stiffness: 100 }}
-      />
-      {!avatar && <Svg size="3em" type="profile" />}
+      {avatar && (
+        <Cont
+          url={url}
+          exit="exit"
+          variants={proVar}
+          initial="initial"
+          animate="animate"
+          whileHover={'hover'}
+          className="loggedIn-profile"
+          onClick={() => setModal((p) => !p)}
+          transition={{ type: 'spring', stiffness: 100 }}
+        />
+      )}
+      {!avatar && (
+        <Svg
+          size="3em"
+          theme={theme}
+          type="profile"
+          onClick={() => setModal((p) => !p)}
+        />
+      )}
     </>
   );
 };

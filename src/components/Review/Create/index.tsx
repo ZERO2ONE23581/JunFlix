@@ -166,18 +166,6 @@ export const CreateReview = () => {
             register={register('content')}
           />
         </ReviewCont>
-        {save && (
-          <ReviewModal
-            watch={watch}
-            loading={Loading}
-            setSave={setSave}
-            setError={setError}
-            register={register}
-            setValue={setValue}
-            getValues={getValues}
-            clearErrors={clearErrors}
-          />
-        )}
       </form>
       <Errors errors={errors} />
     </>

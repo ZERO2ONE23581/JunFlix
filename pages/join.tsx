@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../styles/global';
-import { HeadTitle } from '../src/components/Layout/Head';
+import { HeadTitle } from '../src/components/Head';
 import { CreateUser } from '../src/components/User/Create';
 import { useNeedLogout } from '../src/libs/client/useTools';
 import { CreateId } from '../src/components/User/Create/UserId';

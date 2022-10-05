@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { Title } from '../../src/components/Tools/Title';
 import { Slider } from '../../src/components/Tools/Slider';
-import { HeadTitle } from '../../src/components/Layout/Head';
+import { HeadTitle } from '../../src/components/Head';
 import { Fixed } from '../../src/components/Tools/Button/Fixed';
 
 const AllBoards: NextPage = () => {

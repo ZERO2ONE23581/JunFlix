@@ -3,7 +3,7 @@ import { SWRConfig } from 'swr';
 import { useState } from 'react';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@emotion/react';
-import { Layout } from '../src/components/Layout';
+import { Layout } from '../src/Layout';
 import { darkTheme, lightTheme } from '../styles/theme';
 import { AnimatePresence } from 'framer-motion';
 
@@ -13,16 +13,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     fetcher: (url: string) => fetch(url).then((res) => res.json()),
   };
   const url = 'junflix.com';
-  console.log('THEME', theme);
   return (
     <SWRConfig value={Fetcher}>
-      <ThemeProvider theme={theme ? lightTheme : darkTheme}>
-        <AnimatePresence>
-          <Layout isLight={theme} setTheme={setTheme}>
-            <Component {...pageProps} key={url} />
+      <AnimatePresence>
+        <ThemeProvider theme={theme ? lightTheme : darkTheme}>
+          <Layout setTheme={setTheme} theme={theme}>
+            <Component theme={theme} {...pageProps} key={url} />
           </Layout>
-        </AnimatePresence>
-      </ThemeProvider>
+        </ThemeProvider>
+      </AnimatePresence>
     </SWRConfig>
   );
 }
