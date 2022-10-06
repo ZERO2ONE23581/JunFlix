@@ -7,11 +7,11 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import useUser from '../../../libs/client/useUser';
 import { IReviewForm } from '../../../types/review';
-import { TextAreaWrap } from '../../Tools/Input/TextArea';
+import { TextAreaWrap } from '../../../Tools/Input/TextArea';
 import useMutation from '../../../libs/client/useMutation';
 import { Inputs } from '../Inputs';
 import { useLength } from '../../../libs/client/useTools';
-import { Errors } from '../../Tools/Errors';
+import { Errors } from '../../../Tools/Errors';
 import { Box } from '../../../../styles/global';
 
 interface ICreateReviewRes {

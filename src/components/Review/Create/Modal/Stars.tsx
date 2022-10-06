@@ -1,5 +1,5 @@
-import { Btn } from '../../../Tools/Button';
-import { Stars } from '../../../Tools/Stars';
+import { Btn } from '../../../../Tools/Button';
+import { Stars } from '../../../../Tools/Stars';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 import { IUseform } from '../../../../types/global';

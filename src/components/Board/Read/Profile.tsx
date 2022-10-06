@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../Tools/Svg';
+import { Svg } from '../../../Tools/Svg';
 import { ProfileAvatar } from '../../Avatar/Profile';
 import useUser from '../../../libs/client/useUser';
 import { useRouter } from 'next/router';

@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { InputWrap } from '../Tools/Input';
-import { ConfirmModal } from '../Tools/Modal';
+import { InputWrap } from '../../Tools/Input';
+import { ConfirmModal } from '../../Tools/Modal';
 import { IUseform } from '../../types/global';
 import { Dispatch, SetStateAction } from 'react';
-import { SelectWrap } from '../Tools/Input/Select';
-import { Svg } from '../Tools/Svg';
+import { SelectWrap } from '../../Tools/Input/Select';
+import { Svg } from '../../Tools/Svg';
 
 interface IInputs extends IUseform {
   isEdit?: boolean;

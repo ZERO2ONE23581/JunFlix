@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Btn } from '../../Tools/Button';
+import { Btn } from '../../../Tools/Button';
 import { useForm } from 'react-hook-form';
-import { ErrorMsg, Errors } from '../../Tools/Errors';
-import { InputWrap } from '../../Tools/Input';
+import { ErrorMsg, Errors } from '../../../Tools/Errors';
+import { InputWrap } from '../../../Tools/Input';
 import useMutation from '../../../libs/client/useMutation';
 import { Box } from '../../../../styles/global';
 import useUser from '../../../libs/client/useUser';
 import { IUserForm } from '../../../types/user';
 import { IData } from '../../../types/global';
 import { Title } from '../Create/Title';
-import { LoadingModal } from '../../Tools/Modal/Loading';
+import { LoadingModal } from '../../../Tools/Modal/Loading';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { Answer } from '../../Tools/Modal/Answer';
-import { Svg } from '../../Tools/Svg';
+import { Answer } from '../../../Tools/Modal/Answer';
+import { Svg } from '../../../Tools/Svg';
 
 export const UserId = () => {
   const router = useRouter();

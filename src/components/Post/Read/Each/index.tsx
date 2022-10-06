@@ -1,19 +1,19 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { PosInfo } from './Info/PosInfo';
-import { Svg } from '../../../Tools/Svg';
+import { Svg } from '../../../../Tools/Svg';
 import { AVATAR_URL } from '../../../Avatar';
 import { PostModel } from '../../../../types/post';
 import { ERROR, Overlay } from '../../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { modalVar } from '../../../Tools/Slider/Movie/modal';
-import { PostSettingBtn } from '../../../Tools/Button/Modal/Post';
+import { modalVar } from '../../../../Tools/Slider/Movie/modal';
+import { PostSettingBtn } from '../../../../Tools/Button/Modal/Post';
 import { EditPost } from '../../Edit';
-import { ConfirmModal } from '../../../Tools/Modal';
+import { ConfirmModal } from '../../../../Tools/Modal';
 import useMutation from '../../../../libs/client/useMutation';
 import useUser from '../../../../libs/client/useUser';
 import { useRouter } from 'next/router';
-import { Btn } from '../../../Tools/Button';
+import { Btn } from '../../../../Tools/Button';
 import { IData } from '../../../../types/global';
 
 interface IPostModal {

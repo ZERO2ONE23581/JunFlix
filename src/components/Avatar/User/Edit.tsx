@@ -1,16 +1,16 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../Tools/Button';
+import { Btn } from '../../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Label, ProfileAvatar } from '../Profile';
 import useMutation from '../../../libs/client/useMutation';
 import useUser from '../../../libs/client/useUser';
-import { LoadingModal } from '../../Tools/Modal/Loading';
+import { LoadingModal } from '../../../Tools/Modal/Loading';
 import { IUserForm } from '../../../types/user';
 import { IData } from '../../../types/global';
 import { UserBox } from '../../User/Update/UserId';
-import { Svg } from '../../Tools/Svg';
-import { Answer } from '../../Tools/Modal/Answer';
+import { Svg } from '../../../Tools/Svg';
+import { Answer } from '../../../Tools/Modal/Answer';
 
 export const EditUserAvatar = () => {
   const { loggedInUser } = useUser();

@@ -1,17 +1,18 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../styles/global';
-import { Slider } from '../src/components/Tools/Slider';
+import { Slider } from '../src/Tools/Slider';
 import { Welcome } from '../src/components/Home/Welcome';
 import { HeadTitle } from '../src/components/Head';
+import { ITheme } from '../styles/theme';
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ theme }: ITheme) => {
   return (
     <>
       <HeadTitle title="HOME" />
       <Cont className="home">
         <div className="movie-wrap">
-          <Welcome />
+          <Welcome theme={theme} />
           <Slider pageType="home" sliderType="movie" />
         </div>
         <div className="post-board-wrap">

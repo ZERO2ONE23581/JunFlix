@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { CreatePost } from '../../Post/Create';
 import useUser from '../../../libs/client/useUser';
-import { ModalBtn } from '../../Tools/Button/Modal/Board';
+import { ModalBtn } from '../../../Tools/Button/Modal/Board';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { Svg } from '../../Tools/Svg';
+import { Svg } from '../../../Tools/Svg';
 
 interface IBtnWrap {
   setEdit: Dispatch<SetStateAction<boolean>>;

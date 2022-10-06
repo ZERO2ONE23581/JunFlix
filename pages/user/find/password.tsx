@@ -7,7 +7,7 @@ import { Token } from '../../../src/components/User/Read/Verify/Token';
 import { VerifyUserId } from '../../../src/components/User/Read/Verify/UserID';
 import { CreatePassword } from '../../../src/components/User/Create/Password';
 import { HeadTitle } from '../../../src/components/Head';
-import { ConfirmModal } from '../../../src/components/Tools/Modal';
+import { ConfirmModal } from '../../../src/Tools/Modal';
 
 const FindUserPassword: NextPage = () => {
   const [userId, setUserId] = useState('');

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { IData } from '../../../../../types/global';
-import { Slider } from '../../../../Tools/Slider';
+import { Slider } from '../../../../../Tools/Slider';
 import { ReviewList } from '../../../../Review/Read/List';
 
 interface ILikesList {

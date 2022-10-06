@@ -7,7 +7,7 @@ import { IGetReview } from '../../../../../src/types/review';
 import { Info } from '../../../../../src/components/Review/Read/Info';
 import { HeadTitle } from '../../../../../src/components/Head';
 import { useNeedLogin } from '../../../../../src/libs/client/useTools';
-import { NoData } from '../../../../../src/components/Tools/NoData';
+import { NoData } from '../../../../../src/Tools/NoData';
 
 const ReviewPage: NextPage = () => {
   useNeedLogin();

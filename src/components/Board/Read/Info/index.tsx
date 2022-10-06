@@ -1,8 +1,8 @@
 import { Counts } from './Counts';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Svg } from '../../../Tools/Svg';
-import { FollowBtn } from '../../../Tools/Button/Follow/BoardFollowBtn';
+import { Svg } from '../../../../Tools/Svg';
+import { FollowBtn } from '../../../../Tools/Button/Follow/BoardFollowBtn';
 import useUser from '../../../../libs/client/useUser';
 import { useCapLetters } from '../../../../libs/client/useTools';
 

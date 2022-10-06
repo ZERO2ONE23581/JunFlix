@@ -5,8 +5,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
 import { IData } from '../../../../types/global';
 import { IBoardForm } from '../../../../types/board';
-import { Svg } from '../../../Tools/Svg';
-import { ConfirmModal } from '../../../Tools/Modal';
+import { Svg } from '../../../../Tools/Svg';
+import { ConfirmModal } from '../../../../Tools/Modal';
 
 interface IAvatarForm {
   delModal: boolean;

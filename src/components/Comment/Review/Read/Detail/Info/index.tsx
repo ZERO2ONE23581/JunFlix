@@ -6,11 +6,11 @@ import {
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Creator } from '../../../../../../../Creator';
-import { ErrorMsg } from '../../../../../Tools/Errors';
+import { ErrorMsg } from '../../../../../../Tools/Errors';
 import { IReview } from '../../../../../../types/review';
 import useMutation from '../../../../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { ReadDate } from '../../../../../Tools/Date';
+import { ReadDate } from '../../../../../../Tools/Date';
 import { Text } from './Text';
 import { EditCmt } from '../../../Edit/EditCmt';
 import { useCapLetter } from '../../../../../../libs/client/useTools';

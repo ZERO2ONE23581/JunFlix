@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { User } from '@prisma/client';
 import { useRouter } from 'next/router';
-import { Svg } from '../../../../Tools/Svg';
+import { Svg } from '../../../../../Tools/Svg';
 
 interface IInfo {
   user: User;

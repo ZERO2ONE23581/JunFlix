@@ -3,12 +3,12 @@ import styled from '@emotion/styled';
 import { FindLink } from '../Links/Find';
 import { useForm } from 'react-hook-form';
 import { Title } from '../../Create/Title';
-import { Btn } from '../../../Tools/Button';
-import { Errors } from '../../../Tools/Errors';
-import { InputWrap } from '../../../Tools/Input';
+import { Btn } from '../../../../Tools/Button';
+import { Errors } from '../../../../Tools/Errors';
+import { InputWrap } from '../../../../Tools/Input';
 import { Dispatch, SetStateAction } from 'react';
 import { Box } from '../../../../../styles/global';
-import { LoadingModal } from '../../../Tools/Modal/Loading';
+import { LoadingModal } from '../../../../Tools/Modal/Loading';
 import useMutation from '../../../../libs/client/useMutation';
 import { IFindForm, IFindPostRes } from '../../../../types/user';
 

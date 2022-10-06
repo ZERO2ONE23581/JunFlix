@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../../Tools/Svg';
+import { Svg } from '../../../../../Tools/Svg';
 import { motion } from 'framer-motion';
 import { useCapLetters } from '../../../../../libs/client/useTools';
 

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { Btn } from '../../../../Tools/Button';
+import { Btn } from '../../../../../Tools/Button';
 
 interface IBtnWrap {
   type: string;

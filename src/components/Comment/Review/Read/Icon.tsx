@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import { Svg } from '../../../Tools/Svg';
+import { Svg } from '../../../../Tools/Svg';
 import { useEffect, useState } from 'react';
 import { IReviewCmt } from '../../../../types/review';
 

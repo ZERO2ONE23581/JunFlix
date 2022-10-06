@@ -7,13 +7,13 @@ import { ILoginForm } from '../src/types/user';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { HeadTitle } from '../src/components/Head';
-import { InputWrap } from '../src/components/Tools/Input';
-import { Btn } from '../src/components/Tools/Button';
+import { InputWrap } from '../src/Tools/Input';
+import { Btn } from '../src/Tools/Button';
 import { FindLink } from '../src/components/User/Read/Links/Find';
-import { Errors } from '../src/components/Tools/Errors';
+import { Errors } from '../src/Tools/Errors';
 import { Box, Page } from '../styles/global';
 import { useNeedLogout } from '../src/libs/client/useTools';
-import { LoadingModal } from '../src/components/Tools/Modal/Loading';
+import { LoadingModal } from '../src/Tools/Modal/Loading';
 
 const Login: NextPage = () => {
   useNeedLogout();

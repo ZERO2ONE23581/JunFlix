@@ -5,10 +5,10 @@ import {
 } from '../../../../types/comments';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
-import { Svg } from '../../../Tools/Svg';
-import { ErrorMsg } from '../../../Tools/Errors';
+import { Svg } from '../../../../Tools/Svg';
+import { ErrorMsg } from '../../../../Tools/Errors';
 import { IQuery } from '../../../../types/global';
-import { TextArea } from '../../../Tools/Input/TextArea';
+import { TextArea } from '../../../../Tools/Input/TextArea';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
 import { useCapLetter } from '../../../../libs/client/useTools';

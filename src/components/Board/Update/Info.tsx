@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../Tools/Button';
-import { InputWrap } from '../../Tools/Input';
+import { Btn } from '../../../Tools/Button';
+import { InputWrap } from '../../../Tools/Input';
 import { useForm } from 'react-hook-form';
 import { IData } from '../../../types/global';
-import { LoadingModal } from '../../Tools/Modal/Loading';
+import { LoadingModal } from '../../../Tools/Modal/Loading';
 import { IBoardForm } from '../../../types/board';
-import { TextAreaWrap } from '../../Tools/Input/TextArea';
-import { SelectWrap } from '../../Tools/Input/Select';
+import { TextAreaWrap } from '../../../Tools/Input/TextArea';
+import { SelectWrap } from '../../../Tools/Input/Select';
 import useMutation from '../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Errors } from '../../Tools/Errors';
+import { Errors } from '../../../Tools/Errors';
 import { useCapLetters, useLength } from '../../../libs/client/useTools';
 import { useRouter } from 'next/router';
 

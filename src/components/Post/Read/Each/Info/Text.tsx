@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useCapLetter } from '../../../../../libs/client/useTools';
-import { ReadDate } from '../../../../Tools/Date';
+import { ReadDate } from '../../../../../Tools/Date';
 
 interface IText {
   date: {

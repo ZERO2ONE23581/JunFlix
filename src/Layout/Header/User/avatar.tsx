@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { ITheme } from '../../../../styles/theme';
-import { Svg } from '../../../components/Tools/Svg';
+import { Svg } from '../../../Tools/Svg';
 
 interface IUserAvatar extends ITheme {
   avatar?: string | null;

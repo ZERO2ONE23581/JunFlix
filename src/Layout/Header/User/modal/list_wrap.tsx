@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../../components/Tools/Svg';
+import { Svg } from '../../../../Tools/Svg';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import useUser from '../../../../libs/client/useUser';

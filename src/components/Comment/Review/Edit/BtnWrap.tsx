@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { Svg } from '../../../Tools/Svg';
+import { Svg } from '../../../../Tools/Svg';
 
 interface IBtnWrap {
   selectId: number;

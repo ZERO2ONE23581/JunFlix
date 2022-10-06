@@ -3,14 +3,14 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { IUserForm } from '../../types/user';
-import { ConfirmModal } from '../Tools/Modal';
+import { ConfirmModal } from '../../Tools/Modal';
 import useUser from '../../libs/client/useUser';
 import useMutation from '../../libs/client/useMutation';
-import { Errors } from '../Tools/Errors';
+import { Errors } from '../../Tools/Errors';
 import { UserBox } from './Update/UserId';
-import { Svg } from '../Tools/Svg';
-import { Answer } from '../Tools/Modal/Answer';
-import { Btn } from '../Tools/Button';
+import { Svg } from '../../Tools/Svg';
+import { Answer } from '../../Tools/Modal/Answer';
+import { Btn } from '../../Tools/Button';
 
 export const DeleteUser = () => {
   const [delModal, setDelModal] = useState(false);

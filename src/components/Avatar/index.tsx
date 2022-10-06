@@ -1,4 +1,4 @@
-import { Svg } from '../Tools/Svg';
+import { Svg } from '../../Tools/Svg';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';

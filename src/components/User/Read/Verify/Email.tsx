@@ -1,14 +1,14 @@
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../Tools/Button';
-import { InputWrap } from '../../../Tools/Input';
-import { ErrorMsg } from '../../../Tools/Errors';
+import { Btn } from '../../../../Tools/Button';
+import { InputWrap } from '../../../../Tools/Input';
+import { ErrorMsg } from '../../../../Tools/Errors';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
 import { IFindForm, IFindPostRes } from '../../../../types/user';
 import { Title } from '../../Create/Title';
 import styled from '@emotion/styled';
 import { Box } from '../../../../../styles/global';
-import { LoadingModal } from '../../../Tools/Modal/Loading';
+import { LoadingModal } from '../../../../Tools/Modal/Loading';
 import { FindLink } from '../Links/Find';
 
 interface IEmail {

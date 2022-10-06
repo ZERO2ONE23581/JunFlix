@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import { Svg } from '../../Tools/Svg';
+import { Svg } from '../../../Tools/Svg';
 import { IReviewLikes } from '../../../types/review';
 import useMutation from '../../../libs/client/useMutation';
 

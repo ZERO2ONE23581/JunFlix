@@ -5,13 +5,13 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import useUser from '../../libs/client/useUser';
 import { IGetReview, IReviewForm } from '../../types/review';
-import { TextAreaWrap } from '../Tools/Input/TextArea';
+import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import useMutation from '../../libs/client/useMutation';
 import { Inputs } from './Inputs';
 import useSWR from 'swr';
 import { ReviewCont } from './Create';
 import { useLength } from '../../libs/client/useTools';
-import { Errors } from '../Tools/Errors';
+import { Errors } from '../../Tools/Errors';
 import { IData } from '../../types/global';
 import styled from '@emotion/styled';
 

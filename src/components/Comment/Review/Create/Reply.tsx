@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
-import { AltSvg, Svg } from '../../../Tools/Svg';
-import { ErrorMsg } from '../../../Tools/Errors';
+import { AltSvg, Svg } from '../../../../Tools/Svg';
+import { ErrorMsg } from '../../../../Tools/Errors';
 import { IReview } from '../../../../types/review';
 import useUser from '../../../../libs/client/useUser';
-import { TextArea } from '../../../Tools/Input/TextArea';
+import { TextArea } from '../../../../Tools/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
 import { ProfileAvatar } from '../../../Avatar/Profile';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';

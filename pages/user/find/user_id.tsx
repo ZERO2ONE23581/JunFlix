@@ -5,7 +5,7 @@ import { Page } from '../../../styles/global';
 import { Token } from '../../../src/components/User/Read/Verify/Token';
 import { Email } from '../../../src/components/User/Read/Verify/Email';
 import { HeadTitle } from '../../../src/components/Head';
-import { ConfirmModal } from '../../../src/components/Tools/Modal';
+import { ConfirmModal } from '../../../src/Tools/Modal';
 
 const FindUserId: NextPage = () => {
   const [userId, setUserId] = useState('');

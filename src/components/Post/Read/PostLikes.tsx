@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { Svg } from '../../Tools/Svg';
+import { Svg } from '../../../Tools/Svg';
 import styled from '@emotion/styled';
 import { Post, Review } from '@prisma/client';
 import useMutation from '../../../libs/client/useMutation';

@@ -1,5 +1,5 @@
-import { Svg } from '../../../Tools/Svg';
-import { Btn } from '../../../Tools/Button';
+import { Svg } from '../../../../Tools/Svg';
+import { Btn } from '../../../../Tools/Button';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 import { IUseform } from '../../../../types/global';

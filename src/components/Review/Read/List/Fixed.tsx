@@ -2,8 +2,8 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import useUser from '../../../../libs/client/useUser';
-import { Answer } from '../../../Tools/Modal/Answer';
-import { Svg } from '../../../Tools/Svg';
+import { Answer } from '../../../../Tools/Modal/Answer';
+import { Svg } from '../../../../Tools/Svg';
 
 export const Fixed = () => {
   const router = useRouter();

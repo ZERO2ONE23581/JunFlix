@@ -3,13 +3,13 @@ import { Inputs } from './Inputs';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { LoadingModal } from '../../Tools/Modal/Loading';
-import { TextAreaWrap } from '../../Tools/Input/TextArea';
+import { LoadingModal } from '../../../Tools/Modal/Loading';
+import { TextAreaWrap } from '../../../Tools/Input/TextArea';
 import useMutation from '../../../libs/client/useMutation';
 import { IBoardForm, IBoardFormRes } from '../../../types/board';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useLength } from '../../../libs/client/useTools';
-import { Errors } from '../../Tools/Errors';
+import { Errors } from '../../../Tools/Errors';
 import { Box } from '../../../../styles/global';
 
 interface ICreateBoard {

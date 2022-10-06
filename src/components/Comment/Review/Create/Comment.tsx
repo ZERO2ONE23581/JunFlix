@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Svg } from '../../../Tools/Svg';
-import { ErrorMsg } from '../../../Tools/Errors';
+import { Svg } from '../../../../Tools/Svg';
+import { ErrorMsg } from '../../../../Tools/Errors';
 import { IReview } from '../../../../types/review';
-import { TextArea } from '../../../Tools/Input/TextArea';
+import { TextArea } from '../../../../Tools/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
 import { ICmtRes, ICmtForm } from '../../../../types/comments';
 

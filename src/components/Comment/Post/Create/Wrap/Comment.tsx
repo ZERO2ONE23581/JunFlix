@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Svg } from '../../../../Tools/Svg';
-import { ErrorMsg } from '../../../../Tools/Errors';
-import { TextArea } from '../../../../Tools/Input/TextArea';
+import { Svg } from '../../../../../Tools/Svg';
+import { ErrorMsg } from '../../../../../Tools/Errors';
+import { TextArea } from '../../../../../Tools/Input/TextArea';
 import useMutation from '../../../../../libs/client/useMutation';
 import { ICmtForm, ICmtRes } from '../../../../../types/comments';
 import { IQuery } from '../../../../../types/global';

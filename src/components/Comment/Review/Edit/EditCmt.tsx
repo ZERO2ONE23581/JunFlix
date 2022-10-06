@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useLength } from '../../../../libs/client/useTools';
 import { IUseform } from '../../../../types/global';
-import { TextArea } from '../../../Tools/Input/TextArea';
-import { Svg } from '../../../Tools/Svg';
+import { TextArea } from '../../../../Tools/Input/TextArea';
+import { Svg } from '../../../../Tools/Svg';
 
 interface IInfo extends IUseform {
   loading: boolean;

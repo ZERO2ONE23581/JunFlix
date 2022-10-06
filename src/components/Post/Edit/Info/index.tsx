@@ -1,12 +1,12 @@
 import { Layer } from './Layer';
 import styled from '@emotion/styled';
-import { ErrorMsg } from '../../../Tools/Errors';
+import { ErrorMsg } from '../../../../Tools/Errors';
 import { IUseform } from '../../../../types/global';
 import useUser from '../../../../libs/client/useUser';
-import { TextAreaWrap } from '../../../Tools/Input/TextArea';
+import { TextAreaWrap } from '../../../../Tools/Input/TextArea';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { InputWrap } from '../../../Tools/Input';
-import { Btn } from '../../../Tools/Button';
+import { InputWrap } from '../../../../Tools/Input';
+import { Btn } from '../../../../Tools/Button';
 import { useLength } from '../../../../libs/client/useTools';
 
 interface IInfo extends IUseform {

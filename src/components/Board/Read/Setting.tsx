@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { EditBoardAvatar } from '../../Avatar/Board/Edit';
-import { ConfirmModal } from '../../Tools/Modal';
-import { Answer } from '../../Tools/Modal/Answer';
-import { Svg } from '../../Tools/Svg';
+import { ConfirmModal } from '../../../Tools/Modal';
+import { Answer } from '../../../Tools/Modal/Answer';
+import { Svg } from '../../../Tools/Svg';
 import { BtnWrap } from '../Update/BtnWrap';
 
 interface ISetting {

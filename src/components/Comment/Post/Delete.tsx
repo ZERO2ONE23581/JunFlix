@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../Tools/Button';
+import { Btn } from '../../../Tools/Button';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { LoadingModal } from '../../Tools/Modal/Loading';
+import { LoadingModal } from '../../../Tools/Modal/Loading';
 import { ICmtRes } from '../../../types/comments';
 import useMutation from '../../../libs/client/useMutation';
 import { DimBackground, Modal } from '../../../../styles/global';

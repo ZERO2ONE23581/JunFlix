@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { Answer } from '../../Tools/Modal/Answer';
-import { Svg } from '../../Tools/Svg';
+import { Answer } from '../../../Tools/Modal/Answer';
+import { Svg } from '../../../Tools/Svg';
 
 interface ITitle {
   answer: boolean;

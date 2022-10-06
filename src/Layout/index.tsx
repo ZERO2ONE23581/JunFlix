@@ -2,7 +2,7 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import styled from '@emotion/styled';
 import { ReactElement, useEffect, useState } from 'react';
-import { ThemeBtn, IBtns } from '../components/Tools/Button/Theme';
+import { ThemeBtn, IBtns } from '../Tools/Button/Theme';
 
 interface ILayoutProps extends IBtns {
   children: ReactElement;
@@ -11,7 +11,7 @@ export const Layout = ({ theme, children, setTheme }: ILayoutProps) => {
   const [width, setWidth] = useState(0);
   useEffect(() => {
     if (typeof window !== undefined) setWidth(window?.innerWidth);
-  }, [setWidth]);
+  }, []);
   return (
     <Cont width={width}>
       <Header theme={theme} />
@@ -22,17 +22,18 @@ export const Layout = ({ theme, children, setTheme }: ILayoutProps) => {
   );
 };
 
-const Cont = styled.section<{ width: number }>`
+const Cont = styled.section<{ width?: number }>`
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
   .header,
   .children,
   .footer {
     min-width: ${(p) => p.width && `${p.width}px`};
+    min-width: 1500px;
   }
   .header {
     padding: 0.6em 12em;
-    //border: 5px solid red;
+    border: 2px solid hotpink;
   }
   .footer {
     padding: 0 12em;

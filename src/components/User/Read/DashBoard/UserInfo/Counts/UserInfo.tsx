@@ -5,8 +5,8 @@ import useSWR from 'swr';
 import useUser from '../../../../../../libs/client/useUser';
 import { IData } from '../../../../../../types/global';
 import { ProfileAvatar } from '../../../../../Avatar/Profile';
-import { Btn } from '../../../../../Tools/Button';
-import { FollowUserModal } from '../../../../../Tools/Modal/Follow/User';
+import { Btn } from '../../../../../../Tools/Button';
+import { FollowUserModal } from '../../../../../../Tools/Modal/Follow/User';
 
 interface IUserInfo {
   userID: number;

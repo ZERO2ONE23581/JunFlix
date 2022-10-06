@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { Btn } from '../../Tools/Button';
+import { Btn } from '../../../Tools/Button';
 import { useForm } from 'react-hook-form';
-import { InputWrap } from '../../Tools/Input';
+import { InputWrap } from '../../../Tools/Input';
 import useMutation from '../../../libs/client/useMutation';
 import useUser from '../../../libs/client/useUser';
 import { IUserForm } from '../../../types/user';
 import styled from '@emotion/styled';
-import { Errors } from '../../Tools/Errors';
+import { Errors } from '../../../Tools/Errors';
 import { Title } from '../Create/Title';
 import { Box } from '../../../../styles/global';
 import { IData } from '../../../types/global';

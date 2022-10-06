@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Star } from './Star';
 import { Title } from './Title';
 import { IReview } from '../../../../../types/review';
-import { ReadDate } from '../../../../Tools/Date';
+import { ReadDate } from '../../../../../Tools/Date';
 
 export const Top = ({ review }: IReview) => {
   return (

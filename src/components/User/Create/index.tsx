@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../Tools/Button';
+import { Btn } from '../../../Tools/Button';
 import { useForm } from 'react-hook-form';
-import { Errors } from '../../Tools/Errors';
-import { InputWrap } from '../../Tools/Input';
+import { Errors } from '../../../Tools/Errors';
+import { InputWrap } from '../../../Tools/Input';
 import useMutation from '../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { IJoinForm, IJoinFormRes } from '../../../types/user';
 import { Title } from './Title';
-import { LoadingModal } from '../../Tools/Modal/Loading';
-import { Svg } from '../../Tools/Svg';
+import { LoadingModal } from '../../../Tools/Modal/Loading';
+import { Svg } from '../../../Tools/Svg';
 import { motion } from 'framer-motion';
 
 export interface ICreateUser {
@@ -152,12 +152,7 @@ export const CreateUser = ({
                 })}
               />
             </div>
-            <Btn
-              type="submit"
-              name="회원가입"
-              loading={loading}
-              CLASSNAME="submit-btn"
-            />
+            <Btn type="submit" name="회원가입" />
           </Cont>
           <Errors errors={errors} />
         </form>

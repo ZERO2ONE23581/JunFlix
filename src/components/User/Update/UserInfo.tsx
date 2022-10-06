@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Btn } from '../../Tools/Button';
+import { Btn } from '../../../Tools/Button';
 import { useForm } from 'react-hook-form';
-import { InputWrap } from '../../Tools/Input';
+import { InputWrap } from '../../../Tools/Input';
 import useMutation from '../../../libs/client/useMutation';
-import { SelectWrap } from '../../Tools/Input/Select';
+import { SelectWrap } from '../../../Tools/Input/Select';
 import useUser from '../../../libs/client/useUser';
 import { IUserForm } from '../../../types/user';
-import { Errors } from '../../Tools/Errors';
+import { Errors } from '../../../Tools/Errors';
 import { IData } from '../../../types/global';
 import { UserBox } from './UserId';
-import { Svg } from '../../Tools/Svg';
-import { Answer } from '../../Tools/Modal/Answer';
+import { Svg } from '../../../Tools/Svg';
+import { Answer } from '../../../Tools/Modal/Answer';
 
 export const UserInfo = () => {
   const router = useRouter();

@@ -1,13 +1,13 @@
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../Tools/Button';
-import { Errors } from '../../../Tools/Errors';
-import { InputWrap } from '../../../Tools/Input';
+import { Btn } from '../../../../Tools/Button';
+import { Errors } from '../../../../Tools/Errors';
+import { InputWrap } from '../../../../Tools/Input';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import useMutation from '../../../../libs/client/useMutation';
 import { IFindForm, IFindPostRes } from '../../../../types/user';
 import { Title } from '../../Create/Title';
 import { Box } from '../../../../../styles/global';
-import { LoadingModal } from '../../../Tools/Modal/Loading';
+import { LoadingModal } from '../../../../Tools/Modal/Loading';
 import { FindLink } from '../Links/Find';
 
 interface IVerify {

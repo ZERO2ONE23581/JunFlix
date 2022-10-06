@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../../styles/global';
-import { Svg } from '../../../../src/components/Tools/Svg';
+import { Svg } from '../../../../src/Tools/Svg';
 import { HeadTitle } from '../../../../src/components/Head';
 import { DeleteUser } from '../../../../src/components/User/Delete';
 import { UserId } from '../../../../src/components/User/Update/UserId';
@@ -13,7 +13,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import {
   NeedLogin,
   NeedLoginModal,
-} from '../../../../src/components/Tools/Modal/NeedLoginModal';
+} from '../../../../src/Tools/Modal/NeedLoginModal';
 
 const UserSettingPage: NextPage = () => {
   NeedLogin();

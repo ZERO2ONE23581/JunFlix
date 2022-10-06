@@ -3,14 +3,14 @@ import { Stars } from './Stars';
 import { Icons } from './Icons';
 import styled from '@emotion/styled';
 import { ListWrap, Layer } from './Layer';
-import { Svg } from '../../../Tools/Svg';
+import { Svg } from '../../../../Tools/Svg';
 import { ReviewModel } from '../../../../types/post';
-import { ReadDate } from '../../../Tools/Date';
+import { ReadDate } from '../../../../Tools/Date';
 import { ProfileAvatar } from '../../../Avatar/Profile';
 import { IReviewList } from '../../../../types/review';
 import { Fixed } from './Fixed';
 import { useCapLetter } from '../../../../libs/client/useTools';
-import { NoData } from '../../../Tools/NoData';
+import { NoData } from '../../../../Tools/NoData';
 
 export const ReviewList = ({ reviews, isLikesType }: IReviewList) => {
   const Order = (item: ReviewModel) => {

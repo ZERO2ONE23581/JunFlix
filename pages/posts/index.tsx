@@ -3,10 +3,10 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { IGetAllPosts } from '../../src/types/post';
-import { Title } from '../../src/components/Tools/Title';
+import { Title } from '../../src/Tools/Title';
 import { HeadTitle } from '../../src/components/Head';
 import { PostList } from '../../src/components/Post/Read/List';
-import { Fixed } from '../../src/components/Tools/Button/Fixed';
+import { Fixed } from '../../src/Tools/Button/Fixed';
 
 const AllPosts: NextPage = () => {
   const { data } = useSWR<IGetAllPosts>(`/api/posts`);

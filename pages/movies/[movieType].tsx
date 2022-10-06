@@ -2,8 +2,8 @@ import { MoviePage } from '.';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { Title } from '../../src/components/Tools/Title';
-import { Slider } from '../../src/components/Tools/Slider';
+import { Title } from '../../src/Tools/Title';
+import { Slider } from '../../src/Tools/Slider';
 import { HeadTitle } from '../../src/components/Head';
 
 const MovieTypes: NextPage = () => {

@@ -10,7 +10,7 @@ import { LikesWithPost, PostModel } from '../../../../../types/post';
 import { BoardList } from '../../../../Board/Read/List';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Slider } from '../../../../Tools/Slider';
+import { Slider } from '../../../../../Tools/Slider';
 
 export interface IGet {
   ok: boolean;

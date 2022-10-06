@@ -2,7 +2,7 @@ import { PostBox } from './PostBox';
 import { Fold } from './Fold';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { NoData } from '../../../Tools/NoData';
+import { NoData } from '../../../../Tools/NoData';
 import { IPostList } from '../../../../types/post';
 import { Grid } from '../../../../../styles/global';
 import { PostModal } from '../Each';

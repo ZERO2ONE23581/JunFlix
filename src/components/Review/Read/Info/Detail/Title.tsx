@@ -3,7 +3,7 @@ import {
   useCapLetter,
   useCapLetters,
 } from '../../../../../libs/client/useTools';
-import { Svg } from '../../../../Tools/Svg';
+import { Svg } from '../../../../../Tools/Svg';
 
 interface ITtitle {
   genre: string;

@@ -2,13 +2,12 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../styles/global';
+import { ITheme } from '../styles/theme';
+import { AnimatePresence } from 'framer-motion';
 import { HeadTitle } from '../src/components/Head';
 import { CreateUser } from '../src/components/User/Create';
-import { useNeedLogout } from '../src/libs/client/useTools';
 import { CreateId } from '../src/components/User/Create/UserId';
 import { CreateUserAvatar } from '../src/components/User/Create/avatar';
-import { AnimatePresence } from 'framer-motion';
-import { ITheme } from '../styles/theme';
 
 const Join: NextPage = ({ theme }: ITheme) => {
   const [first, setFirst] = useState('');
@@ -59,11 +58,10 @@ const Cont = styled(Page)`
     justify-content: center;
     padding: 1.5em 2em;
     border-radius: 5px;
-    border: 2px solid ${(p) => p.theme.color.font};
     color: ${(p) => p.theme.color.font};
-    border: ${(p) => p.theme.border.thick};
     box-shadow: ${(p) => p.theme.boxShadow.nav};
     background-color: ${(p) => p.theme.color.bg};
+    border: 1px solid ${(p) => p.theme.color.font};
     h1 {
       span {
         display: block;
@@ -79,7 +77,6 @@ const Cont = styled(Page)`
       //border: 1px solid blue;
     }
     .userId {
-      //border: 1px solid yellow;
       //padding: 20px;
     }
     .flex {

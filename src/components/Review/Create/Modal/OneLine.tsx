@@ -1,5 +1,5 @@
-import { Btn } from '../../../Tools/Button';
-import { InputWrap } from '../../../Tools/Input';
+import { Btn } from '../../../../Tools/Button';
+import { InputWrap } from '../../../../Tools/Input';
 import { IUseform } from '../../../../types/global';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { BtnWrap } from '../../../../../styles/global';

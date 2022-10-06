@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../Tools/Button';
+import { Btn } from '../../../Tools/Button';
 import useMutation from '../../../libs/client/useMutation';
-import { ErrorMsg, Errors } from '../../Tools/Errors';
-import { InputWrap } from '../../Tools/Input';
+import { ErrorMsg, Errors } from '../../../Tools/Errors';
+import { InputWrap } from '../../../Tools/Input';
 import { IFindForm, IFindPostRes } from '../../../types/user';
 import { Title } from './Title';
-import { LoadingModal } from '../../Tools/Modal/Loading';
+import { LoadingModal } from '../../../Tools/Modal/Loading';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 

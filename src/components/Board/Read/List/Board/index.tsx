@@ -4,7 +4,7 @@ import { NoAvatar } from '../../../../Avatar/NoAvatar';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { boxVars, MotionBox } from '../../../../../../styles/global';
-import { FollowBtn } from '../../../../Tools/Button/Follow/BoardFollowBtn';
+import { FollowBtn } from '../../../../../Tools/Button/Follow/BoardFollowBtn';
 
 interface IItem {
   userId: number;

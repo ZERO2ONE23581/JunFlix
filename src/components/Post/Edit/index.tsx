@@ -6,13 +6,13 @@ import useMutation from '../../../libs/client/useMutation';
 import { Modal, Overlay } from '../../../../styles/global';
 import { IEditPostForm } from '../../../types/post';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ConfirmModal } from '../../Tools/Modal';
+import { ConfirmModal } from '../../../Tools/Modal';
 import { useCapLetters } from '../../../libs/client/useTools';
-import { Btn } from '../../Tools/Button';
+import { Btn } from '../../../Tools/Button';
 import { motion } from 'framer-motion';
-import { TextArea } from '../../Tools/Input/TextArea';
-import { Svg } from '../../Tools/Svg';
-import { Errors } from '../../Tools/Errors';
+import { TextArea } from '../../../Tools/Input/TextArea';
+import { Svg } from '../../../Tools/Svg';
+import { Errors } from '../../../Tools/Errors';
 
 interface IEditPost {
   ogData: {
