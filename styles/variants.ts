@@ -1,3 +1,8 @@
+export const themeColorTrans = (dark: boolean) => ({
+  color: dark ? '#000000' : '#ffffff',
+  backgroundColor: dark ? '#ffffff' : '#000000',
+});
+
 export const motionDuration = { duration: 0.5 };
 export const SpringTrans = { type: 'spring', stiffness: 50 };
 export const TweenTrans = { type: 'tween', stiffness: 50 };
@@ -76,4 +81,36 @@ export const ListHover = {
   transition: {
     duration: 0.2,
   },
+};
+export const isMemberVar = {
+  initial: themeColorTrans,
+  animate: themeColorTrans,
+  hover: {
+    scale: 1.1,
+    color: '#E50914',
+  },
+};
+//
+export const joinBoxVar = {
+  initial: (theme: boolean) => ({
+    x: -9000,
+    opacity: 0,
+    color: theme ? '#000000' : '#ffffff',
+    borderColor: theme ? '#000000' : '#ffffff',
+    backgroundColor: theme ? '#ffffff' : '#000000',
+  }),
+  animate: (theme: boolean) => ({
+    x: 0,
+    opacity: 1,
+    color: theme ? '#000000' : '#ffffff',
+    borderColor: theme ? '#000000' : '#ffffff',
+    backgroundColor: theme ? '#ffffff' : '#000000',
+    transition: {
+      duration: 0.6,
+    },
+  }),
+  exit: (theme: boolean) => ({
+    x: 9000,
+    opacity: 0,
+  }),
 };

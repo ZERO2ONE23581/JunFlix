@@ -2,8 +2,8 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
-import { SpringTrans, TweenTrans } from '../../../styles/variants';
 import { ITheme } from '../../../styles/theme';
+import { TweenTrans } from '../../../styles/variants';
 
 interface IInput extends ITheme {
   id: string;
@@ -28,21 +28,21 @@ export const InputWrap = ({
   //
   const [isFocus, setFocus] = useState(false);
   const IsFocus = Boolean(isFocus || watch);
-
   const labelVar = {
     initial: ({ isFocus, theme }: any) => ({
       opacity: 1,
       translateY: '-50%',
-      color: theme ? '#000000' : '#ffffff',
       transition: { duration: 0.2 },
+      color: !theme ? '#000000' : '#b2bec3',
+      backgroundColor: theme ? '#000000' : '#ffffff',
     }),
     animate: ({ isFocus, theme }: any) => ({
-      //opacity: isFocus ? 1 : 0,
-      padding: '0.7em',
       width: 'fit-content',
       transition: { duration: 0.2 },
+      padding: '8px 10px',
       translateY: isFocus ? '-120%' : '-50%',
-      color: isFocus ? '#E50914' : theme ? '#000000' : '#ffffff',
+      backgroundColor: theme ? '#000000' : '#ffffff',
+      color: isFocus ? '#E50914' : !theme ? '#000000' : '#b2bec3',
     }),
     exit: (isFocus: boolean) => ({
       opacity: 0,
@@ -50,29 +50,29 @@ export const InputWrap = ({
   };
   const inputVar = {
     hover: {
-      border: '1px solid transparent',
-      outline: '3px solid #E50914',
+      border: '3px solid #E50914',
       transition: { duration: 0.2 },
     },
     focus: {
-      outline: '3px solid #E50914',
+      border: '3px solid #E50914',
       transition: { duration: 0.2 },
     },
     initial: ({ theme, isFocus }: any) => ({
-      outline: '3px solid transparent',
+      borderWeight: '1px',
+      borderStyle: 'solid',
+      borderColor: !theme ? 'rgba(0, 0, 0, 0)' : '#b2bec3',
+      backgroundColor: theme ? '#000000' : '#ffffff',
     }),
     animate: ({ theme, isFocus }: any) => ({
-      outline: isFocus ? '3px solid #E50914' : '3px solid transparent',
-      border: isFocus
-        ? '1px solid transparent'
-        : theme
-        ? '1px solid #000000'
-        : '1px solid #ffffff',
+      borderWeight: '1px',
+      borderStyle: 'solid',
+      borderColor: !theme ? 'rgba(0, 0, 0, 0)' : '#b2bec3',
+      backgroundColor: theme ? '#000000' : '#ffffff',
     }),
   };
   //
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       <Cont className={id}>
         {label && (
           <Label
@@ -82,8 +82,8 @@ export const InputWrap = ({
             exit="exit"
             initial="initial"
             animate="animate"
-            custom={{ isFocus: IsFocus, theme: theme }}
             variants={labelVar}
+            custom={{ isFocus: IsFocus, theme: !theme }}
           >
             {label}
           </Label>
@@ -95,7 +95,8 @@ export const InputWrap = ({
           whileHover={'hover'}
           whileFocus={'focus'}
           variants={inputVar}
-          custom={{ isFocus: IsFocus, theme: theme }}
+          transition={TweenTrans}
+          custom={{ isFocus: IsFocus, theme: !theme }}
           //
           {...register}
           id={id}
@@ -112,7 +113,11 @@ export const InputWrap = ({
 };
 const Cont = styled.article`
   width: 100%;
+  height: 100%;
   position: relative;
+  padding: 1.2em;
+  min-height: 80px;
+  //border: 3px solid yellowgreen;
 `;
 const Label = styled(motion.label)`
   //border: 1px solid yellow;
@@ -121,19 +126,24 @@ const Label = styled(motion.label)`
   z-index: 1;
   position: absolute;
   //
-  width: 80%;
-  padding: 0.7em 1em;
-  font-size: 0.7em;
+  font-size: 0.6em;
+  width: fit-content;
   border-radius: 20px;
   display: inline-block;
   transform: translateY(-50%);
   background-color: ${(p) => p.theme.color.bg};
 `;
 const Input = styled(motion.input)`
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  position: absolute;
+  //
   width: 100%;
+  padding: 10px 20px;
+  min-height: 50px;
   outline: none;
-  font-size: 0.8em;
-  padding: 0.7em 1em;
+  font-size: 0.6em;
   border-radius: 5px;
   border-style: solid;
   background-color: inherit;
@@ -144,23 +154,5 @@ const Input = styled(motion.input)`
     opacity: 0.8;
     font-style: italic;
     color: ${(p) => p.theme.color.font};
-  }
-`;
-const AltInput = styled.input`
-  width: 100%;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  font-size: 1.5rem;
-  padding: 0 5px 5px;
-  background-color: inherit;
-  color: ${(p) => p.theme.color.font};
-  border-bottom: 3px double ${(p) => p.theme.color.font};
-  ::placeholder {
-    font-size: 1.3rem;
-  }
-  :focus {
-    outline: none;
-    border-bottom: thick double ${(p) => p.theme.color.logo};
   }
 `;

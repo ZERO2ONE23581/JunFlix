@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { MouseEventHandler } from 'react';
 import { ITheme } from '../../../styles/theme';
 import { AnimatePresence, motion } from 'framer-motion';
+import { themeColorTrans } from '../../../styles/variants';
 
 interface IBtn extends ITheme {
   svg?: string;
@@ -14,14 +15,8 @@ interface IBtn extends ITheme {
 
 export const Btn = ({ theme, svg, type, name, onClick, disabled }: IBtn) => {
   const btnVar = {
-    initial: (dark: boolean) => ({
-      color: dark ? '#000000' : '#ffffff',
-      backgroundColor: dark ? '#ffffff' : '#000000',
-    }),
-    animate: (dark: boolean) => ({
-      color: dark ? '#000000' : '#ffffff',
-      backgroundColor: dark ? '#ffffff' : '#000000',
-    }),
+    initial: themeColorTrans,
+    animate: themeColorTrans,
     hover: {
       scale: 1.1,
       fill: '#ffff',
@@ -48,9 +43,7 @@ export const Btn = ({ theme, svg, type, name, onClick, disabled }: IBtn) => {
         whileHover="hover"
       >
         <span>{name}</span>
-        <span>
-          {svg && <Svg onBtn theme={!theme} type={svg} size="1.5em" />}
-        </span>
+        {svg && <Svg onBtn theme={!theme} type={svg} size="1.5em" />}
       </Cont>
     </AnimatePresence>
   );
@@ -58,7 +51,7 @@ export const Btn = ({ theme, svg, type, name, onClick, disabled }: IBtn) => {
 export const Cont = styled(motion.button)`
   border: none;
   padding: 0.6rem;
-  font-size: 1.1em;
+  font-size: 1em;
   border-radius: 3px;
   gap: 8px;
   display: flex;

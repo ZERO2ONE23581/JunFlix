@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { Errors } from '../../../Tools/Errors';
 import { InputWrap } from '../../../Tools/Input';
@@ -8,10 +7,12 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import { IJoinForm, IJoinFormRes } from '../../../types/user';
 import { Title } from './Title';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
-import { Svg } from '../../../Tools/Svg';
 import { motion } from 'framer-motion';
+import { Svg } from '../../../Tools/Svg';
+import { ITheme } from '../../../../styles/theme';
+import { Btn } from '../../../Tools/Button';
 
-export interface ICreateUser {
+export interface ICreateUser extends ITheme {
   saveId: string;
   setUserId: Dispatch<SetStateAction<boolean>>;
   setAvatar: Dispatch<SetStateAction<boolean>>;
@@ -19,6 +20,7 @@ export interface ICreateUser {
 }
 
 export const CreateUser = ({
+  theme,
   saveId,
   setAvatar,
   setUserId,
@@ -67,6 +69,7 @@ export const CreateUser = ({
         <form onSubmit={handleSubmit(onValid)}>
           <Cont>
             <Svg
+              theme={theme}
               size="1.4rem"
               type="left-arrow"
               onClick={() => setUserId(false)}
@@ -84,6 +87,7 @@ export const CreateUser = ({
               </h2>
             </div>
             <InputWrap
+              theme={theme}
               watch={watch('userId')}
               id="userId"
               type="text"
@@ -93,6 +97,7 @@ export const CreateUser = ({
             />
             <div className="flex">
               <InputWrap
+                theme={theme}
                 watch={watch('password')}
                 id="password"
                 type="password"
@@ -116,6 +121,7 @@ export const CreateUser = ({
                 })}
               />
               <InputWrap
+                theme={theme}
                 watch={watch('confirmPassword')}
                 id="confirmPassword"
                 type="password"
@@ -127,6 +133,7 @@ export const CreateUser = ({
             </div>
             <div className="flex">
               <InputWrap
+                theme={theme}
                 watch={watch('email')}
                 id="email"
                 type="email"
@@ -140,6 +147,7 @@ export const CreateUser = ({
                 })}
               />
               <InputWrap
+                theme={theme}
                 watch={watch('username')}
                 id="username"
                 type="text"
@@ -152,12 +160,12 @@ export const CreateUser = ({
                 })}
               />
             </div>
-            <Btn type="submit" name="회원가입" />
+            <Btn theme={theme} type="submit" name="회원가입" />
           </Cont>
           <Errors errors={errors} />
         </form>
       )}
-      {loading && <LoadingModal type="loading" zIndex={1} />}
+      {loading && <LoadingModal theme={theme} isLoading={loading} />}
     </>
   );
 };

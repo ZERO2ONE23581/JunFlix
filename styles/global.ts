@@ -34,25 +34,24 @@ export const Page = styled.section`
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
-export const Modal = styled.article`
-  z-index: 100;
-  position: fixed;
+export const Modal = styled(motion.article)`
   top: 50%;
   left: 50%;
+  z-index: 100;
+  position: fixed;
   transform: translate(-50%, -50%);
-  gap: 20px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  border: none;
+  //
   padding: 30px;
   overflow: hidden;
-  font-size: 1.2rem;
   border-radius: 5px;
-  color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  background-color: ${(p) => p.theme.color.bg};
+  border-width: 1px;
+  border-style: solid;
+  .close {
+    top: 1rem;
+    right: 1rem;
+    position: absolute;
+  }
 `;
 export const SmallModal = styled(Modal)`
   gap: 8px;

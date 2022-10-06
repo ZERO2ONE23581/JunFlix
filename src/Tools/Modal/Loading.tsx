@@ -1,151 +1,109 @@
 import { Svg } from '../Svg';
 import styled from '@emotion/styled';
-import { DimBackground, SmallModal } from '../../../styles/global';
+import { ITheme } from '../../../styles/theme';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Modal, Overlay } from '../../../styles/global';
 
-interface ILoadingModal {
-  type: string;
-  zIndex: number;
+interface ILoadingModal extends ITheme {
+  isLoading: boolean;
 }
-export const LoadingModal = ({ type, zIndex }: ILoadingModal) => {
+export const LoadingModal = ({ theme, isLoading }: ILoadingModal) => {
+  const loadingVar = {
+    initial: (theme: boolean) => ({
+      opacity: 0,
+      color: theme ? '#000000' : '#ffffff',
+      borderColor: theme ? '#000000' : '#ffffff',
+      backgroundColor: theme ? '#ffffff' : '#000000',
+    }),
+    animate: (theme: boolean) => ({
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+      },
+      color: theme ? '#000000' : '#ffffff',
+      borderColor: theme ? '#000000' : '#ffffff',
+      backgroundColor: theme ? '#ffffff' : '#000000',
+    }),
+    exit: (theme: boolean) => ({
+      opacity: 0,
+    }),
+  };
+  //
+  const svgVar = {
+    initial: (theme: boolean) => ({
+      fill: theme ? '#000000' : '#ffffff',
+    }),
+    animate: (theme: boolean) => ({
+      rotate: '360deg',
+      transition: {
+        duration: 1.5,
+        repeat: Infinity,
+      },
+      fill: theme ? '#000000' : '#ffffff',
+    }),
+    exit: (theme: boolean) => ({}),
+  };
+
+  //
   return (
-    <>
-      <Cont zIndex={zIndex} className="loading">
-        {Texts(type)}
-        <Svg type="loading" size="2rem" />
-      </Cont>
-      <DimBackground zIndex={1} />
-    </>
+    <AnimatePresence>
+      {isLoading && (
+        <>
+          <Cont
+            exit="exit"
+            initial="initial"
+            animate="animate"
+            className="loading"
+            custom={theme}
+            variants={loadingVar}
+          >
+            <motion.span
+              animate="animate"
+              variants={{
+                animate: {
+                  opacity: 1,
+                  transition: {
+                    duration: 1.5,
+                    repeat: Infinity,
+                  },
+                },
+              }}
+            >
+              Loading...
+            </motion.span>
+            <motion.svg viewBox="0 0 512 512">
+              <motion.path
+                exit="exit"
+                initial="initial"
+                animate="animate"
+                custom={theme}
+                variants={svgVar}
+                d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"
+              />
+            </motion.svg>
+          </Cont>
+          <Overlay exit={{ opacity: 0 }} animate={{ opacity: 1 }} />
+        </>
+      )}
+    </AnimatePresence>
   );
 };
-const Cont = styled(SmallModal)<{ zIndex?: number }>`
-  gap: 10px;
-  min-width: 300px;
+const Cont = styled(Modal)`
+  width: 25vw;
+  height: 40vh;
+  min-width: 400px;
+  min-height: 300px;
+  gap: 20px;
+  display: flex;
   align-items: center;
-  z-index: ${(p) => p.zIndex && p.zIndex};
+  flex-direction: column;
+  justify-content: center;
+  span {
+    opacity: 0;
+    font-size: 2em;
+  }
+  svg {
+    width: 3em;
+    height: 3em;
+  }
 `;
-const Texts = (type: string) => {
-  return (
-    <>
-      {type === 'loading' && (
-        <>
-          <span>로딩 중...</span>
-          <span>Sign in...</span>
-        </>
-      )}
-      {type === 'login' && (
-        <>
-          <span>로그인중...</span>
-          <span>Sign in...</span>
-        </>
-      )}
-      {type === 'create-password' && (
-        <>
-          <span>새 비밀번호 생성중...</span>
-          <span>Creating new password...</span>
-        </>
-      )}
-      {type === 'verify-token' && (
-        <>
-          <span>토큰 확인중...</span>
-          <span>Confirming token...</span>
-        </>
-      )}
-      {type === 'verify-email' && (
-        <>
-          <span>이메일 확인중...</span>
-          <span>Verifying Email...</span>
-        </>
-      )}
-      {type === 'verify-id' && (
-        <>
-          <span>아이디 확인중...</span>
-          <span>Verifying ID...</span>
-        </>
-      )}
-      {type === 'update' && (
-        <>
-          <span>업데이트중...</span>
-          <span>Updating...</span>
-        </>
-      )}
-      {type === 'delete' && (
-        <>
-          <span>삭제중...</span>
-          <span>Deleting...</span>
-        </>
-      )}
-      {type === 'confirm-delete-board' && (
-        <>
-          <span>보드 삭제...</span>
-          <span>Deleting BOARD...</span>
-        </>
-      )}
-      {type === 'delete-user' && (
-        <>
-          <span>계정 삭제...</span>
-          <span>Deleting Account...</span>
-        </>
-      )}
-      {(type === 'update-board' || type === 'update-post') && (
-        <>
-          <span>업데이트...</span>
-          <span>Updating...</span>
-        </>
-      )}
-      {type === 'update-review' && (
-        <>
-          <span>리뷰 업데이트...</span>
-          <span>Updating REVIEW...</span>
-        </>
-      )}
-      {type === 'create-board' && (
-        <>
-          <span>보드 생성...</span>
-          <span>Creating BOARD...</span>
-        </>
-      )}
-      {type === 'create-review' && (
-        <>
-          <span>리뷰 생성...</span>
-          <span>Creating REVIEW...</span>
-        </>
-      )}
-      {type === 'delete-review' && (
-        <>
-          <span>리뷰 삭제...</span>
-          <span>Deleting REVIEW...</span>
-        </>
-      )}
-      {type === 'delete-review-avatar' && (
-        <>
-          <span>사진 삭제...</span>
-          <span>Deleting the photo...</span>
-        </>
-      )}
-      {type === 'create-post' && (
-        <>
-          <span>새로운 포스트 저장...</span>
-          <span>Saving new POST...</span>
-        </>
-      )}
-      {type === 'delete-post' && (
-        <>
-          <span>포스트 삭제...</span>
-          <span>Deleting current POST...</span>
-        </>
-      )}
-      {type === 'update-board-avatar' && (
-        <>
-          <span>배경 업데이트...</span>
-          <span>Updating Background...</span>
-        </>
-      )}
-      {type === 'delete-board-avatar' && (
-        <>
-          <span>배경 삭제...</span>
-          <span>Deleting Background...</span>
-        </>
-      )}
-    </>
-  );
-};

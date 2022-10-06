@@ -9,7 +9,7 @@ export interface IUserForm {
   password?: string;
   newPassword?: string;
   confirmPassword?: string;
-  email: string;
+  email?: string;
   name?: string;
   birth?: string;
   gender?: string;
@@ -18,9 +18,9 @@ export interface IUserForm {
   avatar?: FileList;
 }
 export interface IJoinForm {
-  userId: string;
-  password: string;
-  confirmPassword: string;
+  userId?: string;
+  password?: string;
+  confirmPassword?: string;
   username?: string;
   email?: string;
 }
@@ -29,10 +29,6 @@ export interface IJoinFormRes extends IData {
 }
 export interface IUserIdCheckForm {
   userId: string;
-}
-
-export interface IUserIdCheckRes extends IData {
-  userId?: string;
 }
 export interface ILoginForm {
   userId?: string;

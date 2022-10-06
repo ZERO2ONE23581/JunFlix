@@ -2,39 +2,43 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../styles/global';
-import { ITheme } from '../styles/theme';
 import { AnimatePresence } from 'framer-motion';
 import { HeadTitle } from '../src/components/Head';
 import { CreateUser } from '../src/components/User/Create';
-import { CreateId } from '../src/components/User/Create/UserId';
+import { UserIdBox } from '../src/components/User/Create/UserId';
 import { CreateUserAvatar } from '../src/components/User/Create/avatar';
 
-const Join: NextPage = ({ theme }: ITheme) => {
+const Join: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [first, setFirst] = useState('');
   const [second, setSecond] = useState(false);
-  const [third, setThird] = useState(false);
+  const [StepThree, setStepThree] = useState(false);
   const [createdId, setCreatedId] = useState(0);
+  const StepOne = !second;
+  const StepTwo = second && !StepThree;
   return (
     <>
       <HeadTitle title="회원가입" />
       <Cont>
-        <AnimatePresence>
-          {!second && (
-            <CreateId
+        <AnimatePresence initial={false}>
+          {StepOne && (
+            <UserIdBox
               theme={theme}
               setSaveId={setFirst}
               setSecond={setSecond}
             />
           )}
-          {second && !third && (
+          {StepTwo && (
             <CreateUser
+              theme={theme}
               saveId={first}
               setUserId={setSecond}
-              setAvatar={setThird}
+              setAvatar={setStepThree}
               setCreatedId={setCreatedId}
             />
           )}
-          {third && <CreateUserAvatar createdId={createdId} />}
+          {StepThree && (
+            <CreateUserAvatar theme={theme} createdId={createdId} />
+          )}
         </AnimatePresence>
       </Cont>
     </>
@@ -48,41 +52,40 @@ const Cont = styled(Page)`
   justify-content: center;
   align-items: center;
   .box {
-    margin: 0 auto;
-    font-size: 1.5em;
-    width: fit-content;
-    height: fit-content;
-    gap: 1em;
+    gap: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 1.5em 2em;
+    margin: 0 auto;
+    font-size: 1.8em;
+    font-size: 2em;
+    padding: 40px;
     border-radius: 5px;
-    color: ${(p) => p.theme.color.font};
     box-shadow: ${(p) => p.theme.boxShadow.nav};
-    background-color: ${(p) => p.theme.color.bg};
     border: 1px solid ${(p) => p.theme.color.font};
-    h1 {
-      span {
-        display: block;
-        :nth-of-type(1) {
-          font-size: 1.3em;
-          margin-bottom: 10px;
-        }
-        :nth-of-type(2) {
-          font-size: 0.9em;
-          font-style: italic;
-        }
+    .box-title {
+      h1,
+      h2 {
+        display: flex;
+        align-items: center;
       }
-      //border: 1px solid blue;
+      h1 {
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+      h2 {
+        display: flex;
+        font-size: 0.7em;
+        padding-right: 5px;
+        align-items: center;
+        justify-content: space-between;
+      }
     }
     .userId {
       //padding: 20px;
     }
-    .flex {
-      gap: 12px;
-      display: flex;
-      align-items: center;
+    .is-member {
+      font-size: 0.7em;
     }
   }
 `;

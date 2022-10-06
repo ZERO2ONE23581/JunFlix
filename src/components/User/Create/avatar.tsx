@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Btn } from '../../../Tools/Button';
 import useMutation from '../../../libs/client/useMutation';
 import { BtnWrap } from '../../../../styles/global';
 import { Label, ProfileAvatar } from '../../Avatar/Profile';
@@ -13,11 +12,13 @@ import { IData } from '../../../types/global';
 import { Title } from './Title';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
 import { motion } from 'framer-motion';
+import { ITheme } from '../../../../styles/theme';
+import { Btn } from '../../../Tools/Button';
 
-interface ICreateAvatar {
+interface ICreateAvatar extends ITheme {
   createdId: number;
 }
-export const CreateUserAvatar = ({ createdId }: ICreateAvatar) => {
+export const CreateUserAvatar = ({ createdId, theme }: ICreateAvatar) => {
   const router = useRouter();
   const [createAvatar, { loading, data }] = useMutation<IData>(
     '/api/user/create/avatar'
@@ -99,18 +100,24 @@ export const CreateUserAvatar = ({ createdId }: ICreateAvatar) => {
             </Label>
             <BtnWrap className="btn-wrap">
               <Btn
+                theme={theme}
                 name="SKIP"
                 type="button"
                 onClick={() => router.replace('/login')}
               />
-              <Btn type="submit" name="SAVE" />
+              <Btn type="submit" name="SAVE" theme={theme} />
             </BtnWrap>
           </form>
           <Errors errors={errors} />
-          {answer && <Answer type="create-useravatar" closeModal={setAnswer} />}
+          <Answer
+            theme={theme}
+            isAnswer={answer}
+            type="join-userAvatar"
+            closeModal={setAnswer}
+          />
         </Cont>
       )}
-      {Loading && <LoadingModal type="loading" zIndex={1} />}
+      {Loading && <LoadingModal theme={theme} isLoading={loading} />}
     </>
   );
 };

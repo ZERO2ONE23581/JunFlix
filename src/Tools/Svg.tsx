@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 interface ISvgProps {
   type: string;
   size: string;
-  theme?: boolean;
+  theme: boolean;
   onBtn?: boolean;
   fill?: string | any;
   onClick?: () => void;
