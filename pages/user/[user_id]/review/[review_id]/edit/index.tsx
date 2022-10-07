@@ -5,7 +5,7 @@ import { HeadTitle } from '../../../../../../src/components/Head';
 import { EditReview } from '../../../../../../src/components/Review/Update';
 import { Fixed } from '../../../../../../src/Tools/Button/Fixed';
 
-const EditReviewPage: NextPage = () => {
+const Edit_Review: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (
     <>
       <HeadTitle title="리뷰수정" />
@@ -16,6 +16,6 @@ const EditReviewPage: NextPage = () => {
     </>
   );
 };
-export default EditReviewPage;
+export default Edit_Review;
 
 const Cont = styled(Page)``;

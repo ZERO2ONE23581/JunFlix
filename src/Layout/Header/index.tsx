@@ -17,30 +17,34 @@ export const Header = ({ theme }: ITheme) => {
   );
 };
 const Cont = styled.header`
-  gap: 3em;
+  gap: 3rem;
   display: flex;
   font-size: 1.3em;
   margin-bottom: 5px;
   align-items: center;
   justify-content: space-between;
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
   border-bottom: ${(p) => p.theme.border.thin};
-  background-color: ${(p) => p.theme.color.bg};
+  //border: 10px solid hotpink;
+  .logo {
+    //border: 5px solid cornflowerblue;
+  }
   .flex {
     width: 100%;
-    gap: 10em;
     display: flex;
     align-items: center;
     justify-content: space-between;
     //border: 5px solid cornflowerblue;
     .main-menu {
-      width: 70%;
+      width: 60%;
       //border: 2px solid yellow;
     }
     .user-menu {
-      width: 30%;
       //border: 2px solid red;
-      .isNotLogged {
+      .logged-in {
+        //border: 2px solid yellow;
+      }
+      .unlogged-in {
+        //border: 2px solid yellow;
       }
     }
     span {

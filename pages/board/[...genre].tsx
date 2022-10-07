@@ -8,7 +8,7 @@ import { Slider } from '../../src/Tools/Slider';
 import { useRouter } from 'next/router';
 import { useCapLetter } from '../../src/libs/client/useTools';
 
-const GenreBoards: NextPage = () => {
+const GenreBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const query = router.query.genre;
   const BoardType = query?.toString();

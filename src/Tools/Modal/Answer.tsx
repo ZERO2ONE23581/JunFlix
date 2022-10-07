@@ -5,65 +5,38 @@ import { Modal, DimBackground, Overlay } from '../../../styles/global';
 import { Svg } from '../Svg';
 import { ITheme } from '../../../styles/theme';
 import { AnimatePresence } from 'framer-motion';
+import { answerVar } from '../../../styles/variants';
 
 interface IAnswer extends ITheme {
-  isAnswer: boolean;
   type: string;
   closeModal: Dispatch<SetStateAction<boolean>>;
-  max?: {
-    title?: number;
-    intro?: number;
-    content?: number;
-  };
 }
-export const Answer = ({ isAnswer, theme, type, closeModal, max }: IAnswer) => {
-  const answerVar = {
-    initial: (theme: boolean) => ({
-      opacity: 0,
-      color: theme ? '#000000' : '#ffffff',
-      backgroundColor: theme ? '#ffffff' : '#000000',
-    }),
-    animate: (theme: boolean) => ({
-      opacity: 1,
-      color: theme ? '#000000' : '#ffffff',
-      backgroundColor: theme ? '#ffffff' : '#000000',
-      transition: {
-        duration: 0.6,
-      },
-    }),
-    exit: (theme: boolean) => ({
-      opacity: 0,
-    }),
-  };
+export const Answer = ({ theme, type, closeModal }: IAnswer) => {
   return (
-    <>
-      <AnimatePresence>
-        {isAnswer && (
-          <>
-            <Cont
-              custom={theme}
-              exit="exit"
-              initial="initial"
-              animate="animate"
-              variants={answerVar}
-            >
-              <Svg
-                size="2rem"
-                type="close"
-                theme={theme!}
-                onClick={() => closeModal(false)}
-              />
-              <ul>{type && Texts(type, max!)}</ul>
-            </Cont>
-            <Overlay
-              exit={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              onClick={() => closeModal(false)}
-            />
-          </>
-        )}
-      </AnimatePresence>
-    </>
+    <AnimatePresence>
+      <>
+        <Cont
+          custom={theme}
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          variants={answerVar}
+        >
+          <Svg
+            size="2rem"
+            type="close"
+            theme={theme!}
+            onClick={() => closeModal(false)}
+          />
+          <ul>{type && Texts(type)}</ul>
+        </Cont>
+        <Overlay
+          exit={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onClick={() => closeModal(false)}
+        />
+      </>
+    </AnimatePresence>
   );
 };
 const Cont = styled(Modal)`
@@ -82,10 +55,7 @@ const Cont = styled(Modal)`
   }
 `;
 
-const Texts = (
-  type: string,
-  max: { title?: number; intro?: number; content?: number }
-) => {
+const Texts = (type: string) => {
   return (
     <>
       {type === 'update-review' && (
@@ -281,23 +251,23 @@ const Texts = (
         <>
           <li>
             <li>보드제목은</li>
-            <li className="red">{max?.title}</li>
+            <li className="red">{'max?.title'}</li>
             <li> 자 이내여야 합니다.</li>
           </li>
           <li>
             <li>소개글은</li>
-            <li className="red">{max?.intro}</li>
+            <li className="red">{'max?.intro'}</li>
             <li> 이내여야 합니다.</li>
           </li>
           <li>보드의 사진을 추가하려면 아이콘을 클릭해주세요.</li>
           <li>
             <li>Board title must be less than or equal to</li>
-            <li className="red">{max?.title}</li>
+            <li className="red">{'max?.title'}</li>
             <li> words.</li>
           </li>
           <li>
             <li>Board intro must be less than or equal to</li>
-            <li className="red">{max?.intro}</li>
+            <li className="red">{'max?.intro'}</li>
             <li> words.</li>
           </li>
           <li>Please click the icon beside to add photo on your Board.</li>
@@ -321,12 +291,14 @@ const Texts = (
       )}
       {type === 'create-post' && (
         <>
-          <li>게시물 제목은 {max?.title}자 이내여야 합니다.</li>
-          <li>게시물 내용은 {max?.content}자 이내여야 합니다.</li>
+          <li>게시물 제목은 {'max?.title'}자 이내여야 합니다.</li>
+          <li>게시물 내용은 {'max?.content'}자 이내여야 합니다.</li>
           <li>새로운 사진을 업로드 하시길 원하면 왼쪽 사진을 클릭하세요.</li>
-          <li>Max length of the post title is less than {max?.title} words.</li>
           <li>
-            Max length of the post content is less than {max?.content} words.
+            Max length of the post title is less than {'max?.title'} words.
+          </li>
+          <li>
+            Max length of the post content is less than {'max?.content'} words.
           </li>
           <li>
             Click the picture on your left if you'd like to pick a new one.

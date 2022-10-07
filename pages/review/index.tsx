@@ -2,30 +2,28 @@ import useSWR from 'swr';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
-import useUser from '../../src/libs/client/useUser';
 import { IGetReviews } from '../../src/types/review';
 import { Title } from '../../src/Tools/Title';
-import { NoData } from '../../src/Tools/NoData';
 import { HeadTitle } from '../../src/components/Head';
-import { useNeedLogin } from '../../src/libs/client/useTools';
+import { Fixed } from '../../src/Tools/Button/Fixed';
 import { ReviewList } from '../../src/components/Review/Read/List';
+import { NoData } from '../../src/Tools/NoData';
 
-const MyReviews: NextPage = () => {
-  useNeedLogin();
-  const { loggedInUser } = useUser();
-  const { data } = useSWR<IGetReviews>(`/api/user/${loggedInUser?.id}/reviews`);
+const All_Reviews: NextPage<{ theme: boolean }> = ({ theme }) => {
+  const { data } = useSWR<IGetReviews>(`/api/reviews`);
   return (
     <>
-      <HeadTitle title={`${loggedInUser?.username}'s Reviews`} />
+      <HeadTitle title="All Reviews" />
       <Cont>
-        <Title type="review" reviewType="my" />
+        <Title type="review" reviewType="all" />
         {data?.reviews && <ReviewList reviews={data?.reviews} />}
         {!data?.reviews && <NoData type="review" />}
+        <Fixed type="read-review" />
       </Cont>
     </>
   );
 };
-export default MyReviews;
+export default All_Reviews;
 
 export const Cont = styled(Page)`
   padding: 5%;

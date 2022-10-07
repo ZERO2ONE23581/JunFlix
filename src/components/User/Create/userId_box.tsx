@@ -109,7 +109,7 @@ export const UserIdBox = ({ theme, isBox, setSaveID, setNext }: IUserIdBox) => {
                   animate="animate"
                   variants={isMemberVar}
                   whileHover={'hover'}
-                  onClick={() => router.push(`/login`)}
+                  onClick={() => router.push(`/user/login`)}
                 >
                   <span>* 이미 회원입니까?</span>
                   <span>Already a member?</span>

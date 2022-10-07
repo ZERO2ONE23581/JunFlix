@@ -4,23 +4,22 @@ import { Page } from '../styles/global';
 import { Slider } from '../src/Tools/Slider';
 import { Welcome } from '../src/components/Home/Welcome';
 import { HeadTitle } from '../src/components/Head';
-import { ITheme } from '../styles/theme';
 
-const Home: NextPage = ({ theme }: ITheme) => {
+const Home: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (
     <>
       <HeadTitle title="HOME" />
       <Cont className="home">
         <div className="movie-wrap">
           <Welcome theme={theme} />
-          <Slider pageType="home" sliderType="movie" />
+          <Slider pageType="home" sliderType="movie" theme={theme} />
         </div>
         <div className="post-board-wrap">
           <div className="board-wrap">
-            <Slider pageType="home" sliderType="board" />
+            <Slider pageType="home" sliderType="board" theme={theme} />
           </div>
           <div className="post-wrap">
-            <Slider pageType="home" sliderType="post" />
+            <Slider pageType="home" sliderType="post" theme={theme} />
           </div>
         </div>
       </Cont>

@@ -21,7 +21,7 @@ export const useNeedLogin = () => {
   useEffect(() => {
     if (!isLoggedIn) {
       alert('로그인이 필요합니다. You need to sign in first.');
-      router.push('/login');
+      router.push('/user/login');
     }
   }, [isLoggedIn, router]);
 };

@@ -28,12 +28,16 @@ const Cont = styled.section<{ width?: number }>`
   .header,
   .children,
   .footer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    color: ${(p) => p.theme.color.font};
     min-width: ${(p) => p.width && `${p.width}px`};
-    min-width: 1500px;
+    background-color: ${(p) => p.theme.color.bg};
   }
   .header {
-    padding: 0.6em 12em;
-    border: 2px solid hotpink;
+    padding: 12px 10rem;
+    //border: 2px solid hotpink;
   }
   .footer {
     padding: 0 12em;
@@ -45,7 +49,7 @@ const Cont = styled.section<{ width?: number }>`
       .movie-wrap,
       .post-board-wrap {
         padding: 0 8em;
-        border: 1px solid red;
+        // border: 1px solid red;
       }
       .movie-wrap {
       }

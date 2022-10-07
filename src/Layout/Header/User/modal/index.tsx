@@ -4,12 +4,13 @@ import { Overlay } from '../../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
 import { menuModalVar, TweenTrans } from '../../../../../styles/variants';
 import { ListWrap } from './list_wrap';
+import { ITheme } from '../../../../../styles/theme';
 
-interface IUserMenuModal {
+interface IUserMenuModal extends ITheme {
   modal: boolean;
   setModal: Dispatch<SetStateAction<boolean>>;
 }
-export const UserMenuModal = ({ modal, setModal }: IUserMenuModal) => {
+export const UserMenuModal = ({ modal, theme, setModal }: IUserMenuModal) => {
   return (
     <AnimatePresence>
       {modal && (
@@ -22,7 +23,7 @@ export const UserMenuModal = ({ modal, setModal }: IUserMenuModal) => {
             transition={TweenTrans}
             onClick={() => setModal((p) => !p)}
           >
-            <ListWrap />
+            <ListWrap theme={theme} />
           </Modal>
           <Overlay
             className="overlay"
@@ -48,6 +49,5 @@ const Modal = styled(motion.div)`
   border: 2px solid ${(p) => p.theme.color.font};
   ul {
     padding: 5px 0;
-    min-width: 10em;
   }
 `;

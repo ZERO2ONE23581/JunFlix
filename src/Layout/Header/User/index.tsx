@@ -24,20 +24,20 @@ export const UserMenu = ({ theme }: ITheme) => {
             setModal={setModal}
             avatar={loggedInUser?.avatar}
           />
-          <UserMenuModal modal={modal} setModal={setModal} />
+          <UserMenuModal modal={modal} setModal={setModal} theme={theme} />
         </div>
       )}
       {!isLoggedIn && (
         <div className="unlogged-in">
           <motion.span
             whileHover={textHover}
-            onClick={() => router.push(`/login`)}
+            onClick={() => router.push(`/user/login`)}
           >
             Login
           </motion.span>
           <motion.span
             whileHover={textHover}
-            onClick={() => router.push(`/join`)}
+            onClick={() => router.push(`/user/join`)}
           >
             Join
           </motion.span>
@@ -48,17 +48,13 @@ export const UserMenu = ({ theme }: ITheme) => {
 };
 
 const Cont = styled.article`
-  > div {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-  }
-  .logged-in {
+  .unlogged-in {
+    gap: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .unlogged-in {
+  .logged-in {
+    position: relative;
   }
 `;

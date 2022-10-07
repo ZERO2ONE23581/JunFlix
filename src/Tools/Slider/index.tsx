@@ -9,13 +9,19 @@ import { IApi } from '../../types/global';
 import useUser from '../../libs/client/useUser';
 import { useCapLetter } from '../../libs/client/useTools';
 import { useRouter } from 'next/router';
+import { ITheme } from '../../../styles/theme';
 
-interface ISlider {
+interface ISlider extends ITheme {
   pageType?: string;
   sliderType: string;
   sliderDetail?: string;
 }
-export const Slider = ({ pageType, sliderType, sliderDetail }: ISlider) => {
+export const Slider = ({
+  pageType,
+  sliderType,
+  sliderDetail,
+  theme,
+}: ISlider) => {
   const router = useRouter();
   const { user_id } = router.query;
   const { loggedInUser } = useUser();
@@ -97,7 +103,8 @@ export const Slider = ({ pageType, sliderType, sliderDetail }: ISlider) => {
       setPage((p) => (p === LastPage - 1 ? 0 : p + 1));
     }
   };
-  const isData = Boolean(data);
+  const isData = Boolean(array?.length > 0);
+  //
   return (
     <Cont className="slider">
       <SlideTitle
@@ -108,11 +115,13 @@ export const Slider = ({ pageType, sliderType, sliderDetail }: ISlider) => {
       {isData && (
         <Flex className="flex" isSingleRow={isSingleRow}>
           <Svg
+            theme={theme}
             size="2rem"
             type="left-chevron"
             onClick={() => clickArrow('left')}
           />
           <Row
+            theme={theme}
             page={page}
             boxes={boxes}
             reverse={reverse}
@@ -125,13 +134,14 @@ export const Slider = ({ pageType, sliderType, sliderDetail }: ISlider) => {
             }}
           />
           <Svg
+            theme={theme}
             size="2rem"
             type="right-chevron"
             onClick={() => clickArrow('right')}
           />
         </Flex>
       )}
-      {!isData && <NoData type="movie" />}
+      {!isData && <NoData type={sliderType} theme={theme} />}
     </Cont>
   );
 };

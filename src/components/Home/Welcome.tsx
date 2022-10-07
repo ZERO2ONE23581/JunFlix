@@ -37,7 +37,7 @@ export const Welcome = ({ theme }: ITheme) => {
               name="Join"
               type="button"
               svg="circle-arrow"
-              onClick={() => router.push('/join')}
+              onClick={() => router.push('/user/join')}
             />
           )}
           <Btn
@@ -49,7 +49,7 @@ export const Welcome = ({ theme }: ITheme) => {
           />
         </div>
       </Cont>
-      {answer && <Answer type="home" closeModal={setAnswer} />}
+      {answer && <Answer theme={theme} type="home" closeModal={setAnswer} />}
     </>
   );
 };

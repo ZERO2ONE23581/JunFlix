@@ -101,7 +101,11 @@ export const PostModal = ({ data, setModal }: IPostModal) => {
               <span>
                 삭제권한이 없습니다. (You don't have right to delete this post.
               </span>
-              <Btn type="button" onClick={() => router.push('/login')} />
+              <Btn
+                theme={theme}
+                type="button"
+                onClick={() => router.push('/user/login')}
+              />
             </ERROR>
           )}
         </>

@@ -15,7 +15,7 @@ import {
   NeedLoginModal,
 } from '../../../../src/Tools/Modal/NeedLoginModal';
 
-const UserSettingPage: NextPage = () => {
+const UserSettingPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   NeedLogin();
   const modal = NeedLogin().modal;
   //

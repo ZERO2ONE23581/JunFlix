@@ -28,7 +28,7 @@ export const FollowBtn = ({ userId, boardId }: IFollowBtn) => {
   const onClick = () => {
     if (!isLoggedIn) {
       alert(`You need to login (로그인이 필요합니다.)`);
-      router.push(`/login`);
+      router.push(`/user/login`);
     }
     setFollow(false);
     setUnFollow(false);

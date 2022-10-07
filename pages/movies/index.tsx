@@ -5,7 +5,7 @@ import { HeadTitle } from '../../src/components/Head';
 import { Slider } from '../../src/Tools/Slider';
 import { Title } from '../../src/Tools/Title';
 
-const Movies: NextPage = () => {
+const Movies: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (
     <>
       <HeadTitle title="영화" />

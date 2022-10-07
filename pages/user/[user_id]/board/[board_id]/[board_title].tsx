@@ -11,7 +11,7 @@ import { HeadTitle } from '../../../../../src/components/Head';
 import { Board } from '../../../../../src/components/Board/Read';
 import { IsPost } from '../../../../../src/components/Post/Read';
 
-const BoardPage: NextPage = () => {
+const BoardPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { loggedInUser } = useUser();
   const router = useRouter();
   const { user_id, board_id } = router.query;

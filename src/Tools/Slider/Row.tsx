@@ -3,8 +3,9 @@ import { BoxArray } from './BoxArray';
 import { Dispatch, SetStateAction } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { slideVars, SpringTrans } from '../../../styles/variants';
+import { ITheme } from '../../../styles/theme';
 
-interface IRow {
+interface IRow extends ITheme {
   array: [];
   page: number;
   boxes: number;
@@ -16,7 +17,15 @@ interface IRow {
   };
   setLeave: Dispatch<SetStateAction<boolean>>;
 }
-export const Row = ({ array, page, boxes, reverse, setLeave, type }: IRow) => {
+export const Row = ({
+  theme,
+  array,
+  page,
+  boxes,
+  reverse,
+  setLeave,
+  type,
+}: IRow) => {
   return (
     <Cont className="row">
       <AnimatePresence
@@ -35,7 +44,7 @@ export const Row = ({ array, page, boxes, reverse, setLeave, type }: IRow) => {
           animate="animate"
           transition={SpringTrans}
         >
-          <BoxArray type={type} array={array} reverse={reverse} />
+          <BoxArray theme={theme} type={type} array={array} reverse={reverse} />
         </Slide>
       </AnimatePresence>
     </Cont>

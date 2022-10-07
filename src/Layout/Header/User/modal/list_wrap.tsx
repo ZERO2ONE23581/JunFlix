@@ -4,8 +4,9 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import useUser from '../../../../libs/client/useUser';
 import { ListHover, SpringTrans } from '../../../../../styles/variants';
+import { ITheme } from '../../../../../styles/theme';
 
-export const ListWrap = () => {
+export const ListWrap = ({ theme }: ITheme) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
   const onClick = (type: string) => {
@@ -26,53 +27,52 @@ export const ListWrap = () => {
         transition={SpringTrans}
         onClick={() => onClick('dash')}
       >
-        <Svg type="home" size="2em" />
+        <Svg theme={theme} type="home" size="2rem" />
         <span>
-          <span>마이페이지</span>
-          <span className="small">My Page</span>
+          <span className="eng">My Page</span>
+          <span className="kor">마이페이지</span>
         </span>
       </List>
 
       <List whileHover={ListHover} onClick={() => onClick('setting')}>
-        <Svg type="setting" size="2em" />
+        <Svg theme={theme} type="setting" size="2rem" />
         <span>
-          <span>설정</span>
-          <span className="small">Setting</span>
+          <span className="eng">Setting</span>
+          <span className="kor">계정설정</span>
         </span>
       </List>
 
       <List whileHover={ListHover} onClick={() => onClick('logout')}>
-        <Svg type="logout" size="2em" />
+        <Svg theme={theme} type="logout" size="2rem" />
         <span>
-          <span>로그아웃</span>
-          <span className="small">Log Out</span>
+          <span className="eng">Log Out</span>
+          <span className="kor">로그아웃</span>
         </span>
       </List>
     </Cont>
   );
 };
 const Cont = styled.ul`
+  width: 180px;
   padding: 5px 0;
-  min-width: 10em;
 `;
-
 const List = styled(motion.li)`
+  //border: 2px solid blue;
   cursor: pointer;
-  font-size: 1.1em;
-  padding: 5px 20px;
+  font-size: 1.1rem;
+  padding: 3px 20px;
   margin-bottom: 5px;
-  gap: 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   > span {
     span {
+      :nth-of-type(1) {
+        //border: 2px solid yellow;
+        margin-bottom: 3px;
+      }
       display: block;
       text-align: center;
-    }
-    .small {
-      opacity: 0.9;
-      font-size: 0.9em;
     }
   }
   svg {

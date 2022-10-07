@@ -8,7 +8,7 @@ import { Fixed } from '../../src/Tools/Button/Fixed';
 import { Slider } from '../../src/Tools/Slider';
 import { useNeedLogin } from '../../src/libs/client/useTools';
 
-const MyBoards: NextPage = () => {
+const MyBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { loggedInUser } = useUser();
   return (
     <>

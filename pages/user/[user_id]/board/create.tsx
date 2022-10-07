@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Page } from '../../../../../styles/global';
-import { CreateBoard } from '../../../../../src/components/Board/Create';
-import { HeadTitle } from '../../../../../src/components/Head';
-import { useNeedLogin } from '../../../../../src/libs/client/useTools';
+import { Page } from '../../../../styles/global';
+import { CreateBoard } from '../../../../src/components/Board/Create';
+import { HeadTitle } from '../../../../src/components/Head';
+import { useNeedLogin } from '../../../../src/libs/client/useTools';
 
-const Create: NextPage = () => {
+const Create_Board: NextPage<{ theme: boolean }> = ({ theme }) => {
   useNeedLogin();
   const [preview, setPreview] = useState('');
   return (
@@ -18,7 +18,7 @@ const Create: NextPage = () => {
     </>
   );
 };
-export default Create;
+export default Create_Board;
 
 const Cont = styled(Page)<{ bg?: string }>`
   padding: 3% 10% 10%;

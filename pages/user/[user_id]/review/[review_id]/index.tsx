@@ -9,7 +9,7 @@ import { HeadTitle } from '../../../../../src/components/Head';
 import { useNeedLogin } from '../../../../../src/libs/client/useTools';
 import { NoData } from '../../../../../src/Tools/NoData';
 
-const ReviewPage: NextPage = () => {
+const ReviewPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   useNeedLogin();
   const router = useRouter();
   const { user_id, review_id } = router.query;

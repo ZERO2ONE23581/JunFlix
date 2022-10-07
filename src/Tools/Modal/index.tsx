@@ -258,16 +258,6 @@ const Btns = ({
           <Btn name="NO" type="button" onClick={() => closeModal!(false)} />
         </>
       )}
-      {(type === 'find-user-id' || type === 'find-user-password') && (
-        <>
-          <Btn
-            name="YES"
-            type="button"
-            onClick={() => router.replace('/login')}
-          />
-          <Btn name="NO" type="button" onClick={() => router.reload()} />
-        </>
-      )}
       {(type === 'delete-user' || type === 'confirm-delete-board') && (
         <div className="delete-user">
           <InputWrap

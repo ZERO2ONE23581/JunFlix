@@ -1,22 +1,16 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
+import { hoverTextVar } from '../../../../../styles/variants';
 
 export const FindUserWrap = () => {
   const router = useRouter();
-  const hoverVar = {
-    hover: {
-      scale: 1.05,
-      color: '#E50914',
-      transition: { duration: 0.3 },
-    },
-  };
   return (
     <Cont className="find-user-wrap">
       <motion.div
         initial="initial"
         animate="animate"
-        variants={hoverVar}
+        variants={hoverTextVar}
         whileHover={'hover'}
         onClick={() => router.push(`/user/find/userId`)}
       >
@@ -29,7 +23,7 @@ export const FindUserWrap = () => {
       <motion.div
         initial="initial"
         animate="animate"
-        variants={hoverVar}
+        variants={hoverTextVar}
         whileHover={'hover'}
         onClick={() => router.push(`/user/find/password`)}
       >
@@ -42,9 +36,9 @@ export const FindUserWrap = () => {
       <motion.div
         initial="initial"
         animate="animate"
-        variants={hoverVar}
+        variants={hoverTextVar}
         whileHover={'hover'}
-        onClick={() => router.push(`/join`)}
+        onClick={() => router.push(`/user/join`)}
       >
         <span className="kor">회원가입</span>
         <span className="eng">(Join)</span>

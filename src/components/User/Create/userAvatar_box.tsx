@@ -40,7 +40,7 @@ export const UserAvatarBox = ({ isBox, createdId, theme }: IUserAvatarBox) => {
   const onValid = async ({ avatar }: IUserForm) => {
     if (loading) return;
     setAvatarLoading((p) => !p);
-    if (!createdId) return router.replace('/login');
+    if (!createdId) return router.replace('/user/login');
     if (avatar && avatar.length > 0 && createdId) {
       const { uploadURL } = await (await fetch(`/api/file`)).json();
       const form = new FormData();
@@ -69,7 +69,7 @@ export const UserAvatarBox = ({ isBox, createdId, theme }: IUserAvatarBox) => {
     if (data) {
       setTimeout(() => {
         if (data.error) setDataErr(data.error);
-        if (data.ok) router.replace('/login');
+        if (data.ok) router.replace('/user/login');
       }, 1000);
     }
   }, [data, router, setDataErr]);
@@ -123,18 +123,19 @@ export const UserAvatarBox = ({ isBox, createdId, theme }: IUserAvatarBox) => {
                     theme={theme}
                     name="SKIP"
                     type="button"
-                    onClick={() => router.replace('/login')}
+                    onClick={() => router.replace('/user/login')}
                   />
                   <Btn type="submit" name="SAVE" theme={theme} />
                 </BtnWrap>
               </form>
               <ErrModal theme={theme} error={dataErr} setDataErr={setDataErr} />
-              <Answer
-                theme={theme}
-                isAnswer={answer}
-                type="join-userAvatar"
-                closeModal={setAnswer}
-              />
+              {answer && (
+                <Answer
+                  theme={theme}
+                  type="join-userAvatar"
+                  closeModal={setAnswer}
+                />
+              )}
             </Cont>
           )}
           {Loading && <LoadingModal theme={theme} />}

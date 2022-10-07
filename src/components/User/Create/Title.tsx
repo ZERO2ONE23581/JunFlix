@@ -128,12 +128,7 @@ export const BoxTitle = ({ type, theme }: IBoxTitle) => {
           </span>
         </h2>
       </Cont>
-      <Answer
-        type={type}
-        theme={theme}
-        isAnswer={answer}
-        closeModal={setAnswer}
-      />
+      {answer && <Answer type={type} theme={theme} closeModal={setAnswer} />}
     </>
   );
 };

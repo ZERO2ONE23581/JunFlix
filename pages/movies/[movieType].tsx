@@ -6,7 +6,7 @@ import { Title } from '../../src/Tools/Title';
 import { Slider } from '../../src/Tools/Slider';
 import { HeadTitle } from '../../src/components/Head';
 
-const MovieTypes: NextPage = () => {
+const MovieTypes: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const type = router.query.movieType?.toString();
   return (

@@ -30,7 +30,7 @@ export const ResultModal = ({ theme, userId, verified }: IResultModal) => {
               size="2rem"
               type="close"
               theme={theme}
-              onClick={() => router.replace('/login')}
+              onClick={() => router.replace('/user/login')}
             />
             <div className="wrap">
               {!isPassword && (
@@ -58,7 +58,7 @@ export const ResultModal = ({ theme, userId, verified }: IResultModal) => {
                 name="OK"
                 type="button"
                 theme={theme}
-                onClick={() => router.replace('/login')}
+                onClick={() => router.replace('/user/login')}
               />
             </div>
           </Cont>

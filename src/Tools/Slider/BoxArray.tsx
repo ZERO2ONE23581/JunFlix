@@ -9,8 +9,9 @@ import { PostBox } from '../../components/Post/Read/List/PostBox';
 import { Post } from '@prisma/client';
 import { IMovie } from '../../types/global';
 import { boxVars, SpringTrans } from '../../../styles/variants';
+import { ITheme } from '../../../styles/theme';
 
-interface IBoxArray {
+interface IBoxArray extends ITheme {
   array: [] | any;
   reverse: boolean;
   type: {
@@ -20,7 +21,7 @@ interface IBoxArray {
   };
 }
 
-export const BoxArray = ({ type, array, reverse }: IBoxArray) => {
+export const BoxArray = ({ type, array, reverse, theme }: IBoxArray) => {
   const [boxID, setBoxID] = useState(0);
   const [postID, setPostID] = useState(0);
   const [modal, setModal] = useState(false);

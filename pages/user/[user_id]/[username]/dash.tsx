@@ -3,18 +3,18 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Blur, Page } from '../../../../../styles/global';
-import { IData } from '../../../../../src/types/global';
-import { Svg } from '../../../../../src/Tools/Svg';
-import { HeadTitle } from '../../../../../src/components/Head';
-import { UserList } from '../../../../../src/components/User/Read/DashBoard/List';
-import { UserInfo } from '../../../../../src/components/User/Read/DashBoard/UserInfo';
-import { FollowUserModal } from '../../../../../src/Tools/Modal/Follow/User';
-import { FollowingBoards } from '../../../../../src/components/User/Read/DashBoard/FollowingBoards';
-import useUser from '../../../../../src/libs/client/useUser';
-import { Title } from '../../../../../src/components/User/Read/DashBoard/Title';
+import { Blur, Page } from '../../../../styles/global';
+import { IData } from '../../../../src/types/global';
+import { Svg } from '../../../../src/Tools/Svg';
+import { HeadTitle } from '../../../../src/components/Head';
+import { UserList } from '../../../../src/components/User/Read/DashBoard/List';
+import { UserInfo } from '../../../../src/components/User/Read/DashBoard/UserInfo';
+import { FollowUserModal } from '../../../../src/Tools/Modal/Follow/User';
+import { FollowingBoards } from '../../../../src/components/User/Read/DashBoard/FollowingBoards';
+import useUser from '../../../../src/libs/client/useUser';
+import { Title } from '../../../../src/components/User/Read/DashBoard/Title';
 
-const DashBoard: NextPage = () => {
+const DashBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
   const { user_id } = router.query;

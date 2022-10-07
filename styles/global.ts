@@ -1,6 +1,15 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
+export const Page = styled.section`
+  width: 100%;
+  height: 100%;
+  min-width: 100vw;
+  min-height: 100vh;
+  position: relative;
+  color: ${(p) => p.theme.color.font};
+  background-color: ${(p) => p.theme.color.bg};
+`;
 export const Flex = styled.div`
   gap: 20px;
   display: flex;
@@ -29,16 +38,6 @@ export const ERROR = styled.div`
       pointer-events: none;
     }
   }
-`;
-
-export const Page = styled.section`
-  width: 100%;
-  height: 100%;
-  min-width: 100vw;
-  min-height: 100vh;
-  position: relative;
-  color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
 `;
 export const Modal = styled(motion.article)`
   top: 50%;

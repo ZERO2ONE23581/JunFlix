@@ -6,7 +6,7 @@ import { Slider } from '../../src/Tools/Slider';
 import { HeadTitle } from '../../src/components/Head';
 import { Fixed } from '../../src/Tools/Button/Fixed';
 
-const AllBoards: NextPage = () => {
+const AllBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (
     <>
       <HeadTitle title="All Boards" />

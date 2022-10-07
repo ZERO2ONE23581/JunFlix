@@ -1,18 +1,18 @@
 import useSWR from 'swr';
-import type { NextPage } from 'next';
 import styled from '@emotion/styled';
+import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { Page } from '../../../../../styles/global';
-import { IData } from '../../../../../src/types/global';
-import { Svg } from '../../../../../src/Tools/Svg';
-import { HeadTitle } from '../../../../../src/components/Head';
-import { useNoAuthority } from '../../../../../src/libs/client/useTools';
-import { ProfileAvatar } from '../../../../../src/components/Avatar/Profile';
-import { Info } from '../../../../../src/components/User/Read/DashBoard/Profile/Info';
-import { Counts } from '../../../../../src/components/User/Read/DashBoard/UserInfo/Counts';
-import { UserFollow } from '../../../../../src/components/User/Read/DashBoard/UserInfo/UserFollow';
+import { Svg } from '../../../../src/Tools/Svg';
+import { Page } from '../../../../styles/global';
+import { IData } from '../../../../src/types/global';
+import { HeadTitle } from '../../../../src/components/Head';
+import { useNoAuthority } from '../../../../src/libs/client/useTools';
+import { ProfileAvatar } from '../../../../src/components/Avatar/Profile';
+import { Info } from '../../../../src/components/User/Read/DashBoard/Profile/Info';
+import { Counts } from '../../../../src/components/User/Read/DashBoard/UserInfo/Counts';
+import { UserFollow } from '../../../../src/components/User/Read/DashBoard/UserInfo/UserFollow';
 
-const MyProfile: NextPage = () => {
+const MyProfile: NextPage<{ theme: boolean }> = ({ theme }) => {
   useNoAuthority();
   const router = useRouter();
   const { user_id } = router.query;
@@ -23,13 +23,18 @@ const MyProfile: NextPage = () => {
       <Cont>
         <Box>
           <Svg
+            theme={theme}
             size="1.5rem"
             type="left-arrow"
             onClick={() =>
               router.push(`/user/${user_id}/${data?.User?.userId}/dashboard`)
             }
           />
-          <ProfileAvatar size={'8rem'} avatar={data?.User?.avatar} />
+          <ProfileAvatar
+            size={'8rem'}
+            theme={theme}
+            type={{ avatar: data?.User?.avatar, preview: '' }}
+          />
           <Counts
             counts={{
               boards: data?.User?.posts.length!,

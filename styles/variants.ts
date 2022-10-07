@@ -18,6 +18,13 @@ export const modalVar = {
     transition: { duration: 0.3 },
   }),
 };
+export const hoverTextVar = {
+  hover: {
+    scale: 1.05,
+    color: '#E50914',
+    transition: { duration: 0.3 },
+  },
+};
 export const motionDuration = { duration: 0.5 };
 export const SpringTrans = { type: 'spring', stiffness: 50 };
 export const TweenTrans = { type: 'tween', stiffness: 50 };
@@ -195,5 +202,23 @@ export const inputErrVar = {
   exit: ({ theme }: any) => ({
     opacity: 0,
     color: '#E50914',
+  }),
+};
+export const answerVar = {
+  initial: (theme: boolean) => ({
+    opacity: 0,
+    color: theme ? '#000000' : '#ffffff',
+    backgroundColor: theme ? '#ffffff' : '#000000',
+  }),
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    color: theme ? '#000000' : '#ffffff',
+    backgroundColor: theme ? '#ffffff' : '#000000',
+    transition: {
+      duration: 0.6,
+    },
+  }),
+  exit: (theme: boolean) => ({
+    opacity: 0,
   }),
 };

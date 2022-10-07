@@ -6,7 +6,7 @@ import useUser from '../src/libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
 import { HeadTitle } from '../src/components/Head';
 
-const Entrance: NextPage = () => {
+const Entrance: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const { isLoggedIn } = useUser();
   useEffect(() => {

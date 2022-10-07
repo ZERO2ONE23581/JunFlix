@@ -58,6 +58,7 @@ const Cont = styled(motion.div)`
     border: 1px solid ${(p) => p.theme.color.font};
   }
   li {
+    cursor: pointer;
     padding: 8px;
     color: inherit;
     font-size: 0.9em;
