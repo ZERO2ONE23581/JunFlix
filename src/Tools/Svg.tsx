@@ -513,7 +513,6 @@ export const Svg = ({ onBtn, theme, type, size, fill, onClick }: ISvgProps) => {
       fill: fill ? fill : theme ? '#ffffff' : '#000000',
     }),
     hover: ({ theme, onBtn }: IPathVars) => ({
-      scale: onBtn ? 1 : 1.1,
       fill: onBtn ? '#ffffff' : '#E50914',
     }),
   };

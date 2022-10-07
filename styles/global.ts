@@ -1,6 +1,12 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
+export const Flex = styled.div`
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 export const ERROR = styled.div`
   top: 50%;
   left: 50%;
@@ -120,7 +126,34 @@ export const Blur = styled.div<{ isBlur: boolean }>`
   pointer-events: ${(p) => p.isBlur && 'none'};
   filter: ${(p) => p.isBlur && 'blur(5px)'};
 `;
-
+export const Box = styled(motion.div)`
+  position: relative;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  //
+  padding: 1.1em;
+  font-size: 2.2em;
+  border-radius: 5px;
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  border: 1px solid ${(p) => p.theme.color.font};
+  form {
+    .input-wrap {
+      //border: 3px solid yellowgreen;
+      width: 100%;
+      .label-input {
+        //border: 2px solid blue;
+        input {
+          border: none;
+        }
+      }
+      .err-msg {
+        // border: 1px solid yellow;
+      }
+    }
+  }
+`;
 export const MotionBox = styled(motion.div)<{
   avatar?: string;
   preview?: string;

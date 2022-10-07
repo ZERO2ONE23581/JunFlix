@@ -93,14 +93,12 @@ export const isMemberVar = {
 //
 export const joinBoxVar = {
   initial: (theme: boolean) => ({
-    x: -9000,
     opacity: 0,
     color: theme ? '#000000' : '#ffffff',
     borderColor: theme ? '#000000' : '#ffffff',
     backgroundColor: theme ? '#ffffff' : '#000000',
   }),
   animate: (theme: boolean) => ({
-    x: 0,
     opacity: 1,
     color: theme ? '#000000' : '#ffffff',
     borderColor: theme ? '#000000' : '#ffffff',
@@ -110,7 +108,77 @@ export const joinBoxVar = {
     },
   }),
   exit: (theme: boolean) => ({
-    x: 9000,
     opacity: 0,
+  }),
+};
+export const labelVar = {
+  initial: ({ theme }: any) => ({
+    opacity: 1,
+    translateY: '-50%',
+    transition: { duration: 0.2 },
+    fontSize: '0.6em',
+    color: !theme ? '#000000' : '#b2bec3',
+    backgroundColor: theme ? '#000000' : '#ffffff',
+  }),
+  animate: ({ isFocus, theme, isDisabled }: any) => ({
+    padding: '4px 10px',
+    width: 'fit-content',
+    transition: { duration: 0.2 },
+    fontSize: isFocus ? '0.5em' : '0.6em',
+    translateY: isFocus ? '-150%' : '-50%',
+    backgroundColor: theme ? '#000000' : '#ffffff',
+    color: isDisabled
+      ? '#636e72'
+      : isFocus
+      ? '#E50914'
+      : !theme
+      ? '#000000'
+      : '#b2bec3',
+  }),
+  exit: (isFocus: boolean) => ({
+    opacity: 0,
+  }),
+};
+//border는 none, outline은 1px theme -> hover, focus시 3px logo색상
+export const inputVar = {
+  initial: ({ theme, isDisabled }: any) => ({
+    color: isDisabled ? '#E50914' : theme ? '#ffffff' : '#000000',
+    backgroundColor: !theme ? '#ffffff' : '#000000',
+    outline: isDisabled
+      ? '3px solid #636e72'
+      : theme
+      ? '1px solid #ffffff'
+      : '1px solid #000000',
+  }),
+  animate: ({ theme, isDisabled }: any) => ({
+    color: isDisabled ? '#636e72' : theme ? '#ffffff' : '#000000',
+    backgroundColor: !theme ? '#ffffff' : '#000000',
+    outline: isDisabled
+      ? '3px solid #636e72'
+      : theme
+      ? '1px solid #ffffff'
+      : '1px solid #000000',
+  }),
+  hover: ({ isDisabled }: any) => ({
+    transition: { duration: 0.2 },
+    outline: !isDisabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
+  }),
+  focus: ({ isDisabled }: any) => ({
+    transition: { duration: 0.2 },
+    outline: !isDisabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
+  }),
+};
+export const inputErrVar = {
+  initial: ({ theme }: any) => ({
+    opacity: 0,
+    color: '#E50914',
+  }),
+  animate: ({ theme }: any) => ({
+    opacity: 1,
+    color: '#E50914',
+  }),
+  exit: ({ theme }: any) => ({
+    opacity: 0,
+    color: '#E50914',
   }),
 };

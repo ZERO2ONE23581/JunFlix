@@ -2,23 +2,25 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import useMutation from '../../../libs/client/useMutation';
-import { BtnWrap } from '../../../../styles/global';
+import { Box, BtnWrap } from '../../../../styles/global';
 import { Label, ProfileAvatar } from '../../Avatar/Profile';
 import styled from '@emotion/styled';
 import { IUserForm } from '../../../types/user';
 import { Answer } from '../../../Tools/Modal/Answer';
-import { Errors } from '../../../Tools/Errors';
 import { IData } from '../../../types/global';
-import { Title } from './Title';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ITheme } from '../../../../styles/theme';
 import { Btn } from '../../../Tools/Button';
+import { BoxTitle } from './Title';
+import { ErrModal } from '../../../Tools/errorModal';
+import { joinBoxVar } from '../../../../styles/variants';
 
-interface ICreateAvatar extends ITheme {
+interface IUserAvatarBox extends ITheme {
+  isBox: boolean;
   createdId: number;
 }
-export const CreateUserAvatar = ({ createdId, theme }: ICreateAvatar) => {
+export const UserAvatarBox = ({ isBox, createdId, theme }: IUserAvatarBox) => {
   const router = useRouter();
   const [createAvatar, { loading, data }] = useMutation<IData>(
     '/api/user/create/avatar'
@@ -61,76 +63,106 @@ export const CreateUserAvatar = ({ createdId, theme }: ICreateAvatar) => {
     }
   }, [avatar, watch, setAvatarLoading]);
 
+  const [dataErr, setDataErr] = useState('');
   useEffect(() => {
-    if (data?.error) alert(data.error);
-    if (data?.ok) {
-      alert(
-        `회원가입을 성공적으로 완료하였습니다. 로그인 페이지로 이동합니다.`
-      );
-      router.replace('/login');
+    if (data) {
+      setTimeout(() => {
+        if (data.error) setDataErr(data.error);
+        if (data.ok) router.replace('/login');
+      }, 1000);
     }
-  }, [data, router]);
+  }, [data, router, setDataErr]);
   const [answer, setAnswer] = useState(false);
+  //
   return (
-    <>
-      {!Loading && (
-        <Cont className="box">
-          <Title
-            kor="계정생성"
-            eng="Create Account"
-            type="create-user-avatar"
-          />
-          <h2>
-            <span>Step 3.</span>
-            <span className="kor">프로필 사진</span>
-            <span>Profile Picture</span>
-          </h2>
-          <form onSubmit={handleSubmit(onValid)}>
-            <Label htmlFor="avatar">
-              <ProfileAvatar preview={preview} size="8rem" />
-              <input
-                {...register('avatar', {
-                  required: '프로필 사진 파일을 업로드해주세요.',
-                })}
-                id="avatar"
-                name="avatar"
-                type="file"
-                accept="image/*"
-              />
-            </Label>
-            <BtnWrap className="btn-wrap">
-              <Btn
+    <AnimatePresence>
+      {isBox && (
+        <>
+          {!Loading && (
+            <Cont
+              exit="exit"
+              initial="initial"
+              animate="animate"
+              custom={theme}
+              variants={joinBoxVar}
+              className="box"
+            >
+              <BoxTitle theme={theme} type="userAvatar" />
+              <form onSubmit={handleSubmit(onValid)}>
+                <Label htmlFor="avatar">
+                  <ProfileAvatar
+                    size="4em"
+                    theme={theme}
+                    type={{ preview: preview, avatar: '' }}
+                  />
+                  <input
+                    {...register('avatar', {
+                      required: '프로필 사진 파일을 업로드해주세요.',
+                    })}
+                    id="avatar"
+                    name="avatar"
+                    type="file"
+                    accept="image/*"
+                  />
+                </Label>
+                <BtnWrap className="btn-wrap">
+                  <Btn
+                    theme={theme}
+                    name="SKIP"
+                    type="button"
+                    onClick={() => router.replace('/login')}
+                  />
+                  <Btn type="submit" name="SAVE" theme={theme} />
+                </BtnWrap>
+              </form>
+              <ErrModal theme={theme} error={dataErr} setDataErr={setDataErr} />
+              <Answer
                 theme={theme}
-                name="SKIP"
-                type="button"
-                onClick={() => router.replace('/login')}
+                isAnswer={answer}
+                type="join-userAvatar"
+                closeModal={setAnswer}
               />
-              <Btn type="submit" name="SAVE" theme={theme} />
-            </BtnWrap>
-          </form>
-          <Errors errors={errors} />
-          <Answer
-            theme={theme}
-            isAnswer={answer}
-            type="join-userAvatar"
-            closeModal={setAnswer}
-          />
-        </Cont>
+            </Cont>
+          )}
+          {Loading && <LoadingModal theme={theme} />}
+        </>
       )}
-      {Loading && <LoadingModal theme={theme} isLoading={loading} />}
-    </>
+    </AnimatePresence>
   );
 };
-const Cont = styled(motion.div)`
-  padding: 30px;
-  max-width: 360px;
-  .profile-avatar {
-    .profile {
-      pointer-events: all;
+const Cont = styled(Box)`
+  position: relative;
+  padding: 40px;
+  .box-title {
+    gap: 12px;
+    width: 100%;
+    //border: 2px solid cornflowerblue;
+    .step {
+      margin-bottom: 0;
+    }
+    .wrap {
+      //border: 2px solid yellow;
+      .kor {
+        font-size: 0.9em;
+      }
+      .eng {
+        font-size: 1em;
+        margin-right: 5px;
+      }
     }
   }
-  .btn-wrap {
-    margin-top: 30px;
-    padding: 0px 40px;
+  form {
+    margin: 0 auto;
+    //border: 2px solid yellow;
+    .btn-wrap {
+      width: 200px;
+      margin: 20px auto 0;
+      //border: 4px solid blueviolet;
+    }
+    button {
+      width: 100%;
+      padding: 8px;
+      font-size: 0.5em;
+    }
   }
 `;

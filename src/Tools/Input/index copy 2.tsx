@@ -47,7 +47,7 @@ export const InputWrap = ({
               initial="initial"
               animate="animate"
               className={'input-label'}
-              custom={{ isFocus: IsFocus, theme: !theme, isDisabled: disabled }}
+              custom={{ isFocus: IsFocus, theme: !theme }}
             >
               {label}
             </Label>
@@ -60,7 +60,7 @@ export const InputWrap = ({
             whileHover={'hover'}
             whileFocus={'focus'}
             transition={TweenTrans}
-            custom={{ isFocus: IsFocus, theme: !theme, isDisabled: disabled }}
+            custom={{ isFocus: IsFocus, theme: !theme, disabled }}
             //
             {...register}
             id={id}
@@ -96,7 +96,8 @@ const Wrap = styled.div`
 `;
 const ErrMsg = styled(motion.div)`
   padding: 5px;
-  font-size: 0.55em;
+  margin: 10px 0;
+  font-size: 0.6em;
   text-align: center;
 `;
 const Label = styled(motion.label)`
@@ -111,7 +112,7 @@ const Label = styled(motion.label)`
 const Input = styled(motion.input)`
   font-size: 0.6em;
   width: 100%;
-  border: none;
+  outline: none;
   padding: 10px 20px;
   border-radius: 5px;
   border-style: solid;

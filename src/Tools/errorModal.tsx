@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { UseFormClearErrors } from 'react-hook-form';
 import userId from '../../pages/api/user/create/userId';
 import { Modal, Overlay } from '../../styles/global';
@@ -10,10 +10,10 @@ import { Btn } from './Button';
 import { Svg } from './Svg';
 
 interface IErrModal extends ITheme {
-  type: string;
-  clearErrors: UseFormClearErrors<any>;
+  error: string;
+  setDataErr: Dispatch<SetStateAction<string>>;
 }
-export const ErrModal = ({ type, theme, clearErrors }: IErrModal) => {
+export const ErrModal = ({ error, theme, setDataErr }: IErrModal) => {
   const errVar = {
     initial: (theme: boolean) => ({
       opacity: 0,
@@ -36,26 +36,15 @@ export const ErrModal = ({ type, theme, clearErrors }: IErrModal) => {
     }),
   };
   //
-  const [error, setError] = useState({ kor: '', eng: '' });
-  useEffect(() => {
-    if (type === 'userId-req')
-      setError({ kor: '아이디를 입력해주세요.', eng: 'Type your id please.' });
-    if (type === 'userId-pattern')
-      setError({
-        kor: '아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.',
-        eng: 'ID must include Alphabets or 6 - 20 numbers without special symbols.',
-      });
-  }, [type, setError]);
-  //
   return (
     <AnimatePresence>
-      {type && (
+      {error && (
         <>
           <Cont
             exit="exit"
             initial="initial"
             animate="animate"
-            className="loading"
+            className="err-modal"
             custom={theme}
             variants={errVar}
           >
@@ -63,18 +52,14 @@ export const ErrModal = ({ type, theme, clearErrors }: IErrModal) => {
               size="2rem"
               type="close"
               theme={theme!}
-              onClick={() => clearErrors()}
+              onClick={() => setDataErr('')}
             />
-            <ul>
-              <li>ERROR !! </li>
-              <li className="err">{error.kor}</li>
-              <li className="err">{error.eng}</li>
-            </ul>
+            <span>{error}</span>
             <Btn
               name="OK"
               type="button"
               theme={theme}
-              onClick={() => clearErrors()}
+              onClick={() => setDataErr('')}
             />
           </Cont>
           <Overlay exit={{ opacity: 0 }} animate={{ opacity: 1 }} />
@@ -95,15 +80,13 @@ const Cont = styled(Modal)`
   border-width: 3px;
   ul {
     li {
-      font-size: 1.6rem;
       text-align: center;
       line-height: 25px;
-      :nth-child(1) {
+      :nth-of-type(1) {
         margin-bottom: 10px;
       }
     }
     .err {
-      font-size: 1.5rem;
       opacity: 0.9;
       font-style: italic;
     }
@@ -112,7 +95,6 @@ const Cont = styled(Modal)`
     width: 80px;
     padding: 5px 10px;
     span {
-      font-size: 0.6em;
     }
   }
 `;

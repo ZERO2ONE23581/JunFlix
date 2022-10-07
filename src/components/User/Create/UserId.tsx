@@ -1,197 +1,160 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { InputWrap } from '../../../Tools/Input';
-import useMutation from '../../../libs/client/useMutation';
-import { Errors } from '../../../Tools/Errors';
-import { Btn } from '../../../Tools/Button';
-import { IJoinForm, IUserForm, IUserIdCheckForm } from '../../../types/user';
+import { BoxTitle } from './Title';
 import styled from '@emotion/styled';
-import { LoadingModal } from '../../../Tools/Modal/Loading';
-import { motion } from 'framer-motion';
-import { ITheme } from '../../../../styles/theme';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import {
-  isMemberVar,
-  joinBoxVar,
-  themeColorTrans,
-} from '../../../../styles/variants';
-import { Svg } from '../../../Tools/Svg';
-import { Answer } from '../../../Tools/Modal/Answer';
+import { useForm } from 'react-hook-form';
+import { Btn } from '../../../Tools/Button';
 import { IData } from '../../../types/global';
+import { InputWrap } from '../../../Tools/Input';
+import { ITheme } from '../../../../styles/theme';
 import { ErrModal } from '../../../Tools/errorModal';
+import useMutation from '../../../libs/client/useMutation';
+import { IJoinForm, IUserForm } from '../../../types/user';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { isMemberVar, joinBoxVar } from '../../../../styles/variants';
+import { Box } from '../../../../styles/global';
+import { LoadingModal } from '../../../Tools/Modal/Loading';
 
 interface IUserIdBox extends ITheme {
-  setSecond: Dispatch<SetStateAction<boolean>>;
-  setSaveId: Dispatch<SetStateAction<string>>;
+  isBox: boolean;
+  setSaveID: Dispatch<SetStateAction<string>>;
+  setNext: Dispatch<SetStateAction<boolean>>;
 }
-export const UserIdBox = ({ theme, setSaveId, setSecond }: IUserIdBox) => {
+export const UserIdBox = ({ theme, isBox, setSaveID, setNext }: IUserIdBox) => {
   const router = useRouter();
+  const [Loading, setLoading] = useState(false);
   const [postUserId, { loading, data }] = useMutation<IData>(
     '/api/user/create/userId'
   );
   const {
     watch,
     register,
-    setError,
-    reset,
-    clearErrors,
     handleSubmit,
     formState: { errors },
   } = useForm<IJoinForm>({ mode: 'onSubmit' });
 
   const onValid = ({ userId }: IUserForm) => {
+    setLoading(true);
     if (loading) return;
-    const reg = /^[A-Za-z]+[A-Za-z0-9]{5,19}$/g;
-    //아이디 필요
-    if (!userId) {
-      setError('userId', {
-        type: 'userId-req',
-      });
-    }
-    //아이디 정규식 체크
-    else if (!reg.test(userId!)) {
-      setError('userId', {
-        type: 'userId-pattern',
-      });
-    } else return postUserId(userId);
+    postUserId(userId);
   };
-  //
-  useEffect(() => {
-    if (data?.error) alert(data.error);
-    if (data?.ok && data.userId) {
-      setSecond((p: boolean) => !p);
-      setSaveId(data.userId);
-    }
-  }, [data, setSecond, setSaveId]);
-  //
-  const [answer, setAnswer] = useState(false);
-  const clickTest = () => {
-    clearErrors();
-  };
-  //
-  console.log(errors.userId?.type);
-  return (
-    <>
-      {!loading && (
-        <>
-          <Box
-            exit="exit"
-            initial="initial"
-            animate="animate"
-            custom={theme}
-            variants={joinBoxVar}
-            //
-            className="box"
-          >
-            <div className="box-title">
-              <h1>Create Account</h1>
-              <h2>
-                <span>Step 1. 아이디 체크 (ID Check)</span>
-                <Svg
-                  size="1.3em"
-                  theme={theme!}
-                  type="question"
-                  onClick={() => setAnswer(true)}
-                />
-              </h2>
-            </div>
-            <form onSubmit={handleSubmit(onValid)}>
-              <InputWrap
-                theme={theme}
-                id="userId"
-                type="text"
-                label="USER ID"
-                watch={watch('userId')}
-                register={register('userId')}
-              />
-              <Btn name="Submit" type="submit" theme={theme} />
-            </form>
 
-            <IsMember
-              className="is-member"
-              custom={theme}
-              initial="initial"
-              animate="animate"
-              variants={isMemberVar}
-              whileHover={'hover'}
-              onClick={() => router.push(`/login`)}
-            >
-              <span>* 이미 회원입니까?</span>
-              <span>Already a member?</span>
-              <span>&rarr;</span>
-            </IsMember>
-            <ErrModal
-              theme={theme}
-              clearErrors={clearErrors}
-              type={errors.userId?.type!}
-            />
-          </Box>
-          <Answer
-            theme={theme}
-            isAnswer={answer}
-            type="join-userId"
-            closeModal={setAnswer}
-          />
+  //data result
+  const [dataErr, setDataErr] = useState('');
+  useEffect(() => {
+    if (data) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+      if (data.error) {
+        setTimeout(() => {
+          setDataErr(data.error!);
+        }, 1000);
+      }
+      if (data.ok && data.userId) {
+        setTimeout(() => {
+          setNext(true);
+          setSaveID(data.userId);
+        }, 1000);
+      }
+    }
+  }, [data, setNext, setSaveID, setDataErr, errors, setLoading]);
+  //
+  return (
+    <AnimatePresence initial={false}>
+      {isBox && (
+        <>
+          {!Loading && (
+            <>
+              <Cont
+                className="box"
+                exit="exit"
+                initial="initial"
+                animate="animate"
+                custom={theme}
+                variants={joinBoxVar}
+              >
+                <div className="wrapper">
+                  <BoxTitle type="userId" theme={theme} />
+                  <form onSubmit={handleSubmit(onValid)}>
+                    <InputWrap
+                      id="userId"
+                      type="text"
+                      theme={theme}
+                      label="USER ID"
+                      watch={watch('userId')}
+                      register={register('userId', {
+                        required: '아이디를 입력해주세요.',
+                        pattern: {
+                          value: /^[A-Za-z]+[A-Za-z0-9]{5,19}$/g,
+                          message:
+                            '아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.',
+                        },
+                      })}
+                      error={errors.userId?.message}
+                    />
+                    <Btn name="Submit" type="submit" theme={theme} />
+                  </form>
+                </div>
+
+                <LoginLink
+                  className="login-link"
+                  custom={theme}
+                  initial="initial"
+                  animate="animate"
+                  variants={isMemberVar}
+                  whileHover={'hover'}
+                  onClick={() => router.push(`/login`)}
+                >
+                  <span>* 이미 회원입니까?</span>
+                  <span>Already a member?</span>
+                  <span>&rarr;</span>
+                </LoginLink>
+              </Cont>
+              <ErrModal error={dataErr} theme={theme} setDataErr={setDataErr} />
+            </>
+          )}
+          {Loading && <LoadingModal theme={theme} />}
         </>
       )}
-      <LoadingModal isLoading={loading} theme={theme} />
-    </>
+    </AnimatePresence>
   );
 };
-export const Box = styled(motion.div)`
-  gap: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0 auto;
-  font-size: 1.8em;
-  font-size: 2em;
-  padding: 40px;
-  border-radius: 5px;
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
-  border: 1px solid ${(p) => p.theme.color.font};
-  .box-title {
-    h1,
-    h2 {
-      display: flex;
-      align-items: center;
-    }
-    h1 {
-      font-weight: 500;
-      margin-bottom: 5px;
-    }
-    h2 {
-      display: flex;
-      font-size: 0.7em;
-      padding-right: 5px;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-  .userId {
-    //padding: 20px;
-  }
-  .is-member {
-    font-size: 0.7em;
+const Cont = styled(Box)`
+  width: 420px;
+  .wrapper {
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   form {
-    input {
-      border: none;
+    //border: 1px solid yellow;
+    .input-wrap {
+      width: 100%;
+      .err-msg {
+        margin-top: 15px;
+      }
     }
     button {
       width: 100%;
-      padding: 7px;
-      font-size: 0.7em;
+      padding: 8px;
+      margin-top: 15px;
+      font-size: 0.6em;
     }
   }
+  .login-link {
+    font-size: 1.1rem;
+    // border: 2px solid red;
+  }
 `;
-const IsMember = styled(motion.div)`
-  margin-top: 20px;
-  border-radius: 5px;
+const LoginLink = styled(motion.div)`
+  gap: 10px;
   display: flex;
-  cursor: pointer;
-  font-size: 0.8em;
   align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 5px;
   span {
     margin-right: 5px;
     font-style: italic;

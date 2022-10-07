@@ -70,13 +70,12 @@ const Cont = styled(Modal)`
   font-size: 1.4rem;
   min-width: 300px;
   min-height: 300px;
-  max-width: 600px;
-  max-height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
   ul {
     li {
+      text-align: center;
       line-height: 30px;
       font-style: italic;
     }
@@ -162,14 +161,14 @@ const Texts = (
       )}
       {type === 'join-userInfo' && (
         <>
-          <li>이름 (username)은 옵션사항 입니다.</li>
           <li>이름을 적지 않으면 'Anonymous'로 자동저장 됩니다.</li>
-          <li>이름은 추후에 수정 가능합니다.</li>
-          <li>Username is optional.</li>
+          <li>유저의 이름은 옵션사항 입니다. 이름은 추후에 수정 가능합니다.</li>
           <li>
             Username is going to be saved as 'Anonymous' if you don't put any.
           </li>
-          <li>You can edit your username after register.</li>
+          <li>
+            Username is optional. You can edit your it after registration.
+          </li>
         </>
       )}
       {type === 'join-userId' && (
