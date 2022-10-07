@@ -1,4 +1,4 @@
-import { BoxTitle } from './title';
+import { BoxTitle } from '../../../Tools/Title';
 import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
@@ -79,29 +79,26 @@ export const UserIdBox = ({ theme, isBox, setSaveID, setNext }: IUserIdBox) => {
                 variants={joinBoxVar}
                 transition={TweenTrans}
               >
-                <div className="wrapper">
-                  <BoxTitle type="create-userId" theme={theme} />
-                  <form onSubmit={handleSubmit(onValid)}>
-                    <InputWrap
-                      id="userId"
-                      type="text"
-                      theme={theme}
-                      label="USER ID"
-                      watch={watch('userId')}
-                      register={register('userId', {
-                        required: '아이디를 입력해주세요.',
-                        pattern: {
-                          value: /^[A-Za-z]+[A-Za-z0-9]{5,19}$/g,
-                          message:
-                            '아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.',
-                        },
-                      })}
-                      error={errors.userId?.message}
-                    />
-                    <Btn name="Submit" type="submit" theme={theme} />
-                  </form>
-                </div>
-
+                <BoxTitle type="join-step1" theme={theme} />
+                <form onSubmit={handleSubmit(onValid)}>
+                  <InputWrap
+                    id="userId"
+                    type="text"
+                    theme={theme}
+                    label="USER ID"
+                    watch={watch('userId')}
+                    register={register('userId', {
+                      required: '아이디를 입력해주세요.',
+                      pattern: {
+                        value: /^[A-Za-z]+[A-Za-z0-9]{5,19}$/g,
+                        message:
+                          '아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.',
+                      },
+                    })}
+                    error={errors.userId?.message}
+                  />
+                  <Btn name="Submit" type="submit" theme={theme} />
+                </form>
                 <LoginLink
                   className="login-link"
                   custom={theme}
@@ -126,34 +123,20 @@ export const UserIdBox = ({ theme, isBox, setSaveID, setNext }: IUserIdBox) => {
   );
 };
 const Cont = styled(Box)`
-  width: 36vw;
-  .wrapper {
-    gap: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  gap: 20px;
+  .box-title {
   }
   form {
-    //border: 1px solid yellow;
-    .input-wrap {
-      width: 100%;
-      .err-msg {
-        margin-top: 15px;
-      }
-    }
-    button {
-      width: 100%;
-      padding: 8px;
+    gap: 15px;
+    .err-msg {
       margin-top: 15px;
-      font-size: 0.6em;
     }
   }
-  .login-link {
-    font-size: 1.1rem;
-    // border: 2px solid red;
+  .find-user-wrap {
   }
 `;
 const LoginLink = styled(motion.div)`
+  font-size: 1.2rem;
   gap: 10px;
   display: flex;
   align-items: center;

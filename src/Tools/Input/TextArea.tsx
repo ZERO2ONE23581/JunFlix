@@ -4,79 +4,94 @@ import styled from '@emotion/styled';
 import { User } from '@prisma/client';
 import { Creator } from '../../../Creator';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ErrMsg } from '.';
+import {
+  inputErrVar,
+  inputVar,
+  textAreaVar,
+  TweenTrans,
+} from '../../../styles/variants';
+import { ITheme } from '../../../styles/theme';
 
-interface ITextAreaWrap {
+interface ITextAreaWrap extends ITheme {
   id: string;
   error?: string;
-  watch?: string;
-  height: number;
+  watch?: boolean;
   disabled?: boolean;
   placeholder: string;
-  user?: User;
+  height?: number;
   register: UseFormRegisterReturn;
 }
 export const TextAreaWrap = ({
   id,
-  user,
+  theme,
   error,
+  height,
   watch,
   register,
   disabled,
   placeholder,
-  height,
 }: ITextAreaWrap) => {
   const [isFocus, setIsFocus] = useState(false);
+  const IsFocus = Boolean(isFocus || watch || disabled);
+  //
   return (
-    <Cont className={id} isFocus={isFocus} isWatch={Boolean(watch)}>
-      {user && (
-        <Creator
-          size="3rem"
-          userAvatar={user.avatar!}
-          username={user.username!}
+    <AnimatePresence initial={false}>
+      <>
+        <label htmlFor={id} style={{ display: 'none' }} />
+        <Cont
+          variants={textAreaVar}
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          whileHover={'hover'}
+          whileFocus={'focus'}
+          transition={TweenTrans}
+          custom={{
+            theme: !theme,
+            height: height,
+            isFocus: IsFocus,
+            isDisabled: disabled,
+          }}
+          //
+          height={height}
+          className="textarea-wrap"
+          {...register}
+          id={id}
+          name={id}
+          disabled={disabled}
+          placeholder={placeholder}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
         />
-      )}
-      <label htmlFor={id} style={{ display: 'none' }} />
-      <TextArea
-        {...register}
-        id={id}
-        name={id}
-        height={height!}
-        disabled={disabled}
-        placeholder={placeholder}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-      />
-      {error && <ErrorMsg error={error} />}
-    </Cont>
+        {error && (
+          <ErrMsg
+            exit="exit"
+            initial="initial"
+            animate="animate"
+            custom={theme}
+            variants={inputErrVar}
+            className="err-msg"
+          >
+            {error}
+          </ErrMsg>
+        )}
+      </>
+    </AnimatePresence>
   );
 };
-const Cont = styled.article<{ isFocus: boolean; isWatch: boolean }>`
-  gap: 10px;
-  width: 100%;
-  display: flex;
-  padding: 15px 20px;
-  border-radius: 3px;
-  flex-direction: column;
-  box-shadow: ${(p) => p.theme.boxShadow.input};
-  border: ${(p) => p.isWatch && `1px solid ${p.theme.color.logo}`};
-  border: ${(p) =>
-    p.isFocus ? `thick double ${p.theme.color.logo}` : p.theme.border.thick};
-`;
-export const TextArea = styled(motion.textarea)<{
-  height?: number;
-}>`
-  width: 100%;
-  resize: none;
-  outline: none;
-  font-size: 1rem;
-  cursor: auto;
+
+export const Cont = styled(motion.textarea)<{ height?: number }>`
+  padding: 20px;
   border: none;
+  resize: none;
+  cursor: auto;
+  font-size: 1rem;
   border-radius: 4px;
   word-break: break-all;
-  color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
-  height: ${(p) => p.height && `${p.height}px`};
+  width: 100%;
+  min-height: 150px;
   ::-webkit-scrollbar {
     display: none;
   }

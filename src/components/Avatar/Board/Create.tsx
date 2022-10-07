@@ -3,21 +3,23 @@ import { Svg } from '../../../Tools/Svg';
 import { Dispatch, SetStateAction } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import { IBoardForm } from '../../../types/board';
+import { ITheme } from '../../../../styles/theme';
 
-interface ICreateBoardAvatar {
+interface ICreateBoardAvatar extends ITheme {
   isPreview: boolean;
   register: UseFormRegister<IBoardForm>;
   setPreview: Dispatch<SetStateAction<string>>;
 }
-export const CreateAvatar = ({
+export const CreateBoardAvatar = ({
+  theme,
   isPreview,
   register,
   setPreview,
 }: ICreateBoardAvatar) => {
   return (
-    <Cont>
+    <Cont className="create-board-bg">
       <label htmlFor="avatar">
-        <Svg type="landscape" size="3rem" />
+        <Svg theme={theme} type="landscape" size="3rem" />
         <input
           {...register('avatar')}
           id="avatar"
@@ -27,7 +29,12 @@ export const CreateAvatar = ({
         />
       </label>
       {isPreview && (
-        <Svg size="2rem" type="undo" onClick={() => setPreview('')} />
+        <Svg
+          size="2rem"
+          type="undo"
+          theme={theme}
+          onClick={() => setPreview('')}
+        />
       )}
     </Cont>
   );

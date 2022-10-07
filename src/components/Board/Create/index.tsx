@@ -1,5 +1,3 @@
-import { Title } from './Title';
-import { Inputs } from './Inputs';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -9,18 +7,28 @@ import useMutation from '../../../libs/client/useMutation';
 import { IBoardForm, IBoardFormRes } from '../../../types/board';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useLength } from '../../../libs/client/useTools';
-import { Errors } from '../../../Tools/Errors';
-import { Box } from '../../../../styles/global';
+import { Box, Flex } from '../../../../styles/global';
+import { ITheme } from '../../../../styles/theme';
+import { BoxTitle } from '../../../Tools/Title';
+import { InputWrap } from '../../../Tools/Input';
+import { SelectWrap } from '../../../Tools/Input/Select';
+import { CreateBoardAvatar } from '../../Avatar/Board/Create';
+import { Svg } from '../../../Tools/Svg';
+import { joinBoxVar } from '../../../../styles/variants';
+import { Btn } from '../../../Tools/Button';
+import { AnimatePresence } from 'framer-motion';
+import { ErrModal } from '../../../Tools/errorModal';
+import useUser from '../../../libs/client/useUser';
 
-interface ICreateBoard {
+interface ICreateBoard extends ITheme {
   isPreview: boolean;
   setPreview: Dispatch<SetStateAction<string>>;
 }
-export const CreateBoard = ({ isPreview, setPreview }: ICreateBoard) => {
+export const CreateBoard = ({ theme, isPreview, setPreview }: ICreateBoard) => {
   const router = useRouter();
-  const { user_id } = router.query;
+  const { loggedInUser } = useUser();
   const [CreateBoard, { loading, data }] = useMutation<IBoardFormRes>(
-    `/api/user/${user_id}/board/create`
+    `/api/user/${loggedInUser?.id}/board/create`
   );
   const {
     watch,
@@ -29,6 +37,12 @@ export const CreateBoard = ({ isPreview, setPreview }: ICreateBoard) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IBoardForm>({ mode: 'onBlur' });
+  //
+  const avatar = watch('avatar');
+  const [dataErr, setDataErr] = useState('');
+  const [Loading, setLoading] = useState(false);
+  const [avatarLoading, setAvatarLoading] = useState(false);
+  const isLoading = avatarLoading ? avatarLoading : Loading ? Loading : false;
   //
   const [maxTitle] = useState(30);
   const [maxIntro] = useState(1000);
@@ -40,16 +54,17 @@ export const CreateBoard = ({ isPreview, setPreview }: ICreateBoard) => {
   //
   const onValid = async ({ title, genre, intro, avatar }: IBoardForm) => {
     if (loading) return;
-    if (useLength(watch!('title'))! === 0)
-      return setError!('title', { message: '제목을 입력해주세요.' });
+    //
     if (useLength(watch!('title'))! > maxTitle)
       return setError!('title', {
-        message: `포스트 제목의 길이는 ${maxTitle}자 이하입니다.`,
+        message: `제목의 길이는 ${maxTitle}자 이하입니다.`,
       });
     if (useLength(watch!('intro'))! > maxIntro)
       return setError!('intro', {
-        message: `포스트 길이는 ${maxIntro}자 이하입니다.`,
+        message: `길이는 ${maxIntro}자 이하입니다.`,
       });
+    //
+    setLoading(true);
     if (avatar && avatar.length > 0) {
       setAvatarLoading((p) => !p);
       const { uploadURL } = await (await fetch(`/api/file`)).json();
@@ -69,66 +84,129 @@ export const CreateBoard = ({ isPreview, setPreview }: ICreateBoard) => {
       CreateBoard({ title, intro, genre });
     }
   };
-  const avatar = watch('avatar');
-  const [avatarLoading, setAvatarLoading] = useState(false);
-  const Loading = avatarLoading ? avatarLoading : loading ? loading : null;
+  //
   useEffect(() => {
     if (avatar && avatar.length > 0) {
       const file = avatar[0];
       setPreview(URL.createObjectURL(file));
     }
   }, [avatar]);
+  //
   useEffect(() => {
-    if (data?.error) alert(data.error);
-    if (data?.ok) {
-      router.replace(
-        `/user/${data.board.UserID}/board/${data.board.id}/${data.board.title}`
-      );
+    if (data) {
+      setTimeout(() => {
+        setLoading(false);
+        if (data.error) return setDataErr(data.error);
+        if (data.ok)
+          return router.replace(`/board/${data.board.id}/${data.board.title}`);
+      }, 1000);
     }
-  }, [data, router]);
-  const [answer, setAnswer] = useState(false);
+  }, [data, router, setDataErr, setTimeout, setLoading]);
+  //
   return (
-    <form onSubmit={handleSubmit(onValid)}>
-      <Cont isAvatar={Boolean(avatar?.length! > 0)}>
-        <Title
-          answer={answer}
-          maxTitle={maxTitle}
-          maxIntro={maxIntro}
-          setAnswer={setAnswer}
-        />
-        <Inputs
-          watch={watch}
-          register={register}
-          isPreview={isPreview}
-          setPreview={setPreview}
-        />
-        <TextAreaWrap
-          id="intro"
-          height={height}
-          register={register('intro')}
-          placeholder="이 보드의 소개글을 작성해주세요."
-        />
-      </Cont>
-      <Errors errors={errors} />
-      {Loading && <LoadingModal zIndex={100} type="create-board" />}
-    </form>
+    <AnimatePresence>
+      {!Loading && (
+        <Cont
+          exit="exit"
+          className="box"
+          initial="initial"
+          animate="animate"
+          custom={theme}
+          variants={joinBoxVar}
+        >
+          <BoxTitle
+            theme={theme}
+            type="create-board"
+            boardMax={{ title: maxTitle, intro: maxIntro }}
+          />
+          <form onSubmit={handleSubmit(onValid)}>
+            <Flex className="flex">
+              <InputWrap
+                id="title"
+                type="text"
+                label="Title"
+                theme={theme}
+                error={errors.title?.message}
+                watch={watch('title')}
+                register={register('title', {
+                  required: '보드의 제목을 입력하세요.',
+                })}
+              />
+              <SelectWrap
+                id="genre"
+                theme={theme}
+                error={errors.genre?.message}
+                register={register('genre')}
+                watch={Boolean(watch('genre'))}
+              />
+            </Flex>
+            <CreateBoardAvatar
+              theme={theme}
+              register={register!}
+              isPreview={isPreview}
+              setPreview={setPreview}
+            />
+            <TextAreaWrap
+              id="intro"
+              theme={theme}
+              height={height}
+              error={errors.intro?.message}
+              register={register('intro')}
+              watch={Boolean(watch('intro'))}
+              placeholder="이 보드의 소개글을 작성해주세요."
+            />
+            <div className="toTheRight">
+              <Btn name="Save" type="submit" theme={theme} />
+            </div>
+          </form>
+          <ErrModal theme={theme} error={dataErr} setDataErr={setDataErr} />
+        </Cont>
+      )}
+      {Loading && <LoadingModal theme={theme} />}
+    </AnimatePresence>
   );
 };
-const Cont = styled(Box)<{ isAvatar: boolean }>`
-  margin: 0;
+const Cont = styled(Box)`
   gap: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  border: ${(p) => !p.isAvatar && p.theme.border.thick};
-  .intro {
+  width: 35vw;
+  min-height: 45vh;
+  min-width: 700px;
+  .flex {
+    //border: 2px solid yellow;
+    align-items: flex-start;
+    .err-msg {
+      margin-top: 20px;
+    }
+  }
+  .box-title {
+    width: 500px;
+    min-width: 500px;
+    h1 {
+      font-size: 2.4rem;
+    }
+  }
+  form {
+    select {
+      width: 40%;
+    }
     textarea {
-      border: none;
-      font-size: 1.2rem;
-      min-height: 150px;
-      max-height: 400px;
-      :focus {
-        outline: none;
+      font-size: 1.3rem;
+    }
+    //border: 3px solid blueviolet;
+    gap: 20px;
+    max-height: 40vh;
+    .create-board-bg {
+      top: 1.3em;
+      right: 1.3em;
+      position: absolute;
+    }
+    .toTheRight {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      button {
+        width: 120px;
       }
     }
   }

@@ -9,7 +9,7 @@ import { LoadingModal } from '../../../Tools/Modal/Loading';
 import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ITheme } from '../../../../styles/theme';
-import { BoxTitle } from './title';
+import { BoxTitle } from '../../../Tools/Title';
 import { Box } from '../../../../styles/global';
 import { joinBoxVar } from '../../../../styles/variants';
 import { ErrModal } from '../../../Tools/errorModal';

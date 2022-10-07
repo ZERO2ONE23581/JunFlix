@@ -18,8 +18,8 @@ import { FindUserWrap } from '../../src/components/User/Read/Links/Find';
 
 const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
-  const [Loading, setLoading] = useState(false);
   const [dataErr, setDataErr] = useState('');
+  const [Loading, setLoading] = useState(false);
   const [login, { loading, data }] = useMutation<IData>(`/api/user/login`);
   const {
     watch,
@@ -43,7 +43,7 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
         if (data?.error) return setDataErr(data.error);
       }, 1000);
     }
-  }, [data, router, setDataErr, setTimeout]);
+  }, [data, router, setDataErr, setTimeout, setLoading]);
   //
   return (
     <>
@@ -51,48 +51,46 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
       <Cont>
         <AnimatePresence>
           {!Loading && (
-            <>
-              <Box
-                className="box"
-                exit="exit"
-                initial="initial"
-                animate="animate"
-                custom={theme}
-                variants={joinBoxVar}
-              >
-                <h1>
-                  <span>Login</span>
-                  <span className="kor">로그인</span>
-                </h1>
-                <form onSubmit={handleSubmit(onValid)}>
-                  <InputWrap
-                    theme={theme}
-                    id="userId"
-                    type="text"
-                    label="USER ID"
-                    error={errors.userId?.message}
-                    watch={watch('userId')}
-                    register={register('userId', {
-                      required: '아이디를 입력해주세요.',
-                    })}
-                  />
-                  <InputWrap
-                    theme={theme}
-                    id="password"
-                    type="password"
-                    label="Password"
-                    error={errors.password?.message}
-                    watch={watch('password')}
-                    register={register('password', {
-                      required: '비밀번호를 입력해주세요.',
-                    })}
-                  />
-                  <Btn theme={theme} name="Login" type="submit" />
-                </form>
-                <FindUserWrap />
-              </Box>
-              <ErrModal error={dataErr} theme={theme} setDataErr={setDataErr} />
-            </>
+            <Box
+              className="box"
+              exit="exit"
+              initial="initial"
+              animate="animate"
+              custom={theme}
+              variants={joinBoxVar}
+            >
+              <h1>
+                <span>Login</span>
+                <span className="kor">로그인</span>
+              </h1>
+              <form onSubmit={handleSubmit(onValid)}>
+                <InputWrap
+                  theme={theme}
+                  id="userId"
+                  type="text"
+                  label="USER ID"
+                  error={errors.userId?.message}
+                  watch={watch('userId')}
+                  register={register('userId', {
+                    required: '아이디를 입력해주세요.',
+                  })}
+                />
+                <InputWrap
+                  theme={theme}
+                  id="password"
+                  type="password"
+                  label="Password"
+                  error={errors.password?.message}
+                  watch={watch('password')}
+                  register={register('password', {
+                    required: '비밀번호를 입력해주세요.',
+                  })}
+                />
+                <Btn theme={theme} name="Login" type="submit" />
+              </form>
+              <FindUserWrap />
+              <ErrModal theme={theme} error={dataErr} setDataErr={setDataErr} />
+            </Box>
           )}
           {Loading && <LoadingModal theme={theme} />}
         </AnimatePresence>
@@ -107,45 +105,31 @@ const Cont = styled(Page)`
   align-items: center;
   justify-content: center;
   background-color: black;
-  .err-modal {
-    font-size: 2rem;
-  }
   .box {
-    min-width: 520px;
-    min-height: 50vh;
-    width: 36vw;
-    max-width: 40vw;
-    max-height: 60vh;
+    gap: 30px;
     h1 {
-      //border: 2px solid blue;
-      gap: 12px;
-      display: flex;
-      align-items: flex-end;
+      height: 100%;
+      //border: 2px solid yellow;
+      font-size: 2rem;
       .kor {
-        font-size: 0.8em;
+        font-size: 1.5rem;
+        margin-left: 12px;
       }
     }
+    .box-title {
+      height: 100%;
+    }
     form {
-      max-height: 250px;
       gap: 20px;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-      button {
-        padding: 7px;
+      .err-msg {
+        margin-top: 20px;
       }
-      .input-wrap {
-        .err-msg {
-          margin-top: 20px;
-        }
+      button {
+        padding: 6px;
       }
     }
     .find-user-wrap {
-      //border: 2px solid pink;
-      div {
-        //border: 2px solid yellow;
-      }
+      height: 100%;
     }
   }
 `;

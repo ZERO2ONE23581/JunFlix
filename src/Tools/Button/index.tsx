@@ -59,7 +59,7 @@ export const Btn = ({
 };
 export const Cont = styled(motion.button)`
   border: none;
-  padding: 0.6rem;
+  padding: 8px;
   border-radius: 3px;
   gap: 8px;
   display: flex;

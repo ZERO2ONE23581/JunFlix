@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
-import { Errors } from '../../../Tools/Errors';
 import { InputWrap } from '../../../Tools/Input';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useMutation from '../../../libs/client/useMutation';
@@ -8,7 +7,7 @@ import { IFindForm, IFindPostRes } from '../../../types/user';
 import { Box } from '../../../../styles/global';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
 import { ITheme } from '../../../../styles/theme';
-import { BoxTitle } from '../Create/title';
+import { BoxTitle } from '../../../Tools/Title';
 import { FindUserWrap } from '../Read/Links/Find';
 import { AnimatePresence } from 'framer-motion';
 import { joinBoxVar } from '../../../../styles/variants';
@@ -60,7 +59,7 @@ export const VerifyUserID = ({ isBox, setToken, theme }: IVerfiyID) => {
               custom={theme}
               variants={joinBoxVar}
             >
-              <BoxTitle theme={theme} type="verify_userId" />
+              <BoxTitle theme={theme} type="find-pw-step1" />
               <form onSubmit={handleSubmit(onValid)}>
                 <InputWrap
                   type="text"
@@ -86,9 +85,7 @@ export const VerifyUserID = ({ isBox, setToken, theme }: IVerfiyID) => {
   );
 };
 const Cont = styled(Box)`
-  width: 40vw;
-  min-width: 500px;
-  min-height: 50vh;
+  gap: 20px;
   form {
     //border: 3px solid yellow;
     gap: 10px;

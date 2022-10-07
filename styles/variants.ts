@@ -117,13 +117,11 @@ export const joinBoxVar = {
   initial: (theme: boolean) => ({
     opacity: 0,
     color: theme ? '#000000' : '#ffffff',
-    borderColor: theme ? '#000000' : '#ffffff',
     backgroundColor: theme ? '#ffffff' : '#000000',
   }),
   animate: (theme: boolean) => ({
     opacity: 1,
     color: theme ? '#000000' : '#ffffff',
-    borderColor: theme ? '#000000' : '#ffffff',
     backgroundColor: theme ? '#ffffff' : '#000000',
     transition: {
       duration: 0.6,
@@ -163,19 +161,57 @@ export const labelVar = {
 };
 //border는 none, outline은 1px theme -> hover, focus시 3px logo색상
 export const inputVar = {
-  initial: ({ theme, isDisabled }: any) => ({
+  initial: ({ theme, isFocus, isDisabled, height }: any) => ({
     color: isDisabled ? '#E50914' : theme ? '#ffffff' : '#000000',
     backgroundColor: !theme ? '#ffffff' : '#000000',
-    outline: isDisabled
+    outline: isFocus
+      ? '3px solid #E50914 '
+      : isDisabled
       ? '3px solid #636e72'
       : theme
       ? '1px solid #ffffff'
       : '1px solid #000000',
   }),
-  animate: ({ theme, isDisabled }: any) => ({
+  animate: ({ theme, isFocus, isDisabled, height }: any) => ({
     color: isDisabled ? '#636e72' : theme ? '#ffffff' : '#000000',
     backgroundColor: !theme ? '#ffffff' : '#000000',
-    outline: isDisabled
+    outline: isFocus
+      ? '3px solid #E50914 '
+      : isDisabled
+      ? '3px solid #636e72'
+      : theme
+      ? '1px solid #ffffff'
+      : '1px solid #000000',
+  }),
+  hover: ({ isDisabled }: any) => ({
+    transition: { duration: 0.2 },
+    outline: !isDisabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
+  }),
+  focus: ({ isDisabled }: any) => ({
+    transition: { duration: 0.2 },
+    outline: !isDisabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
+  }),
+};
+export const textAreaVar = {
+  initial: ({ theme, isFocus, isDisabled, height }: any) => ({
+    height: height ? height : '100%',
+    color: isDisabled ? '#E50914' : theme ? '#ffffff' : '#000000',
+    backgroundColor: !theme ? '#ffffff' : '#000000',
+    outline: isFocus
+      ? '3px solid #E50914 '
+      : isDisabled
+      ? '3px solid #636e72'
+      : theme
+      ? '1px solid #ffffff'
+      : '1px solid #000000',
+  }),
+  animate: ({ theme, isFocus, isDisabled, height }: any) => ({
+    height: height ? height : '100%',
+    color: isDisabled ? '#636e72' : theme ? '#ffffff' : '#000000',
+    backgroundColor: !theme ? '#ffffff' : '#000000',
+    outline: isFocus
+      ? '3px solid #E50914 '
+      : isDisabled
       ? '3px solid #636e72'
       : theme
       ? '1px solid #ffffff'
@@ -212,13 +248,12 @@ export const answerVar = {
   }),
   animate: (theme: boolean) => ({
     opacity: 1,
+    transition: { duration: 0.6 },
     color: theme ? '#000000' : '#ffffff',
     backgroundColor: theme ? '#ffffff' : '#000000',
-    transition: {
-      duration: 0.6,
-    },
   }),
   exit: (theme: boolean) => ({
     opacity: 0,
+    transition: { duration: 0.6 },
   }),
 };

@@ -28,7 +28,7 @@ export const FindUserWrap = () => {
         onClick={() => router.push(`/user/find/password`)}
       >
         <span className="kor">비밀번호 찾기</span>
-        <span className="eng">(Find Pw)</span>
+        <span className="eng">(Find Password)</span>
       </motion.div>
 
       <span className="slash">|</span>
@@ -51,14 +51,16 @@ const Cont = styled(motion.div)`
   display: flex;
   flex-wrap: wrap;
   align-content: center;
-  justify-content: space-between;
-  font-size: 0.5em;
+  justify-content: space-around;
+  font-size: 1rem;
   > div {
-    cursor: pointer;
     gap: 5px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
+    cursor: pointer;
   }
   .slash {
     font-weight: 500;

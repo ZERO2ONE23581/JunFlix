@@ -44,7 +44,7 @@ const Cont = styled(Page)`
   justify-content: center;
   background-color: black;
   .result-modal {
-    width: 50vw;
-    height: 50vh;
+    width: fit-content;
+    height: fit-content;
   }
 `;

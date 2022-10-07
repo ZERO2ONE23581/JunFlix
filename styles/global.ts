@@ -11,6 +11,7 @@ export const Page = styled.section`
   background-color: ${(p) => p.theme.color.bg};
 `;
 export const Flex = styled.div`
+  width: 100%;
   gap: 20px;
   display: flex;
   align-items: center;
@@ -132,17 +133,25 @@ export const Blur = styled.div<{ isBlur: boolean }>`
   filter: ${(p) => p.isBlur && 'blur(5px)'};
 `;
 export const Box = styled(motion.div)`
+  .box-title,
+  form,
+  .find-user-wrap,
+  .login-link {
+    //border: 2px solid yellow;
+    height: fit-content;
+  }
+  width: 500px;
+  min-width: 500px;
+  font-size: 2em;
   position: relative;
-  gap: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   //
-  padding: 1.1em;
-  font-size: 2.2em;
+  padding: 40px;
   border-radius: 5px;
+  border: ${(p) => p.theme.border.thick};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  border: 1px solid ${(p) => p.theme.color.font};
   form {
     height: 100%;
     display: flex;
@@ -153,14 +162,7 @@ export const Box = styled(motion.div)`
       width: 100%;
     }
     .input-wrap {
-      //border: 3px solid yellowgreen;
       width: 100%;
-      .label-input {
-        //border: 2px solid blue;
-      }
-      .err-msg {
-        // border: 1px solid yellow;
-      }
     }
   }
 `;

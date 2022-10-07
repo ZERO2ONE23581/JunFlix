@@ -1,18 +1,19 @@
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../Tools/Button';
-import { InputWrap } from '../../../Tools/Input';
+import { Btn } from '../../../../Tools/Button';
+import { InputWrap } from '../../../../Tools/Input';
+import { ErrorMsg } from '../../../../Tools/Errors';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import useMutation from '../../../libs/client/useMutation';
-import { IFindForm, IFindPostRes } from '../../../types/user';
+import useMutation from '../../../../libs/client/useMutation';
+import { IFindForm, IFindPostRes } from '../../../../types/user';
 import styled from '@emotion/styled';
-import { Box } from '../../../../styles/global';
-import { LoadingModal } from '../../../Tools/Modal/Loading';
-import { FindUserWrap } from '../Read/Links/Find';
-import { ITheme } from '../../../../styles/theme';
-import { BoxTitle } from '../../../Tools/Title';
+import { Box } from '../../../../../styles/global';
+import { LoadingModal } from '../../../../Tools/Modal/Loading';
+import { FindUserWrap } from '../Links/Find';
+import { ITheme } from '../../../../../styles/theme';
+import { BoxTitle } from '../../../../Tools/Title';
 import { AnimatePresence } from 'framer-motion';
-import { ErrModal } from '../../../Tools/errorModal';
-import { joinBoxVar } from '../../../../styles/variants';
+import { ErrModal } from '../../../../Tools/errorModal';
+import { joinBoxVar } from '../../../../../styles/variants';
 
 interface IEmail extends ITheme {
   isBox: boolean;
@@ -61,7 +62,7 @@ export const Email = ({ isBox, theme, setToken }: IEmail) => {
                 custom={theme}
                 variants={joinBoxVar}
               >
-                <BoxTitle theme={theme} type="find-id-step1" />
+                <BoxTitle theme={theme} type="find_userId" />
                 <form onSubmit={handleSubmit(onValid)}>
                   <InputWrap
                     id="email"
@@ -92,19 +93,16 @@ export const Email = ({ isBox, theme, setToken }: IEmail) => {
   );
 };
 const Cont = styled(Box)`
-  font-size: 2em;
-  width: 27vw;
+  width: 40vw;
   height: 50vh;
-  gap: 25px;
-  .box-title {
-  }
   form {
+    //border: 3px solid yellow;
+    height: 100%;
     gap: 10px;
+    align-items: center;
+    justify-content: center;
     .err-msg {
       margin-top: 10px;
     }
-  }
-  .find-user-wrap {
-    height: 100%;
   }
 `;

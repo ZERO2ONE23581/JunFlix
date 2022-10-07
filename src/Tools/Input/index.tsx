@@ -90,6 +90,7 @@ export const InputWrap = ({
 };
 const Cont = styled.div`
   position: relative;
+  width: 100%;
 `;
 const Wrap = styled.div`
   position: relative;
@@ -108,7 +109,7 @@ const Label = styled(motion.label)`
   border-radius: 20px;
   display: inline-block;
 `;
-const Input = styled(motion.input)`
+export const Input = styled(motion.input)`
   font-size: 0.6em;
   width: 100%;
   border: none;

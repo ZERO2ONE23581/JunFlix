@@ -6,7 +6,7 @@ import { IJoinForm, IJoinFormRes } from '../../../types/user';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
 import { ITheme } from '../../../../styles/theme';
 import { Btn } from '../../../Tools/Button';
-import { BoxTitle } from './title';
+import { BoxTitle } from '../../../Tools/Title';
 import { ErrModal } from '../../../Tools/errorModal';
 import { Box, Flex } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -100,7 +100,7 @@ export const UserInfoBox = ({
                   className="back"
                   onClick={() => setUserId(false)}
                 />
-                <BoxTitle type="create-userInfo" theme={theme} />
+                <BoxTitle type="join-step2" theme={theme} />
                 <form onSubmit={handleSubmit(onValid)}>
                   <InputWrap
                     disabled
@@ -196,56 +196,37 @@ export const UserInfoBox = ({
   );
 };
 const Cont = styled(Box)`
-  min-width: 40vw;
-  min-height: 70vh;
+  min-width: 500px;
+  width: 35vw;
+  min-height: 65vh;
   max-width: 40vw;
   max-height: 90vh;
-  justify-content: center;
-  padding: 1.2em;
+  gap: 30px;
+  .box-title {
+    width: fit-content;
+    ul {
+      gap: 20px;
+    }
+  }
+  form {
+    gap: 20px;
+    justify-content: flex-start;
+    .flex {
+      width: 100%;
+      align-items: flex-start;
+    }
+    .err-msg {
+      margin-top: 20px;
+    }
+    button {
+      padding: 8px;
+    }
+  }
   .back {
     top: 2.5em;
     right: 2em;
     width: 80px;
     font-weight: 600;
     position: absolute;
-  }
-  .box-title {
-    width: 80%;
-    .wrap {
-      .kor {
-        font-size: 0.9em;
-      }
-      .eng {
-        font-size: 1em;
-        margin-right: 5px;
-      }
-    }
-  }
-  form {
-    //border: 5px solid yellow;
-    max-height: 400px;
-    margin-top: 10px;
-    gap: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    .flex {
-      //border: 2px solid yellow;
-      align-items: flex-start;
-    }
-    .input-wrap {
-      .err-msg {
-        margin-top: 20px;
-      }
-      input {
-        //margin-bottom: 10px;
-      }
-    }
-
-    button {
-      width: 100%;
-      padding: 8px;
-      font-size: 0.5em;
-    }
   }
 `;

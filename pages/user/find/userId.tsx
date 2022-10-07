@@ -34,11 +34,4 @@ const Cont = styled(Page)`
   align-items: center;
   justify-content: center;
   background-color: black;
-  .err-modal {
-    font-size: 2rem;
-  }
-  .result-modal {
-    width: 50vw;
-    height: 50vh;
-  }
 `;

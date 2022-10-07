@@ -36,8 +36,31 @@ const Cont = styled.section<{ width?: number }>`
     background-color: ${(p) => p.theme.color.bg};
   }
   .header {
-    padding: 12px 10rem;
+    padding: 12px 10em;
     //border: 2px solid hotpink;
+    .logo {
+      //border: 5px solid cornflowerblue;
+    }
+    .flex {
+      width: 100%;
+      //border: 5px solid cornflowerblue;
+      .main-menu {
+        width: 50%;
+        //border: 2px solid yellow;
+      }
+      .user-menu {
+        //border: 2px solid red;
+        .logged-in {
+          //border: 2px solid yellow;
+        }
+        .unlogged-in {
+          //border: 2px solid yellow;
+        }
+      }
+      span {
+        cursor: pointer;
+      }
+    }
   }
   .footer {
     padding: 0 12em;

@@ -2,16 +2,14 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
-import { Errors } from '../../../Tools/Errors';
 import { InputWrap } from '../../../Tools/Input';
 import { Dispatch, SetStateAction } from 'react';
 import { Box } from '../../../../styles/global';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
 import useMutation from '../../../libs/client/useMutation';
 import { IFindForm, IFindPostRes } from '../../../types/user';
-import { BoxTitle } from '../Create/title';
+import { BoxTitle } from '../../../Tools/Title';
 import { ITheme } from '../../../../styles/theme';
-import { FindUserWrap } from '../Read/Links/Find';
 import { AnimatePresence } from 'framer-motion';
 import { ErrModal } from '../../../Tools/errorModal';
 import { joinBoxVar } from '../../../../styles/variants';
@@ -66,7 +64,7 @@ export const Token = ({ isBox, setUserId, setVerify, theme }: IToken) => {
               custom={theme}
               variants={joinBoxVar}
             >
-              <BoxTitle type="email_token" theme={theme} />
+              <BoxTitle type="find-id-step2" theme={theme} />
               <form onSubmit={handleSubmit(onValid)}>
                 <InputWrap
                   id="token"
@@ -96,7 +94,8 @@ export const Token = ({ isBox, setUserId, setVerify, theme }: IToken) => {
   );
 };
 const Cont = styled(Box)`
-  width: 40vw;
+  //width: 40vw;
+  gap: 20px;
   form {
     //border: 3px solid yellow;
     height: 100%;

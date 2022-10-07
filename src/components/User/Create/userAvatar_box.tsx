@@ -12,7 +12,7 @@ import { LoadingModal } from '../../../Tools/Modal/Loading';
 import { AnimatePresence } from 'framer-motion';
 import { ITheme } from '../../../../styles/theme';
 import { Btn } from '../../../Tools/Button';
-import { BoxTitle } from './title';
+import { BoxTitle } from '../../../Tools/Title';
 import { ErrModal } from '../../../Tools/errorModal';
 import { inputErrVar, joinBoxVar } from '../../../../styles/variants';
 import { ErrMsg } from '../../../Tools/Input';
@@ -88,7 +88,7 @@ export const UserAvatarBox = ({ isBox, createdId, theme }: IUserAvatarBox) => {
               variants={joinBoxVar}
               className="box"
             >
-              <BoxTitle theme={theme} type="create-userAvatar" />
+              <BoxTitle theme={theme} type="join-step3" />
               <form onSubmit={handleSubmit(onValid)}>
                 <Label htmlFor="avatar">
                   <ProfileAvatar
@@ -145,23 +145,16 @@ export const UserAvatarBox = ({ isBox, createdId, theme }: IUserAvatarBox) => {
   );
 };
 const Cont = styled(Box)`
+  width: fit-content;
   position: relative;
+  gap: 20px;
   padding: 40px;
+  align-items: center;
   .box-title {
-    gap: 12px;
-    width: 100%;
-    //border: 2px solid cornflowerblue;
-    .step {
-      margin-bottom: 0;
-    }
-    .wrap {
-      //border: 2px solid yellow;
-      .kor {
-        font-size: 0.9em;
-      }
-      .eng {
-        font-size: 1em;
-        margin-right: 5px;
+    width: fit-content;
+    .title-wrap {
+      h1 {
+        font-size: 2rem;
       }
     }
   }
