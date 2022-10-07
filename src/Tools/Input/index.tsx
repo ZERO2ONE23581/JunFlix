@@ -94,7 +94,7 @@ const Cont = styled.div`
 const Wrap = styled.div`
   position: relative;
 `;
-const ErrMsg = styled(motion.div)`
+export const ErrMsg = styled(motion.div)`
   padding: 5px;
   font-size: 0.55em;
   text-align: center;
@@ -114,7 +114,6 @@ const Input = styled(motion.input)`
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
-  border-style: solid;
   background-color: inherit;
   box-shadow: ${(p) => p.theme.boxShadow.input};
   ::placeholder {

@@ -7,7 +7,7 @@ import useUser from '../../../libs/client/useUser';
 import { IUserForm } from '../../../types/user';
 import styled from '@emotion/styled';
 import { Errors } from '../../../Tools/Errors';
-import { Title } from '../Create/Title';
+import { Title } from '../Create/title';
 import { Box } from '../../../../styles/global';
 import { IData } from '../../../types/global';
 import { UserBox } from './UserId';

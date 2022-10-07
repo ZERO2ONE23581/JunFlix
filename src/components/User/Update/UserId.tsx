@@ -9,7 +9,7 @@ import { Box } from '../../../../styles/global';
 import useUser from '../../../libs/client/useUser';
 import { IUserForm } from '../../../types/user';
 import { IData } from '../../../types/global';
-import { Title } from '../Create/Title';
+import { Title } from '../Create/title';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';

@@ -1,11 +1,8 @@
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { UseFormClearErrors } from 'react-hook-form';
-import userId from '../../pages/api/user/create/userId';
+import { Dispatch, SetStateAction } from 'react';
 import { Modal, Overlay } from '../../styles/global';
 import { ITheme } from '../../styles/theme';
-import { IJoinForm } from '../types/user';
 import { Btn } from './Button';
 import { Svg } from './Svg';
 
@@ -69,8 +66,9 @@ export const ErrModal = ({ error, theme, setDataErr }: IErrModal) => {
   );
 };
 const Cont = styled(Modal)`
-  min-width: 400px;
+  font-size: 2rem;
   padding: 40px;
+  min-width: 400px;
   padding-top: 50px;
   gap: 20px;
   display: flex;

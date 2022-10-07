@@ -6,7 +6,7 @@ import { IJoinForm, IJoinFormRes } from '../../../types/user';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
 import { ITheme } from '../../../../styles/theme';
 import { Btn } from '../../../Tools/Button';
-import { BoxTitle } from './Title';
+import { BoxTitle } from './title';
 import { ErrModal } from '../../../Tools/errorModal';
 import { Box, Flex } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -100,7 +100,7 @@ export const UserInfoBox = ({
                   className="back"
                   onClick={() => setUserId(false)}
                 />
-                <BoxTitle type="userInfo" theme={theme} />
+                <BoxTitle type="create-userInfo" theme={theme} />
                 <form onSubmit={handleSubmit(onValid)}>
                   <InputWrap
                     disabled

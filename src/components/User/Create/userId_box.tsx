@@ -1,4 +1,4 @@
-import { BoxTitle } from './Title';
+import { BoxTitle } from './title';
 import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
@@ -11,7 +11,11 @@ import { ErrModal } from '../../../Tools/errorModal';
 import useMutation from '../../../libs/client/useMutation';
 import { IJoinForm, IUserForm } from '../../../types/user';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { isMemberVar, joinBoxVar } from '../../../../styles/variants';
+import {
+  isMemberVar,
+  joinBoxVar,
+  TweenTrans,
+} from '../../../../styles/variants';
 import { Box } from '../../../../styles/global';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
 
@@ -58,10 +62,10 @@ export const UserIdBox = ({ theme, isBox, setSaveID, setNext }: IUserIdBox) => {
         }, 1000);
       }
     }
-  }, [data, setNext, setSaveID, setDataErr, errors, setLoading]);
+  }, [data, setNext, setSaveID, setDataErr, errors, setLoading, setTimeout]);
   //
   return (
-    <AnimatePresence initial={false}>
+    <AnimatePresence>
       {isBox && (
         <>
           {!Loading && (
@@ -73,9 +77,10 @@ export const UserIdBox = ({ theme, isBox, setSaveID, setNext }: IUserIdBox) => {
                 animate="animate"
                 custom={theme}
                 variants={joinBoxVar}
+                transition={TweenTrans}
               >
                 <div className="wrapper">
-                  <BoxTitle type="userId" theme={theme} />
+                  <BoxTitle type="create-userId" theme={theme} />
                   <form onSubmit={handleSubmit(onValid)}>
                     <InputWrap
                       id="userId"
@@ -121,7 +126,7 @@ export const UserIdBox = ({ theme, isBox, setSaveID, setNext }: IUserIdBox) => {
   );
 };
 const Cont = styled(Box)`
-  width: 420px;
+  width: 36vw;
   .wrapper {
     gap: 20px;
     display: flex;

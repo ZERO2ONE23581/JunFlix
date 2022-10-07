@@ -19,7 +19,43 @@ export const BoxTitle = ({ type, theme }: IBoxTitle) => {
     answer: '',
   });
   useEffect(() => {
-    if (type === 'userId')
+    if (type === 'new-password')
+      setText({
+        step: 'Step 3.',
+        title: {
+          kor: '새로운 비밀번호를 생성합니다.',
+          eng: 'Create new pasword.',
+        },
+        answer: 'join-userId',
+      });
+    if (type === 'verify_userId')
+      setText({
+        step: 'Step 1.',
+        title: {
+          kor: '아이디를 입력하여 본인임을 인증하세요.',
+          eng: 'Please type your id to verify yourself.',
+        },
+        answer: 'join-userId',
+      });
+    if (type === 'email_token')
+      setText({
+        step: 'Step 2.',
+        title: {
+          kor: '이메일로 부터 받은 토큰을 입력하세요.',
+          eng: 'Please type token you received from email.',
+        },
+        answer: 'join-userId',
+      });
+    if (type === 'find_userId')
+      setText({
+        step: 'Step 1.',
+        title: {
+          kor: '이메일을 입력하여 본인임을 인증하세요.',
+          eng: 'Please type your email to verify yourself.',
+        },
+        answer: 'join-userId',
+      });
+    if (type === 'create-userId')
       setText({
         step: 'Step 1.',
         title: {
@@ -28,7 +64,7 @@ export const BoxTitle = ({ type, theme }: IBoxTitle) => {
         },
         answer: 'join-userId',
       });
-    if (type === 'userInfo')
+    if (type === 'create-userInfo')
       setText({
         step: 'Step 2.',
         title: {
@@ -37,7 +73,7 @@ export const BoxTitle = ({ type, theme }: IBoxTitle) => {
         },
         answer: 'join-userInfo',
       });
-    if (type === 'userAvatar')
+    if (type === 'create-userAvatar')
       setText({
         step: '',
         title: {
@@ -52,13 +88,31 @@ export const BoxTitle = ({ type, theme }: IBoxTitle) => {
     <>
       <Cont className="box-title">
         <h1>
-          {type !== 'userAvatar' && (
+          {type === 'new-password' && (
+            <span>
+              <span className="eng">New Password</span>
+              <span className="kor">새로운 비밀번호</span>
+            </span>
+          )}
+          {type === 'verify_userId' && (
+            <span>
+              <span className="eng">Find Password</span>
+              <span className="kor">비밀번호 찾기</span>
+            </span>
+          )}
+          {(type === 'find_userId' || type === 'email_token') && (
+            <span>
+              <span className="eng">Find ID</span>
+              <span className="kor">아이디 찾기</span>
+            </span>
+          )}
+          {(type === 'create-userId' || type === 'create-userInfo') && (
             <span>
               <span className="eng">Join</span>
               <span className="kor">회원가입</span>
             </span>
           )}
-          {type == 'userAvatar' && <span>Avatar</span>}
+          {type == 'create-userAvatar' && <span>Avatar</span>}
           <Svg
             size="1em"
             theme={theme!}
@@ -75,9 +129,9 @@ export const BoxTitle = ({ type, theme }: IBoxTitle) => {
         </h2>
       </Cont>
       <Answer
+        type={type}
         theme={theme}
         isAnswer={answer}
-        type={text?.answer}
         closeModal={setAnswer}
       />
     </>
@@ -89,6 +143,7 @@ const Cont = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  flex-wrap: wrap;
   h1 {
     gap: 1rem;
     display: flex;

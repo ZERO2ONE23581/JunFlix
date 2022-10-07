@@ -2,12 +2,10 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../styles/global';
-import { AnimatePresence } from 'framer-motion';
 import { HeadTitle } from '../src/components/Head';
-import { UserInfoBox } from '../src/components/User/Create/UserInfoBox';
-import { UserIdBox } from '../src/components/User/Create/UserId';
-import { UserAvatarBox } from '../src/components/User/Create/avatar';
-import { LoadingModal } from '../src/Tools/Modal/Loading';
+import { UserInfoBox } from '../src/components/User/Create/userInfo_box';
+import { UserIdBox } from '../src/components/User/Create/userId_box';
+import { UserAvatarBox } from '../src/components/User/Create/userAvatar_box';
 
 const Join: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [savedID, setSaveID] = useState('');

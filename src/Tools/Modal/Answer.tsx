@@ -129,29 +129,35 @@ const Texts = (
           </li>
         </>
       )}
-      {type === 'verify-email' && (
+      {type === 'find_userId' && (
         <>
-          <li>인증을 위해 회원님의 이메일을 입력해주세요.</li>
           <li>올바른 이메일 형식을 입력해야 합니다.</li>
+          <li>인증을 위해 회원님의 이메일을 입력해주세요.</li>
+          <li>You need to type email in valid form.</li>
           <li>Please type your email to verification.</li>
-          <li>Email must be in valid form.</li>
         </>
       )}
-      {type === 'verify-token' && (
+      {type === 'email_token' && (
         <>
-          <li>인증을 위하여 6자리 인증번호를 입력해주세요.</li>
           <li>번호는 이메일을 통하여 확인할 수 있습니다.</li>
-          <li>Please type 6 digit number for verification.</li>
+          <li>인증을 위하여 6자리 인증번호를 입력해주세요.</li>
           <li>The number is sent to you email.</li>
+          <li>Type 6 digit number for verification.</li>
         </>
       )}
-      {type === 'verify-id' && (
+      {type === 'verify_userId' && (
         <>
           <li>인증을 위하여 아이디를 입력해주세요.</li>
+          <li>아이디 인증 후 이메일로 토큰을 받을 수 있습니다.</li>
+          <li>
+            아이디가 기억나지 않는다면 박스하단 '아이디 찾기'를 클릭하세요.
+          </li>
           <li>Please type your ID for verification.</li>
+          <li>You can receive token after verifying your id.</li>
+          <li>Click the link 'Find ID' below if you forgot your id.</li>
         </>
       )}
-      {type === 'join-userAvatar' && (
+      {type === 'create-userAvatar' && (
         <>
           <li>프로필 사진을 추가하려면 아이콘을 클릭하세요.</li>
           <li>프로필 사진은 추후에 수정 가능합니다.</li>
@@ -159,7 +165,7 @@ const Texts = (
           <li>You can edit picture later.</li>
         </>
       )}
-      {type === 'join-userInfo' && (
+      {type === 'create-userInfo' && (
         <>
           <li>이름을 적지 않으면 'Anonymous'로 자동저장 됩니다.</li>
           <li>유저의 이름은 옵션사항 입니다. 이름은 추후에 수정 가능합니다.</li>
@@ -171,7 +177,7 @@ const Texts = (
           </li>
         </>
       )}
-      {type === 'join-userId' && (
+      {type === 'create-userId' && (
         <>
           <li>아이디는 대소문자를 구분하지 않습니다.</li>
           <li>
@@ -183,10 +189,17 @@ const Texts = (
           </li>
         </>
       )}
-      {type === 'create-password' && (
+      {type === 'new-password' && (
         <>
-          <li>Please type your new password.</li>
           <li>새로운 비밀번호를 입력해주세요.</li>
+          <li>비밀번호는 최소 8자리, 최대 16자리 길이여야 합니다.</li>
+          <li>
+            비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야
+            합니다..
+          </li>
+          <li>Please type your new password.</li>
+          <li>Length of your password should be between min 8 and max 16.</li>
+          <li>Your password must include 1 or more special letters.</li>
         </>
       )}
       {type === 'edit-user-info' && (

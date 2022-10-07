@@ -5,19 +5,21 @@ import { IData } from '../src/types/global';
 import useMutation from '../src/libs/client/useMutation';
 import { ILoginForm } from '../src/types/user';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { HeadTitle } from '../src/components/Head';
 import { InputWrap } from '../src/Tools/Input';
 import { Btn } from '../src/Tools/Button';
-import { FindLink } from '../src/components/User/Read/Links/Find';
-import { Errors } from '../src/Tools/Errors';
 import { Box, Page } from '../styles/global';
-import { useNeedLogout } from '../src/libs/client/useTools';
 import { LoadingModal } from '../src/Tools/Modal/Loading';
+import { joinBoxVar } from '../styles/variants';
+import { ErrModal } from '../src/Tools/errorModal';
+import { AnimatePresence, motion } from 'framer-motion';
+import { FindUserWrap } from '../src/components/User/Read/Links/Find';
 
-const Login: NextPage = () => {
-  useNeedLogout();
+const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
+  const [Loading, setLoading] = useState(false);
+  const [dataErr, setDataErr] = useState('');
   const [login, { loading, data }] = useMutation<IData>(`/api/user/login`);
   const {
     watch,
@@ -27,49 +29,73 @@ const Login: NextPage = () => {
   } = useForm<ILoginForm>({ mode: 'onSubmit' });
 
   const onValid = ({ userId, password }: ILoginForm) => {
+    setLoading(true);
     if (loading) return;
     const userID = userId!.toUpperCase();
     return login({ userID, password });
   };
+
   useEffect(() => {
-    if (data?.error) alert(data.error);
-    if (data?.ok) {
-      router.replace('/');
+    if (data) {
+      setTimeout(() => {
+        setLoading(false);
+        if (data?.ok) return router.replace('/');
+        if (data?.error) return setDataErr(data.error);
+      }, 1000);
     }
-  }, [data, router]);
+  }, [data, router, setDataErr, setTimeout]);
+  //
   return (
     <>
       <HeadTitle title="로그인" />
       <Cont>
-        {!loading && (
-          <form onSubmit={handleSubmit(onValid)}>
-            <Box className="box">
-              <h1>Login</h1>
-              <InputWrap
-                id="userId"
-                type="text"
-                label="USER ID"
-                watch={watch('userId')}
-                register={register('userId', {
-                  required: '아이디를 입력해주세요.',
-                })}
-              />
-              <InputWrap
-                id="password"
-                type="password"
-                label="Password"
-                watch={watch('password')}
-                register={register('password', {
-                  required: '비밀번호를 입력해주세요.',
-                })}
-              />
-              <Btn name="로그인" type="submit" CLASSNAME="submit" />
-              <FindLink />
-              <Errors errors={errors} />
-            </Box>
-          </form>
-        )}
-        {loading && <LoadingModal type="loading" zIndex={991} />}
+        <AnimatePresence>
+          {!Loading && (
+            <>
+              <Box
+                className="box"
+                exit="exit"
+                initial="initial"
+                animate="animate"
+                custom={theme}
+                variants={joinBoxVar}
+              >
+                <h1>
+                  <span>Login</span>
+                  <span className="kor">로그인</span>
+                </h1>
+                <form onSubmit={handleSubmit(onValid)}>
+                  <InputWrap
+                    theme={theme}
+                    id="userId"
+                    type="text"
+                    label="USER ID"
+                    error={errors.userId?.message}
+                    watch={watch('userId')}
+                    register={register('userId', {
+                      required: '아이디를 입력해주세요.',
+                    })}
+                  />
+                  <InputWrap
+                    theme={theme}
+                    id="password"
+                    type="password"
+                    label="Password"
+                    error={errors.password?.message}
+                    watch={watch('password')}
+                    register={register('password', {
+                      required: '비밀번호를 입력해주세요.',
+                    })}
+                  />
+                  <Btn theme={theme} name="Login" type="submit" />
+                </form>
+                <FindUserWrap />
+              </Box>
+              <ErrModal error={dataErr} theme={theme} setDataErr={setDataErr} />
+            </>
+          )}
+          {Loading && <LoadingModal theme={theme} />}
+        </AnimatePresence>
       </Cont>
     </>
   );
@@ -77,13 +103,49 @@ const Login: NextPage = () => {
 export default Login;
 
 const Cont = styled(Page)`
-  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  .err-modal {
+    font-size: 2rem;
+  }
   .box {
-    max-width: 500px;
-    gap: 20px;
+    min-width: 520px;
+    min-height: 50vh;
+    width: 36vw;
+    max-width: 40vw;
+    max-height: 60vh;
     h1 {
-      font-size: 1.8rem;
-      margin-bottom: 8px;
+      //border: 2px solid blue;
+      gap: 12px;
+      display: flex;
+      align-items: flex-end;
+      .kor {
+        font-size: 0.8em;
+      }
+    }
+    form {
+      max-height: 250px;
+      gap: 20px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      button {
+        padding: 7px;
+      }
+      .input-wrap {
+        .err-msg {
+          margin-top: 20px;
+        }
+      }
+    }
+    .find-user-wrap {
+      //border: 2px solid pink;
+      div {
+        //border: 2px solid yellow;
+      }
     }
   }
 `;

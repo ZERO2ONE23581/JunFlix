@@ -47,6 +47,11 @@ export const Modal = styled(motion.article)`
   position: fixed;
   transform: translate(-50%, -50%);
   //
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  //
   padding: 30px;
   overflow: hidden;
   border-radius: 5px;
@@ -85,6 +90,7 @@ export const SmallModal = styled(Modal)`
   }
 `;
 export const BtnWrap = styled.div`
+  width: 100%;
   gap: 15px;
   display: flex;
   align-items: center;
@@ -139,14 +145,19 @@ export const Box = styled(motion.div)`
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   border: 1px solid ${(p) => p.theme.color.font};
   form {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    button {
+      width: 100%;
+    }
     .input-wrap {
       //border: 3px solid yellowgreen;
       width: 100%;
       .label-input {
         //border: 2px solid blue;
-        input {
-          border: none;
-        }
       }
       .err-msg {
         // border: 1px solid yellow;

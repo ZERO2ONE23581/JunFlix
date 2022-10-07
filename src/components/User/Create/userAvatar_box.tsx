@@ -9,12 +9,13 @@ import { IUserForm } from '../../../types/user';
 import { Answer } from '../../../Tools/Modal/Answer';
 import { IData } from '../../../types/global';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { ITheme } from '../../../../styles/theme';
 import { Btn } from '../../../Tools/Button';
-import { BoxTitle } from './Title';
+import { BoxTitle } from './title';
 import { ErrModal } from '../../../Tools/errorModal';
-import { joinBoxVar } from '../../../../styles/variants';
+import { inputErrVar, joinBoxVar } from '../../../../styles/variants';
+import { ErrMsg } from '../../../Tools/Input';
 
 interface IUserAvatarBox extends ITheme {
   isBox: boolean;
@@ -87,7 +88,7 @@ export const UserAvatarBox = ({ isBox, createdId, theme }: IUserAvatarBox) => {
               variants={joinBoxVar}
               className="box"
             >
-              <BoxTitle theme={theme} type="userAvatar" />
+              <BoxTitle theme={theme} type="create-userAvatar" />
               <form onSubmit={handleSubmit(onValid)}>
                 <Label htmlFor="avatar">
                   <ProfileAvatar
@@ -105,6 +106,18 @@ export const UserAvatarBox = ({ isBox, createdId, theme }: IUserAvatarBox) => {
                     accept="image/*"
                   />
                 </Label>
+                {errors.avatar?.message && (
+                  <ErrMsg
+                    exit="exit"
+                    initial="initial"
+                    animate="animate"
+                    custom={theme}
+                    variants={inputErrVar}
+                    className="err-msg"
+                  >
+                    {errors.avatar?.message}
+                  </ErrMsg>
+                )}
                 <BtnWrap className="btn-wrap">
                   <Btn
                     theme={theme}
