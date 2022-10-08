@@ -32,8 +32,8 @@ export const InputWrap = ({
   register,
   placeholder,
 }: IInput) => {
-  const [isFocus, setFocus] = useState(false);
-  const IsFocus = Boolean(isFocus || watch || disabled);
+  const [focus, setFocus] = useState(false);
+  const isFocus = Boolean(focus || watch || disabled);
   //
   return (
     <AnimatePresence initial={false}>
@@ -47,7 +47,12 @@ export const InputWrap = ({
               initial="initial"
               animate="animate"
               className={'input-label'}
-              custom={{ isFocus: IsFocus, theme: !theme, isDisabled: disabled }}
+              custom={{
+                id,
+                isFocus,
+                disabled,
+                theme: !theme,
+              }}
             >
               {label}
             </Label>
@@ -60,7 +65,7 @@ export const InputWrap = ({
             whileHover={'hover'}
             whileFocus={'focus'}
             transition={TweenTrans}
-            custom={{ isFocus: IsFocus, theme: !theme, isDisabled: disabled }}
+            custom={{ isFocus, theme: !theme, disabled }}
             //
             {...register}
             id={id}
@@ -102,7 +107,7 @@ export const ErrMsg = styled(motion.div)`
 `;
 const Label = styled(motion.label)`
   top: 50%;
-  left: 1em;
+  left: 1rem;
   z-index: 1;
   font-size: 1rem;
   position: absolute;

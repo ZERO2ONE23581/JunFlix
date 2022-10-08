@@ -20,7 +20,7 @@ import { ITheme } from '../../../../../../styles/theme';
 import { useCapLetters } from '../../../../../libs/client/useTools';
 import { Svg } from '../../../../../Tools/Svg';
 import { AnimatePresence, motion } from 'framer-motion';
-import { cicleVar, Circle } from '../../../../../../styles/variants';
+import { circleVar, Circle } from '../../../../../../styles/variants';
 
 interface IUserList extends ITheme {
   username: string;

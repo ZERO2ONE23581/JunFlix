@@ -84,7 +84,7 @@ export const UserBox = ({ theme, user }: IUserBox) => {
                 theme={theme}
                 type="button"
                 name="Edit Profile"
-                onClick={() => onClick('edit')}
+                onClick={() => onClick('update')}
               />
             )}
             <Btn

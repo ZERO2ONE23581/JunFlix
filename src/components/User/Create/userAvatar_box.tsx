@@ -129,13 +129,6 @@ export const UserAvatarBox = ({ isBox, createdId, theme }: IUserAvatarBox) => {
                 </BtnWrap>
               </form>
               <ErrModal theme={theme} error={dataErr} setDataErr={setDataErr} />
-              {answer && (
-                <Answer
-                  theme={theme}
-                  type="join-userAvatar"
-                  closeModal={setAnswer}
-                />
-              )}
             </Cont>
           )}
           {Loading && <LoadingModal theme={theme} />}

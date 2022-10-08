@@ -17,7 +17,7 @@ export const ListWrap = ({ theme }: ITheme) => {
       );
     if (type === 'setting')
       return router.push(
-        `/user/${loggedInUser?.id}/${loggedInUser?.username}/setting`
+        `/user/${loggedInUser?.id}/${loggedInUser?.username}/update`
       );
   };
   return (

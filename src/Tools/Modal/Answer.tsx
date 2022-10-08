@@ -112,12 +112,13 @@ export const Answer = ({
           <>
             <li>아이디는 대소문자를 구분하지 않습니다.</li>
             <li>
-              아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.
+              아이디는 기호를 제외한 영문자 또는{' '}
+              <span className="logo">6 - 20</span>자리 숫자를 포함해야합니다.
             </li>
             <li>ID can be either uppercase of lowercase.</li>
             <li>
-              ID must include Alphabets or 6 - 20 numbers without special
-              symbols.
+              ID must include Alphabets or <span className="logo">6 - 20</span>
+              numbers without special symbols.
             </li>
           </>
         )}
@@ -144,48 +145,39 @@ export const Answer = ({
         )}
         {type === 'edit-user3' && (
           <>
-            <li>이름과 유저이름은 10자를 초과할수 없습니다.</li>
             <li>올바른 이메일 형식을 입력해야 합니다.</li>
-            <li>Name and Username can't be more than 10 letters.</li>
+            <li>이름과 유저이름은 10자를 초과할수 없습니다.</li>
             <li>You need a valid email form.</li>
+            <li>Name and Username can't be more than 10 letters.</li>
           </>
         )}
         {type === 'edit-user2' && (
           <>
-            <li>현재 비밀번호를 입력하세요?</li>
+            <li>현재 비밀번호를 입력하세요.</li>
             <li>새로운 비밀번호를 입력하고 확인란에 재입력하세요.</li>
-            <li>Type your current Password.</li>
-            <li>Type your new password and retype it on the input beside.</li>
-            <li className="red">비밀번호가 기억나지 않습니까?</li>
-            <li className="red">You don't remember your current password?</li>
             <li>
-              <Link href="/user/find/password">
-                <a>&rarr; 비밀번호 찾기</a>
-              </Link>
+              비밀번호가 기억나지 않는다면 하단 '비밀번호 찾기' 링크를
+              클릭하세요.
             </li>
+            <li>Type your current Password.</li>
+            <li>Type your new password and retype it on the blank beside.</li>
+            <li>Click 'find pw' link if you can't remember your password.</li>
           </>
         )}
         {type === 'edit-user1' && (
           <>
+            <li>아이디는 대소문자를 구분하지 않습니다.</li>
             <li>
               아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.
             </li>
-            <li> 아이디는 대소문자를 구분하지 않습니다.</li>
+            <li> ID can be either uppercase of lowercase.</li>
             <li>
               Id must include Alphabets or 6 - 20 numbers without special
               symbols.
             </li>
-            <li> ID can be either uppercase of lowercase.</li>
-            <li className="red">아이디가 기억나지 않습니까?</li>
-            <li className="red">You don't remember your id?</li>
-            <li>
-              <Link href="/user/find/user_id">
-                <a>&rarr; 아이디 찾기</a>
-              </Link>
-            </li>
           </>
         )}
-        {type === 'delete-account' && (
+        {type === 'edit-user5' && (
           <>
             <li>계정은 삭제 후 복구가 불가합니다.</li>
             <li>You can't recover this account after delete.</li>
@@ -232,21 +224,21 @@ export const Answer = ({
         {type === 'create-board' && (
           <>
             <li>
-              소개글은 <span className="data">{boardMax?.intro}</span>이내여야
+              소개글은 <span className="logo">{boardMax?.intro}</span>이내여야
               합니다.
             </li>
             <li>
-              보드제목은 <span className="data">{boardMax?.title}</span>자
+              보드제목은 <span className="logo">{boardMax?.title}</span>자
               이내여야 합니다.
             </li>
             <li>보드의 사진을 추가하려면 아이콘을 클릭해주세요.</li>
             <li>
               Board title must be less than or equal to
-              <span className="data">{boardMax?.title}</span> words.
+              <span className="logo">{boardMax?.title}</span> words.
             </li>
             <li>
               Board intro must be less than or equal to
-              <span className="data">{boardMax?.intro}</span>
+              <span className="logo">{boardMax?.intro}</span>
               words.
             </li>
             <li>Please click the icon beside to add photo on your Board.</li>
@@ -328,10 +320,6 @@ export const Answer = ({
   );
 };
 const Cont = styled(Modal)`
-  .data {
-    margin: 0 8px;
-    color: ${(p) => p.theme.color.logo};
-  }
   font-size: 1.4rem;
   min-width: 300px;
   min-height: 300px;
@@ -344,5 +332,9 @@ const Cont = styled(Modal)`
       line-height: 30px;
       font-style: italic;
     }
+  }
+  .logo {
+    margin: 0 8px;
+    color: ${(p) => p.theme.color.logo};
   }
 `;

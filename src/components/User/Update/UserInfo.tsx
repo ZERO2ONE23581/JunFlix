@@ -65,6 +65,7 @@ export const UserInfo = () => {
             <Svg size="2rem" type="question" onClick={() => setAnswer(true)} />
           </h1>
           <InputWrap
+            theme={theme}
             id="username"
             type="text"
             label="Username"
@@ -77,6 +78,7 @@ export const UserInfo = () => {
             })}
           />
           <InputWrap
+            theme={theme}
             id="email"
             type="email"
             label="Email"
@@ -91,6 +93,7 @@ export const UserInfo = () => {
           />
           <Flex>
             <InputWrap
+              theme={theme}
               id="name"
               type="text"
               label="Name"
@@ -103,6 +106,7 @@ export const UserInfo = () => {
               })}
             />
             <InputWrap
+              theme={theme}
               id="birth"
               type="date"
               label="Birth"
@@ -117,6 +121,7 @@ export const UserInfo = () => {
               register={register('gender')}
             />
             <InputWrap
+              theme={theme}
               id="location"
               type="text"
               label="Location"

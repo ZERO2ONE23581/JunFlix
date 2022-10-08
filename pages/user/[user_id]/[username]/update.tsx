@@ -1,20 +1,11 @@
-import {
-  NeedLogin,
-  NeedLoginModal,
-} from '../../../../src/Tools/Modal/NeedLoginModal';
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Flex, Page } from '../../../../styles/global';
 import { Svg } from '../../../../src/Tools/Svg';
+import { Flex, Page } from '../../../../styles/global';
 import { HeadTitle } from '../../../../src/components/Head';
-import { DeleteUser } from '../../../../src/components/User/Delete';
-import { UserId } from '../../../../src/components/User/Update/UserId og';
-import { UserInfo } from '../../../../src/components/User/Update/UserInfo';
-import { Password } from '../../../../src/components/User/Update/Password';
-import { EditUserAvatar } from '../../../../src/components/Avatar/User/Edit';
 import { AnimatePresence, motion } from 'framer-motion';
-import { UpdateUser } from '../../../../src/components/User/Update/UpdateUser';
+import { UpdateUser } from '../../../../src/components/User/Update/UpdateBox';
 
 const EditUser: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [page, setPage] = useState(1);
@@ -29,6 +20,7 @@ const EditUser: NextPage<{ theme: boolean }> = ({ theme }) => {
       setPage((prev) => (prev === 1 ? 5 : prev - 1));
     }
   };
+  //
   return (
     <>
       <HeadTitle title="프로필 편집" />
@@ -48,17 +40,10 @@ const EditUser: NextPage<{ theme: boolean }> = ({ theme }) => {
                 animate="animate"
                 key={page}
                 custom={back}
-                variants={boxVars}
+                variants={slideVar}
                 className="box-cont"
               >
-                <>
-                  <UpdateUser theme={theme} type={`edit-user${page}`} />
-                  {/* {page === 1 && <UserId />}
-                    {page === 2 && <Password />}
-                    {page === 3 && <EditUserAvatar />}
-                    {page === 4 && <UserInfo />}
-                    {page === 5 && <DeleteUser />} */}
-                </>
+                <UpdateUser theme={theme} type={`edit-user${page}`} />
               </Box>
             </AnimatePresence>
           </div>
@@ -82,9 +67,9 @@ const Cont = styled(Page)`
   justify-content: center;
   .slider-flex {
     //border: 2px solid yellow;
-    width: 45vw;
+    width: 50vw;
     height: 55vh;
-    min-height: 330px;
+    min-height: 400px;
     align-items: center;
     justify-content: space-between;
     .wrap {
@@ -116,11 +101,11 @@ const Box = styled(motion.div)`
   .avatar {
   }
 `;
-const boxVars = {
+const slideVar = {
   initial: (back: boolean) => ({
     scale: 0,
     opacity: 0,
-    x: back ? -500 : 500,
+    x: back ? -1000 : 1000,
   }),
   animate: (back: boolean) => ({
     x: 0,
@@ -138,6 +123,6 @@ const boxVars = {
       type: 'tween',
       duration: 1,
     },
-    x: back ? 500 : -500,
+    x: back ? 1000 : -1000,
   }),
 };

@@ -18,6 +18,7 @@ import { ITheme } from '../../../../styles/theme';
 import { ErrModal } from '../../../Tools/errorModal';
 import { BoxTitle } from '../../../Tools/Title';
 import { joinBoxVar, TweenTrans } from '../../../../styles/variants';
+import { FindUserWrap } from '../Read/Links/Find';
 
 interface IUpdateUser extends ITheme {
   type: string;
@@ -34,13 +35,13 @@ export const UpdateUser = ({ type, theme }: IUpdateUser) => {
   //
   const router = useRouter();
   const { loggedInUser } = useUser();
-  const user_id = loggedInUser?.id;
+  const { user_id } = router.query;
   const userId = loggedInUser?.userId;
   //
   const [api, setApi] = useState('');
-  const [update, { loading, data }] = useMutation<IData>(api);
+  const [update, { loading, data }] = useMutation<IData>(api && api);
   useEffect(() => {
-    if (Type && user_id) setApi(`/api/user/${user_id}/edit/${Type}`);
+    if (Type && user_id) setApi(`/api/user/${user_id}/update/${Type}`);
   }, [setApi, Type, user_id]);
   //
   const {
@@ -61,22 +62,27 @@ export const UpdateUser = ({ type, theme }: IUpdateUser) => {
     if (loading) return;
     setLoading(true);
     if (Type === 'userId') {
-      if (userId) return update({ userId });
+      if (userId) return update({ userId: userId.toUpperCase() });
     }
   };
   useEffect(() => {
     if (data) {
-      setLoading(false);
-      if (Type === 'userId') {
-        setTimeout(() => {
+      setTimeout(() => {
+        setLoading(false);
+        if (!data.ok) {
           if (data.error) setDataErr(data.error);
-          if (data.ok) router.reload();
-        }, 1000);
-      }
+          if (data.message) setDataErr(data.message);
+        }
+        if (data.ok) {
+          if (data.message) setDataErr(data.message);
+          setTimeout(() => {
+            router.reload();
+          }, 2000);
+        }
+      }, 1000);
     }
   }, [data, Type, router, setDataErr, setLoading]);
   //
-  console.log(errors.userId);
   return (
     <>
       {!Loading && (
@@ -89,7 +95,8 @@ export const UpdateUser = ({ type, theme }: IUpdateUser) => {
           transition={TweenTrans}
           className="box"
         >
-          <h1>Edit</h1>
+          {type !== 'edit-user5' && <h1>Edit</h1>}
+          {type === 'edit-user5' && <h1 className="del">Delete</h1>}
           {type && <BoxTitle type={type} theme={theme} />}
           <form onSubmit={handleSubmit(onValid)}>
             <InputWrap
@@ -110,6 +117,7 @@ export const UpdateUser = ({ type, theme }: IUpdateUser) => {
             />
             <Btn theme={theme} name="Update" type="submit" />
           </form>
+          <FindUserWrap />
           <ErrModal error={dataErr} theme={theme} setDataErr={setDataErr} />
         </Cont>
       )}
@@ -118,26 +126,28 @@ export const UpdateUser = ({ type, theme }: IUpdateUser) => {
   );
 };
 export const Cont = styled(Box)`
-  width: 100%;
-  height: 100%;
+  min-width: 30vw;
+  min-height: 50vh;
   display: block;
+  .del {
+    color: red;
+  }
   h1 {
     font-size: 2.7rem;
     margin-bottom: 10px;
   }
+  .find-user-wrap {
+    margin-top: 20px;
+  }
   .box-title {
-    //border: 1px solid yellow;
     gap: 0px;
     margin-bottom: 30px;
     .title-wrap {
-      //border: 1px solid yellowgreen;
-      width: 100%;
       gap: 60px;
-      //padding-right: 10px;
-      //justify-content: space-between;
       h2 {
-        color: ${(p) => p.theme.color.logo};
         font-size: 1.7rem;
+        margin-bottom: 5px;
+        color: ${(p) => p.theme.color.logo};
         .kor {
           font-size: 1.4rem;
         }

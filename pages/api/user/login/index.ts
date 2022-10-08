@@ -21,6 +21,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!isMatch)
       return res.json({ ok: false, error: '비밀번호가 일치하지 않습니다.' });
 
+    //찾은 유저의 id -> 쿠키에 저장 (로그인하는 방법)
     req.session.user = {
       id: user.id,
     };

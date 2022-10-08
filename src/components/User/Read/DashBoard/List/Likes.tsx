@@ -8,7 +8,7 @@ import { BtnWrap } from '../../../../../../styles/global';
 import { Btn } from '../../../../../Tools/Button';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
-import { cicleVar, Circle } from '../../../../../../styles/variants';
+import { circleVar, Circle } from '../../../../../../styles/variants';
 
 export const MyLikes = ({ theme }: ITheme) => {
   const router = useRouter();
@@ -33,7 +33,7 @@ export const MyLikes = ({ theme }: ITheme) => {
                 exit="exit"
                 initial="initial"
                 animate="animate"
-                variants={cicleVar}
+                variants={circleVar}
               />
             )}
           </>
@@ -51,7 +51,7 @@ export const MyLikes = ({ theme }: ITheme) => {
                 exit="exit"
                 initial="initial"
                 animate="animate"
-                variants={cicleVar}
+                variants={circleVar}
               />
             )}
           </>

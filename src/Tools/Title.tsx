@@ -30,13 +30,13 @@ export const BoxTitle = ({ type, theme, boardMax }: IBoxTitle) => {
     if (type === 'edit-user5')
       setText({
         title: {
-          eng: 'Delete Account',
+          eng: 'Danger zone',
           kor: '계정삭제',
         },
         desc: {
           other: '',
-          kor: '계정은 삭제 후 복구가 불가 합니다.',
-          eng: 'Account can not be recovered once it is deleted.',
+          kor: '아 계정을 삭제하려면 아이디를 입력하세요.',
+          eng: 'Type your id to delete this account.',
         },
       });
     if (type === 'edit-user4')
@@ -47,8 +47,8 @@ export const BoxTitle = ({ type, theme, boardMax }: IBoxTitle) => {
         },
         desc: {
           other: '',
-          kor: '아이콘(혹은 사진)을 눌러 아바타를 선택하고 업데이트 버튼을 클릭하세요.',
-          eng: 'Click the icon to select picture and click the "Update" button.',
+          kor: '아이콘(혹은 사진)을 클릭하세요.',
+          eng: 'Click the icon (or picture).',
         },
       });
     if (type === 'edit-user3')
@@ -239,7 +239,13 @@ const Cont = styled(motion.div)`
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
+  .question {
+    top: -3px;
+    right: -50px;
+    position: absolute;
+  }
   .title-wrap {
+    position: relative;
     gap: 20px;
     display: flex;
     align-items: center;

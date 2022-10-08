@@ -134,23 +134,38 @@ export const joinBoxVar = {
     opacity: 0,
   }),
 };
+export const BoxBgVar = {
+  initial: (theme: boolean) => ({
+    color: theme ? '#000000' : '#ffffff',
+    backgroundColor: theme ? '#ffffff' : '#000000',
+  }),
+  animate: (theme: boolean) => ({
+    color: theme ? '#000000' : '#ffffff',
+    backgroundColor: theme ? '#ffffff' : '#000000',
+    transition: {
+      duration: 0.6,
+    },
+  }),
+  exit: (theme: boolean) => ({}),
+};
 export const labelVar = {
-  initial: ({ theme }: any) => ({
+  initial: ({ theme, id }: any) => ({
     opacity: 1,
     translateY: '-50%',
+    fontSize: '1.3rem',
     transition: { duration: 0.2 },
-    fontSize: '0.6em',
     color: !theme ? '#000000' : '#b2bec3',
     backgroundColor: theme ? '#000000' : '#ffffff',
   }),
-  animate: ({ isFocus, theme, isDisabled }: any) => ({
-    padding: '4px 10px',
-    width: 'fit-content',
-    transition: { duration: 0.2 },
-    fontSize: isFocus ? '0.5em' : '0.6em',
+  animate: ({ isFocus, theme, disabled, id }: any) => ({
+    opacity: 1,
+    transition: { duration: 0.1 },
+    padding: id === 'birth' ? '3px 20px' : '3px 10px',
+    width: isFocus ? 'fit-content' : '90%',
     translateY: isFocus ? '-150%' : '-50%',
+    fontSize: isFocus ? '1.1rem' : '1.3rem',
     backgroundColor: theme ? '#000000' : '#ffffff',
-    color: isDisabled
+    color: disabled
       ? '#636e72'
       : isFocus
       ? '#E50914'
@@ -164,69 +179,69 @@ export const labelVar = {
 };
 //border는 none, outline은 1px theme -> hover, focus시 3px logo색상
 export const inputVar = {
-  initial: ({ theme, isFocus, isDisabled, height }: any) => ({
-    color: isDisabled ? '#E50914' : theme ? '#ffffff' : '#000000',
+  initial: ({ theme, isFocus, disabled, height }: any) => ({
+    color: disabled ? '#E50914' : theme ? '#ffffff' : '#000000',
     backgroundColor: !theme ? '#ffffff' : '#000000',
     outline: isFocus
       ? '3px solid #E50914 '
-      : isDisabled
+      : disabled
       ? '3px solid #636e72'
       : theme
       ? '1px solid #ffffff'
       : '1px solid #000000',
   }),
-  animate: ({ theme, isFocus, isDisabled, height }: any) => ({
-    color: isDisabled ? '#636e72' : theme ? '#ffffff' : '#000000',
+  animate: ({ theme, isFocus, disabled, height }: any) => ({
+    color: disabled ? '#636e72' : theme ? '#ffffff' : '#000000',
     backgroundColor: !theme ? '#ffffff' : '#000000',
     outline: isFocus
       ? '3px solid #E50914 '
-      : isDisabled
+      : disabled
       ? '3px solid #636e72'
       : theme
       ? '1px solid #ffffff'
       : '1px solid #000000',
   }),
-  hover: ({ isDisabled }: any) => ({
+  hover: ({ disabled }: any) => ({
     transition: { duration: 0.2 },
-    outline: !isDisabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
+    outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
   }),
-  focus: ({ isDisabled }: any) => ({
+  focus: ({ disabled }: any) => ({
     transition: { duration: 0.2 },
-    outline: !isDisabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
+    outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
   }),
 };
 export const textAreaVar = {
-  initial: ({ theme, isFocus, isDisabled, height }: any) => ({
+  initial: ({ theme, isFocus, disabled, height }: any) => ({
     height: height ? height : '100%',
-    color: isDisabled ? '#E50914' : theme ? '#ffffff' : '#000000',
+    color: disabled ? '#E50914' : theme ? '#ffffff' : '#000000',
     backgroundColor: !theme ? '#ffffff' : '#000000',
     outline: isFocus
       ? '3px solid #E50914 '
-      : isDisabled
+      : disabled
       ? '3px solid #636e72'
       : theme
       ? '1px solid #ffffff'
       : '1px solid #000000',
   }),
-  animate: ({ theme, isFocus, isDisabled, height }: any) => ({
+  animate: ({ theme, isFocus, disabled, height }: any) => ({
     height: height ? height : '100%',
-    color: isDisabled ? '#636e72' : theme ? '#ffffff' : '#000000',
+    color: disabled ? '#636e72' : theme ? '#ffffff' : '#000000',
     backgroundColor: !theme ? '#ffffff' : '#000000',
     outline: isFocus
       ? '3px solid #E50914 '
-      : isDisabled
+      : disabled
       ? '3px solid #636e72'
       : theme
       ? '1px solid #ffffff'
       : '1px solid #000000',
   }),
-  hover: ({ isDisabled }: any) => ({
+  hover: ({ disabled }: any) => ({
     transition: { duration: 0.2 },
-    outline: !isDisabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
+    outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
   }),
-  focus: ({ isDisabled }: any) => ({
+  focus: ({ disabled }: any) => ({
     transition: { duration: 0.2 },
-    outline: !isDisabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
+    outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
   }),
 };
 export const inputErrVar = {
@@ -266,7 +281,7 @@ export const Circle = styled(motion.div)`
   border-radius: 100%;
   background-color: ${(p) => p.theme.color.logo};
 `;
-export const cicleVar = {
+export const circleVar = {
   initial: (theme: boolean) => ({
     opacity: 0,
   }),
