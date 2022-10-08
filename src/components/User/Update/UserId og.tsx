@@ -15,8 +15,9 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Answer } from '../../../Tools/Modal/Answer';
 import { Svg } from '../../../Tools/Svg';
+import { ITheme } from '../../../../styles/theme';
 
-export const UserId = () => {
+export const UserId = ({ theme }: ITheme) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
   const [editUserId, { loading, data }] = useMutation<IData>(
@@ -29,7 +30,6 @@ export const UserId = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IUserForm>({ mode: 'onSubmit' });
-
   useEffect(() => {
     if (loggedInUser?.userId) setValue('userId', loggedInUser?.userId);
   }, [loggedInUser, setValue]);
@@ -50,18 +50,8 @@ export const UserId = () => {
   return (
     <>
       {!loading && (
-        <form onSubmit={handleSubmit(onValid)}>
-          {answer && <Answer type="edit-user-info" closeModal={setAnswer} />}
-          <UserBox className="user-box">
-            <h1>
-              <span>USER ID</span>
-              <span className="small">(유저 아이디)</span>
-              <Svg
-                size="2rem"
-                type="question"
-                onClick={() => setAnswer(true)}
-              />
-            </h1>
+        <Cont className="user-box">
+          <form onSubmit={handleSubmit(onValid)}>
             <InputWrap
               id="userId"
               type="text"
@@ -72,41 +62,12 @@ export const UserId = () => {
               })}
             />
             <Btn name="Edit" type="submit" />
-            <Errors errors={errors} />
-          </UserBox>
-        </form>
+          </form>
+          <Errors errors={errors} />
+        </Cont>
       )}
       {loading && <LoadingModal type="loading" zIndex={99} />}
     </>
   );
 };
-export const UserBox = styled(motion.div)`
-  border: 3px solid ${(p) => p.theme.color.font};
-  border-radius: 5px;
-  padding: 20px 30px;
-  gap: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  h1 {
-    gap: 5px;
-    display: flex;
-    align-items: center;
-    span {
-      font-size: 1.5em;
-      margin-right: 5px;
-    }
-    .small {
-      font-size: 1.3em;
-    }
-  }
-  button {
-    width: 100%;
-  }
-  .flex {
-    gap: 15px;
-    display: flex;
-    align-items: center;
-  }
-`;
+export const Cont = styled(Box)``;

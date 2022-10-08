@@ -4,75 +4,38 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Blur, Page } from '../../../../styles/global';
-import { IData } from '../../../../src/types/global';
-import { Svg } from '../../../../src/Tools/Svg';
 import { HeadTitle } from '../../../../src/components/Head';
-import { UserList } from '../../../../src/components/User/Read/DashBoard/List';
-import { UserInfo } from '../../../../src/components/User/Read/DashBoard/UserInfo';
-import { FollowUserModal } from '../../../../src/Tools/Modal/Follow/User';
-import { FollowingBoards } from '../../../../src/components/User/Read/DashBoard/FollowingBoards';
+import { IGetUser } from '../../../../src/types/user';
 import useUser from '../../../../src/libs/client/useUser';
-import { Title } from '../../../../src/components/User/Read/DashBoard/Title';
+import { FollowUserModal } from '../../../../src/Tools/Modal/Follow/User';
+import { ListWrap } from '../../../../src/components/User/Read/DashBoard/List';
+import { UserBox } from '../../../../src/components/User/Read/DashBoard/UserInfo';
+import { FollowingBoards } from '../../../../src/components/User/Read/DashBoard/FollowingBoards';
 
 const DashBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
-  const { loggedInUser } = useUser();
   const { user_id } = router.query;
-  const { data } = useSWR<IData>(user_id && `/api/user/${user_id}`);
+  const { loggedInUser } = useUser();
+  const { data } = useSWR<IGetUser>(user_id && `/api/user/${user_id}`);
+  const username = data?.user?.username;
   //
+  const isBlur = false;
+  const isMyPage = loggedInUser?.id === Number(user_id);
   const [followModal, setFollowModal] = useState(false);
   const [unFollowModal, setUnFollowModal] = useState(false);
-  const { data: followData } = useSWR<IData>(
-    user_id && `/api/user/${user_id}/follow`
-  );
-  const isMyPage = loggedInUser?.id === Number(user_id);
-  const isFollowing = followData?.isFollowing;
-  const isBlur = !isMyPage && !isFollowing;
 
   return (
     <>
-      <HeadTitle title={`${data?.User?.username}'s Page`} />
+      <HeadTitle title={`${username}'s Page`} />
       <Cont>
-        <Title
-          isBlur={isBlur}
-          isMyPage={isMyPage}
-          isFollowing={isFollowing!}
-          setFollowModal={setFollowModal}
-          username={data?.User?.username!}
-          setUnFollowModal={setUnFollowModal}
-        />
-        <Wrap>
-          <UserInfo
-            userInfo={{
-              id: data?.User?.id!,
-              name: data?.User?.name!,
-              email: data?.User?.email!,
-              userId: data?.User?.userId!,
-              avatar: data?.User?.avatar!,
-              username: data?.User?.username!,
-            }}
-            counts={{
-              posts: data?.User?.posts.length!,
-              boards: data?.User?.boards.length!,
-              reviews: data?.User?.reviews.length!,
-            }}
-            follow={{
-              isFollowing: isFollowing!,
-              followers: data?.Followers!,
-              followings: data?.Followings!,
-            }}
-          />
+        <h1>{username}'s Dash Board</h1>
+        <Wrap className="wrap">
+          <UserBox user={data?.user!} theme={theme} />
           <Blur isBlur={isBlur} className="following-board">
             <FollowingBoards />
           </Blur>
         </Wrap>
-
-        {isBlur && (
-          <Svg type="lock" size="2.2rem" onClick={() => setFollowModal(true)} />
-        )}
-        <Blur isBlur={isBlur}>
-          <UserList username={data?.User?.username!} />
-        </Blur>
+        <ListWrap theme={theme} username={username!} />
       </Cont>
 
       {followModal && (
@@ -97,7 +60,33 @@ const DashBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
 export default DashBoard;
 
 const Cont = styled(Page)`
-  padding-top: 50px;
+  padding: 3em 10em;
+  > h1 {
+    font-size: 2em;
+    width: fit-content;
+    margin-bottom: 20px;
+  }
+  .wrap {
+    .user-profile {
+    }
+    .following-board {
+    }
+  }
+  .list-wrap {
+    .list {
+      min-height: 50vh;
+      height: 100%;
+      .likes-wrap {
+        min-height: 50vh;
+        .lists {
+          min-height: 40vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
   .lock {
     top: 65%;
     left: 50%;
@@ -121,7 +110,6 @@ const Wrap = styled.div`
     border-radius: 5px;
     min-height: 370px;
     max-height: 370px;
-    border: 2px solid blue;
     border: ${(p) => p.theme.border.thick};
     box-shadow: ${(p) => p.theme.boxShadow.nav};
     ::-webkit-scrollbar {

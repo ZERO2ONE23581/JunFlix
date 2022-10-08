@@ -6,7 +6,7 @@ import { ListWrap, Layer } from './Layer';
 import { Svg } from '../../../../Tools/Svg';
 import { ReviewModel } from '../../../../types/post';
 import { ReadDate } from '../../../../Tools/Date';
-import { ProfileAvatar } from '../../../Avatar/Profile';
+import { ProfileAvatar } from '../../../Avatar/profile';
 import { IReviewList } from '../../../../types/review';
 import { Fixed } from './Fixed';
 import { useCapLetter } from '../../../../libs/client/useTools';

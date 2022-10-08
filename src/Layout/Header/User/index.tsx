@@ -11,10 +11,7 @@ export const UserMenu = ({ theme }: ITheme) => {
   const router = useRouter();
   const [modal, setModal] = useState(false);
   const { isLoggedIn, loggedInUser } = useUser();
-  const textHover = {
-    scale: 1.25,
-    color: '#E50914',
-  };
+  //
   return (
     <Cont className="user-menu">
       {isLoggedIn && (
@@ -30,13 +27,23 @@ export const UserMenu = ({ theme }: ITheme) => {
       {!isLoggedIn && (
         <div className="unlogged-in">
           <motion.span
-            whileHover={textHover}
+            exit="exit"
+            initial="initial"
+            animate="animate"
+            whileHover={'hover'}
+            custom={!theme}
+            variants={loginTxtVar}
             onClick={() => router.push(`/user/login`)}
           >
             Login
           </motion.span>
           <motion.span
-            whileHover={textHover}
+            exit="exit"
+            initial="initial"
+            animate="animate"
+            whileHover={'hover'}
+            custom={!theme}
+            variants={loginTxtVar}
             onClick={() => router.push(`/user/join`)}
           >
             Join
@@ -46,7 +53,16 @@ export const UserMenu = ({ theme }: ITheme) => {
     </Cont>
   );
 };
-
+const loginTxtVar = {
+  hover: (theme: boolean) => ({
+    scale: 1.25,
+    color: '#E50914',
+    transition: { duration: 0.3 },
+  }),
+  exit: (theme: boolean) => ({ color: theme ? '#ffffff' : '#000000' }),
+  initial: (theme: boolean) => ({ color: theme ? '#ffffff' : '#000000' }),
+  animate: (theme: boolean) => ({ color: theme ? '#ffffff' : '#000000' }),
+};
 const Cont = styled.article`
   .unlogged-in {
     gap: 70px;

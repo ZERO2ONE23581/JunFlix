@@ -3,65 +3,75 @@ import styled from '@emotion/styled';
 import { IData } from '../../../../../types/global';
 import { Slider } from '../../../../../Tools/Slider';
 import { ReviewList } from '../../../../Review/Read/List';
+import { ITheme } from '../../../../../../styles/theme';
+import { BtnWrap } from '../../../../../../styles/global';
+import { Btn } from '../../../../../Tools/Button';
+import useSWR from 'swr';
+import { useRouter } from 'next/router';
+import { cicleVar, Circle } from '../../../../../../styles/variants';
 
-interface ILikesList {
-  data: IData;
-  username: string;
-}
-export const LikesList = ({ username, data }: ILikesList) => {
+export const MyLikes = ({ theme }: ITheme) => {
+  const router = useRouter();
+  const { user_id } = router.query;
   const [type, setType] = useState('post');
+  const { data } = useSWR<IData>(user_id && `/api/user/${user_id}/likes`);
+  //
+  console.log(type);
   return (
-    <Cont>
+    <Cont className="likes-wrap">
       <BtnWrap>
-        <Button
-          Type={type}
+        <Btn
+          theme={!theme}
           type="button"
-          likeType="post"
+          name={`${'username'}님이 좋아하는 포스트`}
           onClick={() => setType('post')}
         >
-          <span className="username">{username}</span>
-          <span>님이 좋아하는 포스트</span>
-        </Button>
-
-        <Button
-          Type={type}
+          <>
+            {type === 'post' && (
+              <Circle
+                className="circle"
+                exit="exit"
+                initial="initial"
+                animate="animate"
+                variants={cicleVar}
+              />
+            )}
+          </>
+        </Btn>
+        <Btn
+          theme={!theme}
           type="button"
-          likeType="review"
+          name={`${'username'}님이 좋아하는 리뷰`}
           onClick={() => setType('review')}
         >
-          <span className="username">{username}</span>
-          <span>님이 좋아하는 리뷰</span>
-        </Button>
+          <>
+            {type === 'review' && (
+              <Circle
+                className="circle"
+                exit="exit"
+                initial="initial"
+                animate="animate"
+                variants={cicleVar}
+              />
+            )}
+          </>
+        </Btn>
       </BtnWrap>
-
-      {type === 'post' && <Slider sliderType="post" sliderDetail="likes" />}
-      {type === 'review' && (
-        <ReviewList isMyPage reviews={data?.MyReviewLikes!} isLikesType />
-      )}
+      <div className="lists">
+        {type === 'post' && (
+          <Slider theme={theme} sliderType="post" sliderDetail="likes" />
+        )}
+        {type === 'review' && <ReviewList isMyPage reviews={[]} isLikesType />}
+      </div>
     </Cont>
   );
 };
 const Cont = styled.article`
-  margin-top: 30px;
-`;
-const BtnWrap = styled.div`
-  gap: 20px;
   width: 100%;
-  display: flex;
-  margin: 0 auto 20px;
-  align-items: center;
-  justify-content: space-around;
-`;
-const Button = styled.button<{ Type: string; likeType: string }>`
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  font-weight: 550;
-  padding-bottom: 5px;
-  background-color: inherit;
-  border-bottom: ${(p) =>
-    p.Type === p.likeType && `3px double ${p.theme.color.logo}`};
-  font-size: ${(p) => p.Type === p.likeType && '1.3rem'};
-  color: ${(p) =>
-    p.Type === p.likeType ? p.theme.color.logo : p.theme.color.font};
+  .child {
+    top: 120%;
+    .circle {
+      position: absolute;
+    }
+  }
 `;

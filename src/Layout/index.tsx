@@ -35,23 +35,28 @@ const Cont = styled.section<{ width?: number }>`
     min-width: ${(p) => p.width && `${p.width}px`};
     background-color: ${(p) => p.theme.color.bg};
   }
+  .header,
+  .footer {
+    padding: 0 10em;
+  }
   .header {
-    padding: 12px 10em;
-    //border: 2px solid hotpink;
+    min-height: 86px;
+    border: 2px solid hotpink;
     .logo {
       //border: 5px solid cornflowerblue;
     }
     .flex {
       width: 100%;
-      //border: 5px solid cornflowerblue;
+      border: 5px solid cornflowerblue;
       .main-menu {
         width: 50%;
-        //border: 2px solid yellow;
+        border: 2px solid yellow;
       }
       .user-menu {
-        //border: 2px solid red;
+        width: fit-content;
+        border: 3px solid red;
         .logged-in {
-          //border: 2px solid yellow;
+          border: 2px solid yellow;
         }
         .unlogged-in {
           //border: 2px solid yellow;
@@ -63,11 +68,11 @@ const Cont = styled.section<{ width?: number }>`
     }
   }
   .footer {
-    padding: 0 12em;
-    border: 1px solid blue;
+    //border: 1px solid blue;
   }
+  //배경이 들어감으로 패딩을 직접 주지 말것
   .children {
-    //border: 10px solid orange;
+    padding: 0;
     .home {
       .movie-wrap,
       .post-board-wrap {

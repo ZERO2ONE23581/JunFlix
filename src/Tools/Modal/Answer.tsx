@@ -58,21 +58,6 @@ export const Answer = ({
             <li>Click the review title to see the review.</li>
           </>
         )}
-        {type === 'edit-password' && (
-          <>
-            <li>현재 비밀번호를 입력하세요?</li>
-            <li>새로운 비밀번호를 입력하고 확인란에 재입력하세요.</li>
-            <li>Type your current Password.</li>
-            <li>Type your new password and retype it on the input beside.</li>
-            <li className="red">비밀번호가 기억나지 않습니까?</li>
-            <li className="red">You don't remember your current password?</li>
-            <li>
-              <Link href="/user/find/password">
-                <a>&rarr; 비밀번호 찾기</a>
-              </Link>
-            </li>
-          </>
-        )}
         {type === 'find-id-step1' && (
           <>
             <li>올바른 이메일 형식을 입력해야 합니다.</li>
@@ -149,7 +134,15 @@ export const Answer = ({
             <li>Your password must include 1 or more special letters.</li>
           </>
         )}
-        {type === 'edit-user-info' && (
+        {type === 'edit-user4' && (
+          <>
+            <li>
+              프로필 사진을 수정하거나 만드려면 아이콘 (프로필 사진)을 누르세요.
+            </li>
+            <li>Click the icon (picture) to edit or create profile picture.</li>
+          </>
+        )}
+        {type === 'edit-user3' && (
           <>
             <li>이름과 유저이름은 10자를 초과할수 없습니다.</li>
             <li>올바른 이메일 형식을 입력해야 합니다.</li>
@@ -157,7 +150,22 @@ export const Answer = ({
             <li>You need a valid email form.</li>
           </>
         )}
-        {type === 'edit-id' && (
+        {type === 'edit-user2' && (
+          <>
+            <li>현재 비밀번호를 입력하세요?</li>
+            <li>새로운 비밀번호를 입력하고 확인란에 재입력하세요.</li>
+            <li>Type your current Password.</li>
+            <li>Type your new password and retype it on the input beside.</li>
+            <li className="red">비밀번호가 기억나지 않습니까?</li>
+            <li className="red">You don't remember your current password?</li>
+            <li>
+              <Link href="/user/find/password">
+                <a>&rarr; 비밀번호 찾기</a>
+              </Link>
+            </li>
+          </>
+        )}
+        {type === 'edit-user1' && (
           <>
             <li>
               아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.
@@ -175,14 +183,6 @@ export const Answer = ({
                 <a>&rarr; 아이디 찾기</a>
               </Link>
             </li>
-          </>
-        )}
-        {type === 'edit-user-avatar' && (
-          <>
-            <li>
-              프로필 사진을 수정하거나 만드려면 아이콘 (프로필 사진)을 누르세요.
-            </li>
-            <li>Click the icon (picture) to edit or create profile picture.</li>
           </>
         )}
         {type === 'delete-account' && (

@@ -74,13 +74,6 @@ export interface IUseform {
 export interface IData {
   ok?: boolean;
   error?: string;
-  User?: TheUser;
-  isFollowing?: boolean;
-  FollowingUser?: Following;
-  Followers?: Following[];
-  Followings?: Following[];
-  MyPostLikes?: PostModel[];
-  MyReviewLikes?: ReviewModel[];
   [key: string]: any;
 }
 interface TheUser extends User {

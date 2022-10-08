@@ -6,8 +6,6 @@ import { ITheme } from '../../styles/theme';
 import { hoverTextVar, modalVar } from '../../styles/variants';
 import { useCapLetters } from '../libs/client/useTools';
 import useUser from '../libs/client/useUser';
-import { Btn } from './Button';
-import { Svg } from './Svg';
 
 interface INoData extends ITheme {
   type: string;
@@ -35,7 +33,13 @@ export const NoData = ({ type, theme }: INoData) => {
   };
   //
   return (
-    <Cont variants={modalVar} exit="exit" initial="initial" animate="animate">
+    <Cont
+      className="no-data"
+      variants={modalVar}
+      exit="exit"
+      initial="initial"
+      animate="animate"
+    >
       <span className="emoji">🤔</span>
       <div className="wrap">
         <span className="eng">
@@ -76,7 +80,6 @@ export const NoData = ({ type, theme }: INoData) => {
   );
 };
 const Cont = styled(motion.div)`
-  border: 2px solid yellow;
   font-size: 1.5rem;
   gap: 10px;
   display: flex;

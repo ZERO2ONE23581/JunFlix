@@ -14,7 +14,7 @@ const Entrance: NextPage<{ theme: boolean }> = ({ theme }) => {
     setTimeout(() => {
       router.replace(`/home`);
     }, 3000);
-  }, [router, isLoggedIn]);
+  }, [router]);
   return (
     <>
       <HeadTitle title="Welcome Page" />

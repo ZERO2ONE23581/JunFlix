@@ -1,3 +1,6 @@
+import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
+
 export const themeColorTrans = (theme: boolean) => ({
   color: theme ? '#000000' : '#ffffff',
   backgroundColor: theme ? '#ffffff' : '#000000',
@@ -255,5 +258,24 @@ export const answerVar = {
   exit: (theme: boolean) => ({
     opacity: 0,
     transition: { duration: 0.6 },
+  }),
+};
+export const Circle = styled(motion.div)`
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 100%;
+  background-color: ${(p) => p.theme.color.logo};
+`;
+export const cicleVar = {
+  initial: (theme: boolean) => ({
+    opacity: 0,
+  }),
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    transition: { duration: 0.4 },
+  }),
+  exit: (theme: boolean) => ({
+    opacity: 0,
+    transition: { duration: 0.4 },
   }),
 };

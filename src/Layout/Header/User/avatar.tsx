@@ -13,55 +13,7 @@ export const UserAvatarIcon = ({ avatar, setModal, theme }: IUserAvatar) => {
   const variant = 'public';
   const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
   const url = `${base}/${avatar}/${variant}`;
-  const avatarVar = {
-    initial: (theme: boolean) => ({
-      opacity: 0,
-      border: theme ? '1px solid #ffffff' : '1px solid #000000',
-    }),
-    animate: (theme: boolean) => ({
-      opacity: 1,
-      transition: { duration: 0.3 },
-      border: theme ? '1px solid #ffffff' : '1px solid #000000',
-    }),
-    exit: (theme: boolean) => ({
-      opacity: 0,
-      transition: { duration: 0.3 },
-    }),
-    hover: {
-      scale: 1.3,
-      borderRadius: '100%',
-      border: '3px solid #E50914',
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
-  const noAvatarVar = {
-    initial: (theme: boolean) => ({
-      opacity: 0,
-      backgroundColor: theme ? '#000000' : '#ffffff',
-      border: theme ? '1px solid #ffffff' : '1px solid #000000',
-    }),
-    animate: (theme: boolean) => ({
-      opacity: 1,
-      transition: { duration: 0.3 },
-      backgroundColor: theme ? '#000000' : '#ffffff',
-      border: theme ? '1px solid #ffffff' : '1px solid #000000',
-    }),
-    exit: (theme: boolean) => ({
-      opacity: 0,
-      transition: { duration: 0.3 },
-    }),
-    hover: {
-      scale: 1.1,
-      borderRadius: '100%',
-      border: '1px solid #E50914',
-      backgroundColor: '#E50914',
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
+  //
   return (
     <>
       {avatar && (
@@ -115,3 +67,52 @@ const NoAvatar = styled(motion.div)`
     pointer-events: none;
   }
 `;
+const avatarVar = {
+  initial: (theme: boolean) => ({
+    opacity: 0,
+    border: theme ? '1px solid #ffffff' : '1px solid #000000',
+  }),
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    transition: { duration: 0.3 },
+    border: theme ? '1px solid #ffffff' : '1px solid #000000',
+  }),
+  exit: (theme: boolean) => ({
+    opacity: 0,
+    transition: { duration: 0.3 },
+  }),
+  hover: {
+    scale: 1.3,
+    borderRadius: '100%',
+    border: '3px solid #E50914',
+    transition: {
+      duration: 0.3,
+    },
+  },
+};
+const noAvatarVar = {
+  initial: (theme: boolean) => ({
+    opacity: 0,
+    backgroundColor: theme ? '#000000' : '#ffffff',
+    border: theme ? '1px solid #ffffff' : '1px solid #000000',
+  }),
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    transition: { duration: 0.3 },
+    backgroundColor: theme ? '#000000' : '#ffffff',
+    border: theme ? '1px solid #ffffff' : '1px solid #000000',
+  }),
+  exit: (theme: boolean) => ({
+    opacity: 0,
+    transition: { duration: 0.3 },
+  }),
+  hover: {
+    scale: 1.1,
+    borderRadius: '100%',
+    border: '1px solid #E50914',
+    backgroundColor: '#E50914',
+    transition: {
+      duration: 0.3,
+    },
+  },
+};

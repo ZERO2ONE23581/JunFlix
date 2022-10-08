@@ -7,7 +7,7 @@ import { ConfirmModal } from '../../Tools/Modal';
 import useUser from '../../libs/client/useUser';
 import useMutation from '../../libs/client/useMutation';
 import { Errors } from '../../Tools/Errors';
-import { UserBox } from './Update/UserId';
+import { UserBox } from './Update/UserId og';
 import { Svg } from '../../Tools/Svg';
 import { Answer } from '../../Tools/Modal/Answer';
 import { Btn } from '../../Tools/Button';

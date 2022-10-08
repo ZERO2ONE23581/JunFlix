@@ -15,7 +15,7 @@ export const Detail = ({
   isMyDash,
 }: IDetail) => {
   return (
-    <Cont>
+    <UserDetail>
       <Flex>
         <li className="username">
           <label>Username</label>
@@ -38,14 +38,14 @@ export const Detail = ({
           </li>
         </Flex>
       )}
-    </Cont>
+    </UserDetail>
   );
 };
-const Cont = styled.ul`
+const UserDetail = styled.ul`
   gap: 20px;
   display: flex;
-  flex-direction: column;
   margin-top: 20px;
+  flex-direction: column;
 `;
 const Flex = styled.div`
   gap: 50px;

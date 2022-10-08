@@ -50,7 +50,7 @@ export const BoxArray = ({ type, array, reverse, theme }: IBoxArray) => {
   };
   const isPost = Boolean(type.sliderType === 'post');
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {!isPost &&
         array?.map((data: any) => (
           <Box

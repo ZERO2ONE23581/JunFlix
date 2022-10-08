@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { ProfileAvatar } from '../../../Avatar/Profile';
+import { ProfileAvatar } from '../../../Avatar/profile';
 import { IGetFollowInfo } from '../../../../types/board';
 
 export const FollowingBoards = () => {
@@ -44,10 +44,10 @@ const Cont = styled.article`
   h1 {
     font-weight: 500;
     font-size: 1.6rem;
-    margin-bottom: 15px;
-    span {
-      margin-right: 5px;
-    }
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    //border: 1px solid white;
     .kor,
     .count {
       font-size: 1.4rem;

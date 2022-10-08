@@ -7,13 +7,16 @@ import { Page } from '../../../../styles/global';
 import { IData } from '../../../../src/types/global';
 import { HeadTitle } from '../../../../src/components/Head';
 import { useNoAuthority } from '../../../../src/libs/client/useTools';
-import { ProfileAvatar } from '../../../../src/components/Avatar/Profile';
+import { ProfileAvatar } from '../../../../src/components/Avatar/profile';
 import { Info } from '../../../../src/components/User/Read/DashBoard/Profile/Info';
 import { Counts } from '../../../../src/components/User/Read/DashBoard/UserInfo/Counts';
 import { UserFollow } from '../../../../src/components/User/Read/DashBoard/UserInfo/UserFollow';
 
 const MyProfile: NextPage<{ theme: boolean }> = ({ theme }) => {
-  useNoAuthority();
+  const Text = (type: string) => {
+    if (type) return type;
+    if (!type) return 'N/A';
+  };
   const router = useRouter();
   const { user_id } = router.query;
   const { data } = useSWR<IData>(user_id && `/api/user/${user_id}`);

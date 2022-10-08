@@ -1,8 +1,13 @@
-import { User } from '@prisma/client';
+import { Board, Post, Review, User } from '@prisma/client';
 import { IData } from './global';
 
+export interface UserType extends User {
+  posts: Post[];
+  boards: Board[];
+  review: Review[];
+}
 export interface IGetUser extends IData {
-  user: User;
+  user: UserType;
 }
 export interface IUserForm {
   userId?: string;

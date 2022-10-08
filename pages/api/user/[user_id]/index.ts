@@ -7,7 +7,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user_id } = req.query;
   if (!user_id) return res.json({ ok: false, error: 'query error' });
   //
-  const User = await client.user.findUnique({
+  const user = await client.user.findUnique({
     where: { id: +user_id },
     include: { boards: true, posts: true, reviews: true },
   });
@@ -32,7 +32,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   });
   const Followings = following.filter((p) => !p.BoardID);
   //
-  return res.json({ ok: true, User, Followers, Followings });
+  return res.json({ ok: true, user, Followers, Followings });
 }
 export default withApiSession(
   withHandler({ methods: ['GET'], handler, isPrivate: false })

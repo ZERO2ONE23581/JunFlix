@@ -10,9 +10,10 @@ import { Errors } from '../../../Tools/Errors';
 import { Title } from '../../../Tools/Title';
 import { Box } from '../../../../styles/global';
 import { IData } from '../../../types/global';
-import { UserBox } from './UserId';
+import { UserBox } from './UserId og';
+import { ITheme } from '../../../../styles/theme';
 
-export const Password = () => {
+export const Password = ({ theme }: ITheme) => {
   const { loggedInUser } = useUser();
   const [editPassword, { loading, data }] = useMutation<IData>(
     `/api/user/${loggedInUser?.id}/edit/password`

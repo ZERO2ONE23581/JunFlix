@@ -58,7 +58,7 @@ export const NewPassword = ({
       }, 1000);
     }
   }, [data, setModal, setDataErr, setLoading, setTimeout]);
-  console.log(data);
+
   return (
     <AnimatePresence>
       {isBox && (

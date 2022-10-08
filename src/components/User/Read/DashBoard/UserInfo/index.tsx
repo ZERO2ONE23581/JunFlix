@@ -1,102 +1,175 @@
 import styled from '@emotion/styled';
-import { Following } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { Blur, SmallModal } from '../../../../../../styles/global';
+import {
+  Blur,
+  BtnWrap,
+  Flex,
+  SmallModal,
+} from '../../../../../../styles/global';
 import useUser from '../../../../../libs/client/useUser';
-import { ProfileAvatar } from '../../../../Avatar/Profile';
+import { ProfileAvatar } from '../../../../Avatar/profile';
 import { ModalBtn } from '../../../../../Tools/Button/Modal/User';
 import { Svg } from '../../../../../Tools/Svg';
 import { Counts } from './Counts';
-import { Detail } from './Detail';
 import { UserFollow } from './UserFollow';
+import { ITheme } from '../../../../../../styles/theme';
+import { UserType } from '../../../../../types/user';
+import { Btn } from '../../../../../Tools/Button';
+import { motion } from 'framer-motion';
+import { joinBoxVar, TweenTrans } from '../../../../../../styles/variants';
 
-interface IProflie {
-  userInfo: {
-    id: number;
-    name: string;
-    email: string;
-    userId: string;
-    avatar: string;
-    username: string;
-  };
-  counts: {
-    boards: number;
-    posts: number;
-    reviews: number;
-  };
-  follow: {
-    isFollowing: boolean;
-    followers: Following[];
-    followings: Following[];
-  };
+interface IUserBox extends ITheme {
+  user: UserType;
 }
-export const UserInfo = ({ userInfo, counts, follow }: IProflie) => {
+export const UserBox = ({ theme, user }: IUserBox) => {
   const router = useRouter();
-  const { user_id } = router.query;
   const { loggedInUser } = useUser();
-  const [setting, setSetting] = useState(false);
   const [modal, setModal] = useState(false);
-  const isMyDash = Boolean(loggedInUser?.id === Number(user_id));
+  const isMyDash = Boolean(loggedInUser?.id === user?.id);
+  const onClick = (type: string) =>
+    router.push(`/user/${user.id}/${user.username}/${type}`);
   return (
     <>
-      <Box className="user-profile">
-        <div className="flex">
-          <ProfileAvatar size={'8rem'} avatar={userInfo?.avatar} />
-          {userInfo && (
-            <Detail
-              isMyDash={isMyDash}
-              name={userInfo.name}
-              email={userInfo.email}
-              userId={userInfo.userId}
-              username={userInfo.username}
+      {user && (
+        <Cont
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          custom={theme}
+          variants={joinBoxVar}
+          transition={TweenTrans}
+          className="user-profile"
+        >
+          <Flex className="flex">
+            <ProfileAvatar
+              size="10em"
+              theme={theme}
+              type={{ avatar: user?.avatar, preview: '' }}
             />
-          )}
-          {isMyDash && (
-            <Svg type="setting" size="2rem" onClick={() => setSetting(true)} />
-          )}
-        </div>
-
-        <FollowCounts>
-          <Svg type="users" size="2rem" onClick={() => setModal(true)} />
-          <li>
-            <label>
-              {follow?.followers?.length > 1 ? 'Followers' : 'Follower'}
-            </label>
-            <span>{follow?.followers?.length}</span>
-          </li>
-          <li>
-            <label>
-              {follow?.followings?.length > 1 ? 'Following' : 'Followings'}
-            </label>
-            <span>{follow?.followings?.length}</span>
-          </li>
-        </FollowCounts>
-
-        <Counts
-          counts={{
-            posts: counts.posts,
-            boards: counts.boards,
-            reviews: counts.reviews,
-          }}
-          user={{ ID: userInfo?.id!, username: userInfo?.username! }}
-        />
-      </Box>
-
-      {setting && <ModalBtn setSetting={setSetting} />}
-      {modal && (
+            <Detail className="detail">
+              <h1>
+                <label>Username</label>
+                <span>{user.username}</span>
+              </h1>
+              <ul className="follow">
+                <li>
+                  <label>Follower:</label>
+                  <span>0</span>
+                </li>
+                <li>
+                  <label>Following:</label>
+                  <span>0</span>
+                </li>
+              </ul>
+              <ul className="contents">
+                <li>
+                  <label>Boards:</label>
+                  <span>0</span>
+                </li>
+                <li>
+                  <label>Posts:</label>
+                  <span>0</span>
+                </li>
+                <li>
+                  <label>Reviews:</label>
+                  <span>0</span>
+                </li>
+              </ul>
+            </Detail>
+          </Flex>
+          <BtnWrap className="btn-wrap">
+            {isMyDash && (
+              <Btn
+                theme={theme}
+                type="button"
+                name="Edit Profile"
+                onClick={() => onClick('edit')}
+              />
+            )}
+            <Btn
+              theme={theme}
+              type="button"
+              name="See Profile"
+              onClick={() => onClick('profile')}
+            />
+          </BtnWrap>
+        </Cont>
+      )}
+      {/* {modal && (
         <Modal>
-          <Svg type="close" onClick={() => setModal(false)} size="2rem" />
+          <Svg
+            size="2rem"
+            type="close"
+            theme={theme}
+            onClick={() => setModal(false)}
+          />
           <UserFollow follow={follow} setModal={setModal} />
         </Modal>
-      )}
+      )} */}
     </>
   );
 };
+const Cont = styled(motion.article)`
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  .flex {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .btn-wrap {
+    button {
+      padding: 7px;
+      font-size: 1rem;
+    }
+  }
+`;
+const Detail = styled.div`
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 1.6em;
+  width: fit-content;
+  label {
+    font-size: 1.2rem;
+    color: ${(p) => p.theme.color.logo};
+  }
+  h1 {
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    span {
+      font-size: 2.3rem;
+    }
+  }
+  ul {
+    width: fit-content;
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    li {
+      width: 100%;
+      gap: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .contents {
+    li {
+      flex-direction: row;
+    }
+  }
+`;
+
 const Modal = styled(SmallModal)`
   width: 80vw;
   height: 80vh;
-  justify-content: flex-start;
   > article {
     border: none;
   }
@@ -115,21 +188,6 @@ const Modal = styled(SmallModal)`
           font-style: normal;
         }
       }
-    }
-  }
-`;
-const Box = styled.article`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  .flex {
-    gap: 50px;
-    display: flex;
-    position: relative;
-    .setting {
-      top: 0;
-      right: 0;
-      position: absolute;
     }
   }
 `;

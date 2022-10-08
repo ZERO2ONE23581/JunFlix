@@ -6,7 +6,7 @@ import { IReview } from '../../../../types/review';
 import useUser from '../../../../libs/client/useUser';
 import { TextArea } from '../../../../Tools/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
-import { ProfileAvatar } from '../../../Avatar/Profile';
+import { ProfileAvatar } from '../../../Avatar/profile';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ICmtRes, ICmtForm } from '../../../../types/comments';
 import { useLength } from '../../../../libs/client/useTools';

@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../../Tools/Svg';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
+import { Svg } from '../../../../Tools/Svg';
+import { ITheme } from '../../../../../styles/theme';
 import useUser from '../../../../libs/client/useUser';
 import { ListHover, SpringTrans } from '../../../../../styles/variants';
-import { ITheme } from '../../../../../styles/theme';
 
 export const ListWrap = ({ theme }: ITheme) => {
   const router = useRouter();
@@ -13,7 +13,7 @@ export const ListWrap = ({ theme }: ITheme) => {
     if (type === 'logout') return router.push(`/api/user/logout`);
     if (type === 'dash')
       return router.push(
-        `/user/${loggedInUser?.id}/${loggedInUser?.username}/dashboard`
+        `/user/${loggedInUser?.id}/${loggedInUser?.username}/dash`
       );
     if (type === 'setting')
       return router.push(

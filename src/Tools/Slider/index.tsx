@@ -10,6 +10,7 @@ import useUser from '../../libs/client/useUser';
 import { useCapLetter } from '../../libs/client/useTools';
 import { useRouter } from 'next/router';
 import { ITheme } from '../../../styles/theme';
+import { motion } from 'framer-motion';
 
 interface ISlider extends ITheme {
   pageType?: string;
@@ -38,7 +39,8 @@ export const Slider = ({
   useEffect(() => {
     if (sliderType === 'board') setApi(`/api/boards`);
     if (sliderType === 'post') {
-      if (sliderDetail === 'likes') setApi(`/api/user/${user_id}/likes`);
+      if (sliderDetail === 'likes' && user_id)
+        setApi(`/api/user/${user_id}/likes`);
       else setApi(`/api/posts`);
     }
     if (sliderType === 'movie') {
@@ -145,7 +147,9 @@ export const Slider = ({
     </Cont>
   );
 };
-const Cont = styled.section``;
+const Cont = styled(motion.article)`
+  width: 100%;
+`;
 const Flex = styled.article<{ isSingleRow: boolean }>`
   gap: 5px;
   width: 100%;

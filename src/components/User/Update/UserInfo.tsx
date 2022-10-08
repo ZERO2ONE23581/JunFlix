@@ -10,7 +10,7 @@ import useUser from '../../../libs/client/useUser';
 import { IUserForm } from '../../../types/user';
 import { Errors } from '../../../Tools/Errors';
 import { IData } from '../../../types/global';
-import { UserBox } from './UserId';
+import { UserBox } from './UserId og';
 import { Svg } from '../../../Tools/Svg';
 import { Answer } from '../../../Tools/Modal/Answer';
 

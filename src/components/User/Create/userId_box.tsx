@@ -112,8 +112,12 @@ export const UserIdBox = ({ theme, isBox, setSaveID, setNext }: IUserIdBox) => {
                   <span>Already a member?</span>
                   <span>&rarr;</span>
                 </LoginLink>
+                <ErrModal
+                  theme={theme}
+                  error={dataErr}
+                  setDataErr={setDataErr}
+                />
               </Cont>
-              <ErrModal error={dataErr} theme={theme} setDataErr={setDataErr} />
             </>
           )}
           {Loading && <LoadingModal theme={theme} />}

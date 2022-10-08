@@ -5,54 +5,25 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 interface IProfile extends ITheme {
   size?: string;
+  onClick?: () => void;
   type: {
     preview?: string;
     avatar?: string | null;
   };
-  onClick?: () => void;
 }
 export const ProfileAvatar = ({ size, type, onClick, theme }: IProfile) => {
-  const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
   const variant = 'public';
   const [url, setUrl] = useState('');
+  const isNoImg = Boolean(!type?.avatar && !type?.preview);
+  const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
+  //
   useEffect(() => {
-    if (type.avatar) setUrl(`${base}/${type.avatar}/${variant}`);
-    if (type.preview) setUrl(type.preview);
+    if (type) {
+      if (type.avatar) setUrl(`${base}/${type.avatar}/${variant}`);
+      if (type.preview) setUrl(type.preview);
+    }
   }, [setUrl, url, type]);
-
-  const avatarVar = {
-    initial: {
-      opacity: 0,
-    },
-    animate: {
-      opacity: 1,
-      transition: { duration: 0.3 },
-    },
-    exit: {
-      opacity: 0,
-    },
-  };
-  const svgVar = {
-    initial: (theme: boolean) => ({
-      opacity: 0,
-    }),
-    animate: (theme: boolean) => ({
-      opacity: 1,
-      transition: { duration: 0.3 },
-    }),
-    exit: (theme: boolean) => ({ opacity: 0, transition: { duration: 0.3 } }),
-  };
-  const pathVar = {
-    initial: (theme: boolean) => ({
-      fill: theme ? '#000000' : '#ffffff',
-    }),
-    animate: (theme: boolean) => ({
-      transition: { duration: 0.3 },
-      fill: theme ? '#000000' : '#ffffff',
-    }),
-    hover: { fill: '#E50914' },
-  };
-  const isNoImg = Boolean(!type.avatar && !type.preview);
+  //
   return (
     <AnimatePresence>
       {!isNoImg && (
@@ -115,3 +86,35 @@ export const Label = styled.label`
     display: none;
   }
 `;
+const avatarVar = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: { duration: 0.3 },
+  },
+  exit: {
+    opacity: 0,
+  },
+};
+const svgVar = {
+  initial: (theme: boolean) => ({
+    opacity: 0,
+  }),
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    transition: { duration: 0.3 },
+  }),
+  exit: (theme: boolean) => ({ opacity: 0, transition: { duration: 0.3 } }),
+};
+const pathVar = {
+  initial: (theme: boolean) => ({
+    fill: theme ? '#000000' : '#ffffff',
+  }),
+  animate: (theme: boolean) => ({
+    transition: { duration: 0.3 },
+    fill: theme ? '#000000' : '#ffffff',
+  }),
+  hover: { fill: '#E50914' },
+};

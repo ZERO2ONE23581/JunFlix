@@ -104,13 +104,14 @@ const Label = styled(motion.label)`
   top: 50%;
   left: 1em;
   z-index: 1;
+  font-size: 1rem;
   position: absolute;
   width: fit-content;
   border-radius: 20px;
   display: inline-block;
 `;
 export const Input = styled(motion.input)`
-  font-size: 0.6em;
+  font-size: 1rem;
   width: 100%;
   border: none;
   padding: 10px 20px;

@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import useSWR from 'swr';
 import useUser from '../../../../../../libs/client/useUser';
 import { IData } from '../../../../../../types/global';
-import { ProfileAvatar } from '../../../../../Avatar/Profile';
+import { ProfileAvatar } from '../../../../../Avatar/profile';
 import { Btn } from '../../../../../../Tools/Button';
 import { FollowUserModal } from '../../../../../../Tools/Modal/Follow/User';
 

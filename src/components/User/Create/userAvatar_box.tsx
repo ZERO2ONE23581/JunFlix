@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import useMutation from '../../../libs/client/useMutation';
 import { Box, BtnWrap } from '../../../../styles/global';
-import { Label, ProfileAvatar } from '../../Avatar/Profile';
+import { Label, ProfileAvatar } from '../../Avatar/profile';
 import styled from '@emotion/styled';
 import { IUserForm } from '../../../types/user';
 import { Answer } from '../../../Tools/Modal/Answer';

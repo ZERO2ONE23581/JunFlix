@@ -27,6 +27,66 @@ export const BoxTitle = ({ type, theme, boardMax }: IBoxTitle) => {
   });
   //
   useEffect(() => {
+    if (type === 'edit-user5')
+      setText({
+        title: {
+          eng: 'Delete Account',
+          kor: '계정삭제',
+        },
+        desc: {
+          other: '',
+          kor: '계정은 삭제 후 복구가 불가 합니다.',
+          eng: 'Account can not be recovered once it is deleted.',
+        },
+      });
+    if (type === 'edit-user4')
+      setText({
+        title: {
+          eng: 'Avatar',
+          kor: '아바타 수정',
+        },
+        desc: {
+          other: '',
+          kor: '아이콘(혹은 사진)을 눌러 아바타를 선택하고 업데이트 버튼을 클릭하세요.',
+          eng: 'Click the icon to select picture and click the "Update" button.',
+        },
+      });
+    if (type === 'edit-user3')
+      setText({
+        title: {
+          eng: 'User Info',
+          kor: '회원정보 수정',
+        },
+        desc: {
+          other: '',
+          kor: '빈칸에 정보를 입력하고 업데이트 버튼을 클릭하세요.',
+          eng: 'Fill the blanks below and click the "Update" button.',
+        },
+      });
+    if (type === 'edit-user2')
+      setText({
+        title: {
+          eng: 'Password',
+          kor: '비밀번호 수정',
+        },
+        desc: {
+          other: '',
+          kor: '비밀번호 입력하고 업데이트 버튼을 클릭하세요.',
+          eng: 'Type your password and click the"Update" button.',
+        },
+      });
+    if (type === 'edit-user1')
+      setText({
+        title: {
+          eng: 'ID',
+          kor: '아이디 수정',
+        },
+        desc: {
+          other: '',
+          kor: '아이디를 입력하고 업데이트 버튼을 클릭하세요.',
+          eng: 'Type your id and click the "Update" button.',
+        },
+      });
     if (type === 'create-board')
       setText({
         title: {
@@ -142,10 +202,10 @@ export const BoxTitle = ({ type, theme, boardMax }: IBoxTitle) => {
     <>
       <Cont className="box-title">
         <div className="title-wrap">
-          <h1>
+          <h2>
             <span className="eng">{text.title.eng}</span>
             <span className="kor">{text.title.kor}</span>
-          </h1>
+          </h2>
           <Svg
             size="1.3em"
             theme={theme!}
@@ -154,7 +214,7 @@ export const BoxTitle = ({ type, theme, boardMax }: IBoxTitle) => {
           />
         </div>
         <div className="desc-wrap">
-          <h2>{text.desc.other}</h2>
+          <h3>{text.desc.other}</h3>
           <ul>
             <li>{text.desc.kor}</li>
             <li>{text.desc.eng}</li>
@@ -162,9 +222,9 @@ export const BoxTitle = ({ type, theme, boardMax }: IBoxTitle) => {
         </div>
       </Cont>
       <Answer
-        answer={answer}
         type={type}
         theme={theme}
+        answer={answer}
         boardMax={boardMax}
         closeModal={setAnswer}
       />
@@ -185,7 +245,7 @@ const Cont = styled(motion.div)`
     align-items: center;
     width: fit-content;
     //border: 5px solid red;
-    h1 {
+    h2 {
       //border: 3px solid green;
       font-size: 2.2rem;
       gap: 12px;
@@ -202,7 +262,7 @@ const Cont = styled(motion.div)`
     //border: 2px solid yellow;
     display: flex;
     flex-wrap: wrap;
-    h2 {
+    h3 {
       font-size: 1.5rem;
       margin-bottom: 10px;
       //border: 3px solid yellowgreen;
