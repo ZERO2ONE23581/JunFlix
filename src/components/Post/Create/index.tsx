@@ -1,7 +1,7 @@
 import { Info } from './Info';
 import { Layer } from './Layer';
 import styled from '@emotion/styled';
-import { Avatar } from '../../Avatar';
+import { Avatar } from '../../Avatar/indexafsd';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { ErrorMsg, Errors } from '../../../Tools/Errors';

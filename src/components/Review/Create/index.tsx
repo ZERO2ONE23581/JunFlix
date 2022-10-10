@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ReviewModal } from './Modal';
 import styled from '@emotion/styled';
-import { Avatar } from '../../Avatar';
+import { Avatar } from '../../Avatar/indexafsd';
 import { Review } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';

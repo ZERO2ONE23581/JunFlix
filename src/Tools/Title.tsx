@@ -47,8 +47,8 @@ export const BoxTitle = ({ type, theme, boardMax }: IBoxTitle) => {
         },
         desc: {
           other: '',
-          kor: '아이콘(혹은 사진)을 클릭하세요.',
-          eng: 'Click the icon (or picture).',
+          kor: '',
+          eng: '',
         },
       });
     if (type === 'edit-user3')

@@ -7,14 +7,24 @@ interface ISvgProps {
   size?: string;
   theme: boolean;
   onBtn?: boolean;
+  isClicked?: boolean;
   fill?: string | any;
   onClick?: () => void;
 }
 interface IPathVars {
   onBtn: boolean;
   theme: boolean;
+  isClicked: boolean;
 }
-export const Svg = ({ onBtn, theme, type, size, fill, onClick }: ISvgProps) => {
+export const Svg = ({
+  isClicked,
+  onBtn,
+  theme,
+  type,
+  size,
+  fill,
+  onClick,
+}: ISvgProps) => {
   const XMLNS = 'http://www.w3.org/2000/svg';
   const [viewbox, setViewbox] = useState('0 0 0 0');
   const [path, setPath] = useState(
@@ -518,13 +528,13 @@ export const Svg = ({ onBtn, theme, type, size, fill, onClick }: ISvgProps) => {
   }, [setViewbox, setPath]);
   //
   const pathVars = {
-    initial: ({ theme, onBtn }: IPathVars) => ({
-      fill: fill ? fill : theme ? '#ffffff' : '#000000',
+    initial: ({ theme, isClicked }: IPathVars) => ({
+      fill: isClicked ? '#E50914' : fill ? fill : theme ? '#ffffff' : '#000000',
     }),
-    animate: ({ theme, onBtn }: IPathVars) => ({
-      fill: fill ? fill : theme ? '#ffffff' : '#000000',
+    animate: ({ theme, isClicked }: IPathVars) => ({
+      fill: isClicked ? '#E50914' : fill ? fill : theme ? '#ffffff' : '#000000',
     }),
-    hover: ({ theme, onBtn }: IPathVars) => ({
+    hover: ({ isClicked, onBtn }: IPathVars) => ({
       fill: onBtn ? '#ffffff' : '#E50914',
     }),
   };
@@ -544,7 +554,7 @@ export const Svg = ({ onBtn, theme, type, size, fill, onClick }: ISvgProps) => {
           animate="animate"
           whileHover="hover"
           variants={pathVars}
-          custom={{ theme: !theme, onBtn: onBtn }}
+          custom={{ theme: !theme, onBtn: onBtn, isClicked }}
         />
       </Cont>
     </AnimatePresence>

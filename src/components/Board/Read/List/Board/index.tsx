@@ -1,12 +1,13 @@
-import { HoverBox } from './BoardHoverBox';
+import { HoverBox } from './hoverBox';
 import styled from '@emotion/styled';
 import { NoAvatar } from '../../../../Avatar/NoAvatar';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { boxVars, MotionBox } from '../../../../../../styles/global';
+import { MotionBox } from '../../../../../../styles/global';
 import { FollowBtn } from '../../../../../Tools/Button/Follow/BoardFollowBtn';
+import { ITheme } from '../../../../../../styles/theme';
 
-interface IItem {
+interface IItem extends ITheme {
   userId: number;
   boardId: number;
   title: string;
@@ -16,6 +17,7 @@ interface IItem {
 }
 export const BoardBox = ({
   title,
+  theme,
   genre,
   avatar,
   userId,
@@ -40,6 +42,7 @@ export const BoardBox = ({
         <a>
           <NoAvatar genre={genre} avatar={avatar} />
           <HoverBox
+            theme={theme}
             title={title}
             genre={genre}
             userId={userId}

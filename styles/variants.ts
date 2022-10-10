@@ -1,22 +1,73 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
+export const duration = (sec: number) => ({ duration: sec });
+export const color = (dark: boolean) => (dark ? '#000000' : '#ffffff');
+export const bg = (dark: boolean) => (dark ? '#000000' : '#ffffff');
+export const border = (dark: boolean) =>
+  dark ? '1px solid black' : '1px solid white';
+
+export const variants = {
+  initial: (dark: boolean) => ({
+    color: color(dark),
+    backgroundColor: bg(dark),
+  }),
+  animate: (dark: boolean) => ({
+    color: color(dark),
+    backgroundColor: bg(dark),
+    transition: { duration: 0.3 },
+  }),
+  exit: (dark: boolean) => ({
+    transition: { duration: 0.3 },
+  }),
+};
+export const headerVar = {
+  initial: (dark: boolean) => ({
+    borderBottom: border(dark),
+  }),
+  animate: (dark: boolean) => ({
+    transition: { duration: 0.3 },
+    borderBottom: border(dark),
+  }),
+  exit: (dark: boolean) => ({
+    transition: { duration: 0.3 },
+  }),
+};
+
 export const themeColorTrans = (theme: boolean) => ({
   color: theme ? '#000000' : '#ffffff',
   backgroundColor: theme ? '#ffffff' : '#000000',
 });
 export const modalVar = {
-  initial: (theme: boolean) => ({
+  initial: (dark: boolean) => ({
     opacity: 0,
-    color: theme ? '#000000' : '#ffffff',
-    backgroundColor: theme ? '#ffffff' : '#000000',
+    color: color(dark),
+    border: border(dark),
+    backgroundColor: bg(dark),
   }),
-  animate: (theme: boolean) => ({
+  animate: (dark: boolean) => ({
     opacity: 1,
-    backgroundColor: theme ? '#ffffff' : '#000000',
-    transition: { duration: 0.3 },
+    color: color(!dark),
+    border: border(!dark),
+    transition: duration(0.3),
+    backgroundColor: bg(dark),
   }),
-  exit: (theme: boolean) => ({
+  exit: (dark: boolean) => ({
+    opacity: 0,
+    transition: duration(0.3),
+  }),
+};
+export const themeColorVar = {
+  initial: (dark: boolean) => ({
+    opacity: 0,
+    color: dark ? '#ffffff' : '#000000',
+  }),
+  animate: (dark: boolean) => ({
+    opacity: 1,
+    transition: { duration: 0.3 },
+    color: dark ? '#ffffff' : '#000000',
+  }),
+  exit: (dark: boolean) => ({
     opacity: 0,
     transition: { duration: 0.3 },
   }),
@@ -28,19 +79,34 @@ export const hoverTextVar = {
     transition: { duration: 0.3 },
   },
 };
+export const hoverVar = {
+  hover: {
+    backgroundColor: '#E50914',
+    transition: { duration: 0.3 },
+  },
+};
 export const motionDuration = { duration: 0.5 };
 export const SpringTrans = { type: 'spring', stiffness: 50 };
 export const TweenTrans = { type: 'tween', stiffness: 50 };
 export const boxVars = {
-  initial: {
+  initial: (theme: boolean) => ({
     scale: 1,
-  },
+    border: '1px solid #ffffff',
+  }),
+  animate: (theme: boolean) => ({
+    scale: 1,
+    border: '1px solid #ffffff',
+  }),
+  exit: (theme: boolean) => ({
+    scale: 1,
+    border: '1px solid #ffffff',
+  }),
   hover: {
     y: -20,
-    scale: 1.2,
+    scale: 1.15,
     transition: {
-      delay: 0.2,
-      duration: 0.4,
+      delay: 0,
+      duration: 0.5,
     },
   },
 };
@@ -292,5 +358,21 @@ export const circleVar = {
   exit: (theme: boolean) => ({
     opacity: 0,
     transition: { duration: 0.4 },
+  }),
+};
+export const menuTextVar = {
+  initial: (theme: boolean) => ({
+    scale: 1,
+    fontSize: '1em',
+    color: theme ? '#000000' : '#ffffff',
+  }),
+  animate: (theme: boolean) => ({
+    scale: 1,
+    fontSize: '1em',
+    color: theme ? '#000000' : '#ffffff',
+  }),
+  hover: (theme: boolean) => ({
+    scale: 1.25,
+    color: '#E50914',
   }),
 };

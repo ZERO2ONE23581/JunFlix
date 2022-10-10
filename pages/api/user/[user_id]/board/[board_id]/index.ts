@@ -4,53 +4,17 @@ import client from '../../../../../../src/libs/server/prisma_client';
 import { withApiSession } from '../../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { user } = req.session;
-  const { user_id, board_id } = req.query;
-  const queryExists = Boolean(user_id && board_id);
-  if (!queryExists) return res.json({ ok: false, error: 'QUERY ERROR' });
+  const { board_id } = req.query;
+  if (!board_id) return res.json({ ok: false, error: 'query missed.' });
   const board = await client.board.findUnique({
     where: { id: +board_id },
     include: {
-      user: { select: { id: true, username: true, avatar: true } },
-      posts: {
-        select: {
-          id: true,
-          title: true,
-          UserID: true,
-          BoardID: true,
-          avatar: true,
-        },
-        orderBy: {
-          id: 'desc',
-        },
-      },
-      followers: {
-        select: {
-          id: true,
-          UserID: true,
-          BoardID: true,
-          user: { select: { id: true, username: true } },
-        },
-        orderBy: {
-          id: 'desc',
-        },
-      },
+      user: true,
+      posts: true,
       _count: { select: { followers: true, posts: true } },
     },
   });
-  if (!board) return res.json({ ok: false, error: 'NO BOARD FOUND!' });
-  if (board?.UserID !== +user_id)
-    return res.json({ ok: false, error: 'INVALID USER!' });
-  //
-  if (user) {
-    const isFollowing = Boolean(
-      await client.following.findFirst({
-        where: { UserID: user.id, BoardID: board.id },
-      })
-    );
-    return res.json({ ok: true, board, isFollowing });
-  }
-  //
+  if (!board) return res.json({ ok: false, error: 'no board found.' });
   return res.json({ ok: true, board });
 }
 export default withApiSession(

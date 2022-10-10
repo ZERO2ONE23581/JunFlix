@@ -5,7 +5,7 @@ import { Svg } from '../../../../src/Tools/Svg';
 import { Flex, Page } from '../../../../styles/global';
 import { HeadTitle } from '../../../../src/components/Head';
 import { AnimatePresence, motion } from 'framer-motion';
-import { UpdateUser } from '../../../../src/components/User/Update/UpdateBox';
+import { UpdateBox } from '../../../../src/components/User/Update/UpdateBox';
 
 const EditUser: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [page, setPage] = useState(1);
@@ -34,17 +34,17 @@ const EditUser: NextPage<{ theme: boolean }> = ({ theme }) => {
           />
           <div className="wrap">
             <AnimatePresence initial={false} custom={back}>
-              <Box
+              <Wrap
                 exit="exit"
                 initial="initial"
                 animate="animate"
                 key={page}
                 custom={back}
                 variants={slideVar}
-                className="box-cont"
+                className="box-wrap"
               >
-                <UpdateUser theme={theme} type={`edit-user${page}`} />
-              </Box>
+                <UpdateBox theme={theme} type={`edit-user${page}`} />
+              </Wrap>
             </AnimatePresence>
           </div>
           <Svg
@@ -67,9 +67,10 @@ const Cont = styled(Page)`
   justify-content: center;
   .slider-flex {
     //border: 2px solid yellow;
-    width: 50vw;
+    width: 55vw;
     height: 55vh;
-    min-height: 400px;
+    min-width: 800px;
+    min-height: 500px;
     align-items: center;
     justify-content: space-between;
     .wrap {
@@ -77,29 +78,24 @@ const Cont = styled(Page)`
       width: 100%;
       height: 100%;
       position: relative;
-      .box-cont {
+      .box-wrap {
+        width: 100%;
+        height: 100%;
         //border: 4px solid orange;
+        .box {
+          //border: 3px solid blueviolet;
+        }
       }
     }
   }
 `;
-const Box = styled(motion.div)`
-  width: 100%;
-  height: 100%;
+const Wrap = styled(motion.div)`
   top: 0%;
   right: 0%;
   position: absolute;
   display: flex;
-  justify-content: center;
   align-items: center;
-  .user-box {
-    width: 100%;
-    height: 100%;
-    min-width: 400px;
-    min-height: 300px;
-  }
-  .avatar {
-  }
+  justify-content: center;
 `;
 const slideVar = {
   initial: (back: boolean) => ({

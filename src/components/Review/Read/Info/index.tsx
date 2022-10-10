@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { ReviewWithUser } from '../../../../types/review';
 import { Fixed } from './Fixed';
-import { Avatar } from '../../../Avatar';
+import { Avatar } from '../../../Avatar/indexafsd';
 import { Top } from './Detail/Top';
 import { CreateComment } from '../../../Comment/Review/Create/Comment';
 import { CommentList } from '../../../Comment/Review/Read/CmtList';

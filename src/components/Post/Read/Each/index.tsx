@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { PosInfo } from './Info/PosInfo';
 import { Svg } from '../../../../Tools/Svg';
-import { AVATAR_URL } from '../../../Avatar';
+import { AVATAR_URL } from '../../../Avatar/indexafsd';
 import { PostModel } from '../../../../types/post';
 import { ERROR, Overlay } from '../../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';

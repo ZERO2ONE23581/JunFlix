@@ -34,7 +34,6 @@ export const Row = ({
         onExitComplete={() => setLeave((p) => !p)}
       >
         <Slide
-          className="slide"
           key={page}
           boxes={boxes}
           custom={reverse}
@@ -42,6 +41,7 @@ export const Row = ({
           exit="exit"
           initial="initial"
           animate="animate"
+          className="slide"
           transition={SpringTrans}
         >
           <BoxArray theme={theme} type={type} array={array} reverse={reverse} />

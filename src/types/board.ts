@@ -1,32 +1,27 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Board, Following, Post, User } from '@prisma/client';
 
+export interface IBoardType extends Board {
+  user: User;
+  posts: Post[];
+}
 export interface IBoard {
-  board: IBoardWithAttrs;
+  board: IBoardType;
   isFollowing: boolean;
   setPreview: Dispatch<SetStateAction<string>>;
 }
 export interface IBoardForm {
   title: string;
-  intro: string;
   genre: string;
   avatar?: FileList;
+  description: string;
   boardAvatar?: FileList;
 }
 export interface IGetBoard {
   ok?: boolean;
   error?: string;
   isFollowing?: boolean;
-  board?: IBoardWithAttrs;
-}
-export interface IBoardWithAttrs extends Board {
-  user: User;
-  posts: Post[];
-  followers: FollowingWithUser[];
-  _count: {
-    posts: number;
-    followers: number;
-  };
+  board?: IBoardType;
 }
 interface FollowingWithUser extends Following {
   user: User;
@@ -34,7 +29,7 @@ interface FollowingWithUser extends Following {
 export interface IGetBoards {
   ok: boolean;
   error: string;
-  boards?: IBoardWithAttrs[];
+  boards?: IBoardType[];
 }
 export interface IBoardFormRes {
   ok: boolean;
@@ -43,7 +38,7 @@ export interface IBoardFormRes {
 }
 export interface IBoardList {
   size: number;
-  boards: IBoardWithAttrs[];
+  boards: IBoardType[];
 }
 export interface IGetFollowingBoard {
   ok: boolean;

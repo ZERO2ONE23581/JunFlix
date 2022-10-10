@@ -1,37 +1,43 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
-import { Title } from '../../src/Tools/Title';
 import { Slider } from '../../src/Tools/Slider';
-import { HeadTitle } from '../../src/components/Head';
 import { Fixed } from '../../src/Tools/Button/Fixed';
+import { HeadTitle } from '../../src/components/Head';
 
-const AllBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
+const All_Boards: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (
     <>
       <HeadTitle title="All Boards" />
       <Cont>
-        <Title type="all-boards" />
-        <Slider pageType="all-boards" sliderType="board" sliderDetail="all" />
+        <Slider
+          theme={theme}
+          sliderType="board"
+          sliderDetail="all"
+          pageType="all-boards"
+        />
       </Cont>
       <Fixed type="board" />
     </>
   );
 };
-export default AllBoards;
+export default All_Boards;
 
 export const BoardPage = styled(Page)`
-  padding-top: 10%;
+  padding: 0 8em;
   .slider {
+    min-height: 85vh;
+    .page-title {
+    }
     .flex {
       gap: 5px;
+      height: 100%;
+      min-height: 70vh;
       .left-chevron,
       .right-chevron {
-        width: 50px;
-        height: 50px;
       }
       .row {
-        min-height: 440px;
+        min-height: 30em;
         .slide {
           .box-array {
             .slide {

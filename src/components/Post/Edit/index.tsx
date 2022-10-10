@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Avatar, AVATAR_URL } from '../../Avatar';
+import { Avatar, AVATAR_URL } from '../../Avatar/indexafsd';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import useMutation from '../../../libs/client/useMutation';

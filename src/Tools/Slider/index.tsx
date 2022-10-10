@@ -11,6 +11,7 @@ import { useCapLetter } from '../../libs/client/useTools';
 import { useRouter } from 'next/router';
 import { ITheme } from '../../../styles/theme';
 import { motion } from 'framer-motion';
+import { Page_Title } from '../Title/Page_Title';
 
 interface ISlider extends ITheme {
   pageType?: string;
@@ -82,7 +83,7 @@ export const Slider = ({
   useEffect(() => {
     if (pageType === 'home') {
       if (sliderType === 'movie') return setBoxes(6);
-      else if (sliderType === 'board') return setBoxes(5);
+      else if (sliderType === 'board') return setBoxes(4);
       else return setBoxes(5);
     }
     if (sliderType === 'movie') return setBoxes(6);
@@ -109,6 +110,9 @@ export const Slider = ({
   //
   return (
     <Cont className="slider">
+      {pageType === 'all-boards' && (
+        <Page_Title theme={theme} type="all-boards" />
+      )}
       <SlideTitle
         pageType={pageType}
         sliderType={sliderType}
@@ -117,15 +121,15 @@ export const Slider = ({
       {isData && (
         <Flex className="flex" isSingleRow={isSingleRow}>
           <Svg
-            theme={theme}
             size="2rem"
+            theme={!theme}
             type="left-chevron"
             onClick={() => clickArrow('left')}
           />
           <Row
-            theme={theme}
             page={page}
             boxes={boxes}
+            theme={theme}
             reverse={reverse}
             setLeave={setLeave}
             array={slicedArray}
@@ -136,7 +140,7 @@ export const Slider = ({
             }}
           />
           <Svg
-            theme={theme}
+            theme={!theme}
             size="2rem"
             type="right-chevron"
             onClick={() => clickArrow('right')}
@@ -152,7 +156,6 @@ const Cont = styled(motion.article)`
 `;
 const Flex = styled.article<{ isSingleRow: boolean }>`
   gap: 5px;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

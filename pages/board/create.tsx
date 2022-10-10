@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import { Page } from '../../styles/global';
 import { CreateBoard } from '../../src/components/Board/Create';
 import { HeadTitle } from '../../src/components/Head';
-import { useNeedLogin } from '../../src/libs/client/useTools';
 
 const Create_Board: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [preview, setPreview] = useState('');

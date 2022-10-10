@@ -29,17 +29,17 @@ export const MainMenuModal = ({ selected, setSelected }: IMainMenuModal) => {
   //
   const onClick = (btnType: string, detail?: string) => {
     setSelected('');
-    if (btnType === 'all') router.push(`/${selected}`);
+    if (btnType === 'all') router.push(`/${selected}/all`);
     if (btnType === 'my') {
       if (!isLoggedIn) return;
       router.push(`/${selected}/my`);
     }
-    if (btnType && detail === 'genre') router.push(`/boards/${btnType}`);
+    if (btnType && detail === 'genre') router.push(`/board/${btnType}`);
     if (btnType === 'create') {
       if (!isLoggedIn) return;
       if (selected === 'post') {
         alert('포스트를 생성할 보드를 선택해주세요.');
-        router.push(`/boards/my`);
+        router.push(`/board/my`);
       } else {
         router.push(`/${selected}/create`);
       }

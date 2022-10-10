@@ -54,21 +54,24 @@ export const BoxArray = ({ type, array, reverse, theme }: IBoxArray) => {
       {!isPost &&
         array?.map((data: any) => (
           <Box
-            className="box-array"
-            length={array.length}
-            onClick={() => boxClick(data.id)}
-            boximg={imgUrl(data?.avatar, data?.backdrop_path)}
-            //
-            key={data.id}
-            custom={reverse}
-            variants={boxVars}
+            exit="exit"
             initial="initial"
+            animate="animate"
             whileHover="hover"
+            className="box-array"
+            key={data.id}
+            custom={theme}
+            variants={boxVars}
+            length={array.length}
             layoutId={data.id + ''}
             transition={SpringTrans}
+            onClick={() => boxClick(data.id)}
+            boximg={imgUrl(data?.avatar, data?.backdrop_path)}
           >
             {type.sliderType === 'movie' && <MovieHover data={data} />}
-            {type.sliderType === 'board' && <BoardBoxInfo data={data} />}
+            {type.sliderType === 'board' && (
+              <BoardBoxInfo data={data} theme={theme} />
+            )}
           </Box>
         ))}
 
@@ -102,6 +105,7 @@ const Box = styled(motion.div)<{
   length: number;
   boximg?: string;
 }>`
+  min-width: 280px;
   display: flex;
   cursor: pointer;
   overflow: hidden;

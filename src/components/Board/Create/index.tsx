@@ -45,23 +45,23 @@ export const CreateBoard = ({ theme, isPreview, setPreview }: ICreateBoard) => {
   const isLoading = avatarLoading ? avatarLoading : Loading ? Loading : false;
   //
   const [maxTitle] = useState(30);
-  const [maxIntro] = useState(1000);
+  const [maxDesc] = useState(700);
   const [height, setHeight] = useState(40);
   useEffect(() => {
-    const intro = watch!('intro');
-    setHeight(intro?.length * 0.2);
-  }, [setHeight, watch!('intro')]);
+    const description = watch!('description');
+    setHeight(description?.length * 0.2);
+  }, [setHeight, watch!('description')]);
   //
-  const onValid = async ({ title, genre, intro, avatar }: IBoardForm) => {
+  const onValid = async ({ title, genre, description, avatar }: IBoardForm) => {
     if (loading) return;
     //
     if (useLength(watch!('title'))! > maxTitle)
       return setError!('title', {
         message: `제목의 길이는 ${maxTitle}자 이하입니다.`,
       });
-    if (useLength(watch!('intro'))! > maxIntro)
-      return setError!('intro', {
-        message: `길이는 ${maxIntro}자 이하입니다.`,
+    if (useLength(watch!('description'))! > maxDesc)
+      return setError!('description', {
+        message: `길이는 ${maxDesc}자 이하입니다.`,
       });
     //
     setLoading(true);
@@ -78,10 +78,10 @@ export const CreateBoard = ({ theme, isPreview, setPreview }: ICreateBoard) => {
           body: form,
         })
       ).json();
-      CreateBoard({ title, intro, genre, avatar: id });
+      CreateBoard({ title, description, genre, avatar: id });
       setAvatarLoading((p) => !p);
     } else {
-      CreateBoard({ title, intro, genre });
+      CreateBoard({ title, description, genre });
     }
   };
   //
@@ -117,7 +117,7 @@ export const CreateBoard = ({ theme, isPreview, setPreview }: ICreateBoard) => {
           <BoxTitle
             theme={theme}
             type="create-board"
-            boardMax={{ title: maxTitle, intro: maxIntro }}
+            boardMax={{ title: maxTitle, intro: maxDesc }}
           />
           <form onSubmit={handleSubmit(onValid)}>
             <Flex className="flex">
@@ -147,12 +147,12 @@ export const CreateBoard = ({ theme, isPreview, setPreview }: ICreateBoard) => {
               setPreview={setPreview}
             />
             <TextAreaWrap
-              id="intro"
+              id="description"
               theme={theme}
               height={height}
-              error={errors.intro?.message}
-              register={register('intro')}
-              watch={Boolean(watch('intro'))}
+              error={errors.description?.message}
+              register={register('description')}
+              watch={Boolean(watch('description'))}
               placeholder="이 보드의 소개글을 작성해주세요."
             />
             <div className="toTheRight">

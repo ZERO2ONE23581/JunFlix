@@ -5,7 +5,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { IGetBoard } from '../../../../../src/types/board';
 import useUser from '../../../../../src/libs/client/useUser';
-import { AVATAR_BG } from '../../../../../src/components/Avatar';
+import { AVATAR_BG } from '../../../../../src/components/Avatar/indexafsd';
 import { useNeedLogin } from '../../../../../src/libs/client/useTools';
 import { HeadTitle } from '../../../../../src/components/Head';
 import { Board } from '../../../../../src/components/Board/Read';

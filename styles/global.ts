@@ -111,16 +111,16 @@ export const DimBackground = styled.article<{ zIndex?: number }>`
   background-color: rgba(0, 0, 0, 0.8);
   z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
 `;
-export const Overlay = styled(motion.div)`
+export const Overlay = styled(motion.div)<{ zIndex?: number }>`
   top: 0;
   left: 0;
   opacity: 0;
-  z-index: 99;
   width: 100vw;
   height: 100vh;
   position: fixed;
   background-color: red;
   background-color: rgba(0, 0, 0, 0.8);
+  z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
 `;
 export const Grid = styled.article<{ size: number }>`
   gap: 20px;

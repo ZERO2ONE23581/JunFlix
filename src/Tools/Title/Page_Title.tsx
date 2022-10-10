@@ -1,28 +1,30 @@
-import styled from '@emotion/styled';
-import { useCapLetter } from '../../libs/client/useTools';
-import useUser from '../../libs/client/useUser';
-import { GenreIcons } from '../GenreIcons';
 import { Svg } from '../Svg';
 import { Movie } from './movie';
 import { Ropes } from './ropes';
+import styled from '@emotion/styled';
+import { GenreIcons } from '../GenreIcons';
+import { ITheme } from '../../../styles/theme';
+import useUser from '../../libs/client/useUser';
+import { useCapLetter } from '../../libs/client/useTools';
 
-interface ITitle {
+interface IPage_Title extends ITheme {
   type: string;
   postType?: string;
   reviewType?: string;
   movieType?: string;
   genreBoardType?: string;
 }
-export const Title = ({
+export const Page_Title = ({
   type,
+  theme,
   postType,
   movieType,
   reviewType,
   genreBoardType,
-}: ITitle) => {
+}: IPage_Title) => {
   const { loggedInUser } = useUser();
   return (
-    <Cont>
+    <Cont className="page-title">
       <Wrapper>
         <Ropes />
         <H1>
@@ -31,13 +33,13 @@ export const Title = ({
               {reviewType === 'all' && (
                 <>
                   <span>All Reviews</span>
-                  <Svg type="post" size="2rem" />
+                  <Svg theme={theme} type="post" size="2rem" />
                 </>
               )}
               {reviewType === 'my' && (
                 <>
                   <span>{loggedInUser?.username}'s Reviews</span>
-                  <Svg type="post" size="2rem" />
+                  <Svg theme={theme} type="post" size="2rem" />
                 </>
               )}
             </>
@@ -46,13 +48,13 @@ export const Title = ({
             <>
               {postType === 'all' && (
                 <>
-                  All Posts <Svg type="post" size="2rem" />
+                  All Posts <Svg theme={theme} type="post" size="2rem" />
                 </>
               )}
               {postType === 'my' && (
                 <>
                   {loggedInUser?.username}'s Posts
-                  <Svg type="post" size="2rem" />
+                  <Svg theme={theme} type="post" size="2rem" />
                 </>
               )}
             </>
@@ -61,45 +63,45 @@ export const Title = ({
             <>
               {movieType === 'trending' && (
                 <>
-                  Trending Now <Svg type="film" size="2rem" />
+                  Trending Now <Svg theme={theme} type="film" size="2rem" />
                 </>
               )}
               {movieType === 'upcoming' && (
                 <>
-                  Upcoming <Svg type="film" size="2rem" />
+                  Upcoming <Svg theme={theme} type="film" size="2rem" />
                 </>
               )}
               {movieType === 'tv' && (
                 <>
-                  TV Shows <Svg type="film" size="2rem" />
+                  TV Shows <Svg theme={theme} type="film" size="2rem" />
                 </>
               )}
               {movieType === 'now' && (
                 <>
-                  Now Playing <Svg type="film" size="2rem" />
+                  Now Playing <Svg theme={theme} type="film" size="2rem" />
                 </>
               )}
               {movieType === 'top' && (
                 <>
-                  Classics <Svg type="film" size="2rem" />
+                  Classics <Svg theme={theme} type="film" size="2rem" />
                 </>
               )}
             </>
           )}
           {type === 'movie-page' && (
             <>
-              Movie Page <Svg type="film" size="2rem" />
+              Movie Page <Svg theme={theme} type="film" size="2rem" />
             </>
           )}
           {type === 'all-boards' && (
             <>
-              All Boards <Svg type="board" size="2rem" />
+              All Boards <Svg theme={theme} type="board" size="2rem" />
             </>
           )}
           {type === 'my-boards' && (
             <>
               {loggedInUser?.username}'s Boards
-              <Svg type="board" size="2rem" />
+              <Svg theme={theme} type="board" size="2rem" />
             </>
           )}
           {type === 'genre-board' && (
@@ -115,12 +117,9 @@ export const Title = ({
   );
 };
 const Cont = styled.article`
-  top: 0;
-  left: 8rem;
-  position: absolute;
+  padding-left: 3em;
   display: flex;
-  margin-left: 20px;
-  margin-bottom: 20px;
+  width: fit-content;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;

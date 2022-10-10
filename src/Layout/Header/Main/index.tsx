@@ -3,7 +3,7 @@ import { MenuModal } from './modal';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { ITheme } from '../../../../styles/theme';
-import { TweenTrans } from '../../../../styles/variants';
+import { menuTextVar, TweenTrans } from '../../../../styles/variants';
 import { useCapLetter } from '../../../libs/client/useTools';
 
 export const MainMenu = ({ theme }: ITheme) => {
@@ -12,20 +12,6 @@ export const MainMenu = ({ theme }: ITheme) => {
   const isModal = (i: string) => Boolean(selected === i);
   const index = (item: string) => Number(menuArr.indexOf(item));
   //
-  const menuTextVar = {
-    initial: (darkTheme: boolean) => ({
-      scale: 1,
-      color: darkTheme ? '#000000' : '#ffffff',
-    }),
-    animate: (darkTheme: boolean) => ({
-      scale: 1,
-      color: darkTheme ? '#000000' : '#ffffff',
-    }),
-    hover: (darkTheme: boolean) => ({
-      scale: 1.25,
-      color: '#E50914',
-    }),
-  };
   return (
     <Cont className="main-menu">
       {menuArr.map((i) => (

@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { ITheme } from '../../../../styles/theme';
 import useUser from '../../../libs/client/useUser';
 import { UserAvatarIcon } from './avatar';
+import { menuTextVar } from '../../../../styles/variants';
 
 export const UserMenu = ({ theme }: ITheme) => {
   const router = useRouter();
@@ -31,8 +32,9 @@ export const UserMenu = ({ theme }: ITheme) => {
             initial="initial"
             animate="animate"
             whileHover={'hover'}
-            custom={!theme}
-            variants={loginTxtVar}
+            className="login-text"
+            custom={theme}
+            variants={menuTextVar}
             onClick={() => router.push(`/user/login`)}
           >
             Login
@@ -42,8 +44,9 @@ export const UserMenu = ({ theme }: ITheme) => {
             initial="initial"
             animate="animate"
             whileHover={'hover'}
-            custom={!theme}
-            variants={loginTxtVar}
+            className="login-text"
+            custom={theme}
+            variants={menuTextVar}
             onClick={() => router.push(`/user/join`)}
           >
             Join
@@ -53,22 +56,14 @@ export const UserMenu = ({ theme }: ITheme) => {
     </Cont>
   );
 };
-const loginTxtVar = {
-  hover: (theme: boolean) => ({
-    scale: 1.25,
-    color: '#E50914',
-    transition: { duration: 0.3 },
-  }),
-  exit: (theme: boolean) => ({ color: theme ? '#ffffff' : '#000000' }),
-  initial: (theme: boolean) => ({ color: theme ? '#ffffff' : '#000000' }),
-  animate: (theme: boolean) => ({ color: theme ? '#ffffff' : '#000000' }),
-};
 const Cont = styled.article`
   .unlogged-in {
     gap: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
+    .login-text {
+    }
   }
   .logged-in {
     position: relative;

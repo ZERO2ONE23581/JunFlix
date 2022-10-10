@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { BoardPage } from '.';
+import { BoardPage } from './all';
 import useUser from '../../src/libs/client/useUser';
 import { Title } from '../../src/Tools/Title';
 import { HeadTitle } from '../../src/components/Head';

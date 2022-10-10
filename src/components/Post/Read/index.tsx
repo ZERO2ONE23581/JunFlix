@@ -4,12 +4,13 @@ import styled from '@emotion/styled';
 import { Svg } from '../../../Tools/Svg';
 import { useRouter } from 'next/router';
 import { IGetAllPosts } from '../../../types/post';
+import { ITheme } from '../../../../styles/theme';
 
-interface IIsPost {
+interface IIsPost extends ITheme {
   isMyBoard: boolean;
   isFollowing: boolean;
 }
-export const IsPost = ({ isMyBoard, isFollowing }: IIsPost) => {
+export const IsPost = ({ isMyBoard, isFollowing, theme }: IIsPost) => {
   const router = useRouter();
   const { user_id, board_id } = router.query;
   const { data } = useSWR<IGetAllPosts>(
@@ -26,24 +27,44 @@ export const IsPost = ({ isMyBoard, isFollowing }: IIsPost) => {
             <span>! Follow this BOARD to see these POSTS.</span>
           </div>
           <div className="list">
-            <PostList from={8} size={3} isBlur={isBlur} posts={data?.posts!} />
+            {/* <PostList from={8} size={3} isBlur={isBlur} posts={data?.posts!} /> */}
           </div>
         </Blur>
       )}
       {!isPost && (
         <NoPost>
           <div className="line">
-            <Svg type="ellipsis-v" size="1.8rem" fill={'#E50815'} />
-            <Svg type="ellipsis-v" size="1.8rem" fill={'#E50815'} />
+            <Svg
+              theme={theme}
+              size="1.8rem"
+              type="ellipsis-v"
+              fill={'#E50815'}
+            />
+            <Svg
+              theme={theme}
+              size="1.8rem"
+              type="ellipsis-v"
+              fill={'#E50815'}
+            />
           </div>
           <div className="line">
-            <Svg type="ellipsis-v" size="1.8rem" fill={'#E50815'} />
-            <Svg type="ellipsis-v" size="1.8rem" fill={'#E50815'} />
+            <Svg
+              theme={theme}
+              size="1.8rem"
+              type="ellipsis-v"
+              fill={'#E50815'}
+            />
+            <Svg
+              theme={theme}
+              size="1.8rem"
+              type="ellipsis-v"
+              fill={'#E50815'}
+            />
           </div>
           <div className="box">
             <span>아직 포스트가 없습니다...</span>
             <span>(No Post yet...)</span>
-            <Svg type="emoji-kiss" size="2rem" />
+            <Svg theme={theme} type="emoji-kiss" size="2rem" />
           </div>
         </NoPost>
       )}

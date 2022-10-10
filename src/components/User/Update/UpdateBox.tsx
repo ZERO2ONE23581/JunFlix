@@ -28,7 +28,7 @@ import { Edit_UserAvatar } from './avatar_form';
 interface IUpdateUser extends ITheme {
   type: string;
 }
-export const UpdateUser = ({ type, theme }: IUpdateUser) => {
+export const UpdateBox = ({ type, theme }: IUpdateUser) => {
   const [Type, setType] = useState('');
   useEffect(() => {
     if (type === 'edit-user1') setType('userId');
@@ -72,6 +72,7 @@ export const UpdateUser = ({ type, theme }: IUpdateUser) => {
     }
   }, [data, Type, router, setDataErr, setLoading]);
   //
+  console.log(Type);
   const isLink =
     !Boolean(Type === 'avatar') &&
     !Boolean(Type === 'userInfo') &&
@@ -143,11 +144,19 @@ export const UpdateUser = ({ type, theme }: IUpdateUser) => {
   );
 };
 const Cont = styled(Box)<{ kind?: string }>`
-  width: 40vw;
-  width: ${(p) => (p.kind === 'avatar' ? '400px' : '40vw')};
-  min-width: ${(p) => (p.kind === 'avatar' ? '400px' : '520px')};
-  min-height: 55vh;
   display: block;
+  width: 40vw;
+  min-width: 300px;
+  min-height: 60vh;
+  height: ${(p) => p.kind === 'avatar' && '200px'};
+  height: ${(p) => p.kind === 'delete' && '200px'};
+  min-height: ${(p) => p.kind === 'avatar' && '400px'};
+  min-height: ${(p) => p.kind === 'delete' && '380px'};
+  width: ${(p) => p.kind === 'avatar' && '370px'};
+  min-width: ${(p) => p.kind === 'avatar' && '370px'};
+  width: ${(p) => p.kind === 'delete' && '500px'};
+  min-width: ${(p) => p.kind === 'delete' && '500px'};
+  border: ${(p) => p.kind === 'delete' && ' 3px solid red'};
   .del {
     color: red;
   }
@@ -156,11 +165,12 @@ const Cont = styled(Box)<{ kind?: string }>`
     margin-bottom: 10px;
   }
   .find-user-wrap {
-    margin-top: 20px;
+    margin-top: 40px;
   }
   .box-title {
     gap: 0px;
     margin-bottom: 30px;
+    margin-bottom: ${(p) => p.kind === 'avatar' && '0px'};
     .title-wrap {
       gap: 60px;
       h2 {
@@ -170,8 +180,6 @@ const Cont = styled(Box)<{ kind?: string }>`
         .kor {
           font-size: 1.4rem;
         }
-        //align-items: center;
-        //border: 1px solid blue;
       }
     }
     .desc-wrap {

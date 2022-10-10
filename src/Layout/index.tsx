@@ -3,6 +3,8 @@ import { Footer } from './Footer';
 import styled from '@emotion/styled';
 import { ReactElement, useEffect, useState } from 'react';
 import { ThemeBtn, IBtns } from '../Tools/Button/Theme';
+import { motion } from 'framer-motion';
+import { variants } from '../../styles/variants';
 
 interface ILayoutProps extends IBtns {
   children: ReactElement;
@@ -13,7 +15,14 @@ export const Layout = ({ theme, children, setTheme }: ILayoutProps) => {
     if (typeof window !== undefined) setWidth(window?.innerWidth);
   }, []);
   return (
-    <Cont width={width}>
+    <Cont
+      width={width}
+      exit="exit"
+      animate="animate"
+      initial="initial"
+      custom={!theme}
+      variants={variants}
+    >
       <Header theme={theme} />
       <section className="children">{children}</section>
       <Footer theme={theme} />
@@ -22,18 +31,14 @@ export const Layout = ({ theme, children, setTheme }: ILayoutProps) => {
   );
 };
 
-const Cont = styled.section<{ width?: number }>`
-  color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
+const Cont = styled(motion.section)<{ width?: number }>`
   .header,
   .children,
   .footer {
     width: 100%;
     height: 100%;
     position: relative;
-    color: ${(p) => p.theme.color.font};
     min-width: ${(p) => p.width && `${p.width}px`};
-    background-color: ${(p) => p.theme.color.bg};
   }
   .header,
   .footer {
@@ -41,22 +46,22 @@ const Cont = styled.section<{ width?: number }>`
   }
   .header {
     min-height: 86px;
-    border: 2px solid hotpink;
+    //border: 2px solid hotpink;
     .logo {
-      //border: 5px solid cornflowerblue;
+      ////border: 5px solid cornflowerblue;
     }
     .flex {
       width: 100%;
-      border: 5px solid cornflowerblue;
+      //border: 5px solid cornflowerblue;
       .main-menu {
         width: 50%;
-        border: 2px solid yellow;
+        //border: 2px solid yellow;
       }
       .user-menu {
         width: fit-content;
-        border: 3px solid red;
+        //border: 3px solid red;
         .logged-in {
-          border: 2px solid yellow;
+          //border: 2px solid yellow;
         }
         .unlogged-in {
           //border: 2px solid yellow;
