@@ -9,11 +9,14 @@ import { ITheme } from '../../../../styles/theme';
 import { TrimText } from '../../../Tools/trimText';
 import { ClickModal } from '../../../Tools/Modal/clickModal';
 import { useCapLetters } from '../../../libs/client/useTools';
+import { Modal } from '../../../../styles/global';
+import { ModalBox } from '../../../Tools/Modal/Modal';
+import { DelModalBox } from '../../../Tools/Modal/DelModal';
+import { opacityVar } from '../../../../styles/variants';
 
 interface IBoard extends ITheme {
   board: IBoardType;
 }
-
 export const BoardBox = ({ board, theme }: IBoard) => {
   const router = useRouter();
   const [edit, setEdit] = useState({ update: false, delete: false });
@@ -25,10 +28,24 @@ export const BoardBox = ({ board, theme }: IBoard) => {
     if (type === 'dash')
       router.push(`/user/${board.UserID}/${board.user.username}/dash`);
   };
-
+  const closeModal = () => setEdit({ update: false, delete: false });
   //
   return (
     <>
+      <ModalBox
+        type="board"
+        theme={theme}
+        ogData={board}
+        modal={edit.update}
+        onClick={closeModal}
+      />
+      <DelModalBox
+        type="del-board"
+        theme={theme}
+        ogData={board}
+        modal={edit.delete}
+        onClick={closeModal}
+      />
       {board && (
         <Cont className="board-box">
           <Title className="board-title">
@@ -64,6 +81,16 @@ export const BoardBox = ({ board, theme }: IBoard) => {
                   <span>{board.genre}</span>
                 </li>
               )}
+              {board.isPrivate && (
+                <li>
+                  <span>private</span>
+                </li>
+              )}
+              {!board.isPrivate && (
+                <li>
+                  <span>public</span>
+                </li>
+              )}
               <li>
                 <span>0</span>
                 <span>saved</span>
@@ -74,40 +101,24 @@ export const BoardBox = ({ board, theme }: IBoard) => {
               </li>
             </ul>
           </Detail>
-
-          {board.description && (
-            <Desc>
-              <TrimText text={board.description} max={100} />
-            </Desc>
-          )}
-          {/* {edit && (
-            <EditInfo
-              setEdit={setEdit}
-              title={board.title}
-              genre={board.genre}
-              intro={board.intro}
-            />
-          )} */}
+          <TrimText text={board.description} max={100} />
         </Cont>
       )}
     </>
   );
 };
-
 const Cont = styled(motion.article)`
-  gap: 10px;
+  gap: 15px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
 `;
-
 const Title = styled.div`
   position: relative;
   gap: 10px;
   display: flex;
   align-items: flex-end;
-  //border: 3px solid blue;
   h1 {
     font-size: 2.7rem;
   }
@@ -116,7 +127,6 @@ const Title = styled.div`
   }
 `;
 const Host = styled.div`
-  //border: 3px solid blue;
   gap: 5px;
   display: flex;
   align-items: center;
@@ -140,9 +150,6 @@ const Detail = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      span {
-      }
     }
   }
 `;
-const Desc = styled.div``;

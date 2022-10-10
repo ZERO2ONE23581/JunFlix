@@ -5,11 +5,11 @@ import { withApiSession } from '../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { user_id } = req.query;
+  const { user_id, title, description, genre, avatar } = req.body;
+  const mustInputs = Boolean(user_id && title);
   const userMatch = Boolean(user?.id === +user_id);
-  const { title, description, genre, avatar } = req.body;
   if (!user) return res.json({ ok: false, error: 'must login.' });
-  if (!title) return res.json({ ok: false, error: 'input missed.' });
+  if (!mustInputs) return res.json({ ok: false, error: 'input missed.' });
   if (!userMatch) return res.json({ ok: false, error: 'invalid user.' });
   //
   const dupData = Boolean(

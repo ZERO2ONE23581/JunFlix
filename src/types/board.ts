@@ -12,9 +12,10 @@ export interface IBoard {
 }
 export interface IBoardForm {
   title: string;
-  genre: string;
+  genre?: string;
   avatar?: FileList;
-  description: string;
+  isPrivate?: boolean;
+  description?: string;
   boardAvatar?: FileList;
 }
 export interface IGetBoard {

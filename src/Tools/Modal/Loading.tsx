@@ -2,30 +2,9 @@ import styled from '@emotion/styled';
 import { ITheme } from '../../../styles/theme';
 import { motion } from 'framer-motion';
 import { Modal, Overlay } from '../../../styles/global';
+import { loadingVar } from '../../../styles/variants';
 
-interface ILoadingModal extends ITheme {}
-export const LoadingModal = ({ theme }: ILoadingModal) => {
-  const loadingVar = {
-    initial: (theme: boolean) => ({
-      opacity: 0,
-      color: theme ? '#000000' : '#ffffff',
-      borderColor: theme ? '#000000' : '#ffffff',
-      backgroundColor: theme ? '#ffffff' : '#000000',
-    }),
-    animate: (theme: boolean) => ({
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-      },
-      color: theme ? '#000000' : '#ffffff',
-      borderColor: theme ? '#000000' : '#ffffff',
-      backgroundColor: theme ? '#ffffff' : '#000000',
-    }),
-    exit: (theme: boolean) => ({
-      opacity: 0,
-    }),
-  };
-  //
+export const LoadingModal = ({ theme }: ITheme) => {
   const svgVar = {
     initial: (theme: boolean) => ({
       fill: theme ? '#000000' : '#ffffff',
@@ -38,10 +17,7 @@ export const LoadingModal = ({ theme }: ILoadingModal) => {
       },
       fill: theme ? '#000000' : '#ffffff',
     }),
-    exit: (theme: boolean) => ({}),
   };
-
-  //
   return (
     <>
       <Cont

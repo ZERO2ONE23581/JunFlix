@@ -4,17 +4,15 @@ import { MainMenu } from './Main';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { ITheme } from '../../../styles/theme';
-import { headerVar } from '../../../styles/variants';
 
 export const Header = ({ theme }: ITheme) => {
   return (
     <Cont
       className="header"
-      exit="exit"
       animate="animate"
       initial="initial"
-      custom={!theme}
       variants={headerVar}
+      custom={{ theme, isBorder: true }}
     >
       <Logo />
       <div className="flex">
@@ -59,3 +57,11 @@ const Cont = styled(motion.header)`
     }
   }
 `;
+const headerVar = {
+  initial: (light: boolean) => ({
+    borderBottom: light ? 'none' : '1px solid black',
+  }),
+  animate: (light: boolean) => ({
+    borderBottom: light ? 'none' : '1px solid black',
+  }),
+};

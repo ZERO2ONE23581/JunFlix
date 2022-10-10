@@ -29,7 +29,7 @@ export default Board_Page;
 const Cont = styled(Page)`
   .board-box {
     margin: 0 auto;
-    max-width: 20vw;
+    max-width: 22vw;
     padding-top: 50px;
   }
 `;

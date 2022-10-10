@@ -5,36 +5,27 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { user_id, board_id } = req.query;
-  const { title, genre, intro } = req.body;
-  const isInput = Boolean(title);
-  const isQuery = Boolean(user_id && board_id);
-  const isOwner = Boolean(user?.id === +user_id);
+  const { board_id } = req.query;
+  const { user_id, title, genre, description, isPrivate } = req.body;
+  const mustInputs = Boolean(title && user_id);
+  const isOwner = Boolean(user?.id === user_id);
+  //
   if (!user) return res.json({ ok: false, error: 'login needed.' });
-  if (!isQuery) return res.json({ ok: false, error: 'invalid url.' });
-  if (!isInput) return res.json({ ok: false, error: 'No input.' });
-  if (!isOwner) return res.json({ ok: false, error: 'no rights to edit.' });
-
-  const FoundBoard = await client.board.findUnique({
+  if (!board_id) return res.json({ ok: false, error: 'query error.' });
+  if (!isOwner) return res.json({ ok: false, error: 'invalid user.' });
+  if (!mustInputs) return res.json({ ok: false, error: 'input missed.' });
+  //
+  const board = await client.board.findUnique({
     where: { id: +board_id },
-    select: { id: true, UserID: true, title: true },
+    select: { id: true, UserID: true },
   });
-  if (!FoundBoard)
-    return res.json({ ok: false, error: '보드가 존재하지 않습니다.' });
-
-  if (title.toUpperCase() !== FoundBoard.title.toUpperCase()) {
-    const alreadyExists = Boolean(
-      await client.board.findUnique({
-        where: { title },
-      })
-    );
-    if (alreadyExists)
-      return res.json({ ok: false, error: '이미 사용중인 제목입니다.' });
-  }
-
+  if (!board) return res.json({ ok: false, error: 'no board found.' });
+  if (board.UserID !== user_id)
+    return res.json({ ok: false, error: 'invalid board host.' });
+  //
   await client.board.update({
-    where: { id: FoundBoard.id },
-    data: { title, genre, intro },
+    where: { id: board.id },
+    data: { title, genre, description, isPrivate },
   });
   return res.json({ ok: true });
 }

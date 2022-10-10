@@ -1,40 +1,51 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import client from '../../../../../../../src/libs/server/prisma_client';
-import withHandler from '../../../../../../../src/libs/server/withHandler';
-import { withApiSession } from '../../../../../../../src/libs/server/withSession';
+import client from '../../../../src/libs/server/prisma_client';
+import withHandler from '../../../../src/libs/server/withHandler';
+import { withApiSession } from '../../../../src/libs/server/withSession';
+import userId from '../../user/create/userId';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const inputs = req.body;
   const { user } = req.session;
-  const { userId } = req.body;
-  const { user_id, board_id } = req.query;
-  const isQuery = Boolean(user_id && board_id);
-  const isOwner = Boolean(user?.id === +user_id);
-  if (!userId) return res.json({ ok: false, error: 'No input.' });
-  if (!user) return res.json({ ok: false, error: 'login needed.' });
-  if (!isQuery) return res.json({ ok: false, error: 'invalid url.' });
-  if (!isOwner) return res.json({ ok: false, error: 'no rights to delete.' });
+  const { board_id } = req.query; //현보드 아이디
+  const isMatch = Boolean(user?.id === +inputs.user_id);
+  if (!user) return res.json({ ok: false, error: 'must login.' });
+  if (!inputs) return res.json({ ok: false, error: 'inputs missed.' });
+  if (!board_id) return res.json({ ok: false, error: 'query missed.' });
+  if (!isMatch) return res.json({ ok: false, error: 'invalid user.' });
   //
-  const FoundUser = await client.user.findUnique({
-    where: { userId },
+  const givenUser = await client.user.findUnique({
+    where: { userId: inputs.userId },
   });
-  if (!FoundUser)
-    return res.json({ ok: false, error: '존재하지 않는 아이디 입니다.' });
-  if (FoundUser.id !== user.id)
-    return res.json({ ok: false, error: '회원님의 아이디가 아닙니다.' });
-  //
-  const FoundBoard = await client.board.findUnique({
-    where: { id: +board_id.toString() },
-    select: { id: true, UserID: true },
-  });
-  if (!FoundBoard) return res.json({ ok: false, error: 'INVALID BOARD.' });
-  if (FoundBoard.UserID !== FoundUser.id)
+  if (!givenUser)
     return res.json({
       ok: false,
-      error: '회원님의 보드가 아닙니다. (삭제 권한이 없음)',
+      error: '아이디가 존재하지 않습니다. (no ID found)',
+    });
+  if (givenUser.id !== user.id)
+    return res.json({
+      ok: false,
+      error: '아이디가 일치하지 않습니다. (invalid ID)',
+    });
+  //
+  const board = await client.board.findUnique({
+    where: { id: +board_id },
+    include: { user: { select: { userId: true } } },
+  });
+  if (!board)
+    return res.json({
+      ok: false,
+      error: '보드를 찾을수 없습니다. (no board found)',
+    });
+  const isMyBoard = Boolean(board.user.userId === inputs.userId.toUpperCase());
+  if (!isMyBoard)
+    return res.json({
+      ok: false,
+      error: '이 보드의 호스트가 아닙니다. (invalid board host)',
     });
   //
   await client.board.delete({
-    where: { id: FoundBoard.id },
+    where: { id: board.id },
   });
   return res.json({ ok: true });
 }

@@ -1,26 +1,18 @@
+import { ErrMsg } from '.';
 import { useState } from 'react';
-import { ErrorMsg } from '../Errors';
 import styled from '@emotion/styled';
-import { User } from '@prisma/client';
-import { Creator } from '../../../Creator';
+import { ITheme } from '../../../styles/theme';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ErrMsg } from '.';
-import {
-  inputErrVar,
-  inputVar,
-  textAreaVar,
-  TweenTrans,
-} from '../../../styles/variants';
-import { ITheme } from '../../../styles/theme';
+import { inputErrVar, textAreaVar, TweenTrans } from '../../../styles/variants';
 
 interface ITextAreaWrap extends ITheme {
   id: string;
   error?: string;
+  height?: string;
   watch?: boolean;
   disabled?: boolean;
-  placeholder: string;
-  height?: number;
+  placeholder?: string;
   register: UseFormRegisterReturn;
 }
 export const TextAreaWrap = ({
@@ -35,12 +27,18 @@ export const TextAreaWrap = ({
 }: ITextAreaWrap) => {
   const [isFocus, setIsFocus] = useState(false);
   const IsFocus = Boolean(isFocus || watch || disabled);
+  const custom = {
+    theme: !theme,
+    height,
+    isFocus: IsFocus,
+    isDisabled: disabled,
+  };
   //
   return (
     <AnimatePresence initial={false}>
-      <>
+      <Cont className="textarea-wrap">
         <label htmlFor={id} style={{ display: 'none' }} />
-        <Cont
+        <motion.textarea
           variants={textAreaVar}
           exit="exit"
           initial="initial"
@@ -48,15 +46,8 @@ export const TextAreaWrap = ({
           whileHover={'hover'}
           whileFocus={'focus'}
           transition={TweenTrans}
-          custom={{
-            theme: !theme,
-            height: height,
-            isFocus: IsFocus,
-            isDisabled: disabled,
-          }}
+          custom={custom}
           //
-          height={height}
-          className="textarea-wrap"
           {...register}
           id={id}
           name={id}
@@ -77,22 +68,29 @@ export const TextAreaWrap = ({
             {error}
           </ErrMsg>
         )}
-      </>
+      </Cont>
     </AnimatePresence>
   );
 };
-
-export const Cont = styled(motion.textarea)<{ height?: number }>`
-  padding: 20px;
-  border: none;
-  resize: none;
-  cursor: auto;
-  font-size: 1rem;
-  border-radius: 4px;
-  word-break: break-all;
+const Cont = styled.div`
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
-  min-height: 150px;
-  ::-webkit-scrollbar {
-    display: none;
+  textarea {
+    padding: 20px;
+    border: none;
+    resize: none;
+    cursor: auto;
+    font-size: 1rem;
+    border-radius: 4px;
+    word-break: break-all;
+    width: 100%;
+    min-height: 150px;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;

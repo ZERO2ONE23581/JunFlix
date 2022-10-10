@@ -59,13 +59,18 @@ export const ErrModal = ({ error, theme, setDataErr }: IErrModal) => {
               onClick={() => setDataErr('')}
             />
           </Cont>
-          <Overlay exit={{ opacity: 0 }} animate={{ opacity: 1 }} />
+          <Overlay
+            zindex={100}
+            exit={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          />
         </>
       )}
     </AnimatePresence>
   );
 };
 const Cont = styled(Modal)`
+  z-index: 101;
   font-size: 2rem;
   padding: 40px;
   min-width: 400px;

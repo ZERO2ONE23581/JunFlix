@@ -1,14 +1,8 @@
 import styled from '@emotion/styled';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Dispatch, SetStateAction } from 'react';
-import { ITheme } from '../../../styles/theme';
-import {
-  border,
-  duration,
-  SpringTrans,
-  TweenTrans,
-} from '../../../styles/variants';
 import { Svg } from '../../Tools/Svg';
+import { ITheme } from '../../../styles/theme';
+import { AnimatePresence, motion } from 'framer-motion';
+import { border, duration, TweenTrans } from '../../../styles/variants';
 
 interface IUserAvatar extends ITheme {
   info: {

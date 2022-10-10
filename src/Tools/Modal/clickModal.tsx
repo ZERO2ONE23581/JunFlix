@@ -4,7 +4,7 @@ import { ITheme } from '../../../styles/theme';
 import { IBoardType } from '../../types/board';
 import { Overlay } from '../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
-import { hoverVar, modalVar } from '../../../styles/variants';
+import { hoverVar, modalVar, variants } from '../../../styles/variants';
 import { Dispatch, SetStateAction } from 'react';
 
 interface IClickModal extends ITheme {
@@ -25,7 +25,7 @@ export const ClickModal = ({ type, onClick, theme, show }: IClickModal) => {
             exit="exit"
             initial="initial"
             animate="animate"
-            custom={!theme}
+            custom={theme}
             variants={modalVar}
           >
             {type === 'board' && (
@@ -56,7 +56,7 @@ export const ClickModal = ({ type, onClick, theme, show }: IClickModal) => {
             )}
           </Cont>
           <Overlay
-            zIndex={1}
+            zindex={1}
             exit={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             onClick={() => show.setModal(false)}

@@ -1,6 +1,14 @@
 import useUser from './useUser';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+
+export const useHeight = (watch: string) => {
+  const [height, setHeight] = useState('20vh');
+  useEffect(() => {
+    setHeight(`${watch?.length * 0.5}px`);
+  }, [setHeight, watch]);
+  return { height };
+};
 
 export const useCapLetters = (word: string) => {
   return word?.replace(/(?:^|\s)\S/g, function (a) {

@@ -27,30 +27,43 @@ export const TrimText = ({ text, max }: ITrimText) => {
   };
   return (
     <>
-      <Text>"{trimmed}"</Text>
-      {isTrim && (
-        <Span
-          whileHover="hover"
-          variants={variants}
-          onClick={() => onClick('more')}
-        >
-          ...
-        </Span>
-      )}
-      {!isTrim && (
-        <Span
-          whileHover="hover"
-          variants={variants}
-          onClick={() => onClick('less')}
-        >
-          (fold)
-        </Span>
+      {text && (
+        <Cont>
+          <Text>"{trimmed}"</Text>
+          {isTrim && (
+            <Span
+              exit="exit"
+              initial="initial"
+              animate="animate"
+              whileHover="hover"
+              variants={variants}
+              onClick={() => onClick('more')}
+            >
+              ...
+            </Span>
+          )}
+          {!isTrim && (
+            <Span
+              exit="exit"
+              initial="initial"
+              animate="animate"
+              whileHover="hover"
+              variants={variants}
+              onClick={() => onClick('less')}
+            >
+              (fold)
+            </Span>
+          )}
+        </Cont>
       )}
     </>
   );
 };
-const Text = styled.span`
+const Cont = styled.span`
   //border: 1px solid yellow;
+  padding: 0 1rem;
+`;
+const Text = styled.span`
   width: fit-content;
   font-size: 1.1rem;
   line-height: 21px;
@@ -58,6 +71,9 @@ const Text = styled.span`
   word-break: break-all;
 `;
 const variants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
   hover: {
     scale: 1.05,
     color: '#E50914',
@@ -65,7 +81,7 @@ const variants = {
   },
 };
 const Span = styled(motion.span)`
-  cursor: pointer;
-  font-size: 1rem;
   opacity: 0.8;
+  font-size: 1rem;
+  cursor: pointer;
 `;

@@ -13,7 +13,6 @@ import { BoxTitle } from '../../../Tools/Title';
 import { InputWrap } from '../../../Tools/Input';
 import { SelectWrap } from '../../../Tools/Input/Select';
 import { CreateBoardAvatar } from '../../Avatar/Board/Create';
-import { Svg } from '../../../Tools/Svg';
 import { joinBoxVar } from '../../../../styles/variants';
 import { Btn } from '../../../Tools/Button';
 import { AnimatePresence } from 'framer-motion';
@@ -46,10 +45,10 @@ export const CreateBoard = ({ theme, isPreview, setPreview }: ICreateBoard) => {
   //
   const [maxTitle] = useState(30);
   const [maxDesc] = useState(700);
-  const [height, setHeight] = useState(40);
+  const [height, setHeight] = useState('40vh');
   useEffect(() => {
     const description = watch!('description');
-    setHeight(description?.length * 0.2);
+    setHeight(`${description?.length! * 0.2}px`);
   }, [setHeight, watch!('description')]);
   //
   const onValid = async ({ title, genre, description, avatar }: IBoardForm) => {
@@ -120,26 +119,24 @@ export const CreateBoard = ({ theme, isPreview, setPreview }: ICreateBoard) => {
             boardMax={{ title: maxTitle, intro: maxDesc }}
           />
           <form onSubmit={handleSubmit(onValid)}>
-            <Flex className="flex">
-              <InputWrap
-                id="title"
-                type="text"
-                label="Title"
-                theme={theme}
-                error={errors.title?.message}
-                watch={watch('title')}
-                register={register('title', {
-                  required: '보드의 제목을 입력하세요.',
-                })}
-              />
-              <SelectWrap
-                id="genre"
-                theme={theme}
-                error={errors.genre?.message}
-                register={register('genre')}
-                watch={Boolean(watch('genre'))}
-              />
-            </Flex>
+            <InputWrap
+              id="title"
+              type="text"
+              label="Title"
+              theme={theme}
+              error={errors.title?.message}
+              watch={Boolean(watch('title'))}
+              register={register('title', {
+                required: '보드의 제목을 입력하세요.',
+              })}
+            />
+            <SelectWrap
+              id="genre"
+              theme={theme}
+              error={errors.genre?.message}
+              register={register('genre')}
+              watch={Boolean(watch('genre'))}
+            />
             <CreateBoardAvatar
               theme={theme}
               register={register!}
@@ -171,13 +168,6 @@ const Cont = styled(Box)`
   width: 35vw;
   min-height: 45vh;
   min-width: 700px;
-  .flex {
-    //border: 2px solid yellow;
-    align-items: flex-start;
-    .err-msg {
-      margin-top: 20px;
-    }
-  }
   .box-title {
     width: 500px;
     min-width: 500px;
@@ -186,9 +176,6 @@ const Cont = styled(Box)`
     }
   }
   form {
-    select {
-      width: 40%;
-    }
     textarea {
       font-size: 1.3rem;
     }

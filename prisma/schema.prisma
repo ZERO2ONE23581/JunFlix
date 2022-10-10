@@ -45,10 +45,11 @@ model Token {
 
 model Board {
   id           Int        @id @default(autoincrement())
-  title        String     @unique
+  title        String     
   description  String     @db.LongText @default("")
-  genre        String
+  genre        String?
   avatar       String?  
+  isPrivate    Boolean?   @default(false)
   user         User       @relation(fields: [UserID], references: [id], onDelete: Cascade)
   UserID       Int  
   followers    Following[]

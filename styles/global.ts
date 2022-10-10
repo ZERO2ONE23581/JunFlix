@@ -54,10 +54,14 @@ export const Modal = styled(motion.article)`
   //
   padding: 30px;
   overflow: hidden;
+  overflow-y: auto;
   border-radius: 5px;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   border-width: 1px;
   border-style: solid;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   .close {
     top: 1rem;
     right: 1rem;
@@ -111,7 +115,7 @@ export const DimBackground = styled.article<{ zIndex?: number }>`
   background-color: rgba(0, 0, 0, 0.8);
   z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
 `;
-export const Overlay = styled(motion.div)<{ zIndex?: number }>`
+export const Overlay = styled(motion.div)<{ zindex?: number }>`
   top: 0;
   left: 0;
   opacity: 0;
@@ -120,7 +124,7 @@ export const Overlay = styled(motion.div)<{ zIndex?: number }>`
   position: fixed;
   background-color: red;
   background-color: rgba(0, 0, 0, 0.8);
-  z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
+  z-index: ${(p) => (p.zindex ? p.zindex : '99')};
 `;
 export const Grid = styled.article<{ size: number }>`
   gap: 20px;

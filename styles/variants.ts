@@ -2,59 +2,87 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
 export const duration = (sec: number) => ({ duration: sec });
-export const color = (dark: boolean) => (dark ? '#000000' : '#ffffff');
-export const bg = (dark: boolean) => (dark ? '#000000' : '#ffffff');
+export const bg = (dark: boolean) =>
+  dark ? 'rgba(0,0,0)' : 'rgba(255,255,255)';
+export const color = (dark: boolean) =>
+  dark ? 'rgba(0,0,0)' : 'rgba(255,255,255)';
 export const border = (dark: boolean) =>
-  dark ? '1px solid black' : '1px solid white';
+  dark ? '1px solid rgba(0,0,0)' : '1px solid rgba(255,255,255)';
 
+//theme은 dark가 default, 즉 boolean값은 기본적으로 false가 들어오게 됨.
 export const variants = {
-  initial: (dark: boolean) => ({
-    color: color(dark),
-    backgroundColor: bg(dark),
+  initial: (theme: boolean) => ({
+    opacity: 0,
   }),
-  animate: (dark: boolean) => ({
-    color: color(dark),
-    backgroundColor: bg(dark),
-    transition: { duration: 0.3 },
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    color: color(theme),
+    backgroundColor: bg(!theme),
+    transition: duration(0.3),
   }),
-  exit: (dark: boolean) => ({
-    transition: { duration: 0.3 },
-  }),
-};
-export const headerVar = {
-  initial: (dark: boolean) => ({
-    borderBottom: border(dark),
-  }),
-  animate: (dark: boolean) => ({
-    transition: { duration: 0.3 },
-    borderBottom: border(dark),
-  }),
-  exit: (dark: boolean) => ({
-    transition: { duration: 0.3 },
+  exit: (theme: boolean) => ({
+    opacity: 0,
   }),
 };
-
+export const overlayVar = {
+  initial: (dark: boolean) => ({
+    opacity: 0,
+  }),
+  animate: (dark: boolean) => ({
+    opacity: 1,
+    transition: duration(0.3),
+  }),
+  exit: (dark: boolean) => ({
+    opacity: 0,
+  }),
+};
+export const loadingVar = {
+  initial: (theme: boolean) => ({
+    opacity: 0,
+    color: theme ? '#000000' : '#ffffff',
+    borderColor: theme ? '#000000' : '#ffffff',
+    backgroundColor: theme ? '#ffffff' : '#000000',
+  }),
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+    },
+    color: theme ? '#000000' : '#ffffff',
+    borderColor: theme ? '#000000' : '#ffffff',
+    backgroundColor: theme ? '#ffffff' : '#000000',
+  }),
+  exit: (theme: boolean) => ({
+    opacity: 0,
+  }),
+};
 export const themeColorTrans = (theme: boolean) => ({
   color: theme ? '#000000' : '#ffffff',
   backgroundColor: theme ? '#ffffff' : '#000000',
 });
+export const opacityVar = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};
 export const modalVar = {
-  initial: (dark: boolean) => ({
+  initial: (theme: boolean) => ({
     opacity: 0,
-    color: color(dark),
-    border: border(dark),
-    backgroundColor: bg(dark),
+    border: theme
+      ? '1px solid rgba(255,255,255,0)'
+      : '1px solid rgba(255,255,255)',
   }),
-  animate: (dark: boolean) => ({
+  animate: (theme: boolean) => ({
     opacity: 1,
-    color: color(!dark),
-    border: border(!dark),
+    color: color(theme),
     transition: duration(0.3),
-    backgroundColor: bg(dark),
+    backgroundColor: bg(!theme),
+    border: theme
+      ? '1px solid rgba(255,255,255,0)'
+      : '1px solid rgba(255,255,255)',
   }),
-  exit: (dark: boolean) => ({
+  exit: (theme: boolean) => ({
     opacity: 0,
-    transition: duration(0.3),
   }),
 };
 export const themeColorVar = {
@@ -64,25 +92,25 @@ export const themeColorVar = {
   }),
   animate: (dark: boolean) => ({
     opacity: 1,
-    transition: { duration: 0.3 },
+    transition: duration(0.3),
     color: dark ? '#ffffff' : '#000000',
   }),
   exit: (dark: boolean) => ({
     opacity: 0,
-    transition: { duration: 0.3 },
+    transition: duration(0.3),
   }),
 };
 export const hoverTextVar = {
   hover: {
     scale: 1.05,
     color: '#E50914',
-    transition: { duration: 0.3 },
+    transition: duration(0.3),
   },
 };
 export const hoverVar = {
   hover: {
     backgroundColor: '#E50914',
-    transition: { duration: 0.3 },
+    transition: duration(0.3),
   },
 };
 export const motionDuration = { duration: 0.5 };

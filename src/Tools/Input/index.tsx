@@ -13,8 +13,8 @@ import {
 interface IInput extends ITheme {
   id: string;
   type?: string;
-  label?: string;
-  watch?: string;
+  label: string;
+  watch?: boolean;
   isAlt?: boolean;
   disabled?: boolean;
   placeholder?: string;
@@ -38,7 +38,7 @@ export const InputWrap = ({
   return (
     <AnimatePresence initial={false}>
       <Cont className="input-wrap">
-        <Wrap className="label-input">
+        <div className="label-input">
           {label && (
             <Label
               variants={labelVar}
@@ -76,7 +76,7 @@ export const InputWrap = ({
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
           />
-        </Wrap>
+        </div>
         {error && (
           <ErrMsg
             exit="exit"
@@ -95,15 +95,22 @@ export const InputWrap = ({
 };
 const Cont = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
   width: 100%;
-`;
-const Wrap = styled.div`
-  position: relative;
-`;
-export const ErrMsg = styled(motion.div)`
-  padding: 5px;
-  font-size: 0.55em;
-  text-align: center;
+  .label-input {
+    width: 100%;
+    position: relative;
+    label {
+      width: fit-content;
+    }
+    input {
+      width: 100%;
+    }
+  }
 `;
 const Label = styled(motion.label)`
   top: 50%;
@@ -111,14 +118,17 @@ const Label = styled(motion.label)`
   z-index: 1;
   font-size: 1rem;
   position: absolute;
-  width: fit-content;
   border-radius: 20px;
   display: inline-block;
 `;
+export const ErrMsg = styled(motion.div)`
+  padding: 5px;
+  font-size: 1em;
+  text-align: center;
+`;
 export const Input = styled(motion.input)`
-  font-size: 1rem;
-  width: 100%;
   border: none;
+  font-size: 1.1rem;
   padding: 10px 20px;
   border-radius: 5px;
   background-color: inherit;

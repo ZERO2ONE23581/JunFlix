@@ -56,16 +56,15 @@ export const SelectWrap = ({
             {id === 'genre' && (
               <>
                 <option value="">장르</option>
-                <option value="SF">SF (SF)</option>
-                <option value="Action">Action (액션)</option>
-                <option value="Drama">Drama (드라마)</option>
-                <option value="Horror">Horror (공포)</option>
-                <option value="Thriller">Thriller (스릴러)</option>
-                <option value="Mystery">Mystery (미스터리)</option>
-                <option value="Comedy">Comedy (코미디)</option>
-                <option value="Fantasy">Fantasy (판타지)</option>
-                <option value="Adventure">Adventure (모험)</option>
-                <option value="Null">Null (미선택)</option>
+                <option value="sF">SF (SF)</option>
+                <option value="action">Action (액션)</option>
+                <option value="drama">Drama (드라마)</option>
+                <option value="horror">Horror (공포)</option>
+                <option value="thriller">Thriller (스릴러)</option>
+                <option value="mystery">Mystery (미스터리)</option>
+                <option value="comedy">Comedy (코미디)</option>
+                <option value="fantasy">Fantasy (판타지)</option>
+                <option value="adventure">Adventure (모험)</option>
               </>
             )}
           </>
@@ -87,7 +86,7 @@ export const SelectWrap = ({
   );
 };
 const Cont = styled(motion.select)`
-  font-size: 0.6em;
+  font-size: 1.1rem;
   width: 100%;
   border: none;
   text-align: center;

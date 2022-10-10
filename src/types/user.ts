@@ -10,11 +10,11 @@ export interface IGetUser extends IData {
   user: UserType;
 }
 export interface IUserForm {
-  userId?: string;
-  password?: string;
+  email: string;
+  userId: string;
+  password: string;
   newPassword?: string;
   confirmPassword?: string;
-  email?: string;
   name?: string;
   birth?: string;
   gender?: string;
