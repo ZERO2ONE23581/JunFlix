@@ -4,13 +4,13 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Blur, Page } from '../../../../styles/global';
-import { HeadTitle } from '../../../../src/components/Head';
+import { HeadTitle } from '../../../../src/components/head_title';
 import { IGetUser } from '../../../../src/types/user';
 import useUser from '../../../../src/libs/client/useUser';
 import { FollowUserModal } from '../../../../src/Tools/Modal/Follow/User';
-import { ListWrap } from '../../../../src/components/User/Read/DashBoard/List';
-import { UserBox } from '../../../../src/components/User/Read/DashBoard/UserInfo';
-import { FollowingBoards } from '../../../../src/components/User/Read/DashBoard/FollowingBoards';
+import { ListWrap } from '../../../../src/components/post/Read/user/DashBoard/List';
+import { UserBox } from '../../../../src/components/post/Read/user/DashBoard/UserInfo';
+import { FollowingBoards } from '../../../../src/components/post/Read/user/DashBoard/FollowingBoards';
 
 const DashBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();

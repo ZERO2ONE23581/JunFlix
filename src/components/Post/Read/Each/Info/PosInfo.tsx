@@ -2,10 +2,10 @@ import { PostText } from './Text';
 import styled from '@emotion/styled';
 import { LikeIcon } from '../../PostLikes';
 import { PostModel } from '../../../../../types/post';
-import { CommentList } from '../../../../Comment/Post/Read/List';
-import { CommentIcon } from '../../../../Comment/Post/Read/Icon';
-import { CreateComment } from '../../../../Comment/Post/Create/Wrap/Comment';
-import { Profile } from '../../../../Comment/Post/Read/Info/Content/Profile';
+import { CommentList } from '../../../../comment/Post/Read/List';
+import { CommentIcon } from '../../../../comment/Post/Read/Icon';
+import { CreateComment } from '../../../../comment/Post/Create/Wrap/Comment';
+import { Profile } from '../../../../comment/Post/Read/Info/Content/Profile';
 
 export interface IPosInfo {
   data: PostModel;

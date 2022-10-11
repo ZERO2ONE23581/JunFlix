@@ -6,7 +6,7 @@ import { IFollowModal } from './Board';
 import { useRouter } from 'next/router';
 import useMutation from '../../../libs/client/useMutation';
 import { IData } from '../../../types/global';
-import { LoadingModal } from '../Loading';
+import { LoadingModal } from '../loading';
 import { Svg } from '../../Svg';
 
 interface IFollowUserModal extends IFollowModal {

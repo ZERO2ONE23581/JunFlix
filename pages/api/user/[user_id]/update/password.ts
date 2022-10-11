@@ -7,13 +7,13 @@ import { withApiSession } from '../../../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { user_id } = req.query;
-  const { password, newPassword, confirmPassword } = req.body;
+  const { password, newPassword, pw_confirm } = req.body;
   if (!user) return res.json({ ok: false, error: 'must login.' });
   if (user?.id !== +user_id)
     return res.json({ ok: false, error: 'user not matched.' });
-  if (!Boolean(password && newPassword && confirmPassword))
+  if (!Boolean(password && newPassword && pw_confirm))
     return res.json({ ok: false, error: 'input missed.' });
-  if (newPassword !== confirmPassword)
+  if (newPassword !== pw_confirm)
     return res.json({ ok: false, error: 'password not matched. ' });
 
   const LoggedInUser = await client.user.findUnique({ where: { id: user.id } });

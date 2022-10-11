@@ -1,79 +1,50 @@
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import { IUserForm } from '../../types/user';
-import { ConfirmModal } from '../../Tools/Modal';
-import useUser from '../../libs/client/useUser';
-import useMutation from '../../libs/client/useMutation';
-import { Errors } from '../../Tools/Errors';
-import { UserBox } from './Update/UserId og';
-import { Svg } from '../../Tools/Svg';
-import { Answer } from '../../Tools/Modal/Answer';
 import { Btn } from '../../Tools/Button';
+import { IEditUser, IUserForm } from '../../types/user';
+import { InputWrap } from '../../Tools/Input';
 
-export const DeleteUser = () => {
-  const [delModal, setDelModal] = useState(false);
-  const router = useRouter();
-  const { loggedInUser } = useUser();
-  const [deleteAcct, { data, loading }] = useMutation(
-    `/api/user/${loggedInUser?.id}/delete`
-  );
+export const DeleteUser_Form = ({ dataWrap }: IEditUser) => {
+  const type = dataWrap.type;
+  const post = dataWrap.post;
+  const theme = dataWrap.theme;
+  const loading = dataWrap.loading;
+  const setLoading = dataWrap.setLoading;
   const {
     watch,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IUserForm>({ mode: 'onSubmit' });
-
+  //
   const onValid = ({ userId }: IUserForm) => {
     if (loading) return;
-    return deleteAcct({ userId });
+    if (!userId) return;
+    setLoading(true);
+    return post({ userId: userId.toUpperCase() });
   };
-  useEffect(() => {
-    if (data?.error) alert(data.error);
-    if (data?.ok) {
-      alert('계정이 삭제되었습니다.');
-      router.push('/');
-    }
-  }, [data, router]);
-  const [answer, setAnswer] = useState(false);
+  //
   return (
     <>
-      {answer && <Answer type="delete-account" closeModal={setAnswer} />}
-      <form onSubmit={handleSubmit(onValid)}>
-        <Cont>
-          <h1>
-            <Svg size="2rem" type="danger" onClick={() => setAnswer(true)} />
-            <span>계정 삭제</span>
-            <span className="small">DELETE ACCOUNT</span>
-          </h1>
-          <Btn name="DELETE" type="button" onClick={() => setDelModal(true)} />
-        </Cont>
-        {delModal && (
-          <ConfirmModal
-            watch={watch}
-            loading={loading}
-            type="delete-user"
-            register={register}
-            closeModal={setDelModal}
+      {type === 'delete' && (
+        <Cont onSubmit={handleSubmit(onValid)}>
+          <InputWrap
+            id="userId"
+            type="text"
+            theme={theme}
+            label="USER ID"
+            watch={Boolean(watch('userId'))}
+            error={errors.userId?.message}
+            register={register('userId', {
+              required: '아이디를 입력해 주세요.',
+            })}
           />
-        )}
-        <Errors errors={errors} />
-      </form>
+          <Btn theme={theme} name="Delete" type="submit" />
+        </Cont>
+      )}
     </>
   );
 };
-const Cont = styled(UserBox)`
-  h1 {
-    span {
-      font-size: 1.3em;
-    }
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-  width: 300px;
-  height: 200px;
+const Cont = styled.form`
+  gap: 15px;
 `;

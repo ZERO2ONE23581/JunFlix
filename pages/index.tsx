@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import useUser from '../src/libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
-import { HeadTitle } from '../src/components/Head';
+import { HeadTitle } from '../src/components/head_title';
 
 const Entrance: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();

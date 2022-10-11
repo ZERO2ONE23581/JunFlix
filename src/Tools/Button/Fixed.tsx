@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Answer } from '../Modal/Answer';
+import { Answer } from '../Modal/answer';
 import styled from '@emotion/styled';
 import useUser from '../../libs/client/useUser';
 import { Move } from '../Modal/Move';

@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { ReviewWithUser } from '../../../../types/review';
 import { Fixed } from './Fixed';
-import { Avatar } from '../../../Avatar/indexafsd';
+import { Avatar } from '../../../../Tools/Avatar/indexafsd';
 import { Top } from './Detail/Top';
-import { CreateComment } from '../../../Comment/Review/Create/Comment';
-import { CommentList } from '../../../Comment/Review/Read/CmtList';
-import { Icons } from '../../../Comment/Review/Read/Icons';
+import { CreateComment } from '../../../comment/Review/Create/Comment';
+import { CommentList } from '../../../comment/Review/Read/CmtList';
+import { Icons } from '../../../comment/Review/Read/Icons';
 
 export interface IInfo {
   review: ReviewWithUser;

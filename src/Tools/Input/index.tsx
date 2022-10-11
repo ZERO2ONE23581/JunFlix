@@ -34,6 +34,7 @@ export const InputWrap = ({
 }: IInput) => {
   const [focus, setFocus] = useState(false);
   const isFocus = Boolean(focus || watch || disabled);
+  const custom = { isFocus, theme: !theme, disabled };
   //
   return (
     <AnimatePresence initial={false}>
@@ -41,23 +42,19 @@ export const InputWrap = ({
         <div className="label-input">
           {label && (
             <Label
-              variants={labelVar}
               exit="exit"
               htmlFor={id}
               initial="initial"
               animate="animate"
+              variants={labelVar}
+              custom={{ ...custom }}
               className={'input-label'}
-              custom={{
-                id,
-                isFocus,
-                disabled,
-                theme: !theme,
-              }}
             >
               {label}
             </Label>
           )}
           <Input
+            className={id}
             variants={inputVar}
             exit="exit"
             initial="initial"
@@ -65,7 +62,7 @@ export const InputWrap = ({
             whileHover={'hover'}
             whileFocus={'focus'}
             transition={TweenTrans}
-            custom={{ isFocus, theme: !theme, disabled }}
+            custom={{ ...custom }}
             //
             {...register}
             id={id}
@@ -123,7 +120,7 @@ const Label = styled(motion.label)`
 `;
 export const ErrMsg = styled(motion.div)`
   padding: 5px;
-  font-size: 1em;
+  font-size: 1.2rem;
   text-align: center;
 `;
 export const Input = styled(motion.input)`

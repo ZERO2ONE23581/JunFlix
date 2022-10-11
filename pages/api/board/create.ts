@@ -5,28 +5,19 @@ import { withApiSession } from '../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { user_id, title, description, genre, avatar } = req.body;
+  const { user_id, title, description, genre } = req.body;
   const mustInputs = Boolean(user_id && title);
-  const userMatch = Boolean(user?.id === +user_id);
+  const userMatch = Boolean(user?.id === user_id);
   if (!user) return res.json({ ok: false, error: 'must login.' });
-  if (!mustInputs) return res.json({ ok: false, error: 'input missed.' });
   if (!userMatch) return res.json({ ok: false, error: 'invalid user.' });
-  //
-  const dupData = Boolean(
-    await client.board.findUnique({
-      where: { title },
-    })
-  );
-  if (dupData)
-    return res.json({ ok: false, error: '이미 사용중인 제목입니다.' });
+  if (!mustInputs) return res.json({ ok: false, error: 'input missed.' });
   //
   const board = await client.board.create({
     data: {
       title,
-      description,
       genre,
-      avatar,
-      user: { connect: { id: user.id } },
+      description,
+      user: { connect: { id: user_id } },
     },
     select: {
       id: true,

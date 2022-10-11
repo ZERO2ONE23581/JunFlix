@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { BoardPage } from './all';
 import useUser from '../../src/libs/client/useUser';
 import { Title } from '../../src/Tools/Title';
-import { HeadTitle } from '../../src/components/Head';
+import { HeadTitle } from '../../src/components/head_title';
 import { Fixed } from '../../src/Tools/Button/Fixed';
 import { Slider } from '../../src/Tools/Slider';
 import { useNeedLogin } from '../../src/libs/client/useTools';

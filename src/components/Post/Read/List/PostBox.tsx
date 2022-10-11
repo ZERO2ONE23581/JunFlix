@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Post } from '@prisma/client';
 import { motion } from 'framer-motion';
-import { AVATAR_BG } from '../../../Avatar/indexafsd';
+import { AVATAR_BG } from '../../../../Tools/Avatar/indexafsd';
 import { boxVars, postVars, SpringTrans } from '../../../../../styles/variants';
 
 interface IPostBox {

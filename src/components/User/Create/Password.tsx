@@ -1,34 +1,33 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
-import useMutation from '../../../libs/client/useMutation';
-import { Errors } from '../../../Tools/Errors';
-import { InputWrap } from '../../../Tools/Input';
-import { IFindForm, IFindPostRes } from '../../../types/user';
-import { LoadingModal } from '../../../Tools/Modal/Loading';
-import styled from '@emotion/styled';
-import { AnimatePresence, motion } from 'framer-motion';
-import { ITheme } from '../../../../styles/theme';
 import { BoxTitle } from '../../../Tools/Title';
-import { Box } from '../../../../styles/global';
+import { AnimatePresence } from 'framer-motion';
+import { Box, Form } from '../../../../styles/global';
+import { InputWrap } from '../../../Tools/Input';
+import { ITheme } from '../../../../styles/theme';
+import { MessageModal } from '../../../Tools/msg_modal';
 import { joinBoxVar } from '../../../../styles/variants';
-import { ErrModal } from '../../../Tools/errorModal';
+import useMutation from '../../../libs/client/useMutation';
+import { LoadingModal } from '../../../Tools/Modal/loading';
+import { IFindPostRes, IUserForm } from '../../../types/user';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-interface INewPassword extends ITheme {
+interface ICreatePassword extends ITheme {
   isBox: boolean;
   userId: string;
   setModal: Dispatch<SetStateAction<boolean>>;
 }
-export const NewPassword = ({
+export const CreatePassword = ({
   isBox,
   theme,
   userId,
   setModal,
-}: INewPassword) => {
-  const [dataErr, setDataErr] = useState('');
+}: ICreatePassword) => {
+  const [message, setMessage] = useState('');
   const [Loading, setLoading] = useState(false);
   const [create, { loading, data }] = useMutation<IFindPostRes>(
-    `/api/user/login/new_password`
+    `/api/user/create/password`
   );
   const {
     watch,
@@ -36,13 +35,13 @@ export const NewPassword = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFindForm>({ mode: 'onSubmit' });
+  } = useForm<IUserForm>({ mode: 'onSubmit' });
 
-  const onValid = ({ password, confirmPassword }: IFindForm) => {
+  const onValid = ({ password, pw_confirm }: IUserForm) => {
     if (loading) return;
     if (!userId) return;
-    if (password !== confirmPassword)
-      return setError('confirmPassword', {
+    if (password !== pw_confirm)
+      return setError('pw_confirm', {
         message: '확인 비밀번호가 일치하지 않습니다.',
       });
     setLoading(true);
@@ -54,10 +53,10 @@ export const NewPassword = ({
       setTimeout(() => {
         setLoading(false);
         if (data.ok) setModal(data.ok);
-        if (data.error) setDataErr(data.error);
+        if (data.error) setMessage(data.error);
       }, 1000);
     }
-  }, [data, setModal, setDataErr, setLoading, setTimeout]);
+  }, [data, setModal, setMessage, setLoading, setTimeout]);
 
   return (
     <AnimatePresence>
@@ -72,14 +71,14 @@ export const NewPassword = ({
               custom={theme}
               variants={joinBoxVar}
             >
-              <BoxTitle theme={theme} type="new-password" />
-              <form onSubmit={handleSubmit(onValid)}>
+              <BoxTitle theme={theme} type="create-password" />
+              <Form onSubmit={handleSubmit(onValid)}>
                 <InputWrap
                   theme={theme}
                   id="password"
                   type="password"
                   label="New Password"
-                  watch={watch('password')}
+                  watch={Boolean(watch('password'))}
                   error={errors.password?.message}
                   register={register('password', {
                     required: '새 비밀번호 입력하세요.',
@@ -102,17 +101,21 @@ export const NewPassword = ({
                 <InputWrap
                   theme={theme}
                   type="password"
-                  id="confirmPassword"
+                  id="pw_confirm"
                   label="Confirm Password"
-                  watch={watch('confirmPassword')}
-                  error={errors.confirmPassword?.message}
-                  register={register('confirmPassword', {
+                  error={errors.pw_confirm?.message}
+                  watch={Boolean(watch('pw_confirm'))}
+                  register={register('pw_confirm', {
                     required: '새 비밀번호 재입력하세요.',
                   })}
                 />
                 <Btn type="submit" theme={theme} name="Submit" />
-              </form>
-              <ErrModal error={dataErr} theme={theme} setDataErr={setDataErr} />
+              </Form>
+              <MessageModal
+                theme={theme}
+                message={message}
+                setMessage={setMessage}
+              />
             </Cont>
           )}
           {Loading && <LoadingModal theme={theme} />}
@@ -122,17 +125,11 @@ export const NewPassword = ({
   );
 };
 const Cont = styled(Box)`
-  max-width: 35vw;
-  min-width: 500px;
-  min-height: 50vh;
+  width: 500px;
   form {
-    //border: 3px solid yellow;
-    height: 100%;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
-    .err-msg {
-      margin-top: 20px;
+    gap: 15px;
+    .input-wrap {
+      gap: 15px;
     }
   }
 `;

@@ -16,9 +16,7 @@ export const ListWrap = ({ theme }: ITheme) => {
         `/user/${loggedInUser?.id}/${loggedInUser?.username}/dash`
       );
     if (type === 'setting')
-      return router.push(
-        `/user/${loggedInUser?.id}/${loggedInUser?.username}/update`
-      );
+      return router.push(`/user/${loggedInUser?.id}/update`);
   };
   return (
     <Cont>

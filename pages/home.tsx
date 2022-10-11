@@ -2,8 +2,8 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../styles/global';
 import { Slider } from '../src/Tools/Slider';
-import { Welcome } from '../src/components/Home/Welcome';
-import { HeadTitle } from '../src/components/Head';
+import { Welcome } from '../src/Layout/Home/Welcome';
+import { HeadTitle } from '../src/components/head_title';
 
 const Home: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (

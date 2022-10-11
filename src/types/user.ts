@@ -1,38 +1,52 @@
 import { Board, Post, Review, User } from '@prisma/client';
-import { IData } from './global';
+import { Dispatch, SetStateAction } from 'react';
+import { IRes } from './global';
 
-export interface UserType extends User {
+export interface IUserType extends User {
   posts: Post[];
   boards: Board[];
   review: Review[];
 }
-export interface IGetUser extends IData {
-  user: UserType;
+export interface IGetUser extends IRes {
+  user: IUserType;
+}
+export interface ICreateUser {
+  isType: boolean;
+  wrap: {
+    theme: boolean;
+    loading: boolean;
+    post: ({}) => void;
+    setLoading: Dispatch<SetStateAction<boolean>>;
+    id?: {
+      userId: string;
+      user_id: number;
+    };
+  };
 }
 export interface IUserForm {
-  email: string;
-  userId: string;
-  password: string;
-  newPassword?: string;
-  confirmPassword?: string;
   name?: string;
   birth?: string;
+  email?: string;
+  userId?: string;
   gender?: string;
+  avatar?: FileList;
   location?: string;
   username?: string;
-  avatar?: FileList;
+  password?: string;
+  newPassword?: string;
+  pw_confirm?: string;
 }
 export interface IJoinForm {
-  userId?: string;
-  password?: string;
-  confirmPassword?: string;
-  username?: string;
   email?: string;
+  userId?: string;
+  username?: string;
+  password?: string;
+  pw_confirm?: string;
 }
-export interface IJoinFormRes extends IData {
+export interface IJoinFormRes extends IRes {
   createdID: number;
 }
-export interface IUserIdCheckForm {
+export interface IUserIdForm {
   userId: string;
 }
 export interface ILoginForm {
@@ -54,4 +68,13 @@ export interface IFindPostRes {
   ok?: boolean;
   error?: string;
   FoundUserID?: string;
+}
+export interface IEditUser {
+  dataWrap: {
+    theme: boolean;
+    type: string;
+    loading: boolean;
+    post: ({}) => void;
+    setLoading: Dispatch<SetStateAction<boolean>>;
+  };
 }

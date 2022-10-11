@@ -56,14 +56,15 @@ export const SelectWrap = ({
             {id === 'genre' && (
               <>
                 <option value="">장르</option>
-                <option value="sF">SF (SF)</option>
-                <option value="action">Action (액션)</option>
+                <option value="sf">SF (SF)</option>
                 <option value="drama">Drama (드라마)</option>
                 <option value="horror">Horror (공포)</option>
-                <option value="thriller">Thriller (스릴러)</option>
-                <option value="mystery">Mystery (미스터리)</option>
+                <option value="action">Action (액션)</option>
                 <option value="comedy">Comedy (코미디)</option>
+                <option value="romance">Romance (로맨스)</option>
                 <option value="fantasy">Fantasy (판타지)</option>
+                <option value="mystery">Mystery (미스터리)</option>
+                <option value="thriller">Thriller (스릴러)</option>
                 <option value="adventure">Adventure (모험)</option>
               </>
             )}

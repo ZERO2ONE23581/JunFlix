@@ -4,9 +4,9 @@ import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { IGetReviews } from '../../src/types/review';
 import { Title } from '../../src/Tools/Title';
-import { HeadTitle } from '../../src/components/Head';
+import { HeadTitle } from '../../src/components/head_title';
 import { Fixed } from '../../src/Tools/Button/Fixed';
-import { ReviewList } from '../../src/components/Review/Read/List';
+import { ReviewList } from '../../src/components/review/Read/List';
 import { NoData } from '../../src/Tools/NoData';
 
 const All_Reviews: NextPage<{ theme: boolean }> = ({ theme }) => {

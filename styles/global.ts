@@ -17,6 +17,15 @@ export const Flex = styled.div`
   align-items: center;
   justify-content: center;
 `;
+export const AvatarLabel = styled.label`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  input {
+    display: none;
+  }
+`;
 export const ERROR = styled.div`
   top: 50%;
   left: 50%;
@@ -47,12 +56,14 @@ export const Modal = styled(motion.article)`
   position: fixed;
   transform: translate(-50%, -50%);
   //
+  padding: 30px;
+  width: fit-content;
+  //
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
   //
-  padding: 30px;
   overflow: hidden;
   overflow-y: auto;
   border-radius: 5px;
@@ -136,37 +147,29 @@ export const Blur = styled.div<{ isBlur: boolean }>`
   pointer-events: ${(p) => p.isBlur && 'none'};
   filter: ${(p) => p.isBlur && 'blur(5px)'};
 `;
-export const Box = styled(motion.div)`
-  .box-title,
-  form,
-  .find-user-wrap,
-  .login-link {
-    //border: 2px solid yellow;
-    height: fit-content;
-  }
-  width: 500px;
-  min-width: 500px;
-  font-size: 2em;
-  position: relative;
+export const Form = styled(motion.form)`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  //
+  align-items: center;
+`;
+export const Box = styled(motion.div)`
+  position: relative;
+  width: fit-content;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 40px;
   border-radius: 5px;
   border: ${(p) => p.theme.border.thick};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   form {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    button {
-      width: 100%;
+    .flex {
+      align-items: flex-start;
     }
-    .input-wrap {
-      width: 100%;
+    button {
+      margin-top: 20px;
     }
   }
 `;

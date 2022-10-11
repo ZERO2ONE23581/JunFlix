@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { BoardPage } from './all';
 import { Title } from '../../src/Tools/Title';
-import { HeadTitle } from '../../src/components/Head';
+import { HeadTitle } from '../../src/components/head_title';
 import { Fixed } from '../../src/Tools/Button/Fixed';
 import { Slider } from '../../src/Tools/Slider';
 import { useRouter } from 'next/router';

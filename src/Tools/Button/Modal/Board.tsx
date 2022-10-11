@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Btn } from '..';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { DimBackground, Modal } from '../../../../styles/global';
-import { ConfirmModal } from '../../Modal';
+import { ConfirmModal } from '../../Modal/confirm';
 import { useRouter } from 'next/router';
 import useUser from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';

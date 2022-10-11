@@ -9,7 +9,18 @@ import {
   FieldError,
 } from 'react-hook-form';
 import { Board, Following, Post, Review, User } from '@prisma/client';
-import { IBoardWithAttrs } from './board';
+import { IBoardType } from './board';
+import { IUserType } from './user';
+
+export interface IForm {
+  userId: string;
+  title: string;
+  genre?: string;
+  avatar?: FileList;
+  isPrivate?: boolean;
+  description?: string;
+  boardAvatar?: FileList;
+}
 
 export interface IMovie {
   id: number;
@@ -28,8 +39,9 @@ export interface IApi {
   arr?: {
     results?: [IMovie];
   };
+  users?: IUserType[];
   posts?: PostModel[];
-  boards?: IBoardWithAttrs[];
+  boards?: IBoardType[];
   MyPostLikes?: PostModel[];
   MyReviewLikes?: ReviewModel[];
 }
@@ -71,10 +83,15 @@ export interface IUseform {
     avatar?: FieldError | undefined;
   };
 }
-export interface IData {
+export interface IRes {
   ok?: boolean;
   error?: string;
   [key: string]: any;
+}
+export interface ICreateUserRes extends IRes {
+  type: string;
+  userId: string;
+  user_id: number;
 }
 interface TheUser extends User {
   posts: Post[];

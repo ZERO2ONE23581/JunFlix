@@ -2,12 +2,12 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
-import { HeadTitle } from '../../../src/components/Head';
-import { Token } from '../../../src/components/User/Find/Token';
-import { Email } from '../../../src/components/User/Find/verify_email';
-import { ResultModal } from '../../../src/components/User/Find/result_modal';
+import { HeadTitle } from '../../../src/components/head_title';
+import { VerifyToken } from '../../../src/components/user/verify/token';
+import { VerifyEmail } from '../../../src/components/user/verify/email';
+import { VerifyResult } from '../../../src/components/user/verify/result';
 
-const Find_ID: NextPage<{ theme: boolean }> = ({ theme }) => {
+const FindUserId: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [userId, setUserId] = useState('');
   const [token, setToken] = useState(false);
   const [verify, setVerify] = useState(false);
@@ -15,19 +15,20 @@ const Find_ID: NextPage<{ theme: boolean }> = ({ theme }) => {
     <>
       <HeadTitle title="아이디 찾기" />
       <Cont>
-        <Email isBox={!token} setToken={setToken} theme={theme} />
-        <Token
+        <VerifyEmail isBox={!token} setToken={setToken} theme={theme} />
+        <VerifyToken
           theme={theme}
-          isBox={token && !verify}
           setUserId={setUserId}
           setVerify={setVerify}
+          isBox={token && !verify}
+          titleType="verify-token-userId"
         />
       </Cont>
-      <ResultModal userId={userId} verified={verify} theme={theme} />
+      <VerifyResult userId={userId} verified={verify} theme={theme} />
     </>
   );
 };
-export default Find_ID;
+export default FindUserId;
 
 const Cont = styled(Page)`
   display: flex;

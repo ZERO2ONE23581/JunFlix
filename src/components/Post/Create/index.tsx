@@ -1,7 +1,7 @@
 import { Info } from './Info';
 import { Layer } from './Layer';
 import styled from '@emotion/styled';
-import { Avatar } from '../../Avatar/indexafsd';
+import { Avatar } from '../../../Tools/Avatar/indexafsd';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { ErrorMsg, Errors } from '../../../Tools/Errors';
@@ -9,7 +9,7 @@ import { IPostForm } from '../../../types/post';
 import useMutation from '../../../libs/client/useMutation';
 import { Modal, DimBackground } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ConfirmModal } from '../../../Tools/Modal';
+import { ConfirmModal } from '../../../Tools/Modal/confirm';
 import { IData } from '../../../types/global';
 
 interface ICreatePost {

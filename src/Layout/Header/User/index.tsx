@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { UserMenuModal } from './modal';
 import { useRouter } from 'next/router';
+import { UserMenuModal } from './modal';
+import { UserAvatarIcon } from './avatar';
 import { ITheme } from '../../../../styles/theme';
 import useUser from '../../../libs/client/useUser';
-import { UserAvatarIcon } from './avatar';
 import { menuTextVar } from '../../../../styles/variants';
 
 export const UserMenu = ({ theme }: ITheme) => {
@@ -35,7 +35,7 @@ export const UserMenu = ({ theme }: ITheme) => {
             className="login-text"
             custom={theme}
             variants={menuTextVar}
-            onClick={() => router.push(`/user/login`)}
+            onClick={() => router.push(`/login`)}
           >
             Login
           </motion.span>
@@ -47,7 +47,7 @@ export const UserMenu = ({ theme }: ITheme) => {
             className="login-text"
             custom={theme}
             variants={menuTextVar}
-            onClick={() => router.push(`/user/join`)}
+            onClick={() => router.push(`/user/create`)}
           >
             Join
           </motion.span>

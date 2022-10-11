@@ -5,9 +5,9 @@ import type { NextPage } from 'next';
 import { IGetAllPosts } from '../../src/types/post';
 import useUser from '../../src/libs/client/useUser';
 import { Title } from '../../src/Tools/Title';
-import { PostList } from '../../src/components/Post/Read/List';
+import { PostList } from '../../src/components/post/Read/List';
 import { Fixed } from '../../src/Tools/Button/Fixed';
-import { HeadTitle } from '../../src/components/Head';
+import { HeadTitle } from '../../src/components/head_title';
 
 const MyPosts: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { loggedInUser } = useUser();

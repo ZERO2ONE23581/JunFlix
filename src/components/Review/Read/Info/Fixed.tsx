@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IData } from '../../../../types/global';
-import { ConfirmModal } from '../../../../Tools/Modal';
+import { ConfirmModal } from '../../../../Tools/Modal/confirm';
 import useUser from '../../../../libs/client/useUser';
 import useMutation from '../../../../libs/client/useMutation';
 import { Svg } from '../../../../Tools/Svg';

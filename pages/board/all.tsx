@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { Slider } from '../../src/Tools/Slider';
 import { Fixed } from '../../src/Tools/Button/Fixed';
-import { HeadTitle } from '../../src/components/Head';
+import { HeadTitle } from '../../src/components/head_title';
 
 const All_Boards: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (

@@ -1,30 +1,66 @@
-import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../styles/global';
-import { CreateBoard } from '../../src/components/Board/Create';
-import { HeadTitle } from '../../src/components/Head';
+import { HeadTitle } from '../../src/components/head_title';
+import { CreateBoard } from '../../src/components/board/create';
+import useMutation from '../../src/libs/client/useMutation';
+import { IBoardFormRes } from '../../src/types/board';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { LoadingModal } from '../../src/Tools/Modal/loading';
+import { AnimatePresence } from 'framer-motion';
+import { MessageModal } from '../../src/Tools/msg_modal';
 
 const Create_Board: NextPage<{ theme: boolean }> = ({ theme }) => {
-  const [preview, setPreview] = useState('');
+  const router = useRouter();
+  const [post, { loading, data }] =
+    useMutation<IBoardFormRes>(`/api/board/create`);
+  const [Loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  useEffect(() => {
+    if (data) {
+      setTimeout(() => {
+        setLoading(false);
+        if (data.error) return setMessage(data.error);
+        if (data.ok)
+          return router.replace(`/board/${data.board.id}/${data.board.title}`);
+      }, 1000);
+    }
+  }, [data, router, setMessage, setTimeout, setLoading]);
+  //
   return (
     <>
       <HeadTitle title="보드생성" />
-      <Cont bg={preview}>
-        <CreateBoard
-          theme={theme}
-          setPreview={setPreview}
-          isPreview={Boolean(preview)}
-        />
+      <Cont>
+        <AnimatePresence>
+          {!Loading && (
+            <>
+              <CreateBoard
+                theme={theme}
+                post={post}
+                loading={loading}
+                setLoading={setLoading}
+              />
+              <MessageModal
+                theme={theme}
+                message={message}
+                setMessage={setMessage}
+              />
+            </>
+          )}
+          {Loading && <LoadingModal theme={theme} />}
+        </AnimatePresence>
       </Cont>
     </>
   );
 };
 export default Create_Board;
 
-const Cont = styled(Page)<{ bg?: string }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: ${(p) => p.bg && `url(${p.bg}) center / cover no-repeat`};
+const Cont = styled(Page)`
+  padding-top: 50px;
+  .create-box {
+    width: 50vw;
+    margin: 0 auto;
+    min-height: 75vh;
+  }
 `;

@@ -1,6 +1,6 @@
 import { Logo } from './Logo';
-import { UserMenu } from './User';
-import { MainMenu } from './Main';
+import { UserMenu } from './user';
+import { MainMenu } from './main';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { ITheme } from '../../../styles/theme';

@@ -2,10 +2,13 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
 export const duration = (sec: number) => ({ duration: sec });
+
 export const bg = (dark: boolean) =>
   dark ? 'rgba(0,0,0)' : 'rgba(255,255,255)';
+
 export const color = (dark: boolean) =>
   dark ? 'rgba(0,0,0)' : 'rgba(255,255,255)';
+
 export const border = (dark: boolean) =>
   dark ? '1px solid rgba(0,0,0)' : '1px solid rgba(255,255,255)';
 
@@ -13,6 +16,8 @@ export const border = (dark: boolean) =>
 export const variants = {
   initial: (theme: boolean) => ({
     opacity: 0,
+    color: color(theme),
+    backgroundColor: bg(!theme),
   }),
   animate: (theme: boolean) => ({
     opacity: 1,
@@ -101,6 +106,19 @@ export const themeColorVar = {
   }),
 };
 export const hoverTextVar = {
+  initial: (dark: boolean) => ({
+    opacity: 0,
+    color: dark ? '#ffffff' : '#000000',
+  }),
+  animate: (dark: boolean) => ({
+    opacity: 1,
+    transition: duration(0.3),
+    color: dark ? '#ffffff' : '#000000',
+  }),
+  exit: (dark: boolean) => ({
+    opacity: 0,
+    transition: duration(0.3),
+  }),
   hover: {
     scale: 1.05,
     color: '#E50914',
@@ -201,14 +219,6 @@ export const ListHover = {
     duration: 0.2,
   },
 };
-export const isMemberVar = {
-  initial: themeColorTrans,
-  animate: themeColorTrans,
-  hover: {
-    scale: 1.1,
-    color: '#E50914',
-  },
-};
 //
 export const joinBoxVar = {
   initial: (theme: boolean) => ({
@@ -243,19 +253,19 @@ export const BoxBgVar = {
   exit: (theme: boolean) => ({}),
 };
 export const labelVar = {
-  initial: ({ theme, id }: any) => ({
+  initial: ({ theme }: any) => ({
     opacity: 1,
     translateY: '-50%',
     fontSize: '1.3rem',
-    transition: { duration: 0.2 },
+    transition: duration(0.2),
     color: !theme ? '#000000' : '#b2bec3',
     backgroundColor: theme ? '#000000' : '#ffffff',
   }),
-  animate: ({ isFocus, theme, disabled, id }: any) => ({
+  animate: ({ isFocus, theme, disabled }: any) => ({
     opacity: 1,
-    transition: { duration: 0.1 },
-    padding: id === 'birth' ? '3px 20px' : '3px 10px',
-    width: isFocus ? 'fit-content' : '90%',
+    padding: '3px 10px',
+    transition: duration(0.2),
+    width: isFocus ? 'fit-content' : '80%',
     translateY: isFocus ? '-150%' : '-50%',
     fontSize: isFocus ? '1.1rem' : '1.3rem',
     backgroundColor: theme ? '#000000' : '#ffffff',
@@ -287,20 +297,20 @@ export const inputVar = {
   animate: ({ theme, isFocus, disabled, height }: any) => ({
     color: disabled ? '#636e72' : theme ? '#ffffff' : '#000000',
     backgroundColor: !theme ? '#ffffff' : '#000000',
-    outline: isFocus
-      ? '3px solid #E50914 '
-      : disabled
+    outline: disabled
       ? '3px solid #636e72'
+      : isFocus
+      ? '3px solid #E50914 '
       : theme
       ? '1px solid #ffffff'
       : '1px solid #000000',
   }),
   hover: ({ disabled }: any) => ({
-    transition: { duration: 0.2 },
+    transition: duration(0.3),
     outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
   }),
   focus: ({ disabled }: any) => ({
-    transition: { duration: 0.2 },
+    transition: duration(0.3),
     outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
   }),
 };

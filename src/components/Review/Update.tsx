@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ReviewModal } from './Create/Modal';
-import { Avatar } from '../Avatar/indexafsd';
+import { Avatar } from '../../Tools/Avatar/indexafsd';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import useUser from '../../libs/client/useUser';

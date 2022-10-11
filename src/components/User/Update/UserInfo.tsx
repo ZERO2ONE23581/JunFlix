@@ -1,43 +1,41 @@
-import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { Btn } from '../../../Tools/Button';
 import { useForm } from 'react-hook-form';
+import { Btn } from '../../../Tools/Button';
+import { IEditUser, IUserForm } from '../../../types/user';
+import { Flex, Form } from '../../../../styles/global';
 import { InputWrap } from '../../../Tools/Input';
-import useMutation from '../../../libs/client/useMutation';
-import { SelectWrap } from '../../../Tools/Input/Select';
 import useUser from '../../../libs/client/useUser';
-import { IUserForm } from '../../../types/user';
-import { Errors } from '../../../Tools/Errors';
-import { IData } from '../../../types/global';
-import { UserBox } from './UserId og';
-import { Svg } from '../../../Tools/Svg';
-import { Answer } from '../../../Tools/Modal/Answer';
+import { SelectWrap } from '../../../Tools/Input/Select';
+import { useEffect } from 'react';
+import { useCapLetters } from '../../../libs/client/useTools';
 
-export const UserInfo = () => {
-  const router = useRouter();
+export const UserInfo_Form = ({ dataWrap }: IEditUser) => {
+  const type = dataWrap.type;
+  const post = dataWrap.post;
+  const theme = dataWrap.theme;
+  const loading = dataWrap.loading;
+  const setLoading = dataWrap.setLoading;
   const { loggedInUser } = useUser();
-  const [Edit, { loading, data }] = useMutation<IData>(
-    `/api/user/${loggedInUser?.id}/edit/user_info`
-  );
   const {
     watch,
     register,
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<IUserForm>({ mode: 'onBlur' });
-
-  const user = loggedInUser;
+  } = useForm<IUserForm>({ mode: 'onSubmit' });
+  //
   useEffect(() => {
-    if (user?.email) setValue('email', user?.email);
-    if (user?.username) setValue('username', user?.username);
-    if (user?.name) setValue('name', user?.name);
-    if (user?.birth) setValue('birth', user?.birth);
-    if (user?.gender) setValue('gender', user?.gender);
-    if (user?.location) setValue('location', user?.location);
-  }, [user, setValue]);
-
+    const user = loggedInUser;
+    if (user) {
+      if (user.name) setValue('name', user?.name);
+      if (user.email) setValue('email', user?.email);
+      if (user.birth) setValue('birth', user?.birth);
+      if (user.gender) setValue('gender', user?.gender);
+      if (user.location) setValue('location', user?.location);
+      if (user.username) setValue('username', useCapLetters(user?.username));
+    }
+  }, [loggedInUser, setValue]);
+  //
   const onValid = ({
     name,
     email,
@@ -47,29 +45,21 @@ export const UserInfo = () => {
     username,
   }: IUserForm) => {
     if (loading) return;
-    Edit({ name, email, birth, gender, location, username });
+    setLoading(true);
+    post({ name, email, birth, gender, location, username });
   };
-  useEffect(() => {
-    if (data?.error) alert(data.error);
-    if (data?.ok) alert('회원정보를 업데이트 했습니다.');
-  }, [data, router]);
-  const [answer, setAnswer] = useState(false);
+  //
   return (
     <>
-      {answer && <Answer type="edit-user-info" closeModal={setAnswer} />}
-      <form onSubmit={handleSubmit(onValid)}>
-        <Cont>
-          <h1>
-            <span>USER INFO</span>
-            <span className="small">(유저 정보)</span>
-            <Svg size="2rem" type="question" onClick={() => setAnswer(true)} />
-          </h1>
+      {type === 'userInfo' && (
+        <Cont onSubmit={handleSubmit(onValid)}>
           <InputWrap
             theme={theme}
             id="username"
             type="text"
             label="Username"
-            watch={watch('username')}
+            error={errors.username?.message}
+            watch={Boolean(watch('username'))}
             register={register('username', {
               maxLength: {
                 value: 10,
@@ -82,7 +72,8 @@ export const UserInfo = () => {
             id="email"
             type="email"
             label="Email"
-            watch={watch('email')}
+            watch={Boolean(watch('email'))}
+            error={errors.email?.message}
             register={register('email', {
               required: '이메일을 입력해주세요.',
               pattern: {
@@ -91,13 +82,21 @@ export const UserInfo = () => {
               },
             })}
           />
-          <Flex>
+          <SelectWrap
+            id="gender"
+            theme={theme}
+            error={errors.gender?.message}
+            watch={Boolean(watch('gender'))}
+            register={register('gender')}
+          />
+          <Flex className="flex">
             <InputWrap
               theme={theme}
               id="name"
               type="text"
               label="Name"
-              watch={watch('name')}
+              watch={Boolean(watch('name'))}
+              error={errors.name?.message}
               register={register('name', {
                 maxLength: {
                   value: 10,
@@ -110,39 +109,31 @@ export const UserInfo = () => {
               id="birth"
               type="date"
               label="Birth"
-              watch={watch('birth')}
+              watch={Boolean(watch('birth'))}
+              error={errors.birth?.message}
               register={register('birth')}
-            />
-          </Flex>
-          <Flex>
-            <SelectWrap
-              id="gender"
-              watch={watch('gender')!}
-              register={register('gender')}
             />
             <InputWrap
               theme={theme}
               id="location"
               type="text"
               label="Location"
-              watch={watch('location')}
+              error={errors.location?.message}
+              watch={Boolean(watch('location'))}
               register={register('location')}
             />
           </Flex>
-          <Btn name="유저정보 수정" type="submit" loading={loading} />
+          <Btn theme={theme} name="Update" type="submit" />
         </Cont>
-        <Errors errors={errors} />
-      </form>
+      )}
     </>
   );
 };
-const Cont = styled(UserBox)`
-  gap: 20px;
-  width: 440px;
-  height: 440px;
-`;
-const Flex = styled.div`
-  gap: 15px;
-  display: flex;
-  align-items: center;
+const Cont = styled(Form)`
+  gap: 22px;
+  .flex {
+    .birth {
+      height: 40px;
+    }
+  }
 `;

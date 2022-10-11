@@ -79,9 +79,7 @@ export const Btn = ({
 };
 export const Cont = styled(motion.button)`
   position: relative;
-  .child {
-    position: absolute;
-  }
+  width: 100%;
   border: none;
   padding: 8px;
   border-radius: 3px;
@@ -97,7 +95,7 @@ export const Cont = styled(motion.button)`
     align-items: center;
     justify-content: center;
   }
-  svg {
-    //pointer-events: none;
+  .child {
+    position: absolute;
   }
 `;

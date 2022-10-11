@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { ITheme } from '../../../styles/theme';
 import { motion } from 'framer-motion';
+import { ITheme } from '../../../styles/theme';
 import { Modal, Overlay } from '../../../styles/global';
 import { loadingVar } from '../../../styles/variants';
 

@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
-import { Avatar, AVATAR_URL } from '../../Avatar/indexafsd';
+import { Avatar, AVATAR_URL } from '../../../Tools/Avatar/indexafsd';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import useMutation from '../../../libs/client/useMutation';
 import { Modal, Overlay } from '../../../../styles/global';
 import { IEditPostForm } from '../../../types/post';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ConfirmModal } from '../../../Tools/Modal';
+import { ConfirmModal } from '../../../Tools/Modal/confirm';
 import { useCapLetters } from '../../../libs/client/useTools';
 import { motion } from 'framer-motion';
 import { TextArea } from '../../../Tools/Input/TextArea';

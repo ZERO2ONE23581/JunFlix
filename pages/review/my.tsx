@@ -6,9 +6,9 @@ import useUser from '../../src/libs/client/useUser';
 import { IGetReviews } from '../../src/types/review';
 import { Title } from '../../src/Tools/Title';
 import { NoData } from '../../src/Tools/NoData';
-import { HeadTitle } from '../../src/components/Head';
+import { HeadTitle } from '../../src/components/head_title';
 import { useNeedLogin } from '../../src/libs/client/useTools';
-import { ReviewList } from '../../src/components/Review/Read/List';
+import { ReviewList } from '../../src/components/review/Read/List';
 
 const MyReviews: NextPage<{ theme: boolean }> = ({ theme }) => {
   useNeedLogin();

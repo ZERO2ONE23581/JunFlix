@@ -5,12 +5,12 @@ import { useRouter } from 'next/router';
 import { Svg } from '../../../../src/Tools/Svg';
 import { Page } from '../../../../styles/global';
 import { IData } from '../../../../src/types/global';
-import { HeadTitle } from '../../../../src/components/Head';
+import { HeadTitle } from '../../../../src/components/head_title';
 import { useNoAuthority } from '../../../../src/libs/client/useTools';
-import { ProfileAvatar } from '../../../../src/components/Avatar/profile';
-import { Info } from '../../../../src/components/User/Read/DashBoard/Profile/Info';
-import { Counts } from '../../../../src/components/User/Read/DashBoard/UserInfo/Counts';
-import { UserFollow } from '../../../../src/components/User/Read/DashBoard/UserInfo/UserFollow';
+import { ProfileAvatar } from '../../../../src/Tools/Avatar/profile';
+import { Info } from '../../../../src/components/post/Read/user/DashBoard/Profile/Info';
+import { Counts } from '../../../../src/components/post/Read/user/DashBoard/UserInfo/Counts';
+import { UserFollow } from '../../../../src/components/post/Read/user/DashBoard/UserInfo/UserFollow';
 
 const MyProfile: NextPage<{ theme: boolean }> = ({ theme }) => {
   const Text = (type: string) => {
