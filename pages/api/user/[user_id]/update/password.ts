@@ -5,34 +5,41 @@ import withHandler from '../../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const inputs = req.body;
   const { user } = req.session;
   const { user_id } = req.query;
-  const { password, newPassword, pw_confirm } = req.body;
+  const isMatchQuery = Boolean(user?.id !== +user_id);
   if (!user) return res.json({ ok: false, error: 'must login.' });
-  if (user?.id !== +user_id)
-    return res.json({ ok: false, error: 'user not matched.' });
-  if (!Boolean(password && newPassword && pw_confirm))
-    return res.json({ ok: false, error: 'input missed.' });
-  if (newPassword !== pw_confirm)
-    return res.json({ ok: false, error: 'password not matched. ' });
+  if (!user_id) return res.json({ ok: false, error: 'query missed.' });
+  if (!inputs) return res.json({ ok: false, error: 'input missed.' });
+  if (!isMatchQuery) return res.json({ ok: false, error: 'invalid query.' });
 
-  const LoggedInUser = await client.user.findUnique({ where: { id: user.id } });
-  if (LoggedInUser) {
-    const isCorrect = await bcrypt.compare(password, LoggedInUser.password!);
-    if (!isCorrect)
-      return res.json({
-        ok: false,
-        error: '현재 비밀번호를 다시 확인해주세요.',
-      });
+  const og_password = inputs.password;
+  const new_confirm = inputs.new_confirm;
+  const new_password = inputs.new_password;
 
-    bcrypt.hash(newPassword, 10, async function (err, hasedPassword) {
-      if (err) return console.log('HASH PASSWORD FAIL');
-      await client.user.update({
-        where: { id: user.id },
-        data: { password: hasedPassword },
-      });
+  const User = await client.user.findUnique({
+    where: { id: user.id },
+    select: { password: true },
+  });
+  if (!User) return res.json({ ok: false, error: 'no user found. ' });
+
+  const isOgMatch = Boolean(await bcrypt.compare(og_password, User.password!));
+  if (!isOgMatch) return res.json({ ok: false, error: 'invalid og password.' });
+
+  const isNewMatch = Boolean(new_password !== new_confirm);
+  if (!isNewMatch)
+    return res.json({ ok: false, error: 'new password not matched. ' });
+  //
+  bcrypt.hash(new_password, 10, async function (error, hasedPassword) {
+    if (error) return res.json({ ok: false, error: 'password hash failed.' });
+    const User = await client.user.update({
+      where: { id: user.id },
+      data: { password: hasedPassword },
+      select: { password: true },
     });
-    return res.json({ ok: true });
-  } else return res.json({ ok: false, error: 'must login' });
+    if (!User) return res.json({ ok: false, error: 'password update failed.' });
+  });
+  return res.json({ ok: true });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

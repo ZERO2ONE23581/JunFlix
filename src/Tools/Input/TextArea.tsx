@@ -1,37 +1,40 @@
 import { ErrMsg } from '.';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { ITheme } from '../../../styles/theme';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
-import { inputErrVar, textAreaVar, TweenTrans } from '../../../styles/variants';
+import { inputErrVar, TweenTrans } from '../../../styles/variants';
+import { useHeight, useLength } from '../../libs/client/useTools';
 
 interface ITextAreaWrap extends ITheme {
   id: string;
   error?: string;
-  height?: string;
-  watch?: boolean;
+  watch?: string;
   disabled?: boolean;
   placeholder?: string;
+  startHeight: number;
   register: UseFormRegisterReturn;
 }
 export const TextAreaWrap = ({
   id,
   theme,
   error,
-  height,
   watch,
   register,
   disabled,
   placeholder,
+  startHeight,
 }: ITextAreaWrap) => {
+  const { Height } = useHeight(watch!, startHeight);
+  const height = Height ? Height : startHeight;
   const [isFocus, setIsFocus] = useState(false);
   const IsFocus = Boolean(isFocus || watch || disabled);
   const custom = {
-    theme: !theme,
     height,
-    isFocus: IsFocus,
-    isDisabled: disabled,
+    IsFocus,
+    disabled,
+    theme: !theme,
   };
   //
   return (
@@ -39,15 +42,6 @@ export const TextAreaWrap = ({
       <Cont className="textarea-wrap">
         <label htmlFor={id} style={{ display: 'none' }} />
         <motion.textarea
-          variants={textAreaVar}
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          whileHover={'hover'}
-          whileFocus={'focus'}
-          transition={TweenTrans}
-          custom={custom}
-          //
           {...register}
           id={id}
           name={id}
@@ -55,6 +49,15 @@ export const TextAreaWrap = ({
           placeholder={placeholder}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
+          custom={custom}
+          variants={textAreaVar}
+          transition={TweenTrans}
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          whileHover={'hover'}
+          whileFocus={'focus'}
+          //
         />
         {error && (
           <ErrMsg
@@ -80,11 +83,12 @@ const Cont = styled.div`
   justify-content: center;
   width: 100%;
   textarea {
-    padding: 20px;
+    font-size: 1.2rem;
+    padding: 10px;
+    padding-left: 15px;
     border: none;
     resize: none;
     cursor: auto;
-    font-size: 1rem;
     border-radius: 4px;
     word-break: break-all;
     width: 100%;
@@ -94,3 +98,37 @@ const Cont = styled.div`
     }
   }
 `;
+const textAreaVar = {
+  initial: ({ theme, IsFocus, disabled, height }: any) => ({
+    height,
+    color: disabled ? '#E50914' : theme ? '#ffffff' : '#000000',
+    backgroundColor: !theme ? '#ffffff' : '#000000',
+    outline: IsFocus
+      ? '3px solid #E50914 '
+      : disabled
+      ? '3px solid #636e72'
+      : theme
+      ? '1px solid #ffffff'
+      : '1px solid #000000',
+  }),
+  animate: ({ theme, IsFocus, disabled, height }: any) => ({
+    height,
+    color: disabled ? '#636e72' : theme ? '#ffffff' : '#000000',
+    backgroundColor: !theme ? '#ffffff' : '#000000',
+    outline: IsFocus
+      ? '3px solid #E50914 '
+      : disabled
+      ? '3px solid #636e72'
+      : theme
+      ? '1px solid #ffffff'
+      : '1px solid #000000',
+  }),
+  hover: ({ disabled }: any) => ({
+    transition: { duration: 0.2 },
+    outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
+  }),
+  focus: ({ disabled }: any) => ({
+    transition: { duration: 0.2 },
+    outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
+  }),
+};

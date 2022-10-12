@@ -11,13 +11,15 @@ import { IBoardType } from '../../types/board';
 import useUser from '../../libs/client/useUser';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import { modalVar } from '../../../styles/variants';
-import { Flex, Modal } from '../../../styles/global';
+import { Flex, Form, Modal } from '../../../styles/global';
 import { UserAvatar } from '../../Tools/Avatar';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
+  isOverMax,
   useCapLetters,
   useHeight,
   useLength,
+  useMaxLength,
 } from '../../libs/client/useTools';
 import { TextLength } from '../../Tools/TextLength';
 
@@ -57,19 +59,20 @@ export const UpdateBoard = ({
     }
   }, [ogData, setValue]);
 
-  //input
-  const Desc = useLength(watch('description'));
-  const maxLength = (length: number) => length;
-  const { height } = useHeight(watch('description')!);
+  const { max } = useMaxLength(40, 700);
+  const IsOverMax = (text: string) => {
+    const Max = Boolean(text === 'title') ? max.title : max.desc;
+    const Type = Boolean(text === 'title') ? 'title' : 'description';
+    return isOverMax(useLength(String(watch(Type))), Max);
+  };
   const onValid = async ({ title, genre, isPrivate, description }: IForm) => {
-    const Title = useLength(watch('title'));
-    if (Title! > maxLength(50))
-      return setError('title', {
-        message: `제목은 ${maxLength(50)}을 초과할 수 없습니다.`,
+    if (IsOverMax('title'))
+      return setError!('title', {
+        message: `보드제목은 ${max.title}자 미만입니다.`,
       });
-    if (Desc! > maxLength(700))
-      return setError('description', {
-        message: `보드 소개글은 ${maxLength(700)}을 초과할 수 없습니다.`,
+    if (IsOverMax('description'))
+      return setError!('description', {
+        message: `보드 소개글은 ${max.desc}자 미만입니다.`,
       });
     setLoading(true);
     if (loading) return;
@@ -92,9 +95,9 @@ export const UpdateBoard = ({
       className={'board-modal'}
     >
       <Svg type="close" size="2rem" theme={theme} onClick={closeModal} />
-      <h1>Edit your Board</h1>
-      <form onSubmit={handleSubmit(onValid)}>
-        <Flex className="flex-col">
+      <h1>Edit Movie Board</h1>
+      <Form onSubmit={handleSubmit(onValid)}>
+        <Flex className="inputs-flex">
           <InputWrap
             id="title"
             type="text"
@@ -115,17 +118,14 @@ export const UpdateBoard = ({
           />
           <TextAreaWrap
             theme={theme}
-            height={height}
             id="description"
+            startHeight={200}
+            watch={watch('description')}
             register={register('description')}
             error={errors.description?.message}
-            watch={Boolean(watch('description'))}
           />
-          <TextLength
-            theme={theme}
-            text={watch('description')!}
-            num={{ text: Desc!, max: maxLength(700) }}
-          />
+        </Flex>
+        <Flex className="host-text-wrap">
           <Host>
             <UserAvatar
               theme={theme}
@@ -138,6 +138,15 @@ export const UpdateBoard = ({
             />
             <span>@{ogData.user.userId}</span>
           </Host>
+          <TextLength
+            theme={theme}
+            number={{
+              max: max.desc,
+              typed: useLength(String(watch('description'))),
+            }}
+          />
+        </Flex>
+        <Flex>
           <Setting className="setting">
             <label htmlFor="private-mode">
               <span>비공개 보드로 전환</span>
@@ -149,56 +158,41 @@ export const UpdateBoard = ({
               {...register('isPrivate')}
             />
           </Setting>
+          <Btn type="submit" name="Done" theme={theme} />
         </Flex>
-        <Btn type="submit" name="Done" theme={theme} />
-      </form>
+      </Form>
     </ModalCont>
   );
 };
 
 export const ModalCont = styled(Modal)`
-  gap: 35px;
-  width: 30vw;
-  min-height: 80vh;
-  justify-content: flex-start;
+  gap: 30px;
+  height: 90vh;
+  min-width: 480px;
+  min-height: 500px;
+  width: fit-content;
   h1 {
     font-size: 2.5rem;
   }
   form {
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-    font-size: 1.1em;
-    .flex-col {
-      gap: 20px;
-      flex-direction: column;
-      select {
-        padding: 5px;
-      }
-      .textarea-wrap {
-        gap: 20px;
-        textarea {
-          min-height: 20vh;
-          max-height: 40vh;
-          font-size: 1.1rem;
-        }
-      }
+    gap: 10px;
+    textarea {
+      max-height: 40vh;
     }
     button {
       padding: 8px 20px;
-      margin-top: 20px;
+      width: fit-content;
+    }
+    .inputs-flex {
+      gap: 15px;
+      flex-direction: column;
+      .input-wrap {
+        gap: 15px;
+      }
     }
   }
-  .text-length {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    span {
-      margin-right: 5px;
-    }
+  .host-text-wrap {
+    justify-content: flex-start;
   }
 `;
 const Host = styled.div`
@@ -216,9 +210,9 @@ const Host = styled.div`
 const Setting = styled.div`
   font-style: italic;
   width: 100%;
+  gap: 12px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   label {
     gap: 5px;
     display: flex;

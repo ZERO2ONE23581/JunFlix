@@ -2,7 +2,7 @@ import { MoviePage } from '.';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { Title } from '../../src/Tools/Title';
+import { Title } from '../../src/Tools/box_title';
 import { Slider } from '../../src/Tools/Slider';
 import { HeadTitle } from '../../src/components/head_title';
 

@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { IGetAllPosts } from '../../src/types/post';
 import useUser from '../../src/libs/client/useUser';
-import { Title } from '../../src/Tools/Title';
+import { Title } from '../../src/Tools/box_title';
 import { PostList } from '../../src/components/post/Read/List';
 import { Fixed } from '../../src/Tools/Button/Fixed';
 import { HeadTitle } from '../../src/components/head_title';

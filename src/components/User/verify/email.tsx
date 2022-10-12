@@ -9,7 +9,7 @@ import { Box, Form } from '../../../../styles/global';
 import { LoadingModal } from '../../../Tools/Modal/loading';
 import { FindUserWrap } from '../../post/Read/user/Links/Find';
 import { ITheme } from '../../../../styles/theme';
-import { BoxTitle } from '../../../Tools/Title';
+import { BoxTitle } from '../../../Tools/box_title';
 import { AnimatePresence } from 'framer-motion';
 import { joinBoxVar } from '../../../../styles/variants';
 import { MessageModal } from '../../../Tools/msg_modal';

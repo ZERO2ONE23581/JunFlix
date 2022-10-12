@@ -7,30 +7,27 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = req.body;
   const { user } = req.session;
   const { user_id } = req.query;
+  const isMatchQuery = Boolean(user?.id === +user_id);
   if (!user) return res.json({ ok: false, error: 'must login.' });
+  if (!user_id) return res.json({ ok: false, error: 'query missed.' });
   if (!userId) return res.json({ ok: false, error: 'input missed.' });
-  if (user.id !== +user_id)
-    return res.json({ ok: false, error: 'user not match.' });
+  if (!isMatchQuery) return res.json({ ok: false, error: 'invalid query.' });
   //
-  const LoggedInUser = await client.user.findUnique({ where: { id: user.id } });
-  if (LoggedInUser) {
-    if (LoggedInUser.userId === userId)
-      return res.json({ ok: false, message: '현재 사용중인 아이디 입니다.' });
-    //
-    const alredayExists = await client.user.findUnique({
-      where: { userId },
-    });
-    if (alredayExists)
-      return res.json({ ok: false, error: '이미 사용중인 아이디 입니다.' });
-    //
+  const found = await client.user.findUnique({
+    where: { userId },
+    select: { id: true },
+  });
+  const isExists = Boolean(found?.id !== +user_id);
+  if (isExists) return res.json({ ok: false, error: 'already in use id.' });
+  //
+  const isPassed = Boolean(
     await client.user.update({
-      where: { id: LoggedInUser.id },
+      where: { id: +user_id },
       data: { userId },
-    });
-    return res.json({
-      ok: true,
-      message: '업데이트 완료 (Update completed)',
-    });
-  } else return res.json({ ok: false, error: 'must login.' });
+    })
+  );
+  if (!isPassed) return res.json({ ok: false, error: 'update failed.' });
+  //
+  return res.json({ ok: true });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

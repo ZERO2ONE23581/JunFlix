@@ -6,23 +6,18 @@ import { withApiSession } from '../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { user_id, title, description, genre } = req.body;
-  const mustInputs = Boolean(user_id && title);
-  const userMatch = Boolean(user?.id === user_id);
+  const isInputs = Boolean(user_id && title);
+  const isHost = Boolean(user?.id === user_id);
   if (!user) return res.json({ ok: false, error: 'must login.' });
-  if (!userMatch) return res.json({ ok: false, error: 'invalid user.' });
-  if (!mustInputs) return res.json({ ok: false, error: 'input missed.' });
+  if (!isHost) return res.json({ ok: false, error: 'invalid host.' });
+  if (!isInputs) return res.json({ ok: false, error: 'input missed.' });
   //
   const board = await client.board.create({
     data: {
       title,
       genre,
       description,
-      user: { connect: { id: user_id } },
-    },
-    select: {
-      id: true,
-      UserID: true,
-      title: true,
+      host: { connect: { id: user_id } },
     },
   });
   //

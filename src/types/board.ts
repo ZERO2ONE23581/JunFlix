@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Board, Following, Post, User } from '@prisma/client';
 
 export interface IBoardType extends Board {
-  user: User;
+  host: User;
   posts: Post[];
 }
 export interface IBoard {

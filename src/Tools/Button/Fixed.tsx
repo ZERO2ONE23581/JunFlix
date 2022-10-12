@@ -1,33 +1,47 @@
-import { useState } from 'react';
-import { Answer } from '../Modal/answer';
-import styled from '@emotion/styled';
-import useUser from '../../libs/client/useUser';
-import { Move } from '../Modal/Move';
 import { Svg } from '../Svg';
+import { useState } from 'react';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { Answer } from '../Modal/answer';
+import useUser from '../../libs/client/useUser';
+import { ITheme } from '../../../styles/theme';
 
-interface IFixed {
+interface IFixedBtns extends ITheme {
   type: string;
 }
-export const Fixed = ({ type }: IFixed) => {
-  const [answer, setAnswer] = useState(false);
-  const [modal, setModal] = useState(false);
+export const FixedBtns = ({ theme, type }: IFixedBtns) => {
   const { isLoggedIn } = useUser();
+  const [answer, setAnswer] = useState(false);
+  const router = useRouter();
+  const clickAdd = () => {
+    setAnswer(false);
+    if (type) router.push(`/${type}/create`);
+  };
   return (
     <>
       <Cont>
-        <Svg size="2.5rem" type="question" onClick={() => setAnswer(true)} />
-        {isLoggedIn && type !== 'update-review' && (
-          <Svg size="2.5rem" type="add" onClick={() => setModal(true)} />
+        <Svg
+          theme={theme}
+          size="2.5rem"
+          type="question"
+          onClick={() => setAnswer(true)}
+        />
+        {isLoggedIn && (
+          <Svg type="add" theme={theme} size="2.5rem" onClick={clickAdd} />
         )}
       </Cont>
-      {answer && <Answer type={type} closeModal={setAnswer} />}
-      {modal && <Move type={type} closeModal={setModal} />}
+      <Answer
+        type={type}
+        theme={theme}
+        answer={answer}
+        closeModal={setAnswer}
+      />
     </>
   );
 };
 const Cont = styled.article`
-  right: 2rem;
-  bottom: 2rem;
+  right: 3rem;
+  bottom: 4rem;
   position: fixed;
   gap: 20px;
   display: flex;

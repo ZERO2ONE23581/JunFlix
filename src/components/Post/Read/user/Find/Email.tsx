@@ -10,7 +10,7 @@ import { Box } from '../../../../../../styles/global';
 import { LoadingModal } from '../../../../../Tools/Modal/loading';
 import { FindUserWrap } from '../Links/Find';
 import { ITheme } from '../../../../../../styles/theme';
-import { BoxTitle } from '../../../../../Tools/Title';
+import { BoxTitle } from '../../../../../Tools/box_title';
 import { AnimatePresence } from 'framer-motion';
 import { MessageModal } from '../../../../../Tools/msg_modal';
 import { joinBoxVar } from '../../../../../../styles/variants';

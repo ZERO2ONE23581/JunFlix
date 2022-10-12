@@ -20,8 +20,8 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
   const closeModal = () => setType('');
   const onClick = (type: string) => {
     if (board) {
-      const user_id = board.UserID;
-      const username = board.user.username;
+      const user_id = board.host_id;
+      const username = board.host.username;
       if (type === 'all') router.push(`/board/all`);
       if (type === 'update') setType('update-board');
       if (type === 'delete') setType('delete-board');
@@ -33,20 +33,20 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
       <HeadTitle title={data?.board?.title!} />
       <Cont>
         <AnimatePresence>
-          {board && (
+          {data && (
             <>
+              <BoardBox theme={theme} board={board!} onClick={onClick} />
               <ModalSchema
                 type={type}
                 theme={theme}
-                ogData={board}
+                ogData={board!}
                 modal={Boolean(type)}
                 closeModal={closeModal}
               />
-              <BoardBox theme={theme} board={board} onClick={onClick} />
             </>
           )}
         </AnimatePresence>
-        {!board && <LoadingModal theme={theme} />}
+        {!data && <LoadingModal theme={theme} />}
       </Cont>
     </>
   );

@@ -26,19 +26,17 @@ export interface IMovie {
   id: number;
   title?: string;
   overview?: string;
+  poster_path?: string;
   vote_average?: number;
   release_date?: string;
+  original_name?: string;
+  backdrop_path?: string;
   original_title?: string;
   original_language?: string;
-  original_name?: string;
-  poster_path?: string;
-  backdrop_path?: string;
 }
 
 export interface IApi {
-  arr?: {
-    results?: [IMovie];
-  };
+  movies: [IMovie];
   users?: IUserType[];
   posts?: PostModel[];
   boards?: IBoardType[];

@@ -1,29 +1,32 @@
+import { BoardPage } from './all';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { BoardPage } from './all';
-import { Title } from '../../src/Tools/Title';
-import { HeadTitle } from '../../src/components/head_title';
-import { Fixed } from '../../src/Tools/Button/Fixed';
-import { Slider } from '../../src/Tools/Slider';
 import { useRouter } from 'next/router';
-import { useCapLetter } from '../../src/libs/client/useTools';
+import { Slider } from '../../src/Tools/Slider';
+import { FixedBtns } from '../../src/Tools/Button/Fixed';
+import { HeadTitle } from '../../src/components/head_title';
+import { PageTitle } from '../../src/Tools/Title/Page_Title';
 
 const GenreBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
-  const query = router.query.genre;
-  const BoardType = query?.toString();
+  const genre = String(router.query.genre);
   return (
     <>
-      <HeadTitle title={`${BoardType?.toUpperCase()} Boards`} />
+      <HeadTitle title={`${genre?.toUpperCase()} Boards`} />
       <Cont>
-        <Title type="genre-board" genreBoardType={BoardType!} />
+        <PageTitle
+          type="board"
+          theme={theme}
+          detail={{ genre: { isGenre: true, type: genre } }}
+        />
         <Slider
+          theme={theme}
           sliderType="board"
+          sliderDetail={genre}
           pageType="genre-boards"
-          sliderDetail={BoardType}
         />
       </Cont>
-      <Fixed type="board" />
+      <FixedBtns theme={theme} type="board" />
     </>
   );
 };

@@ -26,9 +26,11 @@ export const ModalSchema = ({
   closeModal,
 }: IModalBox) => {
   const router = useRouter();
-  //post api
   const [api, setApi] = useState('');
+  const [message, setMessage] = useState('');
+  const [Loading, setLoading] = useState(false);
   const [post, { data, loading }] = useMutation<IRes>(api && api);
+
   useEffect(() => {
     if (type && ogData) {
       if (type === 'update-board') setApi(`/api/board/${ogData.id}/update`);
@@ -36,9 +38,6 @@ export const ModalSchema = ({
     }
   }, [setApi, type, ogData]);
 
-  //result
-  const [message, setMessage] = useState('');
-  const [Loading, setLoading] = useState(false);
   useEffect(() => {
     if (data) {
       setTimeout(() => {
@@ -55,7 +54,7 @@ export const ModalSchema = ({
           if (type === 'delete-board') {
             setMessage('삭제완료 (Delete Completed)');
             setTimeout(() => {
-              return router.replace(`/`);
+              return router.replace(`/board/all`);
             }, 1000);
           }
         }

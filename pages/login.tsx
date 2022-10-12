@@ -31,8 +31,7 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
   const onValid = ({ userId, password }: ILoginForm) => {
     setLoading(true);
     if (loading) return;
-    const userID = userId!.toUpperCase();
-    return login({ userID, password });
+    return login({ userId: userId?.toUpperCase(), password });
   };
   useEffect(() => {
     if (data) {

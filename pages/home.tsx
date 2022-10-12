@@ -63,9 +63,14 @@ const Cont = styled(Page)`
   .movie-wrap {
     padding-bottom: 40px;
     .slider {
+      width: 100%;
       .flex {
         .row {
           min-height: 10em;
+          .box {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }

@@ -4,15 +4,16 @@ import { opacityVar } from '../../styles/variants';
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface ITextLength extends ITheme {
-  num: {
+  number: {
     max: number;
-    text: number;
+    typed: number;
   };
-  text: string;
 }
-export const TextLength = ({ text, theme, num }: ITextLength) => {
-  const isZero = Boolean(num.text && num.text > 0);
-  const isOver = Boolean(num.text && num.text > num.max);
+export const TextLength = ({ theme, number }: ITextLength) => {
+  const isZero = Boolean(number?.typed === 0);
+  const isOver = Boolean(number?.typed > number?.max);
+  const max = number?.max;
+  const typed = number?.typed;
   //
   return (
     <Cont
@@ -24,7 +25,7 @@ export const TextLength = ({ text, theme, num }: ITextLength) => {
       custom={{ theme, isOver }}
     >
       <AnimatePresence>
-        {isZero && (
+        {!isZero && (
           <motion.span
             exit="exit"
             initial="initial"
@@ -32,12 +33,12 @@ export const TextLength = ({ text, theme, num }: ITextLength) => {
             className="max-num"
             variants={opacityVar}
           >
-            {num.text}
+            {typed}
           </motion.span>
         )}
       </AnimatePresence>
       <span>
-        {!isZero && '0'} / {num.max}
+        {isZero && '0'} / {max}
       </span>
     </Cont>
   );
@@ -55,6 +56,10 @@ const Cont = styled(motion.div)`
 const numVar = {
   animate: ({ isOver, theme }: any) => ({
     transition: { duration: 0.5 },
-    color: isOver ? 'red' : theme ? 'rgba(0,0,0)' : 'rgba(255,255,255)',
+    color: isOver
+      ? 'rgb(255, 0, 0)'
+      : theme
+      ? 'rgba(0,0,0)'
+      : 'rgba(255,255,255)',
   }),
 };

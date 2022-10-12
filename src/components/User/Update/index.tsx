@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { IRes } from '../../../types/global';
 import { Box } from '../../../../styles/global';
-import { BoxTitle } from '../../../Tools/Title';
+import { BoxTitle } from '../../../Tools/box_title';
 import { ITheme } from '../../../../styles/theme';
 import { useEffect, useState } from 'react';
 import { UserId_Form } from './userId';

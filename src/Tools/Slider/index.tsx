@@ -11,7 +11,6 @@ import { useCapLetter } from '../../libs/client/useTools';
 import { useRouter } from 'next/router';
 import { ITheme } from '../../../styles/theme';
 import { motion } from 'framer-motion';
-import { Page_Title } from '../Title/Page_Title';
 
 interface ISlider extends ITheme {
   pageType?: string;
@@ -38,11 +37,11 @@ export const Slider = ({
 
   //api
   useEffect(() => {
-    if (sliderType === 'board') setApi(`/api/boards`);
+    if (sliderType === 'board') setApi(`/api/board/all`);
     if (sliderType === 'post') {
       if (sliderDetail === 'likes' && user_id)
         setApi(`/api/user/${user_id}/likes`);
-      else setApi(`/api/posts`);
+      else setApi(`/api/post/all`);
     }
     if (sliderType === 'movie') {
       if (pageType === 'home') {
@@ -53,10 +52,10 @@ export const Slider = ({
 
   //array
   useEffect(() => {
-    if (sliderType === 'movie') setArray(data?.arr?.results);
+    if (sliderType === 'movie') setArray(data?.movies);
     if (sliderType === 'board') {
       if (sliderDetail === 'my')
-        setArray(data?.boards?.filter((p) => p.UserID === loggedInUser?.id));
+        setArray(data?.boards?.filter((p) => p.host_id === loggedInUser?.id));
       else if (pageType === 'genre-boards')
         setArray(
           data?.boards?.filter((p) => p.genre === useCapLetter(sliderDetail!))
@@ -65,7 +64,7 @@ export const Slider = ({
     }
     if (sliderType === 'post') {
       if (sliderDetail === 'my')
-        setArray(data?.posts?.filter((p) => p.UserID === loggedInUser?.id));
+        setArray(data?.posts?.filter((p) => p.host_id === loggedInUser?.id));
       else if (sliderDetail === 'likes') setArray(data?.MyPostLikes);
       else setArray(data?.posts);
     }
@@ -81,14 +80,10 @@ export const Slider = ({
 
   //Boxes
   useEffect(() => {
-    if (pageType === 'home') {
-      if (sliderType === 'movie') return setBoxes(6);
-      else if (sliderType === 'board') return setBoxes(4);
-      else return setBoxes(5);
-    }
     if (sliderType === 'movie') return setBoxes(6);
+    if (sliderType === 'board') return setBoxes(5);
     if (sliderDetail === 'likes') return setBoxes(5);
-    else return setBoxes(4);
+    else return setBoxes(5);
   }, [pageType, sliderType, setBoxes, sliderDetail]);
 
   const isSingleRow = Boolean(array?.length <= boxes);
@@ -110,9 +105,6 @@ export const Slider = ({
   //
   return (
     <Cont className="slider">
-      {pageType === 'all-boards' && (
-        <Page_Title theme={theme} type="all-boards" />
-      )}
       <SlideTitle
         pageType={pageType}
         sliderType={sliderType}

@@ -105,7 +105,6 @@ const Box = styled(motion.div)<{
   length: number;
   boximg?: string;
 }>`
-  min-width: 280px;
   display: flex;
   cursor: pointer;
   overflow: hidden;

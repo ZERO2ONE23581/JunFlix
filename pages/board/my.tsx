@@ -1,12 +1,11 @@
+import { BoardPage } from './all';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { BoardPage } from './all';
-import useUser from '../../src/libs/client/useUser';
-import { Title } from '../../src/Tools/Title';
-import { HeadTitle } from '../../src/components/head_title';
-import { Fixed } from '../../src/Tools/Button/Fixed';
 import { Slider } from '../../src/Tools/Slider';
-import { useNeedLogin } from '../../src/libs/client/useTools';
+import useUser from '../../src/libs/client/useUser';
+import { HeadTitle } from '../../src/components/head_title';
+import { PageTitle } from '../../src/Tools/Title/Page_Title';
+import { FixedBtns } from '../../src/Tools/Button/Fixed';
 
 const MyBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { loggedInUser } = useUser();
@@ -14,10 +13,15 @@ const MyBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
     <>
       <HeadTitle title={`${loggedInUser?.username}'s Boards`} />
       <Cont>
-        <Title type="my-boards" />
-        <Slider pageType="my-boards" sliderType="board" sliderDetail="my" />
+        <PageTitle type="board" theme={theme} detail={{ my: true }} />
+        <Slider
+          theme={theme}
+          sliderDetail="my"
+          sliderType="board"
+          pageType="my-boards"
+        />
       </Cont>
-      <Fixed type="board" />
+      <FixedBtns theme={theme} type="board" />
     </>
   );
 };

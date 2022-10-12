@@ -1,18 +1,18 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ITheme } from '../../styles/theme';
-import { hoverTextVar, modalVar } from '../../styles/variants';
+import { hoverTextVar, modalVar, variants } from '../../styles/variants';
 import { useCapLetters } from '../libs/client/useTools';
 import useUser from '../libs/client/useUser';
+import { Svg } from './Svg';
 
 interface INoData extends ITheme {
   type: string;
 }
 export const NoData = ({ type, theme }: INoData) => {
   const router = useRouter();
-  const { loggedInUser } = useUser();
   const [text, setText] = useState('');
   //
   useEffect(() => {
@@ -35,89 +35,67 @@ export const NoData = ({ type, theme }: INoData) => {
   return (
     <Cont
       className="no-data"
-      variants={modalVar}
       exit="exit"
       initial="initial"
       animate="animate"
+      custom={theme}
+      variants={variants}
     >
-      <span className="emoji">🤔</span>
-      <div className="wrap">
-        <span className="eng">
-          <span>No</span>
-          <motion.span
-            className="data"
-            whileHover={'hover'}
-            variants={hoverTextVar}
-            onClick={() => router.push(`/${type}/all`)}
-          >{`"${useCapLetters(type)}"`}</motion.span>
-          <span>found.</span>
-        </span>
-
-        <span className="kor">
-          <motion.span
-            className="data"
-            whileHover={'hover'}
-            variants={hoverTextVar}
-            onClick={() => router.push(`/${type}/all`)}
-          >{`"${useCapLetters(type)}"`}</motion.span>
-          <span>를 찾을 수 없습니다.</span>
-        </span>
-      </div>
-
-      <motion.span
-        className="create"
-        whileHover="hover"
-        variants={hoverTextVar}
-        onClick={onClick}
-      >
-        <span>Go to create {`"${useCapLetters(type)}"`}</span>
-        <span className="kor">
-          ({`"${useCapLetters(type)}"`} 생성하러 가기)
-        </span>
-        <span>&rarr;</span>
-      </motion.span>
+      <ul>
+        <li>
+          <span className="emoji">🤔</span>
+        </li>
+        <li className="kor">데이터가 존재하지 않습니다.</li>
+        <li className="eng">(No data found.)</li>
+        <motion.li
+          onClick={onClick}
+          exit="exit"
+          className="click"
+          custom={!theme}
+          initial="initial"
+          animate="animate"
+          whileHover={'hover'}
+          variants={hoverTextVar}
+        >
+          <span className="kor">{text} 생성하러 가기</span>
+          <span>Create {text}</span>
+          <span>
+            <Svg
+              size="2rem"
+              theme={theme}
+              type="right-arrow"
+              fill={'#E50914'}
+            />
+          </span>
+        </motion.li>
+      </ul>
     </Cont>
   );
 };
 const Cont = styled(motion.div)`
-  font-size: 1.5rem;
-  gap: 10px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  .emoji {
-    font-size: 2em;
+  font-size: 2.2rem;
+  text-align: center;
+  margin: 10% auto;
+  width: fit-content;
+  .kor {
+    // font-size: 0.9em;
   }
-  .wrap {
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .kor {
-      opacity: 0.9;
-      font-size: 20px;
+  ul {
+    //border: 2px solid cornflowerblue;
+    li {
+      //border: 2px solid yellow;
+      margin-bottom: 10px;
     }
-    span {
+    .click {
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 2rem;
+      font-style: italic;
       gap: 10px;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: center;
-      //border: 1px solid pink;
-      .data {
-        cursor: pointer;
-        border-bottom: 2px dashed ${(p) => p.theme.color.font};
-      }
-    }
-  }
-  button {
-    font-weight: 500;
-  }
-  .create {
-    cursor: pointer;
-    font-style: italic;
-    .kor {
-      font-size: 0.9em;
+      //border: 1px solid yellow;
     }
   }
 `;

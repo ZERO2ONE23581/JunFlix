@@ -35,13 +35,12 @@ const Cont = styled(motion.header)`
   }
   .flex {
     width: 100%;
+    min-width: 620px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    //border: 5px solid cornflowerblue;
     .main-menu {
       width: 60%;
-      //border: 2px solid yellow;
     }
     .user-menu {
       //border: 2px solid red;

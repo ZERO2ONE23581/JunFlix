@@ -5,14 +5,18 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { avatar, user_id } = req.body;
-  const mustInputs = Boolean(avatar && user_id);
-  if (!mustInputs) return res.json({ ok: false, error: 'inputs missed.' });
-  const user = await client.user.findUnique({
-    where: { id: user_id },
-  });
-  if (!user) return res.json({ ok: false, error: 'no user found.' });
+  const isInputs = Boolean(avatar && user_id);
+  if (!isInputs) return res.json({ ok: false, error: 'inputs missed.' });
+
+  const isUser = Boolean(
+    await client.user.findUnique({
+      where: { id: user_id },
+    })
+  );
+  if (!isUser) return res.json({ ok: false, error: 'no user found.' });
+  //
   await client.user.update({
-    where: { id: user.id },
+    where: { id: user_id },
     data: { avatar },
   });
   return res.json({ ok: true, type: 'avatar' });

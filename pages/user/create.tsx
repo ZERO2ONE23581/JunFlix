@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Box, Page } from '../../styles/global';
-import { BoxTitle } from '../../src/Tools/Title';
+import { BoxTitle } from '../../src/Tools/box_title';
 import { ICreateUserRes } from '../../src/types/global';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MessageModal } from '../../src/Tools/msg_modal';

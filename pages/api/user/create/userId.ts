@@ -7,9 +7,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = req.body;
   if (!userId) return res.json({ ok: false, error: 'inputs missed.' });
   //
-  const isExist = await client.user.findUnique({ where: { userId } });
-  if (isExist)
-    return res.json({ ok: false, error: '이미 가입된 아이디 입니다.' });
+  const isExist = Boolean(await client.user.findUnique({ where: { userId } }));
+  if (isExist) return res.json({ ok: false, error: 'already in use userId.' });
   //
   return res.json({ ok: true, userId, type: 'userId' });
 }

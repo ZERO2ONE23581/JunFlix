@@ -11,7 +11,7 @@ export const BoardDetail = ({ theme, data }: IBoardDetail) => {
   const genre = data.genre;
   const privateMode = data.isPrivate;
   return (
-    <Container className="detail">
+    <Container className="board-detail">
       <ul>
         {genre && (
           <li>

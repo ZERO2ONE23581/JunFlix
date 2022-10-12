@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { HeadTitle } from '../../src/components/head_title';
 import { Slider } from '../../src/Tools/Slider';
-import { Title } from '../../src/Tools/Title';
+import { Title } from '../../src/Tools/box_title';
 
 const Movies: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (

@@ -1,32 +1,31 @@
 import styled from '@emotion/styled';
+import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { IBoardForm } from '../../types/board';
-import { Btn } from '../../Tools/Button';
 import useUser from '../../libs/client/useUser';
 import { TextLength } from '../../Tools/TextLength';
-import { TextAreaWrap } from '../../Tools/Input/TextArea';
-import { useLength } from '../../libs/client/useTools';
-import { Box } from '../../../styles/global';
+import { Box, Flex, Form } from '../../../styles/global';
 import { ITheme } from '../../../styles/theme';
-import { BoxTitle } from '../../Tools/Title';
+import { BoxTitle } from '../../Tools/box_title';
 import { InputWrap } from '../../Tools/Input';
+import { TextAreaWrap } from '../../Tools/Input/TextArea';
+import { isOverMax, useLength, useMaxLength } from '../../libs/client/useTools';
 import { SelectWrap } from '../../Tools/Input/Select';
 import { joinBoxVar } from '../../../styles/variants';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { Dispatch, SetStateAction, useState } from 'react';
 
-interface ICreateBoard extends ITheme {
+interface ICreateBoardBox extends ITheme {
   loading: boolean;
   post: ({}) => void;
   setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-export const CreateBoard = ({
+export const CreateBoardBox = ({
   theme,
   post,
   loading,
   setLoading,
-}: ICreateBoard) => {
+}: ICreateBoardBox) => {
   const { loggedInUser } = useUser();
   const {
     watch,
@@ -35,48 +34,54 @@ export const CreateBoard = ({
     handleSubmit,
     formState: { errors },
   } = useForm<IBoardForm>({ mode: 'onBlur' });
-  //
-  const [maxTitle] = useState(30);
-  const [maxDesc] = useState(700);
-  const [height, setHeight] = useState('40vh');
-  const textLength = useLength(watch!('description'));
-  const isOver = Boolean(textLength && textLength > maxDesc);
-  useEffect(() => {
-    const description = watch!('description');
-    setHeight(`${description?.length! * 0.2}px`);
-  }, [setHeight, watch!('description')]);
-  //
+
+  const { max } = useMaxLength(40, 700);
+  const IsOverMax = (text: string) => {
+    const Max = Boolean(text === 'title') ? max.title : max.desc;
+    const Type = Boolean(text === 'title') ? 'title' : 'description';
+    return isOverMax(useLength(String(watch(Type))), Max);
+  };
   const onValid = async ({ title, genre, description }: IBoardForm) => {
-    if (!loggedInUser) return alert('must login.');
-    if (loading) return;
-    if (useLength(watch!('title'))! > maxTitle)
+    if (IsOverMax('title'))
       return setError!('title', {
-        message: `제목의 길이는 ${maxTitle}자 이하입니다.`,
+        message: `보드제목은 ${max.title}자 미만입니다.`,
       });
-    if (isOver)
+    if (IsOverMax('description'))
       return setError!('description', {
-        message: `길이는 ${maxDesc}자 이하입니다.`,
+        message: `보드 소개글은 ${max.desc}자 미만입니다.`,
       });
     setLoading(true);
-    post({ title, description, genre, user_id: loggedInUser.id });
+    if (loading) return;
+    post({ title, description, genre, user_id: loggedInUser?.id });
   };
-  //
+
   return (
     <Cont
+      className="box"
       exit="exit"
       initial="initial"
       animate="animate"
       custom={theme}
       variants={joinBoxVar}
-      className="create-box"
     >
       <BoxTitle
         theme={theme}
         type="create-board"
-        boardMax={{ title: maxTitle, intro: maxDesc }}
+        max={{ board: { title: max.title, desc: max.desc } }}
       />
-      <Form onSubmit={handleSubmit(onValid)} className="create-board-form">
-        <div className="right-flex">
+      <Form onSubmit={handleSubmit(onValid)} className="form">
+        <Flex className="wrap">
+          <InputWrap
+            id="title"
+            type="text"
+            label="Title"
+            theme={theme}
+            error={errors.title?.message}
+            watch={Boolean(watch('title'))}
+            register={register('title', {
+              required: '보드의 제목을 입력하세요.',
+            })}
+          />
           <SelectWrap
             id="genre"
             theme={theme}
@@ -84,80 +89,53 @@ export const CreateBoard = ({
             register={register('genre')}
             watch={Boolean(watch('genre'))}
           />
-        </div>
-        <InputWrap
-          id="title"
-          type="text"
-          label="Title"
-          theme={theme}
-          error={errors.title?.message}
-          watch={Boolean(watch('title'))}
-          register={register('title', {
-            required: '보드의 제목을 입력하세요.',
-          })}
-        />
+          <Btn name="Save" type="submit" theme={theme} />
+        </Flex>
+
         <TextAreaWrap
           id="description"
           theme={theme}
-          height={height}
-          error={errors.description?.message}
           register={register('description')}
-          watch={Boolean(watch('description'))}
+          error={errors.description?.message}
+          watch={watch('description')}
           placeholder="이 보드의 소개글을 작성해주세요."
         />
         <TextLength
           theme={theme}
-          text={watch('description')!}
-          num={{ text: textLength!, max: maxDesc }}
+          number={{
+            max: max.desc,
+            typed: useLength(String(watch('description'))),
+          }}
         />
-        <Btn name="Save" type="submit" theme={theme} />
       </Form>
     </Cont>
   );
 };
 const Cont = styled(Box)`
   gap: 20px;
-  .box-title {
-    width: 500px;
-    min-width: 500px;
-    h1 {
-      font-size: 2.4rem;
-    }
-  }
-  .create-board-form {
+  .form {
     gap: 20px;
-    height: fit-content;
-    align-items: flex-end;
-    justify-content: flex-end;
-  }
-`;
-const Form = styled(motion.form)`
-  .right-flex {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    .select-wrap {
-      padding: 5px;
+    align-items: flex-start;
+    .wrap {
+      gap: 15px;
+      align-items: flex-start;
+      .input-wrap {
+        gap: 20px;
+      }
+      select {
+        width: min-content;
+      }
+    }
+    .textarea-wrap {
+      textarea {
+        font-size: 1.2rem;
+        max-height: 50vh;
+      }
+    }
+    button {
+      margin-top: 0;
       width: fit-content;
+      padding: 8px 30px;
     }
-  }
-  .input-wrap,
-  .textarea-wrap {
-    gap: 20px;
-  }
-  .textarea-wrap {
-    max-height: 300px;
-    textarea {
-      font-size: 1.3rem;
-    }
-  }
-  button {
-    font-size: 1.3rem;
-    padding: 10px 40px;
-  }
-  .create-board-bg {
-    top: 1.3em;
-    right: 1.3em;
-    position: absolute;
   }
 `;

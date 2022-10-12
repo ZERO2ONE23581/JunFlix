@@ -13,113 +13,123 @@ datasource db {
 
 }
 model User {
-  id                  Int          @id @default(autoincrement())
-  username            String? 
-  userId              String?      @unique
-  password            String?  
-  email               String?      @unique
-  name                String?
-  birth               String?
-  gender              String?
-  location            String?
-  avatar              String?
-  createdAt           DateTime    @default(now())
-  updatedAt           DateTime    @updatedAt
-  posts               Post[]
-  tokens              Token[]  
-  boards              Board[]     
-  reviews             Review[]  
-  likes               Likes[]  
-  comments            Comment[]
-  following           Following[]
+  id               Int          @id @default(autoincrement())
+  userId           String       @unique
+  email            String       @unique
+  password         String  
+  username         String? 
+  name             String?
+  birth            String?
+  gender           String?
+  location         String?
+  avatar           String?
+  updatedAt        DateTime     @updatedAt
+  createdAt        DateTime     @default(now())
+  likes            Like[]  
+  posts            Post[]
+  tokens           Token[]  
+  boards           Board[]     
+  reviews          Review[]  
+  comments         Comment[]
+  followers        Follower[]
+  followings       Following[]
 }
 
 model Token {
-  id           Int         @id @default(autoincrement())
-  tokenNum     Int         @unique
-  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
-  UserID       Int   
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  id               Int         @id @default(autoincrement())
+  digits           Int         @unique
+  updatedAt        DateTime    @updatedAt
+  createdAt        DateTime    @default(now())
+  host_id          Int         @unique
+  host             User        @relation(fields: [host_id], references: [id], onDelete: Cascade)
 }
 
 model Board {
-  id           Int        @id @default(autoincrement())
-  title        String     
-  description  String     @db.LongText @default("")
-  genre        String?
-  avatar       String?  
-  isPrivate    Boolean?   @default(false)
-  user         User       @relation(fields: [UserID], references: [id], onDelete: Cascade)
-  UserID       Int  
-  followers    Following[]
-  posts        Post[]
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  id                Int           @id @default(autoincrement())
+  title             String     
+  genre             String?
+  avatar            String?  
+  updatedAt         DateTime      @updatedAt
+  createdAt         DateTime      @default(now())
+  isPrivate         Boolean?      @default(false)
+  description       String        @db.LongText @default("")
+  posts             Post[]
+  folllowers        Follower[]
+  host_id           Int  
+  host              User          @relation(fields: [host_id], references: [id], onDelete: Cascade)
 }
 model Following {
-  id                Int         @id @default(autoincrement()) 
-  UserID            Int  
-  BoardID           Int?
-  FollowingUserID   Int?
-  updatedAt         DateTime    @updatedAt
-  createdAt         DateTime    @default(now())
-  user              User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
-  board             Board?      @relation(fields: [BoardID], references: [id], onDelete: Cascade)
+  id                Int           @id @default(autoincrement()) 
+  host_id           Int           @unique
+  user_id           Int?          @unique
+  board_id          Int?          @unique
+  updatedAt         DateTime      @updatedAt
+  createdAt         DateTime      @default(now())
+  host              User          @relation(fields: [host_id], references: [id], onDelete: Cascade)
+}
+model Follower {
+  id                Int           @id @default(autoincrement()) 
+  host_id           Int           @unique
+  user_id           Int?          @unique  
+  board_id          Int?          @unique
+  updatedAt         DateTime      @updatedAt
+  createdAt         DateTime      @default(now())
+  user              User?         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  board             Board?        @relation(fields: [board_id], references: [id], onDelete: Cascade)
 }
 model Post {
-  id           Int         @id @default(autoincrement())
-  title        String     
-  content      String?     @db.LongText
-  avatar       String?
-  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
-  UserID       Int   
-  board        Board        @relation(fields: [BoardID], references: [id], onDelete: Cascade)
-  BoardID      Int
-  likes        Likes[]  
-  comments     Comment[]  
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  id               Int            @id @default(autoincrement())
+  title            String     
+  avatar           String?
+  description      String?        @db.LongText
+  updatedAt        DateTime       @updatedAt
+  createdAt        DateTime       @default(now())
+  likes            Like[]  
+  comments         Comment[]  
+  host_id          Int            @unique   
+  board_id         Int            @unique
+  host             User           @relation(fields: [host_id], references: [id], onDelete: Cascade)
+  board            Board          @relation(fields: [board_id], references: [id], onDelete: Cascade)
 }
 model Review {
-  id           Int        @id @default(autoincrement())
-  title        String  
-  movieTitle   String
-  genre        String
-  avatar       String? 
-  content      String?     @db.LongText
-  score        Float?      @default(1)
-  oneline      String?
-  recommend    Boolean?    @default(true)
-  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
-  UserID       Int
-  likes        Likes[]  
-  comments     Comment[]  
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  id               Int            @id @default(autoincrement())
+  title            String  
+  movie            String
+  description      String         @db.LongText
+  genre            String?
+  avatar           String? 
+  score            Float?         @default(1)
+  isRecommend      Boolean?       @default(true)
+  updatedAt        DateTime       @updatedAt
+  createdAt        DateTime       @default(now())
+  likes            Like[]  
+  comments         Comment[]  
+  host_id          Int            @unique
+  host             User           @relation(fields: [host_id], references: [id], onDelete: Cascade)
+  
 }
-model Likes {
-  id           Int         @id @default(autoincrement()) 
-  user         User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
-  UserID       Int
-  post         Post?       @relation(fields: [PostID], references: [id], onDelete: Cascade)
-  PostID       Int?
-  review       Review?     @relation(fields: [ReviewID], references: [id], onDelete: Cascade)
-  ReviewID     Int?
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+model Like {
+  id               Int            @id @default(autoincrement()) 
+  updatedAt        DateTime       @updatedAt
+  createdAt        DateTime       @default(now())
+  host_id          Int            @unique
+  post_id          Int?           @unique
+  review_id        Int?           @unique
+  host             User           @relation(fields: [host_id], references: [id], onDelete: Cascade)
+  post             Post?          @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  review           Review?        @relation(fields: [review_id], references: [id], onDelete: Cascade)
 }
 model Comment {
-  id                  Int         @id @default(autoincrement())
-  content             String?     @db.LongText
-  ReplyID             Int?        @default(0)      
-  ParentID            Int?        @default(0)      
-  user                User        @relation(fields: [UserID], references: [id], onDelete: Cascade)
-  UserID              Int
-  post                Post?       @relation(fields: [PostID], references: [id], onDelete: Cascade)
-  PostID              Int?
-  review              Review?     @relation(fields: [ReviewID], references: [id], onDelete: Cascade)
-  ReviewID            Int?  
-  createdAt           DateTime    @default(now())
-  updatedAt           DateTime    @updatedAt
+  id               Int            @id @default(autoincrement())
+  content          String?        @db.LongText
+  reply_id         Int?           @default(0)      
+  parent_id        Int?           @default(0)      
+  updatedAt        DateTime       @updatedAt
+  createdAt        DateTime       @default(now())
+  host_id          Int            @unique
+  post_id          Int?           @unique
+  review_id        Int?           @unique
+  host             User           @relation(fields: [host_id], references: [id], onDelete: Cascade)
+  post             Post?          @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  review           Review?        @relation(fields: [review_id], references: [id], onDelete: Cascade)
 }

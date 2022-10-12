@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { IForm } from '../../types/global';
 import useUser from '../../libs/client/useUser';
-import { ITypeModal, ModalCont } from './update';
+import { ITypeModal } from './update';
 import { modalVar, opacityVar } from '../../../styles/variants';
 import { Modal } from '../../../styles/global';
 

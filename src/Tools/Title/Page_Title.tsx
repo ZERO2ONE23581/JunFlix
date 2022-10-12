@@ -5,124 +5,74 @@ import styled from '@emotion/styled';
 import { GenreIcons } from '../GenreIcons';
 import { ITheme } from '../../../styles/theme';
 import useUser from '../../libs/client/useUser';
-import { useCapLetter } from '../../libs/client/useTools';
+import { useCapLetter, useCapLetters } from '../../libs/client/useTools';
 
-interface IPage_Title extends ITheme {
+interface IPageTitle extends ITheme {
   type: string;
-  postType?: string;
-  reviewType?: string;
-  movieType?: string;
-  genreBoardType?: string;
+  detail?: {
+    my?: boolean;
+    all?: boolean;
+    genre?: {
+      type: string;
+      isGenre: boolean;
+    };
+  };
 }
-export const Page_Title = ({
-  type,
-  theme,
-  postType,
-  movieType,
-  reviewType,
-  genreBoardType,
-}: IPage_Title) => {
+export const PageTitle = ({ detail, type, theme }: IPageTitle) => {
   const { loggedInUser } = useUser();
+  const isMyBoards = Boolean(type === 'board' && detail?.my);
+  const isAllBoards = Boolean(type === 'board' && detail?.all);
+  const boardGenre = detail?.genre?.type;
+  const GenreBoardTitle = () => (boardGenre === 'sf' ? 'SF' : boardGenre);
+  const isGenreBoards = Boolean(
+    type === 'board' && detail?.genre?.isGenre && boardGenre
+  );
   return (
     <Cont className="page-title">
       <Wrapper>
         <Ropes />
-        <H1>
-          {type === 'review' && (
+        <div className="head">
+          {isAllBoards && (
             <>
-              {reviewType === 'all' && (
-                <>
-                  <span>All Reviews</span>
-                  <Svg theme={theme} type="post" size="2rem" />
-                </>
-              )}
-              {reviewType === 'my' && (
-                <>
-                  <span>{loggedInUser?.username}'s Reviews</span>
-                  <Svg theme={theme} type="post" size="2rem" />
-                </>
-              )}
-            </>
-          )}
-          {type === 'post' && (
-            <>
-              {postType === 'all' && (
-                <>
-                  All Posts <Svg theme={theme} type="post" size="2rem" />
-                </>
-              )}
-              {postType === 'my' && (
-                <>
-                  {loggedInUser?.username}'s Posts
-                  <Svg theme={theme} type="post" size="2rem" />
-                </>
-              )}
-            </>
-          )}
-          {type === 'movie' && (
-            <>
-              {movieType === 'trending' && (
-                <>
-                  Trending Now <Svg theme={theme} type="film" size="2rem" />
-                </>
-              )}
-              {movieType === 'upcoming' && (
-                <>
-                  Upcoming <Svg theme={theme} type="film" size="2rem" />
-                </>
-              )}
-              {movieType === 'tv' && (
-                <>
-                  TV Shows <Svg theme={theme} type="film" size="2rem" />
-                </>
-              )}
-              {movieType === 'now' && (
-                <>
-                  Now Playing <Svg theme={theme} type="film" size="2rem" />
-                </>
-              )}
-              {movieType === 'top' && (
-                <>
-                  Classics <Svg theme={theme} type="film" size="2rem" />
-                </>
-              )}
-            </>
-          )}
-          {type === 'movie-page' && (
-            <>
-              Movie Page <Svg theme={theme} type="film" size="2rem" />
-            </>
-          )}
-          {type === 'all-boards' && (
-            <>
-              All Boards <Svg theme={theme} type="board" size="2rem" />
-            </>
-          )}
-          {type === 'my-boards' && (
-            <>
-              {loggedInUser?.username}'s Boards
+              <span>All Boards</span>
               <Svg theme={theme} type="board" size="2rem" />
             </>
           )}
-          {type === 'genre-board' && (
+          {isMyBoards && (
             <>
-              {genreBoardType?.toUpperCase()} Boards
-              <GenreIcons type={useCapLetter(genreBoardType!)} />
+              <span>{useCapLetter(loggedInUser?.username!)}'s Boards</span>
+              <Svg theme={theme} type="board" size="2rem" />
+            </>
+          )}
+          {isGenreBoards && (
+            <>
+              <span>{useCapLetters(GenreBoardTitle()!)} Boards</span>
+              <GenreIcons type={useCapLetter(boardGenre!)} />
             </>
           )}
           <Movie type={type!} />
-        </H1>
+        </div>
       </Wrapper>
     </Cont>
   );
 };
 const Cont = styled.article`
-  padding-left: 3em;
+  padding-left: 3rem;
   display: flex;
   width: fit-content;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  .head {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-size: 2rem;
+    text-align: center;
+    border-radius: 5px;
+    border: 4px solid ${(p) => p.theme.color.logo};
+  }
   svg {
     pointer-events: none;
   }
@@ -133,14 +83,4 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-const H1 = styled.div`
-  gap: 10px;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  font-size: 2rem;
-  text-align: center;
-  border-radius: 5px;
-  border: 4px solid ${(p) => p.theme.color.logo};
 `;

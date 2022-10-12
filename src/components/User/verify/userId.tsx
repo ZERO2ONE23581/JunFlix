@@ -7,7 +7,7 @@ import { IFindForm, IFindPostRes } from '../../../types/user';
 import { Box, Form } from '../../../../styles/global';
 import { LoadingModal } from '../../../Tools/Modal/loading';
 import { ITheme } from '../../../../styles/theme';
-import { BoxTitle } from '../../../Tools/Title';
+import { BoxTitle } from '../../../Tools/box_title';
 import { FindUserWrap } from '../../post/Read/user/Links/Find';
 import { AnimatePresence } from 'framer-motion';
 import { joinBoxVar } from '../../../../styles/variants';

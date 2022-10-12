@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
-import { BoxTitle } from '../../../Tools/Title';
+import { BoxTitle } from '../../../Tools/box_title';
 import { AnimatePresence } from 'framer-motion';
 import { Box, Form } from '../../../../styles/global';
 import { InputWrap } from '../../../Tools/Input';

@@ -6,22 +6,24 @@ import { withApiSession } from '../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const { userID, password } = req.body;
-    if (!Boolean(userID && password))
-      return res.json({ ok: false, error: 'input missed.' });
+    const { userId, password } = req.body;
+    const isInputs = Boolean(userId && password);
+    if (!isInputs) return res.json({ ok: false, error: 'input missed.' });
 
+    //userId check
     const user = await client.user.findUnique({
-      where: { userId: userID },
+      where: { userId },
       select: { id: true, userId: true, password: true },
     });
     if (!user)
       return res.json({ ok: false, error: '존재하지 않는 아이디 입니다.' });
 
+    //password check
     const isMatch = await bcrypt.compare(password, user.password!);
     if (!isMatch)
       return res.json({ ok: false, error: '비밀번호가 일치하지 않습니다.' });
 
-    //찾은 유저의 id -> 쿠키에 저장 (로그인하는 방법)
+    //save user_id in Cookie session
     req.session.user = {
       id: user.id,
     };

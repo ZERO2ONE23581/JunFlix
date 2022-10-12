@@ -3,37 +3,26 @@ import client from '../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
 
-export interface ResponseType {
-  ok: boolean;
-  [key: string]: any;
-}
-async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseType>
-) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { userId } = req.body;
   const { user } = req.session;
   const { user_id } = req.query;
-  const { userId } = req.body;
-  if (!user)
-    return res.json({ ok: false, error: '로그인이 필요한 기능입니다.' });
-  if (user.id !== +user_id)
-    return res.json({ ok: false, error: '권한이 없습니다.' });
-  if (!userId) return res.json({ ok: false, error: 'No input data.' });
-
-  const FoundUser = await client.user.findUnique({
-    where: { userId },
+  const isMatchQuery = Boolean(user?.id === +user_id);
+  if (!user) return res.json({ ok: false, error: 'must login.' });
+  if (!userId) return res.json({ ok: false, error: 'input missed.' });
+  if (!user_id) return res.json({ ok: false, error: 'query missed.' });
+  if (!isMatchQuery) return res.json({ ok: false, error: 'invalid query.' });
+  //
+  const User = await client.user.findUnique({
+    where: { id: +user_id },
+    select: { userId: true, id: true },
   });
-  if (!FoundUser)
-    return res.json({ ok: false, error: '존재하지 않는 유저입니다.' });
-
-  if (user.id !== FoundUser.id)
-    return res.json({ ok: false, error: '본인 아이디가 아닙니다.' });
-
-  await client.user.delete({
-    where: {
-      id: FoundUser.id,
-    },
-  });
+  if (!User) return res.json({ ok: false, error: 'no user found.' });
+  //
+  const isHost = Boolean(User.userId === userId);
+  if (!isHost) return res.json({ ok: false, error: 'userId not matched.' });
+  //
+  await client.user.delete({ where: { id: User.id } });
   req.session.destroy();
   return res.json({ ok: true });
 }

@@ -2,14 +2,17 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { Slider } from '../../src/Tools/Slider';
-import { Fixed } from '../../src/Tools/Button/Fixed';
-import { HeadTitle } from '../../src/components/head_title';
 
-const All_Boards: NextPage<{ theme: boolean }> = ({ theme }) => {
+import { HeadTitle } from '../../src/components/head_title';
+import { PageTitle } from '../../src/Tools/Title/Page_Title';
+import { FixedBtns } from '../../src/Tools/Button/Fixed';
+
+const AllBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (
     <>
       <HeadTitle title="All Boards" />
       <Cont>
+        <PageTitle type="board" theme={theme} detail={{ all: true }} />
         <Slider
           theme={theme}
           sliderType="board"
@@ -17,14 +20,17 @@ const All_Boards: NextPage<{ theme: boolean }> = ({ theme }) => {
           pageType="all-boards"
         />
       </Cont>
-      <Fixed type="board" />
+      <FixedBtns theme={theme} type="board" />
     </>
   );
 };
-export default All_Boards;
+export default AllBoards;
 
 export const BoardPage = styled(Page)`
   padding: 0 8em;
+  .no-data {
+    //height: 100vh;
+  }
   .slider {
     min-height: 85vh;
     .page-title {

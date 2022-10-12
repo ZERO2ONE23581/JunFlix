@@ -20,12 +20,10 @@ export default function withHandler({
       return res.status(405).end();
 
     if (isPrivate && !req.session.user)
-      return res
-        .status(401)
-        .json({
-          ok: false,
-          error: '(isPrivate:true IS DEFAULT SET!) MUST LOG IN!',
-        });
+      return res.status(401).json({
+        ok: false,
+        error: '(isPrivate:true IS DEFAULT SET!) MUST LOG IN!',
+      });
 
     try {
       await handler(req, res);

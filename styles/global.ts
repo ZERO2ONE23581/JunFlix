@@ -10,6 +10,12 @@ export const Page = styled.section`
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
+export const FlexPage = styled(Page)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+`;
 export const Flex = styled.div`
   width: 100%;
   gap: 20px;

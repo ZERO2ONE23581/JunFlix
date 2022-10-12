@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { IData } from '../../../../../../types/global';
+
 import { Slider } from '../../../../../../Tools/Slider';
 import { ReviewList } from '../../../../../review/Read/List';
 import { ITheme } from '../../../../../../../styles/theme';
@@ -9,14 +9,14 @@ import { Btn } from '../../../../../../Tools/Button';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { circleVar, Circle } from '../../../../../../../styles/variants';
+import { IRes } from '../../../../../../types/global';
 
 export const MyLikes = ({ theme }: ITheme) => {
   const router = useRouter();
   const { user_id } = router.query;
   const [type, setType] = useState('post');
-  const { data } = useSWR<IData>(user_id && `/api/user/${user_id}/likes`);
+  const { data } = useSWR<IRes>(user_id && `/api/user/${user_id}/likes`);
   //
-  console.log(type);
   return (
     <Cont className="likes-wrap">
       <BtnWrap>

@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import useUser from '../../src/libs/client/useUser';
 import { IGetReviews } from '../../src/types/review';
-import { Title } from '../../src/Tools/Title';
+import { Title } from '../../src/Tools/box_title';
 import { NoData } from '../../src/Tools/NoData';
 import { HeadTitle } from '../../src/components/head_title';
 import { useNeedLogin } from '../../src/libs/client/useTools';

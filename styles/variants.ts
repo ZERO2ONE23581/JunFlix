@@ -119,11 +119,11 @@ export const hoverTextVar = {
     opacity: 0,
     transition: duration(0.3),
   }),
-  hover: {
+  hover: (dark: boolean) => ({
     scale: 1.05,
     color: '#E50914',
     transition: duration(0.3),
-  },
+  }),
 };
 export const hoverVar = {
   hover: {
@@ -311,40 +311,6 @@ export const inputVar = {
   }),
   focus: ({ disabled }: any) => ({
     transition: duration(0.3),
-    outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
-  }),
-};
-export const textAreaVar = {
-  initial: ({ theme, isFocus, disabled, height }: any) => ({
-    height: height ? height : '100%',
-    color: disabled ? '#E50914' : theme ? '#ffffff' : '#000000',
-    backgroundColor: !theme ? '#ffffff' : '#000000',
-    outline: isFocus
-      ? '3px solid #E50914 '
-      : disabled
-      ? '3px solid #636e72'
-      : theme
-      ? '1px solid #ffffff'
-      : '1px solid #000000',
-  }),
-  animate: ({ theme, isFocus, disabled, height }: any) => ({
-    height: height ? height : '100%',
-    color: disabled ? '#636e72' : theme ? '#ffffff' : '#000000',
-    backgroundColor: !theme ? '#ffffff' : '#000000',
-    outline: isFocus
-      ? '3px solid #E50914 '
-      : disabled
-      ? '3px solid #636e72'
-      : theme
-      ? '1px solid #ffffff'
-      : '1px solid #000000',
-  }),
-  hover: ({ disabled }: any) => ({
-    transition: { duration: 0.2 },
-    outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
-  }),
-  focus: ({ disabled }: any) => ({
-    transition: { duration: 0.2 },
     outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
   }),
 };

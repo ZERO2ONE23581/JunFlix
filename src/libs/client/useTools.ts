@@ -2,12 +2,21 @@ import useUser from './useUser';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-export const useHeight = (watch: string) => {
-  const [height, setHeight] = useState('20vh');
+interface IUseMax {
+  sec: number;
+  first: number;
+}
+export const useMaxLength = (title: number, desc: number) => {
+  const [max] = useState({ title, desc });
+  return { max };
+};
+export const isOverMax = (typed: number, max: number) => Boolean(typed > max);
+export const useHeight = (watch: string, start: number) => {
+  const [Height, setHeight] = useState(start);
   useEffect(() => {
-    setHeight(`${watch?.length * 0.5}px`);
+    setHeight(watch?.length * 0.5);
   }, [setHeight, watch]);
-  return { height };
+  return { Height };
 };
 
 export const useCapLetters = (word: string) => {
@@ -20,9 +29,9 @@ export const useCapLetter = (word: string) => {
     word?.toString()?.slice(0, 1).toUpperCase() + word?.toString().slice(1)
   }`;
 };
-export const useLength = (watch: string | undefined) => {
-  if (watch) return watch.toString().replace(/\s/gi, '').length;
-};
+export const useLength = (text: string) =>
+  String(text).replace(/\s/gi, '').length;
+
 export const useNeedLogin = () => {
   const router = useRouter();
   const { isLoggedIn } = useUser();

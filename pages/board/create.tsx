@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Page } from '../../styles/global';
+import { FlexPage, Page } from '../../styles/global';
 import { HeadTitle } from '../../src/components/head_title';
-import { CreateBoard } from '../../src/components/board/create';
+import { CreateBoardBox } from '../../src/components/board/create';
 import useMutation from '../../src/libs/client/useMutation';
 import { IBoardFormRes } from '../../src/types/board';
 import { useEffect, useState } from 'react';
@@ -11,7 +11,7 @@ import { LoadingModal } from '../../src/Tools/Modal/loading';
 import { AnimatePresence } from 'framer-motion';
 import { MessageModal } from '../../src/Tools/msg_modal';
 
-const Create_Board: NextPage<{ theme: boolean }> = ({ theme }) => {
+const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const [post, { loading, data }] =
     useMutation<IBoardFormRes>(`/api/board/create`);
@@ -35,7 +35,7 @@ const Create_Board: NextPage<{ theme: boolean }> = ({ theme }) => {
         <AnimatePresence>
           {!Loading && (
             <>
-              <CreateBoard
+              <CreateBoardBox
                 theme={theme}
                 post={post}
                 loading={loading}
@@ -54,13 +54,13 @@ const Create_Board: NextPage<{ theme: boolean }> = ({ theme }) => {
     </>
   );
 };
-export default Create_Board;
+export default CreateBoard;
 
-const Cont = styled(Page)`
-  padding-top: 50px;
-  .create-box {
+const Cont = styled(FlexPage)`
+  .box {
     width: 50vw;
-    margin: 0 auto;
-    min-height: 75vh;
+    min-width: 700px;
+    min-height: 500px;
+    margin-bottom: 50px;
   }
 `;

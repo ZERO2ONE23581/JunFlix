@@ -1,22 +1,23 @@
 import styled from '@emotion/styled';
+import { ITheme } from '../../../../../../styles/theme';
 import {
   useCapLetter,
   useCapLetters,
 } from '../../../../../libs/client/useTools';
 import { Svg } from '../../../../../Tools/Svg';
 
-interface ITtitle {
+interface ITtitle extends ITheme {
   genre: string;
   movieTitle: string;
   reivewTitle: string;
 }
-export const Title = ({ genre, movieTitle, reivewTitle }: ITtitle) => {
+export const Title = ({ theme, genre, movieTitle, reivewTitle }: ITtitle) => {
   const MovieTitle = useCapLetters(movieTitle);
   const ReivewTitle = useCapLetter(reivewTitle);
   return (
     <Cont>
       <Movie>
-        <Svg size="2.5rem" type={genre} />
+        <Svg size="2.5rem" type={genre} theme={theme} />
         <span>{MovieTitle}</span>
       </Movie>
       <Review>
