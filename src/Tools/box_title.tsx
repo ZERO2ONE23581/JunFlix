@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { ITheme } from '../../styles/theme';
-import { Answer } from './Modal/answer';
+import { Answer } from './Modal/answer_modal';
 import { Flex } from '../../styles/global';
 
 interface IBoxTitle extends ITheme {

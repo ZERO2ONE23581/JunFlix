@@ -19,7 +19,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     select: { id: true, host_id: true },
   });
   if (!board) return res.json({ ok: false, error: 'no board found.' });
-  const isHost = Boolean(board.host_id !== user.id);
+
+  const isHost = Boolean(board.host_id === user.id);
   if (!isHost) return res.json({ ok: false, error: 'invalid  host.' });
   //
   await client.board.update({

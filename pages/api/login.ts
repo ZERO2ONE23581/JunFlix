@@ -37,6 +37,16 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const loggedInUser = await client.user.findUnique({
       where: { id: user?.id },
+      include: {
+        likes: true,
+        posts: true,
+        tokens: true,
+        boards: true,
+        reviews: true,
+        comments: true,
+        followers: true,
+        followings: true,
+      },
     });
     if (!loggedInUser) return req.session.destroy();
 

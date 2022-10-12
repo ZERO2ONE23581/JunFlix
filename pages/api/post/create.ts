@@ -8,7 +8,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { board_id, title, description, avatar } = req.body;
   const isInputs = Boolean(title && board_id);
   if (!user) return res.json({ ok: false, error: 'must login.' });
-  if (!isInputs) return res.json({ ok: false, error: 'inputs missed.' });
+  if (!isInputs) return res.json({ ok: false, error: 'input missed.' });
   //
   const board = await client.board.findUnique({
     where: { id: board_id },

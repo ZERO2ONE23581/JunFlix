@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction } from 'react';
 import styled from '@emotion/styled';
+import { ModalLists } from './modal_lists';
+import { Dispatch, SetStateAction } from 'react';
+import { ITheme } from '../../../../../styles/theme';
 import { Overlay } from '../../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
 import { menuModalVar, TweenTrans } from '../../../../../styles/variants';
-import { ListWrap } from './list_wrap';
-import { ITheme } from '../../../../../styles/theme';
 
 interface IUserMenuModal extends ITheme {
   modal: boolean;
@@ -23,7 +23,7 @@ export const UserMenuModal = ({ modal, theme, setModal }: IUserMenuModal) => {
             transition={TweenTrans}
             onClick={() => setModal((p) => !p)}
           >
-            <ListWrap theme={theme} />
+            <ModalLists theme={theme} />
           </Modal>
           <Overlay
             className="overlay"

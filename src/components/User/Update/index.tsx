@@ -9,7 +9,7 @@ import { Password_Form } from './password';
 import { UserInfo_Form } from './userInfo';
 import { UserAvatar_Form } from './avatar';
 import { MessageModal } from '../../../Tools/msg_modal';
-import { LoadingModal } from '../../../Tools/Modal/loading';
+import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import useMutation from '../../../libs/client/useMutation';
 import { DeleteUser_Form } from '../delete';
 

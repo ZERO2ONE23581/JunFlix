@@ -8,7 +8,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { review_id } = req.query;
   if (!user) return res.json({ ok: false, error: 'must login.' });
-  if (!inputs) return res.json({ ok: false, error: 'inputs missed.' });
+  if (!inputs) return res.json({ ok: false, error: 'input missed.' });
   if (!review_id) return res.json({ ok: false, error: 'query missed.' });
 
   const review = await client.review.findUnique({

@@ -7,7 +7,7 @@
 //   const { user } = req.session;
 //   const { board_Id } = req.body;
 //   if (!user) return res.json({ ok: false, error: 'must login' });
-//   if (!board_Id) return res.json({ ok: false, error: 'inputs missed' });
+//   if (!board_Id) return res.json({ ok: false, error: 'input missed' });
 
 //   //current board
 //   const board = await client.board.findUnique({

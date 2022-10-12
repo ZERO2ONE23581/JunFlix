@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react';
 import { Label, ProfileAvatar } from '../profile';
 import useMutation from '../../../libs/client/useMutation';
 import useUser from '../../../libs/client/useUser';
-import { LoadingModal } from '../../Modal/loading';
+import { LoadingModal } from '../../Modal/loading_modal';
 import { IUserForm } from '../../../types/user';
 import { IData } from '../../../types/global';
 import { UserBox } from '../../updateuseridog';
 import { Svg } from '../../Svg';
-import { Answer } from '../../Modal/answer';
+import { Answer } from '../../Modal/answer_modal';
 import { ITheme } from '../../../../styles/theme';
 
 export const EditUserAvatar = ({ theme }: ITheme) => {

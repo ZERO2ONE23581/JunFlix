@@ -5,7 +5,7 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { email } = req.body;
-  if (!email) return res.json({ ok: false, error: 'inputs missed.' });
+  if (!email) return res.json({ ok: false, error: 'input missed.' });
   //
   const user = await client.user.findUnique({
     where: { email },

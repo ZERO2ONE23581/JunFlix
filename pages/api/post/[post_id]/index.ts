@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { post_id } = req.query;
   if (!user) return res.json({ ok: false, error: 'must login.' });
   if (!post_id) return res.json({ ok: false, error: 'query missed.' });
-  if (!board_id) return res.json({ ok: false, error: 'inputs missed.' });
+  if (!board_id) return res.json({ ok: false, error: 'input missed.' });
 
   const post = await client.post.findUnique({
     where: { id: +post_id },

@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const isInputs = Boolean(title && movie && description);
   if (!user) return res.json({ ok: false, error: 'must login.' });
-  if (!isInputs) return res.json({ ok: false, error: 'inputs missed.' });
+  if (!isInputs) return res.json({ ok: false, error: 'input missed.' });
   //
   const ispassed = Boolean(
     await client.review.create({

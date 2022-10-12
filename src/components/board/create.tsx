@@ -89,10 +89,15 @@ export const CreateBoardBox = ({
             register={register('genre')}
             watch={Boolean(watch('genre'))}
           />
-          <Btn name="Save" type="submit" theme={theme} />
+          <Btn
+            type="submit"
+            isBoolean={{ theme }}
+            isString={{ btnName: 'Save' }}
+          />
         </Flex>
 
         <TextAreaWrap
+          startHeight={200}
           id="description"
           theme={theme}
           register={register('description')}

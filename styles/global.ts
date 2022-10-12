@@ -174,9 +174,6 @@ export const Box = styled(motion.div)`
     .flex {
       align-items: flex-start;
     }
-    button {
-      margin-top: 20px;
-    }
   }
 `;
 export const MotionBox = styled(motion.div)<{

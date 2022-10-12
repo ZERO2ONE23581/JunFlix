@@ -12,7 +12,7 @@ import { joinBoxVar } from '../styles/variants';
 import { IRes } from '../src/types/global';
 import { HeadTitle } from '../src/components/head_title';
 import useMutation from '../src/libs/client/useMutation';
-import { LoadingModal } from '../src/Tools/Modal/loading';
+import { LoadingModal } from '../src/Tools/Modal/loading_modal';
 import { MessageModal } from '../src/Tools/msg_modal';
 import { FindUserWrap } from '../src/components/post/Read/user/Links/Find';
 
@@ -84,7 +84,11 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
                     required: '비밀번호를 입력해주세요.',
                   })}
                 />
-                <Btn theme={theme} name="Login" type="submit" />
+                <Btn
+                  type="submit"
+                  isBoolean={{ theme }}
+                  isString={{ btnName: 'Login' }}
+                />
               </Form>
               <FindUserWrap theme={theme} />
               <MessageModal

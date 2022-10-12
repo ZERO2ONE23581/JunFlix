@@ -2,7 +2,7 @@ import { Svg } from '../Svg';
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Answer } from '../Modal/answer';
+import { Answer } from '../Modal/answer_modal';
 import useUser from '../../libs/client/useUser';
 import { ITheme } from '../../../styles/theme';
 

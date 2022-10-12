@@ -11,10 +11,11 @@ const Entrance: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { isLoggedIn } = useUser();
   useEffect(() => {
     if (isLoggedIn) router.replace(`/home`);
-    setTimeout(() => {
-      router.replace(`/home`);
-    }, 3000);
-  }, [router]);
+    else
+      setTimeout(() => {
+        router.replace(`/home`);
+      }, 3000);
+  }, [router, isLoggedIn]);
   return (
     <>
       <HeadTitle title="Welcome Page" />

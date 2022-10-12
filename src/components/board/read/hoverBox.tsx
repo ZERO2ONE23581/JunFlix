@@ -3,6 +3,7 @@ import { Svg } from '../../../Tools/Svg';
 import { motion } from 'framer-motion';
 import { useCapLetters } from '../../../libs/client/useTools';
 import { ITheme } from '../../../../styles/theme';
+import { color } from '../../../../styles/variants';
 
 interface IHoverBox extends ITheme {
   data: {
@@ -36,11 +37,11 @@ export const HoverBox = ({ data, theme }: IHoverBox) => {
   const isAvatar = Boolean(data.avatar);
   const variants = {
     initial: ({ theme, isAvatar }: any) => ({
-      color: isAvatar ? '#ffffff' : theme ? '#ffffff' : '#000000',
+      color: isAvatar ? '#ffffff' : color(theme),
     }),
     animate: ({ theme, isAvatar }: any) => ({
       transition: { duration: 0.4 },
-      color: isAvatar ? '#ffffff' : theme ? '#ffffff' : '#000000',
+      color: isAvatar ? '#ffffff' : color(theme),
     }),
     hover: ({ theme, isAvatar }: any) => ({
       color: '#ffffff',
@@ -50,6 +51,7 @@ export const HoverBox = ({ data, theme }: IHoverBox) => {
   //
   return (
     <Cont
+      className="board-hover-box"
       exit="exit"
       initial="initial"
       animate="animate"

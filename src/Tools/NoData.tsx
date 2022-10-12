@@ -73,29 +73,21 @@ export const NoData = ({ type, theme }: INoData) => {
   );
 };
 const Cont = styled(motion.div)`
-  font-size: 2.2rem;
-  text-align: center;
   margin: 10% auto;
+  font-size: 1.3rem;
   width: fit-content;
-  .kor {
-    // font-size: 0.9em;
-  }
+  text-align: center;
   ul {
-    //border: 2px solid cornflowerblue;
     li {
-      //border: 2px solid yellow;
       margin-bottom: 10px;
     }
     .click {
       cursor: pointer;
-      margin-top: 20px;
-      font-size: 2rem;
       font-style: italic;
       gap: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      //border: 1px solid yellow;
     }
   }
 `;

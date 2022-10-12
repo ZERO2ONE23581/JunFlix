@@ -42,9 +42,9 @@ export const BoxArray = ({ type, array, reverse, theme }: IBoxArray) => {
   };
   const clickedPost = array?.find((p: Post) => p.id === postID);
   const imgUrl = (avatar: string, movieBg: string) => {
-    if (type.sliderType === 'movie')
+    if (type.sliderType === 'movie' && movieBg)
       return `https://image.tmdb.org/t/p/original${movieBg}`;
-    if (type.sliderType === 'board')
+    if (type.sliderType === 'board' && avatar)
       return `https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/${avatar}/public`;
     else return;
   };

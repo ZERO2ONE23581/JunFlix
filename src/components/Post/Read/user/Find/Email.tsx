@@ -7,7 +7,7 @@ import useMutation from '../../../../../libs/client/useMutation';
 import { IFindForm, IFindPostRes } from '../../../../../types/user';
 import styled from '@emotion/styled';
 import { Box } from '../../../../../../styles/global';
-import { LoadingModal } from '../../../../../Tools/Modal/loading';
+import { LoadingModal } from '../../../../../Tools/Modal/loading_modal';
 import { FindUserWrap } from '../Links/Find';
 import { ITheme } from '../../../../../../styles/theme';
 import { BoxTitle } from '../../../../../Tools/box_title';

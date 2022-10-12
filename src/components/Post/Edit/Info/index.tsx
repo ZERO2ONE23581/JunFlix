@@ -80,12 +80,16 @@ export const Info = ({
               required: '포스트 제목을 입력해 주세요.',
             })}
           />
-          <Btn type="button" name="EDIT" onClick={clickSave} />
+          <Btn
+            isBoolean={{ theme }}
+            isString={{ btnName: 'Edit' }}
+            type="button"
+            onClick={clickSave}
+          />
         </Flex>
         <TextAreaWrap
           id="content"
-          height={height}
-          user={loggedInUser}
+          startHeight={200}
           register={register!('content')}
           placeholder="포스트의 내용을 적어주세요."
         />

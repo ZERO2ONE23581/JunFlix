@@ -3,7 +3,7 @@ import { OneLine } from './OneLine';
 import styled from '@emotion/styled';
 import { ReviewStars } from './Stars';
 import { Recommend } from './Recommend';
-import { LoadingModal } from '../../../../Tools/Modal/loading';
+import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
 import { IUseform } from '../../../../types/global';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { DimBackground, SmallModal } from '../../../../../styles/global';

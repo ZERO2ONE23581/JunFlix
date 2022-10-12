@@ -1,16 +1,19 @@
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { Svg } from '../../../../Tools/Svg';
 import { ITheme } from '../../../../../styles/theme';
 import useUser from '../../../../libs/client/useUser';
+import useMutation from '../../../../libs/client/useMutation';
 import { ListHover, SpringTrans } from '../../../../../styles/variants';
 
-export const ListWrap = ({ theme }: ITheme) => {
+export const ModalLists = ({ theme }: ITheme) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
+  const [logout, { data }] = useMutation(`/api/exit`);
   const onClick = (type: string) => {
-    if (type === 'logout') return router.push(`/api/user/logout`);
+    if (type === 'logout') return logout({});
     if (type === 'dash')
       return router.push(
         `/user/${loggedInUser?.id}/${loggedInUser?.username}/dash`
@@ -18,6 +21,9 @@ export const ListWrap = ({ theme }: ITheme) => {
     if (type === 'setting')
       return router.push(`/user/${loggedInUser?.id}/update`);
   };
+  useEffect(() => {
+    if (data && data.ok) router.reload();
+  }, [data, router]);
   return (
     <Cont>
       <List
@@ -55,7 +61,6 @@ const Cont = styled.ul`
   padding: 5px 0;
 `;
 const List = styled(motion.li)`
-  //border: 2px solid blue;
   cursor: pointer;
   font-size: 1.1rem;
   padding: 3px 20px;

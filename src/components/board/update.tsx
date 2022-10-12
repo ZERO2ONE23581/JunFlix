@@ -13,11 +13,10 @@ import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import { modalVar } from '../../../styles/variants';
 import { Flex, Form, Modal } from '../../../styles/global';
 import { UserAvatar } from '../../Tools/Avatar';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import {
   isOverMax,
   useCapLetters,
-  useHeight,
   useLength,
   useMaxLength,
 } from '../../libs/client/useTools';
@@ -129,14 +128,14 @@ export const UpdateBoard = ({
           <Host>
             <UserAvatar
               theme={theme}
-              info={{ size: '3.3em', avatar: ogData.user.avatar }}
+              info={{ size: '3.3em', avatar: ogData.host.avatar }}
               onClick={() =>
                 router.push(
-                  `/user/${ogData.UserID}/${ogData.user.username}/dash`
+                  `/user/${ogData.host_id}/${ogData.host.username}/dash`
                 )
               }
             />
-            <span>@{ogData.user.userId}</span>
+            <span>@{ogData.host.userId}</span>
           </Host>
           <TextLength
             theme={theme}
@@ -158,7 +157,11 @@ export const UpdateBoard = ({
               {...register('isPrivate')}
             />
           </Setting>
-          <Btn type="submit" name="Done" theme={theme} />
+          <Btn
+            type="submit"
+            isBoolean={{ theme }}
+            isString={{ btnName: 'Done' }}
+          />
         </Flex>
       </Form>
     </ModalCont>

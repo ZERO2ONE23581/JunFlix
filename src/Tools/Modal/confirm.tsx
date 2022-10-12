@@ -3,7 +3,7 @@ import { InputWrap } from '../Input';
 import { ErrorMsg } from '../Errors';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { LoadingModal } from './loading';
+import { LoadingModal } from './loading_modal';
 import { Dispatch, SetStateAction } from 'react';
 import { IUseform } from '../../types/global';
 import { SmallModal, BtnWrap, DimBackground } from '../../../styles/global';

@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { UserMenuModal } from './modal';
-import { UserAvatarIcon } from './avatar';
 import { ITheme } from '../../../../styles/theme';
 import useUser from '../../../libs/client/useUser';
+import { UserAvatar } from '../../../Tools/Avatar';
 import { menuTextVar } from '../../../../styles/variants';
 
 export const UserMenu = ({ theme }: ITheme) => {
@@ -13,14 +13,15 @@ export const UserMenu = ({ theme }: ITheme) => {
   const [modal, setModal] = useState(false);
   const { isLoggedIn, loggedInUser } = useUser();
   //
+
   return (
     <Cont className="user-menu">
       {isLoggedIn && (
         <div className="logged-in">
-          <UserAvatarIcon
+          <UserAvatar
             theme={theme}
-            setModal={setModal}
-            avatar={loggedInUser?.avatar}
+            onClick={() => setModal((p) => !p)}
+            info={{ avatar: loggedInUser?.avatar, size: '4rem' }}
           />
           <UserMenuModal modal={modal} setModal={setModal} theme={theme} />
         </div>

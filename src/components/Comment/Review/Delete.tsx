@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../../Tools/Button';
 import { IReview } from '../../../types/review';
-import { LoadingModal } from '../../../Tools/Modal/loading';
+import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import { ICmtRes } from '../../../types/comments';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import useMutation from '../../../libs/client/useMutation';

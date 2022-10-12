@@ -10,7 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const password = inputs.password;
   const pw_confirm = inputs.pw_confirm;
   const isPwMatch = Boolean(password === pw_confirm);
-  if (!inputs) return res.json({ ok: false, error: 'inputs missed.' });
+  if (!inputs) return res.json({ ok: false, error: 'input missed.' });
   if (!isPwMatch)
     return res.json({ ok: false, error: 'password not matched.' });
 

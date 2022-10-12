@@ -59,12 +59,17 @@ export const Info = ({
           register={register!('title')}
           placeholder="포스트 제목을 입력해 주세요."
         />
-        <Btn type="button" onClick={clickSave} name="SAVE" />
+        <Btn
+          type="button"
+          onClick={clickSave}
+          isBoolean={{ theme }}
+          isString={{ btnName: 'Delete' }}
+        />
       </div>
       <TextAreaWrap
+        theme={theme}
         id="content"
-        height={height}
-        user={loggedInUser}
+        startHeight={200}
         register={register!('content')}
         placeholder="포스트의 내용을 적어주세요."
       />

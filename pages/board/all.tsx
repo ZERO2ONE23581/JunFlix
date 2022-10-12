@@ -39,12 +39,11 @@ export const BoardPage = styled(Page)`
       gap: 5px;
       height: 100%;
       min-height: 70vh;
-      .left-chevron,
-      .right-chevron {
-      }
       .row {
         min-height: 30em;
         .slide {
+          //border: 2px solid yellow;
+          gap: 20px;
           .box-array {
             .slide {
               gap: 20px;

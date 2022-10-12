@@ -47,6 +47,7 @@ export const UserAvatar = ({ info, onClick, theme }: IUserAvatar) => {
       {!isAvatar && (
         <Circle
           size={info.size!}
+          onClick={onClick}
           exit="exit"
           initial="initial"
           animate="animate"
@@ -81,16 +82,17 @@ const Cont = styled(motion.div)<{ img?: string; size?: string }>`
 const avatarVar = {
   initial: (theme: boolean) => ({
     opacity: 0,
-    border: border(theme),
     transition: duration(0.4),
+    border: theme ? '1px solid #ffffff' : '1px solid transparent',
   }),
   animate: (theme: boolean) => ({
     opacity: 1,
-    border: border(theme),
     transition: duration(0.4),
+    border: theme ? '1px solid #ffffff' : '1px solid transparent',
   }),
   exit: (theme: boolean) => ({
     opacity: 0,
+    border: theme ? '1px solid #ffffff' : '1px solid transparent',
   }),
   hover: {
     scale: 1.2,

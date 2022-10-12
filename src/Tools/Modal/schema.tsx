@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { LoadingModal } from './loading';
+import { LoadingModal } from './loading_modal';
 import { MessageModal } from '../msg_modal';
 import { useEffect, useState } from 'react';
 import { ITheme } from '../../../styles/theme';
@@ -37,14 +37,14 @@ export const ModalSchema = ({
       if (type === 'delete-board') setApi(`/api/board/${ogData.id}/delete`);
     }
   }, [setApi, type, ogData]);
-
+  console.log(data);
   useEffect(() => {
     if (data) {
       setTimeout(() => {
         setLoading(false);
-        closeModal();
         if (data.error) return setMessage(data.error);
         if (data.ok) {
+          closeModal();
           if (type === 'update-board') {
             setMessage('업데이트 완료 (Update Completed)');
             setTimeout(() => {

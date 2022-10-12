@@ -23,8 +23,6 @@ export const Slider = ({
   sliderDetail,
   theme,
 }: ISlider) => {
-  const router = useRouter();
-  const { user_id } = router.query;
   const { loggedInUser } = useUser();
   const [api, setApi] = useState('');
   const { data } = useSWR<IApi>(api);
@@ -37,18 +35,13 @@ export const Slider = ({
 
   //api
   useEffect(() => {
+    if (sliderType === 'post') setApi(`/api/post/all`);
     if (sliderType === 'board') setApi(`/api/board/all`);
-    if (sliderType === 'post') {
-      if (sliderDetail === 'likes' && user_id)
-        setApi(`/api/user/${user_id}/likes`);
-      else setApi(`/api/post/all`);
-    }
     if (sliderType === 'movie') {
-      if (pageType === 'home') {
-        setApi(`/api/movie/trending`);
-      } else setApi(`/api/movie/${sliderDetail}`);
+      if (pageType === 'home') setApi(`/api/movie/trending`);
+      else setApi(`/api/movie/${sliderDetail}`);
     }
-  }, [pageType, sliderType, setApi, sliderDetail, user_id]);
+  }, [pageType, sliderType, setApi, sliderDetail]);
 
   //array
   useEffect(() => {
@@ -81,7 +74,7 @@ export const Slider = ({
   //Boxes
   useEffect(() => {
     if (sliderType === 'movie') return setBoxes(6);
-    if (sliderType === 'board') return setBoxes(5);
+    if (sliderType === 'board') return setBoxes(4);
     if (sliderDetail === 'likes') return setBoxes(5);
     else return setBoxes(5);
   }, [pageType, sliderType, setBoxes, sliderDetail]);

@@ -5,7 +5,7 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { digits } = req.body;
-  if (!digits) return res.json({ ok: false, error: 'inputs missed.' });
+  if (!digits) return res.json({ ok: false, error: 'input missed.' });
   //
   const token = await client.token.findUnique({
     where: { digits },

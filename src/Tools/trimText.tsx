@@ -63,11 +63,10 @@ export const TrimText = ({ text, max }: ITrimText) => {
     </>
   );
 };
-const Cont = styled.span`
-  //border: 1px solid yellow;
+const Cont = styled(motion.span)`
   padding: 0 1rem;
 `;
-const Text = styled.span`
+const Text = styled(motion.span)`
   width: fit-content;
   font-size: 1.1rem;
   line-height: 21px;
@@ -76,7 +75,7 @@ const Text = styled.span`
 `;
 const variants = {
   initial: { opacity: 0 },
-  animate: { opacity: 1 },
+  animate: { opacity: 1, transition: { duration: 0.3 } },
   exit: { opacity: 0 },
   hover: {
     scale: 1.05,

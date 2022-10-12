@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { FollowBtn } from '../../Button/Follow/BoardFollowBtn';
-import useUser from '../../../libs/client/useUser';
 import { ITheme } from '../../../../styles/theme';
+import useUser from '../../../libs/client/useUser';
 import { HoverBox } from '../../../components/board/read/hoverBox';
 
 interface IBoardBoxInfo extends ITheme {
@@ -13,7 +12,6 @@ export const BoardBoxInfo = ({ data, theme }: IBoardBoxInfo) => {
   const isOwner = Boolean(loggedInUser?.id === data?.UserID);
   return (
     <Cont>
-      {!isOwner && <FollowBtn userId={data?.UserID!} boardId={data?.id} />}
       <Link href={`/board/${data?.id}/${data?.title}`}>
         <a>
           <HoverBox
@@ -39,6 +37,9 @@ const Cont = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  .hover-board-box {
+    border: 2px solid red;
+  }
   a {
     display: flex;
     align-items: flex-end;

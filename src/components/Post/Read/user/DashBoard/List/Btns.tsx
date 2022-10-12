@@ -11,28 +11,24 @@ export const BtnWrap = ({ username, type, setType }: IBtnWrap) => {
   return (
     <Cont type={type}>
       <Btn
-        isuserlist
         type="button"
         name={`${username}'s Boards`}
         onClick={() => setType('board')}
         isclicked={Boolean(type === 'board')}
       />
       <Btn
-        isuserlist
         type="button"
         name={`${username}'s Posts`}
         onClick={() => setType('post')}
         isclicked={Boolean(type === 'post')}
       />
       <Btn
-        isuserlist
         type="button"
         name={`${username}'s Reviews`}
         onClick={() => setType('review')}
         isclicked={Boolean(type === 'review')}
       />
       <Btn
-        isuserlist
         type="button"
         name={`${username}'s Likes`}
         onClick={() => setType('like')}

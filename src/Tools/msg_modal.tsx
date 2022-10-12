@@ -43,7 +43,12 @@ export const MessageModal = ({ message, theme, setMessage }: IMessageModal) => {
           >
             <Svg size="2rem" type="close" theme={theme!} onClick={onClick} />
             {text && <span>{text}</span>}
-            <Btn name="OK" type="button" theme={theme} onClick={onClick} />
+            <Btn
+              type="button"
+              onClick={onClick}
+              isBoolean={{ theme }}
+              isString={{ btnName: 'OK' }}
+            />
           </Cont>
           <Overlay
             zindex={100}

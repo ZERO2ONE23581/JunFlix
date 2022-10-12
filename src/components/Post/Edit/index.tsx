@@ -123,7 +123,12 @@ export const EditPost = ({ ogData, setEdit }: IEditPost) => {
               className="edit-post-textarea"
               whileFocus={textAreaVars}
             />
-            <Btn type="button" name="Edit Post" onClick={clickSave} />
+            <Btn
+              type="button"
+              onClick={clickSave}
+              isBoolean={{ theme }}
+              isString={{ btnName: 'Edit' }}
+            />
           </EditContent>
         </Cont>
 

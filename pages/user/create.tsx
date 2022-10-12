@@ -9,7 +9,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { MessageModal } from '../../src/Tools/msg_modal';
 import { HeadTitle } from '../../src/components/head_title';
 import useMutation from '../../src/libs/client/useMutation';
-import { LoadingModal } from '../../src/Tools/Modal/loading';
+import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
 import { TweenTrans, variants } from '../../styles/variants';
 import { CreateUserId } from '../../src/components/user/create/userId';
 import { CreateUserInfo } from '../../src/components/user/create/userInfo';

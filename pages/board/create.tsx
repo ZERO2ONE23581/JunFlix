@@ -1,13 +1,13 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { FlexPage, Page } from '../../styles/global';
+import { FlexPage } from '../../styles/global';
 import { HeadTitle } from '../../src/components/head_title';
 import { CreateBoardBox } from '../../src/components/board/create';
 import useMutation from '../../src/libs/client/useMutation';
 import { IBoardFormRes } from '../../src/types/board';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { LoadingModal } from '../../src/Tools/Modal/loading';
+import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
 import { AnimatePresence } from 'framer-motion';
 import { MessageModal } from '../../src/Tools/msg_modal';
 

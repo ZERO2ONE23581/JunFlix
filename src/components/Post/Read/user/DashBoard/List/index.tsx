@@ -1,16 +1,6 @@
 import useSWR from 'swr';
 import { useState } from 'react';
 import { MyLikes } from './Likes';
-import { PostList } from '../../../List';
-import { ReviewList } from '../../../../../review/Read/List';
-import { IBoardWithAttrs } from '../../../../../../types/board';
-import {
-  IGetReviews,
-  LikesWithReview,
-  ReviewWithUser,
-} from '../../../../../../types/review';
-import { LikesWithPost, PostModel } from '../../../../../../types/post';
-import { BoardList } from '../../../board_list';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Slider } from '../../../../../../Tools/Slider';
@@ -18,9 +8,9 @@ import { BtnWrap } from '../../../../../../../styles/global';
 import { Btn } from '../../../../../../Tools/Button';
 import { ITheme } from '../../../../../../../styles/theme';
 import { useCapLetters } from '../../../../../../libs/client/useTools';
-import { Svg } from '../../../../../../Tools/Svg';
-import { AnimatePresence, motion } from 'framer-motion';
-import { circleVar, Circle } from '../../../../../../../styles/variants';
+import { motion } from 'framer-motion';
+import { ReviewList } from '../../../../../review/Read/List';
+import { IGetReviews } from '../../../../../../types/review';
 
 interface IUserList extends ITheme {
   username: string;
@@ -40,13 +30,11 @@ export const ListWrap = ({ theme, username }: IUserList) => {
         {btns.map((i) => (
           <Btn
             key={i}
-            theme={!theme}
             type="button"
-            className="btn"
-            layoutId={btns.indexOf(i)}
-            name={`${useCapLetters(i)}s`}
             onClick={() => setClicked(i)}
-            isClicked={Boolean(clicked === i)}
+            isNumber={{ layoutId: btns.indexOf(i) }}
+            isString={{ btnName: `${useCapLetters(i)}s` }}
+            isBoolean={{ theme, isClicked: Boolean(clicked === i) }}
           />
         ))}
       </BtnWrap>

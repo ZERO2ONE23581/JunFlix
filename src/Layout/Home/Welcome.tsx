@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import { Btn } from '../../Tools/Button';
 import { useRouter } from 'next/router';
 import useUser from '../../libs/client/useUser';
-import { Answer } from '../../Tools/Modal/answer';
 import { ITheme } from '../../../styles/theme';
+import { Answer } from '../../Tools/Modal/answer_modal';
 
 export const Welcome = ({ theme }: ITheme) => {
   const { isLoggedIn, loggedInUser } = useUser();
@@ -24,32 +24,34 @@ export const Welcome = ({ theme }: ITheme) => {
         <div className="btn-wrap">
           {isLoggedIn && (
             <Btn
-              theme={theme}
-              svg="home"
               type="button"
-              name="My Dash"
+              isBoolean={{ theme }}
               onClick={() => onClick('dash')}
+              isString={{ btnName: 'My Dash', svg: 'home' }}
             />
           )}
           {!isLoggedIn && (
             <Btn
-              theme={theme}
-              name="Join"
               type="button"
-              svg="circle-arrow"
-              onClick={() => router.push('/user/join')}
+              isBoolean={{ theme }}
+              isString={{ btnName: 'Join', svg: 'circle-arrow' }}
+              onClick={() => router.push('/user/create')}
             />
           )}
           <Btn
-            theme={theme}
-            name="Info"
             type="button"
-            svg="exclamation"
+            isBoolean={{ theme }}
             onClick={() => setAnswer(true)}
+            isString={{ btnName: 'Info', svg: 'exclamation' }}
           />
         </div>
       </Cont>
-      {answer && <Answer theme={theme} type="home" closeModal={setAnswer} />}
+      <Answer
+        type="home"
+        theme={theme}
+        answer={answer}
+        closeModal={setAnswer}
+      />
     </>
   );
 };

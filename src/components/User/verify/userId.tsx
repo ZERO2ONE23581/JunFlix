@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useMutation from '../../../libs/client/useMutation';
 import { IFindForm, IFindPostRes } from '../../../types/user';
 import { Box, Form } from '../../../../styles/global';
-import { LoadingModal } from '../../../Tools/Modal/loading';
+import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import { ITheme } from '../../../../styles/theme';
 import { BoxTitle } from '../../../Tools/box_title';
 import { FindUserWrap } from '../../post/Read/user/Links/Find';

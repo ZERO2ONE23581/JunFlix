@@ -9,7 +9,7 @@ import { ITheme } from '../../../../styles/theme';
 import { MessageModal } from '../../../Tools/msg_modal';
 import { joinBoxVar } from '../../../../styles/variants';
 import useMutation from '../../../libs/client/useMutation';
-import { LoadingModal } from '../../../Tools/Modal/loading';
+import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import { IFindPostRes, IUserForm } from '../../../types/user';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 

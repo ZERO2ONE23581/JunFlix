@@ -11,6 +11,7 @@ import {
 import { Board, Following, Post, Review, User } from '@prisma/client';
 import { IBoardType } from './board';
 import { IUserType } from './user';
+import { Dispatch, SetStateAction } from 'react';
 
 export interface IForm {
   userId: string;
@@ -91,9 +92,11 @@ export interface ICreateUserRes extends IRes {
   userId: string;
   user_id: number;
 }
-interface TheUser extends User {
-  posts: Post[];
-  boards: Board[];
-  reviews: Review[];
-  following: Following[];
+export interface IModal {
+  item: {
+    theme: boolean;
+    modal: boolean;
+    onClick: (data: any) => void;
+    setModal: Dispatch<SetStateAction<boolean>>;
+  };
 }

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
-interface IIDatault<T> {
+interface IResult<T> {
   loading: boolean;
   data?: T;
   error?: object;
 }
-type IMutationReturn<T> = [(formData: any) => void, IIDatault<T>];
+type IMutationReturn<T> = [(formData: any) => void, IResult<T>];
 
 export default function useMutation<T = any>(url: string): IMutationReturn<T> {
-  const [result, setResult] = useState<IIDatault<T>>({
+  const [result, setResult] = useState<IResult<T>>({
     loading: false,
     data: undefined,
     error: undefined,

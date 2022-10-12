@@ -554,7 +554,7 @@ export const Svg = ({
           animate="animate"
           whileHover="hover"
           variants={pathVars}
-          custom={{ theme: !theme, onBtn: onBtn, isClicked }}
+          custom={{ theme: !theme, onBtn, isClicked }}
         />
       </Cont>
     </AnimatePresence>

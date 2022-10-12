@@ -1,25 +1,26 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../../Tools/Button';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { LoadingModal } from '../../../Tools/Modal/loading';
 import { ICmtRes } from '../../../types/comments';
 import useMutation from '../../../libs/client/useMutation';
 import { DimBackground, Modal } from '../../../../styles/global';
 import { IQuery } from '../../../types/global';
+import { ITheme } from '../../../../styles/theme';
+import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 
-interface IDeleteComment extends IQuery {
+interface IDeleteComment extends ITheme {
   chosenId: number;
   setChosenId: Dispatch<SetStateAction<number>>;
   setDelete: Dispatch<SetStateAction<boolean>>;
 }
 export const DeleteComment = ({
-  query,
+  theme,
   setDelete,
   chosenId,
   setChosenId,
 }: IDeleteComment) => {
   const [DeleteComment, { loading, data }] = useMutation<ICmtRes>(
-    `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}/comment/${chosenId}/delete`
+    `/api/user/${'query.userId'}/board/${'query.boardId'}/post/${'query.postId'}/comment/${chosenId}/delete`
   );
   const clickCancel = () => {
     setChosenId(0);
@@ -47,13 +48,22 @@ export const DeleteComment = ({
             </span>
           </div>
           <div className="btn-wrap">
-            <Btn name="삭제" type="button" onClick={() => DeleteComment({})} />
-            <Btn type="button" name="취소" onClick={clickCancel} />
+            <Btn
+              type="button"
+              isBoolean={{ theme }}
+              isString={{ btnName: 'Delete' }}
+              onClick={() => DeleteComment({})}
+            />
+            <Btn
+              type="button"
+              isBoolean={{ theme }}
+              onClick={clickCancel}
+              isString={{ btnName: 'Cancel' }}
+            />
           </div>
         </Cont>
       )}
-      {loading && <LoadingModal zIndex={100} type="delete" />}
-      <DimBackground zIndex={99} />
+      {loading && <LoadingModal theme={theme} />}
     </>
   );
 };

@@ -5,7 +5,7 @@ import { Btn } from '../../../Tools/Button';
 import { InputWrap } from '../../../Tools/Input';
 import { Dispatch, SetStateAction } from 'react';
 import { Box, Form } from '../../../../styles/global';
-import { LoadingModal } from '../../../Tools/Modal/loading';
+import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import useMutation from '../../../libs/client/useMutation';
 import { IFindForm, IFindPostRes } from '../../../types/user';
 import { BoxTitle } from '../../../Tools/box_title';

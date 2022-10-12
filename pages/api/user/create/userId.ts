@@ -5,7 +5,7 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = req.body;
-  if (!userId) return res.json({ ok: false, error: 'inputs missed.' });
+  if (!userId) return res.json({ ok: false, error: 'input missed.' });
   //
   const isExist = Boolean(await client.user.findUnique({ where: { userId } }));
   if (isExist) return res.json({ ok: false, error: 'already in use userId.' });
