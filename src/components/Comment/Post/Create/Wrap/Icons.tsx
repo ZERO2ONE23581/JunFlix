@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { LikeIcon } from '../../../../post/Read/PostLikes';
+import { LikeIcon } from '../../../../post/read/PostLikes';
 import { CommentIcon } from '../../Read/Icon';
 import { IQuery } from '../../../../../types/global';
 

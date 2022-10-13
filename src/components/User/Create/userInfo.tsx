@@ -140,7 +140,7 @@ export const CreateUserInfo = ({ wrap, isType }: ICreateUser) => {
             error={errors.username?.message}
             watch={Boolean(watch('username'))}
           />
-          <Btn theme={theme} type="submit" name="Submit" />
+          <Btn item={{ theme, name: 'Submit' }} type="submit" />
         </Cont>
       )}
     </>

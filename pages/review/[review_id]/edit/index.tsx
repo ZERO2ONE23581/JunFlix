@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../../styles/global';
-import { HeadTitle } from '../../../../src/components/head_title';
+import { HeadTitle } from '../../../../src/Tools/head_title';
 import { EditReview } from '../../../../src/components/review/Update';
 import { Fixed } from '../../../../src/Tools/Button/Fixed';
 

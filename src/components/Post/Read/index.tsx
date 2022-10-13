@@ -1,5 +1,4 @@
 import useSWR from 'swr';
-import { PostList } from './List';
 import styled from '@emotion/styled';
 import { Svg } from '../../../Tools/Svg';
 import { useRouter } from 'next/router';

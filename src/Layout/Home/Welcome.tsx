@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import useUser from '../../libs/client/useUser';
 import { ITheme } from '../../../styles/theme';
 import { Answer } from '../../Tools/Modal/answer_modal';
+import { BtnWrap } from '../../../styles/global';
 
 export const Welcome = ({ theme }: ITheme) => {
   const { isLoggedIn, loggedInUser } = useUser();
@@ -16,35 +17,37 @@ export const Welcome = ({ theme }: ITheme) => {
       return router.push(
         `/user/${loggedInUser?.id}/${loggedInUser?.username}/dashboard`
       );
+    if (type === 'join') return router.push('/user/create');
+    if (type === 'info') return setAnswer(true);
   };
+  const dash = { theme, svg: 'home', type: 'button', name: 'My Page' };
+  const info = { theme, name: 'Info', type: 'button', svg: 'exclamation' };
+  const join = { theme, type: 'button', name: 'Join', svg: 'circle-arrow' };
   return (
     <>
       <Cont>
         <Texts />
-        <div className="btn-wrap">
+        <BtnWrap className="btn-wrap">
           {isLoggedIn && (
             <Btn
               type="button"
-              isBoolean={{ theme }}
-              onClick={() => onClick('dash')}
-              isString={{ btnName: 'My Dash', svg: 'home' }}
+              item={{ ...dash }}
+              onClick={() => onClick('my-page')}
             />
           )}
           {!isLoggedIn && (
             <Btn
               type="button"
-              isBoolean={{ theme }}
-              isString={{ btnName: 'Join', svg: 'circle-arrow' }}
-              onClick={() => router.push('/user/create')}
+              item={{ ...join }}
+              onClick={() => onClick('join')}
             />
           )}
           <Btn
             type="button"
-            isBoolean={{ theme }}
-            onClick={() => setAnswer(true)}
-            isString={{ btnName: 'Info', svg: 'exclamation' }}
+            item={{ ...info }}
+            onClick={() => onClick('info')}
           />
-        </div>
+        </BtnWrap>
       </Cont>
       <Answer
         type="home"
@@ -59,14 +62,11 @@ const Cont = styled.article`
   padding: 10% 5% 3%;
   .btn-wrap {
     gap: 20px;
-    display: flex;
-    align-items: center;
     font-size: 1.1em;
-    margin: 2em 0;
     width: fit-content;
     button {
-      gap: 0.5em;
-      width: 7em;
+      gap: 5px;
+      width: 100px;
     }
   }
 `;

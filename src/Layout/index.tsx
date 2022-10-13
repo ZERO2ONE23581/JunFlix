@@ -17,11 +17,11 @@ export const Layout = ({ theme, children, setTheme }: ILayoutProps) => {
   return (
     <Cont
       width={width}
-      custom={theme}
-      variants={variants}
       exit="exit"
       animate="animate"
       initial="initial"
+      custom={theme}
+      variants={variants}
     >
       <Header theme={theme} />
       <section className="children">{children}</section>

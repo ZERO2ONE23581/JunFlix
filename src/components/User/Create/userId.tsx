@@ -1,9 +1,9 @@
-import { LoginLink } from '../../login_link';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
 import { InputWrap } from '../../../Tools/Input';
 import { Form } from '../../../../styles/global';
 import { ICreateUser, IUserIdForm } from '../../../types/user';
+import { LoginLink } from '../../../Tools/login_link';
 
 export const CreateUserId = ({ wrap, isType }: ICreateUser) => {
   const {
@@ -40,7 +40,7 @@ export const CreateUserId = ({ wrap, isType }: ICreateUser) => {
               })}
               error={errors.userId?.message}
             />
-            <Btn name="Submit" type="submit" theme={wrap.theme} />
+            <Btn item={{ theme: wrap.theme, name: 'Submit' }} type="submit" />
           </Form>
           <LoginLink theme={wrap.theme} />
         </>

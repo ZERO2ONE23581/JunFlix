@@ -8,7 +8,7 @@ import { Flex } from '../../styles/global';
 
 interface IBoxTitle extends ITheme {
   type: string;
-  max: {
+  max?: {
     board: {
       title: number;
       desc: number;

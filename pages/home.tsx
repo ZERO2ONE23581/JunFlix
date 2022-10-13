@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Page } from '../styles/global';
 import { Slider } from '../src/Tools/Slider';
 import { Welcome } from '../src/Layout/Home/Welcome';
-import { HeadTitle } from '../src/components/head_title';
+import { HeadTitle } from '../src/Tools/head_title';
 
 const Home: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (

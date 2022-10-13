@@ -57,10 +57,10 @@ const Cont = styled(motion.header)`
   }
 `;
 const headerVar = {
-  initial: (light: boolean) => ({
-    borderBottom: light ? 'none' : '1px solid black',
+  initial: (dark: boolean) => ({
+    borderBottom: dark ? '1px solid #ffffff' : '1px solid transparent',
   }),
-  animate: (light: boolean) => ({
-    borderBottom: light ? 'none' : '1px solid black',
+  animate: (dark: boolean) => ({
+    borderBottom: dark ? '1px solid #ffffff' : '1px solid transparent',
   }),
 };

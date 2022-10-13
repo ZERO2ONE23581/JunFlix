@@ -21,7 +21,7 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/api/join/id_check copy",
-    "src/components/user/Update/EditProfileAvatart.sx",
+    "src/components/user/Update/EditAvatart.sx",
     "src/components/Read/List/Board/Follow.copytsx"
   ],
   "exclude": ["node_modules"]

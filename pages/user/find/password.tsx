@@ -2,10 +2,10 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
-import { VerifyUserID } from '../../../src/components/user/verify/userId';
-import { HeadTitle } from '../../../src/components/head_title';
-import { VerifyToken } from '../../../src/components/user/verify/token';
-import { VerifyResult } from '../../../src/components/user/verify/result';
+import { VerifyUserID } from '../../../src/components/user/read/verify/userId';
+import { HeadTitle } from '../../../src/Tools/head_title';
+import { VerifyToken } from '../../../src/components/user/read/verify/token';
+import { VerifyResult } from '../../../src/components/user/read/verify/result';
 import { CreatePassword } from '../../../src/components/user/create/password';
 
 const FindPassword: NextPage<{ theme: boolean }> = ({ theme }) => {

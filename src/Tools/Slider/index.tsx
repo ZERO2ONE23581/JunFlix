@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { IApi } from '../../types/global';
 import useUser from '../../libs/client/useUser';
 import { useCapLetter } from '../../libs/client/useTools';
-import { useRouter } from 'next/router';
 import { ITheme } from '../../../styles/theme';
 import { motion } from 'framer-motion';
 

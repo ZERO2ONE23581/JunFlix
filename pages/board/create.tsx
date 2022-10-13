@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { FlexPage } from '../../styles/global';
-import { HeadTitle } from '../../src/components/head_title';
+import { HeadTitle } from '../../src/Tools/head_title';
 import { CreateBoardBox } from '../../src/components/board/create';
 import useMutation from '../../src/libs/client/useMutation';
 import { IBoardFormRes } from '../../src/types/board';

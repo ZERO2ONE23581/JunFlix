@@ -17,9 +17,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const isFollowing = Boolean(
     await client.following.findFirst({
-      where: {
-        AND: [{ host_id: user.id }, { board_id: board.id }],
-      },
+      where: { host_id: user.id, board_id: board.id },
     })
   );
   //

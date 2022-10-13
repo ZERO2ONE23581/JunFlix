@@ -91,7 +91,7 @@ export const Password_Form = ({ dataWrap }: IEditUser) => {
               })}
             />
           </Flex>
-          <Btn theme={theme} name="Update" type="submit" />
+          <Btn item={{ theme, name: 'Edit' }} type="submit" />
         </Cont>
       )}
     </>

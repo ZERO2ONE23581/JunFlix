@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { IGetAllPosts } from '../../src/types/post';
-import { HeadTitle } from '../../src/components/head_title';
-import { PostList } from '../../src/components/post/Read/List';
+import { HeadTitle } from '../../src/Tools/head_title';
+import { PostList } from '../../src/components/post/read/List/list';
 
 const AllPosts: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { data } = useSWR<IGetAllPosts>(`/api/post`);

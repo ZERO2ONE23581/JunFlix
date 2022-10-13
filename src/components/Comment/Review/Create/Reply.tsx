@@ -6,7 +6,7 @@ import { IReview } from '../../../../types/review';
 import useUser from '../../../../libs/client/useUser';
 import { TextArea } from '../../../../Tools/Input/TextArea';
 import useMutation from '../../../../libs/client/useMutation';
-import { ProfileAvatar } from '../../../../Tools/Avatar/profile';
+import { Avatar } from '../../../../Tools/Avatar/profile';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ICmtRes, ICmtForm } from '../../../../types/comments';
 import { useLength } from '../../../../libs/client/useTools';
@@ -55,7 +55,7 @@ export const CreateReply = ({
       <form onSubmit={handleSubmit(onValid)}>
         <Cont>
           <AltSvg type="reply" size="1.4rem" />
-          <ProfileAvatar avatar={loggedInUser?.avatar} size="3rem" />
+          <Avatar avatar={loggedInUser?.avatar} size="3rem" />
           <Flex>
             <TextArea
               {...register('content', { required: '댓글을 입력해주세요.' })}

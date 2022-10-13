@@ -123,7 +123,7 @@ export const UserInfo_Form = ({ dataWrap }: IEditUser) => {
               register={register('location')}
             />
           </Flex>
-          <Btn theme={theme} name="Update" type="submit" />
+          <Btn item={{ theme, name: 'Edit' }} type="submit" />
         </Cont>
       )}
     </>

@@ -11,12 +11,13 @@ interface IInfo extends IUseform {
   setSave: Dispatch<SetStateAction<boolean>>;
 }
 export const Info = ({
+  theme,
   watch,
   setSave,
   register,
   setError,
   clearErrors,
-}: IInfo) => {
+}: any) => {
   const [maxTitle] = useState(30);
   const { loggedInUser } = useUser();
   const [maxContent] = useState(1500);
@@ -52,18 +53,18 @@ export const Info = ({
     <Cont className="create-post-info">
       <div className="flex">
         <InputWrap
-          isAlt
           id="title"
           type="text"
-          watch={watch!('title')}
+          label="Post Title"
+          theme={theme}
+          watch={watch('title')}
           register={register!('title')}
           placeholder="포스트 제목을 입력해 주세요."
         />
         <Btn
           type="button"
           onClick={clickSave}
-          isBoolean={{ theme }}
-          isString={{ btnName: 'Delete' }}
+          item={{ theme, name: 'Delete' }}
         />
       </div>
       <TextAreaWrap

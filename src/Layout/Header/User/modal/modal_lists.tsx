@@ -6,7 +6,7 @@ import { Svg } from '../../../../Tools/Svg';
 import { ITheme } from '../../../../../styles/theme';
 import useUser from '../../../../libs/client/useUser';
 import useMutation from '../../../../libs/client/useMutation';
-import { ListHover, SpringTrans } from '../../../../../styles/variants';
+import { hoverBgColor, SpringTrans } from '../../../../../styles/variants';
 
 export const ModalLists = ({ theme }: ITheme) => {
   const router = useRouter();
@@ -27,7 +27,8 @@ export const ModalLists = ({ theme }: ITheme) => {
   return (
     <Cont>
       <List
-        whileHover={ListHover}
+        whileHover={'hover'}
+        variants={hoverBgColor}
         transition={SpringTrans}
         onClick={() => onClick('dash')}
       >
@@ -38,7 +39,11 @@ export const ModalLists = ({ theme }: ITheme) => {
         </span>
       </List>
 
-      <List whileHover={ListHover} onClick={() => onClick('setting')}>
+      <List
+        whileHover={'hover'}
+        variants={hoverBgColor}
+        onClick={() => onClick('setting')}
+      >
         <Svg theme={theme} type="setting" size="2rem" />
         <span>
           <span className="eng">Setting</span>
@@ -46,7 +51,11 @@ export const ModalLists = ({ theme }: ITheme) => {
         </span>
       </List>
 
-      <List whileHover={ListHover} onClick={() => onClick('logout')}>
+      <List
+        whileHover={'hover'}
+        variants={hoverBgColor}
+        onClick={() => onClick('logout')}
+      >
         <Svg theme={theme} type="logout" size="2rem" />
         <span>
           <span className="eng">Log Out</span>

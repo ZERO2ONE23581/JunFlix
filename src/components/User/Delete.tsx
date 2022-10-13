@@ -39,7 +39,7 @@ export const DeleteUser_Form = ({ dataWrap }: IEditUser) => {
               required: '아이디를 입력해 주세요.',
             })}
           />
-          <Btn theme={theme} name="Delete" type="submit" />
+          <Btn item={{ theme, name: 'Delete' }} type="submit" />
         </Cont>
       )}
     </>

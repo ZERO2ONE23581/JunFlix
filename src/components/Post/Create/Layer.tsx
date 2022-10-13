@@ -8,21 +8,41 @@ interface IBtnWrapProps {
   setNext: Dispatch<SetStateAction<boolean>>;
   setCancel: Dispatch<SetStateAction<boolean>>;
 }
-export const Layer = ({ next, setNext, cancel, setCancel }: IBtnWrapProps) => {
+export const Layer = ({ theme, next, setNext, cancel, setCancel }: any) => {
   return (
     <Cont>
       {!next && (
         <>
-          <Svg size="1.5rem" type="close" onClick={() => setCancel(true)} />
+          <Svg
+            theme
+            size="1.5rem"
+            type="close"
+            onClick={() => setCancel(true)}
+          />
           <h1>새 포스트 만들기</h1>
-          <Svg size="1.5rem" type="right-arrow" onClick={() => setNext(true)} />
+          <Svg
+            theme
+            size="1.5rem"
+            type="right-arrow"
+            onClick={() => setNext(true)}
+          />
         </>
       )}
       {next && (
         <>
-          <Svg size="1.5rem" type="left-arrow" onClick={() => setNext(false)} />
+          <Svg
+            theme
+            size="1.5rem"
+            type="left-arrow"
+            onClick={() => setNext(false)}
+          />
           <h1>새 포스트 만들기</h1>
-          <Svg size="1.5rem" type="close" onClick={() => setCancel(true)} />
+          <Svg
+            theme
+            size="1.5rem"
+            type="close"
+            onClick={() => setCancel(true)}
+          />
         </>
       )}
     </Cont>

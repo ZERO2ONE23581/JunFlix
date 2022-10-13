@@ -7,7 +7,7 @@ import { Box, Form } from '../../../../styles/global';
 import { InputWrap } from '../../../Tools/Input';
 import { ITheme } from '../../../../styles/theme';
 import { MessageModal } from '../../../Tools/msg_modal';
-import { joinBoxVar } from '../../../../styles/variants';
+import { variants } from '../../../../styles/variants';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import { IFindPostRes, IUserForm } from '../../../types/user';
@@ -69,7 +69,7 @@ export const CreatePassword = ({
               animate="animate"
               className="loading"
               custom={theme}
-              variants={joinBoxVar}
+              variants={variants}
             >
               <BoxTitle theme={theme} type="create-password" />
               <Form onSubmit={handleSubmit(onValid)}>
@@ -109,7 +109,7 @@ export const CreatePassword = ({
                     required: '새 비밀번호 재입력하세요.',
                   })}
                 />
-                <Btn type="submit" theme={theme} name="Submit" />
+                <Btn item={{ theme, name: 'Submit' }} type="submit" />
               </Form>
               <MessageModal
                 theme={theme}

@@ -7,8 +7,9 @@ import useMutation from '../../../libs/client/useMutation';
 export interface ILikesBtn {
   userId: number;
   reviewId: number;
+  theme: boolean;
 }
-export const LikeIcon = ({ userId, reviewId }: ILikesBtn) => {
+export const LikeIcon = ({ userId, reviewId, theme }: ILikesBtn) => {
   const { data, mutate } = useSWR<IReviewLikes>(
     `/api/user/${userId}/review/${reviewId}`
   );
@@ -40,9 +41,16 @@ export const LikeIcon = ({ userId, reviewId }: ILikesBtn) => {
     <>
       <Cont onClick={onClick}>
         {data?.isLiked && (
-          <Svg type={'solid-heart'} size="2.5rem" fill="#e74c3c" />
+          <Svg
+            theme={theme}
+            type={'solid-heart'}
+            size="2.5rem"
+            fill="#e74c3c"
+          />
         )}
-        {!data?.isLiked && <Svg type={'unsolid-heart'} size="2.5rem" />}
+        {!data?.isLiked && (
+          <Svg theme={theme} type={'unsolid-heart'} size="2.5rem" />
+        )}
         <span className="counts">{Counts ? Counts : null}</span>
       </Cont>
     </>

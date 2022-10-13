@@ -1,11 +1,24 @@
-import { Board, Post, Review, User } from '@prisma/client';
+import {
+  Board,
+  Comment,
+  Follower,
+  Following,
+  Like,
+  Post,
+  Review,
+  User,
+} from '@prisma/client';
 import { Dispatch, SetStateAction } from 'react';
 import { IRes } from './global';
 
 export interface IUserType extends User {
   posts: Post[];
   boards: Board[];
-  review: Review[];
+  reviews: Review[];
+  likes: Like[];
+  comments: Comment[];
+  followers: Follower[];
+  followings: Following[];
 }
 export interface IGetUser extends IRes {
   user: IUserType;

@@ -7,26 +7,28 @@ import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Svg } from '../../../../Tools/Svg';
 import { ErrorMsg } from '../../../../Tools/Errors';
-import { IQuery } from '../../../../types/global';
-import { TextArea } from '../../../../Tools/Input/TextArea';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { ITheme } from '../../../../../styles/theme';
 import useMutation from '../../../../libs/client/useMutation';
 import { useCapLetter } from '../../../../libs/client/useTools';
+import { TextAreaWrap } from '../../../../Tools/Input/TextArea';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-interface IEditComments extends IQuery {
+interface IEditComments extends ITheme {
   chosenId: number;
   comment: CommentWithUser;
   setEdit: Dispatch<SetStateAction<boolean>>;
   setChosenId: Dispatch<SetStateAction<number>>;
 }
 export const EditComment = ({
-  query,
+  theme,
   comment,
   setEdit,
   setChosenId,
 }: IEditComments) => {
   const [Edit, { loading, data }] = useMutation<ICmtRes>(
-    `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}/comment/${comment?.id}/edit`
+    `/api/user/${'query.userId'}/board/${'query.boardId'}/post/${'query.postId'}/comment/${
+      comment?.id
+    }/edit`
   );
   const {
     watch,
@@ -58,15 +60,15 @@ export const EditComment = ({
   return (
     <form onSubmit={handleSubmit(onValid)}>
       <EditCont>
-        <TextArea
-          {...register('content', { required: '댓글을 입력해주세요.' })}
+        <TextAreaWrap
           id="content"
-          name="content"
-          height={height}
-          placeholder="댓글 달기..."
+          theme={theme}
+          startHeight={100}
+          placeholder="type comments.."
+          register={register('content', { required: '댓글을 입력해주세요.' })}
         />
-        {!loading && <Svg size="1.5rem" type="paper-plane" />}
-        {loading && <Svg size="2rem" type="loading" />}
+        {!loading && <Svg theme={theme} size="1.5rem" type="paper-plane" />}
+        {loading && <Svg theme={theme} size="2rem" type="loading" />}
       </EditCont>
       {errors.content && <ErrorMsg error={errors.content.message} />}
     </form>

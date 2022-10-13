@@ -2,10 +2,10 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
-import { HeadTitle } from '../../../src/components/head_title';
-import { VerifyToken } from '../../../src/components/user/verify/token';
-import { VerifyEmail } from '../../../src/components/user/verify/email';
-import { VerifyResult } from '../../../src/components/user/verify/result';
+import { HeadTitle } from '../../../src/Tools/head_title';
+import { VerifyToken } from '../../../src/components/user/read/verify/token';
+import { VerifyEmail } from '../../../src/components/user/read/verify/email';
+import { VerifyResult } from '../../../src/components/user/read/verify/result';
 
 const FindUserId: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [userId, setUserId] = useState('');

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Svg } from '../../../src/Tools/Svg';
 import { Flex, Page } from '../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
-import { HeadTitle } from '../../../src/components/head_title';
+import { HeadTitle } from '../../../src/Tools/head_title';
 import { UpdateBox } from '../../../src/components/user/update';
 
 const UpdateUser: NextPage<{ theme: boolean }> = ({ theme }) => {

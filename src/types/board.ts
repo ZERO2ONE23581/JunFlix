@@ -1,14 +1,14 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Board, Following, Post, User } from '@prisma/client';
+import { Board, Follower, Following, Post, User } from '@prisma/client';
+import { IRes } from './global';
 
 export interface IBoardType extends Board {
   host: User;
   posts: Post[];
+  followers: Follower[];
 }
-export interface IBoard {
-  board: IBoardType;
-  isFollowing: boolean;
-  setPreview: Dispatch<SetStateAction<string>>;
+export interface IGetBoard extends IRes {
+  board?: IBoardType;
 }
 export interface IBoardForm {
   title: string;
@@ -18,34 +18,8 @@ export interface IBoardForm {
   description?: string;
   boardAvatar?: FileList;
 }
-export interface IGetBoard {
-  ok?: boolean;
-  error?: string;
-  isFollowing?: boolean;
-  board?: IBoardType;
-}
 interface FollowingWithUser extends Following {
   user: User;
-}
-export interface IGetBoards {
-  ok: boolean;
-  error: string;
-  boards?: IBoardType[];
-}
-export interface IBoardFormRes {
-  ok: boolean;
-  error?: string;
-  board: Board;
-}
-export interface IBoardList {
-  size: number;
-  boards: IBoardType[];
-}
-export interface IGetFollowingBoard {
-  ok: boolean;
-  error?: string;
-  isFollowing?: boolean;
-  board: BoardWithRecords;
 }
 export interface BoardWithRecords extends Board {
   user: User;
@@ -55,18 +29,4 @@ export interface BoardWithRecords extends Board {
     followers: number;
     posts: number;
   };
-}
-export interface IFollowBoardProps {
-  isMyBoard?: boolean;
-  user_id?: number | null;
-  board_id?: number | null;
-}
-export interface IGetFollowInfo {
-  ok: boolean;
-  error?: string;
-  following?: FollowingWith[];
-}
-export interface FollowingWith extends Following {
-  board: Board;
-  user: User;
 }

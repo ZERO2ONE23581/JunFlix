@@ -25,7 +25,7 @@ interface CountsInReview extends Review {
     comments: number;
   };
 }
-export const LikeIcon = ({ query }: IQuery) => {
+export const LikeIcon = ({ query, theme }: any) => {
   const { data, mutate } = useSWR<IGetPostWithCounts>(
     `/api/user/${query.userId}/board/${query.boardId}/post/${query.postId}`
   );
@@ -56,8 +56,12 @@ export const LikeIcon = ({ query }: IQuery) => {
   return (
     <>
       <Cont onClick={onClick}>
-        {data?.isLiked && <Svg type={'solid-heart'} size="1.7rem" />}
-        {!data?.isLiked && <Svg type={'unsolid-heart'} size="1.7rem" />}
+        {data?.isLiked && (
+          <Svg type={'solid-heart'} size="2rem" theme={theme} />
+        )}
+        {!data?.isLiked && (
+          <Svg type={'unsolid-heart'} size="2rem" theme={theme} />
+        )}
         <span className="counts">
           {data?.post?._count.likes ? data?.post?._count.likes : null}
         </span>

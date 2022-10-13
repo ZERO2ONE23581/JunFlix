@@ -6,12 +6,12 @@ import { ITheme } from '../../../../styles/theme';
 import { useEffect, useState } from 'react';
 import { UserId_Form } from './userId';
 import { Password_Form } from './password';
-import { UserInfo_Form } from './userInfo';
-import { UserAvatar_Form } from './avatar';
+import { UserAvatar_Form } from './user_avatar';
 import { MessageModal } from '../../../Tools/msg_modal';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import useMutation from '../../../libs/client/useMutation';
 import { DeleteUser_Form } from '../delete';
+import { UserInfo_Form } from './userInfo';
 
 interface IUpdateUser extends ITheme {
   type: string;

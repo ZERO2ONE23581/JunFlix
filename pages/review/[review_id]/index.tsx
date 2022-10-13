@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Page } from '../../../styles/global';
 import { IGetReview } from '../../../src/types/review';
 import { Info } from '../../../src/components/review/Read/Info';
-import { HeadTitle } from '../../../src/components/head_title';
+import { HeadTitle } from '../../../src/Tools/head_title';
 import { useNeedLogin } from '../../../src/libs/client/useTools';
 import { NoData } from '../../../src/Tools/NoData';
 

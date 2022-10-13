@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Title } from '../../src/Tools/box_title';
 import { Slider } from '../../src/Tools/Slider';
-import { HeadTitle } from '../../src/components/head_title';
+import { HeadTitle } from '../../src/Tools/head_title';
 
 const MovieTypes: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();

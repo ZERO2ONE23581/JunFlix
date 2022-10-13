@@ -6,9 +6,11 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { board_id } = req.query;
   if (!board_id) return res.json({ ok: false, error: 'query missed.' });
+  const board_Id = parseInt(board_id.toString());
+
   //
   const board = await client.board.findUnique({
-    where: { id: +board_id },
+    where: { id: board_Id },
     include: {
       host: true,
       posts: true,

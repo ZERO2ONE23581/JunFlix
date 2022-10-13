@@ -43,7 +43,7 @@ export const UserId_Form = ({ dataWrap }: IEditUser) => {
               },
             })}
           />
-          <Btn theme={theme} name="Update" type="submit" />
+          <Btn item={{ theme, name: 'Edit' }} type="submit" />
         </Form>
       )}
     </>

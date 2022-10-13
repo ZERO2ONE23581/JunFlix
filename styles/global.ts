@@ -16,6 +16,12 @@ export const FlexPage = styled(Page)`
   justify-content: center;
   background-color: black;
 `;
+export const Circle = styled(motion.div)`
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 100%;
+  background-color: ${(p) => p.theme.color.logo};
+`;
 export const Flex = styled.div`
   width: 100%;
   gap: 20px;

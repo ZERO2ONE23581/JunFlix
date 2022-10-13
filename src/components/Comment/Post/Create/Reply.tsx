@@ -1,7 +1,7 @@
 import { EditCont } from '../Edit';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
-import { Profile } from '../Read/Info/Content/Profile';
+import { Profile } from '../Read/Info/Profile';
 import { Svg } from '../../../../Tools/Svg';
 import { ErrorMsg } from '../../../../Tools/Errors';
 import useUser from '../../../../libs/client/useUser';

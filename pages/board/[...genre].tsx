@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Slider } from '../../src/Tools/Slider';
 import { FixedBtns } from '../../src/Tools/Button/Fixed';
-import { HeadTitle } from '../../src/components/head_title';
+import { HeadTitle } from '../../src/Tools/head_title';
 import { PageTitle } from '../../src/Tools/Title/Page_Title';
 
 const GenreBoards: NextPage<{ theme: boolean }> = ({ theme }) => {

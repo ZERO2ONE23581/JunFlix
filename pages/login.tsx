@@ -10,11 +10,11 @@ import { ILoginForm } from '../src/types/user';
 import { InputWrap } from '../src/Tools/Input';
 import { joinBoxVar } from '../styles/variants';
 import { IRes } from '../src/types/global';
-import { HeadTitle } from '../src/components/head_title';
+import { HeadTitle } from '../src/Tools/head_title';
 import useMutation from '../src/libs/client/useMutation';
 import { LoadingModal } from '../src/Tools/Modal/loading_modal';
 import { MessageModal } from '../src/Tools/msg_modal';
-import { FindUserWrap } from '../src/components/post/Read/user/Links/Find';
+import { FindUserWrap } from '../src/components/post/read/user/Links/Find';
 
 const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
@@ -85,6 +85,7 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
                   })}
                 />
                 <Btn
+                  isBtn
                   type="submit"
                   isBoolean={{ theme }}
                   isString={{ btnName: 'Login' }}

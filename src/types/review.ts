@@ -1,13 +1,11 @@
 import { ReviewModel } from './post';
-import { Likes, Review, User } from '@prisma/client';
+import { Review, User } from '@prisma/client';
+import { ITheme } from '../../styles/theme';
 
-export interface IReviewList {
+export interface IReviewList extends ITheme {
   isMyPage?: boolean;
   isLikesType?: boolean;
   reviews: ReviewModel[];
-}
-export interface LikesWithReview extends Likes {
-  review: ReviewWithUser;
 }
 export interface IReviewForm {
   title: string;

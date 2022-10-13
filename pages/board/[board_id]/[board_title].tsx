@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { FlexPage, Page } from '../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
 import { IGetBoard } from '../../../src/types/board';
-import { HeadTitle } from '../../../src/components/head_title';
+import { HeadTitle } from '../../../src/Tools/head_title';
 import { LoadingModal } from '../../../src/Tools/Modal/loading_modal';
 import { ModalSchema } from '../../../src/Tools/Modal/schema';
 import { BoardBox } from '../../../src/components/board/read/board_box';

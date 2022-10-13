@@ -1,10 +1,10 @@
 import useSWR from 'swr';
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { PostText } from '../../../../post/Read/Each/Info/Text';
+import { PostText } from '../../../../post/read/posttext';
 import { ReplyList } from './ReplyList';
 import { EditComment } from '../../Edit';
-import { Profile } from './Content/Profile';
+import { Profile } from './Profile';
 import { CreateReply } from '../../Create/Reply';
 import { DeleteComment } from '../../Delete';
 import { SettingBtns } from '../../Edit/Btn';
