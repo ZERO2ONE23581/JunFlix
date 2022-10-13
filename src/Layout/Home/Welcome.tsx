@@ -59,14 +59,15 @@ export const Welcome = ({ theme }: ITheme) => {
   );
 };
 const Cont = styled.article`
-  padding: 10% 5% 3%;
+  padding: 10rem 5rem 2rem;
   .btn-wrap {
     gap: 20px;
-    font-size: 1.1em;
+    margin-top: 50px;
+    font-size: 1.1rem;
     width: fit-content;
     button {
-      gap: 5px;
-      width: 100px;
+      gap: 10px;
+      min-width: 140px;
     }
   }
 `;

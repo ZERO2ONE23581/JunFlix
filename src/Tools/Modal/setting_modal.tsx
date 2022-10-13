@@ -2,19 +2,28 @@ import styled from '@emotion/styled';
 import { IModal } from '../../types/global';
 import useUser from '../../libs/client/useUser';
 import { Overlay } from '../../../styles/global';
-import useFollow from '../../libs/client/useFollow';
+import useFollow from '../../libs/client/useFollowingBoards';
 import { AnimatePresence, motion } from 'framer-motion';
-import { hoverVar, modalVar } from '../../../styles/variants';
+import { hoverBgColor, variants } from '../../../styles/variants';
+import { useRouter } from 'next/router';
+import { Dispatch, SetStateAction } from 'react';
 
-interface ISettingModal extends IModal {
-  host_id: number;
-  board_id: number;
+interface ISettingModal {
+  item: {
+    modal: boolean;
+    theme: boolean;
+    isMyBoard: boolean;
+  };
+  onClick: (text: string) => void;
+  setModal: Dispatch<SetStateAction<boolean>>;
 }
-export const SettingModal = ({ item, host_id, board_id }: ISettingModal) => {
-  const modal = item.modal;
-  const { loggedInUser } = useUser();
-  const isMyBoard = Boolean(loggedInUser?.id === host_id);
-  const [clickFollow, { isFollowing }] = useFollow(board_id);
+export const SettingModal = ({ onClick, setModal, item }: ISettingModal) => {
+  const theme = item?.theme;
+  const modal = item?.modal;
+  const router = useRouter();
+  const isMyBoard = item?.isMyBoard;
+  const { board_id } = router.query;
+  const { isFollowing, follow } = useFollow(board_id);
   //
   return (
     <AnimatePresence>
@@ -24,39 +33,39 @@ export const SettingModal = ({ item, host_id, board_id }: ISettingModal) => {
             exit="exit"
             initial="initial"
             animate="animate"
-            custom={item.theme}
-            variants={modalVar}
+            custom={theme}
+            variants={variants}
           >
             <ul>
               <List className="small">Board Options</List>
               <List
-                variants={hoverVar}
+                variants={hoverBgColor}
                 whileHover={'hover'}
-                onClick={() => item.onClick('all')}
+                onClick={() => onClick('all')}
               >
                 All Boards
               </List>
               <List
-                variants={hoverVar}
+                onClick={follow}
                 whileHover={'hover'}
-                onClick={clickFollow}
+                variants={hoverBgColor}
               >
                 {!isFollowing && 'Follow Board'}
                 {isFollowing && 'Unfollow Board'}
               </List>
               <List
-                variants={hoverVar}
                 whileHover={'hover'}
                 disabled={!isMyBoard}
-                onClick={() => item.onClick('update')}
+                variants={hoverBgColor}
+                onClick={() => onClick('update')}
               >
                 Edit Board
               </List>
               <List
-                variants={hoverVar}
+                variants={hoverBgColor}
                 whileHover={'hover'}
                 disabled={!isMyBoard}
-                onClick={() => item.onClick('delete')}
+                onClick={() => onClick('delete')}
               >
                 Delete Board
               </List>
@@ -66,7 +75,7 @@ export const SettingModal = ({ item, host_id, board_id }: ISettingModal) => {
             zindex={1}
             exit={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onClick={() => item.setModal(false)}
+            onClick={() => setModal(false)}
           />
         </>
       )}

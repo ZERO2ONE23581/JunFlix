@@ -6,18 +6,17 @@ import { SettingModal } from '../../../Tools/Modal/setting_modal';
 import { useCapLetters } from '../../../libs/client/useTools';
 
 interface IBoardTitle extends ITheme {
-  data: {
+  item: {
     title: string;
-    board_id: number;
     host_id: number;
+    board_id: number;
   };
-  onClick: (type: string) => void;
+  clickModal: (type: string) => void;
 }
-export const BoardTitle = ({ theme, data, onClick }: IBoardTitle) => {
-  const title = useCapLetters(data.title);
+export const BoardTitle = ({ theme, item, clickModal }: IBoardTitle) => {
+  const title = useCapLetters(item.title);
   const [modal, setModal] = useState(false);
-  const item = { modal, theme, onClick, setModal };
-  const id = { host: data.host_id, board: data.board_id };
+  const setting_item = { modal, theme, onClick: clickModal, setModal };
   return (
     <Container className="board-title">
       <h1>{title}</h1>
@@ -29,9 +28,9 @@ export const BoardTitle = ({ theme, data, onClick }: IBoardTitle) => {
         onClick={() => setModal((p) => !p)}
       />
       <SettingModal
-        item={{ ...item }}
-        host_id={data.host_id}
-        board_id={data.board_id}
+        host_id={item.host_id}
+        board_id={item.board_id}
+        item={{ ...setting_item }}
       />
     </Container>
   );

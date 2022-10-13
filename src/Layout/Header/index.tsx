@@ -1,9 +1,9 @@
-import { Logo } from './Logo';
-import { UserMenu } from './user';
-import { MainMenu } from './main';
+import { Logo } from './logo';
+import { MainMenu } from './menu';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { ITheme } from '../../../styles/theme';
+import { LoginMenu } from './login_menu';
 
 export const Header = ({ theme }: ITheme) => {
   return (
@@ -17,7 +17,7 @@ export const Header = ({ theme }: ITheme) => {
       <Logo />
       <div className="flex">
         <MainMenu theme={theme} />
-        <UserMenu theme={theme} />
+        <LoginMenu theme={theme} />
       </div>
     </Cont>
   );

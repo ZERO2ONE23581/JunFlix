@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { FlexPage, Page } from '../../../styles/global';
+import { Blur, FlexPage, Layer } from '../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
 import { IGetBoard } from '../../../src/types/board';
 import { HeadTitle } from '../../../src/Tools/head_title';
@@ -12,7 +12,7 @@ import { ModalSchema } from '../../../src/Tools/Modal/schema';
 import { BoardBox } from '../../../src/components/board/read/board_box';
 import { Svg } from '../../../src/Tools/Svg';
 import useUser from '../../../src/libs/client/useUser';
-import useFollow from '../../../src/libs/client/useFollow';
+import useFollow from '../../../src/libs/client/useFollowingBoards';
 
 const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
@@ -22,7 +22,7 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
   const board = data?.board;
   const [type, setType] = useState('');
   const closeModal = () => setType('');
-  const onClick = (type: string) => {
+  const clickModal = (type: string) => {
     if (board) {
       const user_id = board.host_id;
       const username = board.host.username;
@@ -32,10 +32,10 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
       if (type === 'dash') router.push(`/user/${user_id}/${username}/dash`);
     }
   };
-  const [clickFollow, { isFollowing, btnName }] = useFollow(Number(board_id));
   const onPublic = !Boolean(board?.isPrivate);
+  const { isFollowing } = useFollow(board?.id);
   const isMyBoard = Boolean(loggedInUser?.id === board?.host_id);
-  const disabled = onPublic || isMyBoard || isFollowing;
+  const isBlur = !Boolean(onPublic || isMyBoard || isFollowing);
   return (
     <>
       <HeadTitle title={data?.board?.title!} />
@@ -43,17 +43,12 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
         <AnimatePresence>
           {data && (
             <>
-              <BoardBox
-                theme={theme}
-                board={board!}
-                onClick={onClick}
-                follow={{ clickFollow, isFollowing, btnName }}
-              />
+              <BoardBox theme={theme} board={board!} clickModal={clickModal} />
               <Layer className="layer">
-                {!disabled && <Svg type="lock" size="2rem" theme={theme} />}
-                <Block className="block" disabled={disabled!}>
+                <Blur className="block" isBlur={isBlur}>
                   <h1>helloworld</h1>
-                </Block>
+                </Blur>
+                {isBlur && <Svg type="lock" size="2rem" theme={theme} />}
               </Layer>
               <ModalSchema
                 type={type}
@@ -72,21 +67,6 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
 };
 export default Board_Page;
 
-const Layer = styled(FlexPage)`
-  min-width: 50vw;
-  min-height: 50vh;
-  border: 4px solid hotpink;
-  .lock {
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-  }
-`;
-const Block = styled(motion.article)<{ disabled: boolean }>`
-  pointer-events: none;
-  filter: ${(p) => !p.disabled && 'blur(5px)'};
-`;
 const Cont = styled(FlexPage)`
   gap: 50px;
   flex-direction: column;

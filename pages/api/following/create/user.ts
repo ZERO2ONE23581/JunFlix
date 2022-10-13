@@ -9,46 +9,44 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!user) return res.json({ ok: false, error: 'must login' });
   if (!user_id) return res.json({ ok: false, error: 'input missed' });
 
-  const user_Id = parseInt(user_id.toString());
-
   //current user
-  const found = await client.user.findUnique({
-    where: { id: +user_id },
+  const target = await client.user.findUnique({
+    where: { id: +user_id.toString() },
   });
-  if (!found) return res.json({ ok: false, error: 'no user found.' });
-  const isHost = Boolean(found.id === user.id);
+  if (!target) return res.json({ ok: false, error: 'no user target.' });
+  const isHost = Boolean(target.id === user.id);
   if (isHost) return res.json({ ok: false, error: 'you are the host' });
 
-  //currently following users
+  //check if you are following this user
   const following = await client.following.findFirst({
-    where: { host_id: found.id, user_id: found.id },
+    where: { host_id: user.id, user_id: target.id },
   });
 
-  //create following
+  //if you are not following this user, create
   if (!following) {
     const following = await client.following.create({
-      data: { host: { connect: { id: user.id } }, user_id: found.id },
+      data: { host: { connect: { id: user.id } }, user_id: target.id },
     });
-    //create follower (=== loggedin user)
     await client.follower.create({
       data: {
         host_id: following.host_id,
         user: { connect: { id: following?.user_id! } },
       },
     });
+    //
     return res.json({ ok: true, message: 'user followed' });
   }
-  //delete following
-  if (following) {
-    await client.following.delete({ where: { id: following.id } });
 
-    //delete follower
+  //if you are following this user, delete
+  if (following) {
     const follower = await client.follower.findFirst({
       where: { host_id: following.host_id, user_id: following.user_id },
     });
-    if (!follower) return res.json({ ok: true, message: 'no follower found.' });
-    await client.follower.delete({ where: { id: follower.id } });
+    if (!follower)
+      return res.json({ ok: true, message: 'no follower target.' });
     //
+    await client.follower.delete({ where: { id: follower.id } });
+    await client.following.delete({ where: { id: following.id } });
     return res.json({ ok: true, message: 'user unfollowed' });
   }
 }

@@ -14,35 +14,11 @@ export const SpringTrans = { type: 'spring', stiffness: 50 };
 export const color = (dark: boolean) => (dark ? black : white);
 export const border = (dark: boolean) => (dark ? blackBrdr : whiteBrdr);
 export const TransBorder = (dark: boolean) => (dark ? whiteBrdr : transBrdr);
-export const due = (sec: number) => ({ transition: { duration: 0.3 } });
 
 export const colorVar = {
   exit: (theme: boolean) => ({ color: color(theme) }),
   initial: (theme: boolean) => ({ color: color(theme) }),
   animate: (theme: boolean) => ({ color: color(theme) }),
-};
-
-export const variants = {
-  initial: (theme: boolean) => ({
-    opacity: 0,
-    color: color(theme),
-    border: TransBorder(theme),
-    backgroundColor: color(!theme),
-  }),
-  animate: (theme: boolean) => ({
-    opacity: 1,
-    color: color(theme),
-    border: TransBorder(theme),
-    backgroundColor: color(!theme),
-    transition: { duration: 0.3 },
-  }),
-  exit: (theme: boolean) => ({
-    opacity: 0,
-    color: color(!theme),
-    border: TransBorder(theme),
-    backgroundColor: color(theme),
-    transition: { duration: 0.3 },
-  }),
 };
 export const opacityVar = {
   exit: { opacity: 0 },
@@ -50,12 +26,51 @@ export const opacityVar = {
   animate: { opacity: 1 },
 };
 export const hoverBgColor = {
-  hover: { transition: due(0.3), backgroundColor: logo },
+  hover: { transition: { duration: 0.3 }, backgroundColor: logo },
 };
 export const hoverScale = {
-  hover: { scale: 1.1, transition: due(0.3), color: logo },
+  hover: { scale: 1.1, transition: { duration: 0.3 }, color: logo },
 };
-export const boxVars = { hover: { y: -20, scale: 1.1, transition: due(0.3) } };
+export const variants = {
+  initial: (theme: boolean) => ({
+    opacity: 0,
+    color: color(theme),
+    backgroundColor: color(!theme),
+  }),
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    color: color(theme),
+    backgroundColor: color(!theme),
+    transition: { duration: 0.3 },
+  }),
+  exit: (theme: boolean) => ({
+    opacity: 0,
+    color: logo,
+    border: logo,
+    backgroundColor: logo,
+    transition: { duration: 0.3 },
+  }),
+};
+export const btnVar = {
+  initial: ({ theme, isClicked, isFollowing }: any) => ({
+    color: isFollowing ? white : color(!theme),
+    backgroundColor: isFollowing ? logo : color(theme),
+  }),
+  animate: ({ theme, isClicked, isFollowing }: any) => ({
+    transition: { duration: 0.3 },
+    color: isFollowing ? white : color(!theme),
+    backgroundColor: isFollowing ? logo : color(theme),
+  }),
+  hover: {
+    fill: '#ffffff',
+    color: '#ffffff',
+    backgroundColor: '#E50914',
+    transition: { duration: 0.3 },
+  },
+};
+export const boxVars = {
+  hover: { y: -20, scale: 1.1, transition: { duration: 0.3 } },
+};
 export const slideVars = {
   initial: (reverse: boolean) => ({ x: reverse ? -2000 : 2000 }),
   animate: (reverse: boolean) => ({ x: 0, transition: TweenTrans }),
@@ -75,13 +90,13 @@ export const labelVar = {
     opacity: 1,
     fontSize: '1.3rem',
     translateY: '-50%',
-    transition: due(0.3),
+    transition: { duration: 0.3 },
     color: color(!theme),
     backgroundColor: color(theme),
   }),
   animate: ({ isFocus, theme, disabled }: any) => ({
     opacity: 1,
-    transition: due(0.3),
+    transition: { duration: 0.3 },
     color: color(!theme),
     backgroundColor: color(theme),
     width: isFocus ? 'fit-content' : '80%',
@@ -105,8 +120,8 @@ export const inputVar = {
     color: isFocus ? logo : color(!theme),
     outline: isFocus ? redBrdr : border(!theme),
   }),
-  hover: () => ({ transition: due(0.3), outline: redBrdr }),
-  focus: () => ({ outline: redBrdr, transition: due(0.3) }),
+  hover: () => ({ transition: { duration: 0.3 }, outline: redBrdr }),
+  focus: () => ({ outline: redBrdr, transition: { duration: 0.3 } }),
 };
 export const inputErrVar = {
   exit: { opacity: 0, color: logo },

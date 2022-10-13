@@ -1,20 +1,27 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
-export const Page = styled.section`
+export const Page = styled(motion.section)`
   width: 100%;
   height: 100%;
   min-width: 100vw;
   min-height: 100vh;
   position: relative;
-  color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
 `;
 export const FlexPage = styled(Page)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
+`;
+export const Layer = styled(FlexPage)`
+  min-width: 50vw;
+  min-height: 50vh;
+  .lock {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
 `;
 export const Circle = styled(motion.div)`
   width: 0.5rem;

@@ -1,56 +1,41 @@
-import { motion } from 'framer-motion';
-import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
+import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 import { Btn } from '../../../../Tools/Button';
+import { Avatar } from '../../../../Tools/Avatar';
 import { IUserType } from '../../../../types/user';
 import { ITheme } from '../../../../../styles/theme';
 import useUser from '../../../../libs/client/useUser';
 import { BtnWrap } from '../../../../../styles/global';
-import { TweenTrans, variants } from '../../../../../styles/variants';
-import useFollowUser from '../../../../libs/client/useFollowUser';
-import { Avatar } from '../../../../Tools/Avatar';
+import useFollow from '../../../../libs/client/useFollow';
 
 interface IUserBox extends ITheme {
   host: IUserType;
 }
 export const Host = ({ theme, host }: IUserBox) => {
   const router = useRouter();
-  const { loggedInUser, isLoggedIn } = useUser();
+  const { loggedInUser } = useUser();
   const [modal, setModal] = useState(false);
   const isMeHost = Boolean(loggedInUser?.id === host?.id);
-  const item = {
-    theme,
-    size: '10rem',
-    preview: null,
-    avatar: host?.avatar,
-    onClick: () => router.push(`/user/${host.id}/${host.username}/profile`),
-  };
+  const { onClick, name, isFollowing } = useFollow(host && host.id, 'user');
   const clickBtn = (type: string) =>
     router.push(`/user/${host.id}/${host.username}/${type}`);
+  const clickAvatar = () => router.push(`/user/${host && host.id}/dash`);
   //
-  const [clickFollow, { post_data, btnName, isFollowing }] = useFollowUser(
-    host?.id
-  );
-  console.log(post_data);
   return (
     <>
       {host && (
-        <Cont
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          custom={theme}
-          variants={variants}
-          transition={TweenTrans}
-          className="host-box"
-        >
-          <Avatar item={{ ...item }} />
+        <Cont className="host-box">
+          <Avatar
+            onClick={clickAvatar}
+            item={{ theme, size: '10rem', preview: null, avatar: host?.avatar }}
+          />
           {!isMeHost && (
             <Btn
               type="button"
-              onClick={clickFollow}
-              item={{ theme, name: btnName, className: 'follow-btn' }}
+              onClick={onClick}
+              item={{ theme, name, isFollowing, className: 'follow-btn' }}
             />
           )}
           {isMeHost && (
@@ -80,16 +65,18 @@ const Cont = styled(motion.article)`
   flex-direction: column;
   justify-content: center;
   .follow-btn {
-    padding: 8px 15px;
+    padding: 8px 30px;
     font-size: 1.1rem;
     width: fit-content;
     border-radius: 30px;
   }
 `;
 const HostBtns = styled(BtnWrap)`
+  width: fit-content;
   padding: 10px;
   button {
-    font-size: 1rem;
+    width: 90px;
+    font-size: 1.05rem;
     border-radius: 30px;
   }
 `;

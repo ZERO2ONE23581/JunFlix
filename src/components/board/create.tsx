@@ -11,7 +11,6 @@ import { InputWrap } from '../../Tools/Input';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import { isOverMax, useLength, useMaxLength } from '../../libs/client/useTools';
 import { SelectWrap } from '../../Tools/Input/Select';
-import { joinBoxVar } from '../../../styles/variants';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 interface ICreateBoardBox extends ITheme {

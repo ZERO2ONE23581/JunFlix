@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { Svg } from '../../../../Tools/Svg';
-import { ITheme } from '../../../../../styles/theme';
-import useUser from '../../../../libs/client/useUser';
-import useMutation from '../../../../libs/client/useMutation';
-import { hoverBgColor, SpringTrans } from '../../../../../styles/variants';
+import { Svg } from '../../../Tools/Svg';
+import { ITheme } from '../../../../styles/theme';
+import useUser from '../../../libs/client/useUser';
+import useMutation from '../../../libs/client/useMutation';
+import { hoverBgColor, SpringTrans } from '../../../../styles/variants';
 
 export const ModalLists = ({ theme }: ITheme) => {
   const router = useRouter();

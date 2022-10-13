@@ -10,7 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!user_id) return res.json({ ok: false, error: 'query missed.' });
 
   const found = await client.user.findUnique({
-    where: { id: +user_id },
+    where: { id: +user_id.toString() },
     select: { id: true },
   });
   if (!found) return res.json({ ok: false, error: 'no user found.' });

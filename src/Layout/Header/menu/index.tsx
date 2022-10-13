@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { MenuModal } from './modal';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { MenuModal } from './modal';
 import { ITheme } from '../../../../styles/theme';
 import { useCapLetter } from '../../../libs/client/useTools';
 import { colorVar, hoverScale } from '../../../../styles/variants';

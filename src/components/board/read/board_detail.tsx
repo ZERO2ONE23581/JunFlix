@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 import { ITheme } from '../../../../styles/theme';
 
 interface IBoardDetail extends ITheme {
-  data: {
+  item: {
     genre: string;
     isPrivate: boolean;
   };
 }
-export const BoardDetail = ({ theme, data }: IBoardDetail) => {
-  const genre = data.genre;
-  const privateMode = data.isPrivate;
+export const BoardDetail = ({ theme, item }: IBoardDetail) => {
+  const genre = item.genre;
+  const privateMode = item.isPrivate;
   return (
     <Container className="board-detail">
       <ul>

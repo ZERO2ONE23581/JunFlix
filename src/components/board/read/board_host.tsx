@@ -1,23 +1,33 @@
 import styled from '@emotion/styled';
-import { UserAvatar } from '../../../Tools/Avatar';
-import { ITheme } from '../../../../styles/theme';
+import { useRouter } from 'next/router';
+import { Avatar, IAvatar } from '../../../Tools/Avatar';
 
-interface IBoardHost extends ITheme {
-  data: {
-    avatar: string;
+interface IBoardHost {
+  item: {
+    theme: boolean;
     userId: string;
+    username: string;
+    avatar: string | null;
+    preview: string | null;
   };
-  onClick: (type: string) => void;
 }
-export const BoardHost = ({ theme, data, onClick }: IBoardHost) => {
+export const BoardHost = ({ item }: IBoardHost) => {
+  const theme = item.theme;
+  const router = useRouter();
+  const userId = item.userId;
+  const avatar = item.avatar;
+  const preview = item.preview;
+  const username = item.username;
+  const { user_id } = router.query;
+  const onClick = () => router.push(`/user/${user_id}/${username}/dash`);
+  //
   return (
     <Container className="board-host">
-      <UserAvatar
-        theme={theme}
-        onClick={() => onClick('dash')}
-        info={{ avatar: data.avatar, size: '4rem' }}
+      <Avatar
+        item={{ theme, size: '4rem', avatar, preview: null }}
+        onClick={onClick}
       />
-      <span>@{data.userId}</span>
+      <span>@{userId}</span>
     </Container>
   );
 };

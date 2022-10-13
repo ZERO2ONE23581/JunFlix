@@ -1,15 +1,19 @@
-import { ListHover } from '../../../../../styles/variants';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import useUser from '../../../../libs/client/useUser';
-import { useCapLetter } from '../../../../libs/client/useTools';
+import useUser from '../../../libs/client/useUser';
+import { useCapLetter } from '../../../libs/client/useTools';
+import {
+  hoverBgColor,
+  SpringTrans,
+  TweenTrans,
+} from '../../../../styles/variants';
 
 interface IMainMenuModal {
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
 }
-export const MainMenuModal = ({ selected, setSelected }: IMainMenuModal) => {
+export const ModalLists = ({ selected, setSelected }: IMainMenuModal) => {
   const router = useRouter();
   const { isLoggedIn } = useUser();
   //
@@ -55,7 +59,9 @@ export const MainMenuModal = ({ selected, setSelected }: IMainMenuModal) => {
     <>
       {unLogArr()?.map((i: any) => (
         <motion.li
-          whileHover={ListHover}
+          whileHover={'hover'}
+          variants={hoverBgColor}
+          transition={SpringTrans}
           onClick={() => onClick(i)}
           key={unLogArr()?.indexOf(i)}
         >
@@ -67,8 +73,10 @@ export const MainMenuModal = ({ selected, setSelected }: IMainMenuModal) => {
         <>
           {Genre.map((i) => (
             <motion.li
+              whileHover={'hover'}
               key={Genre.indexOf(i)}
-              whileHover={ListHover}
+              variants={hoverBgColor}
+              transition={TweenTrans}
               onClick={() => onClick(i, 'genre')}
             >
               <span>{useCapLetter(i)}</span>
@@ -77,7 +85,12 @@ export const MainMenuModal = ({ selected, setSelected }: IMainMenuModal) => {
         </>
       )}
       {isLoggedIn && (
-        <motion.li whileHover={ListHover} onClick={() => onClick('create')}>
+        <motion.li
+          whileHover={'hover'}
+          variants={hoverBgColor}
+          transition={TweenTrans}
+          onClick={() => onClick('create')}
+        >
           <span>Create</span>
         </motion.li>
       )}

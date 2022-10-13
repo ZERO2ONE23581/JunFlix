@@ -1,16 +1,20 @@
 import styled from '@emotion/styled';
-import { ModalLists } from './modal_lists';
+import { ModalLists } from './icon_modal_lists';
 import { Dispatch, SetStateAction } from 'react';
-import { ITheme } from '../../../../../styles/theme';
-import { Overlay } from '../../../../../styles/global';
+import { Overlay } from '../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
-import { menuModalVar, TweenTrans } from '../../../../../styles/variants';
+import {
+  menuModalVar,
+  opacityVar,
+  TweenTrans,
+} from '../../../../styles/variants';
 
-interface IUserMenuModal extends ITheme {
+interface IUserMenuModal {
+  theme: boolean;
   modal: boolean;
   setModal: Dispatch<SetStateAction<boolean>>;
 }
-export const UserMenuModal = ({ modal, theme, setModal }: IUserMenuModal) => {
+export const IconModal = ({ modal, theme, setModal }: IUserMenuModal) => {
   return (
     <AnimatePresence>
       {modal && (
@@ -26,10 +30,12 @@ export const UserMenuModal = ({ modal, theme, setModal }: IUserMenuModal) => {
             <ModalLists theme={theme} />
           </Modal>
           <Overlay
+            exit="exit"
+            initial="initial"
+            animate="animate"
+            variants={opacityVar}
             className="overlay"
-            animate={{ opacity: 1 }}
             onClick={() => setModal(false)}
-            exit={{ opacity: 0, transition: { duration: 0.5 } }}
           />
         </>
       )}

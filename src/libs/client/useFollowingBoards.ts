@@ -7,27 +7,31 @@ import { IRes } from '../../types/global';
 import { useEffect } from 'react';
 
 interface IContent<T> {
+  name?: string;
+  follow: () => void;
   post_data?: IRes;
-  btnName?: string;
   isFollowing?: boolean;
   data?: IGetFollowing;
 }
-type IResult<T> = [() => void, IContent<T>];
+type IResult<T> = IContent<T>;
+type idType = string | string[] | undefined | number;
 
-export default function useFollowUser<T = any>(user_id: number): IResult<T> {
+export default function useFollowingBoards<T = any>(
+  board_id: idType
+): IResult<T> {
   const router = useRouter();
   const { isLoggedIn } = useUser();
   const [post, { data: post_data }] = useMutation<IRes>(
-    `/api/following/create/user`
+    `/api/following/create/board`
   );
   const { data, mutate } = useSWR<IGetFollowing>(
-    `/api/following/user/${user_id}`
+    `/api/following/board/${board_id}`
   );
-  const clickFollow = () => {
+  const follow = () => {
     if (!data) return;
     if (!isLoggedIn) return router.push('/login');
     if (isLoggedIn) {
-      post({ user_id });
+      post({ board_id });
       mutate({ isFollowing: !data.isFollowing }, false);
     }
   };
@@ -36,6 +40,6 @@ export default function useFollowUser<T = any>(user_id: number): IResult<T> {
   }, [post_data, useMutation]);
   //
   const isFollowing = data?.isFollowing!;
-  const btnName = isFollowing ? 'Following' : 'Follow';
-  return [clickFollow, { isFollowing, btnName, data, post_data }];
+  const name = isFollowing ? 'Following' : 'Follow';
+  return { follow, isFollowing, name, data, post_data };
 }

@@ -1,32 +1,31 @@
 import { Svg } from '../Svg';
 import styled from '@emotion/styled';
-import { border, btnVar, color } from '../../../styles/variants';
+import { border, color, TransBorder } from '../../../styles/variants';
 import { MouseEventHandler, ReactElement, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useCapLetter } from '../../libs/client/useTools';
 
 interface IBtn {
   item: {
-    svg?: string;
+    name: string;
+    category: string;
     theme: boolean;
-    name?: string;
     layoutId?: number;
     className?: string;
     disabled?: boolean;
-    isClicked?: boolean;
-    isFollowing?: boolean;
   };
   type: 'button' | 'submit' | 'reset';
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
-export const Btn = ({ item, type, onClick }: IBtn) => {
-  const svg = item?.svg!;
+export const MyBtn = ({ item, type, onClick }: IBtn) => {
   const name = item?.name!;
   const theme = item?.theme!;
+  const category = item?.category!;
   const disabled = item?.disabled!;
   const className = item?.className!;
-  const isClicked = item?.isClicked!;
-  const isFollowing = item?.isFollowing!;
-  const custom = { theme, isClicked, isFollowing };
+  //
+  const isClicked = Boolean(name === useCapLetter(category));
+  const custom = { theme, isClicked };
   //
   return (
     <AnimatePresence>
@@ -42,10 +41,7 @@ export const Btn = ({ item, type, onClick }: IBtn) => {
         variants={btnVar}
         custom={{ ...custom }}
       >
-        <>
-          {name && <span>{name}</span>}
-          {svg && <Svg onBtn type={svg} size="2rem" theme={!theme} />}
-        </>
+        {name && <span>{name}</span>}
       </Cont>
     </AnimatePresence>
   );
@@ -58,9 +54,28 @@ export const Cont = styled(motion.button)`
   outline: none;
   font-weight: 500;
   font-size: 1.2rem;
-  border-radius: 3px;
-  gap: 20px;
+  gap: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: inherit;
 `;
+const btnVar = {
+  initial: ({ theme, isClicked }: any) => ({
+    color: isClicked ? '#ffffff' : color(theme),
+    borderBottom: isClicked
+      ? '3px solid rgba(229,9,20)'
+      : '3px solid transparent',
+  }),
+  animate: ({ theme, isClicked, isFollowing }: any) => ({
+    transition: { duration: 0.3 },
+    color: isClicked ? '#ffffff' : color(theme),
+    borderBottom: isClicked
+      ? '3px solid rgba(229,9,20)'
+      : '3px solid transparent',
+  }),
+  hover: {
+    color: '#E50914',
+    transition: { duration: 0.3 },
+  },
+};

@@ -2,22 +2,21 @@ import { Svg } from './Svg';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { due, TransBorder, TweenTrans } from '../../styles/variants';
+import { TransBorder, TweenTrans } from '../../styles/variants';
 
-interface IAvatar {
+export interface IAvatar {
   item: {
     size: string;
     theme: boolean;
-    onClick?: () => void;
     avatar: string | null;
     preview: string | null;
   };
+  onClick: (type: any) => void;
 }
-export const Avatar = ({ item }: IAvatar) => {
+export const Avatar = ({ item, onClick }: IAvatar) => {
   const size = item?.size;
   const theme = item?.theme;
   const avatar = item?.avatar;
-  const onClick = item?.onClick;
   const preview = item?.preview;
   const custom = { theme, preview };
   const [image, setImage] = useState('');
@@ -89,25 +88,25 @@ const avatarVar = {
   initial: (theme: boolean) => ({
     opacity: 0,
     borderRadius: '10%',
-    transition: due(0.5),
     border: TransBorder(theme),
+    transition: { duration: 0.5 },
   }),
   animate: (theme: boolean) => ({
     opacity: 1,
     borderRadius: '10%',
-    transition: due(0.5),
     border: TransBorder(theme),
+    transition: { duration: 0.5 },
   }),
   exit: (theme: boolean) => ({
     opacity: 0,
-    transition: due(0.5),
     border: TransBorder(!theme),
+    transition: { duration: 0.5 },
   }),
   hover: {
     scale: 1.2,
     borderWidth: '3px',
     borderRadius: '100%',
-    transition: due(0.5),
     borderColor: '#E50914',
+    transition: { duration: 0.5 },
   },
 };
