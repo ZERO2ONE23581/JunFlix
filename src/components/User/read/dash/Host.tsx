@@ -16,7 +16,6 @@ interface IUserBox extends ITheme {
 export const Host = ({ theme, host }: IUserBox) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
-  const [modal, setModal] = useState(false);
   const isMeHost = Boolean(loggedInUser?.id === host?.id);
   const { onClick, name, isFollowing } = useFollow(host && host.id, 'user');
   const clickBtn = (type: string) =>
@@ -26,7 +25,7 @@ export const Host = ({ theme, host }: IUserBox) => {
   return (
     <>
       {host && (
-        <Cont className="host-box">
+        <Cont className="host">
           <Avatar
             onClick={clickAvatar}
             item={{ theme, size: '10rem', preview: null, avatar: host?.avatar }}

@@ -1,4 +1,4 @@
-import { PostModel, ReviewModel } from './post';
+import { IPostType, ReviewModel } from './post';
 import {
   UseFormWatch,
   UseFormSetError,
@@ -8,7 +8,6 @@ import {
   UseFormClearErrors,
   FieldError,
 } from 'react-hook-form';
-import { Board, Following, Post, Review, User } from '@prisma/client';
 import { IBoardType } from './board';
 import { IUserType } from './user';
 import { Dispatch, SetStateAction } from 'react';
@@ -18,7 +17,7 @@ export interface IForm {
   title: string;
   genre?: string;
   avatar?: FileList;
-  isPrivate?: boolean;
+  onPrivate?: boolean;
   description?: string;
   boardAvatar?: FileList;
 }
@@ -39,9 +38,9 @@ export interface IMovie {
 export interface IApi {
   movies: [IMovie];
   users?: IUserType[];
-  posts?: PostModel[];
+  posts?: IPostType[];
   boards?: IBoardType[];
-  MyPostLikes?: PostModel[];
+  MyPostLikes?: IPostType[];
   MyReviewLikes?: ReviewModel[];
 }
 
@@ -83,8 +82,9 @@ export interface IUseform {
   };
 }
 export interface IRes {
-  ok?: boolean;
+  ok: boolean;
   error?: string;
+  message?: string;
   [key: string]: any;
 }
 export interface ICreateUserRes extends IRes {

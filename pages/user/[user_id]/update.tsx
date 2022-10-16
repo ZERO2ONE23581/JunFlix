@@ -35,7 +35,7 @@ const UpdateUser: NextPage<{ theme: boolean }> = ({ theme }) => {
           <Svg
             theme={theme}
             size="2rem"
-            type="left-chevron"
+            type="left-chev"
             onClick={() => clickArrow('left')}
           />
           <Control className="control-box">
@@ -56,7 +56,7 @@ const UpdateUser: NextPage<{ theme: boolean }> = ({ theme }) => {
           <Svg
             size="2rem"
             theme={theme}
-            type="right-chevron"
+            type="right-chev"
             onClick={() => clickArrow('right')}
           />
         </Flex>

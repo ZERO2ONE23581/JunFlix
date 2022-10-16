@@ -6,6 +6,7 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 import { inputErrVar, TweenTrans } from '../../../styles/variants';
 import { useHeight, useLength } from '../../libs/client/useTools';
+import { TextLength } from '../TextLength';
 
 interface ITextAreaWrap extends ITheme {
   id: string;
@@ -14,12 +15,17 @@ interface ITextAreaWrap extends ITheme {
   disabled?: boolean;
   placeholder?: string;
   startHeight: number;
+  length: {
+    max: number;
+    typed?: string;
+  };
   register: UseFormRegisterReturn;
 }
 export const TextAreaWrap = ({
   id,
   theme,
   error,
+  length,
   watch,
   register,
   disabled,
@@ -39,7 +45,7 @@ export const TextAreaWrap = ({
   //
   return (
     <AnimatePresence initial={false}>
-      <Cont className="textarea-wrap">
+      <Cont className="textarea-wrap" minHeight={`${startHeight}px`}>
         <label htmlFor={id} style={{ display: 'none' }} />
         <motion.textarea
           {...register}
@@ -59,6 +65,13 @@ export const TextAreaWrap = ({
           whileFocus={'focus'}
           //
         />
+        <TextLength
+          theme={theme}
+          number={{
+            max: length?.max!,
+            typed: useLength(length?.typed!),
+          }}
+        />
         {error && (
           <ErrMsg
             exit="exit"
@@ -75,8 +88,8 @@ export const TextAreaWrap = ({
     </AnimatePresence>
   );
 };
-const Cont = styled.div`
-  gap: 20px;
+const Cont = styled.div<{ minHeight: string }>`
+  gap: 10px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -86,6 +99,7 @@ const Cont = styled.div`
     font-size: 1.2rem;
     padding: 10px;
     padding-left: 15px;
+    padding-top: 15px;
     border: none;
     resize: none;
     cursor: auto;
@@ -93,6 +107,9 @@ const Cont = styled.div`
     word-break: break-all;
     width: 100%;
     min-height: 150px;
+    min-height: ${(p) => p.minHeight && p.minHeight};
+    ::placeholder {
+    }
     ::-webkit-scrollbar {
       display: none;
     }

@@ -89,6 +89,7 @@ export const BoxArray = ({ type, array, reverse, theme }: IBoxArray) => {
         <>
           {movieModal && (
             <MovieModal
+              theme={theme}
               movieId={boxID}
               setMovieModal={setMovieModal}
               data={array?.find((movie: IMovie) => movie.id === boxID)!}
@@ -96,7 +97,9 @@ export const BoxArray = ({ type, array, reverse, theme }: IBoxArray) => {
           )}
         </>
       )}
-      {modal && <PostModal data={clickedPost!} setModal={setModal} />}
+      {modal && (
+        <PostModal theme={theme} data={clickedPost!} setModal={setModal} />
+      )}
     </AnimatePresence>
   );
 };

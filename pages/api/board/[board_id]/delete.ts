@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import client from '../../../../src/libs/server/prisma_client';
 import withHandler from '../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../src/libs/server/withSession';
-import userId from '../../user/create/userId';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const inputs = req.body;
@@ -30,14 +29,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //
   const board = await client.board.findUnique({
     where: { id: +board_id },
-    include: { user: { select: { userId: true } } },
+    include: { host: { select: { userId: true } } },
   });
   if (!board)
     return res.json({
       ok: false,
       error: '보드를 찾을수 없습니다. (no board found)',
     });
-  const isMyBoard = Boolean(board.user.userId === inputs.userId.toUpperCase());
+  const isMyBoard = Boolean(board.host.userId === inputs.userId.toUpperCase());
   if (!isMyBoard)
     return res.json({
       ok: false,

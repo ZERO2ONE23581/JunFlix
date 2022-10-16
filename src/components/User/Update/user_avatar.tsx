@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { ErrMsg } from '../../../Tools/Input';
 import useUser from '../../../libs/client/useUser';
-import { AvatarLabel } from '../../../../styles/global';
 import { inputErrVar } from '../../../../styles/variants';
 import { IEditUser, IUserForm } from '../../../types/user';
 import { Avatar } from '../../../Tools/Avatar';
+import { ImageLabel } from '../../../../styles/global';
 
 export const UserAvatar_Form = ({ dataWrap }: IEditUser) => {
   const type = dataWrap.type;
@@ -59,7 +59,7 @@ export const UserAvatar_Form = ({ dataWrap }: IEditUser) => {
     <>
       {type === 'avatar' && (
         <Cont onSubmit={handleSubmit(onValid)}>
-          <AvatarLabel htmlFor="avatar">
+          <ImageLabel htmlFor="avatar">
             <Avatar item={{ ...item }} />
             <input
               {...register('avatar', {
@@ -70,7 +70,7 @@ export const UserAvatar_Form = ({ dataWrap }: IEditUser) => {
               type="file"
               accept="image/*"
             />
-          </AvatarLabel>
+          </ImageLabel>
           {errors.avatar?.message && (
             <ErrMsg
               exit="exit"

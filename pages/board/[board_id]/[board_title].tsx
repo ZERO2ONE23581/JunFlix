@@ -4,64 +4,44 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Blur, FlexPage, Layer } from '../../../styles/global';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { IGetBoard } from '../../../src/types/board';
 import { HeadTitle } from '../../../src/Tools/head_title';
 import { LoadingModal } from '../../../src/Tools/Modal/loading_modal';
 import { ModalSchema } from '../../../src/Tools/Modal/schema';
-import { BoardBox } from '../../../src/components/board/read/board_box';
-import { Svg } from '../../../src/Tools/Svg';
-import useUser from '../../../src/libs/client/useUser';
-import useFollow from '../../../src/libs/client/useFollowingBoards';
+import { Board } from '../../../src/components/board/read/board_box';
 
 const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const { board_id } = router.query;
-  const { loggedInUser } = useUser();
   const { data } = useSWR<IGetBoard>(board_id && `/api/board/${board_id}`);
-  const board = data?.board;
   const [type, setType] = useState('');
-  const closeModal = () => setType('');
-  const clickModal = (type: string) => {
-    if (board) {
-      const user_id = board.host_id;
-      const username = board.host.username;
-      if (type === 'all') router.push(`/board/all`);
-      if (type === 'update') setType('update-board');
-      if (type === 'delete') setType('delete-board');
-      if (type === 'dash') router.push(`/user/${user_id}/${username}/dash`);
-    }
-  };
-  const onPublic = !Boolean(board?.isPrivate);
-  const { isFollowing } = useFollow(board?.id);
-  const isMyBoard = Boolean(loggedInUser?.id === board?.host_id);
-  const isBlur = !Boolean(onPublic || isMyBoard || isFollowing);
+  const [createPost, setCreatePost] = useState(false);
+
+  //
   return (
     <>
       <HeadTitle title={data?.board?.title!} />
-      <Cont>
-        <AnimatePresence>
-          {data && (
+      <AnimatePresence>
+        <Cont>
+          {data?.board && (
             <>
-              <BoardBox theme={theme} board={board!} clickModal={clickModal} />
+              <Board theme={theme} board={data?.board} setType={setType} />
               <Layer className="layer">
-                <Blur className="block" isBlur={isBlur}>
-                  <h1>helloworld</h1>
-                </Blur>
-                {isBlur && <Svg type="lock" size="2rem" theme={theme} />}
+                <h1>posts</h1>
               </Layer>
               <ModalSchema
                 type={type}
                 theme={theme}
-                ogData={board!}
+                ogData={data?.board}
                 modal={Boolean(type)}
-                closeModal={closeModal}
+                closeModal={() => setType('')}
               />
             </>
           )}
-        </AnimatePresence>
-        {!data && <LoadingModal theme={theme} />}
-      </Cont>
+          {!data?.board && <LoadingModal theme={theme} />}
+        </Cont>
+      </AnimatePresence>
     </>
   );
 };

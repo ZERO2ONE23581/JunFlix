@@ -5,73 +5,39 @@ import { ITheme } from '../../../styles/theme';
 import { AnimatePresence, motion } from 'framer-motion';
 import { TweenTrans } from '../../../styles/variants';
 
-export interface IBtns extends ITheme {
+export interface IBtns {
+  theme: boolean;
   setTheme: Dispatch<SetStateAction<boolean>>;
 }
 export const ThemeBtn = ({ setTheme, theme }: IBtns) => {
+  const isDark = !theme;
+  const isLight = theme;
+  const onClick = () => setTheme((p) => !p);
   return (
-    <AnimatePresence>
-      <Cont
-        initial="initial"
-        animate="aniamte"
-        exit={'exit'}
-        transition={TweenTrans}
-      >
-        {!theme && (
-          <motion.div
-            variants={themeVar}
-            initial="initial"
-            animate="aniamte"
-            exit={'exit'}
-            transition={TweenTrans}
-          >
-            <h1>hello</h1>
-            <Svg
-              theme={theme}
-              size="2.5rem"
-              type="moon"
-              onClick={() => setTheme(true)}
-            />
-          </motion.div>
-        )}
-        {theme && (
-          <motion.div
-            transition={TweenTrans}
-            variants={themeVar}
-            initial="initial"
-            animate="aniamte"
-            exit={'exit'}
-          >
-            <h1>world</h1>
-            <Svg
-              theme={theme}
-              size="2.5rem"
-              type="sun"
-              onClick={() => setTheme(false)}
-            />
-          </motion.div>
-        )}
-      </Cont>
-    </AnimatePresence>
+    <Cont>
+      <Svg
+        type="moon"
+        theme={theme}
+        onClick={onClick}
+        item={{ size: '3rem', isHide: isLight }}
+      />
+      <Svg
+        type="sun"
+        theme={theme}
+        onClick={onClick}
+        item={{ size: '3rem', isHide: isDark }}
+      />
+    </Cont>
   );
 };
-const themeVar = {
-  initial: {
-    opacity: 1,
-  },
-  animate: {
-    opacity: 1,
-    transition: { duration: 1 },
-  },
-  exit: {
-    opacity: 0,
-  },
-};
-const Cont = styled(motion.div)`
-  top: 10em;
+const Cont = styled.div`
+  width: 3rem;
+  height: 3rem;
+  top: 8em;
   right: 3em;
   z-index: 9999;
   position: fixed;
-  color: red;
-  border: 2px solid blue;
+  svg {
+    position: absolute;
+  }
 `;

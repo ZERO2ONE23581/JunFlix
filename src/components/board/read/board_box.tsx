@@ -1,7 +1,8 @@
+import { Dispatch, SetStateAction, useState } from 'react';
+import { Svg } from '../../../Tools/Svg';
+import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { BoardTitle } from './box_title';
-import { BoardHost } from './board_host';
 import { Btn } from '../../../Tools/Button';
 import { BoardDetail } from './board_detail';
 import { ITheme } from '../../../../styles/theme';
@@ -9,18 +10,16 @@ import { IBoardType } from '../../../types/board';
 import { TrimText } from '../../../Tools/trimText';
 import useUser from '../../../libs/client/useUser';
 import { Avatar } from '../../../Tools/Avatar';
-import { SettingModal } from '../../../Tools/Modal/setting_modal';
+import { SettingModal } from './board_setting_btn_modal';
 import { useCapLetters } from '../../../libs/client/useTools';
-import { useState } from 'react';
-import { Svg } from '../../../Tools/Svg';
-import { useRouter } from 'next/router';
-import useFollow from '../../../libs/client/useFollowingBoards';
+import useFollow from '../../../libs/client/useFollow';
 
-interface IBoardBox extends ITheme {
+interface IBoardBox {
+  theme: boolean;
   board: IBoardType;
-  clickModal: (type: string) => void;
+  setType: Dispatch<SetStateAction<string>>;
 }
-export const BoardBox = ({ theme, board, clickModal }: IBoardBox) => {
+export const Board = ({ theme, board, setType }: IBoardBox) => {
   const host = board?.host;
   const router = useRouter();
   const avatar = host?.avatar;
@@ -28,11 +27,10 @@ export const BoardBox = ({ theme, board, clickModal }: IBoardBox) => {
   const title = useCapLetters(board.title);
   const [modal, setModal] = useState(false);
   const isMyBoard = Boolean(loggedInUser?.id === host?.id);
-  const { isFollowing, follow, name } = useFollow(board?.id!);
-  const setting_item = { modal, theme, onClick: clickModal, setModal };
-  const detail_item = { genre: board?.genre!, isPrivate: board?.isPrivate! };
+  const detail_item = { genre: board?.genre!, isPrivate: board?.onPrivate! };
   const clickAvatar = () =>
     router.push(`/user/${host?.id}/${host.username}/dash`);
+  const { isFollowing, onClick, name } = useFollow(Number(board?.id), 'board');
   //
   return (
     <>
@@ -42,15 +40,12 @@ export const BoardBox = ({ theme, board, clickModal }: IBoardBox) => {
             <h1>{title}</h1>
             <Svg
               type="more"
-              size="1.5rem"
               theme={theme}
-              isClicked={modal}
               onClick={() => setModal((p) => !p)}
+              item={{ size: '2rem', isClicked: modal }}
             />
             <SettingModal
-              setModal={setModal}
-              onClick={clickModal}
-              item={{ modal, theme, isMyBoard }}
+              item={{ modal, theme, isMyBoard, setType, setModal }}
             />
           </Title>
           <Host className="board-host">
@@ -64,8 +59,8 @@ export const BoardBox = ({ theme, board, clickModal }: IBoardBox) => {
           {!isMyBoard && (
             <Btn
               type="button"
-              onClick={follow}
-              item={{ name, theme, isFollowing }}
+              onClick={onClick}
+              item={{ name, theme, isFollowing, className: 'save-btn' }}
             />
           )}
           <TrimText text={board?.description} max={200} />
@@ -75,17 +70,17 @@ export const BoardBox = ({ theme, board, clickModal }: IBoardBox) => {
   );
 };
 const Box = styled(motion.article)`
-  .follow-btn {
-    width: fit-content;
-    padding: 5px 20px;
-    font-size: 1.1rem;
-  }
+  width: fit-content;
   gap: 15px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  width: fit-content;
+  .save-btn {
+    width: fit-content;
+    padding: 5px 20px;
+    font-size: 1.1rem;
+  }
   border: 2px solid yellow;
 `;
 const Title = styled.div`

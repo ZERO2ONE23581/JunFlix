@@ -5,31 +5,27 @@ import { withApiSession } from '../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
-  const { board_id, title, description, avatar } = req.body;
-  const isInputs = Boolean(title && board_id);
   if (!user) return res.json({ ok: false, error: 'must login.' });
-  if (!isInputs) return res.json({ ok: false, error: 'input missed.' });
+  const { host_id, post_image, title, description, pageLink, hashtags } =
+    req.body;
+  const isMeHost = Boolean(host_id === user.id);
+  if (!isMeHost) return res.json({ ok: false, error: 'invalid host.' });
+  if (!host_id) return res.json({ ok: false, error: 'host id missed.' });
+  if (!title) return res.json({ ok: false, error: 'title input missed.' });
+  const must = {
+    title,
+    pageLink,
+    hashtags,
+    post_image,
+    description,
+    host: { connect: { id: host_id } },
+  };
   //
-  const board = await client.board.findUnique({
-    where: { id: board_id },
-    select: { id: true, host_id: true },
+  const post = await client.post.create({
+    data: { ...must },
+    select: { id: true },
   });
-  if (!board) return res.json({ ok: false, error: 'no board found.' });
-  const isHost = Boolean(user.id === board.host_id);
-  if (!isHost) return res.json({ ok: false, error: 'invalid host.' });
-  //
-  const isPassed = Boolean(
-    await client.post.create({
-      data: {
-        title,
-        avatar,
-        board_id,
-        description,
-        host_id: user.id,
-      },
-    })
-  );
-  if (!isPassed) return res.json({ ok: false, error: 'post failed.' });
-  return res.json({ ok: true });
+  if (!post) return res.json({ ok: false, error: 'Failed' });
+  return res.json({ ok: true, post_id: post.id });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

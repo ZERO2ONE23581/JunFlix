@@ -4,17 +4,16 @@ import { FlexPage } from '../../styles/global';
 import { HeadTitle } from '../../src/Tools/head_title';
 import { CreateBoardBox } from '../../src/components/board/create';
 import useMutation from '../../src/libs/client/useMutation';
-import { IBoardFormRes } from '../../src/types/board';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
 import { AnimatePresence } from 'framer-motion';
 import { MessageModal } from '../../src/Tools/msg_modal';
+import { IRes } from '../../src/types/global';
 
 const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
-  const [post, { loading, data }] =
-    useMutation<IBoardFormRes>(`/api/board/create`);
+  const [post, { loading, data }] = useMutation<IRes>(`/api/board/create`);
   const [Loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   useEffect(() => {

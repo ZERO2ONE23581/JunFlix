@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { ITheme } from '../../../styles/theme';
 import { Modal, Overlay } from '../../../styles/global';
-import { loadingVar } from '../../../styles/variants';
+import { variants } from '../../../styles/variants';
 
 export const LoadingModal = ({ theme }: ITheme) => {
   const svgVar = {
@@ -26,7 +26,7 @@ export const LoadingModal = ({ theme }: ITheme) => {
         animate="animate"
         className="loading"
         custom={theme}
-        variants={loadingVar}
+        variants={variants}
       >
         <motion.span
           animate="animate"

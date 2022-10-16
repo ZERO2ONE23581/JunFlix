@@ -10,9 +10,7 @@ import { ITheme } from '../../../styles/theme';
 import { IBoardType } from '../../types/board';
 import useUser from '../../libs/client/useUser';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
-import { modalVar } from '../../../styles/variants';
 import { Flex, Form, Modal } from '../../../styles/global';
-import { UserAvatar } from '../../Tools/Avatar';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import {
   isOverMax,
@@ -20,7 +18,8 @@ import {
   useLength,
   useMaxLength,
 } from '../../libs/client/useTools';
-import { TextLength } from '../../Tools/TextLength';
+import { variants } from '../../../styles/variants';
+import { Avatar } from '../../Tools/Avatar';
 
 export interface ITypeModal extends ITheme {
   ogData: IBoardType;
@@ -52,7 +51,7 @@ export const UpdateBoard = ({
   useEffect(() => {
     if (ogData) {
       if (ogData.genre) setValue('genre', ogData.genre);
-      if (ogData.isPrivate) setValue('isPrivate', ogData.isPrivate);
+      if (ogData.onPrivate) setValue('onPrivate', ogData.onPrivate);
       if (ogData.title) setValue('title', useCapLetters(ogData.title));
       if (ogData.description) setValue('description', ogData.description);
     }
@@ -64,7 +63,8 @@ export const UpdateBoard = ({
     const Type = Boolean(text === 'title') ? 'title' : 'description';
     return isOverMax(useLength(String(watch(Type))), Max);
   };
-  const onValid = async ({ title, genre, isPrivate, description }: IForm) => {
+  const onValid = async ({ title, genre, onPrivate, description }: IForm) => {
+    const user_id = loggedInUser?.id;
     if (IsOverMax('title'))
       return setError!('title', {
         message: `보드제목은 ${max.title}자 미만입니다.`,
@@ -73,15 +73,10 @@ export const UpdateBoard = ({
       return setError!('description', {
         message: `보드 소개글은 ${max.desc}자 미만입니다.`,
       });
+    //
     setLoading(true);
     if (loading) return;
-    return post({
-      title,
-      genre,
-      description,
-      isPrivate,
-      user_id: loggedInUser?.id,
-    });
+    return post({ title, genre, onPrivate, description, user_id });
   };
   //
   return (
@@ -90,10 +85,15 @@ export const UpdateBoard = ({
       initial="initial"
       animate="animate"
       custom={theme}
-      variants={modalVar}
+      variants={variants}
       className={'board-modal'}
     >
-      <Svg type="close" size="2rem" theme={theme} onClick={closeModal} />
+      <Svg
+        type="close"
+        theme={theme}
+        onClick={closeModal}
+        item={{ size: '2rem' }}
+      />
       <h1>Edit Movie Board</h1>
       <Form onSubmit={handleSubmit(onValid)}>
         <Flex className="inputs-flex">
@@ -118,17 +118,22 @@ export const UpdateBoard = ({
           <TextAreaWrap
             theme={theme}
             id="description"
-            startHeight={200}
+            startHeight={250}
             watch={watch('description')}
             register={register('description')}
             error={errors.description?.message}
+            length={{ max: max.desc, typed: watch('description')?.toString()! }}
           />
         </Flex>
         <Flex className="host-text-wrap">
           <Host>
-            <UserAvatar
-              theme={theme}
-              info={{ size: '3.3em', avatar: ogData.host.avatar }}
+            <Avatar
+              item={{
+                theme,
+                size: '3.3em',
+                preview: null,
+                avatar: ogData.host.avatar,
+              }}
               onClick={() =>
                 router.push(
                   `/user/${ogData.host_id}/${ogData.host.username}/dash`
@@ -137,13 +142,6 @@ export const UpdateBoard = ({
             />
             <span>@{ogData.host.userId}</span>
           </Host>
-          <TextLength
-            theme={theme}
-            number={{
-              max: max.desc,
-              typed: useLength(String(watch('description'))),
-            }}
-          />
         </Flex>
         <Flex>
           <Setting className="setting">
@@ -154,14 +152,10 @@ export const UpdateBoard = ({
             <input
               type="checkbox"
               id="private-mode"
-              {...register('isPrivate')}
+              {...register('onPrivate')}
             />
           </Setting>
-          <Btn
-            type="submit"
-            isBoolean={{ theme }}
-            isString={{ btnName: 'Done' }}
-          />
+          <Btn type="submit" item={{ theme, name: 'Edit' }} />
         </Flex>
       </Form>
     </ModalCont>
@@ -174,27 +168,38 @@ export const ModalCont = styled(Modal)`
   min-width: 480px;
   min-height: 500px;
   width: fit-content;
+  justify-content: flex-start;
+  padding-top: 50px;
   h1 {
     font-size: 2.5rem;
+    //padding-bottom: 20px;
   }
   form {
     gap: 10px;
-    textarea {
-      max-height: 40vh;
-    }
+    height: 100%;
+    //border: 10px solid blueviolet;
     button {
       padding: 8px 20px;
       width: fit-content;
     }
     .inputs-flex {
-      gap: 15px;
+      //border: 2px solid yellow;
+      gap: 20px;
+      height: 100%;
       flex-direction: column;
+      justify-content: flex-start;
       .input-wrap {
-        gap: 15px;
+        gap: 20px;
+      }
+      textarea {
+        max-height: 450px;
       }
     }
   }
   .host-text-wrap {
+    margin-top: 15px;
+
+    //border: 2px solid yellow;
     justify-content: flex-start;
   }
 `;

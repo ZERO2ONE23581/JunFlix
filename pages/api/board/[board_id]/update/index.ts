@@ -28,7 +28,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     data: {
       title: inputs.title,
       genre: inputs.genre,
-      isPrivate: inputs.isPrivate,
+      onPrivate: inputs.onPrivate,
       description: inputs.description,
     },
   });

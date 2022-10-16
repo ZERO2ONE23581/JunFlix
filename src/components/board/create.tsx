@@ -12,6 +12,7 @@ import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import { isOverMax, useLength, useMaxLength } from '../../libs/client/useTools';
 import { SelectWrap } from '../../Tools/Input/Select';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { variants } from '../../../styles/variants';
 
 interface ICreateBoardBox extends ITheme {
   loading: boolean;
@@ -56,12 +57,12 @@ export const CreateBoardBox = ({
 
   return (
     <Cont
-      className="box"
       exit="exit"
       initial="initial"
       animate="animate"
       custom={theme}
-      variants={joinBoxVar}
+      variants={variants}
+      className="box"
     >
       <BoxTitle
         theme={theme}
@@ -76,7 +77,7 @@ export const CreateBoardBox = ({
             label="Title"
             theme={theme}
             error={errors.title?.message}
-            watch={Boolean(watch('title'))}
+            watch={watch('title')}
             register={register('title', {
               required: '보드의 제목을 입력하세요.',
             })}
@@ -88,28 +89,18 @@ export const CreateBoardBox = ({
             register={register('genre')}
             watch={Boolean(watch('genre'))}
           />
-          <Btn
-            type="submit"
-            isBoolean={{ theme }}
-            isString={{ btnName: 'Save' }}
-          />
+          <Btn type="submit" item={{ theme, name: 'Save' }} />
         </Flex>
 
         <TextAreaWrap
-          startHeight={200}
-          id="description"
           theme={theme}
+          id="description"
+          startHeight={200}
+          watch={watch('description')}
           register={register('description')}
           error={errors.description?.message}
-          watch={watch('description')}
-          placeholder="이 보드의 소개글을 작성해주세요."
-        />
-        <TextLength
-          theme={theme}
-          number={{
-            max: max.desc,
-            typed: useLength(String(watch('description'))),
-          }}
+          placeholder="이 보드에 대한 설명을 해주세요. (Write about this board.)"
+          length={{ max: max.desc, typed: String(watch('description')) }}
         />
       </Form>
     </Cont>

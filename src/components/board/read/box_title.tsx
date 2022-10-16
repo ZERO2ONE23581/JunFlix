@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Svg } from '../../../Tools/Svg';
 import { ITheme } from '../../../../styles/theme';
-import { SettingModal } from '../../../Tools/Modal/setting_modal';
+import { SettingModal } from './board_setting_btn_modal';
 import { useCapLetters } from '../../../libs/client/useTools';
 
 interface IBoardTitle extends ITheme {

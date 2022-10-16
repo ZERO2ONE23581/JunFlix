@@ -7,8 +7,8 @@ export interface IBoardType extends Board {
   posts: Post[];
   followers: Follower[];
 }
-export interface IGetBoard extends IRes {
-  board?: IBoardType;
+export interface IGetBoards extends IRes {
+  boards?: IBoardType[];
 }
 export interface IBoardForm {
   title: string;

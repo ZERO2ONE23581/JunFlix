@@ -14,7 +14,7 @@ interface IInput extends ITheme {
   id: string;
   type?: string;
   label: string;
-  watch?: boolean;
+  watch?: string;
   isAlt?: boolean;
   disabled?: boolean;
   placeholder?: string;
@@ -115,8 +115,10 @@ const Label = styled(motion.label)`
   z-index: 1;
   font-size: 1rem;
   position: absolute;
-  border-radius: 20px;
+  border-radius: 10px;
   display: inline-block;
+  padding: 1px 10px;
+  //border: 1px solid yellow;
 `;
 export const ErrMsg = styled(motion.div)`
   padding: 5px;
@@ -133,6 +135,5 @@ export const Input = styled(motion.input)`
   ::placeholder {
     opacity: 0.8;
     font-style: italic;
-    color: ${(p) => p.theme.color.font};
   }
 `;

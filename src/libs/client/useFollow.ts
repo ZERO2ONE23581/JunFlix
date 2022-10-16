@@ -20,8 +20,8 @@ export default function useFollow<T = any>(
   id: idType,
   type: string
 ): IResult<T> {
-  const [Type, setType] = useState('');
   const [key, setKey] = useState(0);
+  const [Type, setType] = useState('');
   useEffect(() => {
     if (id) setKey(id);
     if (type) setType(type);
@@ -54,7 +54,19 @@ export default function useFollow<T = any>(
     Boolean(Type && key) && `/api/following/${Type}/${key}`
   );
   const isFollowing = data?.isFollowing;
-  const name = isFollowing ? 'Following' : 'Follow';
+  const [name, setName] = useState('');
+  useEffect(() => {
+    if (Type) {
+      if (Type === 'user') {
+        if (!isFollowing) setName('Follow');
+        if (isFollowing) setName('Following');
+      }
+      if (Type === 'board') {
+        if (!isFollowing) setName('Save');
+        if (isFollowing) setName('Saved');
+      }
+    }
+  }, [setName, Type, isFollowing]);
   //
   return { onClick, isFollowing, name, data, post_result };
 }

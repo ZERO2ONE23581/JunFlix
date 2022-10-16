@@ -29,8 +29,8 @@ export const Row = ({
   return (
     <Cont className="row">
       <AnimatePresence
-        initial={false}
         custom={reverse}
+        initial={false}
         onExitComplete={() => setLeave((p) => !p)}
       >
         <Slide

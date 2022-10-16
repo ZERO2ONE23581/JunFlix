@@ -6,7 +6,7 @@ import { Btn } from '../../../Tools/Button';
 import { ErrMsg } from '../../../Tools/Input';
 import { inputErrVar } from '../../../../styles/variants';
 import { ICreateUser, IUserForm } from '../../../types/user';
-import { AvatarLabel, BtnWrap, Form } from '../../../../styles/global';
+import { ImageLabel, BtnWrap, Form } from '../../../../styles/global';
 import { Avatar } from '../../../Tools/Avatar';
 
 export const CreateUserAvatar = ({ wrap, isType }: ICreateUser) => {
@@ -54,7 +54,7 @@ export const CreateUserAvatar = ({ wrap, isType }: ICreateUser) => {
     <>
       {isType && (
         <Cont onSubmit={handleSubmit(onValid)}>
-          <AvatarLabel htmlFor="avatar">
+          <ImageLabel htmlFor="avatar">
             <Avatar item={{ theme, size: '10rem', preview, avatar: null }} />
             <input
               {...register('avatar', {
@@ -65,7 +65,7 @@ export const CreateUserAvatar = ({ wrap, isType }: ICreateUser) => {
               type="file"
               accept="image/*"
             />
-          </AvatarLabel>
+          </ImageLabel>
           {error && (
             <ErrMsg
               exit="exit"

@@ -28,8 +28,8 @@ const Cont = styled(MoviePage)`
     }
     .flex {
       gap: 5px;
-      .left-chevron,
-      .right-chevron {
+      .left-chev,
+      .right-chev {
         width: 50px;
         height: 50px;
       }

@@ -105,9 +105,8 @@ export const Slider = ({
       {isData && (
         <Flex className="flex" isSingleRow={isSingleRow}>
           <Svg
-            size="2rem"
             theme={!theme}
-            type="left-chevron"
+            type="left-chev"
             onClick={() => clickArrow('left')}
           />
           <Row
@@ -125,8 +124,7 @@ export const Slider = ({
           />
           <Svg
             theme={!theme}
-            size="2rem"
-            type="right-chevron"
+            type="right-chev"
             onClick={() => clickArrow('right')}
           />
         </Flex>
@@ -143,8 +141,8 @@ const Flex = styled.article<{ isSingleRow: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  .right-chevron,
-  .left-chevron {
+  .right-chev,
+  .left-chev {
     opacity: ${(p) => p.isSingleRow && 0};
     pointer-events: ${(p) => p.isSingleRow && 'none'};
   }

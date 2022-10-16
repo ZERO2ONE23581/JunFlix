@@ -18,9 +18,15 @@ interface IMovieModal {
     backdrop_path?: string;
   };
   movieId: number;
+  theme: boolean;
   setMovieModal: Dispatch<SetStateAction<boolean>>;
 }
-export const MovieModal = ({ data, movieId, setMovieModal }: IMovieModal) => {
+export const MovieModal = ({
+  theme,
+  data,
+  movieId,
+  setMovieModal,
+}: IMovieModal) => {
   const Title = data?.original_name ? data?.original_name : data?.title;
   return (
     <>
@@ -37,7 +43,7 @@ export const MovieModal = ({ data, movieId, setMovieModal }: IMovieModal) => {
         >
           <div className="bg-title-wrap">
             <Svg
-              size="2rem"
+              theme={theme}
               type="close"
               onClick={() => setMovieModal(false)}
             />
@@ -140,7 +146,7 @@ const MovieInfo = styled.div<{ bg: string }>`
   }
 `;
 
-export const modalVar = {
+const modalVar = {
   initial: {
     opacity: 0,
   },

@@ -11,7 +11,7 @@ export interface IAvatar {
     avatar: string | null;
     preview: string | null;
   };
-  onClick: (type: any) => void;
+  onClick?: (type: any) => void;
 }
 export const Avatar = ({ item, onClick }: IAvatar) => {
   const size = item?.size;

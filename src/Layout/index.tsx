@@ -1,13 +1,21 @@
+import {
+  useState,
+  Dispatch,
+  useEffect,
+  ReactElement,
+  SetStateAction,
+} from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import styled from '@emotion/styled';
-import { ReactElement, useEffect, useState } from 'react';
-import { ThemeBtn, IBtns } from '../Tools/Button/Theme';
 import { motion } from 'framer-motion';
+import { ThemeBtn } from '../Tools/Button/Theme';
 import { variants } from '../../styles/variants';
 
-interface ILayoutProps extends IBtns {
+interface ILayoutProps {
+  theme: boolean;
   children: ReactElement;
+  setTheme: Dispatch<SetStateAction<boolean>>;
 }
 export const Layout = ({ theme, children, setTheme }: ILayoutProps) => {
   const [width, setWidth] = useState(0);

@@ -44,7 +44,7 @@ export const Btn = ({ item, type, onClick }: IBtn) => {
       >
         <>
           {name && <span>{name}</span>}
-          {svg && <Svg onBtn type={svg} size="2rem" theme={!theme} />}
+          {svg && <Svg type={svg} theme={!theme} />}
         </>
       </Cont>
     </AnimatePresence>

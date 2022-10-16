@@ -29,14 +29,14 @@ export const Circle = styled(motion.div)`
   border-radius: 100%;
   background-color: ${(p) => p.theme.color.logo};
 `;
-export const Flex = styled.div`
+export const Flex = styled(motion.div)`
   width: 100%;
   gap: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
-export const AvatarLabel = styled.label`
+export const ImageLabel = styled.label`
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -145,17 +145,6 @@ export const DimBackground = styled.article<{ zIndex?: number }>`
   background-color: rgba(0, 0, 0, 0.8);
   z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
 `;
-export const Overlay = styled(motion.div)<{ zindex?: number }>`
-  top: 0;
-  left: 0;
-  opacity: 0;
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  background-color: red;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: ${(p) => (p.zindex ? p.zindex : '99')};
-`;
 export const Grid = styled.article<{ size: number }>`
   gap: 20px;
   display: grid;
@@ -189,6 +178,19 @@ export const Box = styled(motion.div)`
     }
   }
 `;
+export const Overlay = styled(motion.div)<{ dark?: number; zindex?: number }>`
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: red;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: ${(p) => (p.zindex ? p.zindex : '99')};
+  background-color: ${(p) => p.dark && `rgba(0, 0, 0, ${p.dark})`};
+`;
+
 export const MotionBox = styled(motion.div)<{
   avatar?: string;
   preview?: string;

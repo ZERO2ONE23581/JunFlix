@@ -1,96 +1,106 @@
 import useSWR from 'swr';
+import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Blur, BtnWrap, Layer } from '../../../../styles/global';
+import { Svg } from '../../../../src/Tools/Svg';
 import { IGetUser } from '../../../../src/types/user';
 import useUser from '../../../../src/libs/client/useUser';
 import { HeadTitle } from '../../../../src/Tools/head_title';
-import { Host } from '../../../../src/components/user/read/dash/Host';
 import { MyBtn } from '../../../../src/Tools/Button/my_btn';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { Svg } from '../../../../src/Tools/Svg';
 import useFollow from '../../../../src/libs/client/useFollow';
+import { Host } from '../../../../src/components/user/read/dash/Host';
+import { MyContents } from '../../../../src/components/user/read/dash/my_contents';
+import { BtnWrap } from '../../../../styles/global';
+import { AddBtnModal } from '../../../../src/components/user/read/dash/add_btn_modal';
+import { CreatePost } from '../../../../src/components/post/create/create_post';
+import { AnimatePresence } from 'framer-motion';
 
 const DashBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const { user_id } = router.query;
   const { loggedInUser } = useUser();
   const { data } = useSWR<IGetUser>(user_id && `/api/user/${user_id}`);
-  const host = data?.user!;
-  const username = data?.user?.username;
+  //
   const [category, setCategory] = useState('created');
   const onClick = (type: string) => setCategory(type);
   //
   const { isFollowing } = useFollow(Number(user_id), 'user');
-  const isMyPage = Boolean(loggedInUser?.id === host?.id);
+  const isMyPage = Boolean(loggedInUser?.id === data?.user?.id);
   const isBlur = Boolean(!isMyPage && !isFollowing);
+  //
+  const [addModal, setAddModal] = useState(false);
+  const [createPost, setCreatePost] = useState(false);
+  const add_item = {
+    theme,
+    isMyPage,
+    modal: addModal,
+    setCreatePost,
+    setModal: setAddModal,
+  };
   //
   return (
     <>
-      <HeadTitle title={`${username}'s Page`} />
-      <Cont>
-        <Host host={host} theme={theme} />
-
-        <BtnWrap className="control-btns">
-          <MyBtn
-            type="button"
-            onClick={() => onClick('created')}
-            item={{ theme, name: 'Created', category }}
-          />
-          <MyBtn
-            type="button"
-            onClick={() => onClick('saved')}
-            item={{ theme, name: 'Saved', category }}
-          />
-          <MyBtn
-            type="button"
-            onClick={() => onClick('likes')}
-            item={{ theme, name: 'Likes', category }}
-          />
-        </BtnWrap>
-
-        <Layer className="layer">
-          <Blur className="block" isBlur={isBlur}>
-            <ContentsWrap
-              exit="exit"
-              initial="initial"
-              animate="animate"
-              key={category}
-              variants={contentVar}
-            >
-              {category === 'likes' && <h2>likes</h2>}
-              {category === 'saved' && <h2>saved boards</h2>}
-              {category === 'created' && <h2>created contents</h2>}
-            </ContentsWrap>
-          </Blur>
-          {isBlur && <Svg type="lock" size="2rem" theme={theme} />}
-        </Layer>
-      </Cont>
+      <HeadTitle title={`${data?.user?.username}'s Page`} />
+      <Page>
+        <>
+          <Host host={data?.user!} theme={theme} />
+          <Buttons className="btn-wrap">
+            <MyBtn
+              type="button"
+              onClick={() => onClick('created')}
+              item={{ theme, name: 'Created', category }}
+            />
+            <MyBtn
+              type="button"
+              onClick={() => onClick('saved')}
+              item={{ theme, name: 'Saved', category }}
+            />
+            <MyBtn
+              type="button"
+              onClick={() => onClick('likes')}
+              item={{ theme, name: 'Likes', category }}
+            />
+          </Buttons>
+          <Add className="add">
+            <Svg
+              type="add"
+              theme={theme}
+              onClick={() => setAddModal((p) => !p)}
+            />
+            <AddBtnModal item={{ ...add_item }} />
+          </Add>
+          <MyContents theme={theme} isBlur={isBlur} category={category} />
+        </>
+        <CreatePost
+          theme={theme}
+          modal={createPost}
+          closeModal={() => setCreatePost(false)}
+        />
+      </Page>
     </>
   );
 };
 export default DashBoard;
 
-const Cont = styled.section`
+const Page = styled.section`
+  .host,
+  .btn-wrap,
+  .my-contents {
+    padding: 20px;
+  }
   height: 100vh;
   padding-top: 30px;
-  gap: 20px;
+  gap: 0px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
-  > article {
-    padding: 20px;
-  }
-  .host-box {
+  .host {
     width: 100vw;
-    border: 5px solid yellowgreen;
   }
   .following-boards {
     width: 100vw;
-    border: 5px solid orangered;
   }
   .lock {
     top: 65%;
@@ -99,38 +109,23 @@ const Cont = styled.section`
     position: absolute;
     transform: translate(-50%, 0%);
   }
-  .control-btns {
-    gap: 20px;
-    margin: 0 auto;
-    width: fit-content;
-    //border: 2px solid blue;
-    button {
-      //border: 2px solid hotpink;
-      width: 100px;
-      padding-bottom: 10px;
-    }
+`;
+const Buttons = styled(BtnWrap)`
+  position: relative;
+  gap: 20px;
+  margin: 0 auto;
+  width: fit-content;
+  button {
+    width: 100px;
+    padding-bottom: 10px;
   }
 `;
-const ContentsWrap = styled(motion.div)`
-  width: 100vw;
-  height: 50vh;
+const Add = styled.div`
+  width: 50%;
   display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  h2 {
-    font-size: 2rem;
+  position: relative;
+  justify-content: flex-end;
+  .add {
+    z-index: 2;
   }
 `;
-
-const contentVar = {
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: { duration: 1 },
-  },
-  exit: {
-    opacity: 0,
-    transition: { delay: 1, duration: 4 },
-  },
-};

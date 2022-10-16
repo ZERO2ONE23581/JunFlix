@@ -6,11 +6,11 @@ import { ITheme } from '../../../styles/theme';
 import { IBoardType } from '../../types/board';
 import { AnimatePresence } from 'framer-motion';
 import { Overlay } from '../../../styles/global';
-import { overlayVar } from '../../../styles/variants';
 import useMutation from '../../libs/client/useMutation';
 import { DeleteBoard } from '../../components/board/delete';
 import { UpdateBoard } from '../../components/board/update';
 import { IRes } from '../../types/global';
+import { opacityVar } from '../../../styles/variants';
 
 interface IModalBox extends ITheme {
   type: string;
@@ -37,7 +37,7 @@ export const ModalSchema = ({
       if (type === 'delete-board') setApi(`/api/board/${ogData.id}/delete`);
     }
   }, [setApi, type, ogData]);
-  console.log(data);
+
   useEffect(() => {
     if (data) {
       setTimeout(() => {
@@ -101,7 +101,7 @@ export const ModalSchema = ({
             initial="initial"
             animate="animate"
             onClick={closeModal}
-            variants={overlayVar}
+            variants={opacityVar}
           />
         </>
       )}

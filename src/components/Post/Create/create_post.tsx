@@ -1,48 +1,104 @@
-import { Info } from './Info';
-import { Layer } from './layer';
+import {
+  isOverMax,
+  useLength,
+  useMaxLength,
+} from '../../../libs/client/useTools';
 import styled from '@emotion/styled';
-
+import { Layer } from './post_layer';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { ErrorMsg, Errors } from '../../../Tools/Errors';
-import { IPostForm } from '../../../types/post';
-import useMutation from '../../../libs/client/useMutation';
-import { Modal, DimBackground } from '../../../../styles/global';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ConfirmModal } from '../../../Tools/Modal/confirm';
 import { IRes } from '../../../types/global';
-import { Avatar } from '../../../Tools/Avatar';
+import { ICreatePostRes, IPostForm } from '../../../types/post';
+import { opacityVar, variants } from '../../../../styles/variants';
+import { PostModal } from '../../../../styles/post';
+import useMutation from '../../../libs/client/useMutation';
+import useUser from '../../../libs/client/useUser';
+import { PostImage } from './post_img_input';
+import { PostContents } from './post_contents';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { OverlayBg } from '../../../Tools/overlay';
+import { LoadingModal } from '../../../Tools/Modal/loading_modal';
+import { MessageModal } from '../../../Tools/msg_modal';
+import { SelectBoard } from './select_board';
 
 interface ICreatePost {
-  setCreate: Dispatch<SetStateAction<boolean>>;
+  modal: boolean;
+  theme: boolean;
+  closeModal: () => void;
 }
-export const CreatePost = ({ setCreate, theme }: any) => {
+export const CreatePost = ({ modal, theme, closeModal }: ICreatePost) => {
+  const lightTheme = !theme;
+  const router = useRouter();
+  const { user_id } = router.query;
+  const { loggedInUser } = useUser();
+  const [step, setStep] = useState(1);
+  const { max } = useMaxLength(50, 1000);
+  const [message, setMessage] = useState('');
+  const [Loading, setLoading] = useState(false);
+  const host_id = loggedInUser?.id;
+  useEffect(() => {
+    if (user_id && host_id) {
+      const isMeHost = Boolean(Number(user_id) === host_id);
+      if (!isMeHost) return setMessage('You are not the host!');
+    }
+  }, [user_id, host_id, setMessage]);
+  //
   const {
     watch,
-    register,
     setError,
-    clearErrors,
+    register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IPostForm>({ mode: 'onBlur' });
-  const router = useRouter();
-  const { user_id, board_id } = router.query;
-  const [createPost, { data, loading }] = useMutation<IRes>(
-    `/api/user/${user_id}/board/${board_id}/post/create`
-  );
-  const [next, setNext] = useState(false);
-  const [save, setSave] = useState(false);
-  const [cancel, setCancel] = useState(false);
-  const [avatarLoading, setAvatarLoading] = useState(false);
-  const Loading = avatarLoading ? true : loading ? true : false;
+  } = useForm<IPostForm>({
+    mode: 'onSubmit',
+  });
+  //preview
+  const postImage = watch('post_image');
+  const [preview, setPreview] = useState('');
+  useEffect(() => {
+    if (postImage && postImage.length > 0) {
+      const file = postImage[0];
+      setPreview(URL.createObjectURL(file));
+    } else setPreview('');
+  }, [postImage, setPreview]);
 
-  const onValid = async ({ createAvatar, title, content }: IPostForm) => {
+  //post api
+  const [post, { data, loading }] =
+    useMutation<ICreatePostRes>(`/api/post/create`);
+  const onValid = async (inputs: IPostForm) => {
+    //ERROR
+    const typed_title = useLength(inputs.title);
+    const typed_desc = useLength(inputs.description!);
+    if (isOverMax(typed_title, max.title))
+      return setError('title', {
+        message: `제목은 ${max.title}을 초과할 수 없습니다.`,
+      });
+    if (isOverMax(typed_desc, max.desc))
+      return setError('description', {
+        message: `포스트의 글자수는 ${max.desc}를 초과할 수 없습니다.`,
+      });
+    setLoading(true);
     if (loading) return;
-    if (createAvatar && createAvatar.length > 0) {
-      setAvatarLoading((p) => !p);
+
+    //POST
+    const Image = inputs.post_image;
+    const hashtags = inputs.hashtags;
+    const pageLink = inputs.pageLink;
+    const Post = (types: any) => {
+      const tags = { hashtags: '#junflix #movie' };
+      const links = { pageLink: 'www.junflix.com' };
+      const both = { ...tags, ...links };
+      if (!hashtags && !pageLink) return post({ ...types, ...both });
+      if (!hashtags) return post({ ...types, ...tags });
+      if (!pageLink) return post({ ...types, ...links });
+      else return post({ ...types });
+    };
+    const must = { ...inputs, host_id }; // required data
+    if (Image && Image.length > 0 && host_id) {
       const { uploadURL } = await (await fetch(`/api/file`)).json();
       const form = new FormData();
-      form.append('file', createAvatar[0]);
+      form.append('file', Image[0], host_id.toString());
       const {
         result: { id },
       } = await (
@@ -51,101 +107,98 @@ export const CreatePost = ({ setCreate, theme }: any) => {
           body: form,
         })
       ).json();
-      setAvatarLoading((p) => !p);
-      return createPost({ title, content, avatar: id });
+      return Post({ ...must, post_image: id });
     } else {
-      return createPost({ title, content });
+      return Post({ ...must, post_image: null });
     }
   };
 
+  //api result
   useEffect(() => {
-    if (!next) {
-      clearErrors!('title');
-      clearErrors!('content');
+    if (data) {
+      setTimeout(() => {
+        setLoading(false);
+        if (data.error) return setMessage(data.error);
+        if (data.ok) return closeModal();
+      }, 1000);
     }
-  }, [next, clearErrors]);
-
-  useEffect(() => {
-    if (data?.error) alert(data.error);
-    if (data?.ok) {
-      setSave(false);
-      setCreate(false);
-      alert('새로운 포스트를 생성했습니다.');
-    }
-  }, [data, setCreate, setSave]);
-
+  }, [data, setLoading, setMessage, closeModal]);
+  const create_result = { isPost: data?.ok!, post_id: data?.post_id! };
+  //
   return (
-    <form onSubmit={handleSubmit(onValid)}>
-      <Cont isNext={next}>
-        <Layer
-          next={next}
-          cancel={cancel}
-          setNext={setNext}
-          setCancel={setCancel}
-        />
-        <Main isNext={next}>
-          {next && (
-            <Info
-              watch={watch}
-              errors={errors}
-              setSave={setSave}
-              register={register}
-              setError={setError}
-              clearErrors={clearErrors}
-            />
+    <AnimatePresence>
+      {!Loading && (
+        <>
+          {modal && (
+            <>
+              <Modal
+                exit="exit"
+                animate="animate"
+                initial="initial"
+                variants={opacityVar}
+              >
+                <form onSubmit={handleSubmit(onValid)}>
+                  <Layer
+                    step={step}
+                    theme={theme}
+                    setStep={setStep}
+                    closeModal={closeModal}
+                  />
+                  <Main
+                    animate="animate"
+                    className="main"
+                    custom={lightTheme}
+                    variants={variants}
+                  >
+                    <PostImage
+                      step={step}
+                      theme={theme}
+                      preview={preview}
+                      img_id="post_image"
+                      register={register('post_image')}
+                      deletePreview={() => setPreview('')}
+                    />
+                    <PostContents
+                      watch={watch}
+                      theme={theme}
+                      errors={errors}
+                      register={register}
+                      isNext={Boolean(step === 2)}
+                    />
+                  </Main>
+                </form>
+              </Modal>
+              <MessageModal
+                message={message}
+                setMessage={setMessage}
+                theme={theme}
+              />
+              <OverlayBg closeModal={closeModal} />
+            </>
           )}
-        </Main>
-        {errors && <Errors errors={errors} />}
-      </Cont>
-
-      {save && (
-        <ConfirmModal
-          loading={Loading}
-          type="create-post"
-          closeModal={setSave}
-        />
+          <SelectBoard theme={theme} create_result={{ ...create_result }} />
+        </>
       )}
-      {cancel && (
-        <ConfirmModal
-          loading={Loading}
-          closeModal={setCancel}
-          closePost={setCreate}
-          type="cancel-create-post"
-        />
-      )}
-      <DimBackground zIndex={101} onClick={() => setCancel(true)} />
-    </form>
+      {Loading && <LoadingModal theme={theme} />}
+    </AnimatePresence>
   );
 };
-const Cont = styled(Modal)<{ isNext: boolean }>`
-  padding: 0;
-  z-index: 102;
-  border: none;
-  display: block;
-  border-radius: 5px;
-`;
-const Main = styled.article<{ isNext: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .createAvatar {
-    .isPreivewTag,
-    .isImageTag,
-    .noImageDiv {
-      width: 45vw;
-      height: 80vh;
-      min-width: 500px;
-      min-height: 500px;
-      border-right: ${(p) => !p.isNext && 'none'};
-      /* width: ${(p) => (!p.isNext ? '35vw' : '40vw')}; */
-    }
+const Modal = styled(PostModal)`
+  min-width: 500px;
+  min-height: 700px;
+  .layer {
+    height: 7%;
+    width: 100%;
   }
-  .create-post-info {
-    width: 30vw;
-    height: 80vh;
-    min-width: 500px;
-    min-height: 500px;
-    /* min-width: 400px;
-    min-height: 580px; */
+  .main {
+    width: 100%;
+    height: 93%;
+  }
+`;
+const Main = styled(motion.div)`
+  overflow: auto;
+  position: relative;
+  ::-webkit-scrollbar {
+    display: none;
   }
 `;

@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { IForm } from '../../types/global';
 import useUser from '../../libs/client/useUser';
 import { ITypeModal } from './update';
-import { modalVar, opacityVar } from '../../../styles/variants';
+import { opacityVar, variants } from '../../../styles/variants';
 import { Modal } from '../../../styles/global';
 
 export const DeleteBoard = ({
@@ -31,7 +31,7 @@ export const DeleteBoard = ({
 
   //input
   const onValid = async ({ userId }: IForm) => {
-    const isMatch = Boolean(ogData.user.userId !== userId);
+    const isMatch = Boolean(ogData.host.userId !== userId);
     if (!isMatch) {
       setError('userId', {
         message: '보드의 호스트가 아닙니다. (invalid board host.)',
@@ -39,7 +39,7 @@ export const DeleteBoard = ({
     }
     setLoading(true);
     if (loading) return;
-    return post({ userId, user_id: loggedInUser?.id });
+    return post({ userId: userId.toUpperCase(), user_id: loggedInUser?.id });
   };
   //
   const [isDel, setIsDel] = useState(false);
@@ -54,10 +54,15 @@ export const DeleteBoard = ({
       initial="initial"
       animate="animate"
       custom={theme}
-      variants={modalVar}
+      variants={variants}
       className={'edit-board-modal'}
     >
-      <Svg type="close" size="2rem" theme={theme} onClick={clickClose} />
+      <Svg
+        type="close"
+        theme={theme}
+        onClick={clickClose}
+        item={{ size: '2rem' }}
+      />
       <h1>Delete the Board</h1>
       {!isDel && (
         <motion.div
@@ -78,9 +83,8 @@ export const DeleteBoard = ({
             </span>
           </h2>
           <Btn
-            theme={theme}
             type="button"
-            name="Delete"
+            item={{ theme, name: 'Delete' }}
             onClick={() => setIsDel(true)}
           />
         </motion.div>
@@ -109,7 +113,7 @@ export const DeleteBoard = ({
               required: '아이디를 입력해주세요.',
             })}
           />
-          <Btn type="submit" name="Delete" theme={theme} />
+          <Btn type="submit" item={{ theme, name: 'Delete' }} />
         </Form>
       )}
     </Container>
@@ -117,13 +121,11 @@ export const DeleteBoard = ({
 };
 
 const Container = styled(Modal)`
-  width: 35vw;
-  height: 50vh;
-  min-height: 300px;
   justify-content: space-around;
   h1 {
-    color: ${(p) => p.theme.color.logo};
     font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: ${(p) => p.theme.color.logo};
   }
   .step1 {
     button {
@@ -140,7 +142,7 @@ const Container = styled(Modal)`
         margin-bottom: 20px;
         > span {
           :first-of-type {
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             font-size: 1.4rem;
           }
           :nth-of-type(2) {

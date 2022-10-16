@@ -1,35 +1,83 @@
 import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { color, scaleVar } from '../../styles/variants';
 
 interface ISvgProps {
   type: string;
-  size?: string;
   theme: boolean;
-  onBtn?: boolean;
-  isClicked?: boolean;
-  fill?: string | any;
   onClick?: () => void;
+  item?: {
+    fill?: string;
+    size?: string;
+    onBtn?: boolean;
+    isHide?: boolean;
+    isClicked?: boolean;
+  };
 }
-interface IPathVars {
-  onBtn: boolean;
-  theme: boolean;
-  isClicked: boolean;
+interface IUseSvg {
+  type: string;
+  setPath: Dispatch<SetStateAction<string>>;
+  setViewbox: Dispatch<SetStateAction<string>>;
 }
-export const Svg = ({
-  isClicked,
-  onBtn,
-  theme,
-  type,
-  size,
-  fill,
-  onClick,
-}: ISvgProps) => {
+export const Svg = ({ item, type, theme, onClick }: ISvgProps) => {
+  const [path, setPath] = useState(def);
   const XMLNS = 'http://www.w3.org/2000/svg';
   const [viewbox, setViewbox] = useState('0 0 0 0');
-  const [path, setPath] = useState(
-    'M568.482 177.448L424.479 313.433C409.3 327.768 384 317.14 384 295.985v-71.963c-144.575.97-205.566 35.113-164.775 171.353 4.483 14.973-12.846 26.567-25.006 17.33C155.252 383.105 120 326.488 120 269.339c0-143.937 117.599-172.5 264-173.312V24.012c0-21.174 25.317-31.768 40.479-17.448l144.003 135.988c10.02 9.463 10.028 25.425 0 34.896zM384 379.128V448H64V128h50.916a11.99 11.99 0 0 0 8.648-3.693c14.953-15.568 32.237-27.89 51.014-37.676C185.708 80.83 181.584 64 169.033 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48v-88.806c0-8.288-8.197-14.066-16.011-11.302a71.83 71.83 0 0 1-34.189 3.377c-7.27-1.046-13.8 4.514-13.8 11.859z'
+  //
+  const size = item?.size!;
+  const fill = item?.fill!;
+  const onBtn = item?.onBtn!;
+  const isHide = item?.isHide!;
+  const isClicked = item?.isClicked!;
+  const [isSvg, setIsSvg] = useState(false);
+  //
+  useEffect(() => {
+    if (isHide) setIsSvg(true);
+    else setIsSvg(false);
+  }, [setIsSvg, isHide]);
+  UseSvg({ type, setPath, setViewbox });
+  const custom = { theme, onBtn, isClicked, fill };
+  //
+  return (
+    <AnimatePresence>
+      {!isSvg && (
+        <Cont
+          size={size}
+          xmlns={XMLNS}
+          className={type}
+          viewBox={viewbox}
+          onClick={onClick}
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          whileHover="hover"
+          variants={pathVars}
+          custom={{ ...custom }}
+        >
+          <AnimatePresence>
+            <motion.path
+              d={path}
+              exit="exit"
+              initial="initial"
+              animate="animate"
+              whileHover="hover"
+              variants={pathVars}
+              custom={{ ...custom }}
+            />
+          </AnimatePresence>
+        </Cont>
+      )}
+    </AnimatePresence>
   );
+};
+const Cont = styled(motion.svg)<{ size?: string }>`
+  cursor: pointer;
+  width: ${(p) => (p.size ? p.size : '2rem')};
+  height: ${(p) => (p.size ? p.size : '2rem')};
+`;
+const UseSvg = ({ type, setPath, setViewbox }: IUseSvg) => {
+  //
   useEffect(() => {
     if (type === 'grid') {
       setViewbox('0 0 512 512');
@@ -37,13 +85,13 @@ export const Svg = ({
         'M296 32h192c13.255 0 24 10.745 24 24v160c0 13.255-10.745 24-24 24H296c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24zm-80 0H24C10.745 32 0 42.745 0 56v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24zM0 296v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm296 184h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H296c-13.255 0-24 10.745-24 24v160c0 13.255 10.745 24 24 24z'
       );
     }
-    if (type === 'right-chevron') {
+    if (type === 'right-chev') {
       setViewbox('0 0 320 512');
       setPath(
         'M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z'
       );
     }
-    if (type === 'left-chevron') {
+    if (type === 'left-chev') {
       setViewbox('0 0 320 512');
       setPath(
         'M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z'
@@ -463,7 +511,7 @@ export const Svg = ({
         'M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z'
       );
     }
-    if (type === 'X') {
+    if (type === 'close_') {
       setViewbox('0 0 352 512');
       setPath(
         'M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z'
@@ -526,42 +574,27 @@ export const Svg = ({
       );
     }
   }, [setViewbox, setPath]);
-  //
-  const pathVars = {
-    initial: ({ theme, isClicked }: IPathVars) => ({
-      fill: isClicked ? '#E50914' : fill ? fill : theme ? '#ffffff' : '#000000',
-    }),
-    animate: ({ theme, isClicked }: IPathVars) => ({
-      fill: isClicked ? '#E50914' : fill ? fill : theme ? '#ffffff' : '#000000',
-    }),
-    hover: ({ isClicked, onBtn }: IPathVars) => ({
-      fill: onBtn ? '#ffffff' : '#E50914',
-    }),
-  };
-  //
-  return (
-    <AnimatePresence>
-      <Cont
-        size={size}
-        xmlns={XMLNS}
-        viewBox={viewbox}
-        className={type}
-        onClick={onClick}
-      >
-        <motion.path
-          d={path}
-          initial="initial"
-          animate="animate"
-          whileHover="hover"
-          variants={pathVars}
-          custom={{ theme: !theme, onBtn, isClicked }}
-        />
-      </Cont>
-    </AnimatePresence>
-  );
 };
-const Cont = styled(motion.svg)<{ size?: string }>`
-  cursor: pointer;
-  width: ${(p) => (p.size ? p.size : '1rem')};
-  height: ${(p) => (p.size ? p.size : '1rem')};
-`;
+const def =
+  'M568.482 177.448L424.479 313.433C409.3 327.768 384 317.14 384 295.985v-71.963c-144.575.97-205.566 35.113-164.775 171.353 4.483 14.973-12.846 26.567-25.006 17.33C155.252 383.105 120 326.488 120 269.339c0-143.937 117.599-172.5 264-173.312V24.012c0-21.174 25.317-31.768 40.479-17.448l144.003 135.988c10.02 9.463 10.028 25.425 0 34.896zM384 379.128V448H64V128h50.916a11.99 11.99 0 0 0 8.648-3.693c14.953-15.568 32.237-27.89 51.014-37.676C185.708 80.83 181.584 64 169.033 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48v-88.806c0-8.288-8.197-14.066-16.011-11.302a71.83 71.83 0 0 1-34.189 3.377c-7.27-1.046-13.8 4.514-13.8 11.859z';
+
+const pathVars = {
+  initial: ({ theme, isClicked, fill }: any) => ({
+    opacity: 0,
+    fill: isClicked ? '#E50914' : fill ? fill : color(theme),
+  }),
+  animate: ({ theme, isClicked, fill }: any) => ({
+    opacity: 1,
+    transition: { duration: 0.4 },
+    fill: isClicked ? '#E50914' : fill ? fill : color(theme),
+  }),
+  exit: ({ theme, isClicked, fill }: any) => ({
+    opacity: 0,
+    transition: { duration: 0.4 },
+    fill: isClicked ? '#E50914' : fill ? fill : color(theme),
+  }),
+  hover: ({ theme }: any) => ({
+    opacity: 1,
+    fill: '#E50914',
+  }),
+};

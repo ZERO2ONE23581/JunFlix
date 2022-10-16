@@ -22,12 +22,17 @@ export const FixedBtns = ({ theme, type }: IFixedBtns) => {
       <Cont>
         <Svg
           theme={theme}
-          size="2.5rem"
           type="question"
+          item={{ size: '3rem' }}
           onClick={() => setAnswer(true)}
         />
         {isLoggedIn && (
-          <Svg type="add" theme={theme} size="2.5rem" onClick={clickAdd} />
+          <Svg
+            type="add"
+            theme={theme}
+            onClick={clickAdd}
+            item={{ size: '3rem' }}
+          />
         )}
       </Cont>
       <Answer

@@ -19,12 +19,14 @@ model User {
   password         String  
   username         String? 
   name             String?
+  intro            String?     
+  website          String?     
   birth            String?
+  language         String?
   gender           String?
   location         String?
   avatar           String?
-  updatedAt        DateTime     @updatedAt
-  createdAt        DateTime     @default(now())
+  onPrivate        Boolean?     @default(false)
   likes            Like[]  
   posts            Post[]
   tokens           Token[]  
@@ -33,29 +35,31 @@ model User {
   comments         Comment[]
   followers        Follower[]
   followings       Following[]
+  updatedAt        DateTime     @updatedAt
+  createdAt        DateTime     @default(now())
 }
 
 model Token {
   id               Int         @id @default(autoincrement())
   digits           Int         @unique
+  host_id          Int         
   updatedAt        DateTime    @updatedAt
   createdAt        DateTime    @default(now())
-  host_id          Int         
   host             User        @relation(fields: [host_id], references: [id], onDelete: Cascade)
 }
 
 model Board {
   id                Int           @id @default(autoincrement())
   title             String     
+  host_id           Int  
   genre             String?
-  avatar            String?  
+  cover             String?  
   updatedAt         DateTime      @updatedAt
   createdAt         DateTime      @default(now())
-  isPrivate         Boolean?      @default(false)
-  description       String        @db.LongText @default("")
+  onPrivate         Boolean?      @default(false)
+  description       String        @default("") @db.LongText
   posts             Post[]
   folllowers        Follower[]
-  host_id           Int  
   host              User          @relation(fields: [host_id], references: [id], onDelete: Cascade)
 }
 model Following {
@@ -79,27 +83,30 @@ model Follower {
 }
 model Post {
   id               Int            @id @default(autoincrement())
-  title            String     
-  avatar           String?
+  title            String
+  host_id          Int               
+  board_id         Int?            @default(0)        
+  post_image       String?
   description      String?        @db.LongText
+  hashtags         String?        
+  pageLink         String?        
+  onPrivate        Boolean?       @default(false)
   updatedAt        DateTime       @updatedAt
   createdAt        DateTime       @default(now())
   likes            Like[]  
   comments         Comment[]  
-  host_id          Int               
-  board_id         Int            
   host             User           @relation(fields: [host_id], references: [id], onDelete: Cascade)
-  board            Board          @relation(fields: [board_id], references: [id], onDelete: Cascade)
+  board            Board?          @relation(fields: [board_id], references: [id], onDelete: Cascade)
 }
 model Review {
   id               Int            @id @default(autoincrement())
   title            String  
   movie            String
-  description      String         @db.LongText
-  genre            String?
-  avatar           String? 
+  content          String         @db.LongText
   score            Float?         @default(1)
-  isRecommend      Boolean?       @default(true)
+  review_image     String? 
+  isRecommend      Boolean?       @default(false)
+  onPrivate        Boolean?       @default(false)
   updatedAt        DateTime       @updatedAt
   createdAt        DateTime       @default(now())
   likes            Like[]  

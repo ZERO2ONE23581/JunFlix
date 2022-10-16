@@ -64,7 +64,6 @@ export const CreateUserInfo = ({ wrap, isType }: ICreateUser) => {
       {isType && (
         <Cont onSubmit={handleSubmit(onValid)}>
           <Svg
-            size="2rem"
             theme={theme}
             type="left-arrow"
             onClick={() => router.reload()}

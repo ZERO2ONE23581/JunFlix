@@ -1,6 +1,3 @@
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-
 //theme은 dark가 default, 즉 boolean값은 기본적으로 false가 들어오게 됨.
 const black = 'rgba(0,0,0)';
 const logo = 'rgba(229,9,20)';
@@ -21,15 +18,36 @@ export const colorVar = {
   animate: (theme: boolean) => ({ color: color(theme) }),
 };
 export const opacityVar = {
-  exit: { opacity: 0 },
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
+  initial: { opacity: 0, transition: { duration: 0.3 } },
+  animate: { opacity: 1, transition: { duration: 0.3 } },
+  exit: { opacity: 0, transition: { duration: 0.3 } },
 };
 export const hoverBgColor = {
+  animate: (theme: boolean) => ({ color: color(theme) }),
   hover: { transition: { duration: 0.3 }, backgroundColor: logo },
 };
 export const hoverScale = {
   hover: { scale: 1.1, transition: { duration: 0.3 }, color: logo },
+};
+export const scaleVar = {
+  initial: (theme: boolean) => ({
+    scale: 0.2,
+    opacity: 0,
+    color: color(theme),
+    backgroundColor: color(!theme),
+  }),
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    scale: 1,
+    color: color(theme),
+    backgroundColor: color(!theme),
+    transition: { duration: 0.5 },
+  }),
+  exit: (theme: boolean) => ({
+    opacity: 0,
+    scale: 0.2,
+    transition: { duration: 0.5 },
+  }),
 };
 export const variants = {
   initial: (theme: boolean) => ({
@@ -45,10 +63,21 @@ export const variants = {
   }),
   exit: (theme: boolean) => ({
     opacity: 0,
-    color: logo,
-    border: logo,
-    backgroundColor: logo,
     transition: { duration: 0.3 },
+  }),
+};
+export const modalVar = {
+  initial: (theme: boolean) => ({
+    opacity: 0,
+    border: TransBorder(!theme),
+  }),
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    border: TransBorder(!theme),
+  }),
+  exit: (theme: boolean) => ({
+    opacity: 0,
+    border: TransBorder(!theme),
   }),
 };
 export const btnVar = {
@@ -86,18 +115,18 @@ export const menuModalVar = {
   animate: { x: '-50%', y: '30px', opacity: 1, transition: { duration: 0.3 } },
 };
 export const labelVar = {
-  initial: ({ theme }: any) => ({
+  initial: ({ theme, isFocus }: any) => ({
     opacity: 1,
     fontSize: '1.3rem',
     translateY: '-50%',
-    transition: { duration: 0.3 },
-    color: color(!theme),
+    transition: { duration: 0.2 },
+    color: isFocus ? logo : color(!theme),
     backgroundColor: color(theme),
   }),
   animate: ({ isFocus, theme, disabled }: any) => ({
     opacity: 1,
-    transition: { duration: 0.3 },
-    color: color(!theme),
+    transition: { duration: 0.2 },
+    color: isFocus ? logo : color(!theme),
     backgroundColor: color(theme),
     width: isFocus ? 'fit-content' : '80%',
     translateY: isFocus ? '-150%' : '-50%',
@@ -110,14 +139,14 @@ export const labelVar = {
   }),
 };
 export const inputVar = {
-  initial: ({ theme, isFocus }: any) => ({
+  initial: ({ theme, isFocus, disabled }: any) => ({
     backgroundColor: color(theme),
-    color: isFocus ? logo : color(!theme),
+    color: disabled ? logo : color(!theme),
     outline: isFocus ? redBrdr : border(!theme),
   }),
-  animate: ({ theme, isFocus }: any) => ({
+  animate: ({ theme, isFocus, disabled }: any) => ({
     backgroundColor: color(theme),
-    color: isFocus ? logo : color(!theme),
+    color: disabled ? logo : color(!theme),
     outline: isFocus ? redBrdr : border(!theme),
   }),
   hover: () => ({ transition: { duration: 0.3 }, outline: redBrdr }),
@@ -125,6 +154,6 @@ export const inputVar = {
 };
 export const inputErrVar = {
   exit: { opacity: 0, color: logo },
+  animate: { opacity: 1, color: logo },
   initial: { opacity: 0, color: logo },
-  animate: { opacity: 0, color: logo },
 };
