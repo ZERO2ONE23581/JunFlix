@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { ITheme } from '../../styles/theme';
-import { color, due } from '../../styles/variants';
+import { color } from '../../styles/variants';
 
 export const LoginLink = ({ theme }: ITheme) => {
   const router = useRouter();
@@ -44,11 +44,11 @@ const hoverVar = {
   animate: (theme: boolean) => ({
     opacity: 1,
     color: color(theme),
-    transition: due(0.3),
+    transition: { duration: 0.3 },
   }),
   exit: { opacity: 0 },
   hover: {
     color: '#E50914',
-    transition: due(0.3),
+    transition: { duration: 0.3 },
   },
 };

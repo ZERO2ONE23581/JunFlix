@@ -82,7 +82,7 @@ export interface IUseform {
   };
 }
 export interface IRes {
-  ok: boolean;
+  ok?: boolean;
   error?: string;
   message?: string;
   [key: string]: any;

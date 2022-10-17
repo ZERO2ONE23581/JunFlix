@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 interface IReadDate {
-  createdAt?: Date | null;
-  updatedAt?: Date | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
 }
 export const ReadDate = ({ createdAt, updatedAt }: IReadDate) => {
   const Compute = (date: string) => {

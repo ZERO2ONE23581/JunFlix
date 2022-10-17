@@ -7,10 +7,9 @@ import styled from '@emotion/styled';
 import { Layer } from './post_layer';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { IRes } from '../../../types/global';
 import { ICreatePostRes, IPostForm } from '../../../types/post';
 import { opacityVar, variants } from '../../../../styles/variants';
-import { PostModal } from '../../../../styles/post';
+import { PostModalStyle } from '../../../../styles/post';
 import useMutation from '../../../libs/client/useMutation';
 import useUser from '../../../libs/client/useUser';
 import { PostImage } from './post_img_input';
@@ -183,7 +182,7 @@ export const CreatePost = ({ modal, theme, closeModal }: ICreatePost) => {
     </AnimatePresence>
   );
 };
-const Modal = styled(PostModal)`
+const Modal = styled(PostModalStyle)`
   min-width: 500px;
   min-height: 700px;
   .layer {

@@ -5,7 +5,7 @@ import { IRes } from './global';
 import { IUserType } from './user';
 
 export interface IPostType extends Post {
-  user: IUserType;
+  host: IUserType;
   board: IBoardType;
   likes: Like[];
   comments: Comment[];
@@ -71,7 +71,7 @@ export interface ICreatePostForm {
   watch: UseFormWatch<IPostForm>;
   register: UseFormRegister<IPostForm>;
 }
-export interface IGetAllPosts {
+export interface IGetPosts {
   ok: boolean;
   posts?: IPostType[];
 }

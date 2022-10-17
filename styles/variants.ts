@@ -7,7 +7,7 @@ const blackBrdr = `1px solid ${black}`;
 const whiteBrdr = `1px solid ${white}`;
 const transBrdr = `1px solid transparent`;
 export const TweenTrans = { type: 'tween', stiffness: 50 };
-export const SpringTrans = { type: 'spring', stiffness: 50 };
+export const SpringTrans = { type: 'spring', stiffness: 100 };
 export const color = (dark: boolean) => (dark ? black : white);
 export const border = (dark: boolean) => (dark ? blackBrdr : whiteBrdr);
 export const TransBorder = (dark: boolean) => (dark ? whiteBrdr : transBrdr);
@@ -27,6 +27,9 @@ export const hoverBgColor = {
   hover: { transition: { duration: 0.3 }, backgroundColor: logo },
 };
 export const hoverScale = {
+  hover: { scale: 1.1, transition: { duration: 0.3 }, color: logo },
+};
+export const hoverColor = {
   hover: { scale: 1.1, transition: { duration: 0.3 }, color: logo },
 };
 export const scaleVar = {
@@ -66,7 +69,7 @@ export const variants = {
     transition: { duration: 0.3 },
   }),
 };
-export const modalVar = {
+export const TransBorderVar = {
   initial: (theme: boolean) => ({
     opacity: 0,
     border: TransBorder(!theme),

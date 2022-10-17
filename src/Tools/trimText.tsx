@@ -33,7 +33,7 @@ export const TrimText = ({ text, max }: ITrimText) => {
     <>
       {text && (
         <Cont className="content-text">
-          <Text>"{useCapLetter(trimmed)}"</Text>
+          <Text>{useCapLetter(trimmed)}</Text>
           {isTrim && (
             <Span
               exit="exit"
@@ -63,14 +63,11 @@ export const TrimText = ({ text, max }: ITrimText) => {
     </>
   );
 };
-const Cont = styled(motion.span)`
-  padding: 0 1rem;
-`;
+const Cont = styled(motion.span)``;
 const Text = styled(motion.span)`
   width: fit-content;
   font-size: 1.1rem;
   line-height: 21px;
-  margin-right: 10px;
   word-break: break-all;
 `;
 const variants = {

@@ -13,19 +13,23 @@ export const LoginMenu = ({ theme }: ITheme) => {
   const router = useRouter();
   const [modal, setModal] = useState(false);
   const { isLoggedIn, loggedInUser } = useUser();
-  const item = {
-    theme,
-    size: '4rem',
-    preview: null,
-    avatar: loggedInUser?.avatar!,
-  };
+  const user = loggedInUser;
   //
   const textVar = { ...colorVar, ...hoverScale };
   return (
     <Cont className="user-menu">
       {isLoggedIn && (
         <div className="logged-in">
-          <Avatar item={{ ...item }} onClick={() => setModal((p) => !p)} />
+          <Avatar
+            size={'4rem'}
+            theme={theme}
+            data={{
+              host_id: 0,
+              preview: null,
+              avatar: user?.avatar!,
+            }}
+            click={{ isClick: true, onClick: () => setModal((p) => !p) }}
+          />
           <IconModal modal={modal} setModal={setModal} theme={theme} />
         </div>
       )}

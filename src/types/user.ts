@@ -19,6 +19,15 @@ export interface IUserType extends User {
   comments: Comment[];
   followers: Follower[];
   followings: Following[];
+  _count: {
+    posts: number;
+    boards: number;
+    reviews: number;
+    likes: number;
+    comments: number;
+    followers: number;
+    followings: number;
+  };
 }
 export interface IGetUser extends IRes {
   user: IUserType;

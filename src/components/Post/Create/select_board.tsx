@@ -13,7 +13,7 @@ import { IRes } from '../../../types/global';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import { Btn } from '../../../Tools/Button';
 import { Svg } from '../../../Tools/Svg';
-import { PostModal } from '../../../../styles/post';
+import { PostModalStyle } from '../../../../styles/post';
 import { ICreatePostRes } from '../../../types/post';
 
 interface ISelectBoard {
@@ -24,9 +24,8 @@ interface ISelectBoard {
   };
 }
 export const SelectBoard = ({ theme, create_result }: ISelectBoard) => {
-  const { isPost, post_id } = create_result;
-  const router = useRouter();
   const { loggedInUser } = useUser();
+  const { isPost, post_id } = create_result;
   const [saveId, setSaveId] = useState(0);
   const [message, setMessage] = useState('');
   const [Loading, setLoading] = useState(false);
@@ -153,7 +152,7 @@ export const SelectBoard = ({ theme, create_result }: ISelectBoard) => {
     </AnimatePresence>
   );
 };
-const Modal = styled(PostModal)`
+const Modal = styled(PostModalStyle)`
   font-size: 1.2rem;
   width: 35vw;
   height: fit-content;

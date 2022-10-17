@@ -2,7 +2,7 @@ import { Modal } from './global';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
-export const PostModal = styled(Modal)`
+export const PostModalStyle = styled(Modal)`
   padding: 0;
   width: 40vw;
   height: 90vh;

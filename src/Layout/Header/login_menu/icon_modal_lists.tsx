@@ -11,13 +11,12 @@ import { hoverBgColor, SpringTrans } from '../../../../styles/variants';
 export const ModalLists = ({ theme }: ITheme) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
+  console.log(loggedInUser);
   const [logout, { data }] = useMutation(`/api/exit`);
   const onClick = (type: string) => {
     if (type === 'logout') return logout({});
-    if (type === 'dash')
-      return router.push(
-        `/user/${loggedInUser?.id}/${loggedInUser?.username}/dash`
-      );
+    if (type === 'mypage')
+      return router.push(`/user/${loggedInUser?.id}/mypage`);
     if (type === 'setting')
       return router.push(`/user/${loggedInUser?.id}/update`);
   };
@@ -30,9 +29,9 @@ export const ModalLists = ({ theme }: ITheme) => {
         whileHover={'hover'}
         variants={hoverBgColor}
         transition={SpringTrans}
-        onClick={() => onClick('dash')}
+        onClick={() => onClick('mypage')}
       >
-        <Svg theme={theme} type="home" size="2rem" />
+        <Svg theme={theme} type="home" />
         <span>
           <span className="eng">My Page</span>
           <span className="kor">마이페이지</span>
@@ -44,7 +43,7 @@ export const ModalLists = ({ theme }: ITheme) => {
         variants={hoverBgColor}
         onClick={() => onClick('setting')}
       >
-        <Svg theme={theme} type="setting" size="2rem" />
+        <Svg theme={theme} type="setting" />
         <span>
           <span className="eng">Setting</span>
           <span className="kor">계정설정</span>
@@ -56,7 +55,7 @@ export const ModalLists = ({ theme }: ITheme) => {
         variants={hoverBgColor}
         onClick={() => onClick('logout')}
       >
-        <Svg theme={theme} type="logout" size="2rem" />
+        <Svg theme={theme} type="logout" />
         <span>
           <span className="eng">Log Out</span>
           <span className="kor">로그아웃</span>
@@ -70,8 +69,8 @@ const Cont = styled.ul`
   padding: 5px 0;
 `;
 const List = styled(motion.li)`
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 1.1rem;
   padding: 3px 20px;
   margin-bottom: 5px;
   display: flex;

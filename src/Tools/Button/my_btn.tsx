@@ -53,7 +53,6 @@ export const Cont = styled(motion.button)`
   padding: 8px;
   outline: none;
   font-weight: 500;
-  font-size: 1.2rem;
   gap: 8px;
   display: flex;
   align-items: center;

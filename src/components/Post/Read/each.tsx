@@ -20,7 +20,7 @@ interface IPostModal {
   data: PostModel;
   setModal: Dispatch<SetStateAction<boolean>>;
 }
-export const PostModal = ({ theme, data, setModal }: IPostModal) => {
+export const OldPostModal = ({ theme, data, setModal }: IPostModal) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
   const [setting, setSetting] = useState(false);

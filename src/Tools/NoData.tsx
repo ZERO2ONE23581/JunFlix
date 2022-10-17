@@ -1,12 +1,10 @@
+import { Svg } from './Svg';
 import styled from '@emotion/styled';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ITheme } from '../../styles/theme';
-import { hoverTextVar, modalVar, variants } from '../../styles/variants';
-import { useCapLetters } from '../libs/client/useTools';
-import useUser from '../libs/client/useUser';
-import { Svg } from './Svg';
+import { hoverColor, variants } from '../../styles/variants';
 
 interface INoData extends ITheme {
   type: string;
@@ -14,7 +12,6 @@ interface INoData extends ITheme {
 export const NoData = ({ type, theme }: INoData) => {
   const router = useRouter();
   const [text, setText] = useState('');
-  //
   useEffect(() => {
     if (type === 'post') setText('Post');
     if (type === 'board') setText('Board');
@@ -55,17 +52,12 @@ export const NoData = ({ type, theme }: INoData) => {
           initial="initial"
           animate="animate"
           whileHover={'hover'}
-          variants={hoverTextVar}
+          variants={hoverColor}
         >
           <span className="kor">{text} 생성하러 가기</span>
           <span>Create {text}</span>
           <span>
-            <Svg
-              size="2rem"
-              theme={theme}
-              type="right-arrow"
-              fill={'#E50914'}
-            />
+            <Svg theme={theme} type="right-arrow" />
           </span>
         </motion.li>
       </ul>

@@ -36,7 +36,7 @@ export default function useFollow<T = any>(
     if (isLoggedIn) {
       if (type === 'user') post({ user_id: id });
       else if (type === 'board') post({ board_id: id });
-      return mutate({ isFollowing: !data.isFollowing }, false);
+      return mutate({ ...data, isFollowing: !isFollowing }, false);
     }
   };
   const [post, { data: post_result }] = useMutation<IRes>(

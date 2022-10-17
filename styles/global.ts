@@ -14,8 +14,9 @@ export const FlexPage = styled(Page)`
   justify-content: center;
 `;
 export const Layer = styled(FlexPage)`
-  min-width: 50vw;
-  min-height: 50vh;
+  position: relative;
+  width: 100%;
+  height: 100%;
   .lock {
     top: 50%;
     left: 50%;
@@ -145,7 +146,7 @@ export const DimBackground = styled.article<{ zIndex?: number }>`
   background-color: rgba(0, 0, 0, 0.8);
   z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
 `;
-export const Grid = styled.article<{ size: number }>`
+export const Grid = styled.article<{ size?: number }>`
   gap: 20px;
   display: grid;
   position: relative;

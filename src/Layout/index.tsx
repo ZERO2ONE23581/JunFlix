@@ -6,7 +6,7 @@ import {
   SetStateAction,
 } from 'react';
 import { Header } from './Header';
-import { Footer } from './Footer';
+import { Footer } from './footer';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { ThemeBtn } from '../Tools/Button/Theme';
@@ -33,7 +33,7 @@ export const Layout = ({ theme, children, setTheme }: ILayoutProps) => {
     >
       <Header theme={theme} />
       <section className="children">{children}</section>
-      <Footer theme={theme} />
+      <Footer theme={!theme} />
       <ThemeBtn theme={theme} setTheme={setTheme} />
     </Cont>
   );
@@ -48,16 +48,10 @@ const Cont = styled(motion.section)<{ width?: number }>`
     position: relative;
     min-width: ${(p) => p.width && `${p.width}px`};
   }
-  .header,
-  .footer {
-    padding: 0 10em;
-  }
+
   .header {
     min-height: 86px;
     //border: 2px solid hotpink;
-    .logo {
-      ////border: 5px solid cornflowerblue;
-    }
     .flex {
       width: 100%;
       //border: 5px solid cornflowerblue;
@@ -80,9 +74,6 @@ const Cont = styled(motion.section)<{ width?: number }>`
       }
     }
   }
-  .footer {
-    //border: 1px solid blue;
-  }
   //배경이 들어감으로 패딩을 직접 주지 말것
   .children {
     padding: 0;
@@ -90,15 +81,7 @@ const Cont = styled(motion.section)<{ width?: number }>`
       .movie-wrap,
       .post-board-wrap {
         padding: 0 8em;
-        // border: 1px solid red;
-      }
-      .movie-wrap {
-      }
-      .post-board-wrap {
       }
     }
-  }
-  .footer {
-    //border: 5px solid yellow;
   }
 `;

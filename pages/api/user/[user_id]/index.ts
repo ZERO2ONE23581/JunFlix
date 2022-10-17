@@ -8,7 +8,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!user_id) return res.json({ ok: false, error: 'query missed' });
   //
   const user = await client.user.findUnique({
-    where: { id: +user_id },
+    where: { id: +user_id.toString() },
     include: {
       likes: true,
       posts: true,

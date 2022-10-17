@@ -33,11 +33,11 @@ export const MessageModal = ({ message, theme, setMessage }: IMessageModal) => {
     }
   }, [setText, message]);
 
-  const isReload = Boolean(
-    message === 'create_post' ||
-      message === 'update_post' ||
-      message === 'update_post_skip'
-  );
+  const isReload =
+    Boolean();
+    // message === 'create_post' ||
+    //   message === 'update_post' ||
+    //   message === 'update_post_skip'
 
   const onClick = () => {
     if (message === 'create-user-done') return router.replace('/login');

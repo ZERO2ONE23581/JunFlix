@@ -8,13 +8,12 @@ import { Box, Form, Page } from '../styles/global';
 import { AnimatePresence } from 'framer-motion';
 import { ILoginForm } from '../src/types/user';
 import { InputWrap } from '../src/Tools/Input';
-import { joinBoxVar } from '../styles/variants';
 import { IRes } from '../src/types/global';
 import { HeadTitle } from '../src/Tools/head_title';
 import useMutation from '../src/libs/client/useMutation';
 import { LoadingModal } from '../src/Tools/Modal/loading_modal';
 import { MessageModal } from '../src/Tools/msg_modal';
-import { FindUserWrap } from '../src/components/post/read/user/Links/Find';
+import { variants } from '../styles/variants';
 
 const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
@@ -55,7 +54,7 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
               initial="initial"
               animate="animate"
               custom={theme}
-              variants={joinBoxVar}
+              variants={variants}
             >
               <h1>
                 <span>Login</span>
@@ -68,7 +67,7 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
                   type="text"
                   label="USER ID"
                   error={errors.userId?.message}
-                  watch={Boolean(watch('userId'))}
+                  watch={watch('userId')}
                   register={register('userId', {
                     required: '아이디를 입력해주세요.',
                   })}
@@ -79,19 +78,13 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
                   type="password"
                   label="Password"
                   error={errors.password?.message}
-                  watch={Boolean(watch('password'))}
+                  watch={watch('password')}
                   register={register('password', {
                     required: '비밀번호를 입력해주세요.',
                   })}
                 />
-                <Btn
-                  isBtn
-                  type="submit"
-                  isBoolean={{ theme }}
-                  isString={{ btnName: 'Login' }}
-                />
+                <Btn type="submit" item={{ theme, name: 'Submit' }} />
               </Form>
-              <FindUserWrap theme={theme} />
               <MessageModal
                 theme={theme}
                 message={message}

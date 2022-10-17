@@ -20,15 +20,17 @@ export const Host = ({ theme, host }: IUserBox) => {
   const { onClick, name, isFollowing } = useFollow(host && host.id, 'user');
   const clickBtn = (type: string) =>
     router.push(`/user/${host.id}/${host.username}/${type}`);
-  const clickAvatar = () => router.push(`/user/${host && host.id}/dash`);
+  const clickIcon = () => router.push(`/user/${host.id}/setting`);
   //
   return (
     <>
       {host && (
         <Cont className="host">
           <Avatar
-            onClick={clickAvatar}
-            item={{ theme, size: '10rem', preview: null, avatar: host?.avatar }}
+            size={'10rem'}
+            theme={theme}
+            click={{ isClick: true, onClick: clickIcon }}
+            data={{ host_id: host?.id!, preview: null, avatar: host?.avatar! }}
           />
           {!isMeHost && (
             <Btn

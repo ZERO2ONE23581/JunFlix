@@ -23,6 +23,7 @@ export const Header = ({ theme }: ITheme) => {
   );
 };
 const Cont = styled(motion.header)`
+  padding: 0 10em;
   gap: 3rem;
   display: flex;
   font-size: 1.3em;
