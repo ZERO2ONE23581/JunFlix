@@ -20,7 +20,7 @@ export const List = ({ item }: IList) => {
   const isStep = item.isStep;
   const onClick = item.onClick;
   const isBackBtn = Boolean(step === 2 || step === 3);
-  console.log(step);
+
   return (
     <>
       {isStep && (

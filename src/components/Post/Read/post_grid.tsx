@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import { useImgUrl } from '../../../Tools/Avatar';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Flex, Grid } from '../../../../styles/global';
 import { useCapLetters } from '../../../libs/client/useTools';
 import {
@@ -13,6 +12,8 @@ import { TrimText } from '../../../Tools/trimText';
 import { IPostType } from '../../../types/post';
 import { useState } from 'react';
 import { PostModal } from './post_grid_modal';
+import { UpdatePostModal } from '../update/update_post_modal';
+import { avatarLink } from '../../../Tools/Avatar';
 
 interface IPostGrid {
   theme: boolean;
@@ -21,9 +22,11 @@ interface IPostGrid {
 
 export const PostGrid = ({ posts, theme }: IPostGrid) => {
   const [savedId, setSavedId] = useState(0);
+  const [update, setUpdate] = useState(false);
   const post = posts?.find((e) => e.id === savedId);
   const isPost = Boolean(post && savedId);
   const isGrid = posts && Boolean(posts?.length > 0);
+  const [close, setClose] = useState(false);
   return (
     <>
       {isGrid && (
@@ -52,7 +55,7 @@ export const PostGrid = ({ posts, theme }: IPostGrid) => {
                 variants={coverVar}
                 transition={SpringTrans}
               >
-                <img src={useImgUrl(e.post_image)} alt="test" />
+                <img src={avatarLink(e?.post_image)} alt="test" />
               </Cover>
               <Info>
                 <h2>
@@ -75,6 +78,13 @@ export const PostGrid = ({ posts, theme }: IPostGrid) => {
         theme={theme}
         modal={isPost}
         closeModal={() => setSavedId(0)}
+        updatePost={() => setUpdate(true)}
+      />
+      <UpdatePostModal
+        post={post!}
+        theme={theme}
+        modal={Boolean(update && post)}
+        closeModal={() => setUpdate(false)}
       />
     </>
   );

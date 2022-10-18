@@ -6,23 +6,23 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useCapLetter } from '../../libs/client/useTools';
 
 interface IBtn {
-  item: {
-    name: string;
-    category: string;
-    theme: boolean;
-    layoutId?: number;
-    className?: string;
-    disabled?: boolean;
-  };
+  name: string;
+  theme: boolean;
+  category: string;
+  className?: string;
+  disabled?: boolean;
   type: 'button' | 'submit' | 'reset';
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
-export const MyBtn = ({ item, type, onClick }: IBtn) => {
-  const name = item?.name!;
-  const theme = item?.theme!;
-  const category = item?.category!;
-  const disabled = item?.disabled!;
-  const className = item?.className!;
+export const MyBtn = ({
+  name,
+  type,
+  theme,
+  onClick,
+  category,
+  className,
+  disabled,
+}: IBtn) => {
   //
   const isClicked = Boolean(name === useCapLetter(category));
   const custom = { theme, isClicked };
@@ -61,14 +61,14 @@ export const Cont = styled(motion.button)`
 `;
 const btnVar = {
   initial: ({ theme, isClicked }: any) => ({
-    color: isClicked ? '#ffffff' : color(theme),
+    color: isClicked ? '#E50914' : color(theme),
     borderBottom: isClicked
       ? '3px solid rgba(229,9,20)'
       : '3px solid transparent',
   }),
   animate: ({ theme, isClicked, isFollowing }: any) => ({
     transition: { duration: 0.3 },
-    color: isClicked ? '#ffffff' : color(theme),
+    color: isClicked ? '#E50914' : color(theme),
     borderBottom: isClicked
       ? '3px solid rgba(229,9,20)'
       : '3px solid transparent',

@@ -1,14 +1,16 @@
 import styled from '@emotion/styled';
-import { AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Flex } from '../../../../styles/global';
 import { PostModalStyle } from '../../../../styles/post';
-import { color } from '../../../../styles/variants';
+import {
+  color,
+  TransBorder,
+  animateColorVar,
+} from '../../../../styles/variants';
 import useFollow from '../../../libs/client/useFollow';
 import { useCapLetters } from '../../../libs/client/useTools';
 import useUser from '../../../libs/client/useUser';
-import { Avatar, useImgUrl } from '../../../Tools/Avatar';
+import { Avatar, avatarLink } from '../../../Tools/Avatar';
 import { Btn } from '../../../Tools/Button';
 import { InputWrap } from '../../../Tools/Input';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
@@ -23,6 +25,7 @@ interface IPostGrid {
   theme: boolean;
   modal: boolean;
   post: IPostType;
+  updatePost: () => void;
   closeModal: () => void;
 }
 
@@ -31,17 +34,18 @@ export const PostModal = ({
   post,
   theme,
   modal,
+  updatePost,
   closeModal,
 }: IPostGrid) => {
-  const { loggedInUser } = useUser();
   const host = post?.host;
   const hash = post?.hashtags;
   const link = post?.pageLink;
+  const { loggedInUser } = useUser();
   const isHashLink = Boolean(hash || link);
+  const [ellips, setEllips] = useState(false);
   const host_followers = host?._count?.followers;
   const isMyPost = Boolean(loggedInUser?.id === host?.id);
   const { onClick, name, isFollowing } = useFollow(host?.id, 'user');
-  const [ellips, setEllips] = useState(false);
   //
   return (
     <>
@@ -55,9 +59,9 @@ export const PostModal = ({
                 initial="initial"
                 animate="animate"
                 custom={theme}
-                variants={modalVar}
+                variants={postModalVar}
               >
-                <img src={useImgUrl(post.post_image)} alt="post image" />
+                <img alt="post image" src={avatarLink(post?.post_image)} />
                 <>
                   <Svg type="close_" theme={theme} onClick={closeModal} />
                   <Ellips>
@@ -65,6 +69,7 @@ export const PostModal = ({
                       theme={theme}
                       modal={ellips}
                       isMyPost={isMyPost}
+                      updatePost={updatePost}
                       closeModal={() => setEllips(false)}
                     />
                     <Svg
@@ -74,7 +79,12 @@ export const PostModal = ({
                     />
                   </Ellips>
                 </>
-                <Info className="info">
+                <Info
+                  custom={!theme}
+                  animate="animate"
+                  className="info"
+                  variants={animateColorVar}
+                >
                   <Host className="host">
                     <Flex className="flex">
                       <Avatar
@@ -175,7 +185,7 @@ export const PostModal = ({
                   </CommentBox>
                 </Info>
               </Modal>
-              <OverlayBg closeModal={closeModal} />
+              <OverlayBg closeModal={closeModal} dark={0.3} />
             </>
           )}
           {!post && <LoadingModal theme={theme} />}
@@ -224,10 +234,8 @@ const Info = styled(Flex)`
   .detail,
   .comment_box {
     width: 100%;
-    //border: 1px solid yellow;
     .cmt_form {
       margin: 20px auto;
-      //border: 1px solid yellow;
     }
   }
 `;
@@ -323,26 +331,22 @@ const Icon = styled.div`
   align-items: center;
   width: fit-content;
 `;
-const modalVar = {
+export const postModalVar = {
   initial: (theme: boolean) => ({
     opacity: 0,
     scale: 0.1,
-    color: color(theme),
-    backgroundColor: color(!theme),
-    transition: { duration: 0.5 },
+    border: TransBorder(!theme),
   }),
   animate: (theme: boolean) => ({
     scale: 1,
     opacity: 1,
     color: color(theme),
+    border: TransBorder(!theme),
     transition: { duration: 0.5 },
-    backgroundColor: color(!theme),
   }),
   exit: (theme: boolean) => ({
-    scale: 0.1,
     opacity: 0,
-    color: color(theme),
-    transition: { duration: 0.5 },
-    backgroundColor: color(!theme),
+    scale: 0.1,
+    border: TransBorder(!theme),
   }),
 };

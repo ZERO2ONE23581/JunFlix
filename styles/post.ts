@@ -6,6 +6,8 @@ export const PostModalStyle = styled(Modal)`
   padding: 0;
   width: 40vw;
   height: 90vh;
+  min-width: 520px;
+  font-size: 1.1rem;
   justify-content: flex-start;
   form {
     width: 100%;
@@ -59,6 +61,12 @@ export const CreatePostMain = styled(motion.div)`
 `;
 export const PostInfo = styled(motion.article)`
   width: 100%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 20px;
   h2 {
     width: 100%;
     font-size: 1.3rem;
@@ -71,14 +79,6 @@ export const PostInfo = styled(motion.article)`
       margin-right: 10px;
     }
   }
-  min-height: 70%;
-
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
   .input-wrap {
   }
   textarea {

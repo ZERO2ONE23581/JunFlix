@@ -19,7 +19,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { OverlayBg } from '../../../Tools/overlay';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import { MessageModal } from '../../../Tools/msg_modal';
-import { SelectBoard } from './select_board';
+import { PostBoardModal } from './select_post_board_modal';
 
 interface ICreatePost {
   modal: boolean;
@@ -36,12 +36,12 @@ export const CreatePost = ({ modal, theme, closeModal }: ICreatePost) => {
   const [message, setMessage] = useState('');
   const [Loading, setLoading] = useState(false);
   const host_id = loggedInUser?.id;
+  const isMeHost = Boolean(Number(user_id) === host_id);
   useEffect(() => {
     if (user_id && host_id) {
-      const isMeHost = Boolean(Number(user_id) === host_id);
       if (!isMeHost) return setMessage('You are not the host!');
     }
-  }, [user_id, host_id, setMessage]);
+  }, [user_id, host_id, setMessage, isMeHost]);
   //
   const {
     watch,
@@ -150,10 +150,10 @@ export const CreatePost = ({ modal, theme, closeModal }: ICreatePost) => {
                     variants={variants}
                   >
                     <PostImage
-                      step={step}
                       theme={theme}
                       preview={preview}
                       img_id="post_image"
+                      isNext={Boolean(step === 2)}
                       register={register('post_image')}
                       deletePreview={() => setPreview('')}
                     />
@@ -175,7 +175,12 @@ export const CreatePost = ({ modal, theme, closeModal }: ICreatePost) => {
               <OverlayBg closeModal={closeModal} />
             </>
           )}
-          <SelectBoard theme={theme} create_result={{ ...create_result }} />
+          {!data?.ok && (
+            <PostBoardModal
+              theme={theme}
+              create_result={{ ...create_result }}
+            />
+          )}
         </>
       )}
       {Loading && <LoadingModal theme={theme} />}
@@ -183,6 +188,7 @@ export const CreatePost = ({ modal, theme, closeModal }: ICreatePost) => {
   );
 };
 const Modal = styled(PostModalStyle)`
+  z-index: 100;
   min-width: 500px;
   min-height: 700px;
   .layer {

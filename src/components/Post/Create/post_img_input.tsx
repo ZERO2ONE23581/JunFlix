@@ -5,22 +5,21 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface IPostImage {
-  step: number;
   theme: boolean;
   img_id: string;
+  isNext: boolean;
   preview: string | null;
   deletePreview: () => void;
-  register?: UseFormRegisterReturn;
+  register: UseFormRegisterReturn;
 }
 export const PostImage = ({
-  step,
+  isNext,
   theme,
   img_id,
   preview,
   register,
   deletePreview,
 }: IPostImage) => {
-  const isNext = Boolean(step === 2);
   const isHide = Boolean(isNext && !preview);
   const isShrink = Boolean(isNext && preview);
   return (
@@ -37,16 +36,16 @@ export const PostImage = ({
           <CircleSvg
             theme={theme}
             onClick={deletePreview}
-            isHide={Boolean(isNext || !preview)}
+            isHide={!Boolean(preview)}
           />
           <Label htmlFor={img_id} className="img-label" isNext={isNext}>
             <AnimatePresence>
-              {preview && (
+              {Boolean(preview) && (
                 <motion.img
                   exit="exit"
                   initial="initial"
                   animate="animate"
-                  src={preview}
+                  src={preview!}
                   variants={imgVar}
                   alt="이미지 프리뷰"
                 />
@@ -74,7 +73,6 @@ export const PostImage = ({
             id={img_id}
             name={img_id}
             accept="image/*"
-            disabled={isNext}
             style={{ display: 'none' }}
           />
         </Cont>
@@ -83,7 +81,6 @@ export const PostImage = ({
   );
 };
 const Cont = styled(motion.div)`
-  //border: 3px solid blueviolet;
   overflow: hidden;
   label {
     width: 100%;

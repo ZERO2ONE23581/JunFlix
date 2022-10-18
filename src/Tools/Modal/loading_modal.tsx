@@ -1,10 +1,15 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { OverlayBg } from '../overlay';
 import { ITheme } from '../../../styles/theme';
-import { Modal, Overlay } from '../../../styles/global';
+import { Modal } from '../../../styles/global';
 import { variants } from '../../../styles/variants';
 
-export const LoadingModal = ({ theme }: ITheme) => {
+interface ILoadingModal {
+  theme: boolean;
+}
+
+export const LoadingModal = ({ theme }: ILoadingModal) => {
   const svgVar = {
     initial: (theme: boolean) => ({
       fill: theme ? '#000000' : '#ffffff',
@@ -53,11 +58,12 @@ export const LoadingModal = ({ theme }: ITheme) => {
           />
         </motion.svg>
       </Cont>
-      <Overlay exit={{ opacity: 0 }} animate={{ opacity: 1 }} />
+      <OverlayBg dark={0.3} />
     </>
   );
 };
 const Cont = styled(Modal)`
+  z-index: 999;
   width: 25vw;
   height: 40vh;
   min-width: 400px;

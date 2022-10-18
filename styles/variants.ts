@@ -17,6 +17,12 @@ export const colorVar = {
   initial: (theme: boolean) => ({ color: color(theme) }),
   animate: (theme: boolean) => ({ color: color(theme) }),
 };
+export const animateColorVar = {
+  animate: (theme: boolean) => ({
+    color: color(!theme),
+    backgroundColor: color(theme),
+  }),
+};
 export const opacityVar = {
   initial: { opacity: 0, transition: { duration: 0.3 } },
   animate: { opacity: 1, transition: { duration: 0.3 } },

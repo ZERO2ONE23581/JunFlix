@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction } from 'react';
-import { Overlay } from '../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
 import { color, hoverBgColor, TransBorder } from '../../../../styles/variants';
 import { OverlayBg } from '../../../Tools/overlay';
@@ -11,11 +9,13 @@ interface IPostSettingBtnModal {
   theme: boolean;
   isMyPost: boolean;
   closeModal: () => void;
+  updatePost: () => void;
 }
 export const EllipsModal = ({
   modal,
   theme,
   isMyPost,
+  updatePost,
   closeModal,
 }: IPostSettingBtnModal) => {
   const router = useRouter();
@@ -23,8 +23,8 @@ export const EllipsModal = ({
     if (type === 'all') router.push(`/post/all`);
     if (!isMyPost) return alert('not allowed.');
     if (isMyPost) {
+      if (type === 'update') updatePost();
       if (type === 'my_post') router.push(`/post/my`);
-      if (type === 'update') alert('update');
       if (type === 'delete') alert('delete');
     }
   };
@@ -73,7 +73,7 @@ export const EllipsModal = ({
               </List>
             </ul>
           </Cont>
-          <OverlayBg closeModal={closeModal} />
+          <OverlayBg closeModal={closeModal} dark={0.4} />
         </>
       )}
     </AnimatePresence>

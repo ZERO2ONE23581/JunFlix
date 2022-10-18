@@ -11,7 +11,6 @@ import { hoverBgColor, SpringTrans } from '../../../../styles/variants';
 export const ModalLists = ({ theme }: ITheme) => {
   const router = useRouter();
   const { loggedInUser } = useUser();
-  console.log(loggedInUser);
   const [logout, { data }] = useMutation(`/api/exit`);
   const onClick = (type: string) => {
     if (type === 'logout') return logout({});

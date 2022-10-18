@@ -65,7 +65,7 @@ export interface IPostFormErr {
   post_image?: FieldError | undefined;
 }
 export interface ICreatePostForm {
-  isNext: boolean;
+  isNext?: boolean;
   theme: boolean;
   errors: IPostFormErr;
   watch: UseFormWatch<IPostForm>;

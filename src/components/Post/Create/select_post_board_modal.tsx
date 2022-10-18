@@ -4,8 +4,7 @@ import useSWR from 'swr';
 import { IGetBoards } from '../../../types/board';
 import styled from '@emotion/styled';
 import { color, variants } from '../../../../styles/variants';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useRouter } from 'next/router';
+import { motion } from 'framer-motion';
 import useMutation from '../../../libs/client/useMutation';
 import { MessageModal } from '../../../Tools/msg_modal';
 import { OverlayBg } from '../../../Tools/overlay';
@@ -14,7 +13,6 @@ import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import { Btn } from '../../../Tools/Button';
 import { Svg } from '../../../Tools/Svg';
 import { PostModalStyle } from '../../../../styles/post';
-import { ICreatePostRes } from '../../../types/post';
 
 interface ISelectBoard {
   theme: boolean;
@@ -23,7 +21,7 @@ interface ISelectBoard {
     post_id: number;
   };
 }
-export const SelectBoard = ({ theme, create_result }: ISelectBoard) => {
+export const PostBoardModal = ({ theme, create_result }: ISelectBoard) => {
   const { loggedInUser } = useUser();
   const { isPost, post_id } = create_result;
   const [saveId, setSaveId] = useState(0);
@@ -33,11 +31,8 @@ export const SelectBoard = ({ theme, create_result }: ISelectBoard) => {
   const myBoards = given_data?.boards?.filter(
     (e) => e.host_id === loggedInUser?.id
   );
-  //if no board exists
+  const [modal, setModal] = useState(false);
   const boardExists = Boolean(myBoards?.length! > 0);
-  useEffect(() => {
-    if (isPost && !boardExists) return setMessage('create_post');
-  }, [isPost, boardExists, setMessage, myBoards]);
 
   //POST API
   const [post, { data, loading }] = useMutation<IRes>(
@@ -56,106 +51,113 @@ export const SelectBoard = ({ theme, create_result }: ISelectBoard) => {
     return post({ board_id: saveId, fetch_type: 'update_post' });
   };
 
-  //POST result
   useEffect(() => {
-    if (data) {
-      setTimeout(() => {
-        setLoading(false);
-        if (data.error) setMessage(data.error);
-        if (data.message) setMessage(data.message);
-      }, 1000);
+    if (isPost && post_id) {
+      if (!boardExists) return setMessage('create_post');
+      if (!data) {
+        if (boardExists && !Loading) return setModal(true);
+      } else {
+        setTimeout(() => {
+          setLoading(false);
+          if (data.error) setMessage(data.error);
+          if (data.ok) {
+            setModal(false);
+            setMessage(data?.message!);
+            return setMessage('');
+          }
+        }, 1000);
+      }
     }
-  }, [data, setLoading, setMessage]);
+  }, [isPost, boardExists, myBoards, data, setLoading, setMessage, setModal]);
   //
   return (
-    <AnimatePresence>
-      {isPost && (
+    <>
+      {!Loading && (
         <>
-          {!Loading && (
+          {modal && (
             <>
-              {Boolean(boardExists && !Loading) && (
-                <Modal
-                  exit="exit"
-                  animate="animate"
-                  initial="initial"
-                  custom={!theme}
+              <Modal
+                exit="exit"
+                animate="animate"
+                initial="initial"
+                custom={!theme}
+                variants={variants}
+              >
+                <Layer
+                  custom={theme}
                   variants={variants}
+                  className="layer"
+                  animate="animate"
                 >
-                  <Layer
-                    custom={theme}
-                    variants={variants}
-                    className="layer"
-                    animate="animate"
-                  >
-                    <div>
-                      <Svg type="X" theme={theme} onClick={skipThis} />
-                    </div>
-                    <div>
-                      <h1>Select Board</h1>
-                    </div>
-                    <div>
-                      <Btn
-                        type="button"
-                        onClick={onClick}
-                        item={{ theme, name: 'Save' }}
-                      />
-                    </div>
-                  </Layer>
-
-                  <Map className="map">
-                    <h1>
-                      <span>Select Board to save your post.</span>
-                      <span>포스트를 저장할 보드를 선택해주세요.</span>
-                    </h1>
-                    {myBoards &&
-                      myBoards?.map((e) => (
-                        <ListWrap
-                          key={e.id}
-                          animate="animate"
-                          whileHover="hover"
-                          variants={listVar}
-                          onClick={() => setSaveId(e.id)}
-                          custom={{
-                            theme: !theme,
-                            isClicked: Boolean(saveId === e.id),
-                          }}
-                        >
-                          <li className="cover">
-                            <img src="/img/home-bg-dn.jpg" alt="" />
-                          </li>
-                          <li>
-                            <h2>{e.title}</h2>
-                          </li>
-                        </ListWrap>
-                      ))}
-                  </Map>
-                  <Skip>
+                  <div>
+                    <Svg type="X" theme={theme} onClick={skipThis} />
+                  </div>
+                  <div>
+                    <h1>Select Board</h1>
+                  </div>
+                  <div>
                     <Btn
                       type="button"
-                      onClick={skipThis}
-                      item={{ theme: !theme, name: 'Skip' }}
+                      onClick={onClick}
+                      item={{ theme, name: 'Save' }}
                     />
-                  </Skip>
-                </Modal>
-              )}
-              <MessageModal
-                theme={theme}
-                message={message}
-                setMessage={setMessage}
-              />
+                  </div>
+                </Layer>
+
+                <Map className="map">
+                  <h1>
+                    <span>Select Board to save your post.</span>
+                    <span>포스트를 저장할 보드를 선택해주세요.</span>
+                  </h1>
+                  {myBoards &&
+                    myBoards?.map((e) => (
+                      <ListWrap
+                        key={e.id}
+                        animate="animate"
+                        whileHover="hover"
+                        variants={listVar}
+                        onClick={() => setSaveId(e.id)}
+                        custom={{
+                          theme: !theme,
+                          isClicked: Boolean(saveId === e.id),
+                        }}
+                      >
+                        <li className="cover">
+                          <img src="/img/home-bg-dn.jpg" alt="" />
+                        </li>
+                        <li>
+                          <h2>{e.title}</h2>
+                        </li>
+                      </ListWrap>
+                    ))}
+                </Map>
+                <Skip>
+                  <Btn
+                    type="button"
+                    onClick={skipThis}
+                    item={{ theme: !theme, name: 'Skip' }}
+                  />
+                </Skip>
+              </Modal>
+              <OverlayBg dark={0.2} />
             </>
           )}
-          {Loading && <LoadingModal theme={theme} />}
-          <OverlayBg />
+          <MessageModal
+            theme={theme}
+            message={message}
+            setMessage={setMessage}
+          />
         </>
       )}
-    </AnimatePresence>
+      {Loading && <LoadingModal theme={theme} />}
+    </>
   );
 };
 const Modal = styled(PostModalStyle)`
   font-size: 1.2rem;
   width: 35vw;
   height: fit-content;
+  min-height: 300px;
   .layer {
     width: 100%;
     padding: 10px;

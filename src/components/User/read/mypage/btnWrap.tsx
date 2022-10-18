@@ -25,18 +25,24 @@ export const BtnsWrap = ({
     <Cont className="btn-wrap">
       <MyBtn
         type="button"
+        theme={theme}
+        name={'Created'}
+        category={category}
         onClick={() => onClick('created')}
-        item={{ theme, name: 'Created', category }}
       />
       <MyBtn
         type="button"
+        name={'Saved'}
+        theme={theme}
+        category={category}
         onClick={() => onClick('saved')}
-        item={{ theme, name: 'Saved', category }}
       />
       <MyBtn
         type="button"
+        theme={theme}
+        name={'Likes'}
+        category={category}
         onClick={() => onClick('likes')}
-        item={{ theme, name: 'Likes', category }}
       />
       <Add className="add">
         <Svg type="add" theme={theme} onClick={() => setAddModal((p) => !p)} />

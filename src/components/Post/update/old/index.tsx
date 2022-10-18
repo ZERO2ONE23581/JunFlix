@@ -1,18 +1,18 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import useMutation from '../../../libs/client/useMutation';
-import { Modal, Overlay } from '../../../../styles/global';
-import { IEditPostForm } from '../../../types/post';
+import useMutation from '../../../../libs/client/useMutation';
+import { Modal, Overlay } from '../../../../../styles/global';
+import { IEditPostForm } from '../../../../types/post';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ConfirmModal } from '../../../Tools/Modal/confirm';
-import { useCapLetters } from '../../../libs/client/useTools';
+import { ConfirmModal } from '../../../../Tools/Modal/confirm';
+import { useCapLetters } from '../../../../libs/client/useTools';
 import { motion } from 'framer-motion';
-import { Errors } from '../../../Tools/Errors';
-import { Avatar } from '../../../Tools/Avatar';
-import { TextAreaWrap } from '../../../Tools/Input/TextArea';
-import { Btn } from '../../../Tools/Button';
-import { Svg } from '../../../Tools/Svg';
+import { Errors } from '../../../../Tools/Errors';
+import { Avatar } from '../../../../Tools/Avatar';
+import { TextAreaWrap } from '../../../../Tools/Input/TextArea';
+import { Btn } from '../../../../Tools/Button';
+import { Svg } from '../../../../Tools/Svg';
 
 interface IEditPost {
   theme: boolean;

@@ -81,7 +81,6 @@ const Box = styled(motion.article)`
     padding: 5px 20px;
     font-size: 1.1rem;
   }
-  border: 2px solid yellow;
 `;
 const Title = styled.div`
   position: relative;

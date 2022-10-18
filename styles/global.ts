@@ -37,6 +37,14 @@ export const Flex = styled(motion.div)`
   align-items: center;
   justify-content: center;
 `;
+export const FlexCol = styled(motion.div)`
+  width: 100%;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+`;
 export const ImageLabel = styled.label`
   cursor: pointer;
   display: flex;
@@ -70,13 +78,16 @@ export const ERROR = styled.div`
   }
 `;
 export const Modal = styled(motion.article)`
-  top: 50%;
-  left: 50%;
-  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   position: fixed;
-  transform: translate(-50%, -50%);
+  margin: 3rem auto;
   //
-  padding: 30px;
+  padding: 20px;
+  overflow: hidden;
+  overflow-y: auto;
   width: fit-content;
   //
   display: flex;
@@ -84,12 +95,10 @@ export const Modal = styled(motion.article)`
   flex-direction: column;
   justify-content: center;
   //
-  overflow: hidden;
-  overflow-y: auto;
-  border-radius: 5px;
-  box-shadow: ${(p) => p.theme.boxShadow.nav};
   border-width: 1px;
+  border-radius: 5px;
   border-style: solid;
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
   ::-webkit-scrollbar {
     display: none;
   }

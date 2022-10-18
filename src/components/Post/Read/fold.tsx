@@ -19,18 +19,12 @@ export const Fold = ({ theme, from, postLength, setLength, length }: any) => {
           {unFold && (
             <Svg
               theme={theme}
-              size="2rem"
               type="ellipsis"
               onClick={() => setLength(postLength)}
             />
           )}
           {Fold && (
-            <Svg
-              theme={theme}
-              size="2rem"
-              type="caret"
-              onClick={() => setLength(from)}
-            />
+            <Svg theme={theme} type="caret" onClick={() => setLength(from)} />
           )}
         </Cont>
       )}

@@ -51,22 +51,16 @@ const Cont = styled(motion.section)<{ width?: number }>`
 
   .header {
     min-height: 86px;
-    //border: 2px solid hotpink;
     .flex {
       width: 100%;
-      //border: 5px solid cornflowerblue;
       .main-menu {
         width: 50%;
-        //border: 2px solid yellow;
       }
       .user-menu {
         width: fit-content;
-        //border: 3px solid red;
         .logged-in {
-          //border: 2px solid yellow;
         }
         .unlogged-in {
-          //border: 2px solid yellow;
         }
       }
       span {

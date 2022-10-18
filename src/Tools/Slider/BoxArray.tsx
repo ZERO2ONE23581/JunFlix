@@ -2,10 +2,8 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { BoardBoxInfo } from './Board/BoardBoxInfo';
 import { AnimatePresence, motion } from 'framer-motion';
-import { PostModal } from '../../components/post/read/each';
 import { MovieHover } from './Movie/MovieHover';
 import { MovieModal } from './Movie/modal';
-import { PostBox } from '../../components/post/read/box';
 import { Post } from '@prisma/client';
 import { IMovie } from '../../types/global';
 import { boxVars, SpringTrans } from '../../../styles/variants';
@@ -75,16 +73,6 @@ export const BoxArray = ({ type, array, reverse, theme }: IBoxArray) => {
           </Box>
         ))}
 
-      {isPost &&
-        array?.map((data: any) => (
-          <PostBox
-            data={data}
-            key={data.id}
-            reverse={reverse}
-            clickBox={clickBox}
-          />
-        ))}
-
       {type.sliderType === 'movie' && (
         <>
           {movieModal && (
@@ -96,9 +84,6 @@ export const BoxArray = ({ type, array, reverse, theme }: IBoxArray) => {
             />
           )}
         </>
-      )}
-      {modal && (
-        <PostModal theme={theme} data={clickedPost!} setModal={setModal} />
       )}
     </AnimatePresence>
   );

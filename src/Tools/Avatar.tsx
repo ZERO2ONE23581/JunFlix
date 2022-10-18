@@ -137,9 +137,13 @@ const circleTypeVar = {
     transition: { duration: 0.5 },
   }),
 };
-export const useImgUrl = (image: string | null) => {
+interface IAvatarLink {
+  url?: string | null;
+}
+export const avatarLink = (url: string | any) => {
+  const no_img = '/img/1.jpg';
   const variant = 'public';
   const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
-  if (image) return `${base}/${image}/${variant}`;
-  else return '/img/1.jpg';
+  if (!Boolean(url)) return no_img;
+  else return `${base}/${url}/${variant}`;
 };

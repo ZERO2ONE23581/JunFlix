@@ -7,6 +7,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const inputs = req.body;
   const { user } = req.session;
   const { post_id } = req.query;
+  console.log(post_id, inputs);
+  return;
   if (!user) return res.json({ ok: false, error: 'must login.' });
   if (!post_id) return res.json({ ok: false, error: 'query missed.' });
 

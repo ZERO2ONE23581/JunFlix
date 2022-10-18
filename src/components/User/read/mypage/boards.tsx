@@ -30,14 +30,13 @@ export const FollowingBoards = ({ theme, array }: IFollowingBoards) => {
 };
 
 const Cont = styled(motion.article)`
+  height: 100%;
+  padding: 20px;
+  width: fit-content;
   h1 {
     font-size: 2rem;
     span {
       display: block;
     }
   }
-  border: 5px solid yellow;
-  padding: 20px;
-  width: fit-content;
-  height: 100%;
 `;

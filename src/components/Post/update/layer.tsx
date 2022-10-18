@@ -1,39 +1,79 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction } from 'react';
-import { ITheme } from '../../../../styles/theme';
+import { motion } from 'framer-motion';
 import { Svg } from '../../../Tools/Svg';
+import { Btn } from '../../../Tools/Button';
+import { Flex } from '../../../../styles/global';
+import { variants } from '../../../../styles/variants';
 
-interface ITitle extends ITheme {
-  setEdit: Dispatch<SetStateAction<boolean>>;
+interface ILayer {
+  theme: boolean;
+  preview: boolean;
+  fileInput: boolean;
+  onClick: (type: string) => void;
 }
-export const Layer = ({ setEdit, theme }: ITitle) => {
+export const Layer = ({ theme, preview, onClick, fileInput }: ILayer) => {
   return (
-    <Cont>
-      <div />
-      <h1>포스트 수정</h1>
-      <Svg
-        theme={theme}
-        size="1.5rem"
-        type="close"
-        onClick={() => setEdit(false)}
-      />
-    </Cont>
+    <Container
+      custom={theme}
+      animate="animate"
+      className="layer"
+      variants={variants}
+    >
+      <Each>
+        <Svg type="close_" theme={theme} onClick={() => onClick('close')} />
+      </Each>
+      <Each>
+        <h1>Edit Post</h1>
+      </Each>
+      {fileInput && (
+        <Each className="add-skip">
+          {!preview && (
+            <Btn
+              type="button"
+              item={{ name: 'Skip', theme }}
+              onClick={() => onClick('skip')}
+            />
+          )}
+          {preview && (
+            <Btn
+              type="button"
+              item={{ name: 'Add', theme }}
+              onClick={() => onClick('add-new')}
+            />
+          )}
+        </Each>
+      )}
+      {!fileInput && (
+        <Each>
+          <Btn type="submit" item={{ name: 'Done', theme }} />
+        </Each>
+      )}
+    </Container>
   );
 };
-const Cont = styled.div`
+
+const Container = styled(motion.div)`
   display: flex;
-  font-weight: 500;
-  padding: 8px 20px;
   align-items: center;
   justify-content: space-between;
-  color: ${(p) => p.theme.color.bg};
-  background-color: ${(p) => p.theme.color.font};
+  padding: 8px 20px;
+  .add-skip {
+    gap: 8px;
+  }
+`;
+const Each = styled(Flex)`
+  width: 100%;
+  :first-of-type {
+    justify-content: flex-start;
+  }
+  :last-of-type {
+    justify-content: flex-end;
+  }
   h1 {
-    margin-left: 30px;
+    font-size: 1.4rem;
   }
   button {
-    svg {
-      fill: ${(p) => p.theme.color.bg};
-    }
+    width: 80px;
+    padding: 5px;
   }
 `;
