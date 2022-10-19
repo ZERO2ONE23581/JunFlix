@@ -20,12 +20,15 @@ export const EllipsModal = ({
 }: IPostSettingBtnModal) => {
   const router = useRouter();
   const onClick = (type: string) => {
-    if (type === 'all') router.push(`/post/all`);
     if (!isMyPost) return alert('not allowed.');
-    if (isMyPost) {
-      if (type === 'update') updatePost();
-      if (type === 'my_post') router.push(`/post/my`);
-      if (type === 'delete') alert('delete');
+    if (type) {
+      //closeModal();
+      if (type === 'all') router.push(`/post/all`);
+      if (isMyPost) {
+        if (type === 'update') updatePost();
+        if (type === 'my_post') router.push(`/post/my`);
+        if (type === 'delete') alert('delete');
+      }
     }
   };
   return (

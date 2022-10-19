@@ -1,34 +1,54 @@
 import styled from '@emotion/styled';
+import { OpenSelectBoard } from './open_select_board';
+import { AnimatePresence } from 'framer-motion';
 import { InputWrap } from '../../../Tools/Input';
 import { PostInfo } from '../../../../styles/post';
+import { FlexCol } from '../../../../styles/global';
 import { ICreatePostForm } from '../../../types/post';
 import { TextAreaWrap } from '../../../Tools/Input/TextArea';
-import { useMaxLength } from '../../../libs/client/useTools';
-import { color } from '../../../../styles/variants';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Flex, FlexCol } from '../../../../styles/global';
 
 interface IPostContents extends ICreatePostForm {
   isShrink: boolean;
+  selectQuck: boolean;
+  openBoardList: () => void;
+  id: {
+    host_id: number;
+    board_id: number;
+    chosen_board_id: number;
+  };
 }
 export const PostContents = ({
+  id,
   watch,
   theme,
   errors,
   register,
   isShrink,
+  selectQuck,
+  openBoardList,
 }: IPostContents) => {
-  const { max } = useMaxLength(50, 1000);
+  const host_id = id?.host_id!;
+  const board_id = id?.board_id!;
+  const chosen_board_id = id?.chosen_board_id!;
+
   return (
     <AnimatePresence>
       <Cont
-        exit="exit"
-        initial="initial"
         animate="animate"
         className="contents"
-        custom={{ theme, isShrink }}
         variants={contentsVar}
+        custom={{ theme, isShrink }}
       >
+        <OpenSelectBoard
+          id={{
+            host_id,
+            board_id,
+            chosen_board_id,
+          }}
+          theme={theme}
+          open={openBoardList}
+          selectQuck={selectQuck}
+        />
         <Wrap className="wrap">
           <InputWrap
             id="title"
@@ -43,17 +63,14 @@ export const PostContents = ({
             placeholder="포스트 제목을 입력해 주세요."
           />
           <TextAreaWrap
-            error={errors.description?.message}
-            watch={watch!('description')}
+            theme={theme}
             id="description"
             startHeight={140}
-            theme={theme}
+            watch={watch!('description')}
             register={register('description')}
+            error={errors.description?.message}
             placeholder="이 포스트에 대한 설명을 적어주세요."
-            length={{
-              max: max.desc,
-              typed: watch('description'),
-            }}
+            length={{ max: 1000, typed: watch('description') }}
           />
           <InputWrap
             type="text"
@@ -80,45 +97,24 @@ export const PostContents = ({
 };
 
 const Cont = styled(PostInfo)`
-  width: 90%;
-  margin-top: 20px;
-  overflow-y: auto;
-  padding: 15px 30px;
-  border-radius: 10px;
-  box-shadow: ${(p) => p.theme.boxShadow.input};
-  top: 0;
   left: 0;
+  top: 50px;
+  height: 100%;
+  overflow-y: auto;
   position: absolute;
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 const Wrap = styled(FlexCol)`
-  width: 100%;
+  //border: 2px solid yellow;
+  height: 100%;
+  gap: 30px;
+  padding: 20px 10px 0;
   padding-bottom: 40px;
-  height: fit-content;
-  justify-content: flex-start;
-  border-bottom: dotted ${(p) => p.theme.color.font};
 `;
 const contentsVar = {
-  initial: ({ theme, isShrink }: any) => ({
-    y: 50,
-    opacity: 0,
-    scale: 0.2,
-    height: '60vh',
-  }),
   animate: ({ theme, isShrink }: any) => ({
     scale: 1,
     opacity: 1,
-    y: isShrink ? 330 : 0,
-    transition: { duration: 0.8 },
-    height: isShrink ? '40vh' : '80vh',
-  }),
-  exit: ({ theme, isShrink }: any) => ({
-    y: 50,
-    scale: 0.2,
-    opacity: 0,
-    height: '60vh',
+    y: isShrink ? 220 : 0,
     transition: { duration: 0.8 },
   }),
 };

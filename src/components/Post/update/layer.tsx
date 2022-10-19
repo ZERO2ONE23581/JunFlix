@@ -10,8 +10,19 @@ interface ILayer {
   preview: boolean;
   fileInput: boolean;
   onClick: (type: string) => void;
+  closeSelectModal: () => void;
 }
-export const Layer = ({ theme, preview, onClick, fileInput }: ILayer) => {
+export const Layer = ({
+  theme,
+  preview,
+  onClick,
+  fileInput,
+  closeSelectModal,
+}: ILayer) => {
+  const clickClose = () => {
+    () => onClick('close');
+    closeSelectModal();
+  };
   return (
     <Container
       custom={theme}
@@ -20,7 +31,7 @@ export const Layer = ({ theme, preview, onClick, fileInput }: ILayer) => {
       variants={variants}
     >
       <Each>
-        <Svg type="close_" theme={theme} onClick={() => onClick('close')} />
+        <Svg type="close_" theme={theme} onClick={clickClose} />
       </Each>
       <Each>
         <h1>Edit Post</h1>

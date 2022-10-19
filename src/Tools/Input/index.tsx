@@ -42,8 +42,8 @@ export const InputWrap = ({
         <div className="label-input">
           {label && (
             <Label
-              exit="exit"
               htmlFor={id}
+              exit="exit"
               initial="initial"
               animate="animate"
               variants={labelVar}

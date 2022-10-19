@@ -12,6 +12,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   //2. 보드에 연결된 상태에서 선택한 보드로 바꿔 연결하는 경우
   //3. 보드에 연결안하고 기존의 quicksave (board_id === 0)에 계속 저장하는 경우
   //4. 기존의 보드와의 연결을 끊는 경우 // board_id === 0으로 바꿔줌
+
   const {
     title,
     description,

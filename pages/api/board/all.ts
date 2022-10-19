@@ -9,6 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       host: true,
       posts: true,
       folllowers: true,
+      _count: true,
     },
   });
   const isArray = Boolean(boards.length > 0);

@@ -15,6 +15,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       host: true,
       posts: true,
       folllowers: true,
+      _count: true,
     },
   });
   if (!board) return res.json({ ok: false, error: 'no board found.' });

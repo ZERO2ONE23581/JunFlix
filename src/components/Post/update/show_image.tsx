@@ -1,7 +1,7 @@
-import { imgVar } from './img_input';
 import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { opacityVar, variants } from '../../../../styles/variants';
+import { imgVar } from './img_input';
 
 interface IShowImage {
   src: string;
@@ -36,7 +36,7 @@ export const ShowImage = ({ src, isBoolean, theme }: IShowImage) => {
                     alt="프리뷰 이미지"
                     initial="initial"
                     animate="animate"
-                    variants={imgVar}
+                    variants={abs_image_var}
                   />
                 )}
               </AnimatePresence>
@@ -49,7 +49,7 @@ export const ShowImage = ({ src, isBoolean, theme }: IShowImage) => {
                     alt="오리지널 이미지"
                     initial="initial"
                     animate="animate"
-                    variants={imgVar}
+                    variants={abs_image_var}
                   />
                 )}
               </AnimatePresence>
@@ -62,17 +62,42 @@ export const ShowImage = ({ src, isBoolean, theme }: IShowImage) => {
 };
 const Container = styled(motion.div)`
   width: 100%;
-  padding: 20px;
   height: fit-content;
-  border-top: 1px solid ${(p) => p.theme.color.font};
 `;
 const ImgWrap = styled(motion.div)`
+  padding: 20px;
   width: 15rem;
-  height: 20rem;
-  overflow: hidden;
-  border-radius: 12px;
+  height: 15rem;
+  position: relative;
 `;
 const Img = styled(motion.img)`
+  top: 58%;
+  left: 60%;
+  position: absolute;
   width: 100%;
   height: 100%;
+  border-radius: 12px;
 `;
+const abs_image_var = {
+  initial: () => ({
+    x: '-50%',
+    y: '-50%',
+    opacity: 0,
+    scale: 0.2,
+    transition: { duration: 0.8 },
+  }),
+  animate: () => ({
+    x: '-50%',
+    y: '-50%',
+    scale: 1,
+    opacity: 1,
+    transition: { duration: 0.8 },
+  }),
+  exit: () => ({
+    x: '-50%',
+    y: '-50%',
+    opacity: 0,
+    scale: 0.2,
+    transition: { duration: 0.8 },
+  }),
+};

@@ -32,18 +32,17 @@ export const Circle = styled(motion.div)`
 `;
 export const Flex = styled(motion.div)`
   width: 100%;
-  gap: 20px;
   display: flex;
+  overflow-y: auto;
   align-items: center;
   justify-content: center;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
-export const FlexCol = styled(motion.div)`
-  width: 100%;
-  gap: 20px;
-  display: flex;
-  align-items: center;
+export const FlexCol = styled(Flex)`
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 `;
 export const ImageLabel = styled.label`
   cursor: pointer;
@@ -195,10 +194,10 @@ export const Overlay = styled(motion.div)<{ dark?: number; zindex?: number }>`
   width: 100vw;
   height: 100vh;
   position: fixed;
-  background-color: red;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: ${(p) => (p.zindex ? p.zindex : '99')};
   background-color: ${(p) => p.dark && `rgba(0, 0, 0, ${p.dark})`};
+  //background-color: red;
 `;
 
 export const MotionBox = styled(motion.div)<{

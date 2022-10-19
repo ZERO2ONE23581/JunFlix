@@ -5,10 +5,9 @@ import { useForm } from 'react-hook-form';
 import { PostModalStyle } from '../../../../styles/post';
 import useMutation from '../../../libs/client/useMutation';
 import {
-  isOverMax,
   useCapLetters,
-  useLength,
-  useMaxLength,
+  useError,
+  useUploadImg,
 } from '../../../libs/client/useTools';
 import { avatarLink } from '../../../Tools/Avatar';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
@@ -18,6 +17,7 @@ import { postModalVar } from '../read/post_grid_modal';
 import { FileInput } from './img_input';
 import { Layer } from './layer';
 import { Main } from './main';
+import { SelectBoardModal } from './select_board_modal';
 
 interface IUpdatePostModal {
   post: IPostType;
@@ -45,11 +45,12 @@ export const UpdatePostModal = ({
 
   const [src, setSrc] = useState('');
   const original = post?.post_image;
-  const { max } = useMaxLength(50, 1000);
   const [preview, setPreview] = useState('');
   const [isHide, setIsHide] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [fileInput, setFileInput] = useState(false);
+  const [selectModal, setSelectModal] = useState(false);
+  const [chosen_board_id, setChosen_board_id] = useState(0);
   //
   const handleClick = (type: string) => {
     const onReset = () =>
@@ -67,7 +68,10 @@ export const UpdatePostModal = ({
         setPreview('');
         if (type === 'close' || type === 'restore') {
           setIsHide(false);
-          if (type === 'close') return closeModal();
+          if (type === 'close') {
+            closeSelectModal();
+            closeModal();
+          }
         }
         if (type === 'delete' && !preview) return setIsHide(true);
       }
@@ -90,37 +94,24 @@ export const UpdatePostModal = ({
     if (preview) return setSrc(preview);
     if (original) return setSrc(avatarLink(post?.post_image));
   }, [setPreview, preview, original]);
-
+  //
+  interface ITest {
+    test: any;
+  }
   //POST
   const onValid = async (inputs: IPostForm) => {
     if (loading) return;
-
-    const typed_title = useLength(inputs.title);
-    const typed_desc = useLength(inputs.description!);
-    if (isOverMax(typed_title, max.title))
-      return setError('title', {
-        message: `제목은 ${max.title}을 초과할 수 없습니다.`,
-      });
-    if (isOverMax(typed_desc, max.desc))
-      return setError('description', {
-        message: `포스트의 글자수는 ${max.desc}를 초과할 수 없습니다.`,
-      });
+    useError({
+      setError,
+      title: inputs?.title,
+      desc: inputs?.description!,
+      max: { title: 50, desc: 1000 },
+    });
     setLoading(true);
-    //
     const image = inputs?.post_image;
-    if (image && image.length > 0 && post.host_id) {
-      const { uploadURL } = await (await fetch(`/api/file`)).json();
-      const form = new FormData();
-      form.append('file', image[0], post.host_id.toString());
-      const {
-        result: { id },
-      } = await (
-        await fetch(uploadURL, {
-          method: 'POST',
-          body: form,
-        })
-      ).json();
-      return update({ ...inputs, post_image: id });
+    const file_id = await useUploadImg(image, post?.host_id!);
+    if (file_id) {
+      return update({ ...inputs, post_image: file_id });
     } else if (original && !preview && isHide) {
       return update({ ...inputs, post_image: 'delete_og' });
     } else return update({ ...inputs });
@@ -138,12 +129,19 @@ export const UpdatePostModal = ({
     }
   }, [post, setValue, useCapLetters]);
   //
-
+  const [selectQuck, setSelectQuick] = useState(false);
+  const closeSelectModal = () => {
+    setChosen_board_id(0);
+    setSelectQuick(false);
+    setSelectModal(false);
+  };
   return (
     <AnimatePresence>
+      {/* {true && ( */}
       {modal && (
         <>
-          {!Loading && (
+          {/* {!Loading && ( */}
+          {true && (
             <>
               <Modal
                 exit="exit"
@@ -158,6 +156,7 @@ export const UpdatePostModal = ({
                     fileInput={fileInput}
                     onClick={handleClick}
                     preview={Boolean(preview)}
+                    closeSelectModal={() => setSelectModal(false)}
                   />
                   <FileInput
                     theme={theme}
@@ -170,18 +169,32 @@ export const UpdatePostModal = ({
                     }}
                   />
                   <Main
+                    id={{
+                      chosen_board_id,
+                      host_id: post.host_id,
+                      board_id: post?.board_id!,
+                    }}
                     onClick={handleClick}
                     useform={{ errors, watch, register }}
                     isString={{ src, preview, original }}
-                    isBoolean={{ theme, isHide, fileInput }}
+                    openBoardList={() => setSelectModal(true)}
+                    isBoolean={{ theme, isHide, fileInput, selectQuck }}
                   />
                 </form>
               </Modal>
-
               <OverlayBg
                 dark={0.5}
                 zIndex={111}
                 closeModal={() => handleClick('close')}
+              />
+              <SelectBoardModal
+                theme={theme}
+                modal={selectModal}
+                host_id={post?.host?.id!}
+                closeModal={closeSelectModal}
+                setSelectModal={setSelectModal}
+                setSelectQuick={setSelectQuick}
+                setChosen_board_id={setChosen_board_id}
               />
             </>
           )}

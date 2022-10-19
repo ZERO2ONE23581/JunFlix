@@ -60,6 +60,9 @@ export const CreatePostMain = styled(motion.div)`
   }
 `;
 export const PostInfo = styled(motion.article)`
+  ::-webkit-scrollbar {
+    display: none;
+  }
   width: 100%;
   padding: 20px;
   display: flex;

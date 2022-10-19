@@ -1,6 +1,49 @@
 import useUser from './useUser';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { UseFormSetError } from 'react-hook-form';
+import { IPostForm } from '../../types/post';
+
+export const useUploadImg = async (
+  image: FileList | undefined,
+  host_id: number
+) => {
+  if (image && image.length > 0 && host_id) {
+    const { uploadURL } = await (await fetch(`/api/file`)).json();
+    const form = new FormData();
+    form.append('file', image[0], host_id.toString());
+    const {
+      result: { id },
+    } = await (
+      await fetch(uploadURL, {
+        method: 'POST',
+        body: form,
+      })
+    ).json();
+    return id;
+  }
+};
+interface IUserError {
+  title: string;
+  desc: string;
+  max: {
+    title: number;
+    desc: number;
+  };
+  setError: UseFormSetError<IPostForm>;
+}
+export const useError = ({ title, desc, max, setError }: IUserError) => {
+  const typed_title = useLength(title);
+  const typed_desc = useLength(desc);
+  if (isOverMax(typed_title, max.title))
+    return setError('title', {
+      message: `제목은 ${max.title}을 초과할 수 없습니다.`,
+    });
+  if (isOverMax(typed_desc, max.desc))
+    return setError('description', {
+      message: `포스트의 글자수는 ${max.desc}를 초과할 수 없습니다.`,
+    });
+};
 
 interface IUseMax {
   sec: number;
