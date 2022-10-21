@@ -34,11 +34,10 @@ export const CreateUserId = ({ wrap, isType }: ICreateUser) => {
                 required: '아이디를 입력해주세요.',
                 pattern: {
                   value: /^[A-Za-z]+[A-Za-z0-9]{5,19}$/g,
-                  message:
-                    '아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.',
+                  msg: '아이디는 기호를 제외한 영문자 또는 6~20자리 숫자를 포함해야합니다.',
                 },
               })}
-              error={errors.userId?.message}
+              error={errors.userId?.msg}
             />
             <Btn item={{ theme: wrap.theme, name: 'Submit' }} type="submit" />
           </Form>

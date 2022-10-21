@@ -37,7 +37,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         board: { connect: { id: following?.board_id! } },
       },
     });
-    return res.json({ ok: true, message: 'board followed' });
+    return res.json({ ok: true, msg: 'board followed' });
   }
   //delete following
   if (following) {
@@ -47,10 +47,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const follower = await client.follower.findFirst({
       where: { host_id: following.host_id },
     });
-    if (!follower) return res.json({ ok: true, message: 'no follower found.' });
+    if (!follower) return res.json({ ok: true, msg: 'no follower found.' });
     await client.follower.delete({ where: { id: follower.id } });
     //
-    return res.json({ ok: true, message: 'board unfollowed' });
+    return res.json({ ok: true, msg: 'board unfollowed' });
   }
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

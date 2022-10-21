@@ -7,19 +7,44 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { HeadTitle } from '../src/Tools/head_title';
 import { BtnWrap, FlexPage, Page } from '../styles/global';
 import { Btn } from '../src/Tools/Button';
+import { useForm } from 'react-hook-form';
 
 const Test: NextPage<{ theme: boolean }> = ({ theme }) => {
   const array = [1, 2, 3, 4];
   const [num, setNum] = useState(1);
   //
-
   const leftClick = () => setNum((p) => p - 1);
   const rightClick = () => setNum((p) => p + 1);
-  // const rightClick = () => setNum((p) => (p === 4 ? 1 : p + 1));
-  // const leftClick = () => setNum((p) => (p === 1 ? 1 : p - 1));
+  const {
+    reset,
+    watch,
+    register,
+    setValue,
+    setError,
+    getValues,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<any>({ mode: 'onBlur' });
+  const onValid = (inputs: any) => {
+    console.log(inputs);
+  };
+  const onReset = () => {
+    reset({ title: 'hi' });
+  };
+
   return (
     <>
       <Cont>
+        <Btn onClick={onReset} type="button" item={{ name: 'test', theme }} />
+        <form onSubmit={handleSubmit(onValid)}>
+          <input type="text" {...register('title')} />
+          <input type="text" {...register('desc')} />
+          <input type="text" {...register('hash')} />
+          <input type="text" {...register('image')} />
+
+          <Btn type="submit" item={{ name: 'Submit', theme }} />
+        </form>
+
         {/* <div className="test1">
           {array.map((e) => (
             <div key={e}>{<Box1>hellowrold {e}</Box1>}</div>

@@ -84,7 +84,7 @@ export interface IUseform {
 export interface IRes {
   ok?: boolean;
   error?: string;
-  message?: string;
+  msg?: string;
   [key: string]: any;
 }
 export interface ICreateUserRes extends IRes {

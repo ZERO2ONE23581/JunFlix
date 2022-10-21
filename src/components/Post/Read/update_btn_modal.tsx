@@ -10,24 +10,26 @@ interface IPostSettingBtnModal {
   isMyPost: boolean;
   closeModal: () => void;
   updatePost: () => void;
+  clickDelete: () => void;
 }
 export const EllipsModal = ({
   modal,
   theme,
   isMyPost,
-  updatePost,
   closeModal,
+  updatePost,
+  clickDelete,
 }: IPostSettingBtnModal) => {
   const router = useRouter();
   const onClick = (type: string) => {
     if (!isMyPost) return alert('not allowed.');
     if (type) {
-      //closeModal();
+      closeModal();
       if (type === 'all') router.push(`/post/all`);
       if (isMyPost) {
         if (type === 'update') updatePost();
         if (type === 'my_post') router.push(`/post/my`);
-        if (type === 'delete') alert('delete');
+        if (type === 'delete') clickDelete();
       }
     }
   };

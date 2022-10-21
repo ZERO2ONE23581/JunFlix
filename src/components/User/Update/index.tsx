@@ -7,11 +7,11 @@ import { useEffect, useState } from 'react';
 import { UserId_Form } from './userId';
 import { Password_Form } from './password';
 import { UserAvatar_Form } from './user_avatar';
-import { MessageModal } from '../../../Tools/msg_modal';
+import { MsgModal } from '../../../Tools/msg_modal';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import useMutation from '../../../libs/client/useMutation';
-import { DeleteUser_Form } from '../delete';
-import { UserInfo_Form } from './userInfo';
+import { UserInfo_Form } from './UserInfo';
+import { DeleteUser_Form } from '../Delete';
 
 interface IUpdateUser extends ITheme {
   type: string;
@@ -20,7 +20,7 @@ export const UpdateBox = ({ type, theme }: IUpdateUser) => {
   const router = useRouter();
   const { user_id } = router.query;
   const [api, setApi] = useState('');
-  const [message, setMessage] = useState('');
+  const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);
   const [post, { loading, data }] = useMutation<IRes>(api && api);
 
@@ -36,11 +36,11 @@ export const UpdateBox = ({ type, theme }: IUpdateUser) => {
       setTimeout(() => {
         setLoading(false);
         if (!data.ok) {
-          if (data.error) setMessage(data.error);
-          if (data.message) setMessage(data.message);
+          if (data.error) setMsg(data.error);
+          if (data.msg) setMsg(data.msg);
         }
         if (data.ok) {
-          setMessage('업데이트 완료 (Update completed)');
+          setMsg('업데이트 완료 (Update completed)');
           if (type === 'delete') return router.replace(`/home`);
           setTimeout(() => {
             router.reload();
@@ -48,28 +48,27 @@ export const UpdateBox = ({ type, theme }: IUpdateUser) => {
         }
       }, 1000);
     }
-  }, [data, type, router, setMessage, setLoading]);
+  }, [data, type, router, setMsg, setLoading]);
   //
   const dataWrap = { loading, setLoading, type, post, theme };
   return (
     <>
       {!Loading && (
-        <>
-          <Box className={type}>
-            <BoxTitle type={`update-user-${type}`} theme={theme} />
-            <UserId_Form dataWrap={{ ...dataWrap }} />
-            <Password_Form dataWrap={{ ...dataWrap }} />
-            <UserInfo_Form dataWrap={{ ...dataWrap }} />
-            <UserAvatar_Form dataWrap={{ ...dataWrap }} />
-            <DeleteUser_Form dataWrap={{ ...dataWrap }} />
-          </Box>
-          <MessageModal
-            theme={theme}
-            message={message}
-            setMessage={setMessage}
-          />
-        </>
+        <Box className={type}>
+          <BoxTitle type={`update-user-${type}`} theme={theme} />
+          <UserId_Form dataWrap={{ ...dataWrap }} />
+          <Password_Form dataWrap={{ ...dataWrap }} />
+          <UserInfo_Form dataWrap={{ ...dataWrap }} />
+          <UserAvatar_Form dataWrap={{ ...dataWrap }} />
+          <DeleteUser_Form dataWrap={{ ...dataWrap }} />
+        </Box>
       )}
+      <MsgModal
+        msg={msg}
+        theme={theme}
+        Loading={Loading}
+        closeModal={() => setMsg('')}
+      />
       {Loading && <LoadingModal theme={theme} />}
     </>
   );

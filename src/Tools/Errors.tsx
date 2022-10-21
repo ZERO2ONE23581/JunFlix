@@ -42,28 +42,28 @@ const Cont = styled.div`
 export const Errors = ({ errors }: IUseform) => {
   return (
     <Container>
-      {errors?.userId && <ErrorMsg error={errors.userId.message} />}
-      {errors?.password && <ErrorMsg error={errors.password.message} />}
-      {errors?.newPassword && <ErrorMsg error={errors.newPassword.message} />}
+      {errors?.userId && <ErrorMsg error={errors.userId.msg} />}
+      {errors?.password && <ErrorMsg error={errors.password.msg} />}
+      {errors?.newPassword && <ErrorMsg error={errors.newPassword.msg} />}
       {errors?.confirmPassword && (
-        <ErrorMsg error={errors.confirmPassword.message} />
+        <ErrorMsg error={errors.confirmPassword.msg} />
       )}
-      {errors?.email && <ErrorMsg error={errors.email.message} />}
-      {errors?.username && <ErrorMsg error={errors.username.message} />}
-      {errors?.name && <ErrorMsg error={errors.name.message} />}
-      {errors?.birth && <ErrorMsg error={errors.birth.message} />}
-      {errors?.gender && <ErrorMsg error={errors.gender.message} />}
-      {errors?.location && <ErrorMsg error={errors.location.message} />}
+      {errors?.email && <ErrorMsg error={errors.email.msg} />}
+      {errors?.username && <ErrorMsg error={errors.username.msg} />}
+      {errors?.name && <ErrorMsg error={errors.name.msg} />}
+      {errors?.birth && <ErrorMsg error={errors.birth.msg} />}
+      {errors?.gender && <ErrorMsg error={errors.gender.msg} />}
+      {errors?.location && <ErrorMsg error={errors.location.msg} />}
 
-      {errors?.content && <ErrorMsg error={errors.content.message} />}
-      {errors?.movieTitle && <ErrorMsg error={errors.movieTitle.message} />}
+      {errors?.content && <ErrorMsg error={errors.content.msg} />}
+      {errors?.movieTitle && <ErrorMsg error={errors.movieTitle.msg} />}
       {errors?.oneline && (
-        <ErrorMsg type="oneline" error={errors.oneline?.message} />
+        <ErrorMsg type="oneline" error={errors.oneline?.msg} />
       )}
-      {errors?.title && <ErrorMsg error={errors.title.message} />}
-      {errors?.genre && <ErrorMsg error={errors.genre.message} />}
-      {errors?.intro && <ErrorMsg error={errors.intro.message} />}
-      {errors?.avatar && <ErrorMsg error={errors.avatar.message} />}
+      {errors?.title && <ErrorMsg error={errors.title.msg} />}
+      {errors?.genre && <ErrorMsg error={errors.genre.msg} />}
+      {errors?.intro && <ErrorMsg error={errors.intro.msg} />}
+      {errors?.avatar && <ErrorMsg error={errors.avatar.msg} />}
     </Container>
   );
 };

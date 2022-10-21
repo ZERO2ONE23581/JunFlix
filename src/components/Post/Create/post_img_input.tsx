@@ -31,7 +31,7 @@ export const PostImage = ({
           animate="animate"
           className="post-image"
           custom={isShrink}
-          variants={postImgVar}
+          variants={variants}
         >
           <CircleSvg
             theme={theme}
@@ -46,7 +46,7 @@ export const PostImage = ({
                   initial="initial"
                   animate="animate"
                   src={preview!}
-                  variants={imgVar}
+                  variants={variants}
                   alt="이미지 프리뷰"
                 />
               )}
@@ -81,6 +81,10 @@ export const PostImage = ({
   );
 };
 const Cont = styled(motion.div)`
+  .circle-svg {
+    top: 1rem;
+    left: 1rem;
+  }
   overflow: hidden;
   label {
     width: 100%;
@@ -135,7 +139,7 @@ const clickVar = {
   animate: { x: '-50%', y: '-50%', transition: { duration: 0.5 } },
   hover: { color: '#E50914', scale: 1.5, transition: { duration: 0.5 } },
 };
-const postImgVar = {
+const variants = {
   initial: () => ({
     y: -900,
     opacity: 0,
@@ -143,12 +147,13 @@ const postImgVar = {
     transition: { duration: 0.5 },
   }),
   animate: (isShrink: boolean) => ({
-    y: 0,
+    x: !isShrink ? 20 : 0,
+    y: !isShrink ? 30 : 0,
     scale: 1,
     opacity: 1,
     transition: { duration: 0.5 },
-    width: isShrink ? '60%' : '100%',
-    height: isShrink ? '60%' : '100%',
+    width: isShrink ? '50%' : '100%',
+    height: isShrink ? '50%' : '100%',
     borderBottomRightRadius: isShrink ? '5%' : '0%',
   }),
   exit: () => ({

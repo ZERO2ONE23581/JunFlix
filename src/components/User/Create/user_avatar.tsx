@@ -49,7 +49,7 @@ export const CreateUserAvatar = ({ wrap, isType }: ICreateUser) => {
   };
   //
   const theme = wrap.theme;
-  const error = errors.avatar?.message;
+  const error = errors.avatar?.msg;
   return (
     <>
       {isType && (

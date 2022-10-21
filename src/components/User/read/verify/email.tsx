@@ -10,7 +10,7 @@ import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
 import { ITheme } from '../../../../../styles/theme';
 import { BoxTitle } from '../../../../Tools/box_title';
 import { AnimatePresence } from 'framer-motion';
-import { MessageModal } from '../../../../Tools/msg_modal';
+import { MsgModal } from '../../../../Tools/msg_modal';
 import { variants } from '../../../../../styles/variants';
 
 interface IVerifyEmail extends ITheme {
@@ -18,7 +18,7 @@ interface IVerifyEmail extends ITheme {
   setToken: Dispatch<SetStateAction<boolean>>;
 }
 export const VerifyEmail = ({ isBox, theme, setToken }: IVerifyEmail) => {
-  const [message, setMessage] = useState('');
+  const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);
   const [verify, { loading, data }] = useMutation<IFindPostRes>(
     `/api/user/login/verify/email`
@@ -41,55 +41,50 @@ export const VerifyEmail = ({ isBox, theme, setToken }: IVerifyEmail) => {
       setTimeout(() => {
         setLoading(false);
         if (data.ok) setToken(data.ok);
-        if (data.error) setMessage(data.error);
+        if (data.error) setMsg(data.error);
       }, 1000);
     }
-  }, [data, setToken, setMessage, setLoading, setTimeout]);
+  }, [data, setToken, setMsg, setLoading, setTimeout]);
 
   return (
     <AnimatePresence>
-      {isBox && (
-        <>
-          {!Loading && (
-            <>
-              <Cont
-                exit="exit"
-                initial="initial"
-                animate="animate"
-                className="loading"
-                custom={theme}
-                variants={variants}
-              >
-                <BoxTitle theme={theme} type="verify-email" />
-                <Form onSubmit={handleSubmit(onValid)}>
-                  <InputWrap
-                    id="email"
-                    type="text"
-                    label="Email"
-                    theme={theme}
-                    error={errors.email?.message}
-                    watch={Boolean(watch('email'))}
-                    register={register('email', {
-                      required: '이메일을 입력하세요.',
-                      pattern: {
-                        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                        message: '이메일 형식이 올바르지 않습니다.',
-                      },
-                    })}
-                  />
-                  <Btn item={{ theme, name: 'Submit' }} type="submit" />
-                </Form>
-              </Cont>
-              <MessageModal
-                theme={theme}
-                message={message}
-                setMessage={setMessage}
-              />
-            </>
-          )}
-          {Loading && <LoadingModal theme={theme} />}
-        </>
+      {isBox && !Loading && (
+        <Cont
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          className="loading"
+          custom={theme}
+          variants={variants}
+        >
+          <BoxTitle theme={theme} type="verify-email" />
+          <Form onSubmit={handleSubmit(onValid)}>
+            <InputWrap
+              id="email"
+              type="text"
+              label="Email"
+              theme={theme}
+              error={errors.email?.message}
+              watch={watch('email')}
+              register={register('email', {
+                required: '이메일을 입력하세요.',
+                pattern: {
+                  value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                  message: '이메일 형식이 올바르지 않습니다.',
+                },
+              })}
+            />
+            <Btn item={{ theme, name: 'Submit' }} type="submit" />
+          </Form>
+        </Cont>
       )}
+      <MsgModal
+        msg={msg}
+        theme={theme}
+        Loading={isBox && Loading}
+        closeModal={() => setMsg('')}
+      />
+      {isBox && Loading && <LoadingModal theme={theme} />}
     </AnimatePresence>
   );
 };

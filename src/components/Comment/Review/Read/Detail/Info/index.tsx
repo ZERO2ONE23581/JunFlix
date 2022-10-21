@@ -74,7 +74,7 @@ export const Info = ({
           <EditCmt watch={watch} loading={loading} register={register} />
         )}
       </Cont>
-      {errors.content && <ErrorMsg error={errors.content.message} />}
+      {errors.content && <ErrorMsg error={errors.content.msg} />}
     </form>
   );
 };

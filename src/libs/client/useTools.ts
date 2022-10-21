@@ -25,7 +25,7 @@ export const useUploadImg = async (
 };
 interface IUserError {
   title: string;
-  desc: string;
+  desc?: string;
   max: {
     title: number;
     desc: number;
@@ -34,7 +34,7 @@ interface IUserError {
 }
 export const useError = ({ title, desc, max, setError }: IUserError) => {
   const typed_title = useLength(title);
-  const typed_desc = useLength(desc);
+  const typed_desc = useLength(desc!);
   if (isOverMax(typed_title, max.title))
     return setError('title', {
       message: `제목은 ${max.title}을 초과할 수 없습니다.`,
@@ -54,14 +54,6 @@ export const useMaxLength = (title: number, desc: number) => {
   return { max };
 };
 export const isOverMax = (typed: number, max: number) => Boolean(typed > max);
-export const useHeight = (watch: string, start: number) => {
-  const [Height, setHeight] = useState(start);
-  useEffect(() => {
-    setHeight(watch?.length * 0.5);
-  }, [setHeight, watch]);
-  return { Height };
-};
-
 export const useCapLetters = (word: string) => {
   return word?.replace(/(?:^|\s)\S/g, function (a) {
     return a.toUpperCase();

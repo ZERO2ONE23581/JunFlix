@@ -14,8 +14,8 @@ import { Modal } from '../../../styles/global';
 export const DeleteBoard = ({
   post,
   theme,
-  ogData,
   loading,
+  original,
   setLoading,
   closeModal,
 }: ITypeModal) => {
@@ -31,10 +31,10 @@ export const DeleteBoard = ({
 
   //input
   const onValid = async ({ userId }: IForm) => {
-    const isMatch = Boolean(ogData.host.userId !== userId);
+    const isMatch = Boolean(original.host.userId !== userId);
     if (!isMatch) {
       setError('userId', {
-        message: '보드의 호스트가 아닙니다. (invalid board host.)',
+        msg: '보드의 호스트가 아닙니다. (invalid board host.)',
       });
     }
     setLoading(true);
@@ -107,8 +107,8 @@ export const DeleteBoard = ({
             type="text"
             label="USER ID"
             theme={theme}
-            error={errors.userId?.message}
-            watch={Boolean(watch('userId'))}
+            watch={watch('userId')}
+            error={errors.userId?.msg}
             register={register('userId', {
               required: '아이디를 입력해주세요.',
             })}

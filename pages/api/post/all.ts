@@ -6,7 +6,9 @@ import { withApiSession } from '../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const posts = await client.post.findMany({
     include: {
-      host: true,
+      host: {
+        include: { _count: true },
+      },
       board: true,
       likes: true,
       comments: true,

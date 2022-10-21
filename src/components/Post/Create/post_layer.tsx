@@ -8,24 +8,36 @@ import { Btn } from '../../../Tools/Button';
 interface IPostLayer {
   step: number;
   theme: boolean;
+  preview: boolean;
   closeModal: () => void;
+
   setStep: Dispatch<SetStateAction<number>>;
+  setHideInput: Dispatch<SetStateAction<boolean>>;
 }
-export const Layer = ({ step, theme, setStep, closeModal }: IPostLayer) => {
+export const Layer = ({
+  step,
+  theme,
+  setStep,
+  closeModal,
+  setHideInput,
+  preview,
+}: IPostLayer) => {
   const onClick = (type: string) => {
     if (type === 'back') return setStep((p) => (p === 1 ? 1 : p - 1));
     if (type === 'next') return setStep((p) => (p === 2 ? 2 : p + 1));
     if (type === 'close') return closeModal();
   };
   const Step = (num: number) => Boolean(num === step);
+  const clickBack = () => {
+    onClick('back');
+    setHideInput(false);
+  };
+  const clickNext = () => {
+    onClick('next');
+    if (!preview) setHideInput(true);
+  };
   return (
-    <Cont
-      key={step}
-      custom={theme}
-      variants={variants}
-      className="layer"
-      animate="animate"
-    >
+    <Cont key={step} className="layer">
       <>
         <li>
           {Step(1) && (
@@ -36,11 +48,7 @@ export const Layer = ({ step, theme, setStep, closeModal }: IPostLayer) => {
             />
           )}
           {Step(2) && (
-            <Svg
-              theme={theme}
-              type={'left-chev'}
-              onClick={() => onClick('back')}
-            />
+            <Svg theme={theme} type={'left-chev'} onClick={clickBack} />
           )}
         </li>
         <li>
@@ -53,8 +61,8 @@ export const Layer = ({ step, theme, setStep, closeModal }: IPostLayer) => {
           {Step(1) && (
             <Btn
               type="button"
+              onClick={clickNext}
               item={{ theme, name: 'Next' }}
-              onClick={() => onClick('next')}
             />
           )}
           {Step(2) && <Btn type="submit" item={{ theme, name: 'Save' }} />}
@@ -66,9 +74,10 @@ export const Layer = ({ step, theme, setStep, closeModal }: IPostLayer) => {
 const Cont = styled(motion.ul)`
   gap: 0;
   display: flex;
-  padding: 0 20px;
+  padding: 10px 20px;
   align-items: center;
   justify-content: space-between;
+  //border-bottom: 1px dashed ${(p) => p.theme.color.font};
   li {
     h1 {
       font-size: 1.5rem;

@@ -1,28 +1,14 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { OverlayBg } from '../overlay';
-import { ITheme } from '../../../styles/theme';
 import { Modal } from '../../../styles/global';
 import { variants } from '../../../styles/variants';
 
 interface ILoadingModal {
   theme: boolean;
+  zindex?: number;
 }
-
-export const LoadingModal = ({ theme }: ILoadingModal) => {
-  const svgVar = {
-    initial: (theme: boolean) => ({
-      fill: theme ? '#000000' : '#ffffff',
-    }),
-    animate: (theme: boolean) => ({
-      rotate: '360deg',
-      transition: {
-        duration: 1.5,
-        repeat: Infinity,
-      },
-      fill: theme ? '#000000' : '#ffffff',
-    }),
-  };
+export const LoadingModal = ({ theme, zindex }: ILoadingModal) => {
   return (
     <>
       <Cont
@@ -58,7 +44,7 @@ export const LoadingModal = ({ theme }: ILoadingModal) => {
           />
         </motion.svg>
       </Cont>
-      <OverlayBg dark={0.3} />
+      <OverlayBg dark={0.3} zIndex={zindex} />
     </>
   );
 };
@@ -82,3 +68,16 @@ const Cont = styled(Modal)`
     height: 3em;
   }
 `;
+const svgVar = {
+  initial: (theme: boolean) => ({
+    fill: theme ? '#000000' : '#ffffff',
+  }),
+  animate: (theme: boolean) => ({
+    rotate: '360deg',
+    transition: {
+      duration: 1.5,
+      repeat: Infinity,
+    },
+    fill: theme ? '#000000' : '#ffffff',
+  }),
+};

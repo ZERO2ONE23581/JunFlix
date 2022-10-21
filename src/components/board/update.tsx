@@ -10,7 +10,7 @@ import { ITheme } from '../../../styles/theme';
 import { IBoardType } from '../../types/board';
 import useUser from '../../libs/client/useUser';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
-import { Flex, Form, Modal } from '../../../styles/global';
+import { Flex, Form, Modal, Setting } from '../../../styles/global';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import {
   isOverMax,
@@ -18,11 +18,11 @@ import {
   useLength,
   useMaxLength,
 } from '../../libs/client/useTools';
-import { variants } from '../../../styles/variants';
 import { Avatar } from '../../Tools/Avatar';
+import { variants } from '../../../styles/variants';
 
 export interface ITypeModal extends ITheme {
-  ogData: IBoardType;
+  original: IBoardType;
   loading: boolean;
   post: ({}) => void;
   closeModal: () => void;
@@ -31,7 +31,7 @@ export interface ITypeModal extends ITheme {
 export const UpdateBoard = ({
   post,
   theme,
-  ogData,
+  original,
   loading,
   setLoading,
   closeModal,
@@ -49,13 +49,13 @@ export const UpdateBoard = ({
 
   //set value
   useEffect(() => {
-    if (ogData) {
-      if (ogData.genre) setValue('genre', ogData.genre);
-      if (ogData.onPrivate) setValue('onPrivate', ogData.onPrivate);
-      if (ogData.title) setValue('title', useCapLetters(ogData.title));
-      if (ogData.description) setValue('description', ogData.description);
+    if (original) {
+      if (original.genre) setValue('genre', original.genre);
+      if (original.onPrivate) setValue('onPrivate', original.onPrivate);
+      if (original.title) setValue('title', useCapLetters(original.title));
+      if (original.description) setValue('description', original.description);
     }
-  }, [ogData, setValue]);
+  }, [original, setValue]);
 
   const { max } = useMaxLength(40, 700);
   const IsOverMax = (text: string) => {
@@ -67,11 +67,11 @@ export const UpdateBoard = ({
     const user_id = loggedInUser?.id;
     if (IsOverMax('title'))
       return setError!('title', {
-        message: `보드제목은 ${max.title}자 미만입니다.`,
+        msg: `보드제목은 ${max.title}자 미만입니다.`,
       });
     if (IsOverMax('description'))
       return setError!('description', {
-        message: `보드 소개글은 ${max.desc}자 미만입니다.`,
+        msg: `보드 소개글은 ${max.desc}자 미만입니다.`,
       });
     //
     setLoading(true);
@@ -102,8 +102,8 @@ export const UpdateBoard = ({
             type="text"
             label="Title"
             theme={theme}
-            error={errors.title?.message}
-            watch={Boolean(watch('title'))}
+            error={errors.title?.msg}
+            watch={watch('title')}
             register={register('title', {
               required: '제목을 입력해주세요.',
             })}
@@ -112,35 +112,31 @@ export const UpdateBoard = ({
             id="genre"
             theme={theme}
             register={register('genre')}
-            error={errors.genre?.message}
+            error={errors.genre?.msg}
             watch={Boolean(watch('genre'))}
           />
           <TextAreaWrap
             theme={theme}
             id="description"
-            startHeight={250}
+            minHeight={250}
             watch={watch('description')}
             register={register('description')}
-            error={errors.description?.message}
+            error={errors.description?.msg}
             length={{ max: max.desc, typed: watch('description')?.toString()! }}
           />
         </Flex>
         <Flex className="host-text-wrap">
           <Host>
             <Avatar
-              item={{
-                theme,
-                size: '3.3em',
+              theme={theme}
+              size="3.3rem"
+              data={{
                 preview: null,
-                avatar: ogData.host.avatar,
+                host_id: original?.host_id,
+                avatar: original?.host?.avatar!,
               }}
-              onClick={() =>
-                router.push(
-                  `/user/${ogData.host_id}/${ogData.host.username}/dash`
-                )
-              }
             />
-            <span>@{ogData.host.userId}</span>
+            <span>@{original.host.userId}</span>
           </Host>
         </Flex>
         <Flex>
@@ -213,22 +209,5 @@ const Host = styled.div`
     font-style: italic;
     margin-right: 10px;
     display: inline-block;
-  }
-`;
-const Setting = styled.div`
-  font-style: italic;
-  width: 100%;
-  gap: 12px;
-  display: flex;
-  align-items: center;
-  label {
-    gap: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  input {
-    width: 1.4rem;
-    height: 1.4rem;
   }
 `;

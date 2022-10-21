@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import { ShowImage } from './show_image';
-import { BtnWrap } from './update_postImg_btns';
+import { EditBtns } from './update_postImg_btns';
 import { variants } from '../../../../styles/variants';
-import { PostContents } from './post_contents';
+import { PostInputsWrap } from './update_post_main_inputs';
 import { IPostForm, IPostFormErr } from '../../../types/post';
 import { UseFormRegister, UseFormWatch } from 'react-hook-form';
+import { PostImage } from './main_postImage';
+import { FlexCol } from '../../../../styles/global';
 
 interface IMain {
   isString: {
@@ -19,17 +19,18 @@ interface IMain {
     fileInput: boolean;
     selectQuck: boolean;
   };
-  useform: {
-    errors: IPostFormErr;
-    watch: UseFormWatch<IPostForm>;
-    register: UseFormRegister<IPostForm>;
-  };
   onClick: (type: string) => void;
+  clickDelete: () => void;
   openBoardList: () => void;
   id: {
     host_id: number;
     board_id: number;
     chosen_board_id: number;
+  };
+  useform: {
+    errors: IPostFormErr;
+    watch: UseFormWatch<IPostForm>;
+    register: UseFormRegister<IPostForm>;
   };
 }
 
@@ -39,68 +40,64 @@ export const Main = ({
   useform,
   isString,
   isBoolean,
+  clickDelete,
   openBoardList,
 }: IMain) => {
-  const host_id = id?.host_id!;
-  const board_id = id?.board_id!;
-  const chosen_board_id = id?.chosen_board_id!;
-  const watch = useform?.watch;
-  const errors = useform?.errors;
-  const register = useform?.register;
   const theme = isBoolean?.theme;
   const isHide = isBoolean?.isHide;
   const fileInput = isBoolean?.fileInput;
   const selectQuck = isBoolean?.selectQuck;
   const src = isString?.src;
-  const preview = Boolean(isString?.preview);
-  const original = Boolean(isString?.original);
+  const preview = isString?.preview;
+  const original = isString?.original;
+  const isImg = Boolean(original || preview);
+  const openImg = isImg && !isHide;
   //
   return (
     <>
       {!fileInput && (
-        <Container animate="animate" variants={variants} custom={theme}>
-          <BtnWrap
+        <Cont
+          custom={theme}
+          className="main"
+          animate="animate"
+          variants={variants}
+        >
+          <PostInputsWrap
+            id={id}
+            theme={theme}
+            useform={useform}
+            clickDelete={clickDelete}
+            selectQuck={selectQuck}
+            openBoardList={openBoardList}
+            isShrink={Boolean(original || preview) && !isHide}
+          />
+          <PostImage
+            src={src}
+            open={openImg}
+            preview={preview}
+            original={original}
+          />
+          <EditBtns
             theme={theme}
             onClick={onClick}
-            isBoolean={{ original, preview, isHide }}
+            data={{ isHide, original, preview }}
           />
-          <ShowImage
-            src={src}
-            theme={theme}
-            isBoolean={{ original, preview, isHide }}
-          />
-          <motion.div
-            custom={theme}
-            animate="animate"
-            variants={variants}
-            className="content-wrap"
-          >
-            <PostContents
-              id={{
-                host_id,
-                board_id,
-                chosen_board_id,
-              }}
-              watch={watch}
-              theme={theme}
-              errors={errors}
-              register={register}
-              selectQuck={selectQuck}
-              openBoardList={openBoardList}
-              isShrink={(original || preview) && !isHide}
-            />
-          </motion.div>
-        </Container>
+        </Cont>
       )}
     </>
   );
 };
-const Container = styled(motion.article)`
-  height: 100%;
+const Cont = styled(FlexCol)`
   position: relative;
-  .content-wrap {
-    height: 100%;
-    .contents {
-    }
+  align-items: flex-start;
+  min-height: 100%;
+  .post_image {
+    border: 5px solid hotpink;
+  }
+  .main_inputs {
+    left: 0;
+    top: 2rem;
+    position: absolute;
+    border: 5px solid blueviolet;
   }
 `;

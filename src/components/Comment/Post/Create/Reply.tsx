@@ -66,7 +66,7 @@ export const CreateReply = ({
         </Cont>
       </form>
       {data?.error && <ErrorMsg error={data.error} />}
-      {errors.content && <ErrorMsg error={errors.content?.message} />}
+      {errors.content && <ErrorMsg error={errors.content?.msg} />}
     </>
   );
 };

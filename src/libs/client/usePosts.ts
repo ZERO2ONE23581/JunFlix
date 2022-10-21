@@ -5,11 +5,20 @@ export interface IUseGetAllPosts {
   counts: number | any;
   posts: IPostType[] | any;
 }
-export const useGetAllPosts = (host_id: number) => {
+export const useGetMyPosts = (host_id: number) => {
   const { data } = useSWR<IGetPosts>(`/api/post/all`);
-  const posts = data?.posts?.filter(
-    (e) => e.board_id === 0 && e.host_id === host_id
-  );
-  const counts = posts?.length;
-  return counts;
+  const posts = data?.posts?.filter((e) => e.host_id === host_id);
+  const isData = data && data.ok && data.posts && posts;
+  if (isData && posts.length > 0) return posts;
+};
+export const useGetQuickSavedPost = (host_id: number) => {
+  const { data } = useSWR<IGetPosts>(`/api/post/all`);
+  const isData = data && data.ok && data.posts;
+  if (isData) {
+    const posts = data.posts?.filter((e) => e.host_id === host_id);
+    if (posts) {
+      const quickSaved = posts?.filter((e) => e.board_id === 0);
+      if (quickSaved) return quickSaved.length;
+    }
+  }
 };

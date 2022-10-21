@@ -6,7 +6,7 @@ import { Box, Page } from '../../styles/global';
 import { BoxTitle } from '../../src/Tools/box_title';
 import { ICreateUserRes } from '../../src/types/global';
 import { AnimatePresence, motion } from 'framer-motion';
-import { MessageModal } from '../../src/Tools/msg_modal';
+import { MsgModal } from '../../src/Tools/msg_modal';
 import { HeadTitle } from '../../src/Tools/head_title';
 import useMutation from '../../src/libs/client/useMutation';
 import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
@@ -19,7 +19,7 @@ const Create_User: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const [api, setApi] = useState('');
   const [type, setType] = useState('userId');
-  const [message, setMessage] = useState('');
+  const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);
   const [id, setId] = useState({ userId: '', user_id: 0 });
   const array = ['userId', 'userInfo', 'avatar'].filter((e) => e === type);
@@ -32,8 +32,8 @@ const Create_User: NextPage<{ theme: boolean }> = ({ theme }) => {
       setTimeout(() => {
         setLoading(false);
         if (!data.ok) {
-          if (data.error) setMessage(data.error);
-          if (data.message) setMessage(data.message);
+          if (data.error) setMsg(data.error);
+          if (data.msg) setMsg(data.msg);
         }
         if (data.ok) {
           if (data.type === 'userId') {
@@ -48,12 +48,12 @@ const Create_User: NextPage<{ theme: boolean }> = ({ theme }) => {
           }
           if (data.type === 'avatar') {
             setType('');
-            return setMessage('create-user-done');
+            return setMsg('create-user-done');
           }
         }
       }, 1000);
     }
-  }, [type, setApi, setId, data, setLoading, setMessage, setType, router]);
+  }, [type, setApi, setId, data, setLoading, setMsg, setType, router]);
   const isType = (text: string) => Boolean(type === text);
   const wrap = { theme, loading, post, id, setLoading, isType };
   //
@@ -63,33 +63,32 @@ const Create_User: NextPage<{ theme: boolean }> = ({ theme }) => {
       <Cont>
         <AnimatePresence>
           {!Loading && (
-            <>
-              <Wrap className={type}>
-                {array.map((element) => (
-                  <Box
-                    className="box"
-                    exit="exit"
-                    initial="initial"
-                    animate="animate"
-                    custom={theme}
-                    variants={variants}
-                    transition={TweenTrans}
-                    key={array?.indexOf(element)}
-                  >
-                    <BoxTitle theme={theme} type={`create-user-${type}`} />
-                    <CreateUserId wrap={wrap} isType={isType('userId')} />
-                    <CreateUserInfo wrap={wrap} isType={isType('userInfo')} />
-                    <CreateUserAvatar wrap={wrap} isType={isType('avatar')} />
-                  </Box>
-                ))}
-              </Wrap>
-              <MessageModal
-                theme={theme}
-                message={message}
-                setMessage={setMessage}
-              />
-            </>
+            <Wrap className={type}>
+              {array.map((element) => (
+                <Box
+                  className="box"
+                  exit="exit"
+                  initial="initial"
+                  animate="animate"
+                  custom={theme}
+                  variants={variants}
+                  transition={TweenTrans}
+                  key={array?.indexOf(element)}
+                >
+                  <BoxTitle theme={theme} type={`create-user-${type}`} />
+                  <CreateUserId wrap={wrap} isType={isType('userId')} />
+                  <CreateUserInfo wrap={wrap} isType={isType('userInfo')} />
+                  <CreateUserAvatar wrap={wrap} isType={isType('avatar')} />
+                </Box>
+              ))}
+            </Wrap>
           )}
+          <MsgModal
+            msg={msg}
+            theme={theme}
+            Loading={Loading}
+            closeModal={() => setMsg('')}
+          />
           {Loading && <LoadingModal theme={theme} />}
         </AnimatePresence>
       </Cont>

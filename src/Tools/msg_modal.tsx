@@ -1,109 +1,77 @@
 import { Svg } from './Svg';
 import { Btn } from './Button';
 import styled from '@emotion/styled';
-import { ITheme } from '../../styles/theme';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Modal, Overlay } from '../../styles/global';
-import { variants, opacityVar } from '../../styles/variants';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { ITheme } from '../../styles/theme';
+import { FlexCol, Modal, Overlay } from '../../styles/global';
+import { AnimatePresence, motion } from 'framer-motion';
+import { variants, opacityVar } from '../../styles/variants';
+import { OverlayBg } from './overlay';
 
-interface IMessageModal extends ITheme {
-  message: string;
-  setMessage: Dispatch<SetStateAction<string>>;
+interface IMsgModal extends ITheme {
+  msg: string;
+  closeModal: () => void;
 }
-export const MessageModal = ({ message, theme, setMessage }: IMessageModal) => {
+export const MsgModal = ({ msg, theme, closeModal }: IMsgModal) => {
   const router = useRouter();
   const [text, setText] = useState({ eng: '', kor: '' });
-  const isPostCreated = Boolean(
-    message === 'create_post' || message === 'update_post_skip'
-  );
+  const isReload = Boolean(msg === 'update_done' || msg === 'delete_done');
+  //
   useEffect(() => {
-    if (message) {
-      if (message === 'create-user-done')
-        return setText({
-          eng: 'Welcome!',
-          kor: ' 가입을 축하합니다!',
-        });
-      if (isPostCreated) return setText({ eng: 'saved.', kor: '저장완료.' });
-      if (message === 'update_post')
-        return setText({ eng: 'updated.', kor: '업데이트 완료' });
-      //
-      else return setText({ eng: message, kor: '' });
+    if (msg === 'create_user_done')
+      setText({ eng: 'Welcome!', kor: ' 가입을 축하합니다!' });
+    if (msg === 'update_done')
+      setText({ eng: 'Updated.', kor: '업데이트 되었습니다.' });
+    if (msg === 'update_fail')
+      setText({ eng: 'Update Failed.', kor: '업데이트 실패.' });
+    if (msg === 'create_done')
+      setText({ eng: 'Saved.', kor: '저장되었습니다.' });
+    if (msg === 'delete_done') setText({ eng: 'Deleted.', kor: '삭제완료' });
+    //
+    if (msg === 'error') alert('error! check your console');
+    if (msg) {
+      setTimeout(() => {
+        closeModal();
+        if (isReload) return router.reload();
+        if (msg === 'create_user_done') return router.replace('/login');
+      }, 2000);
     }
-  }, [setText, message]);
-
-  const isReload =
-    Boolean();
-    // message === 'create_post' ||
-    //   message === 'update_post' ||
-    //   message === 'update_post_skip'
-
-  const onClick = () => {
-    if (message === 'create-user-done') return router.replace('/login');
-    if (isReload) return router.reload();
-    else return setMessage('');
-  };
-
+  }, [setText, msg, closeModal, isReload, router]);
+  //
   return (
     <AnimatePresence>
-      {message && (
+      {msg && (
         <>
           <Cont
             exit="exit"
+            custom={theme}
             initial="initial"
             animate="animate"
-            custom={theme}
             variants={variants}
             className="msg-modal"
           >
-            <Svg
-              type="close"
-              theme={theme!}
-              onClick={onClick}
-              item={{ size: '2rem' }}
-            />
-            {Boolean(text.eng || text.kor) && (
-              <Text>
-                <span className="eng">{text.eng}</span>
-                <span className="kor">{text.kor}</span>
-              </Text>
-            )}
-            <Btn type="button" onClick={onClick} item={{ theme, name: 'OK' }} />
+            <Text>
+              {text.kor && <span className="kor">{text.kor}</span>}
+              {text.eng && <span className="eng">{text.eng}</span>}
+            </Text>
           </Cont>
-          <Overlay
-            zindex={100}
-            exit="exit"
-            initial="initial"
-            animate="animate"
-            variants={opacityVar}
-          />
+          <OverlayBg zIndex={200} />
         </>
       )}
     </AnimatePresence>
   );
 };
-
-const Text = styled(motion.span)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  font-size: 1.8rem;
-  .kor {
-    font-size: 1.5rem;
-  }
-`;
 const Cont = styled(Modal)`
-  z-index: 101;
-  gap: 20px;
+  top: 30%;
+  width: fit-content;
+  height: fit-content;
+  z-index: 201;
   padding: 40px;
-  min-width: 400px;
-  min-height: 270px;
-  padding-top: 50px;
-  button {
-    width: 120px;
-  }
+  font-size: 1.5rem;
+`;
+const Text = styled(FlexCol)`
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 `;

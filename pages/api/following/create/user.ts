@@ -34,7 +34,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     });
     //
-    return res.json({ ok: true, message: 'user followed' });
+    return res.json({ ok: true, msg: 'user followed' });
   }
 
   //if you are following this user, delete
@@ -42,12 +42,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const follower = await client.follower.findFirst({
       where: { host_id: following.host_id, user_id: following.user_id },
     });
-    if (!follower)
-      return res.json({ ok: true, message: 'no follower target.' });
+    if (!follower) return res.json({ ok: true, msg: 'no follower target.' });
     //
     await client.follower.delete({ where: { id: follower.id } });
     await client.following.delete({ where: { id: following.id } });
-    return res.json({ ok: true, message: 'user unfollowed' });
+    return res.json({ ok: true, msg: 'user unfollowed' });
   }
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

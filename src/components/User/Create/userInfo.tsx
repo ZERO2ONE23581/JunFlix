@@ -37,13 +37,13 @@ export const CreateUserInfo = ({ wrap, isType }: ICreateUser) => {
       const max = 20;
       if (useLength(username)! > max) {
         return setError('username', {
-          message: `유저의 이름은 ${max}를 초과할 수 없습니다. (Length of the username can't exeed ${max}.)`,
+          msg: `유저의 이름은 ${max}를 초과할 수 없습니다. (Length of the username can't exeed ${max}.)`,
         });
       }
     }
     if (password !== pw_confirm) {
       return setError('pw_confirm', {
-        message: '비밀번호가 일치하지 않습니다.',
+        msg: '비밀번호가 일치하지 않습니다.',
       });
     }
     if (wrap.loading) return;
@@ -84,22 +84,21 @@ export const CreateUserInfo = ({ wrap, isType }: ICreateUser) => {
               type="password"
               label="Password"
               watch={Boolean(watch('password'))}
-              error={errors.password?.message}
+              error={errors.password?.msg}
               register={register('password', {
                 required: '비밀번호를 입력해주세요.',
                 minLength: {
                   value: 8,
-                  message: '비밀번호는 최소 8자리여야 합니다.',
+                  msg: '비밀번호는 최소 8자리여야 합니다.',
                 },
                 maxLength: {
                   value: 16,
-                  message: '비밀번호는 최대 16자리여야 합니다.',
+                  msg: '비밀번호는 최대 16자리여야 합니다.',
                 },
                 pattern: {
                   value:
                     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
-                  message:
-                    '비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야 합니다.',
+                  msg: '비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야 합니다.',
                 },
               })}
             />
@@ -109,7 +108,7 @@ export const CreateUserInfo = ({ wrap, isType }: ICreateUser) => {
               id="pw_confirm"
               label="Confirm Password"
               watch={Boolean(watch('pw_confirm'))}
-              error={errors.pw_confirm?.message}
+              error={errors.pw_confirm?.msg}
               register={register('pw_confirm', {
                 required: '비밀번호를 재입력해주세요.',
               })}
@@ -121,12 +120,12 @@ export const CreateUserInfo = ({ wrap, isType }: ICreateUser) => {
             label="Email"
             theme={theme}
             watch={Boolean(watch('email'))}
-            error={errors.email?.message}
+            error={errors.email?.msg}
             register={register('email', {
               required: '이메일을 입력해주세요.',
               pattern: {
                 value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                message: '이메일 형식이 올바르지 않습니다.',
+                msg: '이메일 형식이 올바르지 않습니다.',
               },
             })}
           />
@@ -136,7 +135,7 @@ export const CreateUserInfo = ({ wrap, isType }: ICreateUser) => {
             theme={theme}
             label="Username"
             register={register('username')}
-            error={errors.username?.message}
+            error={errors.username?.msg}
             watch={Boolean(watch('username'))}
           />
           <Btn item={{ theme, name: 'Submit' }} type="submit" />

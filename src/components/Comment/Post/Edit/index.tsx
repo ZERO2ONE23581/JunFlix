@@ -63,14 +63,14 @@ export const EditComment = ({
         <TextAreaWrap
           id="content"
           theme={theme}
-          startHeight={100}
+          minHeight={100}
           placeholder="type comments.."
           register={register('content', { required: '댓글을 입력해주세요.' })}
         />
         {!loading && <Svg theme={theme} size="1.5rem" type="paper-plane" />}
         {loading && <Svg theme={theme} size="2rem" type="loading" />}
       </EditCont>
-      {errors.content && <ErrorMsg error={errors.content.message} />}
+      {errors.content && <ErrorMsg error={errors.content.msg} />}
     </form>
   );
 };

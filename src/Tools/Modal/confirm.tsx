@@ -61,7 +61,7 @@ export const ConfirmModal = ({
             />
           </BtnWrap>
           {errors?.userId && (
-            <ErrorMsg type="err-delete-user" error={errors.userId.message} />
+            <ErrorMsg type="err-delete-user" error={errors.userId.msg} />
           )}
         </Cont>
       )}

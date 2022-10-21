@@ -1,151 +1,150 @@
-import { ErrMsg } from '.';
-import { useEffect, useState } from 'react';
+import {
+  color,
+  greyBrdr,
+  greyColor,
+  redBrdr,
+  redColor,
+  TransBorder,
+} from '../../../styles/variants';
+import { useState } from 'react';
 import styled from '@emotion/styled';
-import { ITheme } from '../../../styles/theme';
-import { UseFormRegisterReturn } from 'react-hook-form';
-import { AnimatePresence, motion } from 'framer-motion';
-import { inputErrVar, TweenTrans } from '../../../styles/variants';
-import { useHeight, useLength } from '../../libs/client/useTools';
+import { ErrMsg } from '../error_message';
 import { TextLength } from '../TextLength';
+import { ITheme } from '../../../styles/theme';
+import { FlexCol } from '../../../styles/global';
+import { useLength } from '../../libs/client/useTools';
+import { AnimatePresence, motion } from 'framer-motion';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface ITextAreaWrap extends ITheme {
   id: string;
-  error?: string;
-  watch?: string;
+  label?: string;
   disabled?: boolean;
   placeholder?: string;
-  startHeight: number;
-  length: {
-    max: number;
-    typed?: string;
-  };
   register: UseFormRegisterReturn;
+  data: {
+    min: number;
+    max: number;
+    text?: string;
+    error?: string;
+  };
 }
 export const TextAreaWrap = ({
   id,
+  data,
+  label,
   theme,
-  error,
-  length,
-  watch,
   register,
   disabled,
   placeholder,
-  startHeight,
 }: ITextAreaWrap) => {
-  const { Height } = useHeight(watch!, startHeight);
-  const height = Height ? Height : startHeight;
-  const [isFocus, setIsFocus] = useState(false);
-  const IsFocus = Boolean(isFocus || watch || disabled);
-  const custom = {
-    height,
-    IsFocus,
-    disabled,
-    theme: !theme,
-  };
-  //
+  //const disabled = true;
+  const min = data?.min!;
+  const max = data?.max!;
+  const text = data?.text!;
+  const error = data?.error!;
+  const textLength = useLength(text!);
+  const [focus, setFocus] = useState(false);
+  const isRed = Boolean(focus || text);
+  const height = textLength > max ? max * 0.5 : min + textLength * 0.3;
+  const custom = { theme, height, isRed, disabled };
   return (
-    <AnimatePresence initial={false}>
-      <Cont className="textarea-wrap" minHeight={`${startHeight}px`}>
-        <label htmlFor={id} style={{ display: 'none' }} />
-        <motion.textarea
-          {...register}
-          id={id}
-          name={id}
-          disabled={disabled}
-          placeholder={placeholder}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          custom={custom}
-          variants={textAreaVar}
-          transition={TweenTrans}
-          exit="exit"
+    <AnimatePresence>
+      <Cont
+        height={`${height}px`}
+        max={`${max * 0.48}px`}
+        className="textarea-wrap"
+      >
+        {label && (
+          <motion.label
+            htmlFor={id}
+            animate="animate"
+            variants={label_var}
+            custom={{ ...custom }}
+          >
+            {label}
+          </motion.label>
+        )}
+        <Style
           initial="initial"
           animate="animate"
-          whileHover={'hover'}
-          whileFocus={'focus'}
-          //
-        />
-        <TextLength
-          theme={theme}
-          number={{
-            max: length?.max!,
-            typed: useLength(length?.typed!),
-          }}
-        />
-        {error && (
-          <ErrMsg
-            exit="exit"
-            initial="initial"
-            animate="animate"
-            custom={theme}
-            variants={inputErrVar}
-            className="err-msg"
-          >
-            {error}
-          </ErrMsg>
-        )}
+          custom={{ ...custom }}
+          variants={textarea_vars}
+        >
+          <textarea
+            id={id}
+            {...register}
+            disabled={disabled}
+            placeholder={placeholder}
+            onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
+          />
+        </Style>
+        <TextLength theme={theme} number={{ max, typed: useLength(text!) }} />
+        <ErrMsg error={error} />
       </Cont>
     </AnimatePresence>
   );
 };
-const Cont = styled.div<{ minHeight: string }>`
+const Cont = styled(FlexCol)<{ height: string; max: string }>`
   gap: 10px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
   width: 100%;
+  overflow-y: initial;
+  align-items: flex-start;
+  position: relative;
+  label {
+    top: -1rem;
+    left: 1rem;
+    z-index: 1;
+    font-size: 1.1rem;
+    padding: 5px 10px;
+    width: fit-content;
+    position: absolute;
+    border-radius: 10px;
+    display: inline-block;
+    //border: 1px solid yellow;
+  }
   textarea {
-    font-size: 1.2rem;
-    padding: 10px;
-    padding-left: 15px;
-    padding-top: 15px;
-    border: none;
+    width: 100%;
     resize: none;
     cursor: auto;
-    border-radius: 4px;
+    border: none;
+    //border: 1px solid yellow;
+    outline: none;
+    max-height: 500px;
+    font-size: 1.1rem;
     word-break: break-all;
-    width: 100%;
-    min-height: 150px;
-    min-height: ${(p) => p.minHeight && p.minHeight};
-    ::placeholder {
-    }
+    height: ${(p) => p.height};
+    max-height: ${(p) => p.max};
+    color: ${(p) => p.theme.color.font};
+    background-color: ${(p) => p.theme.color.bg};
     ::-webkit-scrollbar {
       display: none;
     }
   }
 `;
-const textAreaVar = {
-  initial: ({ theme, IsFocus, disabled, height }: any) => ({
+const Style = styled(motion.div)`
+  width: 100%;
+  overflow: hidden;
+  padding: 15px 20px;
+  border-radius: 8px;
+`;
+
+const textarea_vars = {
+  initial: ({ height }: any) => ({
     height,
-    color: disabled ? '#E50914' : theme ? '#ffffff' : '#000000',
-    backgroundColor: !theme ? '#ffffff' : '#000000',
-    outline: IsFocus
-      ? '3px solid #E50914 '
-      : disabled
-      ? '3px solid #636e72'
-      : theme
-      ? '1px solid #ffffff'
-      : '1px solid #000000',
   }),
-  animate: ({ theme, IsFocus, disabled, height }: any) => ({
+  animate: ({ theme, disabled, isRed, height }: any) => ({
     height,
-    color: disabled ? '#636e72' : theme ? '#ffffff' : '#000000',
-    backgroundColor: !theme ? '#ffffff' : '#000000',
-    outline: IsFocus
-      ? '3px solid #E50914 '
-      : disabled
-      ? '3px solid #636e72'
-      : theme
-      ? '1px solid #ffffff'
-      : '1px solid #000000',
+    transition: { duration: 0.3 },
+    backgroundColor: color(!theme),
+    color: disabled ? greyColor : isRed ? redColor : color(theme),
+    border: disabled ? greyBrdr : isRed ? redBrdr : TransBorder(!theme),
   }),
-  hover: ({ disabled }: any) => ({
-    transition: { duration: 0.2 },
-    outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
-  }),
-  focus: ({ disabled }: any) => ({
-    transition: { duration: 0.2 },
-    outline: !disabled ? '3px solid rgb(229,9,20)' : '3px solid #636e72',
+};
+const label_var = {
+  animate: ({ isRed, theme, disabled }: any) => ({
+    backgroundColor: color(!theme),
+    color: disabled ? greyColor : isRed ? redColor : color(theme),
   }),
 };

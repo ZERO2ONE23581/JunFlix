@@ -33,7 +33,7 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
               <ModalSchema
                 type={type}
                 theme={theme}
-                ogData={data?.board}
+                original={data?.board}
                 modal={Boolean(type)}
                 closeModal={() => setType('')}
               />

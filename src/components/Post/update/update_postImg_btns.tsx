@@ -3,19 +3,19 @@ import { motion } from 'framer-motion';
 import { Flex } from '../../../../styles/global';
 import { Svg } from '../../../Tools/Svg';
 
-interface IBtnWrap {
+interface IEditBtnWrap {
   theme: boolean;
-  isBoolean: {
+  data: {
     isHide: boolean;
-    preview: boolean;
-    original: boolean;
+    preview: string;
+    original: string | null;
   };
   onClick: (type: string) => void;
 }
-export const BtnWrap = ({ theme, isBoolean, onClick }: IBtnWrap) => {
-  const preview = isBoolean?.preview;
-  const original = isBoolean?.original;
-  const isHide = isBoolean?.isHide;
+export const EditBtns = ({ theme, data, onClick }: IEditBtnWrap) => {
+  const preview = data?.preview;
+  const original = data?.original;
+  const isHide = data?.isHide;
   return (
     <Container className="options">
       <div>

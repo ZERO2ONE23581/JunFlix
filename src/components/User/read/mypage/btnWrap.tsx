@@ -64,6 +64,7 @@ const Cont = styled(BtnWrap)`
   width: fit-content;
   button {
     width: 100px;
+    font-size: 1.3rem;
     padding-bottom: 10px;
   }
 `;

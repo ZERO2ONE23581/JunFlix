@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
+import { color } from '../../styles/variants';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { color, scaleVar } from '../../styles/variants';
 
 interface ISvgProps {
   type: string;

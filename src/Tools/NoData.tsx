@@ -31,55 +31,37 @@ export const NoData = ({ type, theme }: INoData) => {
   //
   return (
     <Cont
-      className="no-data"
       exit="exit"
+      custom={theme}
       initial="initial"
       animate="animate"
-      custom={theme}
       variants={variants}
+      className="no-data"
     >
-      <ul>
-        <li>
-          <span className="emoji">🤔</span>
-        </li>
-        <li className="kor">데이터가 존재하지 않습니다.</li>
-        <li className="eng">(No data found.)</li>
-        <motion.li
-          onClick={onClick}
-          exit="exit"
-          className="click"
-          custom={!theme}
-          initial="initial"
-          animate="animate"
-          whileHover={'hover'}
-          variants={hoverColor}
-        >
-          <span className="kor">{text} 생성하러 가기</span>
-          <span>Create {text}</span>
-          <span>
-            <Svg theme={theme} type="right-arrow" />
-          </span>
-        </motion.li>
-      </ul>
+      <li className="emoji">🤔</li>
+      <li>
+        <span className="eng">No data. </span>
+        <span className="kor">데이터를 찾을수 없습니다.</span>
+      </li>
     </Cont>
   );
 };
-const Cont = styled(motion.div)`
-  margin: 10% auto;
-  font-size: 1.3rem;
+const Cont = styled(motion.ul)`
+  margin: 0 auto;
   width: fit-content;
   text-align: center;
-  ul {
-    li {
-      margin-bottom: 10px;
-    }
-    .click {
-      cursor: pointer;
+  .emoji {
+    font-size: 4rem;
+  }
+  li {
+    margin-bottom: 10px;
+    .eng,
+    .kor {
       font-style: italic;
-      gap: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .eng {
+      font-size: 1.6rem;
     }
   }
 `;

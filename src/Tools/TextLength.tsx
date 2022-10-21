@@ -46,7 +46,7 @@ export const TextLength = ({ theme, number }: ITextLength) => {
 const Cont = styled(motion.div)`
   width: 100%;
   display: flex;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   align-items: center;
   justify-content: flex-end;
   span {

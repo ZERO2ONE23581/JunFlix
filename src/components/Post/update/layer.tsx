@@ -10,19 +10,15 @@ interface ILayer {
   preview: boolean;
   fileInput: boolean;
   onClick: (type: string) => void;
-  closeSelectModal: () => void;
+  clickClose: () => void;
 }
 export const Layer = ({
   theme,
   preview,
   onClick,
   fileInput,
-  closeSelectModal,
+  clickClose,
 }: ILayer) => {
-  const clickClose = () => {
-    () => onClick('close');
-    closeSelectModal();
-  };
   return (
     <Container
       custom={theme}
@@ -63,11 +59,9 @@ export const Layer = ({
   );
 };
 
-const Container = styled(motion.div)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+const Container = styled(Flex)`
   padding: 8px 20px;
+  justify-content: space-between;
   .add-skip {
     gap: 8px;
   }

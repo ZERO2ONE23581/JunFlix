@@ -8,24 +8,24 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
 import { AnimatePresence } from 'framer-motion';
-import { MessageModal } from '../../src/Tools/msg_modal';
+import { MsgModal } from '../../src/Tools/msg_modal';
 import { IRes } from '../../src/types/global';
 
 const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const [post, { loading, data }] = useMutation<IRes>(`/api/board/create`);
   const [Loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [msg, setMsg] = useState('');
   useEffect(() => {
     if (data) {
       setTimeout(() => {
         setLoading(false);
-        if (data.error) return setMessage(data.error);
+        if (data.error) return setMsg(data.error);
         if (data.ok)
           return router.replace(`/board/${data.board.id}/${data.board.title}`);
       }, 1000);
     }
-  }, [data, router, setMessage, setTimeout, setLoading]);
+  }, [data, router, setMsg, setTimeout, setLoading]);
   //
   return (
     <>
@@ -33,20 +33,19 @@ const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
       <Cont>
         <AnimatePresence>
           {!Loading && (
-            <>
-              <CreateBoardBox
-                theme={theme}
-                post={post}
-                loading={loading}
-                setLoading={setLoading}
-              />
-              <MessageModal
-                theme={theme}
-                message={message}
-                setMessage={setMessage}
-              />
-            </>
+            <CreateBoardBox
+              theme={theme}
+              post={post}
+              loading={loading}
+              setLoading={setLoading}
+            />
           )}
+          <MsgModal
+            msg={msg}
+            theme={theme}
+            Loading={Loading}
+            closeModal={() => setMsg('')}
+          />
           {Loading && <LoadingModal theme={theme} />}
         </AnimatePresence>
       </Cont>

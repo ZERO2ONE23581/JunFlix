@@ -31,7 +31,7 @@ export const Password_Form = ({ dataWrap }: IEditUser) => {
   const onValid = ({ password, newPassword, pw_confirm }: IUserForm) => {
     if (newPassword !== pw_confirm)
       return setError('pw_confirm', {
-        message: '비밀번호가 일치하지 않습니다.',
+        msg: '비밀번호가 일치하지 않습니다.',
       });
     if (loading) return;
     setLoading(true);
@@ -48,7 +48,7 @@ export const Password_Form = ({ dataWrap }: IEditUser) => {
             type="password"
             label="Password"
             watch={Boolean(watch('password'))}
-            error={errors.password?.message}
+            error={errors.password?.msg}
             register={register('password', {
               required: '현재 비밀번호를 입력해주세요.',
             })}
@@ -60,22 +60,21 @@ export const Password_Form = ({ dataWrap }: IEditUser) => {
               id="newPassword"
               label="New Password"
               watch={Boolean(watch('newPassword'))}
-              error={errors.newPassword?.message}
+              error={errors.newPassword?.msg}
               register={register('newPassword', {
                 required: '새로운 비밀번호를 입력해주세요.',
                 minLength: {
                   value: 8,
-                  message: '비밀번호는 최소 8자리여야 합니다.',
+                  msg: '비밀번호는 최소 8자리여야 합니다.',
                 },
                 maxLength: {
                   value: 16,
-                  message: '비밀번호는 최대 16자리여야 합니다.',
+                  msg: '비밀번호는 최대 16자리여야 합니다.',
                 },
                 pattern: {
                   value:
                     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
-                  message:
-                    '비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야 합니다.',
+                  msg: '비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야 합니다.',
                 },
               })}
             />
@@ -84,7 +83,7 @@ export const Password_Form = ({ dataWrap }: IEditUser) => {
               type="password"
               id="pw_confirm"
               label="Confirm Password"
-              error={errors.pw_confirm?.message}
+              error={errors.pw_confirm?.msg}
               watch={Boolean(watch('pw_confirm'))}
               register={register('pw_confirm', {
                 required: '새로운 비밀번호를 재입력해주세요.',

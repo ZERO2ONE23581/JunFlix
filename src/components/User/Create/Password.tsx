@@ -6,7 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import { Box, Form } from '../../../../styles/global';
 import { InputWrap } from '../../../Tools/Input';
 import { ITheme } from '../../../../styles/theme';
-import { MessageModal } from '../../../Tools/msg_modal';
+import { MsgModal } from '../../../Tools/msg_modal';
 import { variants } from '../../../../styles/variants';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
@@ -24,7 +24,7 @@ export const CreatePassword = ({
   userId,
   setModal,
 }: ICreatePassword) => {
-  const [message, setMessage] = useState('');
+  const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);
   const [create, { loading, data }] = useMutation<IFindPostRes>(
     `/api/user/create/password`
@@ -53,74 +53,71 @@ export const CreatePassword = ({
       setTimeout(() => {
         setLoading(false);
         if (data.ok) setModal(data.ok);
-        if (data.error) setMessage(data.error);
+        if (data.error) setMsg(data.error);
       }, 1000);
     }
-  }, [data, setModal, setMessage, setLoading, setTimeout]);
+  }, [data, setModal, setMsg, setLoading, setTimeout]);
 
   return (
     <AnimatePresence>
-      {isBox && (
-        <>
-          {!Loading && (
-            <Cont
-              exit="exit"
-              initial="initial"
-              animate="animate"
-              className="loading"
-              custom={theme}
-              variants={variants}
-            >
-              <BoxTitle theme={theme} type="create-password" />
-              <Form onSubmit={handleSubmit(onValid)}>
-                <InputWrap
-                  theme={theme}
-                  id="password"
-                  type="password"
-                  label="New Password"
-                  watch={Boolean(watch('password'))}
-                  error={errors.password?.message}
-                  register={register('password', {
-                    required: '새 비밀번호 입력하세요.',
-                    minLength: {
-                      value: 8,
-                      message: '비밀번호는 최소 8자리여야 합니다.',
-                    },
-                    maxLength: {
-                      value: 16,
-                      message: '비밀번호는 최대 16자리여야 합니다.',
-                    },
-                    pattern: {
-                      value:
-                        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
-                      message:
-                        '비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야 합니다.',
-                    },
-                  })}
-                />
-                <InputWrap
-                  theme={theme}
-                  type="password"
-                  id="pw_confirm"
-                  label="Confirm Password"
-                  error={errors.pw_confirm?.message}
-                  watch={Boolean(watch('pw_confirm'))}
-                  register={register('pw_confirm', {
-                    required: '새 비밀번호 재입력하세요.',
-                  })}
-                />
-                <Btn item={{ theme, name: 'Submit' }} type="submit" />
-              </Form>
-              <MessageModal
-                theme={theme}
-                message={message}
-                setMessage={setMessage}
-              />
-            </Cont>
-          )}
-          {Loading && <LoadingModal theme={theme} />}
-        </>
+      {isBox && !Loading && (
+        <Cont
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          className="loading"
+          custom={theme}
+          variants={variants}
+        >
+          <BoxTitle theme={theme} type="create-password" />
+          <Form onSubmit={handleSubmit(onValid)}>
+            <InputWrap
+              theme={theme}
+              id="password"
+              type="password"
+              label="New Password"
+              watch={watch('password')}
+              error={errors.password?.message}
+              register={register('password', {
+                required: '새 비밀번호 입력하세요.',
+                minLength: {
+                  value: 8,
+                  message: '비밀번호는 최소 8자리여야 합니다.',
+                },
+                maxLength: {
+                  value: 16,
+                  message: '비밀번호는 최대 16자리여야 합니다.',
+                },
+                pattern: {
+                  value:
+                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
+                  message:
+                    '비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야 합니다.',
+                },
+              })}
+            />
+            <InputWrap
+              theme={theme}
+              type="password"
+              id="pw_confirm"
+              label="Confirm Password"
+              error={errors.pw_confirm?.message}
+              watch={watch('pw_confirm')}
+              register={register('pw_confirm', {
+                required: '새 비밀번호 재입력하세요.',
+              })}
+            />
+            <Btn item={{ theme, name: 'Submit' }} type="submit" />
+          </Form>
+        </Cont>
       )}
+      <MsgModal
+        msg={msg}
+        theme={theme}
+        Loading={isBox && Loading}
+        closeModal={() => setMsg('')}
+      />
+      {isBox && Loading && <LoadingModal theme={theme} />}
     </AnimatePresence>
   );
 };

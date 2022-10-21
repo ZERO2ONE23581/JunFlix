@@ -8,17 +8,14 @@ interface IOverlayBg {
 }
 export const OverlayBg = ({ dark, zIndex, closeModal }: IOverlayBg) => {
   return (
-    <>
-      <Overlay
-        className="overlay-bg"
-        dark={dark}
-        zindex={zIndex}
-        exit="exit"
-        animate="animate"
-        initial="initial"
-        variants={opacityVar}
-        onClick={closeModal}
-      />
-    </>
+    <Overlay
+      dark={dark}
+      zindex={zIndex}
+      variants={opacityVar}
+      onClick={closeModal}
+      animate="animate"
+      initial="initial"
+      exit="exit"
+    />
   );
 };

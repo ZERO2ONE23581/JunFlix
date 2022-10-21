@@ -8,10 +8,29 @@ export const Page = styled(motion.section)`
   min-height: 100vh;
   position: relative;
 `;
+export const Setting = styled.div`
+  font-style: italic;
+  width: 100%;
+  gap: 12px;
+  display: flex;
+  align-items: center;
+  label {
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  input {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+`;
+
 export const FlexPage = styled(Page)`
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
 `;
 export const Layer = styled(FlexPage)`
   position: relative;
@@ -33,7 +52,6 @@ export const Circle = styled(motion.div)`
 export const Flex = styled(motion.div)`
   width: 100%;
   display: flex;
-  overflow-y: auto;
   align-items: center;
   justify-content: center;
   ::-webkit-scrollbar {
@@ -82,7 +100,7 @@ export const Modal = styled(motion.article)`
   right: 0;
   bottom: 0;
   position: fixed;
-  margin: 3rem auto;
+  margin: 2.5rem auto;
   //
   padding: 20px;
   overflow: hidden;
@@ -132,7 +150,7 @@ export const SmallModal = styled(Modal)`
     color: ${(p) => p.theme.color.logo};
   }
 `;
-export const BtnWrap = styled.div`
+export const BtnWrap = styled(motion.div)`
   width: 100%;
   gap: 15px;
   display: flex;
@@ -166,9 +184,9 @@ export const Blur = styled.div<{ isBlur: boolean }>`
 `;
 export const Form = styled(motion.form)`
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 `;
 export const Box = styled(motion.div)`
   position: relative;
@@ -194,7 +212,7 @@ export const Overlay = styled(motion.div)<{ dark?: number; zindex?: number }>`
   width: 100vw;
   height: 100vh;
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: ${(p) => (p.zindex ? p.zindex : '99')};
   background-color: ${(p) => p.dark && `rgba(0, 0, 0, ${p.dark})`};
   //background-color: red;

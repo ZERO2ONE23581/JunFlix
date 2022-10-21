@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
+import { AnimatePresence } from 'framer-motion';
 import { InputWrap } from '../../../Tools/Input';
 import { PostInfo } from '../../../../styles/post';
 import { ICreatePostForm } from '../../../types/post';
 import { TextAreaWrap } from '../../../Tools/Input/TextArea';
 import { useMaxLength } from '../../../libs/client/useTools';
-import { AnimatePresence } from 'framer-motion';
 
 export const PostContents = ({
   watch,
@@ -13,24 +13,23 @@ export const PostContents = ({
   register,
   isNext,
 }: ICreatePostForm) => {
-  const lightTheme = !theme;
   const { max } = useMaxLength(50, 1000);
   return (
     <AnimatePresence>
       {isNext && (
         <Cont
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          className="post-inputs-wrap"
-          custom={lightTheme}
+          custom={theme}
           variants={ContentVar}
+          className="post-inputs-wrap"
+          animate="animate"
+          initial="initial"
+          exit="exit"
         >
           <h2>Fill the Blanks below.</h2>
           <InputWrap
             id="title"
             type="text"
-            theme={lightTheme}
+            theme={theme}
             label="Title"
             error={errors.title?.message}
             register={register('title', {
@@ -43,8 +42,8 @@ export const PostContents = ({
             error={errors.description?.message}
             watch={watch!('description')}
             id="description"
-            startHeight={140}
-            theme={lightTheme}
+            minHeight={140}
+            theme={theme}
             register={register('description')}
             placeholder="이 포스트에 대한 설명을 적어주세요."
             length={{
@@ -55,7 +54,7 @@ export const PostContents = ({
           <InputWrap
             type="text"
             id="hashtags"
-            theme={lightTheme}
+            theme={theme}
             label="Movie Tags"
             watch={watch('hashtags')}
             register={register('hashtags')}
@@ -65,7 +64,7 @@ export const PostContents = ({
             type="text"
             id="pageLink"
             label="Website"
-            theme={lightTheme}
+            theme={theme}
             watch={watch('pageLink')}
             register={register('pageLink')}
             placeholder="웹사이트 링크 추가"
@@ -75,10 +74,21 @@ export const PostContents = ({
     </AnimatePresence>
   );
 };
-const Cont = styled(PostInfo)``;
+const Cont = styled(PostInfo)`
+  //border: 2px solid yellow;
+  height: 100%;
+  padding: 30px;
+  h2 {
+    //border: 2px solid blue;
+    padding-left: 5px;
+  }
+  input {
+    padding: 12px 20px;
+  }
+`;
 const ContentVar = {
   initial: () => ({
-    y: -900,
+    y: 900,
     opacity: 0,
     scale: 0.2,
   }),
@@ -89,7 +99,7 @@ const ContentVar = {
     transition: { delay: 0.5, duration: 0.3 },
   }),
   exit: () => ({
-    y: -900,
+    y: 900,
     opacity: 0,
     scale: 0.2,
     transition: { duration: 0.5 },

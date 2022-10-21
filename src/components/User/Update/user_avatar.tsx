@@ -71,7 +71,7 @@ export const UserAvatar_Form = ({ dataWrap }: IEditUser) => {
               accept="image/*"
             />
           </ImageLabel>
-          {errors.avatar?.message && (
+          {errors.avatar?.msg && (
             <ErrMsg
               exit="exit"
               initial="initial"
@@ -80,7 +80,7 @@ export const UserAvatar_Form = ({ dataWrap }: IEditUser) => {
               variants={inputErrVar}
               className="err-msg"
             >
-              {errors.avatar?.message}
+              {errors.avatar?.msg}
             </ErrMsg>
           )}
           <Btn item={{ theme, name: 'Edit' }} type="submit" />

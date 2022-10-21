@@ -99,9 +99,9 @@ export const EditPost = ({ theme, ogData, setEdit }: IEditPost) => {
   const clickCloseIcon = () => setEdit({ update: false, delete: false });
   const clickSave = () => {
     if (!watch('title'))
-      return setError('title', { message: '포스트 제목을 입력하세요.' });
+      return setError('title', { msg: '포스트 제목을 입력하세요.' });
     else if (!watch('content'))
-      return setError('content', { message: '내용을 입력하세요.' });
+      return setError('content', { msg: '내용을 입력하세요.' });
     else setSaveEdit(true);
   };
   //
@@ -127,7 +127,7 @@ export const EditPost = ({ theme, ogData, setEdit }: IEditPost) => {
             <TextAreaWrap
               id="content"
               theme={theme}
-              startHeight={200}
+              minHeight={200}
               register={register('content')}
               placeholder="write about your post here.."
             />

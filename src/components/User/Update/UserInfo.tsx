@@ -58,12 +58,12 @@ export const UserInfo_Form = ({ dataWrap }: IEditUser) => {
             id="username"
             type="text"
             label="Username"
-            error={errors.username?.message}
+            error={errors.username?.msg}
             watch={Boolean(watch('username'))}
             register={register('username', {
               maxLength: {
                 value: 10,
-                message: '유저의 이름은 10자를 초과할수 없습니다.',
+                msg: '유저의 이름은 10자를 초과할수 없습니다.',
               },
             })}
           />
@@ -73,19 +73,19 @@ export const UserInfo_Form = ({ dataWrap }: IEditUser) => {
             type="email"
             label="Email"
             watch={Boolean(watch('email'))}
-            error={errors.email?.message}
+            error={errors.email?.msg}
             register={register('email', {
               required: '이메일을 입력해주세요.',
               pattern: {
                 value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                message: '이메일 형식이 올바르지 않습니다.',
+                msg: '이메일 형식이 올바르지 않습니다.',
               },
             })}
           />
           <SelectWrap
             id="gender"
             theme={theme}
-            error={errors.gender?.message}
+            error={errors.gender?.msg}
             watch={Boolean(watch('gender'))}
             register={register('gender')}
           />
@@ -96,11 +96,11 @@ export const UserInfo_Form = ({ dataWrap }: IEditUser) => {
               type="text"
               label="Name"
               watch={Boolean(watch('name'))}
-              error={errors.name?.message}
+              error={errors.name?.msg}
               register={register('name', {
                 maxLength: {
                   value: 10,
-                  message: '이름은 10자를 초과할수 없습니다.',
+                  msg: '이름은 10자를 초과할수 없습니다.',
                 },
               })}
             />
@@ -110,7 +110,7 @@ export const UserInfo_Form = ({ dataWrap }: IEditUser) => {
               type="date"
               label="Birth"
               watch={Boolean(watch('birth'))}
-              error={errors.birth?.message}
+              error={errors.birth?.msg}
               register={register('birth')}
             />
             <InputWrap
@@ -118,7 +118,7 @@ export const UserInfo_Form = ({ dataWrap }: IEditUser) => {
               id="location"
               type="text"
               label="Location"
-              error={errors.location?.message}
+              error={errors.location?.msg}
               watch={Boolean(watch('location'))}
               register={register('location')}
             />

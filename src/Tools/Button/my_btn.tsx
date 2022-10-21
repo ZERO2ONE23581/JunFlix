@@ -1,7 +1,6 @@
-import { Svg } from '../Svg';
 import styled from '@emotion/styled';
-import { border, color, TransBorder } from '../../../styles/variants';
-import { MouseEventHandler, ReactElement, useEffect, useState } from 'react';
+import { MouseEventHandler } from 'react';
+import { color } from '../../../styles/variants';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useCapLetter } from '../../libs/client/useTools';
 

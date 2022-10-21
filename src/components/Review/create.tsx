@@ -94,7 +94,7 @@ export const CreateReview = ({ theme }: ITheme) => {
           <TextAreaWrap
             id="content"
             theme={theme}
-            startHeight={200}
+            minHeight={200}
             watch={watch('content')}
             placeholder="리뷰 작성하기..."
             register={register('content')}

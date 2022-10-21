@@ -44,11 +44,11 @@ export const CreateBoardBox = ({
   const onValid = async ({ title, genre, description }: IBoardForm) => {
     if (IsOverMax('title'))
       return setError!('title', {
-        message: `보드제목은 ${max.title}자 미만입니다.`,
+        msg: `보드제목은 ${max.title}자 미만입니다.`,
       });
     if (IsOverMax('description'))
       return setError!('description', {
-        message: `보드 소개글은 ${max.desc}자 미만입니다.`,
+        msg: `보드 소개글은 ${max.desc}자 미만입니다.`,
       });
     setLoading(true);
     if (loading) return;
@@ -76,7 +76,7 @@ export const CreateBoardBox = ({
             type="text"
             label="Title"
             theme={theme}
-            error={errors.title?.message}
+            error={errors.title?.msg}
             watch={watch('title')}
             register={register('title', {
               required: '보드의 제목을 입력하세요.',
@@ -85,7 +85,7 @@ export const CreateBoardBox = ({
           <SelectWrap
             id="genre"
             theme={theme}
-            error={errors.genre?.message}
+            error={errors.genre?.msg}
             register={register('genre')}
             watch={Boolean(watch('genre'))}
           />
@@ -95,10 +95,10 @@ export const CreateBoardBox = ({
         <TextAreaWrap
           theme={theme}
           id="description"
-          startHeight={200}
+          minHeight={200}
           watch={watch('description')}
           register={register('description')}
-          error={errors.description?.message}
+          error={errors.description?.msg}
           placeholder="이 보드에 대한 설명을 해주세요. (Write about this board.)"
           length={{ max: max.desc, typed: String(watch('description')) }}
         />

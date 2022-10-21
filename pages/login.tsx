@@ -12,12 +12,12 @@ import { IRes } from '../src/types/global';
 import { HeadTitle } from '../src/Tools/head_title';
 import useMutation from '../src/libs/client/useMutation';
 import { LoadingModal } from '../src/Tools/Modal/loading_modal';
-import { MessageModal } from '../src/Tools/msg_modal';
+import { MsgModal } from '../src/Tools/msg_modal';
 import { variants } from '../styles/variants';
 
 const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
-  const [message, setMessage] = useState('');
+  const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);
   const [login, { loading, data }] = useMutation<IRes>(`/api/login`);
   const {
@@ -37,15 +37,15 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
       setTimeout(() => {
         setLoading(false);
         if (data?.ok) return router.replace('/');
-        if (data?.error) return setMessage(data.error);
+        if (data?.error) return setMsg(data.error);
       }, 1000);
     }
-  }, [data, router, setMessage, setTimeout, setLoading]);
+  }, [data, router, setMsg, setTimeout, setLoading]);
   //
   return (
     <>
       <HeadTitle title="로그인" />
-      <Cont>
+      <Cont variants={variants} animate="animate" custom={theme}>
         <AnimatePresence>
           {!Loading && (
             <Box
@@ -85,14 +85,10 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
                 />
                 <Btn type="submit" item={{ theme, name: 'Submit' }} />
               </Form>
-              <MessageModal
-                theme={theme}
-                message={message}
-                setMessage={setMessage}
-              />
             </Box>
           )}
           {Loading && <LoadingModal theme={theme} />}
+          <MsgModal msg={msg} theme={theme} closeModal={() => setMsg('')} />
         </AnimatePresence>
       </Cont>
     </>
@@ -108,9 +104,8 @@ const Cont = styled(Page)`
   .box {
     width: 440px;
     form {
-      gap: 20px;
-      .input-wrap {
-        gap: 20px;
+      button {
+        margin-top: 20px;
       }
     }
     h1 {

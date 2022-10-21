@@ -1,19 +1,23 @@
+import {
+  color,
+  GreyBorder,
+  greyBrdr,
+  greyColor,
+  redBrdr,
+  redColor,
+} from '../../../styles/variants';
 import { useState } from 'react';
 import styled from '@emotion/styled';
+import { ErrMsg } from '../error_message';
+import { ITheme } from '../../../styles/theme';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ITheme } from '../../../styles/theme';
-import {
-  inputErrVar,
-  inputVar,
-  labelVar,
-  TweenTrans,
-} from '../../../styles/variants';
+import { FlexCol } from '../../../styles/global';
 
 interface IInput extends ITheme {
   id: string;
   type?: string;
-  label: string;
+  label?: string;
   watch?: string;
   isAlt?: boolean;
   disabled?: boolean;
@@ -33,107 +37,89 @@ export const InputWrap = ({
   placeholder,
 }: IInput) => {
   const [focus, setFocus] = useState(false);
-  const isFocus = Boolean(focus || watch || disabled);
-  const custom = { isFocus, theme: !theme, disabled };
-  //
+  const isRed = Boolean(focus || watch);
+  const custom = { isRed, theme, disabled };
   return (
     <AnimatePresence initial={false}>
-      <Cont className="input-wrap">
-        <div className="label-input">
+      <Cont className={id}>
+        <FlexCol className="input_wrap_flex">
+          <Style animate="animate" variants={style_var} custom={{ ...custom }}>
+            <input
+              id={id}
+              name={id}
+              type={type}
+              {...register}
+              disabled={disabled}
+              placeholder={placeholder}
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
+            />
+          </Style>
           {label && (
-            <Label
+            <motion.label
               htmlFor={id}
-              exit="exit"
-              initial="initial"
               animate="animate"
-              variants={labelVar}
+              variants={label_var}
               custom={{ ...custom }}
-              className={'input-label'}
             >
               {label}
-            </Label>
+            </motion.label>
           )}
-          <Input
-            className={id}
-            variants={inputVar}
-            exit="exit"
-            initial="initial"
-            animate="animate"
-            whileHover={'hover'}
-            whileFocus={'focus'}
-            transition={TweenTrans}
-            custom={{ ...custom }}
-            //
-            {...register}
-            id={id}
-            name={id}
-            type={type}
-            disabled={disabled}
-            placeholder={placeholder}
-            onFocus={() => setFocus(true)}
-            onBlur={() => setFocus(false)}
-          />
-        </div>
-        {error && (
-          <ErrMsg
-            exit="exit"
-            initial="initial"
-            animate="animate"
-            custom={theme}
-            variants={inputErrVar}
-            className="err-msg"
-          >
-            {error}
-          </ErrMsg>
-        )}
+        </FlexCol>
+        <ErrMsg error={error} />
       </Cont>
     </AnimatePresence>
   );
 };
-const Cont = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
+const Cont = styled(FlexCol)`
   gap: 20px;
-  width: 100%;
-  .label-input {
-    width: 100%;
+  //border: 5px solid yellow;
+  .input_wrap_flex {
+    padding-top: 20px;
     position: relative;
+    //border: 2px solid yellowgreen;
     label {
+      //border: 1px solid yellow;
+      top: 63%;
+      left: 1rem;
+      z-index: 1;
+      font-size: 1.1rem;
+      padding: 5px 10px;
       width: fit-content;
-    }
-    input {
-      width: 100%;
+      position: absolute;
+      border-radius: 10px;
+      display: inline-block;
     }
   }
 `;
-const Label = styled(motion.label)`
-  top: 50%;
-  left: 1rem;
-  z-index: 1;
-  font-size: 1rem;
-  position: absolute;
-  border-radius: 10px;
-  display: inline-block;
-  padding: 1px 10px;
-  //border: 1px solid yellow;
-`;
-export const ErrMsg = styled(motion.div)`
-  padding: 5px;
-  font-size: 1.2rem;
-  text-align: center;
-`;
-export const Input = styled(motion.input)`
-  border: none;
-  font-size: 1.1rem;
+const Style = styled(FlexCol)`
+  width: 100%;
   padding: 10px 20px;
-  border-radius: 5px;
-  background-color: inherit;
-  box-shadow: ${(p) => p.theme.boxShadow.input};
-  ::placeholder {
-    opacity: 0.8;
-    font-style: italic;
+  border-radius: 8px;
+  justify-content: center;
+  input {
+    width: 100%;
+    border: none;
+    outline: none;
+    color: inherit;
+    font-size: 1.2rem;
+    background-color: inherit;
+    ::placeholder {
+      color: ${(p) => p.theme.color.grey.reg};
+    }
   }
 `;
+const style_var = {
+  animate: ({ isRed, theme, disabled }: any) => ({
+    backgroundColor: color(!theme),
+    color: disabled ? greyColor : color(theme),
+    border: disabled ? greyBrdr : isRed ? redBrdr : GreyBorder(!theme),
+  }),
+};
+const label_var = {
+  animate: ({ isRed, theme, disabled }: any) => ({
+    backgroundColor: color(!theme),
+    y: disabled ? '-140%' : isRed ? '-140%' : '-50%',
+    color: disabled ? greyColor : isRed ? redColor : color(theme),
+  }),
+};

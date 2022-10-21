@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
-import { opacityVar, variants } from '../../../../styles/variants';
-import { imgVar } from './img_input';
+import { variants } from '../../../../styles/variants';
 
 interface IShowImage {
   src: string;
@@ -22,21 +21,21 @@ export const ShowImage = ({ src, isBoolean, theme }: IShowImage) => {
         <AnimatePresence>
           {(original || preview) && !isHide && (
             <ImgWrap
-              exit="exit"
-              initial="initial"
-              animate="animate"
-              variants={imgVar}
+              // exit="exit"
+              // initial="initial"
+              // animate="animate"
+              //variants={imgVar}
               custom={!theme}
             >
               <AnimatePresence>
                 {preview && (
                   <Img
                     src={src}
-                    exit="exit"
-                    alt="프리뷰 이미지"
-                    initial="initial"
-                    animate="animate"
-                    variants={abs_image_var}
+                    // exit="exit"
+                    // alt="프리뷰 이미지"
+                    // initial="initial"
+                    // animate="animate"
+                    // variants={abs_image_var}
                   />
                 )}
               </AnimatePresence>
@@ -45,11 +44,11 @@ export const ShowImage = ({ src, isBoolean, theme }: IShowImage) => {
                 {!preview && original && (
                   <Img
                     src={src}
-                    exit="exit"
-                    alt="오리지널 이미지"
-                    initial="initial"
-                    animate="animate"
-                    variants={abs_image_var}
+                    // exit="exit"
+                    // alt="오리지널 이미지"
+                    // initial="initial"
+                    // animate="animate"
+                    // variants={abs_image_var}
                   />
                 )}
               </AnimatePresence>
@@ -66,13 +65,14 @@ const Container = styled(motion.div)`
 `;
 const ImgWrap = styled(motion.div)`
   padding: 20px;
-  width: 15rem;
-  height: 15rem;
+  /* width: 15rem;
+  height: 15rem; */
   position: relative;
+  width: 100%;
+  height: 100%;
+  border: 2px solid red;
 `;
 const Img = styled(motion.img)`
-  top: 58%;
-  left: 60%;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -80,24 +80,34 @@ const Img = styled(motion.img)`
 `;
 const abs_image_var = {
   initial: () => ({
-    x: '-50%',
-    y: '-50%',
     opacity: 0,
     scale: 0.2,
     transition: { duration: 0.8 },
   }),
   animate: () => ({
-    x: '-50%',
-    y: '-50%',
     scale: 1,
     opacity: 1,
     transition: { duration: 0.8 },
   }),
   exit: () => ({
-    x: '-50%',
-    y: '-50%',
     opacity: 0,
     scale: 0.2,
     transition: { duration: 0.8 },
+  }),
+};
+const imgVar = {
+  initial: () => ({
+    scale: 0.1,
+    opacity: 0,
+  }),
+  animate: ({ isShrink }: any) => ({
+    scale: 1,
+    opacity: 1,
+    transition: { duration: 0.4 },
+  }),
+  exit: () => ({
+    scale: 0.1,
+    opacity: 0,
+    transition: { duration: 0.4 },
   }),
 };

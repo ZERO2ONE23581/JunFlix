@@ -1,16 +1,41 @@
 //theme은 dark가 default, 즉 boolean값은 기본적으로 false가 들어오게 됨.
-const black = 'rgba(0,0,0)';
-const logo = 'rgba(229,9,20)';
-const white = 'rgba(255,255,255)';
-const redBrdr = `2px solid ${logo}`;
-const blackBrdr = `1px solid ${black}`;
-const whiteBrdr = `1px solid ${white}`;
-const transBrdr = `1px solid transparent`;
+export const redColor = '#E50914';
+export const blackColor = '#000000';
+export const whiteColor = '#ffffff';
+export const transBrdr = `1px solid transparent`;
+export const redBrdr = `2px solid ${redColor}`;
+export const whiteBrdr = `2px solid ${whiteColor}`;
+export const blackBrdr = `2px solid ${blackColor}`;
 export const TweenTrans = { type: 'tween', stiffness: 50 };
 export const SpringTrans = { type: 'spring', stiffness: 100 };
-export const color = (dark: boolean) => (dark ? black : white);
+export const color = (dark: boolean) => (dark ? blackColor : whiteColor);
 export const border = (dark: boolean) => (dark ? blackBrdr : whiteBrdr);
 export const TransBorder = (dark: boolean) => (dark ? whiteBrdr : transBrdr);
+
+export const greyColor = '#bdc3c7';
+export const greyBrdr = `1px solid ${greyColor}`;
+export const GreyBorder = (dark: boolean) => (dark ? whiteBrdr : greyBrdr);
+
+export const myboxVar = {
+  initial: (theme: boolean) => ({
+    opacity: 0,
+  }),
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    color: color(theme),
+    border: TransBorder(!theme),
+    transition: { duration: 0.3 },
+  }),
+  exit: (theme: boolean) => ({
+    opacity: 0,
+  }),
+  hover: () => ({
+    scale: 1.05,
+    color: redColor,
+    border: redBrdr,
+    transition: { duration: 0.3 },
+  }),
+};
 
 export const colorVar = {
   exit: (theme: boolean) => ({ color: color(theme) }),
@@ -30,13 +55,13 @@ export const opacityVar = {
 };
 export const hoverBgColor = {
   animate: (theme: boolean) => ({ color: color(theme) }),
-  hover: { transition: { duration: 0.3 }, backgroundColor: logo },
+  hover: { transition: { duration: 0.3 }, backgroundColor: redColor },
 };
 export const hoverScale = {
-  hover: { scale: 1.1, transition: { duration: 0.3 }, color: logo },
+  hover: { scale: 1.1, transition: { duration: 0.3 }, color: redColor },
 };
 export const hoverColor = {
-  hover: { scale: 1.1, transition: { duration: 0.3 }, color: logo },
+  hover: { scale: 1.1, transition: { duration: 0.3 }, color: redColor },
 };
 export const scaleVar = {
   initial: (theme: boolean) => ({
@@ -78,26 +103,31 @@ export const variants = {
 export const TransBorderVar = {
   initial: (theme: boolean) => ({
     opacity: 0,
-    border: TransBorder(!theme),
+    scale: 0.1,
+    transition: { duration: 0.5 },
   }),
   animate: (theme: boolean) => ({
+    scale: 1,
     opacity: 1,
     border: TransBorder(!theme),
+    transition: { duration: 0.5 },
+    backgroundColor: color(!theme),
   }),
   exit: (theme: boolean) => ({
+    scale: 0.1,
     opacity: 0,
-    border: TransBorder(!theme),
+    transition: { duration: 0.5 },
   }),
 };
 export const btnVar = {
   initial: ({ theme, isClicked, isFollowing }: any) => ({
-    color: isFollowing ? white : color(!theme),
-    backgroundColor: isFollowing ? logo : color(theme),
+    color: isFollowing ? whiteColor : color(!theme),
+    backgroundColor: isFollowing ? redColor : color(theme),
   }),
   animate: ({ theme, isClicked, isFollowing }: any) => ({
     transition: { duration: 0.3 },
-    color: isFollowing ? white : color(!theme),
-    backgroundColor: isFollowing ? logo : color(theme),
+    color: isFollowing ? whiteColor : color(!theme),
+    backgroundColor: isFollowing ? redColor : color(theme),
   }),
   hover: {
     fill: '#ffffff',
@@ -120,49 +150,16 @@ export const slideVars = {
 export const menuModalVar = {
   initial: { y: '0', x: '-50%', opacity: 0 },
   exit: { y: '0', opacity: 0, transition: { duration: 0.3 } },
-  hover: { backgroundColor: logo, transition: { duration: 0.2 } },
+  hover: { backgroundColor: redColor, transition: { duration: 0.2 } },
   animate: { x: '-50%', y: '30px', opacity: 1, transition: { duration: 0.3 } },
 };
-export const labelVar = {
-  initial: ({ theme, isFocus }: any) => ({
-    opacity: 1,
-    fontSize: '1.3rem',
-    translateY: '-50%',
-    transition: { duration: 0.2 },
-    color: isFocus ? logo : color(!theme),
-    backgroundColor: color(theme),
-  }),
-  animate: ({ isFocus, theme, disabled }: any) => ({
-    opacity: 1,
-    transition: { duration: 0.2 },
-    color: isFocus ? logo : color(!theme),
-    backgroundColor: color(theme),
-    width: isFocus ? 'fit-content' : '80%',
-    translateY: isFocus ? '-150%' : '-50%',
-    fontSize: isFocus ? '1.1rem' : '1.3rem',
-  }),
-  exit: (theme: boolean) => ({
-    opacity: 0,
-    color: color(theme),
-    backgroundColor: color(!theme),
-  }),
-};
 export const inputVar = {
-  initial: ({ theme, isFocus, disabled }: any) => ({
-    backgroundColor: color(theme),
-    color: disabled ? logo : color(!theme),
-    outline: isFocus ? redBrdr : border(!theme),
-  }),
   animate: ({ theme, isFocus, disabled }: any) => ({
+    transition: { duration: 0.4 },
     backgroundColor: color(theme),
-    color: disabled ? logo : color(!theme),
-    outline: isFocus ? redBrdr : border(!theme),
+    color: disabled ? redColor : color(!theme),
+    outline: isFocus ? redBrdr : TransBorder(theme),
   }),
   hover: () => ({ transition: { duration: 0.3 }, outline: redBrdr }),
   focus: () => ({ outline: redBrdr, transition: { duration: 0.3 } }),
-};
-export const inputErrVar = {
-  exit: { opacity: 0, color: logo },
-  animate: { opacity: 1, color: logo },
-  initial: { opacity: 0, color: logo },
 };

@@ -10,15 +10,15 @@ interface ICircleSvg {
 }
 export const CircleSvg = ({ isHide, theme, onClick }: ICircleSvg) => {
   return (
-    <AnimatePresence>
+    <>
       {!isHide && (
         <Circle
           exit="exit"
           initial="initial"
           animate="animate"
-          className="circle-svg"
-          variants={scaleVar}
           custom={!theme}
+          variants={scaleVar}
+          className="circle-svg"
         >
           <Svg
             type="trash"
@@ -28,7 +28,7 @@ export const CircleSvg = ({ isHide, theme, onClick }: ICircleSvg) => {
           />
         </Circle>
       )}
-    </AnimatePresence>
+    </>
   );
 };
 

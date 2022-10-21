@@ -34,7 +34,7 @@ export const DeleteUser_Form = ({ dataWrap }: IEditUser) => {
             theme={theme}
             label="USER ID"
             watch={Boolean(watch('userId'))}
-            error={errors.userId?.message}
+            error={errors.userId?.msg}
             register={register('userId', {
               required: '아이디를 입력해 주세요.',
             })}
