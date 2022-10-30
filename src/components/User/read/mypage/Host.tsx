@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
@@ -6,17 +5,15 @@ import { Btn } from '../../../../Tools/Button';
 import { Avatar } from '../../../../Tools/Avatar';
 import { IUserType } from '../../../../types/user';
 import { ITheme } from '../../../../../styles/theme';
-import useUser from '../../../../libs/client/useUser';
 import { BtnWrap } from '../../../../../styles/global';
 import useFollow from '../../../../libs/client/useFollow';
 
 interface IUserBox extends ITheme {
+  isMyAcct: boolean;
   host: IUserType;
 }
-export const Host = ({ theme, host }: IUserBox) => {
+export const Host = ({ theme, host, isMyAcct }: IUserBox) => {
   const router = useRouter();
-  const { loggedInUser } = useUser();
-  const isMeHost = Boolean(loggedInUser?.id === host?.id);
   const { onClick, name, isFollowing } = useFollow(host && host.id, 'user');
   const clickBtn = (type: string) =>
     router.push(`/user/${host.id}/${host.username}/${type}`);
@@ -27,19 +24,24 @@ export const Host = ({ theme, host }: IUserBox) => {
       {host && (
         <Cont className="host">
           <Avatar
-            size={'10rem'}
-            theme={theme}
-            click={{ isClick: true, onClick: clickIcon }}
-            data={{ host_id: host?.id!, preview: null, avatar: host?.avatar! }}
+            _data={{
+              theme,
+              size: '10rem',
+              isClick: true,
+              preview: null,
+              onClick: clickIcon,
+              host_id: host?.id!,
+              avatar: host?.avatar!,
+            }}
           />
-          {!isMeHost && (
+          {!isMyAcct && (
             <Btn
               type="button"
               onClick={onClick}
               item={{ theme, name, isFollowing, className: 'follow-btn' }}
             />
           )}
-          {isMeHost && (
+          {isMyAcct && (
             <HostBtns className="host-btns">
               <Btn
                 type="button"

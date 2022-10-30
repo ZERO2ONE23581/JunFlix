@@ -1,13 +1,13 @@
-import { motion } from 'framer-motion';
-import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction } from 'react';
-import useUser from '../../../libs/client/useUser';
-import { useCapLetter } from '../../../libs/client/useTools';
 import {
   hoverBgColor,
   SpringTrans,
   TweenTrans,
 } from '../../../../styles/variants';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
+import { Dispatch, SetStateAction } from 'react';
+import { useUser } from '../../../libs/client/useUser';
+import { useCapLetter } from '../../../libs/client/useTools';
 
 interface IMainMenuModal {
   selected: string;

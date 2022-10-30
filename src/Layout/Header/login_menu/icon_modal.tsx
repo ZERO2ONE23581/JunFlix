@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ModalLists } from './icon_modal_lists';
+import { ModalLists } from './Modal_Lists';
 import { Dispatch, SetStateAction } from 'react';
 import { Overlay } from '../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';

@@ -63,25 +63,29 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
               <Form onSubmit={handleSubmit(onValid)}>
                 <InputWrap
                   theme={theme}
-                  id="userId"
-                  type="text"
-                  label="USER ID"
-                  error={errors.userId?.message}
-                  watch={watch('userId')}
-                  register={register('userId', {
-                    required: '아이디를 입력해주세요.',
-                  })}
+                  data={{
+                    label: 'ID',
+                    id: 'userId',
+                    type: 'text',
+                    text: watch('userId')!,
+                    error: errors.userId?.message!,
+                    register: register('userId', {
+                      required: '아이디를 입력해주세요.',
+                    }),
+                  }}
                 />
                 <InputWrap
                   theme={theme}
-                  id="password"
-                  type="password"
-                  label="Password"
-                  error={errors.password?.message}
-                  watch={watch('password')}
-                  register={register('password', {
-                    required: '비밀번호를 입력해주세요.',
-                  })}
+                  data={{
+                    type: 'text',
+                    id: 'password',
+                    label: 'Password',
+                    text: watch('password')!,
+                    error: errors.password?.message!,
+                    register: register('password', {
+                      required: '비밀번호를 입력해주세요.',
+                    }),
+                  }}
                 />
                 <Btn type="submit" item={{ theme, name: 'Submit' }} />
               </Form>

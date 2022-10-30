@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../../styles/global';
 import { HeadTitle } from '../../../../src/Tools/head_title';
-import { EditReview } from '../../../../src/components/review/Update';
+import { EditReview } from '../../../../src/components/Review/Update';
 import { Fixed } from '../../../../src/Tools/Button/Fixed';
 
 const Edit_Review: NextPage<{ theme: boolean }> = ({ theme }) => {

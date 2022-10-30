@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { ReviewWithUser } from '../../../types/review';
-import { CreateComment } from '../../comment/Review/Create/Comment';
-import { CommentList } from '../../comment/Review/Read/CmtList';
-import { Icons } from '../../comment/Review/Read/Icons';
+import { CreateComment } from '../../Comment/Review/Create/Comment';
+import { CommentList } from '../../Comment/Review/Read/CmtList';
+import { Icons } from '../../Comment/Review/Read/Icons';
 import { Fixed } from './Fixed';
 
 import { Top } from './Top';
@@ -17,7 +17,7 @@ export const Info = ({ review, theme }: IInfo) => {
       <Fixed theme={theme} />
       <Top review={review!} />
       <Wrap>
-        <Content>{review?.description}</Content>
+        <Content>{review?.content}</Content>
         <Wrap>
           <Icons review={review!} />
           <CreateComment review={review!} />

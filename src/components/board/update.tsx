@@ -15,6 +15,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import {
   isOverMax,
   useCapLetters,
+  useError,
   useLength,
   useMaxLength,
 } from '../../libs/client/useTools';
@@ -65,15 +66,12 @@ export const UpdateBoard = ({
   };
   const onValid = async ({ title, genre, onPrivate, description }: IForm) => {
     const user_id = loggedInUser?.id;
-    if (IsOverMax('title'))
-      return setError!('title', {
-        msg: `보드제목은 ${max.title}자 미만입니다.`,
-      });
-    if (IsOverMax('description'))
-      return setError!('description', {
-        msg: `보드 소개글은 ${max.desc}자 미만입니다.`,
-      });
-    //
+    useError({
+      title,
+      setError,
+      desc: description,
+      max: { title: 50, desc: 700 },
+    });
     setLoading(true);
     if (loading) return;
     return post({ title, genre, onPrivate, description, user_id });
@@ -94,35 +92,42 @@ export const UpdateBoard = ({
         onClick={closeModal}
         item={{ size: '2rem' }}
       />
-      <h1>Edit Movie Board</h1>
+      <h1>Edit Board</h1>
       <Form onSubmit={handleSubmit(onValid)}>
         <Flex className="inputs-flex">
           <InputWrap
-            id="title"
-            type="text"
-            label="Title"
             theme={theme}
-            error={errors.title?.msg}
-            watch={watch('title')}
-            register={register('title', {
-              required: '제목을 입력해주세요.',
-            })}
+            data={{
+              id: 'title',
+              type: 'text',
+              label: 'Title',
+              text: watch('title'),
+              error: errors.title?.message!,
+              register: register('title', {
+                required: '제목을 입력하세요.',
+              }),
+            }}
           />
           <SelectWrap
-            id="genre"
             theme={theme}
-            register={register('genre')}
-            error={errors.genre?.msg}
-            watch={Boolean(watch('genre'))}
+            data={{
+              id: 'genre',
+              text: watch('genre'),
+              register: register('genre'),
+              error: errors.genre?.message!,
+            }}
           />
           <TextAreaWrap
             theme={theme}
-            id="description"
-            minHeight={250}
-            watch={watch('description')}
-            register={register('description')}
-            error={errors.description?.msg}
-            length={{ max: max.desc, typed: watch('description')?.toString()! }}
+            data={{
+              min: 120,
+              max: 700,
+              id: 'description',
+              label: 'Description',
+              text: watch('description'),
+              register: register('description'),
+              error: errors.description?.message,
+            }}
           />
         </Flex>
         <Flex className="host-text-wrap">

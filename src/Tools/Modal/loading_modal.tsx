@@ -7,8 +7,9 @@ import { variants } from '../../../styles/variants';
 interface ILoadingModal {
   theme: boolean;
   zindex?: number;
+  layoutId?: string;
 }
-export const LoadingModal = ({ theme, zindex }: ILoadingModal) => {
+export const LoadingModal = ({ theme, zindex, layoutId }: ILoadingModal) => {
   return (
     <>
       <Cont
@@ -16,6 +17,7 @@ export const LoadingModal = ({ theme, zindex }: ILoadingModal) => {
         initial="initial"
         animate="animate"
         className="loading"
+        layoutId={layoutId}
         custom={theme}
         variants={variants}
       >
@@ -44,11 +46,12 @@ export const LoadingModal = ({ theme, zindex }: ILoadingModal) => {
           />
         </motion.svg>
       </Cont>
-      <OverlayBg dark={0.3} zIndex={zindex} />
+      <OverlayBg dark={0.3} zIndex={99999} />
     </>
   );
 };
 const Cont = styled(Modal)`
+  top: 20rem;
   z-index: 999;
   width: 25vw;
   height: 40vh;

@@ -3,7 +3,7 @@ import { Overlay } from '../../styles/global';
 import { Dispatch, SetStateAction } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { color, TransBorder } from '../../styles/variants';
-import { List } from '../components/user/read/mypage/btn_modal_list';
+import { List } from '../components/User/read/mypage/List';
 
 interface IBtnModal {
   item: {

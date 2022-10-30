@@ -1,88 +1,80 @@
-import {
-  color,
-  greyBrdr,
-  greyColor,
-  redBrdr,
-  redColor,
-  TransBorder,
-} from '../../../styles/variants';
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { ErrMsg } from '../error_message';
+import { ErrModal } from '../err_modal';
 import { TextLength } from '../TextLength';
-import { ITheme } from '../../../styles/theme';
 import { FlexCol } from '../../../styles/global';
+import { color } from '../../../styles/variants';
 import { useLength } from '../../libs/client/useTools';
 import { AnimatePresence, motion } from 'framer-motion';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { InpBorderVar, InpColorVar, InpLabelColor } from '.';
+import { UseFormClearErrors, UseFormRegisterReturn } from 'react-hook-form';
 
-interface ITextAreaWrap extends ITheme {
-  id: string;
-  label?: string;
-  disabled?: boolean;
-  placeholder?: string;
-  register: UseFormRegisterReturn;
-  data: {
+interface ITextAreaWrap {
+  _data: {
+    id: string;
     min: number;
     max: number;
     text?: string;
+    theme: boolean;
+    label?: string;
     error?: string;
+    disabled?: boolean;
+    register: UseFormRegisterReturn;
+    clearErrors: UseFormClearErrors<any>;
   };
 }
-export const TextAreaWrap = ({
-  id,
-  data,
-  label,
-  theme,
-  register,
-  disabled,
-  placeholder,
-}: ITextAreaWrap) => {
-  //const disabled = true;
-  const min = data?.min!;
-  const max = data?.max!;
-  const text = data?.text!;
-  const error = data?.error!;
+export const TextAreaWrap = ({ _data }: ITextAreaWrap) => {
+  const id = _data?.id!;
+  const min = _data?.min!;
+  const max = _data?.max!;
+  const text = _data?.text!;
+  const error = _data?.error!;
+  const theme = _data?.theme!;
+  const label = _data?.label!;
+  const disabled = _data?.disabled!;
+  const register = _data?.register!;
+  const clearErrors = _data?.clearErrors!;
   const textLength = useLength(text!);
   const [focus, setFocus] = useState(false);
-  const isRed = Boolean(focus || text);
   const height = textLength > max ? max * 0.5 : min + textLength * 0.3;
-  const custom = { theme, height, isRed, disabled };
+  const custom = { theme, height, isRed: Boolean(focus || text), disabled };
   return (
     <AnimatePresence>
-      <Cont
-        height={`${height}px`}
-        max={`${max * 0.48}px`}
-        className="textarea-wrap"
-      >
-        {label && (
-          <motion.label
-            htmlFor={id}
-            animate="animate"
-            variants={label_var}
-            custom={{ ...custom }}
-          >
-            {label}
-          </motion.label>
-        )}
-        <Style
-          initial="initial"
-          animate="animate"
-          custom={{ ...custom }}
-          variants={textarea_vars}
+      <>
+        <Cont
+          height={`${height}px`}
+          max={`${max * 0.48}px`}
+          className="textarea-wrap"
         >
-          <textarea
-            id={id}
-            {...register}
-            disabled={disabled}
-            placeholder={placeholder}
-            onFocus={() => setFocus(true)}
-            onBlur={() => setFocus(false)}
-          />
-        </Style>
-        <TextLength theme={theme} number={{ max, typed: useLength(text!) }} />
-        <ErrMsg error={error} />
-      </Cont>
+          {label && (
+            <motion.label
+              htmlFor={id}
+              animate="animate"
+              variants={textLabelVar}
+              custom={{ ...custom }}
+            >
+              {label}
+            </motion.label>
+          )}
+          <Style
+            initial="initial"
+            animate="animate"
+            custom={{ ...custom }}
+            variants={textareaVar}
+          >
+            <textarea
+              {...register}
+              id={id}
+              disabled={disabled}
+              placeholder="내용 입력하기 (Write about your story here)"
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
+            />
+          </Style>
+          <TextLength theme={theme} number={{ max, typed: useLength(text!) }} />
+        </Cont>
+        <ErrModal _data={{ id, error, theme, clearErrors }} />
+      </>
     </AnimatePresence>
   );
 };
@@ -90,8 +82,8 @@ const Cont = styled(FlexCol)<{ height: string; max: string }>`
   gap: 10px;
   width: 100%;
   overflow-y: initial;
-  align-items: flex-start;
   position: relative;
+  align-items: flex-start;
   label {
     top: -1rem;
     left: 1rem;
@@ -102,22 +94,22 @@ const Cont = styled(FlexCol)<{ height: string; max: string }>`
     position: absolute;
     border-radius: 10px;
     display: inline-block;
-    //border: 1px solid yellow;
   }
   textarea {
+    border: none;
+    //border: 1px solid yellow;
     width: 100%;
     resize: none;
     cursor: auto;
-    border: none;
-    //border: 1px solid yellow;
     outline: none;
     max-height: 500px;
     font-size: 1.1rem;
     word-break: break-all;
+    padding: 1rem;
     height: ${(p) => p.height};
     max-height: ${(p) => p.max};
-    color: ${(p) => p.theme.color.font};
-    background-color: ${(p) => p.theme.color.bg};
+    background-color: inherit;
+    color: inherit;
     ::-webkit-scrollbar {
       display: none;
     }
@@ -126,25 +118,21 @@ const Cont = styled(FlexCol)<{ height: string; max: string }>`
 const Style = styled(motion.div)`
   width: 100%;
   overflow: hidden;
-  padding: 15px 20px;
   border-radius: 8px;
 `;
-
-const textarea_vars = {
+const textareaVar = {
   initial: ({ height }: any) => ({
     height,
   }),
   animate: ({ theme, disabled, isRed, height }: any) => ({
     height,
-    transition: { duration: 0.3 },
-    backgroundColor: color(!theme),
-    color: disabled ? greyColor : isRed ? redColor : color(theme),
-    border: disabled ? greyBrdr : isRed ? redBrdr : TransBorder(!theme),
+    color: InpColorVar(isRed, theme, disabled),
+    border: InpBorderVar(isRed, theme, disabled),
   }),
 };
-const label_var = {
+const textLabelVar = {
   animate: ({ isRed, theme, disabled }: any) => ({
     backgroundColor: color(!theme),
-    color: disabled ? greyColor : isRed ? redColor : color(theme),
+    color: InpLabelColor(isRed, theme, disabled),
   }),
 };

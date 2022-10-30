@@ -1,30 +1,34 @@
 import { Svg } from './Svg';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { TransBorder, TweenTrans } from '../../styles/variants';
-import { useRouter } from 'next/router';
 
 export interface IAvatar {
-  size: string;
-  theme: boolean;
-  isRound?: boolean;
-  data: {
-    host_id: number;
+  _data: {
+    size: string;
+    theme: boolean;
+    host_id?: number;
+    isRound?: boolean;
+    isClick?: boolean;
+    onClick?: () => void;
     avatar: string | null;
     preview: string | null;
   };
-  click?: {
-    isClick: boolean;
-    onClick: () => void;
-  };
 }
-export const Avatar = ({ data, size, theme, click, isRound }: IAvatar) => {
+export const Avatar = ({ _data }: IAvatar) => {
+  const size = _data?.size!;
+  const theme = _data?.theme!;
+  const avatar = _data?.avatar!;
+  const preview = _data?.preview!;
+  const host_id = _data?.host_id!;
+  const isClick = _data?.isClick!;
+  const isRound = _data?.isRound!;
+  const onClick = _data?.onClick!;
+  //
   const router = useRouter();
   const [image, setImage] = useState('');
-  const avatar = data?.avatar!;
-  const host_id = data?.host_id!;
-  const preview = data?.preview!;
   const isAvatar = Boolean(avatar || preview);
 
   useEffect(() => {
@@ -37,8 +41,8 @@ export const Avatar = ({ data, size, theme, click, isRound }: IAvatar) => {
     }
   }, [avatar, preview, setImage]);
 
-  const onClick = () => {
-    if (click?.isClick) return click.onClick();
+  const clickIcon = () => {
+    if (isClick) return onClick();
     else return router.push(`/user/${host_id}/mypage`);
   };
   //
@@ -62,7 +66,7 @@ export const Avatar = ({ data, size, theme, click, isRound }: IAvatar) => {
       {!isAvatar && (
         <NoAvatar
           size={size!}
-          onClick={onClick}
+          onClick={clickIcon}
           className="avatar"
           exit="exit"
           initial="initial"
@@ -137,9 +141,6 @@ const circleTypeVar = {
     transition: { duration: 0.5 },
   }),
 };
-interface IAvatarLink {
-  url?: string | null;
-}
 export const avatarLink = (url: string | any) => {
   const no_img = '/img/1.jpg';
   const variant = 'public';

@@ -3,9 +3,9 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
 import { HeadTitle } from '../../../src/Tools/head_title';
-import { VerifyToken } from '../../../src/components/user/read/verify/token';
-import { VerifyEmail } from '../../../src/components/user/read/verify/email';
-import { VerifyResult } from '../../../src/components/user/read/verify/result';
+import { VerifyToken } from '../../../src/components/User/Read/verify/token';
+import { VerifyEmail } from '../../../src/components/User/read/verify/email';
+import { VerifyResult } from '../../../src/components/User/Read/verify/result';
 
 const FindUserId: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [userId, setUserId] = useState('');

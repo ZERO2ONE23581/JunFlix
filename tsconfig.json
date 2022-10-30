@@ -5,7 +5,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": false,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -21,8 +21,9 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/api/join/id_check copy",
-    "src/components/user/Update/EditAvatart.sx",
-    "src/components/Read/List/Board/Follow.copytsx"
+    "src/components/User/Update/EditAvatart.sx",
+    "src/components/Read/List/Board/Follow.copytsx",
+    "src/components/Post/Update/layer_onetsx"
   ],
   "exclude": ["node_modules"]
 }

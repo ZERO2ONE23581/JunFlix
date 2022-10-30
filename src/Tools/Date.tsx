@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { FlexCol } from '../../styles/global';
 
 interface IReadDate {
   createdAt: Date | null;
@@ -22,30 +23,25 @@ export const ReadDate = ({ createdAt, updatedAt }: IReadDate) => {
   const isUpdate = updatedAt && UpdatedAt && isUpdated;
   return (
     <Cont className="read-date">
-      {isCreate && (
-        <span className="create">
+      {!UpdatedAt && (
+        <div className="create">
           <span>{CreatedAt}</span>
           <span>작성</span>
-        </span>
+        </div>
       )}
-      {isUpdate && (
-        <span className="update">
-          <span>{UpdatedAt}</span>
-          <span>수정</span>
-        </span>
-      )}
+      <div className="update">
+        <span>{UpdatedAt}</span>
+        <span>수정</span>
+      </div>
     </Cont>
   );
 };
-const Cont = styled.article`
-  margin-left: 10px;
-  font-size: 0.8rem;
+const Cont = styled(FlexCol)`
+  gap: 5px;
+  font-size: 1rem;
+  /* width: 100%; */
   font-style: italic;
-  display: inline-block;
-  gap: 3px;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
+  //border: 1px solid yellow;
   span {
     margin-right: 3px;
   }

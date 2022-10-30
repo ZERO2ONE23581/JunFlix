@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { PostText } from '../../../../post/read/posttext';
+import { PostText } from '../../posttext';
 import { ReplyList } from './ReplyList';
 import { EditComment } from '../../Edit';
 import { Profile } from './Profile';

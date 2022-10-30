@@ -9,6 +9,7 @@ interface IOverlayBg {
 export const OverlayBg = ({ dark, zIndex, closeModal }: IOverlayBg) => {
   return (
     <Overlay
+      className="overlay"
       dark={dark}
       zindex={zIndex}
       variants={opacityVar}

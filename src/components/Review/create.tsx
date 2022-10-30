@@ -90,14 +90,18 @@ export const CreateReview = ({ theme }: ITheme) => {
       <form onSubmit={handleSubmit(onValid)}>
         <ReviewCont>
           <h1>Create Review</h1>
-
           <TextAreaWrap
-            id="content"
             theme={theme}
-            minHeight={200}
-            watch={watch('content')}
-            placeholder="리뷰 작성하기..."
-            register={register('content')}
+            data={{
+              min: 100,
+              max: 2000,
+              id: 'content',
+              label: 'content',
+              text: watch('content'),
+              error: errors.content?.message,
+              register: register('content'),
+              placeholder: '해당 영화에 대한 리뷰를 적어주세요.',
+            }}
           />
         </ReviewCont>
       </form>

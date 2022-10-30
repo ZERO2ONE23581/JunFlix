@@ -1,28 +1,32 @@
 import styled from '@emotion/styled';
 import { Svg } from '../../../../Tools/Svg';
+import { CreateModal } from './create_modal';
 import { BtnWrap } from '../../../../../styles/global';
 import { MyBtn } from '../../../../Tools/Button/my_btn';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { CreateModal } from './create_modal';
 
 interface IBtnsWrap {
-  theme: boolean;
-  category: string;
-  isMyPage: boolean;
-  setCategory: Dispatch<SetStateAction<string>>;
-  setCreatePost: Dispatch<SetStateAction<boolean>>;
+  _data: {
+    theme: boolean;
+    type: string;
+    isMyPage: boolean;
+    setType: Dispatch<SetStateAction<string>>;
+    setCreate: Dispatch<
+      SetStateAction<{ post: boolean; board: boolean; review: boolean }>
+    >;
+  };
 }
-export const BtnsWrap = ({
-  theme,
-  isMyPage,
-  category,
-  setCategory,
-  setCreatePost,
-}: IBtnsWrap) => {
+export const BtnsWrap = ({ _data }: IBtnsWrap) => {
+  const theme = _data?.theme!;
+  const isMyPage = _data?.isMyPage!;
+  const category = _data?.type!;
+  const setCategory = _data?.setType!;
+  const setCreate = _data?.setCreate!;
   const [addModal, setAddModal] = useState(false);
   const onClick = (type: string) => setCategory(type);
   return (
     <Cont className="btn-wrap">
+      <div className="blank" />
       <MyBtn
         type="button"
         theme={theme}
@@ -45,19 +49,23 @@ export const BtnsWrap = ({
         onClick={() => onClick('likes')}
       />
       <Add className="add">
-        <Svg type="add" theme={theme} onClick={() => setAddModal((p) => !p)} />
+        <Svg type="plus" theme={theme} onClick={() => setAddModal((p) => !p)} />
         <CreateModal
           theme={theme}
           modal={addModal}
           isMyPage={isMyPage}
           setModal={setAddModal}
-          setCreatePost={setCreatePost}
+          setCreate={setCreate}
         />
       </Add>
     </Cont>
   );
 };
 const Cont = styled(BtnWrap)`
+  .blank {
+    width: 2rem;
+    height: 2rem;
+  }
   gap: 20px;
   margin: 0 auto;
   position: relative;
@@ -73,7 +81,11 @@ const Add = styled.div`
   position: relative;
   margin-bottom: 10px;
   justify-content: flex-end;
-  .add {
+  .plus {
     z-index: 2;
+  }
+  .create-modal {
+    top: 2.5rem;
+    left: -3rem;
   }
 `;

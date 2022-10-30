@@ -2,12 +2,11 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-
-import { IconModal } from './icon_modal';
-import { ITheme } from '../../../../styles/theme';
-import useUser from '../../../libs/client/useUser';
-import { colorVar, hoverScale } from '../../../../styles/variants';
+import { IconModal } from './Icon_Modal';
 import { Avatar } from '../../../Tools/Avatar';
+import { ITheme } from '../../../../styles/theme';
+import { useUser } from '../../../libs/client/useUser';
+import { colorVar, hoverScale } from '../../../../styles/variants';
 
 export const LoginMenu = ({ theme }: ITheme) => {
   const router = useRouter();
@@ -21,14 +20,14 @@ export const LoginMenu = ({ theme }: ITheme) => {
       {isLoggedIn && (
         <div className="logged-in">
           <Avatar
-            size={'4rem'}
-            theme={theme}
-            data={{
-              host_id: 0,
+            _data={{
+              theme,
+              size: '4rem',
+              isClick: true,
               preview: null,
               avatar: user?.avatar!,
+              onClick: () => setModal((p) => !p),
             }}
-            click={{ isClick: true, onClick: () => setModal((p) => !p) }}
           />
           <IconModal modal={modal} setModal={setModal} theme={theme} />
         </div>

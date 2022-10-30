@@ -2,17 +2,18 @@ import styled from '@emotion/styled';
 import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { IBoardForm } from '../../types/board';
-import useUser from '../../libs/client/useUser';
-import { TextLength } from '../../Tools/TextLength';
+
 import { Box, Flex, Form } from '../../../styles/global';
 import { ITheme } from '../../../styles/theme';
 import { BoxTitle } from '../../Tools/box_title';
 import { InputWrap } from '../../Tools/Input';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
-import { isOverMax, useLength, useMaxLength } from '../../libs/client/useTools';
+
 import { SelectWrap } from '../../Tools/Input/Select';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { variants } from '../../../styles/variants';
+import { useUser } from '../../libs/client/useUser';
+import { useTextLimit } from '../../libs/client/useTools';
 
 interface ICreateBoardBox extends ITheme {
   loading: boolean;
@@ -30,31 +31,25 @@ export const CreateBoardBox = ({
   const {
     watch,
     register,
+    clearErrors,
     setError,
     handleSubmit,
     formState: { errors },
-  } = useForm<IBoardForm>({ mode: 'onBlur' });
-
-  const { max } = useMaxLength(40, 700);
-  const IsOverMax = (text: string) => {
-    const Max = Boolean(text === 'title') ? max.title : max.desc;
-    const Type = Boolean(text === 'title') ? 'title' : 'description';
-    return isOverMax(useLength(String(watch(Type))), Max);
-  };
+  } = useForm<IBoardForm>({ mode: 'onSubmit' });
   const onValid = async ({ title, genre, description }: IBoardForm) => {
-    if (IsOverMax('title'))
-      return setError!('title', {
-        msg: `보드제목은 ${max.title}자 미만입니다.`,
-      });
-    if (IsOverMax('description'))
-      return setError!('description', {
-        msg: `보드 소개글은 ${max.desc}자 미만입니다.`,
-      });
-    setLoading(true);
     if (loading) return;
-    post({ title, description, genre, user_id: loggedInUser?.id });
+    const { ok } = useTextLimit({
+      _data: {
+        setError,
+        max: [50, 1000],
+        types: ['title', 'description'],
+        texts: [title, description],
+      },
+    });
+    if (!ok) return;
+    setLoading(true);
+    return post({ title, description, genre, user_id: loggedInUser?.id });
   };
-
   return (
     <Cont
       exit="exit"
@@ -64,43 +59,47 @@ export const CreateBoardBox = ({
       variants={variants}
       className="box"
     >
-      <BoxTitle
-        theme={theme}
-        type="create-board"
-        max={{ board: { title: max.title, desc: max.desc } }}
-      />
+      <BoxTitle theme={theme} type="create-board" />
       <Form onSubmit={handleSubmit(onValid)} className="form">
         <Flex className="wrap">
           <InputWrap
-            id="title"
-            type="text"
-            label="Title"
-            theme={theme}
-            error={errors.title?.msg}
-            watch={watch('title')}
-            register={register('title', {
-              required: '보드의 제목을 입력하세요.',
-            })}
+            _data={{
+              theme,
+              clearErrors,
+              id: 'title',
+              type: 'text',
+              label: 'Title',
+              text: watch('title'),
+              error: errors.title?.message!,
+              register: register('title', {
+                required: '제목을 입력하세요.',
+              }),
+            }}
           />
           <SelectWrap
-            id="genre"
-            theme={theme}
-            error={errors.genre?.msg}
-            register={register('genre')}
-            watch={Boolean(watch('genre'))}
+            _data={{
+              theme,
+              id: 'genre',
+              text: watch('genre'),
+              register: register('genre'),
+              error: errors.genre?.message,
+            }}
           />
           <Btn type="submit" item={{ theme, name: 'Save' }} />
         </Flex>
 
         <TextAreaWrap
-          theme={theme}
-          id="description"
-          minHeight={200}
-          watch={watch('description')}
-          register={register('description')}
-          error={errors.description?.msg}
-          placeholder="이 보드에 대한 설명을 해주세요. (Write about this board.)"
-          length={{ max: max.desc, typed: String(watch('description')) }}
+          _data={{
+            theme,
+            min: 120,
+            max: 700,
+            clearErrors,
+            id: 'description',
+            label: 'Description',
+            text: watch('description'),
+            register: register('description'),
+            error: errors.description?.message,
+          }}
         />
       </Form>
     </Cont>

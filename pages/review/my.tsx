@@ -8,7 +8,7 @@ import { Title } from '../../src/Tools/box_title';
 import { NoData } from '../../src/Tools/NoData';
 import { HeadTitle } from '../../src/Tools/head_title';
 import { useNeedLogin } from '../../src/libs/client/useTools';
-import { ReviewList } from '../../src/components/review/Read/List/list';
+import { ReviewList } from '../../src/components/Review/Read/List/list';
 
 const MyReviews: NextPage<{ theme: boolean }> = ({ theme }) => {
   useNeedLogin();

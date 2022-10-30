@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { FlexPage } from '../../styles/global';
 import { HeadTitle } from '../../src/Tools/head_title';
-import { CreateBoardBox } from '../../src/components/board/create';
+import { CreateBoardBox } from '../../src/components/Board/create';
 import useMutation from '../../src/libs/client/useMutation';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';

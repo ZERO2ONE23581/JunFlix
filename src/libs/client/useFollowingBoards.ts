@@ -1,10 +1,11 @@
 import useSWR from 'swr';
-import useUser from './useUser';
+
 import useMutation from './useMutation';
 import { useRouter } from 'next/router';
 import { IGetFollowing } from '../../types/following';
 import { IRes } from '../../types/global';
 import { useEffect } from 'react';
+import { useUser } from './useUser';
 
 interface IContent<T> {
   name?: string;

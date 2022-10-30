@@ -7,8 +7,8 @@ import { IBoardType } from '../../types/board';
 import { AnimatePresence } from 'framer-motion';
 import { Overlay } from '../../../styles/global';
 import useMutation from '../../libs/client/useMutation';
-import { DeleteBoard } from '../../components/board/delete';
-import { UpdateBoard } from '../../components/board/update';
+import { DeleteBoard } from '../../components/Board/delete';
+import { UpdateBoard } from '../../components/Board/update';
 import { IRes } from '../../types/global';
 import { opacityVar } from '../../../styles/variants';
 

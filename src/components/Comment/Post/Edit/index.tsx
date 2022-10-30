@@ -61,16 +61,21 @@ export const EditComment = ({
     <form onSubmit={handleSubmit(onValid)}>
       <EditCont>
         <TextAreaWrap
-          id="content"
           theme={theme}
-          minHeight={100}
-          placeholder="type comments.."
-          register={register('content', { required: '댓글을 입력해주세요.' })}
+          data={{
+            min: 100,
+            max: 500,
+            id: 'content',
+            label: 'content',
+            text: watch('content'),
+            error: errors.content?.message,
+            register: register('content', { required: '댓글을 입력하세요.' }),
+          }}
         />
-        {!loading && <Svg theme={theme} size="1.5rem" type="paper-plane" />}
-        {loading && <Svg theme={theme} size="2rem" type="loading" />}
+        {!loading && <Svg theme={theme} type="paper-plane" />}
+        {loading && <Svg theme={theme} type="loading" />}
       </EditCont>
-      {errors.content && <ErrorMsg error={errors.content.msg} />}
+      {errors.content && <ErrorMsg error={errors.content.message} />}
     </form>
   );
 };

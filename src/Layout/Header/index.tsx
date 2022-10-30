@@ -1,9 +1,9 @@
 import { Logo } from './logo';
-import { MainMenu } from './menu';
+import { MainMenu } from './Menu';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { LoginMenu } from './Login_Menu';
 import { ITheme } from '../../../styles/theme';
-import { LoginMenu } from './login_menu';
 
 export const Header = ({ theme }: ITheme) => {
   return (

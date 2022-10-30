@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { IGetReviews } from '../../src/types/review';
 import { HeadTitle } from '../../src/Tools/head_title';
-import { ReviewList } from '../../src/components/review/Read/List/list';
+import { ReviewList } from '../../src/components/Review/Read/List/list';
 
 const All_Reviews: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { data } = useSWR<IGetReviews>(`/api/review/all`);

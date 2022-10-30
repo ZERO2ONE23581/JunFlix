@@ -2,11 +2,11 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
-import { VerifyUserID } from '../../../src/components/user/read/verify/userId';
+import { VerifyUserID } from '../../../src/components/User/Read/verify/userId';
 import { HeadTitle } from '../../../src/Tools/head_title';
-import { VerifyToken } from '../../../src/components/user/read/verify/token';
-import { VerifyResult } from '../../../src/components/user/read/verify/result';
-import { CreatePassword } from '../../../src/components/user/create/password';
+import { VerifyToken } from '../../../src/components/User/Read/verify/token';
+import { VerifyResult } from '../../../src/components/User/Read/verify/result';
+import { CreatePassword } from '../../../src/components/User/Create/password';
 
 const FindPassword: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [userId, setUserId] = useState('');

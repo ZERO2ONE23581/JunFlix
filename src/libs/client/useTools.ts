@@ -23,26 +23,32 @@ export const useUploadImg = async (
     return id;
   }
 };
-interface IUserError {
-  title: string;
-  desc?: string;
-  max: {
-    title: number;
-    desc: number;
+interface IUseError {
+  _data: {
+    max: [number, number];
+    types: [string, string];
+    texts: [string, string?];
+    setError: UseFormSetError<any>;
   };
-  setError: UseFormSetError<IPostForm>;
 }
-export const useError = ({ title, desc, max, setError }: IUserError) => {
-  const typed_title = useLength(title);
-  const typed_desc = useLength(desc!);
-  if (isOverMax(typed_title, max.title))
-    return setError('title', {
-      message: `제목은 ${max.title}을 초과할 수 없습니다.`,
-    });
-  if (isOverMax(typed_desc, max.desc))
-    return setError('description', {
-      message: `포스트의 글자수는 ${max.desc}를 초과할 수 없습니다.`,
-    });
+export const useTextLimit = ({ _data }: IUseError) => {
+  const maxArr = _data?.max!;
+  const typeArr = _data?.types!;
+  const textArr = _data?.texts!;
+  const setError = _data?.setError!;
+  const max = (e: string) => maxArr[textArr.indexOf(e)]!;
+  const type = (e: string) => typeArr[textArr.indexOf(e)]!;
+  const message = (e: string) => `글자는 ${max(e)}를 초과할수 없습니다.`;
+  const length = (e: string) => useLength(textArr[textArr.indexOf(e)]!);
+  //
+  const [first, sec] = textArr.map((element) => {
+    if (length(element!) > max(element!)) {
+      setError(type(element!), { message: message(element!) });
+      return false;
+    } else return true;
+  });
+  if (first && sec) return { ok: true };
+  else return { ok: false };
 };
 
 interface IUseMax {

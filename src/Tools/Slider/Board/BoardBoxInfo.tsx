@@ -2,7 +2,7 @@ import Link from 'next/link';
 import styled from '@emotion/styled';
 import { ITheme } from '../../../../styles/theme';
 import useUser from '../../../libs/client/useUser';
-import { HoverBox } from '../../../components/board/read/hoverBox';
+import { HoverBox } from '../../../components/Board/read/hoverBox';
 
 interface IBoardBoxInfo extends ITheme {
   data: any;

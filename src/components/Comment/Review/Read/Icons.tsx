@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { IReview } from '../../../../types/review';
-import { LikeIcon } from '../../../review/Read/Likes';
+import { LikeIcon } from '../../../Review/Read/Likes';
 import { CommentIcon } from './Icon';
 
 export const Icons = ({ review }: IReview) => {

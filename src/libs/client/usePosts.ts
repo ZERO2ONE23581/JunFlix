@@ -11,7 +11,7 @@ export const useGetMyPosts = (host_id: number) => {
   const isData = data && data.ok && data.posts && posts;
   if (isData && posts.length > 0) return posts;
 };
-export const useGetQuickSavedPost = (host_id: number) => {
+export const useGetQsaved = (host_id: number) => {
   const { data } = useSWR<IGetPosts>(`/api/post/all`);
   const isData = data && data.ok && data.posts;
   if (isData) {

@@ -8,47 +8,48 @@ import {
 } from '../../../styles/variants';
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { ErrMsg } from '../error_message';
-import { ITheme } from '../../../styles/theme';
-import { UseFormRegisterReturn } from 'react-hook-form';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { ErrModal } from '../err_modal';
 import { FlexCol } from '../../../styles/global';
+import { UseFormClearErrors, UseFormRegisterReturn } from 'react-hook-form';
 
-interface IInput extends ITheme {
-  id: string;
-  type?: string;
-  label?: string;
-  watch?: string;
-  isAlt?: boolean;
-  disabled?: boolean;
-  placeholder?: string;
-  error?: string;
-  register?: UseFormRegisterReturn;
+interface IInput {
+  _data: {
+    id: string;
+    type: string;
+    text: string;
+    label: string;
+    error: string;
+    theme: boolean;
+    disabled?: boolean;
+    placeholder?: string;
+    register: UseFormRegisterReturn;
+    clearErrors: UseFormClearErrors<any>;
+  };
 }
-export const InputWrap = ({
-  id,
-  type,
-  theme,
-  label,
-  watch,
-  error,
-  disabled,
-  register,
-  placeholder,
-}: IInput) => {
+export const InputWrap = ({ _data }: IInput) => {
+  const id = _data?.id!;
+  const text = _data?.text!;
+  const type = _data?.type!;
+  const error = _data?.error!;
+  const theme = _data?.theme!;
+  const label = _data?.label!;
+  const register = _data?.register!;
+  const disabled = _data?.disabled!;
+  const placeholder = _data?.placeholder!;
+  const clearErrors = _data?.clearErrors!;
   const [focus, setFocus] = useState(false);
-  const isRed = Boolean(focus || watch);
-  const custom = { isRed, theme, disabled };
+  const custom = { isRed: Boolean(focus || text), theme, disabled };
   return (
-    <AnimatePresence initial={false}>
+    <>
       <Cont className={id}>
         <FlexCol className="input_wrap_flex">
-          <Style animate="animate" variants={style_var} custom={{ ...custom }}>
+          <Style animate="animate" variants={InputVar} custom={{ ...custom }}>
             <input
+              {...register}
               id={id}
               name={id}
               type={type}
-              {...register}
               disabled={disabled}
               placeholder={placeholder}
               onFocus={() => setFocus(true)}
@@ -59,25 +60,25 @@ export const InputWrap = ({
             <motion.label
               htmlFor={id}
               animate="animate"
-              variants={label_var}
+              variants={InplabelVar}
               custom={{ ...custom }}
             >
               {label}
             </motion.label>
           )}
         </FlexCol>
-        <ErrMsg error={error} />
       </Cont>
-    </AnimatePresence>
+      <ErrModal _data={{ id, theme, error, clearErrors }} />
+    </>
   );
 };
 const Cont = styled(FlexCol)`
   gap: 20px;
   //border: 5px solid yellow;
   .input_wrap_flex {
-    padding-top: 20px;
+    padding-top: 1rem;
     position: relative;
-    //border: 2px solid yellowgreen;
+    //border: 5px solid blue;
     label {
       //border: 1px solid yellow;
       top: 63%;
@@ -109,17 +110,36 @@ const Style = styled(FlexCol)`
     }
   }
 `;
-const style_var = {
+const InputVar = {
   animate: ({ isRed, theme, disabled }: any) => ({
-    backgroundColor: color(!theme),
-    color: disabled ? greyColor : color(theme),
-    border: disabled ? greyBrdr : isRed ? redBrdr : GreyBorder(!theme),
+    color: InpColorVar(isRed, theme, disabled),
+    border: InpBorderVar(isRed, theme, disabled),
   }),
 };
-const label_var = {
+const InplabelVar = {
   animate: ({ isRed, theme, disabled }: any) => ({
+    y: InpLabelY(isRed, disabled),
     backgroundColor: color(!theme),
-    y: disabled ? '-140%' : isRed ? '-140%' : '-50%',
-    color: disabled ? greyColor : isRed ? redColor : color(theme),
+    color: InpLabelColor(isRed, theme, disabled),
   }),
 };
+export const InpBorderVar = (
+  isRed: boolean,
+  theme: boolean,
+  disabled: boolean
+) => (disabled ? greyBrdr : isRed ? redBrdr : GreyBorder(!theme));
+
+export const InpColorVar = (
+  isRed: boolean,
+  theme: boolean,
+  disabled: boolean
+) => (disabled ? greyColor : color(theme));
+
+export const InpLabelColor = (
+  isRed: boolean,
+  theme: boolean,
+  disabled: boolean
+) => (disabled ? greyColor : isRed ? redColor : color(theme));
+
+export const InpLabelY = (isRed: boolean, disabled: boolean) =>
+  disabled ? '-140%' : isRed ? '-140%' : '-50%';

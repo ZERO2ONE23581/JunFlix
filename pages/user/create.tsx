@@ -11,9 +11,9 @@ import { HeadTitle } from '../../src/Tools/head_title';
 import useMutation from '../../src/libs/client/useMutation';
 import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
 import { TweenTrans, variants } from '../../styles/variants';
-import { CreateUserId } from '../../src/components/user/create/userId';
-import { CreateUserInfo } from '../../src/components/user/create/userInfo';
-import { CreateUserAvatar } from '../../src/components/user/create/user_avatar';
+import { CreateUserId } from '../../src/components/User/Create/userId';
+import { CreateUserInfo } from '../../src/components/User/Create/userInfo';
+import { CreateUserAvatar } from '../../src/components/User/Create/user_avatar';
 
 const Create_User: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();

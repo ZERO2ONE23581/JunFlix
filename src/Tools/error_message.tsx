@@ -23,6 +23,7 @@ export const ErrMsg = ({ error }: IErrMsg) => {
   );
 };
 const Container = styled(motion.div)`
+  width: 100%;
   padding: 5px;
   font-size: 1.2rem;
   text-align: center;

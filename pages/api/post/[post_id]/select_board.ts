@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { post_id } = req.query;
   if (!user) return res.json({ ok: false, error: 'must login.' });
   if (!post_id) return res.json({ ok: false, error: 'query missed.' });
-  if (!board_id) return res.json({ ok: false, error: 'boar id missed.' });
+  if (!board_id) return res.json({ ok: false, error: 'board id missed.' });
   //
   const post = await client.post.findUnique({
     where: { id: +post_id.toString() },
@@ -33,7 +33,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       data: { board_id: board.id },
     })
   );
-  if (!isUpdate) return res.json({ ok: false, error: 'fail.' });
+  if (!isUpdate) return res.json({ ok: false, error: 'select_board_fail.' });
   return res.json({ ok: true });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

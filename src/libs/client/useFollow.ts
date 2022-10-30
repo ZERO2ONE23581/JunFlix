@@ -1,10 +1,11 @@
 import useSWR from 'swr';
-import useUser from './useUser';
+
 import { useEffect, useState } from 'react';
 import useMutation from './useMutation';
 import { useRouter } from 'next/router';
 import { IRes } from '../../types/global';
 import { IGetFollowing } from '../../types/following';
+import { useUser } from './useUser';
 
 export interface IFollowingUsers<T> {
   name?: string;

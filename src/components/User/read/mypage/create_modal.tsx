@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { List } from './btn_modal_list';
 import { Dispatch, SetStateAction } from 'react';
 import { Overlay } from '../../../../../styles/global';
@@ -12,14 +12,16 @@ interface ICreateModal {
   theme: boolean;
   isMyPage: boolean;
   setModal: Dispatch<SetStateAction<boolean>>;
-  setCreatePost: Dispatch<SetStateAction<boolean>>;
+  setCreate: Dispatch<
+    SetStateAction<{ post: boolean; board: boolean; review: boolean }>
+  >;
 }
 export const CreateModal = ({
   theme,
   modal,
   setModal,
   isMyPage,
-  setCreatePost,
+  setCreate,
 }: ICreateModal) => {
   const router = useRouter();
   const { isLoggedIn } = useUser();
@@ -27,16 +29,17 @@ export const CreateModal = ({
   const onClick = (type: string) => {
     if (!isLoggedIn) return;
     if (type === 'post') {
-      setCreatePost(true);
+      setCreate((p) => ({ ...p, post: true }));
       return setModal((p) => !p);
     } else router.push(`/${type}/create`);
   };
   //
   return (
-    <>
+    <AnimatePresence>
       {modal && (
         <>
           <Cont
+            className="create-modal"
             exit="exit"
             initial="initial"
             animate="animate"
@@ -65,7 +68,6 @@ export const CreateModal = ({
               />
             </ul>
           </Cont>
-
           <Overlay
             zindex={1}
             exit={{ opacity: 0 }}
@@ -74,14 +76,12 @@ export const CreateModal = ({
           />
         </>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 
 const Cont = styled(motion.div)`
   z-index: 111;
-  top: 0;
-  right: 0;
   position: absolute;
   padding: 5px;
   font-size: 1.2rem;

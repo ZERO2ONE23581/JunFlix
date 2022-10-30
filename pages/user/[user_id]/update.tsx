@@ -5,7 +5,7 @@ import { Svg } from '../../../src/Tools/Svg';
 import { Flex, Page } from '../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
 import { HeadTitle } from '../../../src/Tools/head_title';
-import { UpdateBox } from '../../../src/components/user/update';
+import { UpdateBox } from '../../../src/components/User/update';
 
 const UpdateUser: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [page, setPage] = useState(0);

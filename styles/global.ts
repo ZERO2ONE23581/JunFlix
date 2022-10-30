@@ -8,6 +8,7 @@ export const Page = styled(motion.section)`
   min-height: 100vh;
   position: relative;
 `;
+
 export const Setting = styled.div`
   font-style: italic;
   width: 100%;
@@ -32,22 +33,17 @@ export const FlexPage = styled(Page)`
   flex-direction: column;
   justify-content: flex-start;
 `;
-export const Layer = styled(FlexPage)`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  .lock {
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-  }
-`;
+
 export const Circle = styled(motion.div)`
-  width: 0.5rem;
-  height: 0.5rem;
+  display: flex;
+  min-width: 1rem;
+  min-height: 1rem;
   border-radius: 100%;
-  background-color: ${(p) => p.theme.color.logo};
+  align-items: center;
+  justify-content: center;
+  svg {
+    display: block;
+  }
 `;
 export const Flex = styled(motion.div)`
   width: 100%;
@@ -62,6 +58,39 @@ export const FlexCol = styled(Flex)`
   flex-direction: column;
   justify-content: flex-start;
 `;
+export const Layer_ = styled(Flex)`
+  padding: 0.6rem 1rem;
+  /* color: inherit;
+  background-color: inherit; */
+  justify-content: space-between;
+  .add-skip {
+    gap: 8px;
+  }
+  > div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    :first-of-type {
+      justify-content: flex-start;
+    }
+    :nth-of-type(2) {
+      h1 {
+        font-size: 1.4rem;
+      }
+    }
+    :last-of-type {
+      justify-content: flex-end;
+      button {
+        width: 80px;
+        padding: 0.3rem;
+        font-size: 1.1rem;
+        border-radius: 10px;
+      }
+    }
+  }
+`;
+
 export const ImageLabel = styled.label`
   cursor: pointer;
   display: flex;
@@ -100,7 +129,7 @@ export const Modal = styled(motion.article)`
   right: 0;
   bottom: 0;
   position: fixed;
-  margin: 2.5rem auto;
+  margin: 0 auto;
   //
   padding: 20px;
   overflow: hidden;
@@ -121,7 +150,7 @@ export const Modal = styled(motion.article)`
   }
   .close {
     top: 1rem;
-    right: 1rem;
+    left: 1rem;
     position: absolute;
   }
 `;
@@ -150,6 +179,10 @@ export const SmallModal = styled(Modal)`
     color: ${(p) => p.theme.color.logo};
   }
 `;
+export const Blank = styled.div`
+  width: 2rem;
+  height: 2rem;
+`;
 export const BtnWrap = styled(motion.div)`
   width: 100%;
   gap: 15px;
@@ -172,11 +205,12 @@ export const DimBackground = styled.article<{ zIndex?: number }>`
   background-color: rgba(0, 0, 0, 0.8);
   z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
 `;
-export const Grid = styled.article<{ size?: number }>`
-  gap: 20px;
+export const Grid = styled(motion.div)<{ box: number }>`
+  gap: 1.3rem;
   display: grid;
   position: relative;
-  grid-template-columns: ${(p) => p.size && `repeat(${p.size}, 1fr)`};
+  background-color: inherit;
+  grid-template-columns: ${(p) => p.box && `repeat(${p.box}, 1fr)`};
 `;
 export const Blur = styled.div<{ isBlur: boolean }>`
   pointer-events: ${(p) => p.isBlur && 'none'};

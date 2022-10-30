@@ -9,35 +9,44 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { variants, opacityVar } from '../../styles/variants';
 import { OverlayBg } from './overlay';
 
-interface IMsgModal extends ITheme {
-  msg: string;
-  closeModal: () => void;
+interface IMsgModal {
+  _data: {
+    msg: string;
+    theme: boolean;
+    layoutId: string;
+  };
 }
-export const MsgModal = ({ msg, theme, closeModal }: IMsgModal) => {
+export const MsgModal = ({ _data }: IMsgModal) => {
+  const msg = _data?.msg!;
+  const theme = _data?.theme!;
+  const layoutId = _data?.layoutId!;
   const router = useRouter();
   const [text, setText] = useState({ eng: '', kor: '' });
-  const isReload = Boolean(msg === 'update_done' || msg === 'delete_done');
+  const reload = () => {
+    setTimeout(() => {
+      return router.reload();
+    }, 2000);
+  };
   //
   useEffect(() => {
-    if (msg === 'create_user_done')
-      setText({ eng: 'Welcome!', kor: ' 가입을 축하합니다!' });
-    if (msg === 'update_done')
-      setText({ eng: 'Updated.', kor: '업데이트 되었습니다.' });
-    if (msg === 'update_fail')
-      setText({ eng: 'Update Failed.', kor: '업데이트 실패.' });
-    if (msg === 'create_done')
-      setText({ eng: 'Saved.', kor: '저장되었습니다.' });
-    if (msg === 'delete_done') setText({ eng: 'Deleted.', kor: '삭제완료' });
-    //
     if (msg === 'error') alert('error! check your console');
-    if (msg) {
-      setTimeout(() => {
-        closeModal();
-        if (isReload) return router.reload();
-        if (msg === 'create_user_done') return router.replace('/login');
-      }, 2000);
+    if (msg === 'create_user_done')
+      return setText({ eng: 'Welcome!', kor: ' 가입을 축하합니다!' });
+    if (msg === 'updated') {
+      setText({ eng: 'Updated.', kor: '업데이트 되었습니다.' });
+      return reload();
     }
-  }, [setText, msg, closeModal, isReload, router]);
+    if (msg === 'created') {
+      setText({ eng: 'Saved.', kor: '저장되었습니다.' });
+      return reload();
+    }
+    if (msg === 'deleted') {
+      setText({ eng: 'Deleted.', kor: '삭제완료' });
+      return reload();
+    } else {
+      return setText({ eng: msg, kor: '' });
+    }
+  }, [msg, setText]);
   //
   return (
     <AnimatePresence>
@@ -48,6 +57,7 @@ export const MsgModal = ({ msg, theme, closeModal }: IMsgModal) => {
             custom={theme}
             initial="initial"
             animate="animate"
+            layoutId={layoutId}
             variants={variants}
             className="msg-modal"
           >

@@ -25,9 +25,7 @@ const Test: NextPage<{ theme: boolean }> = ({ theme }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<any>({ mode: 'onBlur' });
-  const onValid = (inputs: any) => {
-    console.log(inputs);
-  };
+  const onValid = (inputs: any) => {};
   const onReset = () => {
     reset({ title: 'hi' });
   };

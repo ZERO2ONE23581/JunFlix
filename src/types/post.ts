@@ -1,8 +1,26 @@
 import { Board, Comment, Like, Post, Review, User } from '@prisma/client';
-import { FieldError, UseFormRegister, UseFormWatch } from 'react-hook-form';
+import {
+  FieldError,
+  UseFormClearErrors,
+  UseFormRegister,
+  UseFormReset,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
 import { IBoardType } from './board';
 import { IRes } from './global';
 import { IUserType } from './user';
+
+export interface IUseformPost {
+  _useform: {
+    errors: IPostFormErr;
+    reset: UseFormReset<IPostForm>;
+    watch: UseFormWatch<IPostForm>;
+    register: UseFormRegister<IPostForm>;
+    setValue: UseFormSetValue<IPostForm>;
+    clearErrors: UseFormClearErrors<IPostForm>;
+  };
+}
 
 export interface IPostType extends Post {
   host: IUserType;
@@ -64,12 +82,12 @@ export interface IPostFormErr {
   description?: FieldError | undefined;
   post_image?: FieldError | undefined;
 }
-export interface ICreatePostForm {
-  isNext?: boolean;
-  theme: boolean;
-  errors: IPostFormErr;
-  watch: UseFormWatch<IPostForm>;
-  register: UseFormRegister<IPostForm>;
+export interface IPostUseForm {
+  _data: {
+    errors: IPostFormErr;
+    watch: UseFormWatch<IPostForm>;
+    register: UseFormRegister<IPostForm>;
+  };
 }
 export interface IGetPosts {
   ok: boolean;

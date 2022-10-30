@@ -2,10 +2,10 @@
 export const redColor = '#E50914';
 export const blackColor = '#000000';
 export const whiteColor = '#ffffff';
+export const redBrdr = `1px solid ${redColor}`;
 export const transBrdr = `1px solid transparent`;
-export const redBrdr = `2px solid ${redColor}`;
-export const whiteBrdr = `2px solid ${whiteColor}`;
-export const blackBrdr = `2px solid ${blackColor}`;
+export const whiteBrdr = `1px solid ${whiteColor}`;
+export const blackBrdr = `1px solid ${blackColor}`;
 export const TweenTrans = { type: 'tween', stiffness: 50 };
 export const SpringTrans = { type: 'spring', stiffness: 100 };
 export const color = (dark: boolean) => (dark ? blackColor : whiteColor);
@@ -16,25 +16,12 @@ export const greyColor = '#bdc3c7';
 export const greyBrdr = `1px solid ${greyColor}`;
 export const GreyBorder = (dark: boolean) => (dark ? whiteBrdr : greyBrdr);
 
-export const myboxVar = {
-  initial: (theme: boolean) => ({
-    opacity: 0,
-  }),
-  animate: (theme: boolean) => ({
-    opacity: 1,
-    color: color(theme),
-    border: TransBorder(!theme),
-    transition: { duration: 0.3 },
-  }),
-  exit: (theme: boolean) => ({
-    opacity: 0,
-  }),
-  hover: () => ({
-    scale: 1.05,
-    color: redColor,
-    border: redBrdr,
-    transition: { duration: 0.3 },
-  }),
+const scale = { scale: 0.2, opacity: 0, transition: { duration: 0.8 } };
+const __scale = { scale: 1, opacity: 1, transition: { duration: 0.8 } };
+export const onlyScaleVar = {
+  initial: { ...scale },
+  animate: { ...__scale },
+  exit: { ...scale },
 };
 
 export const colorVar = {
@@ -68,6 +55,7 @@ export const scaleVar = {
     scale: 0.2,
     opacity: 0,
     color: color(theme),
+    transition: { duration: 0.8 },
     backgroundColor: color(!theme),
   }),
   animate: (theme: boolean) => ({
@@ -75,12 +63,12 @@ export const scaleVar = {
     scale: 1,
     color: color(theme),
     backgroundColor: color(!theme),
-    transition: { duration: 0.5 },
+    transition: { duration: 0.8 },
   }),
   exit: (theme: boolean) => ({
     opacity: 0,
     scale: 0.2,
-    transition: { duration: 0.5 },
+    transition: { duration: 0.8 },
   }),
 };
 export const variants = {
@@ -93,11 +81,13 @@ export const variants = {
     opacity: 1,
     color: color(theme),
     backgroundColor: color(!theme),
-    transition: { duration: 0.3 },
+    transition: { duration: 0.5 },
   }),
   exit: (theme: boolean) => ({
     opacity: 0,
-    transition: { duration: 0.3 },
+    color: color(theme),
+    backgroundColor: color(!theme),
+    transition: { duration: 0.5 },
   }),
 };
 export const TransBorderVar = {
@@ -121,14 +111,19 @@ export const TransBorderVar = {
 };
 export const btnVar = {
   initial: ({ theme, isClicked, isFollowing }: any) => ({
+    opacity: 0,
     color: isFollowing ? whiteColor : color(!theme),
     backgroundColor: isFollowing ? redColor : color(theme),
   }),
   animate: ({ theme, isClicked, isFollowing }: any) => ({
+    opacity: 1,
     transition: { duration: 0.3 },
     color: isFollowing ? whiteColor : color(!theme),
     backgroundColor: isFollowing ? redColor : color(theme),
   }),
+  exit: {
+    opacity: 0,
+  },
   hover: {
     fill: '#ffffff',
     color: '#ffffff',

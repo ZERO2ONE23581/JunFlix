@@ -3,13 +3,13 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { Blur, FlexPage, Layer } from '../../../styles/global';
 import { AnimatePresence } from 'framer-motion';
 import { IGetBoard } from '../../../src/types/board';
 import { HeadTitle } from '../../../src/Tools/head_title';
 import { LoadingModal } from '../../../src/Tools/Modal/loading_modal';
 import { ModalSchema } from '../../../src/Tools/Modal/schema';
-import { Board } from '../../../src/components/board/read/board_box';
+import { Board } from '../../../src/components/Board/read/board_box';
+import { FlexPage } from '../../../styles/global';
 
 const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
@@ -64,5 +64,16 @@ const Cont = styled(FlexPage)`
     border: 10px solid blanchedalmond;
     width: 100vw;
     height: 20vh;
+  }
+`;
+const Layer = styled(FlexPage)`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  .lock {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
   }
 `;

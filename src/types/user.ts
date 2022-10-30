@@ -8,9 +8,13 @@ import {
   Review,
   User,
 } from '@prisma/client';
-import { Dispatch, SetStateAction } from 'react';
 import { IRes } from './global';
+import { Dispatch, SetStateAction } from 'react';
 
+export interface IGetUser extends IRes {
+  user: IUserType;
+  loggedInUser?: IUserType;
+}
 export interface IUserType extends User {
   posts: Post[];
   boards: Board[];
@@ -29,9 +33,7 @@ export interface IUserType extends User {
     followings: number;
   };
 }
-export interface IGetUser extends IRes {
-  user: IUserType;
-}
+
 export interface ICreateUser {
   isType: boolean;
   wrap: {

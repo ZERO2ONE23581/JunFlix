@@ -1,0 +1,101 @@
+import styled from '@emotion/styled';
+import { Click } from './Click';
+import { Preview } from './Preview';
+import { IPostForm } from '../../../../../types/post';
+import { UseFormRegister, UseFormWatch } from 'react-hook-form';
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import { FlexCol } from '../../../../../../styles/global';
+import { Icon } from './Icon';
+
+interface IFileInput {
+  _data: {
+    theme: boolean;
+    preview: string;
+    setPreview: Dispatch<SetStateAction<string>>;
+  };
+  _useform: {
+    watch: UseFormWatch<IPostForm>;
+    register: UseFormRegister<IPostForm>;
+  };
+}
+export const FileInput = ({ _data, _useform }: IFileInput) => {
+  const theme = _data?.theme!;
+  const input_id = 'post_image';
+  const watch = _useform?.watch!;
+  const preview = _data?.preview!;
+  const register = _useform?.register!;
+  const setPreview = _data?.setPreview!;
+
+  useEffect(() => {
+    const image = watch('post_image');
+    if (image && image.length > 0) {
+      const file = image[0];
+      setPreview(URL.createObjectURL(file));
+    }
+  }, [watch('post_image'), setPreview]);
+
+  return (
+    <Cont
+      variants={vars}
+      exit="exit"
+      initial="initial"
+      animate="animate"
+      className="file-input"
+    >
+      <Label isNext={!open} htmlFor={'post_image'} className="img-label">
+        <Click _data={{ preview, theme }} />
+        <Preview _data={{ preview, isNext: !open }} />
+      </Label>
+      <Icon theme={theme} preview={preview} setPreview={setPreview} />
+      <input
+        {...register(input_id)}
+        id={input_id}
+        name={input_id}
+        disabled={!open}
+        type="file"
+        accept="image/*"
+        style={{ display: 'none' }}
+      />
+    </Cont>
+  );
+};
+const Cont = styled(FlexCol)`
+  overflow: hidden;
+  position: relative;
+  .delete-icon {
+    top: 1rem;
+    left: 1.5rem;
+    position: absolute;
+  }
+  label {
+    position: relative;
+    .click {
+      top: 50%;
+      left: 50%;
+      font-size: 2rem;
+      font-weight: 400;
+      position: absolute;
+    }
+  }
+`;
+const Label = styled.label<{ isNext: boolean }>`
+  cursor: ${(p) => !p.isNext && 'pointer'};
+`;
+const vars = {
+  initial: () => ({
+    //scale: 0.2,
+    opacity: 0,
+    transition: { duration: 0.8 },
+  }),
+  animate: () => ({
+    //scale: 1,
+    opacity: 1,
+    transition: { duration: 0.8 },
+  }),
+  exit: () => ({
+    //scale: 0.2,
+    opacity: 0,
+    transition: { duration: 0.8 },
+  }),
+  hover: { color: '#E50914', scale: 1.5, transition: { duration: 0.5 } },
+};
