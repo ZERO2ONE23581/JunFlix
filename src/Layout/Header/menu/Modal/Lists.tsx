@@ -1,60 +1,50 @@
 import {
-  hoverBgColor,
-  SpringTrans,
   TweenTrans,
-} from '../../../../styles/variants';
+  SpringTrans,
+  hoverBgColor,
+} from '../../../../../styles/variants';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import { useUser } from '../../../libs/client/useUser';
-import { useCapLetter } from '../../../libs/client/useTools';
+import { useUser } from '../../../../libs/client/useUser';
+import { useCapLetter } from '../../../../libs/client/useTools';
 
 interface IMainMenuModal {
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
+  setCreatePost: Dispatch<SetStateAction<boolean>>;
 }
-export const ModalLists = ({ selected, setSelected }: IMainMenuModal) => {
+export const Lists = ({
+  selected,
+  setSelected,
+  setCreatePost,
+}: IMainMenuModal) => {
   const router = useRouter();
-  const { isLoggedIn } = useUser();
-  //
-  const unLogArr = () => {
-    if (!isLoggedIn) return ['all'];
-    if (isLoggedIn) return ['all', 'my'];
-  };
-  const Genre = [
-    'sf',
-    'drama',
-    'comedy',
-    'action',
-    'horror',
-    'mystery',
-    'thriller',
-  ];
-  //
+  const { isLoggedIn, loggedInUser } = useUser();
   const onClick = (btnType: string, detail?: string) => {
     setSelected('');
-    if (btnType === 'all') router.push(`/${selected}/all`);
+    if (btnType === 'all') router.push(`/all/${selected}s/`);
     if (btnType === 'my') {
       if (!isLoggedIn) return;
-      router.push(`/${selected}/my`);
+      router.push(`/user/${loggedInUser?.id!}/${selected}s/`);
     }
     if (btnType && detail === 'genre') router.push(`/board/${btnType}`);
     if (btnType === 'create') {
       if (!isLoggedIn) return;
       if (selected === 'post') {
-        alert('포스트를 생성할 보드를 선택해주세요.');
-        router.push(`/board/my`);
-      } else {
-        router.push(`/${selected}/create`);
-      }
+        return setCreatePost(true);
+      } else return router.push(`/${selected}/create`);
     }
     if (btnType && detail === 'movietype') {
       if (btnType === 'all') router.push(`/movies`);
       else router.push(`/movies/${btnType}`);
     }
   };
+  const unLogArr = () => {
+    if (!isLoggedIn) return ['all'];
+    if (isLoggedIn) return ['all', 'my'];
+  };
   //
-
   return (
     <>
       {unLogArr()?.map((i: any) => (
@@ -97,3 +87,13 @@ export const ModalLists = ({ selected, setSelected }: IMainMenuModal) => {
     </>
   );
 };
+
+const Genre = [
+  'sf',
+  'drama',
+  'comedy',
+  'action',
+  'horror',
+  'mystery',
+  'thriller',
+];

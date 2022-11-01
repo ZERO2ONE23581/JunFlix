@@ -25,6 +25,8 @@ interface ICreatePostModal {
   };
 }
 export const Modal = ({ _data }: ICreatePostModal) => {
+  const router = useRouter();
+  const { board_id } = router.query;
   const post = _data?.post!;
   const theme = _data?.theme!;
   const modal = _data?.modal!;
@@ -33,9 +35,7 @@ export const Modal = ({ _data }: ICreatePostModal) => {
   const layoutId = _data?.layoutId!;
   const setLoading = _data?.setLoading!;
   //
-  const router = useRouter();
-  const { user_id } = router.query;
-  const { loggedInUser } = useUser();
+  const { loggedInUser, isLoggedIn } = useUser();
   const {
     reset,
     watch,
@@ -49,8 +49,7 @@ export const Modal = ({ _data }: ICreatePostModal) => {
   });
   const onValid = async (inputs: IPostForm) => {
     if (loading) return;
-    const host_id = loggedInUser?.id!;
-    if (Boolean(user_id !== host_id + '')) return;
+    if (!isLoggedIn) return;
     const { ok } = useTextLimit({
       _data: {
         setError,
@@ -72,9 +71,12 @@ export const Modal = ({ _data }: ICreatePostModal) => {
       if (!pageLink) return post({ ...inputs, ...links });
       if (hashtags && pageLink) return post({ ...inputs });
     };
+    const host_id = loggedInUser?.id!;
     const img_id = await useUploadImg(inputs.post_image, host_id);
-    if (!img_id) return option({ ...inputs, host_id, post_image: null });
-    if (img_id) return option({ ...inputs, host_id, post_image: img_id });
+    if (!img_id)
+      return option({ ...inputs, host_id, post_image: null, board_id });
+    if (img_id)
+      return option({ ...inputs, host_id, post_image: img_id, board_id });
   };
   const [step, setStep] = useState(1);
   const isNext = Boolean(step === 2);

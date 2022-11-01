@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import styled from '@emotion/styled';
 import { ITheme } from '../../../../styles/theme';
-import useUser from '../../../libs/client/useUser';
-import { HoverBox } from '../../../components/Board/read/hoverBox';
+import { useUser } from '../../../libs/client/useUser';
 
 interface IBoardBoxInfo extends ITheme {
   data: any;
@@ -14,7 +13,7 @@ export const BoardBoxInfo = ({ data, theme }: IBoardBoxInfo) => {
     <Cont>
       <Link href={`/board/${data?.id}/${data?.title}`}>
         <a>
-          <HoverBox
+          {/* <HoverBox
             theme={theme}
             data={{
               isOwner: isOwner,
@@ -25,7 +24,7 @@ export const BoardBoxInfo = ({ data, theme }: IBoardBoxInfo) => {
               intro: data.intro,
               username: data.user?.username,
             }}
-          />
+          /> */}
         </a>
       </Link>
     </Cont>

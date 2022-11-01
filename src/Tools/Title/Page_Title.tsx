@@ -4,7 +4,8 @@ import { Ropes } from './ropes';
 import styled from '@emotion/styled';
 import { GenreIcons } from '../GenreIcons';
 import { ITheme } from '../../../styles/theme';
-import useUser from '../../libs/client/useUser';
+import { FlexCol } from '../../../styles/global';
+import { useUser } from '../../libs/client/useUser';
 import { useCapLetter, useCapLetters } from '../../libs/client/useTools';
 
 interface IPageTitle extends ITheme {
@@ -29,19 +30,19 @@ export const PageTitle = ({ detail, type, theme }: IPageTitle) => {
   );
   return (
     <Cont className="page-title">
-      <Wrapper>
-        <Ropes />
+      <FlexCol className="wrap">
+        <Ropes theme={theme} />
         <div className="head">
           {isAllBoards && (
             <>
               <span>All Boards</span>
-              <Svg theme={theme} type="board" size="2rem" />
+              <Svg theme={theme} type="board" />
             </>
           )}
           {isMyBoards && (
             <>
               <span>{useCapLetter(loggedInUser?.username!)}'s Boards</span>
-              <Svg theme={theme} type="board" size="2rem" />
+              <Svg theme={theme} type="board" />
             </>
           )}
           {isGenreBoards && (
@@ -52,35 +53,25 @@ export const PageTitle = ({ detail, type, theme }: IPageTitle) => {
           )}
           <Movie type={type!} />
         </div>
-      </Wrapper>
+      </FlexCol>
     </Cont>
   );
 };
-const Cont = styled.article`
-  padding-left: 3rem;
-  display: flex;
+const Cont = styled(FlexCol)`
   width: fit-content;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  .head {
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    font-size: 2rem;
-    text-align: center;
-    border-radius: 5px;
-    border: 4px solid ${(p) => p.theme.color.logo};
+  pointer-events: none;
+  .wrap {
+    position: relative;
+    justify-content: center;
+    .head {
+      gap: 10px;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      font-size: 2rem;
+      text-align: center;
+      border-radius: 5px;
+      border: 4px solid ${(p) => p.theme.color.logo};
+    }
   }
-  svg {
-    pointer-events: none;
-  }
-`;
-const Wrapper = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 `;

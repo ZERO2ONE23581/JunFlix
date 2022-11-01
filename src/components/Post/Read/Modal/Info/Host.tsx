@@ -9,6 +9,10 @@ interface IHost {
   _data: {
     theme: boolean;
     isMyPost: boolean;
+    board: {
+      isBoard: boolean;
+      onClick: () => void;
+    };
     _host: {
       userId: string;
       host_id: number;
@@ -49,6 +53,9 @@ export const Host = ({ _data }: IHost) => {
         </FlexCol>
       </Flex>
       <Icon className="icon">
+        {_data?.board?.isBoard! && (
+          <Svg type="compass" theme={theme} onClick={_data?.board?.onClick!} />
+        )}
         <Svg type="like" theme={theme} />
         <Svg type="comment" theme={theme} />
         {!isMyPost && (
@@ -88,7 +95,8 @@ const Cont = styled(Flex)`
   }
 `;
 const Icon = styled(Flex)`
-  gap: 30px;
+  gap: 1.2rem;
   width: fit-content;
   justify-content: flex-start;
+  //border: 1px solid yellow;
 `;

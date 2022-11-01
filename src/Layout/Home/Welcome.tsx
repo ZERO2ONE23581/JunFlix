@@ -3,10 +3,10 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Btn } from '../../Tools/Button';
 import { useRouter } from 'next/router';
-import useUser from '../../libs/client/useUser';
 import { ITheme } from '../../../styles/theme';
-import { Answer } from '../../Tools/Modal/answer_modal';
 import { BtnWrap } from '../../../styles/global';
+import { useUser } from '../../libs/client/useUser';
+import { Answer } from '../../Tools/Modal/answer_modal';
 
 export const Welcome = ({ theme }: ITheme) => {
   const { isLoggedIn, loggedInUser } = useUser();

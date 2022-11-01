@@ -1,4 +1,4 @@
-import { BoardPage } from './all';
+import { BoardPage } from '../all/boards';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Slider } from '../../src/Tools/Slider';

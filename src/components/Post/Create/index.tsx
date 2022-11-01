@@ -1,11 +1,12 @@
 import { Modal } from './Modal';
 import { useEffect, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
 import { SelectModal } from './Select_Modal';
+import { AnimatePresence } from 'framer-motion';
 import { MsgModal } from '../../../Tools/msg_modal';
 import { ICreatePostRes } from '../../../types/post';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
+import { useRouter } from 'next/router';
 
 interface ICreatePost {
   open: boolean;
@@ -13,24 +14,29 @@ interface ICreatePost {
   closeModal: () => void;
 }
 export const CreatePost = ({ open, theme, closeModal }: ICreatePost) => {
+  const router = useRouter();
+  const { board_id } = router.query;
   const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);
+  const [listModal, setListModal] = useState(false);
   const [post, { data, loading }] =
     useMutation<ICreatePostRes>(`/api/post/create`);
   //
-  const [listModal, setListModal] = useState(false);
   useEffect(() => {
     if (data) {
       setTimeout(() => {
         setLoading(false);
         if (data.error) return setMsg(data.error);
-        else {
-          closeModal();
-          setListModal(data?.ok!);
+        if (data?.ok) {
+          if (board_id) return setMsg('created');
+          else {
+            closeModal();
+            return setListModal(data?.ok!);
+          }
         }
       }, 1000);
     }
-  }, [data, setLoading, setMsg]);
+  }, [data, setLoading, setMsg, board_id]);
   //
   const post_id = data?.post_id;
   const layoutId = 'create_post';

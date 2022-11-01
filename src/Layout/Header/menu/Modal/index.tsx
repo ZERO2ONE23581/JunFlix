@@ -1,20 +1,34 @@
 import styled from '@emotion/styled';
+import { Lists } from './Lists';
 import { motion } from 'framer-motion';
-import { MovieMenuLists } from './movie_lists';
-import { Dispatch, SetStateAction } from 'react';
-import { Overlay } from '../../../../styles/global';
-import { menuModalVar, TweenTrans } from '../../../../styles/variants';
-import { ModalLists } from './modal_lists';
+import { MovieLists } from './Movie_Lists';
+import { Overlay } from '../../../../../styles/global';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { CreatePost } from '../../../../components/Post/Create';
+import { menuModalVar, TweenTrans } from '../../../../../styles/variants';
 
 interface IMenuModal {
+  theme: boolean;
   selected: string;
   isModal: boolean;
   setSelected: Dispatch<SetStateAction<string>>;
 }
-export const MenuModal = ({ selected, setSelected, isModal }: IMenuModal) => {
+export const MenuModal = ({
+  theme,
+  isModal,
+  selected,
+  setSelected,
+}: IMenuModal) => {
   const isMovie = Boolean(selected === 'movie');
+  const [createPost, setCreatePost] = useState(false);
+
   return (
     <>
+      <CreatePost
+        theme={theme}
+        open={createPost}
+        closeModal={() => setCreatePost(false)}
+      />
       {isModal && (
         <>
           <Cont
@@ -26,10 +40,14 @@ export const MenuModal = ({ selected, setSelected, isModal }: IMenuModal) => {
           >
             <ul>
               {!isMovie && (
-                <ModalLists selected={selected} setSelected={setSelected} />
+                <Lists
+                  selected={selected}
+                  setSelected={setSelected}
+                  setCreatePost={setCreatePost}
+                />
               )}
               {isMovie && (
-                <MovieMenuLists selected={selected} setSelected={setSelected} />
+                <MovieLists selected={selected} setSelected={setSelected} />
               )}
             </ul>
           </Cont>

@@ -3,15 +3,16 @@ import { motion } from 'framer-motion';
 import { Svg } from '../../../../Tools/Svg';
 import { Dispatch, SetStateAction } from 'react';
 import { Layer_ } from '../../../../../styles/global';
+import { useCapLetters } from '../../../../libs/client/useTools';
 import { color, redColor } from '../../../../../styles/variants';
 
 interface ITitle {
   _data: {
     theme: boolean;
-    isMyAcct: boolean;
-    username: string;
+    isMyAcct?: boolean;
+    username?: string;
     onClick: () => void;
-    setCreate: Dispatch<SetStateAction<boolean>>;
+    setCreate?: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Title = ({ _data }: ITitle) => {
@@ -24,19 +25,22 @@ export const Title = ({ _data }: ITitle) => {
     <Cont className="layer">
       <div></div>
       <div>
-        <h1>
-          <motion.span
-            custom={theme}
-            onClick={onClick}
-            variants={nameVar}
-            className="user"
-            animate="animate"
-            whileHover="hover"
-          >
-            {username}
-          </motion.span>
-          <span>'s Posts</span>
-        </h1>
+        {username && (
+          <h1>
+            <motion.span
+              custom={theme}
+              onClick={onClick}
+              variants={nameVar}
+              className="user"
+              animate="animate"
+              whileHover="hover"
+            >
+              {useCapLetters(username)}
+            </motion.span>
+            <span>'s Posts</span>
+          </h1>
+        )}
+        {!username && <h1>All Posts</h1>}
       </div>
       <div>
         {isMyAcct && (

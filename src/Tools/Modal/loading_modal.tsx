@@ -6,10 +6,9 @@ import { variants } from '../../../styles/variants';
 
 interface ILoadingModal {
   theme: boolean;
-  zindex?: number;
   layoutId?: string;
 }
-export const LoadingModal = ({ theme, zindex, layoutId }: ILoadingModal) => {
+export const LoadingModal = ({ theme, layoutId }: ILoadingModal) => {
   return (
     <>
       <Cont
@@ -17,9 +16,9 @@ export const LoadingModal = ({ theme, zindex, layoutId }: ILoadingModal) => {
         initial="initial"
         animate="animate"
         className="loading"
-        layoutId={layoutId}
         custom={theme}
         variants={variants}
+        layoutId={layoutId}
       >
         <motion.span
           animate="animate"
@@ -46,13 +45,12 @@ export const LoadingModal = ({ theme, zindex, layoutId }: ILoadingModal) => {
           />
         </motion.svg>
       </Cont>
-      <OverlayBg dark={0.3} zIndex={99999} />
+      <OverlayBg dark={0.3} zIndex={888} />
     </>
   );
 };
 const Cont = styled(Modal)`
   top: 20rem;
-  z-index: 999;
   width: 25vw;
   height: 40vh;
   min-width: 400px;
@@ -62,13 +60,14 @@ const Cont = styled(Modal)`
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  z-index: 999;
   span {
     opacity: 0;
-    font-size: 2em;
+    font-size: 2.2rem;
   }
   svg {
-    width: 3em;
-    height: 3em;
+    width: 3rem;
+    height: 3rem;
   }
 `;
 const svgVar = {

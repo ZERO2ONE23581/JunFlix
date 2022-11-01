@@ -9,7 +9,7 @@ export const Page = styled(motion.section)`
   position: relative;
 `;
 
-export const Setting = styled.div`
+export const SetPrivate = styled.div`
   font-style: italic;
   width: 100%;
   gap: 12px;
@@ -34,17 +34,6 @@ export const FlexPage = styled(Page)`
   justify-content: flex-start;
 `;
 
-export const Circle = styled(motion.div)`
-  display: flex;
-  min-width: 1rem;
-  min-height: 1rem;
-  border-radius: 100%;
-  align-items: center;
-  justify-content: center;
-  svg {
-    display: block;
-  }
-`;
 export const Flex = styled(motion.div)`
   width: 100%;
   display: flex;
@@ -54,14 +43,43 @@ export const Flex = styled(motion.div)`
     display: none;
   }
 `;
+export const Circle = styled(Flex)`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+  svg {
+    display: block;
+  }
+`;
+export const ModalBtn = styled(motion.div)`
+  top: 0rem;
+  right: 0rem;
+  position: absolute;
+  z-index: 100;
+  padding: 5px;
+  font-size: 1.2em;
+  overflow: hidden;
+  border-radius: 5px;
+  ul {
+    width: fit-content;
+    .small {
+      font-size: 1rem;
+    }
+    li {
+      min-width: 120px;
+      font-size: 1.1rem;
+      padding: 0.3rem;
+      cursor: pointer;
+      text-align: center;
+    }
+  }
+`;
 export const FlexCol = styled(Flex)`
   flex-direction: column;
   justify-content: flex-start;
 `;
 export const Layer_ = styled(Flex)`
   padding: 0.6rem 1rem;
-  /* color: inherit;
-  background-color: inherit; */
   justify-content: space-between;
   .add-skip {
     gap: 8px;
@@ -85,7 +103,7 @@ export const Layer_ = styled(Flex)`
         width: 80px;
         padding: 0.3rem;
         font-size: 1.1rem;
-        border-radius: 10px;
+        border-radius: 40px;
       }
     }
   }
@@ -150,7 +168,7 @@ export const Modal = styled(motion.article)`
   }
   .close {
     top: 1rem;
-    left: 1rem;
+    left: 1.5rem;
     position: absolute;
   }
 `;
@@ -217,19 +235,20 @@ export const Blur = styled.div<{ isBlur: boolean }>`
   filter: ${(p) => p.isBlur && 'blur(5px)'};
 `;
 export const Form = styled(motion.form)`
+  max-height: 50vh;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
-export const Box = styled(motion.div)`
+export const Box = styled(FlexCol)`
+  padding: 40px;
   position: relative;
   width: fit-content;
-  gap: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 40px;
   border-radius: 5px;
   border: ${(p) => p.theme.border.thick};
   box-shadow: ${(p) => p.theme.boxShadow.nav};

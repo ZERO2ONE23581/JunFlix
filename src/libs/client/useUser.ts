@@ -5,7 +5,9 @@ export const useUser = () => {
   const { data } = useSWR<IGetUser>('/api/login');
   return {
     isLoggedIn: data?.ok,
+    user_id: data?.loggedInUser?.id,
     loggedInUser: data?.loggedInUser,
+    username: data?.loggedInUser?.username,
   };
 };
 export const useGetUser = (user_id: number) => {
@@ -15,5 +17,6 @@ export const useGetUser = (user_id: number) => {
   return {
     isMyAcct,
     user: data?.user,
+    username: data?.user?.username!,
   };
 };

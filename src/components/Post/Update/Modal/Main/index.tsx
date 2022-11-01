@@ -1,6 +1,6 @@
 import { Info } from './Info';
 import styled from '@emotion/styled';
-import { Setting } from './Setting/Setting';
+import { Setting } from './Setting';
 import { PostImage } from './Setting/PostImage';
 import { Dispatch, SetStateAction } from 'react';
 import { IUseformPost } from '../../../../../types/post';

@@ -97,7 +97,6 @@ const Cont = styled(FlexCol)<{ height: string; max: string }>`
   }
   textarea {
     border: none;
-    //border: 1px solid yellow;
     width: 100%;
     resize: none;
     cursor: auto;
@@ -105,7 +104,7 @@ const Cont = styled(FlexCol)<{ height: string; max: string }>`
     max-height: 500px;
     font-size: 1.1rem;
     word-break: break-all;
-    padding: 1rem;
+    padding: 1.2rem;
     height: ${(p) => p.height};
     max-height: ${(p) => p.max};
     background-color: inherit;

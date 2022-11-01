@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { IconModal } from './Icon_Modal';
+import { IconModal } from './Modal';
 import { Avatar } from '../../../Tools/Avatar';
 import { ITheme } from '../../../../styles/theme';
 import { useUser } from '../../../libs/client/useUser';

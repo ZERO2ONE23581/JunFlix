@@ -1,9 +1,7 @@
 import { Svg } from '../Svg';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { ITheme } from '../../../styles/theme';
-import { AnimatePresence, motion } from 'framer-motion';
-import { TweenTrans } from '../../../styles/variants';
+import { Flex } from '../../../styles/global';
 
 export interface IBtns {
   theme: boolean;
@@ -13,30 +11,28 @@ export const ThemeBtn = ({ setTheme, theme }: IBtns) => {
   const isDark = !theme;
   const isLight = theme;
   const onClick = () => setTheme((p) => !p);
+  const size = '2.5rem';
   return (
-    <Cont>
+    <Cont size={size}>
       <Svg
         type="moon"
         theme={theme}
         onClick={onClick}
-        item={{ size: '3rem', isHide: isLight }}
+        item={{ size, isHide: isLight }}
       />
       <Svg
         type="sun"
         theme={theme}
         onClick={onClick}
-        item={{ size: '3rem', isHide: isDark }}
+        item={{ size, isHide: isDark }}
       />
     </Cont>
   );
 };
-const Cont = styled.div`
-  width: 3rem;
-  height: 3rem;
-  top: 8em;
-  right: 3em;
-  z-index: 9999;
-  position: fixed;
+const Cont = styled(Flex)<{ size: string }>`
+  position: relative;
+  width: ${(p) => p.size && p.size};
+  width: ${(p) => p.size && p.size};
   svg {
     position: absolute;
   }

@@ -1,19 +1,16 @@
-import { Svg } from './Svg';
-import { Btn } from './Button';
 import styled from '@emotion/styled';
+import { OverlayBg } from './overlay';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { ITheme } from '../../styles/theme';
-import { FlexCol, Modal, Overlay } from '../../styles/global';
-import { AnimatePresence, motion } from 'framer-motion';
-import { variants, opacityVar } from '../../styles/variants';
-import { OverlayBg } from './overlay';
+import { AnimatePresence } from 'framer-motion';
+import { variants } from '../../styles/variants';
+import { FlexCol, Modal } from '../../styles/global';
 
 interface IMsgModal {
   _data: {
     msg: string;
     theme: boolean;
-    layoutId: string;
+    layoutId?: string;
   };
 }
 export const MsgModal = ({ _data }: IMsgModal) => {

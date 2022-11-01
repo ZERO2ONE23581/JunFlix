@@ -1,13 +1,14 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../Tools/Svg';
-import { Btn } from '../../Tools/Button';
-import { Modal } from '../../../styles/global';
-import { color } from '../../../styles/variants';
-import { MsgModal } from '../../Tools/msg_modal';
-import { OverlayBg } from '../../Tools/overlay';
-import useMutation from '../../libs/client/useMutation';
-import { LoadingModal } from '../../Tools/Modal/loading_modal';
+import { Svg } from '../../../Tools/Svg';
+import { Btn } from '../../../Tools/Button';
+import { Modal } from '../../../../styles/global';
+import { color } from '../../../../styles/variants';
+import { MsgModal } from '../../../Tools/msg_modal';
+import { OverlayBg } from '../../../Tools/overlay';
+import useMutation from '../../../libs/client/useMutation';
+import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Text } from './Text';
 
 interface IDeletePost {
   _data: {
@@ -30,14 +31,13 @@ export const DeletePost = ({ _data }: IDeletePost) => {
   const [Loading, setLoading] = useState(false);
   const open = Boolean(modal === 'delete') && !Loading;
   const [post, { data, loading }] = useMutation(`/api/post/${post_id}/delete`);
-  const handleSubmit = () => {
+  const onClick = () => {
     if (loading) return;
-    if (!isMyPost) return;
-    if (!post_id) return;
+    if (!isMyPost) return alert('invalid host');
+    if (!post_id) return alert('no post id');
     setLoading(true);
     return post({ isDelete: true });
   };
-
   useEffect(() => {
     if (data) {
       setTimeout(() => {
@@ -48,7 +48,7 @@ export const DeletePost = ({ _data }: IDeletePost) => {
       }, 1000);
     }
   }, [data, setLoading, setMsg]);
-
+  const closeModal = () => setModal('read');
   return (
     <>
       {open && (
@@ -61,24 +61,13 @@ export const DeletePost = ({ _data }: IDeletePost) => {
             variants={vars}
             layoutId={layoutId}
           >
-            <Svg type="close" theme={theme} onClick={() => setModal('read')} />
-            <h2>
-              <span className="kor">
-                <span>이 포스트를 삭제하시겠습니까?</span>
-                <span className="small">
-                  * 포스트는 삭제 후 복구가 불가합니다.
-                </span>
-              </span>
-              <span className="eng">
-                <span>Do you like to delete this post?</span>
-                <span className="small">
-                  * The post can not be recoverd after this action.
-                </span>
-              </span>
-            </h2>
-            <form onSubmit={handleSubmit}>
-              <Btn type="submit" item={{ theme, name: 'Delete' }} />
-            </form>
+            <Svg type="close" theme={theme} onClick={closeModal} />
+            <Text />
+            <Btn
+              type="button"
+              onClick={onClick}
+              item={{ theme, name: 'Delete' }}
+            />
           </DeleteModal>
           <OverlayBg
             dark={0.8}
@@ -87,18 +76,12 @@ export const DeletePost = ({ _data }: IDeletePost) => {
           />
         </>
       )}
-      {Loading && (
-        <LoadingModal layoutId={layoutId} theme={theme} zindex={112} />
-      )}
+      {Loading && <LoadingModal layoutId={layoutId} theme={theme} />}
       <MsgModal _data={{ msg, theme, layoutId }} />
     </>
   );
 };
 const DeleteModal = styled(Modal)`
-  .close {
-    top: 1.3rem;
-    left: 1.7rem;
-  }
   top: 15rem;
   z-index: 114;
   padding: 3rem 2rem;
@@ -108,21 +91,9 @@ const DeleteModal = styled(Modal)`
     font-size: 1.3rem;
     padding: 10px 20px;
   }
-  h2 {
-    text-align: center;
-    font-size: 1.4rem;
-    .small {
-      opacity: 0.7;
-      font-size: 1.3rem;
-      font-style: italic;
-    }
-    span {
-      display: block;
-      line-height: 30px;
-    }
-    > span {
-      padding: 10px;
-    }
+  .close {
+    top: 1.3rem;
+    left: 1.7rem;
   }
 `;
 const vars = {

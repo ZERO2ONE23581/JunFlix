@@ -4,8 +4,9 @@ import { Dispatch, SetStateAction } from 'react';
 import { Modal, Overlay } from '../../../styles/global';
 import { ITheme } from '../../../styles/theme';
 import { AnimatePresence } from 'framer-motion';
-import { answerVar } from '../../../styles/variants';
 import { AnswerTexts } from './answer_texts';
+import { scaleVar } from '../../../styles/variants';
+import { OverlayBg } from '../overlay';
 
 interface IAnswer extends ITheme {
   type: string;
@@ -24,14 +25,13 @@ export const Answer = ({ max, answer, theme, type, closeModal }: IAnswer) => {
       {answer && (
         <>
           <Cont
-            custom={theme}
             exit="exit"
             initial="initial"
             animate="animate"
-            variants={answerVar}
+            custom={theme}
+            variants={scaleVar}
           >
             <Svg
-              size="2rem"
               type="close"
               theme={theme!}
               onClick={() => closeModal(false)}
@@ -40,23 +40,20 @@ export const Answer = ({ max, answer, theme, type, closeModal }: IAnswer) => {
               <AnswerTexts type={type} max={max} />
             </ul>
           </Cont>
-          <Overlay
-            exit={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            onClick={() => closeModal(false)}
-          />
+          <OverlayBg closeModal={() => closeModal(false)} />
         </>
       )}
     </AnimatePresence>
   );
 };
 const Cont = styled(Modal)`
+  z-index: 100;
+  max-width: 800px;
+  margin-top: 12rem;
   font-size: 1.4rem;
-  min-width: 300px;
-  min-height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+  padding: 2.5rem 2rem;
   ul {
     li {
       text-align: center;

@@ -1,6 +1,9 @@
 import { IRes } from './global';
 import { Board, Follower, Following, Post, User } from '@prisma/client';
 
+export interface IUseGetBoards {
+  boards: IGetBoards;
+}
 export interface IBoardType extends Board {
   host: User;
   posts: Post[];

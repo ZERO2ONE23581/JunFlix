@@ -13,6 +13,10 @@ export interface IInfo {
       title: string;
       hashtags: string;
       pageLink: string;
+      board: {
+        isBoard: boolean;
+        onClick: () => void;
+      };
     };
     _host: {
       userId: string;
@@ -35,7 +39,7 @@ export const Info = ({ _data }: IInfo) => {
         animate="animate"
         variants={variants}
       >
-        <Host _data={{ theme, _host, isMyPost }} />
+        <Host _data={{ theme, _host, isMyPost, board: _data?._post?.board! }} />
         <Detail _post={_post!} />
       </Cont>
     </>

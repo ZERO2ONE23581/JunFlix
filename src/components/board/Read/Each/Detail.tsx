@@ -1,29 +1,21 @@
 import styled from '@emotion/styled';
-import { ITheme } from '../../../../styles/theme';
 
-interface IBoardDetail extends ITheme {
-  item: {
-    genre: string;
-    isPrivate: boolean;
+interface IBoardDetail {
+  _data: {
+    onPrivate: boolean;
   };
 }
-export const BoardDetail = ({ theme, item }: IBoardDetail) => {
-  const genre = item.genre;
-  const privateMode = item.isPrivate;
+export const Detail = ({ _data }: IBoardDetail) => {
+  const onPrivate = _data?.onPrivate!;
   return (
     <Container className="board-detail">
       <ul>
-        {genre && (
-          <li>
-            <span>{genre}</span>
-          </li>
-        )}
-        {privateMode && (
+        {onPrivate && (
           <li>
             <span>private</span>
           </li>
         )}
-        {!privateMode && (
+        {!onPrivate && (
           <li>
             <span>public</span>
           </li>

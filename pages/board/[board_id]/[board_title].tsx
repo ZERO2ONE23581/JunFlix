@@ -1,45 +1,54 @@
-import useSWR from 'swr';
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { AnimatePresence } from 'framer-motion';
-import { IGetBoard } from '../../../src/types/board';
-import { HeadTitle } from '../../../src/Tools/head_title';
-import { LoadingModal } from '../../../src/Tools/Modal/loading_modal';
-import { ModalSchema } from '../../../src/Tools/Modal/schema';
-import { Board } from '../../../src/components/Board/read/board_box';
 import { FlexPage } from '../../../styles/global';
+import { NoData } from '../../../src/Tools/NoData';
+import { HeadTitle } from '../../../src/Tools/head_title';
+import { BoardSchema } from '../../../src/Tools/Modal/schema';
+import { Board } from '../../../src/components/Board/Read/Each';
+import { useGetBoard } from '../../../src/libs/client/useBoards';
+import { useGetMyPosts } from '../../../src/libs/client/usePosts';
+import { LoadingModal } from '../../../src/Tools/Modal/loading_modal';
+import { PostSchema } from '../../../src/components/Post/Read/Schema';
 
 const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const { board_id } = router.query;
-  const { data } = useSWR<IGetBoard>(board_id && `/api/board/${board_id}`);
   const [type, setType] = useState('');
-  const [createPost, setCreatePost] = useState(false);
-
-  //
+  const [create, setCreate] = useState(false);
+  const { board, isMyBoard } = useGetBoard(board_id);
+  const modal = Boolean(type && isMyBoard);
+  const { posts, isPost } = useGetMyPosts(Number(board?.host_id));
   return (
     <>
-      <HeadTitle title={data?.board?.title!} />
+      <HeadTitle title={board?.title!} />
       <AnimatePresence>
         <Cont>
-          {data?.board && (
+          {board && (
             <>
-              <Board theme={theme} board={data?.board} setType={setType} />
+              <Board theme={theme} board={board} setType={setType} />
               <Layer className="layer">
-                <h1>posts</h1>
+                {isPost && (
+                  <PostSchema
+                    _data={{ theme, posts, create, setCreate, max_grid: 6 }}
+                  />
+                )}
+                {!isPost && <NoData theme={theme} />}
               </Layer>
-              <ModalSchema
-                type={type}
-                theme={theme}
-                original={data?.board}
-                modal={Boolean(type)}
-                closeModal={() => setType('')}
+              <BoardSchema
+                _data={{
+                  type,
+                  modal,
+                  theme,
+                  board,
+                  closeModal: () => setType(''),
+                }}
               />
             </>
           )}
-          {!data?.board && <LoadingModal theme={theme} />}
+          {!board && <LoadingModal theme={theme} />}
         </Cont>
       </AnimatePresence>
     </>
@@ -48,28 +57,24 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
 export default Board_Page;
 
 const Cont = styled(FlexPage)`
-  gap: 50px;
+  gap: 2rem;
   flex-direction: column;
   justify-content: flex-start;
   .board-box {
-    padding-top: 50px;
+    width: fit-content;
+    //border: 2px solid hotpink;
     .board-title {
-      max-width: 50vw;
+      max-width: 60vw;
     }
     .content-text {
-      max-width: 25vw;
+      max-width: 30vw;
     }
-  }
-  .test {
-    border: 10px solid blanchedalmond;
-    width: 100vw;
-    height: 20vh;
   }
 `;
 const Layer = styled(FlexPage)`
   position: relative;
-  width: 100%;
-  height: 100%;
+  //border: 2px solid red;
+  padding: 0 8rem;
   .lock {
     top: 50%;
     left: 50%;

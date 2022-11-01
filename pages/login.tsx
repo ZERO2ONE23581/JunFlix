@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Btn } from '../src/Tools/Button';
-import { Box, Form, Page } from '../styles/global';
+import { Box, FlexPage, Form, Page } from '../styles/global';
 import { AnimatePresence } from 'framer-motion';
 import { ILoginForm } from '../src/types/user';
 import { InputWrap } from '../src/Tools/Input';
@@ -23,6 +23,7 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
   const {
     watch,
     register,
+    clearErrors,
     handleSubmit,
     formState: { errors },
   } = useForm<ILoginForm>({ mode: 'onSubmit' });
@@ -42,17 +43,19 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
     }
   }, [data, router, setMsg, setTimeout, setLoading]);
   //
+  console.log(data);
   return (
     <>
       <HeadTitle title="로그인" />
-      <Cont variants={variants} animate="animate" custom={theme}>
-        <AnimatePresence>
+      <AnimatePresence>
+        <Cont variants={variants} animate="animate" custom={theme}>
           {!Loading && (
             <Box
-              className="box"
               exit="exit"
+              className="box"
               initial="initial"
               animate="animate"
+              layoutId="login"
               custom={theme}
               variants={variants}
             >
@@ -62,8 +65,9 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
               </h1>
               <Form onSubmit={handleSubmit(onValid)}>
                 <InputWrap
-                  theme={theme}
-                  data={{
+                  _data={{
+                    theme,
+                    clearErrors,
                     label: 'ID',
                     id: 'userId',
                     type: 'text',
@@ -75,10 +79,11 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
                   }}
                 />
                 <InputWrap
-                  theme={theme}
-                  data={{
-                    type: 'text',
+                  _data={{
+                    theme,
+                    clearErrors,
                     id: 'password',
+                    type: 'password',
                     label: 'Password',
                     text: watch('password')!,
                     error: errors.password?.message!,
@@ -92,21 +97,18 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
             </Box>
           )}
           {Loading && <LoadingModal theme={theme} />}
-          <MsgModal msg={msg} theme={theme} closeModal={() => setMsg('')} />
-        </AnimatePresence>
-      </Cont>
+          <MsgModal _data={{ msg, theme, layoutId: 'login' }} />
+        </Cont>
+      </AnimatePresence>
     </>
   );
 };
 export default Login;
 
-const Cont = styled(Page)`
-  display: flex;
-  align-items: center;
+const Cont = styled(FlexPage)`
   justify-content: center;
-  background-color: black;
   .box {
-    width: 440px;
+    min-width: 30vw;
     form {
       button {
         margin-top: 20px;

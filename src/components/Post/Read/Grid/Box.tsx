@@ -10,7 +10,7 @@ interface IPostBox {
     theme: boolean;
     post_id: number;
     image: string | null;
-    clickBox: (id: number) => void;
+    onClick: (id: number) => void;
   };
 }
 export const Box = ({ _data }: IPostBox) => {
@@ -18,7 +18,7 @@ export const Box = ({ _data }: IPostBox) => {
   const image = _data?.image!;
   const theme = _data?.theme!;
   const post_id = _data?.post_id!;
-  const clickBox = _data?.clickBox!;
+  const onClick = _data?.onClick!;
   //
 
   const Title = (text: string) => {
@@ -30,22 +30,27 @@ export const Box = ({ _data }: IPostBox) => {
     else return useCapLetters(text.slice(0, 24)) + '...';
   };
   return (
-    <Cont
-      key={post_id}
-      custom={theme}
-      variants={vars}
-      transition={TweenTrans}
-      layoutId={post_id + ''}
-      onClick={() => clickBox(post_id)}
-      exit="exit"
-      className="grid-box"
-      initial="initial"
-      animate="animate"
-      whileHover="hover"
-    >
-      <img alt="박스커버이미지" src={avatarLink(image)} />
-      <h2>{Title(title)}</h2>
-    </Cont>
+    <>
+      {avatarLink(image) && (
+        <Cont
+          key={post_id}
+          custom={theme}
+          variants={vars}
+          transition={TweenTrans}
+          layoutId={post_id + ''}
+          onClick={() => onClick(post_id)}
+          exit="exit"
+          className="grid-box"
+          initial="initial"
+          animate="animate"
+          whileHover="hover"
+        >
+          {/* <h1>{post_id}</h1> */}
+          <img alt="박스커버이미지" src={avatarLink(image)} />
+          <h2>{Title(title)}</h2>
+        </Cont>
+      )}
+    </>
   );
 };
 const Cont = styled(FlexCol)`
@@ -58,7 +63,7 @@ const Cont = styled(FlexCol)`
   img {
     border: none;
     display: block;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: ${(p) => p.theme.boxShadow.nav};
   }
   h2 {

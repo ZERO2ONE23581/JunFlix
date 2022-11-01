@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { MenuModal } from './Modal';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { MenuModal } from './modal';
 import { ITheme } from '../../../../styles/theme';
 import { useCapLetter } from '../../../libs/client/useTools';
 import { colorVar, hoverScale } from '../../../../styles/variants';
@@ -21,15 +21,16 @@ export const MainMenu = ({ theme }: ITheme) => {
             exit="exit"
             animate="animate"
             initial="initial"
+            whileHover="hover"
             custom={theme}
             variants={textVar}
-            whileHover="hover"
             onClick={() => setSelected(i)}
           >
             {useCapLetter(i)}
           </Text>
 
           <MenuModal
+            theme={theme}
             isModal={isModal(i)}
             selected={selected}
             setSelected={setSelected}

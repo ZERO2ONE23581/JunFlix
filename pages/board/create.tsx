@@ -1,21 +1,21 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { FlexPage } from '../../styles/global';
-import { HeadTitle } from '../../src/Tools/head_title';
-import { CreateBoardBox } from '../../src/components/Board/create';
-import useMutation from '../../src/libs/client/useMutation';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
+import { useEffect, useState } from 'react';
+import { IRes } from '../../src/types/global';
+import { FlexPage } from '../../styles/global';
 import { AnimatePresence } from 'framer-motion';
 import { MsgModal } from '../../src/Tools/msg_modal';
-import { IRes } from '../../src/types/global';
+import { HeadTitle } from '../../src/Tools/head_title';
+import useMutation from '../../src/libs/client/useMutation';
+import { CreateBox } from '../../src/components/Board/Create';
+import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
 
 const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
-  const [post, { loading, data }] = useMutation<IRes>(`/api/board/create`);
-  const [Loading, setLoading] = useState(false);
   const [msg, setMsg] = useState('');
+  const [Loading, setLoading] = useState(false);
+  const [post, { loading, data }] = useMutation<IRes>(`/api/board/create`);
   useEffect(() => {
     if (data) {
       setTimeout(() => {
@@ -27,27 +27,23 @@ const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
     }
   }, [data, router, setMsg, setTimeout, setLoading]);
   //
+  const layoutId = 'create-board';
   return (
     <>
       <HeadTitle title="보드생성" />
       <Cont>
-        <AnimatePresence>
-          {!Loading && (
-            <CreateBoardBox
-              theme={theme}
-              post={post}
-              loading={loading}
-              setLoading={setLoading}
-            />
-          )}
-          <MsgModal
-            msg={msg}
-            theme={theme}
-            Loading={Loading}
-            closeModal={() => setMsg('')}
-          />
-          {Loading && <LoadingModal theme={theme} />}
-        </AnimatePresence>
+        <CreateBox
+          _data={{
+            post,
+            theme,
+            loading,
+            layoutId,
+            setLoading,
+            open: !Loading,
+          }}
+        />
+        {Loading && <LoadingModal theme={theme} />}
+        <MsgModal _data={{ msg, theme, layoutId }} />
       </Cont>
     </>
   );
@@ -55,10 +51,5 @@ const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
 export default CreateBoard;
 
 const Cont = styled(FlexPage)`
-  .box {
-    width: 50vw;
-    min-width: 700px;
-    min-height: 500px;
-    margin-bottom: 50px;
-  }
+  margin-top: 8rem;
 `;

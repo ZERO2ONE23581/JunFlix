@@ -13,6 +13,7 @@ import {
   redColor,
   TransBorder,
 } from '../../../styles/variants';
+import { InpBorderVar } from '.';
 
 interface ISelectWrap {
   _data: {
@@ -39,11 +40,12 @@ export const SelectWrap = ({ _data }: ISelectWrap) => {
       <>
         <label htmlFor={id} style={{ display: 'none' }} />
         <Cont
-          custom={{ theme, disabled, isRed }}
-          variants={select_vars}
+          variants={vars}
           animate="animate"
+          className="select-wrap"
+          custom={{ theme, disabled, isRed }}
         >
-          <label htmlFor={id} />
+          <label htmlFor={id} style={{ display: 'none' }} />
           <select
             {...register}
             id={id}
@@ -84,26 +86,30 @@ export const SelectWrap = ({ _data }: ISelectWrap) => {
     </AnimatePresence>
   );
 };
-const select_vars = {
-  animate: ({ theme, disabled, isRed }: any) => ({
-    transition: { duration: 0.3 },
-    backgroundColor: color(!theme),
-    color: disabled ? greyColor : isRed ? redColor : color(theme),
-    border: disabled ? greyBrdr : isRed ? redBrdr : TransBorder(!theme),
-  }),
-};
 const Cont = styled(FlexCol)`
-  label {
-    display: none;
-    padding: 8px 20px;
-    border-radius: 5px;
-  }
+  overflow: hidden;
+  padding: 0 3rem;
+  min-height: 44px;
+  border-radius: 8px;
   select {
+    padding: 11px 0;
     width: 100%;
+    height: 100%;
     border: none;
+    //  border: 1px solid yellow;
+    outline: none;
+    color: inherit;
     font-size: 1.1rem;
     text-align: center;
     background-color: inherit;
-    box-shadow: ${(p) => p.theme.boxShadow.input};
   }
 `;
+const vars = {
+  animate: ({ theme, disabled, isRed }: any) => ({
+    transition: { duration: 0.3 },
+    backgroundColor: color(!theme),
+    border: InpBorderVar(isRed, theme, disabled),
+    color: disabled ? greyColor : isRed ? redColor : color(theme),
+    //border: disabled ? greyBrdr : isRed ? redBrdr : TransBorder(!theme),
+  }),
+};

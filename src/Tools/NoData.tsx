@@ -1,36 +1,27 @@
 import styled from '@emotion/styled';
+import { ITheme } from '../../styles/theme';
+import { scaleVar } from '../../styles/variants';
 import { AnimatePresence, motion } from 'framer-motion';
-import { scaleVar, variants } from '../../styles/variants';
 
-interface INoData {
-  _data: {
-    theme: boolean;
-    no_data: boolean;
-  };
-}
-export const NoData = ({ _data }: INoData) => {
-  const theme = _data?.theme!;
-  const open = _data?.no_data!;
+export const NoData = ({ theme }: ITheme) => {
   return (
     <AnimatePresence>
-      {open && (
-        <Cont
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          className="no-data"
-          custom={theme}
-          variants={scaleVar}
-        >
-          <ul>
-            <li className="emoji">🤔</li>
-            <li>
-              <span className="eng">No data. </span>
-              <span className="kor">데이터를 찾을수 없습니다.</span>
-            </li>
-          </ul>
-        </Cont>
-      )}
+      <Cont
+        exit="exit"
+        initial="initial"
+        animate="animate"
+        className="no-data"
+        custom={theme}
+        variants={scaleVar}
+      >
+        <ul>
+          <li className="emoji">🤔</li>
+          <li>
+            <span className="eng">No data. </span>
+            <span className="kor">데이터를 찾을수 없습니다.</span>
+          </li>
+        </ul>
+      </Cont>
     </AnimatePresence>
   );
 };

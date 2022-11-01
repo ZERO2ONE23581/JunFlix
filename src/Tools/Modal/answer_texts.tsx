@@ -25,8 +25,10 @@ export const AnswerTexts = ({ type, max }: IAnswerLists) => {
           </li>
           <li>
             보드는 생성될시 공개모드로 팔로우없이 상대방이 나의 보드를 볼 수
-            있습니다. 이를 원하지 않는다면 보드생성후 보드를 비공개 모드로
-            전환해주세요.
+            있습니다.
+          </li>
+          <li>
+            이를 원하지 않는다면 보드생성후 보드를 비공개 모드로 전환해주세요.
           </li>
           <li>
             Board is the place where you can create, read, update and save
@@ -43,9 +45,11 @@ export const AnswerTexts = ({ type, max }: IAnswerLists) => {
           </li>
           <li>
             Board is on public mode automatically after it is created, which
-            means that others can see your boards without following yours. If
-            you don't want this, you can let your board on private mode after on
-            your board page.
+            means that others can see your boards without following yours.
+          </li>
+          <li>
+            If you don't want this, you can let your board on private mode after
+            on your board page.
           </li>
         </>
       )}

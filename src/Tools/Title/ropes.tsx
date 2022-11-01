@@ -1,11 +1,12 @@
-import styled from '@emotion/styled';
 import { Svg } from '../Svg';
+import styled from '@emotion/styled';
+import { ITheme } from '../../../styles/theme';
 
-export const Ropes = () => {
+export const Ropes = ({ theme }: ITheme) => {
   return (
     <Cont>
-      <Svg type="ellipsis-v" fill="#e50914" size="1.6rem" />
-      <Svg type="ellipsis-v" fill="#e50914" size="1.6rem" />
+      <Svg type="ellipsis-v" theme={theme} />
+      <Svg type="ellipsis-v" theme={theme} />
     </Cont>
   );
 };

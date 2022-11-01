@@ -1,17 +1,18 @@
-import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction } from 'react';
-import { OverlayBg } from '../../../../../Tools/overlay';
-import { AnimatePresence, motion } from 'framer-motion';
 import {
   color,
   hoverBgColor,
   TransBorder,
 } from '../../../../../../styles/variants';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { Dispatch, SetStateAction } from 'react';
+import { OverlayBg } from '../../../../../Tools/overlay';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface IPostSettingBtnModal {
   _data: {
     theme: boolean;
+    host_id: number;
     setting: boolean;
     isMyPost: boolean;
     closeSetting: () => void;
@@ -22,19 +23,19 @@ export const EllipsModal = ({ _data }: IPostSettingBtnModal) => {
   const router = useRouter();
   const theme = _data?.theme;
   const open = _data?.setting;
+  const host_id = _data?.host_id;
   const isMyPost = _data?.isMyPost;
   const setModal = _data?.setModal;
   const closeSetting = _data?.closeSetting;
   const onClick = (type: string) => {
-    if (!isMyPost) return alert('not allowed.');
     if (type) {
-      if (type === 'all') router.push(`/post/all`);
+      if (type === 'all') return router.push(`/post/all`);
+      if (!isMyPost) return alert('not allowed.');
       if (isMyPost) {
-        if (type === 'my_post') return router.push(`/post/my`);
-        if (type === 'update') return setModal('update')!;
-        if (type === 'delete') return setModal('delete')!;
+        if (type === 'my_post') return router.push(`/user/${host_id}/posts`);
+        else setModal(type);
       }
-      closeSetting();
+      return closeSetting();
     }
   };
   return (
@@ -73,9 +74,9 @@ export const EllipsModal = ({ _data }: IPostSettingBtnModal) => {
                 Edit Post
               </List>
               <List
-                variants={hoverBgColor}
-                whileHover={'hover'}
                 hidden={!isMyPost}
+                whileHover={'hover'}
+                variants={hoverBgColor}
                 onClick={() => onClick('delete')}
               >
                 Delete Post

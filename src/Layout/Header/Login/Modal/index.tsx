@@ -1,13 +1,13 @@
-import styled from '@emotion/styled';
-import { ModalLists } from './Modal_Lists';
-import { Dispatch, SetStateAction } from 'react';
-import { Overlay } from '../../../../styles/global';
-import { AnimatePresence, motion } from 'framer-motion';
 import {
   menuModalVar,
   opacityVar,
   TweenTrans,
-} from '../../../../styles/variants';
+} from '../../../../../styles/variants';
+import { Lists } from './Lists';
+import styled from '@emotion/styled';
+import { Dispatch, SetStateAction } from 'react';
+import { Overlay } from '../../../../../styles/global';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface IUserMenuModal {
   theme: boolean;
@@ -27,7 +27,7 @@ export const IconModal = ({ modal, theme, setModal }: IUserMenuModal) => {
             transition={TweenTrans}
             onClick={() => setModal((p) => !p)}
           >
-            <ModalLists theme={theme} />
+            <Lists theme={theme} />
           </Modal>
           <Overlay
             exit="exit"

@@ -152,18 +152,14 @@ export const BoxTitle = ({ type, theme, max }: IBoxTitle) => {
             {sub('eng') && <span>{sub('eng')}</span>}
             {sub('kor') && <span>{sub('kor')}</span>}
           </h2>
-          <Svg
-            size="2rem"
-            theme={theme!}
-            type="question"
-            onClick={() => setAnswer(true)}
-          />
+          <Svg theme={theme!} type="question" onClick={() => setAnswer(true)} />
         </Flex>
         <span className="desc">
           {desc('eng') && <span>{desc('eng')}</span>}
           {desc('kor') && <span>{desc('kor')}</span>}
         </span>
       </Cont>
+
       <Answer
         max={max}
         type={type}

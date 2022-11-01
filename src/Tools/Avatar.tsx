@@ -9,10 +9,12 @@ export interface IAvatar {
   _data: {
     size: string;
     theme: boolean;
-    host_id?: number;
     isRound?: boolean;
-    isClick?: boolean;
-    onClick?: () => void;
+    handleClick?: {
+      isClick: boolean;
+      onClick: () => void;
+    };
+    host_id: number;
     avatar: string | null;
     preview: string | null;
   };
@@ -21,12 +23,10 @@ export const Avatar = ({ _data }: IAvatar) => {
   const size = _data?.size!;
   const theme = _data?.theme!;
   const avatar = _data?.avatar!;
-  const preview = _data?.preview!;
-  const host_id = _data?.host_id!;
-  const isClick = _data?.isClick!;
   const isRound = _data?.isRound!;
-  const onClick = _data?.onClick!;
-  //
+  const host_id = _data?.host_id!;
+  const preview = _data?.preview!;
+
   const router = useRouter();
   const [image, setImage] = useState('');
   const isAvatar = Boolean(avatar || preview);
@@ -41,9 +41,11 @@ export const Avatar = ({ _data }: IAvatar) => {
     }
   }, [avatar, preview, setImage]);
 
-  const clickIcon = () => {
-    if (isClick) return onClick();
-    else return router.push(`/user/${host_id}/mypage`);
+  const onClick = () => {
+    const handleClick = _data?.handleClick!;
+    console.log(handleClick?.isClick, '???');
+    if (handleClick?.isClick) return handleClick?.onClick();
+    if (host_id) return router.push(`/user/${host_id}/my_page`);
   };
   //
   return (
@@ -66,12 +68,12 @@ export const Avatar = ({ _data }: IAvatar) => {
       {!isAvatar && (
         <NoAvatar
           size={size!}
-          onClick={clickIcon}
-          className="avatar"
+          onClick={onClick}
           exit="exit"
           initial="initial"
           animate="animate"
           whileHover="hover"
+          className="avatar"
           variants={avatarVar}
         >
           <Svg theme={theme} type="user" />

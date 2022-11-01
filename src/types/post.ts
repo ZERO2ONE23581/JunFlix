@@ -91,5 +91,5 @@ export interface IPostUseForm {
 }
 export interface IGetPosts {
   ok: boolean;
-  posts?: IPostType[];
+  posts: IPostType[];
 }

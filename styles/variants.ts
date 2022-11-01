@@ -35,6 +35,30 @@ export const animateColorVar = {
     backgroundColor: color(theme),
   }),
 };
+export const hoverVars = {
+  animate: (theme: boolean) => ({
+    color: color(theme),
+    //backgroundColor: color(!theme),
+  }),
+  hover: () => ({
+    scale: 1.1,
+    color: redColor,
+    transition: { duration: 0.4, delay: 0.4 },
+  }),
+};
+export const hoverBgVars = {
+  animate: (theme: boolean) => ({
+    color: color(theme),
+    backgroundColor: color(!theme),
+  }),
+  hover: () => ({
+    scale: 1.1,
+    color: redColor,
+    fill: whiteColor,
+    backgroundColor: redColor,
+    transition: { duration: 0.4 },
+  }),
+};
 export const opacityVar = {
   initial: { opacity: 0, transition: { duration: 0.3 } },
   animate: { opacity: 1, transition: { duration: 0.3 } },
@@ -59,15 +83,15 @@ export const scaleVar = {
     backgroundColor: color(!theme),
   }),
   animate: (theme: boolean) => ({
-    opacity: 1,
     scale: 1,
+    opacity: 1,
     color: color(theme),
     backgroundColor: color(!theme),
     transition: { duration: 0.8 },
   }),
   exit: (theme: boolean) => ({
-    opacity: 0,
     scale: 0.2,
+    opacity: 0,
     transition: { duration: 0.8 },
   }),
 };

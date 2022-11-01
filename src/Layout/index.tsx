@@ -9,7 +9,6 @@ import { Header } from './Header';
 import { Footer } from './footer';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { ThemeBtn } from '../Tools/Button/Theme';
 import { variants } from '../../styles/variants';
 
 interface ILayoutProps {
@@ -31,10 +30,9 @@ export const Layout = ({ theme, children, setTheme }: ILayoutProps) => {
       custom={theme}
       variants={variants}
     >
-      <Header theme={theme} />
+      <Header theme={theme} setTheme={setTheme} />
       <section className="children">{children}</section>
       <Footer theme={!theme} />
-      <ThemeBtn theme={theme} setTheme={setTheme} />
     </Cont>
   );
 };

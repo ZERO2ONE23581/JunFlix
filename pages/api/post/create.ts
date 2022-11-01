@@ -6,8 +6,15 @@ import { withApiSession } from '../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   if (!user) return res.json({ ok: false, error: 'must login.' });
-  const { host_id, post_image, title, description, pageLink, hashtags } =
-    req.body;
+  const {
+    title,
+    host_id,
+    pageLink,
+    hashtags,
+    post_image,
+    description,
+    board_id,
+  } = req.body;
   const isMeHost = Boolean(host_id === user.id);
   if (!isMeHost) return res.json({ ok: false, error: 'invalid host.' });
   if (!host_id) return res.json({ ok: false, error: 'host id missed.' });
@@ -21,6 +28,22 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     host: { connect: { id: host_id } },
   };
   //
+  if (board_id) {
+    const board = await client.board.findUnique({
+      where: { id: +board_id.toString() },
+    });
+    if (!board) return res.json({ ok: false, error: 'no board found.' });
+    const isMyBoard = Boolean(user.id === board.host_id);
+    if (!isMyBoard)
+      return res.json({ ok: false, error: 'invalid board host.' });
+    const isCreated = Boolean(
+      await client.post.create({
+        data: { ...must, board: { connect: { id: board.id } } },
+      })
+    );
+    if (!isCreated) return res.json({ ok: false, error: 'Failed' });
+    return res.json({ ok: true });
+  }
   const post = await client.post.create({
     data: { ...must },
     select: { id: true },

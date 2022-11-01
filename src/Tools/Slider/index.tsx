@@ -6,10 +6,11 @@ import styled from '@emotion/styled';
 import { SlideTitle } from './SlideTitle';
 import { useEffect, useState } from 'react';
 import { IApi } from '../../types/global';
-import useUser from '../../libs/client/useUser';
+
 import { useCapLetter } from '../../libs/client/useTools';
 import { ITheme } from '../../../styles/theme';
 import { motion } from 'framer-motion';
+import { useUser } from '../../libs/client/useUser';
 
 interface ISlider extends ITheme {
   pageType?: string;
@@ -129,7 +130,7 @@ export const Slider = ({
           />
         </Flex>
       )}
-      {!isData && <NoData type={sliderType} theme={theme} />}
+      <NoData _data={{ no_data: !isData, theme }} />
     </Cont>
   );
 };

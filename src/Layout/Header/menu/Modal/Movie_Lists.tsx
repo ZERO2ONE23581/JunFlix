@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import { hoverBgColor, TweenTrans } from '../../../../styles/variants';
+import { hoverBgColor, TweenTrans } from '../../../../../styles/variants';
 
-interface IMovieMenu {
+interface IMovieLists {
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
 }
-export const MovieMenuLists = ({ selected, setSelected }: IMovieMenu) => {
+export const MovieLists = ({ selected, setSelected }: IMovieLists) => {
   const router = useRouter();
   const onClick = (btnType: string, detail?: string) => {
     setSelected('');

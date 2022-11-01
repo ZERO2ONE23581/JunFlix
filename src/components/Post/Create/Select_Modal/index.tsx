@@ -9,6 +9,7 @@ import { useUser } from '../../../../libs/client/useUser';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { FlexCol, Modal } from '../../../../../styles/global';
 import useMutation from '../../../../libs/client/useMutation';
+import { useRouter } from 'next/router';
 
 interface ISelectBoardModal {
   _data: {
@@ -29,6 +30,9 @@ export const SelectModal = ({ _data }: ISelectBoardModal) => {
   const layoutId = _data?.layoutId!;
   const setLoading = _data?.setLoading!;
   const setListModal = _data?.setListModal!;
+  //
+  const router = useRouter();
+  const { user_id } = router.query;
   const { loggedInUser } = useUser();
   const host_id = loggedInUser?.id!;
   //
@@ -38,7 +42,10 @@ export const SelectModal = ({ _data }: ISelectBoardModal) => {
 
   const onFinal = async (success: boolean) => {
     setListModal(false);
-    if (success) return setMsg('created');
+    if (success) {
+      if (!user_id) return router.push(`/user/${loggedInUser?.id}/posts`);
+      return setMsg('created');
+    }
     if (!success) return alert('fail');
   };
   const onClick = ({ board_id }: any) => {

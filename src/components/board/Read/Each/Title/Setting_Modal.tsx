@@ -1,10 +1,14 @@
+import {
+  color,
+  hoverBgColor,
+  TransBorder,
+} from '../../../../../../styles/variants';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import { Overlay } from '../../../../styles/global';
-import useFollow from '../../../libs/client/useFollowingBoards';
+import { Overlay } from '../../../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
-import { color, hoverBgColor, TransBorder } from '../../../../styles/variants';
+import { useUser } from '../../../../../libs/client/useUser';
 
 interface ISettingModal {
   item: {
@@ -23,18 +27,17 @@ export const SettingModal = ({ item }: ISettingModal) => {
   const isMyBoard = item?.isMyBoard!;
   //
   const router = useRouter();
-  const { board_id } = router.query;
-  const { isFollowing, follow } = useFollow(board_id);
-
+  const { user_id } = useUser();
   const onClick = (type: string) => {
-    if (type === 'all') router.push(`/board/all`);
     if (!isMyBoard) return alert('not allowed.');
     if (isMyBoard) {
+      if (type === 'my') router.push(`/user/${user_id}/boards`);
+      if (type === 'create') router.push(`/board/create`);
       if (type === 'update') setType('update-board');
       if (type === 'delete') setType('delete-board');
       if (type === 'my_board') router.push(`/board/my`);
     }
-    return;
+    return setModal(false);
   };
   //
   return (
@@ -42,52 +45,44 @@ export const SettingModal = ({ item }: ISettingModal) => {
       {modal && (
         <>
           <Cont
+            custom={theme}
+            variants={smallModalVar}
             exit="exit"
             initial="initial"
             animate="animate"
-            custom={theme}
-            variants={variants}
+            className="setting-modal"
           >
             <ul>
               <List className="small">Board Options</List>
               <List
-                variants={hoverBgColor}
-                whileHover={'hover'}
-                onClick={() => onClick('all')}
-              >
-                All Boards
-              </List>
-              <List
                 whileHover={'hover'}
                 variants={hoverBgColor}
-                onClick={() => onClick('my_board')}
+                onClick={() => onClick('my')}
               >
                 My Boards
               </List>
               <List
-                onClick={follow}
-                hidden={isMyBoard}
                 whileHover={'hover'}
                 variants={hoverBgColor}
+                onClick={() => onClick('create')}
               >
-                {!isFollowing && 'Save Board'}
-                {isFollowing && 'Unsave Board'}
+                Create
               </List>
               <List
-                whileHover={'hover'}
                 hidden={!isMyBoard}
+                whileHover={'hover'}
                 variants={hoverBgColor}
                 onClick={() => onClick('update')}
               >
-                Edit Board
+                Edit
               </List>
               <List
-                variants={hoverBgColor}
-                whileHover={'hover'}
                 hidden={!isMyBoard}
+                whileHover={'hover'}
+                variants={hoverBgColor}
                 onClick={() => onClick('delete')}
               >
-                Delete Board
+                Delete
               </List>
             </ul>
           </Cont>
@@ -105,14 +100,17 @@ export const SettingModal = ({ item }: ISettingModal) => {
 
 const Cont = styled(motion.div)`
   z-index: 2;
-  top: 100%;
-  right: -20%;
-  position: absolute;
   padding: 5px;
   font-size: 1.2em;
   overflow: hidden;
-  width: fit-content;
   border-radius: 5px;
+  ul {
+    width: fit-content;
+    //border: 1px solid yellow;
+    li {
+      text-align: center;
+    }
+  }
   .small {
     font-size: 1rem;
   }
@@ -120,10 +118,9 @@ const Cont = styled(motion.div)`
 const List = styled(motion.li)<{ hidden?: boolean }>`
   padding: 5px;
   cursor: pointer;
-  min-width: 150px;
   display: ${(p) => p.hidden && 'none'};
 `;
-const variants = {
+export const smallModalVar = {
   initial: (theme: boolean) => ({
     opacity: 0,
     color: color(theme),

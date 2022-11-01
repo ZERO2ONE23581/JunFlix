@@ -1,29 +1,38 @@
-import { Logo } from './logo';
+import { Logo } from './Logo';
 import { MainMenu } from './Menu';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { LoginMenu } from './Login_Menu';
-import { ITheme } from '../../../styles/theme';
+import { LoginMenu } from './Login';
+import { ThemeBtn } from '../../Tools/Button/Theme';
+import { Dispatch, SetStateAction } from 'react';
+import { Flex } from '../../../styles/global';
+import { greyBrdr } from '../../../styles/variants';
 
-export const Header = ({ theme }: ITheme) => {
+interface IHeader {
+  theme: boolean;
+  setTheme: Dispatch<SetStateAction<boolean>>;
+}
+
+export const Header = ({ theme, setTheme }: IHeader) => {
   return (
     <Cont
-      className="header"
       animate="animate"
       initial="initial"
+      className="header"
       variants={headerVar}
       custom={{ theme, isBorder: true }}
     >
       <Logo />
-      <div className="flex">
+      <Flex className="flex">
         <MainMenu theme={theme} />
         <LoginMenu theme={theme} />
-      </div>
+      </Flex>
+      <ThemeBtn theme={theme} setTheme={setTheme} />
     </Cont>
   );
 };
 const Cont = styled(motion.header)`
-  padding: 0 10em;
+  padding: 0 4rem;
   gap: 3rem;
   display: flex;
   font-size: 1.3em;
@@ -31,15 +40,15 @@ const Cont = styled(motion.header)`
   align-items: center;
   justify-content: space-between;
   box-shadow: ${(p) => p.theme.boxShadow.input};
+  //border: 2px solid yellow;
   .logo {
     //border: 5px solid cornflowerblue;
   }
   .flex {
     width: 100%;
     min-width: 620px;
-    display: flex;
-    align-items: center;
     justify-content: space-between;
+
     .main-menu {
       width: 60%;
     }
@@ -58,10 +67,7 @@ const Cont = styled(motion.header)`
   }
 `;
 const headerVar = {
-  initial: (dark: boolean) => ({
-    borderBottom: dark ? '1px solid #ffffff' : '1px solid transparent',
-  }),
   animate: (dark: boolean) => ({
-    borderBottom: dark ? '1px solid #ffffff' : '1px solid transparent',
+    borderBottom: dark ? greyBrdr : '1px solid transparent',
   }),
 };
