@@ -19,10 +19,10 @@ export const Setting = ({ host_id, theme, isMyPost, setModal }: ISetting) => {
     <>
       <Cont className="setting">
         <Close
-          custom={theme}
           className="icon"
           animate="animate"
           variants={scaleVar}
+          custom={{ theme, duration: 0.6 }}
         >
           <Svg
             type="close_"
@@ -34,10 +34,10 @@ export const Setting = ({ host_id, theme, isMyPost, setModal }: ISetting) => {
 
         {isMyPost && (
           <Ellips
-            custom={theme}
             className="icon"
             animate="animate"
             variants={scaleVar}
+            custom={{ theme, duration: 0.6 }}
           >
             <Svg
               theme={theme}

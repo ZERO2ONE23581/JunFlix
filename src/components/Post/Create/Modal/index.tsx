@@ -114,6 +114,8 @@ export const Modal = ({ _data }: ICreatePostModal) => {
   );
 };
 const Cont = styled(PostModal)`
+  .layer {
+  }
   form {
     width: 100%;
     height: 100%;

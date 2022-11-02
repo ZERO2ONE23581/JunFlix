@@ -18,9 +18,9 @@ export const Icon = ({ theme, preview, setPreview }: IIcon) => {
           initial="initial"
           animate="animate"
           className="delete-icon"
-          custom={theme}
           variants={scaleVar}
           onClick={() => setPreview('')}
+          custom={{ theme, duration: 0.6 }}
         >
           <Svg type="trash" theme={theme} />
         </Cont>

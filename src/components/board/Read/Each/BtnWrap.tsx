@@ -30,6 +30,10 @@ export const BtnWrap = ({ _data }: IBtnWrap) => {
     if (isMyBoard) return setCreatePost(true);
     else return onClick();
   };
+  const clickGen = () => {
+    if (genre) router.push(`/all/${genre}/boards`);
+    else router.push(`/all/boards`);
+  };
   return (
     <Cont className="box-btns">
       <Btn className="box-btn" onClick={() => router.push(`/all/boards`)}>
@@ -44,7 +48,7 @@ export const BtnWrap = ({ _data }: IBtnWrap) => {
         <Name className="name">All Boards</Name>
       </Btn>
 
-      <Btn className="box-btn" onClick={() => router.push(`/${genre}/boards`)}>
+      <Btn className="box-btn" onClick={clickGen}>
         <Box
           animate="animate"
           whileHover="hover"

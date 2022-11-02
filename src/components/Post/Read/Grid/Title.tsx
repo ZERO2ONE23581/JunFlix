@@ -15,7 +15,7 @@ interface ITitle {
     setCreate?: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const Title = ({ _data }: ITitle) => {
+export const PostTitle = ({ _data }: ITitle) => {
   const theme = _data?.theme!;
   const onClick = _data?.onClick!;
   const isMyAcct = _data?.isMyAcct!;

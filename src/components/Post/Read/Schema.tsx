@@ -1,20 +1,20 @@
 import { PostGrid } from './Grid';
 import { ReadPost } from './Modal';
-import styled from '@emotion/styled';
 import { UpdatePost } from '../Update';
 import { DeletePost } from '../Delete';
 import { CreatePost } from '../Create';
 import { IPostType } from '../../../types/post';
-import { Page } from '../../../../styles/global';
 import { useUser } from '../../../libs/client/useUser';
 import { Dispatch, SetStateAction, useState } from 'react';
+import styled from '@emotion/styled';
 
 interface IPostSchema {
   _data: {
-    max_grid: number;
     theme: boolean;
-    posts: IPostType[];
     create: boolean;
+    max_grid: number;
+    posts: IPostType[];
+    hideCreate?: boolean;
     setCreate: Dispatch<SetStateAction<boolean>>;
   };
 }
@@ -24,6 +24,7 @@ export const PostSchema = ({ _data }: IPostSchema) => {
   const create = _data?.create!;
   const max_grid = _data?.max_grid!;
   const setCreate = _data?.setCreate!;
+  const hideCreate = _data?.hideCreate!;
   //
   const { user_id } = useUser();
   const [modal, setModal] = useState('');
@@ -35,8 +36,10 @@ export const PostSchema = ({ _data }: IPostSchema) => {
     setPostId(postID);
   };
   return (
-    <>
-      <PostGrid _data={{ theme, onClick, posts, max_grid }} />
+    <Cont>
+      <PostGrid
+        _data={{ theme, onClick, posts, max_grid, hideCreate, setCreate }}
+      />
       <ReadPost _data={{ theme, post, modal, setModal }} />
       <UpdatePost theme={theme} post={post} modal={modal} setModal={setModal} />
       <DeletePost
@@ -47,6 +50,18 @@ export const PostSchema = ({ _data }: IPostSchema) => {
         open={create}
         closeModal={() => setCreate(false)}
       />
-    </>
+    </Cont>
   );
 };
+const Cont = styled.section`
+  //border: 10px solid cornflowerblue;
+  position: relative;
+  .posts-grid {
+    //margin-top: 4rem;
+  }
+  .icons {
+    top: -3rem;
+    right: 1rem;
+    //border: 5px solid red;
+  }
+`;

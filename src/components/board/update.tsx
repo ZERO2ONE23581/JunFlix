@@ -80,9 +80,9 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
       {open && (
         <>
           <Container
-            custom={theme}
             variants={scaleVar}
             layoutId={layoutId}
+            custom={{ theme, duration: 0.6 }}
             exit="exit"
             initial="initial"
             animate="animate"

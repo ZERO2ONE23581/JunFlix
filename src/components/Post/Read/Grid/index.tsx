@@ -1,17 +1,18 @@
 import { Box } from './Box';
+import { Icons } from './Icons';
 import styled from '@emotion/styled';
 import { IPostType } from '../../../../types/post';
-import { Circle, FlexCol, Grid } from '../../../../../styles/global';
-import { Svg } from '../../../../Tools/Svg';
-import { Filter } from './Filter';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { FlexCol, Grid } from '../../../../../styles/global';
 
 interface IMyPosts {
   _data: {
-    max_grid: number;
     theme: boolean;
+    max_grid: number;
     posts: IPostType[];
+    hideCreate?: boolean;
     onClick: (id: number) => void;
+    setCreate: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const PostGrid = ({ _data }: IMyPosts) => {
@@ -19,28 +20,26 @@ export const PostGrid = ({ _data }: IMyPosts) => {
   const posts = _data?.posts!;
   const max = _data?.max_grid!;
   const onClick = _data?.onClick!;
-  //
+  const setCreate = _data?.setCreate!;
+  const hideCreate = _data?.hideCreate!;
   const [Max, setMax] = useState(max);
-  const array = [...new Array(max)].map((_, p) => p + 1);
-  const box_num = posts?.length > Max ? Max : posts?.length;
-
-  const Filtered = (box: number) => {
+  const array = [...new Array(Max)].map((_, p) => p + 1);
+  const Posts = (box: number) => {
     const row_first = (post: IPostType, box: number) =>
       posts.indexOf(post) === array.indexOf(box);
     const row_after = (post: IPostType, box: number) =>
       posts.indexOf(post) % Max === array.indexOf(box);
-    //
     return posts?.filter(
       (post) => row_first(post, box) || row_after(post, box)
     );
   };
   return (
     <>
-      <Posts box={box_num} className="my-posts-grid">
-        <Filter _data={{ theme, setMax }} />
+      <Icons _data={{ theme, setMax, hideCreate, setCreate }} />
+      <Cont box={Max} className="posts-grid">
         {array.map((box) => (
           <Column key={box} className="posts-column">
-            {Filtered(box)?.map((post) => (
+            {Posts(box)?.map((post) => (
               <Box
                 key={post.id}
                 _data={{
@@ -54,17 +53,11 @@ export const PostGrid = ({ _data }: IMyPosts) => {
             ))}
           </Column>
         ))}
-      </Posts>
+      </Cont>
     </>
   );
 };
-const Icon = styled(Circle)`
-  top: -3rem;
-  right: 1.5rem;
-  position: absolute;
-`;
-const Posts = styled(Grid)`
-  //border: 2px solid yellow;
+const Cont = styled(Grid)`
   .posts-column {
     .grid-box {
       max-width: 300px;

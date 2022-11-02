@@ -1,89 +1,108 @@
+import { Icons } from './Icons';
+import { Cover } from './Cover';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { Grid } from '../../../../../styles/global';
-import { IBoardType } from '../../../../types/board';
-import { avatarLink } from '../../../../Tools/Avatar';
-import { ITheme } from '../../../../../styles/theme';
-import { hoverVars } from '../../../../../styles/variants';
-import { useCapLetters } from '../../../../libs/client/useTools';
+import { Svg } from '../../../../Tools/Svg';
 import { NoData } from '../../../../Tools/NoData';
+import { IBoardType } from '../../../../types/board';
+import { Flex, Grid } from '../../../../../styles/global';
+import { hoverVars, scaleVar } from '../../../../../styles/variants';
+import { useCapLetters } from '../../../../libs/client/useTools';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-interface IBoardsGrid extends ITheme {
-  isBoard: boolean;
-  boards: IBoardType[];
+interface IBoards {
+  _data: {
+    theme: boolean;
+    isBoard: boolean;
+    hideFilter?: boolean;
+    boards: IBoardType[];
+  };
 }
-
-export const BoardsGrid = ({ boards, theme, isBoard }: IBoardsGrid) => {
+export const BoardsGrid = ({ _data }: IBoards) => {
   const router = useRouter();
-  const max = 5;
-  const box = boards?.length! > max ? max : boards?.length;
-  const postLen = (length: number) =>
-    length === 0 ? 1 : length! < 2 ? 2 : length;
+  const theme = _data?.theme!;
+  const boards = _data?.boards!;
+  const hideFilter = _data?.hideFilter!;
 
+  const [genre, setGenre] = useState({
+    select: false,
+    type: 'all',
+  });
+  const genreBoard = boards?.filter((e) => e.genre === genre.type);
+  const allGenre = Boolean(genre.type === 'all');
+  const Boards = genre.select ? (allGenre ? boards : genreBoard) : boards;
+  const isBoard = Boolean(_data?.isBoard! && Boards.length > 0);
   return (
     <>
-      {isBoard && (
-        <Cont className="board-grid" box={box}>
-          {boards.map((board) => (
-            <Box
-              custom={theme}
-              key={board.id}
-              variants={hoverVars}
-              animate="animate"
-              whileHover="hover"
-              className="grid-box"
-              onClick={() => router.push(`/board/${board.id}/${board.title}`)}
-            >
-              <Cover box={postLen(board.posts.length)} className="board-cover">
-                {board.posts.slice(0, 3)?.map((post) => (
-                  <motion.img
-                    alt="보드커버"
-                    key={post.id}
-                    src={avatarLink(post?.post_image)}
-                  />
-                ))}
-                {board.posts.length === 0 && (
-                  <motion.img alt="보드커버" src={avatarLink('')} />
-                )}
-              </Cover>
-              <Info className="info">
-                <h1>{useCapLetters(board.title)}</h1>
-                <div className="post-length">
-                  <span>{board.posts.length}</span>
-                  <span>Posts</span>
-                </div>
-              </Info>
-            </Box>
-          ))}
-        </Cont>
-      )}
-      <NoData _data={{ no_data: !isBoard, theme }} />
+      <Icons theme={theme} setGenre={setGenre} hideFilter={hideFilter} />
+      <AnimatePresence>
+        {isBoard && (
+          <Cont
+            box={5}
+            exit="exit"
+            animate="animate"
+            initial="initial"
+            variants={scaleVar}
+            custom={{ theme, duration: 0.6 }}
+          >
+            {Boards?.map((board) => (
+              <Box
+                custom={theme}
+                key={board.id}
+                variants={hoverVars}
+                animate="animate"
+                whileHover="hover"
+                className="grid-box"
+                onClick={() => router.push(`/board/${board.id}/${board.title}`)}
+              >
+                <Cover theme={theme} posts={board.posts} />
+                <Info className="info">
+                  <Flex className="flex-wrap">
+                    <h1>{useCapLetters(board.title)}</h1>
+                    <Svg
+                      theme={theme}
+                      item={{ size: '1.6rem' }}
+                      type={board.genre ? board.genre : 'film'}
+                    />
+                  </Flex>
+                  <div className="post-length">
+                    <span>{board.posts.length}</span>
+                    <span>Posts</span>
+                  </div>
+                </Info>
+              </Box>
+            ))}
+          </Cont>
+        )}
+      </AnimatePresence>
+      {!isBoard && <NoData theme={theme} />}
     </>
   );
 };
-
 const Cont = styled(Grid)`
-  margin-top: 3rem;
+  width: fit-content;
+  .flex-wrap {
+    justify-content: space-between;
+    //border: 1px solid pink;
+  }
 `;
 const Box = styled(motion.div)`
   cursor: pointer;
-  max-width: 440px;
-  margin: 0 auto;
-  img {
-    box-shadow: ${(p) => p.theme.boxShadow.nav};
-  }
-`;
-const Cover = styled(Grid)`
-  gap: 0;
-  overflow: hidden;
-  border-radius: 10px;
-  img {
+  .board-cover {
+    width: 100%;
+    height: 16rem;
+    min-width: 16rem;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 `;
 const Info = styled.div`
   padding: 1rem;
   font-size: 1.4rem;
+  height: 5rem;
   h1 {
     margin-bottom: 8px;
   }

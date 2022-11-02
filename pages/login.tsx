@@ -43,7 +43,7 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
     }
   }, [data, router, setMsg, setTimeout, setLoading]);
   //
-  console.log(data);
+
   return (
     <>
       <HeadTitle title="로그인" />

@@ -1,31 +1,31 @@
+import { Host } from './Host';
+import { Title } from './Title';
+import { Detail } from './Detail';
 import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { Title } from './Title';
 import { CreatePost } from '../../../Post/Create';
 import { IBoardType } from '../../../../types/board';
 import { TrimText } from '../../../../Tools/trimText';
 import { useUser } from '../../../../libs/client/useUser';
 import { hoverBgVars } from '../../../../../styles/variants';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { Host } from './Host';
-import { Detail } from './Detail';
 
 interface IBoardBox {
   theme: boolean;
   board: IBoardType;
   setType: Dispatch<SetStateAction<string>>;
+  setCreate: Dispatch<SetStateAction<boolean>>;
 }
-export const Board = ({ theme, board, setType }: IBoardBox) => {
+export const Board = ({ theme, board, setType, setCreate }: IBoardBox) => {
   const host = board?.host;
   const host_id = host?.id;
   const genre = board?.genre!;
   const title = board?.title!;
   const avatar = host?.avatar!;
   const userId = host?.userId!;
-  const onPrivate = board?.onPrivate!;
   const { loggedInUser } = useUser();
-  const [createPost, setCreatePost] = useState(false);
+  const onPrivate = board?.onPrivate!;
   const isMyBoard = Boolean(loggedInUser?.id === host?.id);
   //
   return (
@@ -40,18 +40,13 @@ export const Board = ({ theme, board, setType }: IBoardBox) => {
               theme,
               genre,
               isMyBoard,
-              setCreatePost,
               board_id: board?.id,
+              setCreatePost: setCreate,
             }}
           />
           <TrimText text={board?.description} max={200} />
         </Box>
       )}
-      <CreatePost
-        theme={theme}
-        open={createPost}
-        closeModal={() => setCreatePost(false)}
-      />
     </>
   );
 };

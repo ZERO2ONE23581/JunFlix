@@ -9,18 +9,20 @@ import { HeadTitle } from '../../../src/Tools/head_title';
 import { BoardSchema } from '../../../src/Tools/Modal/schema';
 import { Board } from '../../../src/components/Board/Read/Each';
 import { useGetBoard } from '../../../src/libs/client/useBoards';
-import { useGetMyPosts } from '../../../src/libs/client/usePosts';
+import { useGetPosts } from '../../../src/libs/client/usePosts';
 import { LoadingModal } from '../../../src/Tools/Modal/loading_modal';
 import { PostSchema } from '../../../src/components/Post/Read/Schema';
 
 const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
-  const { board_id } = router.query;
+  const { board_id: board__id } = router.query;
+  const board_id = Number(board__id);
   const [type, setType] = useState('');
   const [create, setCreate] = useState(false);
   const { board, isMyBoard } = useGetBoard(board_id);
+  const host_id = board?.host_id!;
   const modal = Boolean(type && isMyBoard);
-  const { posts, isPost } = useGetMyPosts(Number(board?.host_id));
+  const { posts, isPost } = useGetPosts(host_id, board_id);
   return (
     <>
       <HeadTitle title={board?.title!} />
@@ -28,11 +30,23 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
         <Cont>
           {board && (
             <>
-              <Board theme={theme} board={board} setType={setType} />
+              <Board
+                theme={theme}
+                board={board}
+                setType={setType}
+                setCreate={setCreate}
+              />
               <Layer className="layer">
                 {isPost && (
                   <PostSchema
-                    _data={{ theme, posts, create, setCreate, max_grid: 6 }}
+                    _data={{
+                      theme,
+                      posts,
+                      create,
+                      setCreate,
+                      max_grid: 5,
+                      hideCreate: true,
+                    }}
                   />
                 )}
                 {!isPost && <NoData theme={theme} />}

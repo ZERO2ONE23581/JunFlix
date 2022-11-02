@@ -11,8 +11,15 @@ export const useGetAllPosts = () => {
   const isPost = data?.ok && Boolean(posts.length < 1);
   return { posts: data?.posts!, isPost };
 };
-export const useGetMyPosts = (host_id: number) => {
+export const useGetPosts = (host_id: number, board_id: number) => {
   const { data } = useSWR<IGetPosts>(`/api/post/all`);
+  if (board_id) {
+    const posts = data?.posts?.filter(
+      (e) => e.host_id === host_id && e.board_id === board_id
+    )!;
+    const isPost = data?.ok && Boolean(posts.length > 0);
+    return { posts, isPost };
+  }
   const posts = data?.posts?.filter((e) => e.host_id === host_id)!;
   const isPost = data?.ok && Boolean(posts.length > 0);
   return { posts, isPost };

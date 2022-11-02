@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Svg } from '../../../../../Tools/Svg';
-import { opacityVar, scaleVar } from '../../../../../../styles/variants';
+import { opacityVar } from '../../../../../../styles/variants';
 
 interface IDeleteIcon {
   _data: {

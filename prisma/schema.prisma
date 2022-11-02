@@ -52,9 +52,9 @@ model Board {
   id                Int           @id @default(autoincrement())
   title             String     
   host_id           Int  
-  genre             String?
   cover             String?  
   updatedAt         DateTime      @updatedAt
+  genre             String?       @default("") 
   createdAt         DateTime      @default(now())
   onPrivate         Boolean?      @default(false)
   description       String        @default("") @db.LongText

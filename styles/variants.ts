@@ -75,24 +75,24 @@ export const hoverColor = {
   hover: { scale: 1.1, transition: { duration: 0.3 }, color: redColor },
 };
 export const scaleVar = {
-  initial: (theme: boolean) => ({
+  initial: ({ theme, duration }: any) => ({
     scale: 0.2,
     opacity: 0,
     color: color(theme),
-    transition: { duration: 0.8 },
+    transition: { duration },
     backgroundColor: color(!theme),
   }),
-  animate: (theme: boolean) => ({
+  animate: ({ theme, duration }: any) => ({
     scale: 1,
     opacity: 1,
     color: color(theme),
     backgroundColor: color(!theme),
-    transition: { duration: 0.8 },
+    transition: { duration },
   }),
-  exit: (theme: boolean) => ({
+  exit: ({ theme, duration }: any) => ({
     scale: 0.2,
     opacity: 0,
-    transition: { duration: 0.8 },
+    transition: { duration },
   }),
 };
 export const variants = {

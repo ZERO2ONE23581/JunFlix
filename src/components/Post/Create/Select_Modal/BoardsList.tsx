@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { select_board_ul_var } from '../../../../../styles/post';
+import { useGetBoards } from '../../../../libs/client/useBoards';
 import { useCapLetters } from '../../../../libs/client/useTools';
-import { useGetMyBoards } from '../../../../libs/client/useBoards';
 
 interface IBoardsList {
   _data: {
@@ -14,7 +14,7 @@ interface IBoardsList {
 export const BoardsList = ({ _data }: IBoardsList) => {
   const theme = _data?.theme!;
   const clickBoard = _data?.clickBoard!;
-  const boards = useGetMyBoards(_data?.host_id!);
+  const { boards } = useGetBoards(_data?.host_id!);
   return (
     <>
       {boards?.map((board) => (

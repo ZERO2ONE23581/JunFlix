@@ -11,8 +11,8 @@ export const NoData = ({ theme }: ITheme) => {
         initial="initial"
         animate="animate"
         className="no-data"
-        custom={theme}
         variants={scaleVar}
+        custom={{ theme, duration: 1 }}
       >
         <ul>
           <li className="emoji">🤔</li>

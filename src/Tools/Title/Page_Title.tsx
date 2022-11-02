@@ -48,7 +48,7 @@ export const PageTitle = ({ detail, type, theme }: IPageTitle) => {
           {isGenreBoards && (
             <>
               <span>{useCapLetters(GenreBoardTitle()!)} Boards</span>
-              <GenreIcons type={useCapLetter(boardGenre!)} />
+              <Svg type={boardGenre!} theme={theme} />
             </>
           )}
           <Movie type={type!} />
@@ -68,7 +68,7 @@ const Cont = styled(FlexCol)`
       display: flex;
       align-items: center;
       padding: 10px;
-      font-size: 2rem;
+      font-size: 1.8rem;
       text-align: center;
       border-radius: 5px;
       border: 4px solid ${(p) => p.theme.color.logo};

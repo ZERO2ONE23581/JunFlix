@@ -1,25 +1,32 @@
 import { Svg } from '../Svg';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { Modal, Overlay } from '../../../styles/global';
-import { ITheme } from '../../../styles/theme';
+import { Modal } from '../../../styles/global';
 import { AnimatePresence } from 'framer-motion';
 import { AnswerTexts } from './answer_texts';
 import { scaleVar } from '../../../styles/variants';
 import { OverlayBg } from '../overlay';
 
-interface IAnswer extends ITheme {
-  type: string;
-  answer?: boolean;
-  closeModal: Dispatch<SetStateAction<boolean>>;
-  max?: {
-    board: {
-      title: number;
-      desc: number;
+interface IAnswer {
+  _data: {
+    type: string;
+    theme?: boolean;
+    answer?: boolean;
+    closeModal: Dispatch<SetStateAction<boolean>>;
+    max?: {
+      board: {
+        title: number;
+        desc: number;
+      };
     };
   };
 }
-export const Answer = ({ max, answer, theme, type, closeModal }: IAnswer) => {
+export const Answer = ({ _data }: IAnswer) => {
+  const max = _data?.max!;
+  const type = _data?.type!;
+  const theme = _data?.theme!;
+  const answer = _data?.answer!;
+  const closeModal = _data?.closeModal!;
   return (
     <AnimatePresence>
       {answer && (
@@ -28,7 +35,7 @@ export const Answer = ({ max, answer, theme, type, closeModal }: IAnswer) => {
             exit="exit"
             initial="initial"
             animate="animate"
-            custom={theme}
+            custom={{ theme, duration: 0.6 }}
             variants={scaleVar}
           >
             <Svg

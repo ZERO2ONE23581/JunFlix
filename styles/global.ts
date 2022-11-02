@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 export const Page = styled(motion.section)`
   width: 100%;
   height: 100%;
+  width: 100vw;
   min-width: 100vw;
   min-height: 100vh;
   position: relative;
@@ -66,11 +67,16 @@ export const ModalBtn = styled(motion.div)`
       font-size: 1rem;
     }
     li {
+      gap: 0rem;
+      display: flex;
+      cursor: pointer;
       min-width: 120px;
       font-size: 1.1rem;
-      padding: 0.3rem;
-      cursor: pointer;
-      text-align: center;
+      align-items: center;
+      padding: 0.3rem 1rem;
+      justify-content: space-between;
+    }
+    li {
     }
   }
 `;
@@ -223,7 +229,7 @@ export const DimBackground = styled.article<{ zIndex?: number }>`
   background-color: rgba(0, 0, 0, 0.8);
   z-index: ${(p) => (p.zIndex ? p.zIndex : '99')};
 `;
-export const Grid = styled(motion.div)<{ box: number }>`
+export const Grid = styled(motion.article)<{ box?: number }>`
   gap: 1.3rem;
   display: grid;
   position: relative;

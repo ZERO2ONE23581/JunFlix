@@ -59,7 +59,7 @@ export const Lists = ({
           <span>{useCapLetter(selected)}s</span>
         </motion.li>
       ))}
-      {selected === 'board' && (
+      {/* {selected === 'board' && (
         <>
           {Genre.map((i) => (
             <motion.li
@@ -73,7 +73,7 @@ export const Lists = ({
             </motion.li>
           ))}
         </>
-      )}
+      )} */}
       {isLoggedIn && (
         <motion.li
           whileHover={'hover'}
