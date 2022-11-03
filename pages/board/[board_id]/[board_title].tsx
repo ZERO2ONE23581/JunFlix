@@ -71,7 +71,7 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
 export default Board_Page;
 
 const Cont = styled(FlexPage)`
-  gap: 2rem;
+  gap: 4rem;
   flex-direction: column;
   justify-content: flex-start;
   .board-box {

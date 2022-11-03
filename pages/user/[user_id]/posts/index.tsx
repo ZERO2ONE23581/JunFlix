@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { PostPage } from '../../all/posts';
-import { useGetUser } from '../../../src/libs/client/useUser';
-import { useGetPosts } from '../../../src/libs/client/usePosts';
-import { PostSchema } from '../../../src/components/Post/Read/Schema';
 import styled from '@emotion/styled';
-import { useCapLetters } from '../../../src/libs/client/useTools';
+import type { NextPage } from 'next';
 import { motion } from 'framer-motion';
-import { color, redColor } from '../../../styles/variants';
+import { useRouter } from 'next/router';
+import { PostPage } from '../../../all/posts';
+import { color, redColor } from '../../../../styles/variants';
+import { useGetUser } from '../../../../src/libs/client/useUser';
+import { useGetPosts } from '../../../../src/libs/client/usePosts';
+import { useCapLetters } from '../../../../src/libs/client/useTools';
+import { PostSchema } from '../../../../src/components/Post/Read/Schema';
 
 const MyPostsPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
@@ -17,6 +17,7 @@ const MyPostsPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { posts } = useGetPosts(Number(user_id), 0);
   const { username } = useGetUser(Number(user_id));
   const onClick = () => router.push(`/user/${user_id}/my_page`);
+  const isOrganize = Boolean(user_id);
   return (
     <Page>
       <UserName
@@ -29,7 +30,9 @@ const MyPostsPage: NextPage<{ theme: boolean }> = ({ theme }) => {
       >
         {useCapLetters(username)}'s posts
       </UserName>
-      <PostSchema _data={{ theme, posts, create, setCreate, max_grid: 5 }} />
+      <PostSchema
+        _data={{ theme, posts, isOrganize, create, setCreate, max_grid: 5 }}
+      />
     </Page>
   );
 };

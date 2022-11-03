@@ -17,8 +17,8 @@ const AllPosts: NextPage<{ theme: boolean }> = ({ theme }) => {
 export default AllPosts;
 
 export const PostPage = styled(Page)`
-  padding: 0 2rem;
-  padding-top: 4rem;
+  padding: 0 10rem;
+  padding-top: 4.4rem;
   /* > .layer {
     padding: 1.5rem;
     //border: 1px solid yellow;

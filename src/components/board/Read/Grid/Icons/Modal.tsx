@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { OverlayBg } from '../../../../../Tools/overlay';
 import { List } from '../../../../User/Read/MyPage/List';
-import { ModalBtn } from '../../../../../../styles/global';
+import { MiniModal } from '../../../../../../styles/global';
 import { smallModalVar } from '../../Each/Title/Setting_Modal';
 import { useCapLetters } from '../../../../../libs/client/useTools';
 
@@ -91,7 +91,7 @@ export const Modal = ({ _data }: IFilterModal) => {
     </AnimatePresence>
   );
 };
-const Cont = styled(ModalBtn)`
+const Cont = styled(MiniModal)`
   ul {
     li {
       gap: 0rem;

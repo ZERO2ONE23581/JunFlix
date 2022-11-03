@@ -1,8 +1,13 @@
 import { Svg } from '../Svg';
 import styled from '@emotion/styled';
-import { border, btnVar, color } from '../../../styles/variants';
-import { MouseEventHandler, ReactElement, useEffect, useState } from 'react';
+import { MouseEventHandler } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import {
+  color,
+  greyColor,
+  redColor,
+  whiteColor,
+} from '../../../styles/variants';
 
 interface IBtn {
   item: {
@@ -26,20 +31,20 @@ export const Btn = ({ item, type, onClick }: IBtn) => {
   const className = item?.className!;
   const isClicked = item?.isClicked!;
   const isFollowing = item?.isFollowing!;
-  const custom = { theme, isClicked, isFollowing };
+  const custom = { theme, isClicked, isFollowing, disabled };
   //
   return (
     <AnimatePresence>
       <Cont
-        type={type}
-        onClick={onClick}
-        disabled={disabled}
-        className={className}
         exit="exit"
         animate="animate"
         initial="initial"
         whileHover="hover"
-        variants={btnVar}
+        type={type}
+        variants={vars}
+        onClick={onClick}
+        disabled={disabled}
+        className={className}
         custom={{ ...custom }}
       >
         <>
@@ -51,7 +56,6 @@ export const Btn = ({ item, type, onClick }: IBtn) => {
   );
 };
 export const Cont = styled(motion.button)`
-  position: relative;
   width: 100%;
   border: none;
   padding: 8px;
@@ -59,8 +63,21 @@ export const Cont = styled(motion.button)`
   font-weight: 500;
   font-size: 1.2rem;
   border-radius: 3px;
+  position: relative;
   gap: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
+const vars = {
+  animate: ({ theme, disabled, isClicked }: any) => ({
+    transition: { duration: 0.3 },
+    color: isClicked ? whiteColor : color(!theme),
+    backgroundColor: disabled ? greyColor : isClicked ? redColor : color(theme),
+  }),
+  hover: ({ theme, disabled }: any) => ({
+    transition: { duration: 0.3 },
+    color: disabled ? color(!theme) : whiteColor,
+    backgroundColor: disabled ? greyColor : redColor,
+  }),
+};

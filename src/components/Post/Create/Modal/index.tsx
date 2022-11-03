@@ -55,7 +55,7 @@ export const Modal = ({ _data }: ICreatePostModal) => {
         setError,
         max: [50, 1000],
         types: ['title', 'description'],
-        texts: [inputs.title, inputs.description],
+        texts: [inputs.title, inputs.description!],
       },
     });
     if (!ok) return;

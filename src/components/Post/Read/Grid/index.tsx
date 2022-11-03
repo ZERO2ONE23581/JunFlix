@@ -8,20 +8,27 @@ import { FlexCol, Grid } from '../../../../../styles/global';
 interface IMyPosts {
   _data: {
     theme: boolean;
+    host_id: number;
     max_grid: number;
     posts: IPostType[];
     hideCreate?: boolean;
+    isOrganize?: boolean;
     onClick: (id: number) => void;
     setCreate: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const PostGrid = ({ _data }: IMyPosts) => {
-  const theme = _data?.theme!;
-  const posts = _data?.posts!;
-  const max = _data?.max_grid!;
-  const onClick = _data?.onClick!;
-  const setCreate = _data?.setCreate!;
-  const hideCreate = _data?.hideCreate!;
+  const {
+    theme,
+    posts,
+    onClick,
+    host_id,
+    setCreate,
+    hideCreate,
+    isOrganize,
+    max_grid: max,
+  } = _data;
+
   const [Max, setMax] = useState(max);
   const array = [...new Array(Max)].map((_, p) => p + 1);
   const Posts = (box: number) => {
@@ -33,9 +40,10 @@ export const PostGrid = ({ _data }: IMyPosts) => {
       (post) => row_first(post, box) || row_after(post, box)
     );
   };
+  //
   return (
     <>
-      <Icons _data={{ theme, setMax, hideCreate, setCreate }} />
+      <Icons _data={{ theme, setMax, setCreate }} />
       <Cont box={Max} className="posts-grid">
         {array.map((box) => (
           <Column key={box} className="posts-column">
@@ -60,12 +68,12 @@ export const PostGrid = ({ _data }: IMyPosts) => {
 const Cont = styled(Grid)`
   .posts-column {
     .grid-box {
-      max-width: 300px;
+      //max-width: 300px;
       height: fit-content;
       img {
         width: 100%;
-        min-height: 240px;
-        max-height: 500px;
+        //min-height: 240px;
+        max-height: 600px;
         height: fit-content;
       }
     }

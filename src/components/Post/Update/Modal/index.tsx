@@ -1,7 +1,7 @@
 import { Main } from './Main';
 import { Layer } from './Layer';
 import styled from '@emotion/styled';
-import { SelectModal } from './Select_Modal';
+import { SelectModal } from './Select';
 import { AnimatePresence } from 'framer-motion';
 import { OverlayBg } from '../../../../Tools/overlay';
 import { PostModal } from '../../../../../styles/post';
@@ -35,8 +35,9 @@ export const Modal = ({ _data, _useform }: IModal) => {
   const [selectModal, setSelectModal] = useState(false);
 
   const closeModal = () => {
-    _data?.resetPreview!();
-    _data?.setNewBoardId!(post?.board_id!);
+    setQuickSave(false);
+    _data?.resetPreview();
+    _data?.setNewBoardId(0);
     return setModal!('read');
   };
   return (
@@ -82,7 +83,10 @@ export const Modal = ({ _data, _useform }: IModal) => {
               closeModal: () => setSelectModal(false),
               selectClick: (type: string, id: number) => {
                 if (type === 'quick') setQuickSave(true);
-                if (type === 'board' && id) _data?.setNewBoardId!(id);
+                if (type === 'board' && id) {
+                  setQuickSave(false);
+                  _data?.setNewBoardId!(id);
+                }
                 setSelectModal(false);
               },
             }}

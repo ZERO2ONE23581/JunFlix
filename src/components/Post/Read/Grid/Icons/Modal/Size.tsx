@@ -3,10 +3,10 @@ import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { OverlayBg } from '../../../../../../Tools/overlay';
 import { List } from '../../../../../User/Read/MyPage/List';
-import { ModalBtn } from '../../../../../../../styles/global';
+import { MiniModal } from '../../../../../../../styles/global';
 import { smallModalVar } from '../../../../../Board/Read/Each/Title/Setting_Modal';
 
-interface ISizeModal {
+interface ISetGridModal {
   _data: {
     theme: boolean;
     modal: boolean;
@@ -14,7 +14,7 @@ interface ISizeModal {
     setMax: Dispatch<SetStateAction<number>>;
   };
 }
-export const SizeModal = ({ _data }: ISizeModal) => {
+export const SetGridModal = ({ _data }: ISetGridModal) => {
   const theme = _data?.theme!;
   const modal = _data?.modal!;
   const setMax = _data?.setMax!;
@@ -27,6 +27,7 @@ export const SizeModal = ({ _data }: ISizeModal) => {
             custom={theme}
             initial="initial"
             animate="animate"
+            className="grid_modal"
             variants={smallModalVar}
           >
             <ul>
@@ -74,7 +75,7 @@ export const SizeModal = ({ _data }: ISizeModal) => {
     </AnimatePresence>
   );
 };
-const Cont = styled(ModalBtn)`
+const Cont = styled(MiniModal)`
   ul {
     li {
     }

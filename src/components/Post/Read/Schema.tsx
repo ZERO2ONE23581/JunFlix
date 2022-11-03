@@ -13,6 +13,7 @@ interface IPostSchema {
     theme: boolean;
     create: boolean;
     max_grid: number;
+    isOrganize?: boolean;
     posts: IPostType[];
     hideCreate?: boolean;
     setCreate: Dispatch<SetStateAction<boolean>>;
@@ -23,6 +24,7 @@ export const PostSchema = ({ _data }: IPostSchema) => {
   const posts = _data?.posts!;
   const create = _data?.create!;
   const max_grid = _data?.max_grid!;
+  const isOrganize = _data?.isOrganize!;
   const setCreate = _data?.setCreate!;
   const hideCreate = _data?.hideCreate!;
   //
@@ -38,7 +40,16 @@ export const PostSchema = ({ _data }: IPostSchema) => {
   return (
     <Cont>
       <PostGrid
-        _data={{ theme, onClick, posts, max_grid, hideCreate, setCreate }}
+        _data={{
+          theme,
+          posts,
+          onClick,
+          max_grid,
+          hideCreate,
+          setCreate,
+          isOrganize,
+          host_id: user_id!,
+        }}
       />
       <ReadPost _data={{ theme, post, modal, setModal }} />
       <UpdatePost theme={theme} post={post} modal={modal} setModal={setModal} />
@@ -54,6 +65,12 @@ export const PostSchema = ({ _data }: IPostSchema) => {
   );
 };
 const Cont = styled.section`
+  .test {
+    width: fit-content;
+    top: -5rem;
+    left: 0rem;
+    position: absolute;
+  }
   //border: 10px solid cornflowerblue;
   position: relative;
   .posts-grid {

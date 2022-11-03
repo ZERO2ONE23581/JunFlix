@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Svg } from '../../Tools/Svg';
-import { Container, ITypeModal } from './Update';
-import { AnimatePresence, motion } from 'framer-motion';
 import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { IForm } from '../../types/global';
 import { InputWrap } from '../../Tools/Input';
 import { OverlayBg } from '../../Tools/overlay';
+import { Container, ITypeModal } from './Update';
 import { useUser } from '../../libs/client/useUser';
+import { AnimatePresence, motion } from 'framer-motion';
 import { opacityVar, variants } from '../../../styles/variants';
 
 export const DeleteBoard = ({ _data }: ITypeModal) => {

@@ -8,7 +8,7 @@ export const useGetAllBoards = () => {
 };
 export const useGetBoards = (host_id: any) => {
   const { data } = useSWR<IGetBoards>(`/api/board/all`);
-  const boards = data?.boards?.filter((e) => e.host_id === host_id)!;
+  const boards = data?.boards?.filter((e: IGetBoard) => e.host_id === host_id)!;
   return { boards, isBoard: Boolean(data?.boards?.length! > 1) };
 };
 export const useGetBoard = (board_id: any) => {

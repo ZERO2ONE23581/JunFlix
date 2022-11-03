@@ -30,6 +30,7 @@ export const ThemeBtn = ({ setTheme, theme }: IBtns) => {
   );
 };
 const Cont = styled(Flex)<{ size: string }>`
+  z-index: 999;
   position: relative;
   width: ${(p) => p.size && p.size};
   width: ${(p) => p.size && p.size};

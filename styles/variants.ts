@@ -133,28 +133,6 @@ export const TransBorderVar = {
     transition: { duration: 0.5 },
   }),
 };
-export const btnVar = {
-  initial: ({ theme, isClicked, isFollowing }: any) => ({
-    opacity: 0,
-    color: isFollowing ? whiteColor : color(!theme),
-    backgroundColor: isFollowing ? redColor : color(theme),
-  }),
-  animate: ({ theme, isClicked, isFollowing }: any) => ({
-    opacity: 1,
-    transition: { duration: 0.3 },
-    color: isFollowing ? whiteColor : color(!theme),
-    backgroundColor: isFollowing ? redColor : color(theme),
-  }),
-  exit: {
-    opacity: 0,
-  },
-  hover: {
-    fill: '#ffffff',
-    color: '#ffffff',
-    backgroundColor: '#E50914',
-    transition: { duration: 0.3 },
-  },
-};
 export const boxVars = {
   hover: { y: -20, scale: 1.1, transition: { duration: 0.3 } },
 };

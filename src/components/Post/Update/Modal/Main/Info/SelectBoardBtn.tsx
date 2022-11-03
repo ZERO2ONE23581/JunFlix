@@ -1,14 +1,14 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import { Svg } from '../../../../../../Tools/Svg';
 import { useEffect, useState } from 'react';
+import { Svg } from '../../../../../../Tools/Svg';
 import { IGetBoard } from '../../../../../../types/board';
 import { avatarLink } from '../../../../../../Tools/Avatar';
+import { useUser } from '../../../../../../libs/client/useUser';
 import { Flex, FlexCol } from '../../../../../../../styles/global';
 import { color, redBrdr } from '../../../../../../../styles/variants';
 import { useCapLetters } from '../../../../../../libs/client/useTools';
-import { useGetQsaved } from '../../../../../../libs/client/usePosts';
-import { useUser } from '../../../../../../libs/client/useUser';
+import { useGetQuickSaved } from '../../../../../../libs/client/usePosts';
 
 interface ISelectBoardBtn {
   _data: {
@@ -22,21 +22,15 @@ interface ISelectBoardBtn {
 export const SelectBoardBtn = ({ _data }: ISelectBoardBtn) => {
   const theme = _data?.theme!;
   const board_id = _data?.board_id!;
+
   const new_id = _data?.new_boardId!;
   const quickSave = _data?.quickSave!;
   const openSelect = _data?.openSelect!;
   //
-  const [select, setSelect] = useState(0);
+  const [select, setSelect] = useState(board_id);
   useEffect(() => {
-    if (!board_id) {
-      if (new_id) setSelect(new_id);
-      else setSelect(0);
-    }
-    if (board_id) {
-      if (quickSave) setSelect(0);
-      else if (new_id) setSelect(new_id);
-      else setSelect(board_id);
-    }
+    if (new_id) setSelect(new_id);
+    if (quickSave) setSelect(0);
   }, [board_id, new_id, quickSave, setSelect]);
   //
   const { data } = useSWR<IGetBoard>(
@@ -46,8 +40,8 @@ export const SelectBoardBtn = ({ _data }: ISelectBoardBtn) => {
   const { loggedInUser } = useUser();
   const counts = board?._count?.posts;
   const isRed = Boolean(new_id || quickSave);
-  const quick = Number(useGetQsaved(loggedInUser?.id!)) - 1;
-  const quick_counts = quick < 0 ? 0 : quick;
+  const { counts: num } = useGetQuickSaved(loggedInUser?.id!);
+  const quick_counts = num < 1 ? 0 : quickSave ? num + 1 : num;
   return (
     <>
       <Cont>
@@ -62,11 +56,8 @@ export const SelectBoardBtn = ({ _data }: ISelectBoardBtn) => {
           <img src={avatarLink(board?.cover)} alt="board cover" />
           <Info>
             <div className="txt">
-              <span className="txt-title">
-                {Boolean(board && !quickSave)
-                  ? useCapLetters(board?.title!)
-                  : 'Quick Save'}
-              </span>
+              {board && <Title>{useCapLetters(board?.title)} </Title>}
+              {!board && <Title>{'QuickSave'} </Title>}
               <span className="txt-post-counts">
                 {board && (
                   <>
@@ -82,7 +73,6 @@ export const SelectBoardBtn = ({ _data }: ISelectBoardBtn) => {
                 )}
               </span>
             </div>
-
             <Svg type="right-chev" theme={theme} item={{ size: '1rem' }} />
           </Info>
         </Wrap>
@@ -90,6 +80,10 @@ export const SelectBoardBtn = ({ _data }: ISelectBoardBtn) => {
     </>
   );
 };
+const Title = styled.span`
+  display: block;
+  font-size: 1.2rem;
+`;
 const Cont = styled(FlexCol)`
   align-items: flex-start;
   h3 {
@@ -122,10 +116,6 @@ const Info = styled(Flex)`
   span {
   }
   .txt {
-    .txt-title {
-      display: block;
-      font-size: 1.2rem;
-    }
     .txt-post-counts {
       font-size: 1rem;
       span {

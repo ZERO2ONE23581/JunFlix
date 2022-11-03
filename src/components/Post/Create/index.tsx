@@ -1,6 +1,6 @@
 import { Modal } from './Modal';
 import { useEffect, useState } from 'react';
-import { SelectModal } from './Select_Modal';
+import { SelectModal } from './Select';
 import { AnimatePresence } from 'framer-motion';
 import { MsgModal } from '../../../Tools/msg_modal';
 import { ICreatePostRes } from '../../../types/post';

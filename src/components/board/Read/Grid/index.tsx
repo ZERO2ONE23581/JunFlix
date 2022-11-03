@@ -1,36 +1,38 @@
+import { GridBox } from './Box';
 import { Icons } from './Icons';
-import { Cover } from './Cover';
+import { useState } from 'react';
 import styled from '@emotion/styled';
-import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { Svg } from '../../../../Tools/Svg';
+import { AnimatePresence } from 'framer-motion';
 import { NoData } from '../../../../Tools/NoData';
+import { Grid } from '../../../../../styles/global';
 import { IBoardType } from '../../../../types/board';
-import { Flex, Grid } from '../../../../../styles/global';
-import { hoverVars, scaleVar } from '../../../../../styles/variants';
-import { useCapLetters } from '../../../../libs/client/useTools';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { scaleVar } from '../../../../../styles/variants';
+import { IPostType } from '../../../../types/post';
 
 interface IBoards {
   _data: {
     theme: boolean;
+    user_id?: number;
     isBoard: boolean;
     hideFilter?: boolean;
     boards: IBoardType[];
+    quickSaved?: IPostType[];
   };
 }
 export const BoardsGrid = ({ _data }: IBoards) => {
-  const router = useRouter();
   const theme = _data?.theme!;
   const boards = _data?.boards!;
+  const quickSaved = _data?.quickSaved!;
   const hideFilter = _data?.hideFilter!;
+  const isQuickSaved = Boolean(quickSaved?.length);
 
   const [genre, setGenre] = useState({
     select: false,
     type: 'all',
   });
-  const genreBoard = boards?.filter((e) => e.genre === genre.type);
   const allGenre = Boolean(genre.type === 'all');
+  const genreBoard = boards?.filter((e) => e.genre === genre.type);
   const Boards = genre.select ? (allGenre ? boards : genreBoard) : boards;
   const isBoard = Boolean(_data?.isBoard! && Boards.length > 0);
   return (
@@ -46,32 +48,29 @@ export const BoardsGrid = ({ _data }: IBoards) => {
             variants={scaleVar}
             custom={{ theme, duration: 0.6 }}
           >
+            {isQuickSaved && (
+              <GridBox
+                _data={{
+                  theme,
+                  board_id: 0,
+                  genre: null!,
+                  posts: quickSaved,
+                  title: 'Quick Saved',
+                  user_id: _data?.user_id!,
+                }}
+              />
+            )}
             {Boards?.map((board) => (
-              <Box
-                custom={theme}
+              <GridBox
                 key={board.id}
-                variants={hoverVars}
-                animate="animate"
-                whileHover="hover"
-                className="grid-box"
-                onClick={() => router.push(`/board/${board.id}/${board.title}`)}
-              >
-                <Cover theme={theme} posts={board.posts} />
-                <Info className="info">
-                  <Flex className="flex-wrap">
-                    <h1>{useCapLetters(board.title)}</h1>
-                    <Svg
-                      theme={theme}
-                      item={{ size: '1.6rem' }}
-                      type={board.genre ? board.genre : 'film'}
-                    />
-                  </Flex>
-                  <div className="post-length">
-                    <span>{board.posts.length}</span>
-                    <span>Posts</span>
-                  </div>
-                </Info>
-              </Box>
+                _data={{
+                  theme,
+                  title: board.title,
+                  board_id: board.id,
+                  genre: board.genre!,
+                  posts: board.posts,
+                }}
+              />
             ))}
           </Cont>
         )}
@@ -85,32 +84,5 @@ const Cont = styled(Grid)`
   .flex-wrap {
     justify-content: space-between;
     //border: 1px solid pink;
-  }
-`;
-const Box = styled(motion.div)`
-  cursor: pointer;
-  .board-cover {
-    width: 100%;
-    height: 16rem;
-    min-width: 16rem;
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-`;
-const Info = styled.div`
-  padding: 1rem;
-  font-size: 1.4rem;
-  height: 5rem;
-  h1 {
-    margin-bottom: 8px;
-  }
-  .post-length {
-    font-size: 1.1rem;
-    font-style: italic;
-    span {
-      margin-right: 5px;
-    }
   }
 `;

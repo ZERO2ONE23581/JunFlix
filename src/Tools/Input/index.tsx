@@ -44,7 +44,12 @@ export const InputWrap = ({ _data }: IInput) => {
     <>
       <Cont className={id}>
         <FlexCol className="input_wrap_flex">
-          <Style animate="animate" variants={InputVar} custom={{ ...custom }}>
+          <Style
+            className="input-style"
+            animate="animate"
+            variants={InputVar}
+            custom={{ ...custom }}
+          >
             <input
               {...register}
               id={id}

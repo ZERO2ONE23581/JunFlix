@@ -1,5 +1,6 @@
 import useSWR from 'swr';
 import { IGetPosts, IPostType } from '../../types/post';
+import { useCapLetters } from './useTools';
 
 export interface IUseGetAllPosts {
   counts?: number | any;
@@ -24,14 +25,18 @@ export const useGetPosts = (host_id: number, board_id: number) => {
   const isPost = data?.ok && Boolean(posts.length > 0);
   return { posts, isPost };
 };
-export const useGetQsaved = (host_id: number) => {
+export const useGetQuickSaved = (host_id: number) => {
   const { data } = useSWR<IGetPosts>(`/api/post/all`);
-  const isData = data && data.ok && data.posts;
-  if (isData) {
-    const posts = data.posts?.filter((e) => e.host_id === host_id);
-    if (posts) {
-      const quickSaved = posts?.filter((e) => e.board_id === 0);
-      if (quickSaved) return quickSaved.length;
-    }
-  }
+  const posts = data?.posts?.filter(
+    (e) => e.host_id === host_id && e.board_id === 0
+  );
+  return { posts, counts: posts?.length! };
+};
+export const usePostTitle = (title: string) => {
+  const length = title.length;
+  const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+  const isKor = korean.test(title);
+  if (isKor && length > 15) return useCapLetters(title.slice(0, 15)) + '...';
+  else if (length <= 24) return useCapLetters(title);
+  else return useCapLetters(title.slice(0, 24)) + '...';
 };

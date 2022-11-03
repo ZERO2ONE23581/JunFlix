@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
+import { UseFormRegister } from 'react-hook-form';
 import { avatarLink } from '../../../../Tools/Avatar';
-import { FlexCol } from '../../../../../styles/global';
+import { Flex, FlexCol } from '../../../../../styles/global';
 import { useCapLetters } from '../../../../libs/client/useTools';
-import { TweenTrans, color } from '../../../../../styles/variants';
+import { TweenTrans, color, variants } from '../../../../../styles/variants';
+import { Svg } from '../../../../Tools/Svg';
 
 interface IPostBox {
   _data: {
@@ -14,13 +16,7 @@ interface IPostBox {
   };
 }
 export const Box = ({ _data }: IPostBox) => {
-  const title = _data?.title!;
-  const image = _data?.image!;
-  const theme = _data?.theme!;
-  const post_id = _data?.post_id!;
-  const onClick = _data?.onClick!;
-  //
-
+  const { title, image, theme, post_id, onClick } = _data;
   const Title = (text: string) => {
     const length = text.length;
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
@@ -32,34 +28,34 @@ export const Box = ({ _data }: IPostBox) => {
   return (
     <>
       {avatarLink(image) && (
-        <Cont
+        <PostBox__
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          whileHover="hover"
+          className="grid-box"
           key={post_id}
           custom={theme}
           variants={vars}
           transition={TweenTrans}
           layoutId={post_id + ''}
           onClick={() => onClick(post_id)}
-          exit="exit"
-          className="grid-box"
-          initial="initial"
-          animate="animate"
-          whileHover="hover"
         >
-          {/* <h1>{post_id}</h1> */}
           <img alt="박스커버이미지" src={avatarLink(image)} />
           <h2>{Title(title)}</h2>
-        </Cont>
+        </PostBox__>
       )}
     </>
   );
 };
-const Cont = styled(FlexCol)`
+export const PostBox__ = styled(FlexCol)`
   gap: 10px;
   margin: 0 auto;
   cursor: pointer;
   overflow: hidden;
   align-items: center;
   justify-content: flex-start;
+  position: static;
   img {
     border: none;
     display: block;
@@ -81,7 +77,7 @@ const vars = {
     color: color(theme),
     transition: { duration: 0.3 },
   }),
-  exit: (theme: boolean) => ({
+  exit: () => ({
     opacity: 0,
   }),
   hover: () => ({

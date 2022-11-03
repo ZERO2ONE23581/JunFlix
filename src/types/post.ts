@@ -2,8 +2,10 @@ import { Board, Comment, Like, Post, Review, User } from '@prisma/client';
 import {
   FieldError,
   UseFormClearErrors,
+  UseFormHandleSubmit,
   UseFormRegister,
   UseFormReset,
+  UseFormSetError,
   UseFormSetValue,
   UseFormWatch,
 } from 'react-hook-form';
@@ -11,17 +13,27 @@ import { IBoardType } from './board';
 import { IRes } from './global';
 import { IUserType } from './user';
 
-export interface IUseformPost {
+export interface IPostUseform {
   _useform: {
-    errors: IPostFormErr;
-    reset: UseFormReset<IPostForm>;
-    watch: UseFormWatch<IPostForm>;
-    register: UseFormRegister<IPostForm>;
-    setValue: UseFormSetValue<IPostForm>;
-    clearErrors: UseFormClearErrors<IPostForm>;
+    errors?: {
+      title?: FieldError | any;
+      chosenId?: FieldError | any;
+      pageLink?: FieldError | any;
+      hashtags?: FieldError | any;
+      onPrivate?: FieldError | any;
+      post_image?: FieldError | any;
+      description?: FieldError | any;
+    };
+    reset?: UseFormReset<IPostForm>;
+    watch?: UseFormWatch<IPostForm>;
+    setError?: UseFormSetError<IPostForm>;
+    register?: UseFormRegister<IPostForm>;
+    setValue?: UseFormSetValue<IPostForm>;
+    handleSubmit?: UseFormHandleSubmit<IPostForm>;
+    clearErrors?: UseFormClearErrors<IPostForm>;
   };
 }
-
+export interface IPostFormErr {}
 export interface IPostType extends Post {
   host: IUserType;
   board: IBoardType;
@@ -68,27 +80,14 @@ export interface ReviewModel extends Review {
 }
 export interface IPostForm {
   title: string;
+  chosenId: [any];
   pageLink?: string;
   hashtags?: string;
   onPrivate?: boolean;
   description?: string;
   post_image?: FileList;
 }
-export interface IPostFormErr {
-  title?: FieldError | undefined;
-  pageLink?: FieldError | undefined;
-  hashtags?: FieldError | undefined;
-  onPrivate?: FieldError | undefined;
-  description?: FieldError | undefined;
-  post_image?: FieldError | undefined;
-}
-export interface IPostUseForm {
-  _data: {
-    errors: IPostFormErr;
-    watch: UseFormWatch<IPostForm>;
-    register: UseFormRegister<IPostForm>;
-  };
-}
+
 export interface IGetPosts {
   ok: boolean;
   posts: IPostType[];

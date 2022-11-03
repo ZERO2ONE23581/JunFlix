@@ -1,3 +1,4 @@
+import { Text } from './Text';
 import styled from '@emotion/styled';
 import { Svg } from '../../../Tools/Svg';
 import { Btn } from '../../../Tools/Button';
@@ -8,7 +9,6 @@ import { OverlayBg } from '../../../Tools/overlay';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Text } from './Text';
 
 interface IDeletePost {
   _data: {
@@ -40,11 +40,11 @@ export const DeletePost = ({ _data }: IDeletePost) => {
   };
   useEffect(() => {
     if (data) {
+      setModal('');
       setTimeout(() => {
         setLoading(false);
         if (data.error) setMsg(data.error);
         if (data.ok) setMsg('deleted');
-        setModal('');
       }, 1000);
     }
   }, [data, setLoading, setMsg]);

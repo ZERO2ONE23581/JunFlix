@@ -45,6 +45,7 @@ export const Flex = styled(motion.div)`
   }
 `;
 export const Circle = styled(Flex)`
+  cursor: pointer;
   width: 2rem;
   height: 2rem;
   border-radius: 100%;
@@ -52,7 +53,7 @@ export const Circle = styled(Flex)`
     display: block;
   }
 `;
-export const ModalBtn = styled(motion.div)`
+export const MiniModal = styled(motion.div)`
   top: 0rem;
   right: 0rem;
   position: absolute;

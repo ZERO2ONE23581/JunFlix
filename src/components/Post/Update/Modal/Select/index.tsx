@@ -1,10 +1,11 @@
+import { OverlayBg } from '../../../../../Tools/overlay';
+import { PostModal } from '../../../../../../styles/post';
+import { FlexCol } from '../../../../../../styles/global';
+import { variants } from '../../../../../../styles/variants';
+import { BoardsList } from '../../../Create/Select/MyBoards';
+import styled from '@emotion/styled';
 import { Layer } from './Layer';
-import { OverlayBg } from '../../../../Tools/overlay';
-import { PostModal } from '../../../../../styles/post';
-import { FlexCol } from '../../../../../styles/global';
-import { variants } from '../../../../../styles/variants';
-import { QuickSave } from '../../Create/Select_Modal/QuickSave';
-import { BoardsList } from '../../Create/Select_Modal/BoardsList';
+import { QuickSave } from './QuickSave';
 
 interface ISelectModal {
   _data: {
@@ -22,17 +23,18 @@ export const SelectModal = ({ _data }: ISelectModal) => {
   const layoutId = _data?.layoutId!;
   const closeModal = _data?.closeModal!;
   const selectModal = _data?.selectModal!;
+  const selectClick = _data?.selectClick!;
   const _select = {
     theme,
     host_id,
-    clickQuick: () => _data?.selectClick('quick', 0)!,
-    clickBoard: (id: number) => _data?.selectClick('board', id)!,
+    clickQuick: () => selectClick('quick', 0)!,
+    clickBoard: (id: number) => selectClick('board', id),
   };
   return (
     <>
       {selectModal && (
         <>
-          <PostModal
+          <Cont
             exit="exit"
             animate="animate"
             initial="initial"
@@ -46,10 +48,13 @@ export const SelectModal = ({ _data }: ISelectModal) => {
               <QuickSave _data={{ ..._select }} />
               <BoardsList _data={{ ..._select }} />
             </FlexCol>
-          </PostModal>
+          </Cont>
           <OverlayBg dark={0.8} zIndex={113} />
         </>
       )}
     </>
   );
 };
+const Cont = styled(PostModal)`
+  top: -5rem;
+`;

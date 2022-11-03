@@ -1,8 +1,7 @@
-import useUser from './useUser';
-import { useEffect, useState } from 'react';
+import { useUser } from './useUser';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { UseFormSetError } from 'react-hook-form';
-import { IPostForm } from '../../types/post';
 
 export const useUploadImg = async (
   image: FileList | undefined,
@@ -27,7 +26,7 @@ interface IUseError {
   _data: {
     max: [number, number];
     types: [string, string];
-    texts: [string, string?];
+    texts: [string, string];
     setError: UseFormSetError<any>;
   };
 }

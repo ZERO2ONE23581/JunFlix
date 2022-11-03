@@ -3,9 +3,7 @@ import { useRouter } from 'next/router';
 import { IRes } from '../../types/global';
 import { useEffect, useState } from 'react';
 import { LoadingModal } from './loading_modal';
-import { ITheme } from '../../../styles/theme';
 import { IBoardType } from '../../types/board';
-import { AnimatePresence } from 'framer-motion';
 import useMutation from '../../libs/client/useMutation';
 import { DeleteBoard } from '../../components/Board/Delete';
 import { UpdateBoard } from '../../components/Board/Update';
@@ -72,7 +70,7 @@ export const BoardSchema = ({ _data }: IBoardSchema) => {
           if (type === 'delete-board') {
             setMsg('deleted');
             setTimeout(() => {
-              return router.replace(`/board/all`);
+              return router.replace(`/all/boards`);
             }, 1000);
           }
         }

@@ -1,7 +1,8 @@
 import { Layer } from './Layer';
 import styled from '@emotion/styled';
 import { QuickSave } from './QuickSave';
-import { BoardsList } from './BoardsList';
+import { useRouter } from 'next/router';
+import { BoardsList } from './MyBoards';
 import { IRes } from '../../../../types/global';
 import { OverlayBg } from '../../../../Tools/overlay';
 import { variants } from '../../../../../styles/variants';
@@ -9,7 +10,6 @@ import { useUser } from '../../../../libs/client/useUser';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { FlexCol, Modal } from '../../../../../styles/global';
 import useMutation from '../../../../libs/client/useMutation';
-import { useRouter } from 'next/router';
 
 interface ISelectBoardModal {
   _data: {
@@ -99,6 +99,7 @@ export const SelectModal = ({ _data }: ISelectBoardModal) => {
   );
 };
 const Cont = styled(Modal)`
+  top: -3rem;
   padding: 0;
   width: 33vw;
   z-index: 114;

@@ -113,12 +113,13 @@ export const UpdatePost = ({ theme, post, modal, setModal }: IUpdate) => {
   };
   useEffect(() => {
     if (data) {
+      setModal('');
       setTimeout(() => {
         if (data) {
           if (data?.error) alert(data.error);
           if (data?.ok) {
             setLoading(false);
-            setModal('');
+
             setMsg('updated');
             setTimeout(() => {
               router.reload();
@@ -131,6 +132,7 @@ export const UpdatePost = ({ theme, post, modal, setModal }: IUpdate) => {
 
   useEffect(() => {
     if (deleteData) {
+      setModal('');
       setTimeout(() => {
         setLoading(false);
         if (deleteData) {

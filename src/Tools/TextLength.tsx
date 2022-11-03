@@ -17,11 +17,11 @@ export const TextLength = ({ theme, number }: ITextLength) => {
   //
   return (
     <Cont
-      className="text-length"
       exit="exit"
       initial="initial"
       animate="animate"
       variants={numVar}
+      className="text-length"
       custom={{ theme, isOver }}
     >
       <AnimatePresence>

@@ -17,6 +17,7 @@ export const useGetUser = (user_id: number) => {
   return {
     isMyAcct,
     user: data?.user,
+    userId: data?.user?.userId!,
     username: data?.user?.username!,
   };
 };

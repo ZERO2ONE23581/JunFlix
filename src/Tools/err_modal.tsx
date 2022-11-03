@@ -10,7 +10,7 @@ interface IErrMsg {
     id: string;
     theme: boolean;
     error?: string;
-    clearErrors: UseFormClearErrors<any>;
+    clearErrors?: UseFormClearErrors<any>;
   };
 }
 export const ErrModal = ({ _data }: IErrMsg) => {
@@ -18,6 +18,7 @@ export const ErrModal = ({ _data }: IErrMsg) => {
   const theme = _data?.theme!;
   const error = _data?.error!;
   const clearErrors = _data?.clearErrors!;
+
   return (
     <AnimatePresence>
       {error && (
@@ -34,7 +35,7 @@ export const ErrModal = ({ _data }: IErrMsg) => {
           </Cont>
           <OverlayBg
             closeModal={() => clearErrors(id)}
-            zIndex={11}
+            zIndex={221}
             dark={0.8}
           />
         </>
@@ -43,7 +44,7 @@ export const ErrModal = ({ _data }: IErrMsg) => {
   );
 };
 const Cont = styled(Modal)`
-  z-index: 112;
+  z-index: 222;
   height: 200px;
   width: fit-content;
   height: fit-content;

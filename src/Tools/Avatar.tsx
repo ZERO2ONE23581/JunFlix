@@ -43,7 +43,6 @@ export const Avatar = ({ _data }: IAvatar) => {
 
   const onClick = () => {
     const handleClick = _data?.handleClick!;
-    console.log(handleClick?.isClick, '???');
     if (handleClick?.isClick) return handleClick?.onClick();
     if (host_id) return router.push(`/user/${host_id}/my_page`);
   };

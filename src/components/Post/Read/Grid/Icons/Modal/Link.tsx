@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { AnimatePresence } from 'framer-motion';
 import { OverlayBg } from '../../../../../../Tools/overlay';
 import { List } from '../../../../../User/Read/MyPage/List';
-import { ModalBtn } from '../../../../../../../styles/global';
+import { MiniModal } from '../../../../../../../styles/global';
 import { useUser } from '../../../../../../libs/client/useUser';
 import { smallModalVar } from '../../../../../Board/Read/Each/Title/Setting_Modal';
 
@@ -28,10 +28,11 @@ export const LinkModal = ({ _data }: ILinkModal) => {
             custom={theme}
             initial="initial"
             animate="animate"
+            className="link_modal"
             variants={smallModalVar}
           >
             <ul>
-              <li className="small">Posts page (포스트로 이동)</li>
+              <li className="small">Options</li>
               <List
                 _data={{
                   theme,
@@ -43,8 +44,24 @@ export const LinkModal = ({ _data }: ILinkModal) => {
                 <List
                   _data={{
                     theme,
-                    onClick: () => router.push(`/user/${user_id}/posts`),
                     name: { eng: 'My Posts', kor: '나의 포스트' },
+                    onClick: () => router.push(`/user/${user_id}/posts`),
+                  }}
+                />
+              )}
+              <List
+                _data={{
+                  theme,
+                  onClick: () => router.push('/all/boards'),
+                  name: { eng: 'All Boards', kor: '모든 보드' },
+                }}
+              />
+              {isLoggedIn && (
+                <List
+                  _data={{
+                    theme,
+                    name: { eng: 'My Boards', kor: '나의 보드' },
+                    onClick: () => router.push(`/user/${user_id}/boards`),
                   }}
                 />
               )}
@@ -56,9 +73,4 @@ export const LinkModal = ({ _data }: ILinkModal) => {
     </AnimatePresence>
   );
 };
-const Cont = styled(ModalBtn)`
-  ul {
-    li {
-    }
-  }
-`;
+const Cont = styled(MiniModal)``;

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { ListWrap } from './BoardsList';
-import { useGetQsaved } from '../../../../libs/client/usePosts';
-import { select_board_ul_var } from '../../../../../styles/post';
+import { ListWrap } from '../../../Create/Select/MyBoards';
+import { useGetQuickSaved } from '../../../../../libs/client/usePosts';
+import { select_board_ul_var } from '../../../../../../styles/post';
 
 interface IQuickSave {
   _data: {
@@ -14,8 +14,7 @@ export const QuickSave = ({ _data }: IQuickSave) => {
   const theme = _data?.theme!;
   const host_id = _data?.host_id!;
   const clickQuick = _data?.clickQuick!;
-  const post_counts = Number(useGetQsaved(host_id)) - 1;
-  const counts = post_counts < 0 ? 0 : post_counts;
+  const { counts } = useGetQuickSaved(host_id);
   return (
     <ListWrap
       custom={theme}
@@ -32,7 +31,7 @@ export const QuickSave = ({ _data }: IQuickSave) => {
         <h2>Quick Save</h2>
         <span className="post-num">
           <span>{counts ? counts : 0}</span>
-          <span>{counts! > 1 ? 'posts' : 'post'}</span>
+          <span>{counts < 1 ? 'post' : 'posts'}</span>
         </span>
       </motion.li>
     </ListWrap>
