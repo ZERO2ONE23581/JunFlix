@@ -2,9 +2,9 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../styles/global';
 import { HeadTitle } from '../../src/Tools/head_title';
-import { PageTitle } from '../../src/Tools/Title/Page_Title';
 import { BoardsGrid } from '../../src/components/Board/Read/Grid';
 import { useGetAllBoards } from '../../src/libs/client/useBoards';
+import { PageHeading } from '../../src/components/Board/Read/BoardTitle';
 
 const AllBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { boards, isBoard } = useGetAllBoards();
@@ -12,7 +12,7 @@ const AllBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
     <>
       <HeadTitle title="All Boards" />
       <BoardPage>
-        <PageTitle type="board" theme={theme} detail={{ all: true }} />
+        <PageHeading type="board" theme={theme} detail={{ all: true }} />
         <BoardsGrid _data={{ theme, isBoard, boards }} />
       </BoardPage>
     </>
@@ -21,9 +21,8 @@ const AllBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
 export default AllBoards;
 
 export const BoardPage = styled(Page)`
-  padding: 0 4rem;
+  padding: 0 8rem;
   .no-data {
-    border: 2px solid yellow;
     min-height: 60vh;
   }
   .board-icons {

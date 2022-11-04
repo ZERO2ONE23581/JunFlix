@@ -2,13 +2,13 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { FlexCol } from '../../../styles/global';
-import { HeadTitle } from '../../../src/Tools/head_title';
-import { useGetUser } from '../../../src/libs/client/useUser';
-import { CreatePost } from '../../../src/components/Post/Create';
-import { Host } from '../../../src/components/User/Read/MyPage/Host';
-import { BtnsWrap } from '../../../src/components/User/Read/MyPage/BtnsWrap';
-import { MyCreated } from '../../../src/components/User/Read/MyPage/MyCreated';
+import { FlexCol } from '../../../../styles/global';
+import { HeadTitle } from '../../../../src/Tools/head_title';
+import { useGetUser } from '../../../../src/libs/client/useUser';
+import { CreatePost } from '../../../../src/components/Post/Create';
+import { Host } from '../../../../src/components/User/Read/MyPage/Host';
+import { BtnsWrap } from '../../../../src/components/User/Read/MyPage/BtnsWrap';
+import { MyCreated } from '../../../../src/components/User/Read/MyPage/MyCreated';
 
 const MyPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();

@@ -1,11 +1,11 @@
 import { Logo } from './Logo';
 import { MainMenu } from './Menu';
+import { LoginMenu } from './Login';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { LoginMenu } from './Login';
-import { ThemeBtn } from '../../Tools/Button/Theme';
-import { Dispatch, SetStateAction } from 'react';
 import { Flex } from '../../../styles/global';
+import { Dispatch, SetStateAction } from 'react';
+import { ThemeBtn } from '../../Tools/Button/Theme';
 import { greyBrdr } from '../../../styles/variants';
 
 interface IHeader {
@@ -32,7 +32,7 @@ export const Header = ({ theme, setTheme }: IHeader) => {
   );
 };
 const Cont = styled(motion.header)`
-  padding: 0 4rem;
+  padding: 0 10rem;
   gap: 3rem;
   display: flex;
   font-size: 1.3em;

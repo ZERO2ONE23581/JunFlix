@@ -2,10 +2,12 @@ import { Text } from './Text';
 import styled from '@emotion/styled';
 import { Svg } from '../../../Tools/Svg';
 import { Btn } from '../../../Tools/Button';
+import { IPostType } from '../../../types/post';
 import { Modal } from '../../../../styles/global';
 import { color } from '../../../../styles/variants';
 import { MsgModal } from '../../../Tools/msg_modal';
 import { OverlayBg } from '../../../Tools/overlay';
+import { useUser } from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -14,30 +16,30 @@ interface IDeletePost {
   _data: {
     modal: string;
     theme: boolean;
-    post_id: number;
-    isMyPost: boolean;
+    post: IPostType;
     setModal: Dispatch<SetStateAction<string>>;
   };
 }
 export const DeletePost = ({ _data }: IDeletePost) => {
-  const modal = _data?.modal!;
-  const theme = _data?.theme!;
-  const post_id = _data?.post_id!;
-  const isMyPost = _data?.isMyPost!;
-  const setModal = _data?.setModal!;
-  //
+  const { modal, theme, post, setModal } = _data;
+  const post_id = post?.id;
+  const { user_id } = useUser();
+  const host_id = post?.host_id;
   const layoutId = post_id + '';
-  const [msg, setMsg] = useState('');
+
+  const [delete_post, { data, loading }] = useMutation(
+    `/api/post/${post_id}/delete`
+  );
   const [Loading, setLoading] = useState(false);
-  const open = Boolean(modal === 'delete') && !Loading;
-  const [post, { data, loading }] = useMutation(`/api/post/${post_id}/delete`);
   const onClick = () => {
     if (loading) return;
+    const isMyPost = Boolean(user_id === host_id);
     if (!isMyPost) return alert('invalid host');
     if (!post_id) return alert('no post id');
     setLoading(true);
-    return post({ isDelete: true });
+    return delete_post({ isDelete: true });
   };
+  const [msg, setMsg] = useState('');
   useEffect(() => {
     if (data) {
       setModal('');
@@ -48,7 +50,8 @@ export const DeletePost = ({ _data }: IDeletePost) => {
       }, 1000);
     }
   }, [data, setLoading, setMsg]);
-  const closeModal = () => setModal('read');
+
+  const open = Boolean(modal === 'delete') && !Loading;
   return (
     <>
       {open && (
@@ -61,7 +64,7 @@ export const DeletePost = ({ _data }: IDeletePost) => {
             variants={vars}
             layoutId={layoutId}
           >
-            <Svg type="close" theme={theme} onClick={closeModal} />
+            <Svg type="close" theme={theme} onClick={() => setModal('read')} />
             <Text />
             <Btn
               type="button"

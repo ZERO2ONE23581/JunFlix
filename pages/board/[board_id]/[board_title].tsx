@@ -22,7 +22,7 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { board, isMyBoard } = useGetBoard(board_id);
   const host_id = board?.host_id!;
   const modal = Boolean(type && isMyBoard);
-  const { posts, isPost } = useGetPosts(host_id, board_id);
+  const { posts, isPost } = useGetPosts({ host_id, board_id });
   return (
     <>
       <HeadTitle title={board?.title!} />
@@ -37,18 +37,7 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
                 setCreate={setCreate}
               />
               <Layer className="layer">
-                {isPost && (
-                  <PostSchema
-                    _data={{
-                      theme,
-                      posts,
-                      create,
-                      setCreate,
-                      max_grid: 5,
-                      hideCreate: true,
-                    }}
-                  />
-                )}
+                {isPost && <PostSchema _data={{ theme, posts, grid: 5 }} />}
                 {!isPost && <NoData theme={theme} />}
               </Layer>
               <BoardSchema
@@ -88,7 +77,7 @@ const Cont = styled(FlexPage)`
 const Layer = styled(FlexPage)`
   position: relative;
   //border: 2px solid red;
-  padding: 0 8rem;
+  padding: 0 10rem;
   .lock {
     top: 50%;
     left: 50%;

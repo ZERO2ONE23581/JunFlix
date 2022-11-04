@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Slider } from '../../src/Tools/Slider';
 import { HeadTitle } from '../../src/Tools/head_title';
-import { PageTitle } from '../../src/Tools/Title/Page_Title';
+import { PageTitle } from '../../src/components/Board/Read/BoardTitle';
 import { FixedBtns } from '../../src/Tools/Button/Fixed';
 import { useUser } from '../../src/libs/client/useUser';
 

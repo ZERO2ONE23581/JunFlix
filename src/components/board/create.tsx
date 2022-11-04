@@ -46,7 +46,7 @@ export const CreateBox = ({ _data }: ICreateBox) => {
       _data: {
         setError,
         max: [50, 700],
-        texts: [title, description],
+        texts: [title, description!],
         types: ['title', 'description'],
       },
     });

@@ -63,8 +63,9 @@ const Box = styled(motion.div)`
   cursor: pointer;
   .board-cover {
     width: 100%;
+    //height: 100%;
     height: 16rem;
-    min-width: 16rem;
+    //min-width: 16rem;
     img {
       width: 100%;
       height: 100%;
@@ -72,11 +73,14 @@ const Box = styled(motion.div)`
   }
 `;
 const Info = styled.div`
+  height: 5rem;
   padding: 1rem;
   font-size: 1.4rem;
-  height: 5rem;
   h1 {
     margin-bottom: 8px;
+  }
+  .flex-wrap {
+    justify-content: space-between;
   }
   .post-length {
     font-size: 1.1rem;

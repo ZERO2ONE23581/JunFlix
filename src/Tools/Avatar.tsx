@@ -14,9 +14,9 @@ export interface IAvatar {
       isClick: boolean;
       onClick: () => void;
     };
-    host_id: number;
-    avatar: string | null;
-    preview: string | null;
+    host_id?: number;
+    avatar?: string | null;
+    preview?: string | null;
   };
 }
 export const Avatar = ({ _data }: IAvatar) => {

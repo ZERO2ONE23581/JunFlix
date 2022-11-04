@@ -35,8 +35,8 @@ export const Answer = ({ _data }: IAnswer) => {
             exit="exit"
             initial="initial"
             animate="animate"
-            custom={{ theme, duration: 0.6 }}
             variants={scaleVar}
+            custom={{ theme, duration: 0.6 }}
           >
             <Svg
               type="close"

@@ -2,7 +2,6 @@ import { GridBox } from './Box';
 import { Icons } from './Icons';
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { AnimatePresence } from 'framer-motion';
 import { NoData } from '../../../../Tools/NoData';
 import { Grid } from '../../../../../styles/global';
@@ -36,13 +35,14 @@ export const BoardsGrid = ({ _data }: IBoards) => {
   const Boards = genre.select ? (allGenre ? boards : genreBoard) : boards;
   const isBoard = Boolean(_data?.isBoard! && Boards.length > 0);
   return (
-    <>
+    <Cont>
       <Icons theme={theme} setGenre={setGenre} hideFilter={hideFilter} />
       <AnimatePresence>
         {isBoard && (
-          <Cont
+          <Grid
             box={5}
             exit="exit"
+            className="grid"
             animate="animate"
             initial="initial"
             variants={scaleVar}
@@ -72,17 +72,20 @@ export const BoardsGrid = ({ _data }: IBoards) => {
                 }}
               />
             ))}
-          </Cont>
+          </Grid>
         )}
       </AnimatePresence>
       {!isBoard && <NoData theme={theme} />}
-    </>
+    </Cont>
   );
 };
-const Cont = styled(Grid)`
-  width: fit-content;
-  .flex-wrap {
-    justify-content: space-between;
-    //border: 1px solid pink;
+const Cont = styled.section`
+  position: relative;
+  .icons {
+    top: -3rem;
+    right: 1rem;
+  }
+  .grid {
+    width: fit-content;
   }
 `;

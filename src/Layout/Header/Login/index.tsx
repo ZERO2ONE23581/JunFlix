@@ -1,36 +1,29 @@
 import { useState } from 'react';
+import { IconModal } from './Modal';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { IconModal } from './Modal';
 import { Avatar } from '../../../Tools/Avatar';
+import { Flex } from '../../../../styles/global';
 import { ITheme } from '../../../../styles/theme';
 import { useUser } from '../../../libs/client/useUser';
 import { colorVar, hoverScale } from '../../../../styles/variants';
 
 export const LoginMenu = ({ theme }: ITheme) => {
+  const size = '3.5rem';
   const router = useRouter();
   const [modal, setModal] = useState(false);
-  const { isLoggedIn, loggedInUser } = useUser();
-  const user = loggedInUser;
-  //
+  const onClick = () => setModal((p) => !p);
   const textVar = { ...colorVar, ...hoverScale };
+  const handleClick = { isClick: true, onClick };
+  const { isLoggedIn, user_id: host_id, avatar } = useUser();
   return (
     <Cont className="user-menu">
       {isLoggedIn && (
-        <div className="logged-in">
-          <Avatar
-            _data={{
-              theme,
-              size: '4rem',
-              isClick: true,
-              preview: null,
-              avatar: user?.avatar!,
-              onClick: () => setModal((p) => !p),
-            }}
-          />
+        <Flex className="logged-in">
+          <Avatar _data={{ size, theme, avatar, host_id, handleClick }} />
           <IconModal modal={modal} setModal={setModal} theme={theme} />
-        </div>
+        </Flex>
       )}
       {!isLoggedIn && (
         <div className="unlogged-in">
@@ -64,9 +57,6 @@ export const LoginMenu = ({ theme }: ITheme) => {
 const Cont = styled.article`
   .unlogged-in {
     gap: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   .logged-in {
     position: relative;

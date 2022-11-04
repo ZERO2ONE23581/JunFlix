@@ -22,7 +22,7 @@ interface IPostsModal extends IPostUseform {
 }
 export const PostsModal = ({ _data, _useform }: IPostsModal) => {
   const { user_id } = useUser();
-  const { posts } = useGetPosts(user_id!, 0);
+  const { posts } = useGetPosts({ board_id: 0, host_id: user_id! });
   const { theme, modal, array, layoutId, setModal } = _data;
   const { register, clearErrors, setError, errors } = _useform;
   return (

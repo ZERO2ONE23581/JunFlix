@@ -13,7 +13,7 @@ import { useGetQuickSaved } from '../../../../../../libs/client/usePosts';
 interface ISelectBoardBtn {
   _data: {
     theme: boolean;
-    board_id: number;
+    board_id: number | null;
     quickSave: boolean;
     new_boardId: number;
     openSelect: () => void;

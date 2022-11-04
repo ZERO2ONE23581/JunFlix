@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Page } from '../../../styles/global';
 import { HeadTitle } from '../../../src/Tools/head_title';
-import { PageTitle } from '../../../src/Tools/Title/Page_Title';
+import { PageTitle } from '../../../src/components/Board/Read/BoardTitle';
 import { BoardsGrid } from '../../../src/components/Board/Read/Grid';
 import { useGetAllBoards } from '../../../src/libs/client/useBoards';
 

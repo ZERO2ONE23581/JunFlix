@@ -1,16 +1,16 @@
 import styled from '@emotion/styled';
 import { DangerZone } from './DangerZone';
 import { BlockComment } from './BlockComment';
-import { SelectBoardBtn } from './SelectBoardBtn';
 import { Dispatch, SetStateAction } from 'react';
-import { IUseformPost } from '../../../../../../types/post';
+import { SelectBoardBtn } from './SelectBoardBtn';
+import { IPostUseform } from '../../../../../../types/post';
 import { FlexCol } from '../../../../../../../styles/global';
 import { PostInputs } from '../../../../Create/Modal/Info/Inputs';
 
-interface IInfo extends IUseformPost {
+interface IInfo extends IPostUseform {
   _data: {
     theme: boolean;
-    board_id: number;
+    board_id: number | null;
     quickSave: boolean;
     new_boardId: number;
     setIsDelete: Dispatch<SetStateAction<boolean>>;
@@ -18,12 +18,14 @@ interface IInfo extends IUseformPost {
   };
 }
 export const Info = ({ _data, _useform }: IInfo) => {
-  const theme = _data?.theme!;
-  const board_id = _data?.board_id!;
-  const quickSave = _data?.quickSave!;
-  const new_boardId = _data?.new_boardId!;
-  const setIsDelete = _data?.setIsDelete!;
-  const setSelectModal = _data?.setSelectModal!;
+  const {
+    theme,
+    board_id,
+    quickSave,
+    new_boardId,
+    setIsDelete,
+    setSelectModal,
+  } = _data;
   return (
     <Cont>
       <PostInputs theme={theme} _useform={_useform} />

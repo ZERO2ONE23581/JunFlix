@@ -17,20 +17,23 @@ import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IUpdate {
-  modal: string;
-  theme: boolean;
-  post: IPostType;
-  setModal: Dispatch<SetStateAction<string>>;
+  _data: {
+    modal: string;
+    theme: boolean;
+    post: IPostType;
+    setModal: Dispatch<SetStateAction<string>>;
+  };
 }
-export const UpdatePost = ({ theme, post, modal, setModal }: IUpdate) => {
+export const UpdatePost = ({ _data }: IUpdate) => {
   const router = useRouter();
   const [msg, setMsg] = useState('');
   const [hide, setHide] = useState(false);
-  const layoutId = post?.id! + 'update' + '';
   const [preview, setPreview] = useState('');
   const [Loading, setLoading] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [new_boardId, setNewBoardId] = useState(0);
+  const { theme, post, modal, setModal } = _data;
+  const layoutId = post?.id! + 'update' + '';
   //
   const [update, { data, loading }] = useMutation<IRes>(
     `/api/post/${post?.id}/update`
@@ -99,7 +102,7 @@ export const UpdatePost = ({ theme, post, modal, setModal }: IUpdate) => {
           setError,
           max: [50, 1000],
           types: ['title', 'description'],
-          texts: [inputs.title, inputs.description],
+          texts: [inputs.title, inputs.description!],
         },
       });
       if (!ok) return;

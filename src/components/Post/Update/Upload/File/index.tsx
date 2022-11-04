@@ -1,39 +1,29 @@
-import styled from '@emotion/styled';
+import { Icon } from './Icon';
 import { Click } from './Click';
 import { Preview } from './Preview';
-import { IPostForm } from '../../../../../types/post';
-import { UseFormRegister, UseFormWatch } from 'react-hook-form';
+import styled from '@emotion/styled';
+import { IPostUseform } from '../../../../../types/post';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { FlexCol } from '../../../../../../styles/global';
-import { Icon } from './Icon';
 
-interface IFileInput {
+interface IFileInput extends IPostUseform {
   _data: {
     theme: boolean;
     preview: string;
     setPreview: Dispatch<SetStateAction<string>>;
   };
-  _useform: {
-    watch: UseFormWatch<IPostForm>;
-    register: UseFormRegister<IPostForm>;
-  };
 }
 export const FileInput = ({ _data, _useform }: IFileInput) => {
-  const theme = _data?.theme!;
   const input_id = 'post_image';
-  const watch = _useform?.watch!;
-  const preview = _data?.preview!;
-  const register = _useform?.register!;
-  const setPreview = _data?.setPreview!;
-
+  const { watch, register } = _useform;
+  const { theme, preview, setPreview } = _data;
   useEffect(() => {
-    const image = watch('post_image');
+    const image = watch!('post_image');
     if (image && image.length > 0) {
       const file = image[0];
       setPreview(URL.createObjectURL(file));
     }
-  }, [watch('post_image'), setPreview]);
-
+  }, [watch!('post_image'), setPreview]);
   return (
     <Cont
       variants={vars}
@@ -48,10 +38,10 @@ export const FileInput = ({ _data, _useform }: IFileInput) => {
       </Label>
       <Icon theme={theme} preview={preview} setPreview={setPreview} />
       <input
-        {...register(input_id)}
+        {...register!(input_id)}
         id={input_id}
-        name={input_id}
         disabled={!open}
+        name={input_id}
         type="file"
         accept="image/*"
         style={{ display: 'none' }}

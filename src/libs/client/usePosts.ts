@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import useSWR from 'swr';
 import { IGetPosts, IPostType } from '../../types/post';
 import { useCapLetters } from './useTools';
+import { useUser } from './useUser';
 
 export interface IUseGetAllPosts {
   counts?: number | any;
@@ -12,18 +14,24 @@ export const useGetAllPosts = () => {
   const isPost = data?.ok && Boolean(posts.length < 1);
   return { posts: data?.posts!, isPost };
 };
-export const useGetPosts = (host_id: number, board_id: number) => {
+interface IUseGetPosts {
+  isQs?: boolean;
+  host_id: number | string;
+  board_id: number | string;
+}
+export const useGetPosts = ({ host_id, board_id, isQs }: IUseGetPosts) => {
   const { data } = useSWR<IGetPosts>(`/api/post/all`);
-  if (board_id) {
+  if (board_id || isQs) {
     const posts = data?.posts?.filter(
-      (e) => e.host_id === host_id && e.board_id === board_id
+      (e) => e.host_id === Number(host_id) && e.board_id === Number(board_id)
     )!;
+    const isPost = Boolean(data?.ok && posts.length > 0);
+    return { posts, isPost };
+  } else {
+    const posts = data?.posts?.filter((e) => e.host_id === Number(host_id))!;
     const isPost = data?.ok && Boolean(posts.length > 0);
     return { posts, isPost };
   }
-  const posts = data?.posts?.filter((e) => e.host_id === host_id)!;
-  const isPost = data?.ok && Boolean(posts.length > 0);
-  return { posts, isPost };
 };
 export const useGetQuickSaved = (host_id: number) => {
   const { data } = useSWR<IGetPosts>(`/api/post/all`);
@@ -39,4 +47,22 @@ export const usePostTitle = (title: string) => {
   if (isKor && length > 15) return useCapLetters(title.slice(0, 15)) + '...';
   else if (length <= 24) return useCapLetters(title);
   else return useCapLetters(title.slice(0, 24)) + '...';
+};
+
+interface IUsePostsGrid {
+  //col: number;
+  grid: number;
+  //array: [number];
+  posts: IPostType[];
+}
+export const usePostsGrid = ({ posts, grid }: IUsePostsGrid) => {
+  const [max, setMax] = useState(grid);
+  const ColArr = [...new Array(max)].map((_, p) => p + 1);
+  const PostArr = (col: number) =>
+    posts?.filter(
+      (post) =>
+        posts.indexOf(post) === ColArr.indexOf(col) || // first row
+        posts.indexOf(post) % max === ColArr.indexOf(col) // second row ++
+    );
+  return { ColArr, PostArr, max, setMax };
 };

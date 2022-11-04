@@ -9,31 +9,15 @@ import { useCapLetters } from '../../../../../libs/client/useTools';
 
 interface IFilterModal {
   _data: {
-    modal: boolean;
+    modal: string;
     theme: boolean;
-    setModal: Dispatch<SetStateAction<boolean>>;
+    closeModal: () => void;
     setGenre: Dispatch<SetStateAction<{ select: boolean; type: string }>>;
   };
 }
-export const Modal = ({ _data }: IFilterModal) => {
-  const theme = _data?.theme!;
-  const modal = _data?.modal!;
-  const setModal = _data?.setModal!;
-  const setGenre = _data?.setGenre!;
-  const genre = [
-    'all',
-    'sf',
-    'drama',
-    'action',
-    'horror',
-    'comedy',
-    'romance',
-    'fantasy',
-    'mystery',
-    'thriller',
-    'adventure',
-    '',
-  ];
+
+export const FilterModal = ({ _data }: IFilterModal) => {
+  const { theme, modal, closeModal, setGenre } = _data;
   const useName = (txt: string) => {
     const kor = () => {
       if (txt === 'drama') return '드라마';
@@ -58,15 +42,15 @@ export const Modal = ({ _data }: IFilterModal) => {
   };
   return (
     <AnimatePresence>
-      {modal && (
+      {modal === 'filter' && (
         <>
           <Cont
-            custom={theme}
-            variants={smallModalVar}
             exit="exit"
+            custom={theme}
             initial="initial"
             animate="animate"
-            className="genre-modal"
+            variants={smallModalVar}
+            className="filter-modal"
           >
             <ul>
               <li className="small">Genre (장르별로 보기)</li>
@@ -85,7 +69,7 @@ export const Modal = ({ _data }: IFilterModal) => {
               ))}
             </ul>
           </Cont>
-          <OverlayBg closeModal={() => setModal(false)} />
+          <OverlayBg closeModal={closeModal} />
         </>
       )}
     </AnimatePresence>
@@ -102,3 +86,17 @@ const Cont = styled(MiniModal)`
     }
   }
 `;
+const genre = [
+  'all',
+  'sf',
+  'drama',
+  'action',
+  'horror',
+  'comedy',
+  'romance',
+  'fantasy',
+  'mystery',
+  'thriller',
+  'adventure',
+  '',
+];

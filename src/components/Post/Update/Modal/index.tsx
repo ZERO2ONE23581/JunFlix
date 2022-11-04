@@ -6,10 +6,10 @@ import { AnimatePresence } from 'framer-motion';
 import { OverlayBg } from '../../../../Tools/overlay';
 import { PostModal } from '../../../../../styles/post';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { IPostType, IUseformPost } from '../../../../types/post';
+import { IPostType, IPostUseform } from '../../../../types/post';
 import { color, TransBorder } from '../../../../../styles/variants';
 
-interface IModal extends IUseformPost {
+interface IModal extends IPostUseform {
   _data: {
     theme: boolean;
     modal: string;
@@ -26,18 +26,28 @@ interface IModal extends IUseformPost {
   };
 }
 export const Modal = ({ _data, _useform }: IModal) => {
-  const theme = _data?.theme!;
-  const modal = _data?.modal!;
-  const post = _data?.post!;
-  const layoutId = _data?.layoutId!;
-  const setModal = _data?.setModal!;
+  const {
+    theme,
+    modal,
+    post,
+    layoutId,
+    hide,
+    preview,
+    new_boardId,
+    resetPreview,
+    setHide,
+    setModal,
+    setIsDelete,
+    setNewBoardId,
+  } = _data;
+  const board_id = post?.board_id;
+  const original = post?.post_image;
   const [quickSave, setQuickSave] = useState(false);
   const [selectModal, setSelectModal] = useState(false);
-
   const closeModal = () => {
+    resetPreview();
+    setNewBoardId(0);
     setQuickSave(false);
-    _data?.resetPreview();
-    _data?.setNewBoardId(0);
     return setModal!('read');
   };
   return (
@@ -58,16 +68,16 @@ export const Modal = ({ _data, _useform }: IModal) => {
               _data={{
                 quickSave,
                 setSelectModal,
-                hide: _data?.hide!,
-                theme: _data?.theme!,
-                board_id: post?.board_id!,
-                preview: _data?.preview!,
-                setHide: _data?.setHide!,
-                original: post?.post_image!,
-                setModal: _data?.setModal!,
-                new_boardId: _data?.new_boardId!,
-                setIsDelete: _data?.setIsDelete!,
-                resetPreview: _data?.resetPreview!,
+                theme,
+                hide,
+                board_id,
+                preview,
+                setHide,
+                original,
+                setModal,
+                new_boardId,
+                setIsDelete,
+                resetPreview,
               }}
               _useform={_useform}
             />

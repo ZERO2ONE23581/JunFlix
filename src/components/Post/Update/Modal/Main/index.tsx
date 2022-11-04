@@ -3,10 +3,10 @@ import styled from '@emotion/styled';
 import { Setting } from './Setting';
 import { PostImage } from './Setting/PostImage';
 import { Dispatch, SetStateAction } from 'react';
-import { IUseformPost } from '../../../../../types/post';
+import { IPostUseform } from '../../../../../types/post';
 import { Flex, FlexCol } from '../../../../../../styles/global';
 
-interface IMain extends IUseformPost {
+interface IMain extends IPostUseform {
   _data: {
     hide: boolean;
     theme: boolean;
@@ -23,10 +23,20 @@ interface IMain extends IUseformPost {
   };
 }
 export const Main = ({ _data, _useform }: IMain) => {
-  const hide = _data?.hide!;
-  const theme = _data?.theme!;
-  const preview = _data?.preview!;
-  const original = _data?.original!;
+  const {
+    hide,
+    theme,
+    preview,
+    original,
+    setHide,
+    setModal,
+    resetPreview,
+    board_id,
+    quickSave,
+    new_boardId,
+    setIsDelete,
+    setSelectModal,
+  } = _data;
   return (
     <Cont className="main">
       <Flex className="image-setting">
@@ -37,9 +47,9 @@ export const Main = ({ _data, _useform }: IMain) => {
             theme,
             preview,
             original,
-            setHide: _data?.setHide!,
-            setModal: _data?.setModal!,
-            resetPreview: _data?.resetPreview!,
+            setHide,
+            setModal,
+            resetPreview,
           }}
         />
       </Flex>
@@ -47,11 +57,11 @@ export const Main = ({ _data, _useform }: IMain) => {
         _useform={_useform}
         _data={{
           theme,
-          board_id: _data?.board_id!,
-          quickSave: _data?.quickSave!,
-          new_boardId: _data?.new_boardId!,
-          setIsDelete: _data?.setIsDelete!,
-          setSelectModal: _data?.setSelectModal!,
+          board_id,
+          quickSave,
+          new_boardId,
+          setIsDelete,
+          setSelectModal,
         }}
       />
     </Cont>

@@ -1,27 +1,13 @@
-import {
-  UseFormWatch,
-  UseFormRegister,
-  UseFormClearErrors,
-} from 'react-hook-form';
 import { InputWrap } from '../../../../../Tools/Input';
+import { IPostUseform } from '../../../../../types/post';
 import { useCapLetter } from '../../../../../libs/client/useTools';
 import { TextAreaWrap } from '../../../../../Tools/Input/TextArea';
-import { IPostForm, IPostFormErr } from '../../../../../types/post';
 
-interface IPostInputs {
+interface IPostInputs extends IPostUseform {
   theme: boolean;
-  _useform: {
-    errors: IPostFormErr;
-    watch: UseFormWatch<IPostForm>;
-    register: UseFormRegister<IPostForm>;
-    clearErrors: UseFormClearErrors<IPostForm>;
-  };
 }
 export const PostInputs = ({ _useform, theme }: IPostInputs) => {
-  const watch = _useform?.watch!;
-  const errors = _useform?.errors!;
-  const register = _useform?.register!;
-  const clearErrors = _useform?.clearErrors!;
+  const { watch, errors, register, clearErrors } = _useform;
   const __data = (id: string | any, required: string | undefined) => ({
     id,
     theme,
@@ -31,23 +17,23 @@ export const PostInputs = ({ _useform, theme }: IPostInputs) => {
     text: watch!(id),
     label: useCapLetter(id),
     clearErrors: clearErrors!,
-    register: register(id, { required }),
+    register: register!(id, { required }),
   });
   const __title = {
     ...__data('title', '제목을 입력하세요'),
-    error: errors.title?.message!,
+    error: errors?.title?.message!,
   };
   const __desc = {
     ...__data('description', undefined),
-    error: errors.description?.message,
+    error: errors?.description?.message,
   };
   const __hash = {
     ...__data('hashtags', undefined),
-    error: errors.hashtags?.message!,
+    error: errors?.hashtags?.message!,
   };
   const __link = {
     ...__data('pageLink', undefined),
-    error: errors.pageLink?.message!,
+    error: errors?.pageLink?.message!,
   };
   return (
     <>

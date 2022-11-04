@@ -7,6 +7,8 @@ export const useUser = () => {
     isLoggedIn: data?.ok,
     user_id: data?.loggedInUser?.id,
     loggedInUser: data?.loggedInUser,
+    avatar: data?.loggedInUser?.avatar,
+    userId: data?.loggedInUser?.userId,
     username: data?.loggedInUser?.username,
   };
 };
@@ -19,5 +21,6 @@ export const useGetUser = (user_id: number) => {
     user: data?.user,
     userId: data?.user?.userId!,
     username: data?.user?.username!,
+    avatar: data?.user?.username!,
   };
 };

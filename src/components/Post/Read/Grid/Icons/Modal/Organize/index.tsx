@@ -9,12 +9,12 @@ import { CreateNewModal } from '../../../../../Organize/CreateNewBoard';
 interface IOrgPosts {
   _data: {
     theme: boolean;
-    modal: boolean;
+    modal: string;
     closeModal: () => void;
   };
 }
 export const OrganizePosts = ({ _data }: IOrgPosts) => {
-  const { theme, modal: open, closeModal } = _data;
+  const { theme, modal: mdoal_, closeModal } = _data;
   const [modal, setModal] = useState('');
   const [array, setArray] = useState<any>();
   const layoutId = 'organize_posts';
@@ -32,6 +32,7 @@ export const OrganizePosts = ({ _data }: IOrgPosts) => {
       setArray([...watch!('chosenId').map((id) => Number(id))]);
   }, [setArray, watch!('chosenId')]);
   //
+  const open = Boolean(mdoal_ === 'posts');
   return (
     <>
       <OptionModal _data={{ open, theme, setModal, closeModal }} />

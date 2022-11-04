@@ -9,8 +9,8 @@ import { smallModalVar } from '../../../../../Board/Read/Each/Title/Setting_Moda
 
 interface ILinkModal {
   _data: {
+    modal: string;
     theme: boolean;
-    modal: boolean;
     closeModal: () => void;
   };
 }
@@ -21,7 +21,7 @@ export const LinkModal = ({ _data }: ILinkModal) => {
   const { isLoggedIn, user_id } = useUser();
   return (
     <AnimatePresence>
-      {modal && (
+      {modal === 'compass' && (
         <>
           <Cont
             exit="exit"

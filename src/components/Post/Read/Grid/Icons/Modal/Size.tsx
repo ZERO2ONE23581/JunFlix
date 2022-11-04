@@ -8,8 +8,8 @@ import { smallModalVar } from '../../../../../Board/Read/Each/Title/Setting_Moda
 
 interface ISetGridModal {
   _data: {
+    modal: string;
     theme: boolean;
-    modal: boolean;
     closeModal: () => void;
     setMax: Dispatch<SetStateAction<number>>;
   };
@@ -20,7 +20,7 @@ export const SetGridModal = ({ _data }: ISetGridModal) => {
   const setMax = _data?.setMax!;
   return (
     <AnimatePresence>
-      {modal && (
+      {modal === 'grid' && (
         <>
           <Cont
             exit="exit"
