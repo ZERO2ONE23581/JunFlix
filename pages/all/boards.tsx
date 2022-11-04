@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../styles/global';
-import { HeadTitle } from '../../src/Tools/head_title';
+import { Head_ } from '../../src/Tools/head_title';
 import { BoardsGrid } from '../../src/components/Board/Read/Grid';
 import { useGetAllBoards } from '../../src/libs/client/useBoards';
 import { PageHeading } from '../../src/components/Board/Read/BoardTitle';
@@ -10,7 +10,7 @@ const AllBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { boards, isBoard } = useGetAllBoards();
   return (
     <>
-      <HeadTitle title="All Boards" />
+      <Head_ title="All Boards" />
       <BoardPage>
         <PageHeading type="board" theme={theme} detail={{ all: true }} />
         <BoardsGrid _data={{ theme, isBoard, boards }} />

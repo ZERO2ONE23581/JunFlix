@@ -34,7 +34,7 @@ export const MyCreated = ({ type, theme }: IMyCreated) => {
                   initial="initial"
                   animate="animate"
                   whileHover="hover"
-                  className="grid-box"
+                  className="gird_box"
                 >
                   <img src="/img/1.jpg" alt="test" />
                   <Info>

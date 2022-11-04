@@ -38,7 +38,7 @@ export const GridBox = ({ _data }: IBoardsGridBox) => {
       onClick={onClick}
       animate="animate"
       whileHover="hover"
-      className="grid-box"
+      className="grid_box"
       variants={hoverVars}
     >
       <Cover theme={theme} posts={posts} />
@@ -61,7 +61,7 @@ export const GridBox = ({ _data }: IBoardsGridBox) => {
 };
 const Box = styled(motion.div)`
   cursor: pointer;
-  .board-cover {
+  .board_cover {
     width: 100%;
     //height: 100%;
     height: 16rem;

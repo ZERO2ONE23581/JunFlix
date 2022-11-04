@@ -42,10 +42,10 @@ export const BoardsGrid = ({ _data }: IBoards) => {
           <Grid
             box={5}
             exit="exit"
-            className="grid"
             animate="animate"
             initial="initial"
             variants={scaleVar}
+            className="boards_grid"
             custom={{ theme, duration: 0.6 }}
           >
             {isQuickSaved && (
@@ -85,7 +85,7 @@ const Cont = styled.section`
     top: -3rem;
     right: 1rem;
   }
-  .grid {
+  .boards_grid {
     width: fit-content;
   }
 `;

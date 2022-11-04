@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Page } from '../../../styles/global';
-import { HeadTitle } from '../../../src/Tools/head_title';
+import { Head_ } from '../../../src/Tools/head_title';
 import { PageTitle } from '../../../src/components/Board/Read/BoardTitle';
 import { BoardsGrid } from '../../../src/components/Board/Read/Grid';
 import { useGetAllBoards } from '../../../src/libs/client/useBoards';
@@ -15,7 +15,7 @@ const GenreBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const hideFilter = Boolean(gen_type);
   return (
     <>
-      <HeadTitle title="All Boards" />
+      <Head_ title="All Boards" />
       <BoardPage>
         <PageTitle
           type="board"

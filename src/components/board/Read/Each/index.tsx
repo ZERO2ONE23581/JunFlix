@@ -4,12 +4,11 @@ import { Detail } from './Detail';
 import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { CreatePost } from '../../../Post/Create';
+import { Dispatch, SetStateAction } from 'react';
 import { IBoardType } from '../../../../types/board';
 import { TrimText } from '../../../../Tools/trimText';
 import { useUser } from '../../../../libs/client/useUser';
 import { hoverBgVars } from '../../../../../styles/variants';
-import { Dispatch, SetStateAction, useState } from 'react';
 
 interface IBoardBox {
   theme: boolean;
@@ -22,7 +21,6 @@ export const Board = ({ theme, board, setType, setCreate }: IBoardBox) => {
   const host_id = host?.id;
   const genre = board?.genre!;
   const title = board?.title!;
-  const avatar = host?.avatar!;
   const userId = host?.userId!;
   const { loggedInUser } = useUser();
   const onPrivate = board?.onPrivate!;
@@ -33,7 +31,7 @@ export const Board = ({ theme, board, setType, setCreate }: IBoardBox) => {
       {board && (
         <Box className="board-box">
           <Title _data={{ title, theme, isMyBoard, setType }} />
-          <Host _data={{ theme, userId, host_id, avatar }} />
+          <Host _data={{ theme, userId, host_id }} />
           <Detail _data={{ onPrivate }} />
           <BtnWrap
             _data={{

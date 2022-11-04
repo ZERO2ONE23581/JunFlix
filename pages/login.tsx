@@ -9,7 +9,7 @@ import { AnimatePresence } from 'framer-motion';
 import { ILoginForm } from '../src/types/user';
 import { InputWrap } from '../src/Tools/Input';
 import { IRes } from '../src/types/global';
-import { HeadTitle } from '../src/Tools/head_title';
+import { Head_ } from '../src/Tools/head_title';
 import useMutation from '../src/libs/client/useMutation';
 import { LoadingModal } from '../src/Tools/Modal/loading_modal';
 import { MsgModal } from '../src/Tools/msg_modal';
@@ -46,7 +46,7 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
 
   return (
     <>
-      <HeadTitle title="로그인" />
+      <Head_ title="로그인" />
       <AnimatePresence>
         <Cont variants={variants} animate="animate" custom={theme}>
           {!Loading && (

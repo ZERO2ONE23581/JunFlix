@@ -11,7 +11,7 @@ export const ThemeBtn = ({ setTheme, theme }: IBtns) => {
   const isDark = !theme;
   const isLight = theme;
   const onClick = () => setTheme((p) => !p);
-  const size = '2.5rem';
+  const size = '2rem';
   return (
     <Cont size={size}>
       <Svg

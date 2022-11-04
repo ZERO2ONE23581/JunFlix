@@ -6,7 +6,7 @@ import { IRes } from '../../src/types/global';
 import { FlexPage } from '../../styles/global';
 import { AnimatePresence } from 'framer-motion';
 import { MsgModal } from '../../src/Tools/msg_modal';
-import { HeadTitle } from '../../src/Tools/head_title';
+import { Head_ } from '../../src/Tools/head_title';
 import useMutation from '../../src/libs/client/useMutation';
 import { CreateBox } from '../../src/components/Board/Create';
 import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
@@ -30,7 +30,7 @@ const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
   const layoutId = 'create-board';
   return (
     <>
-      <HeadTitle title="보드생성" />
+      <Head_ title="보드생성" />
       <Cont>
         <CreateBox
           _data={{

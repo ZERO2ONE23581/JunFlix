@@ -2,13 +2,13 @@ import { Info } from './Info';
 import { Setting } from './Setting';
 import { motion } from 'framer-motion';
 import { CommentBox } from './Comments';
+import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import { IPostType } from '../../../../types/post';
 import { avatarLink } from '../../../../Tools/Avatar';
 import { OverlayBg } from '../../../../Tools/overlay';
 import { useUser } from '../../../../libs/client/useUser';
 import { PostModal, postVar } from '../../../../../styles/post';
-import { useRouter } from 'next/router';
 
 export interface IReadPost {
   _data: {
@@ -51,6 +51,7 @@ export const ReadPost = ({ _data }: IReadPost) => {
     host_id: host?.id!,
     avatar: host?.avatar!,
     userId: host?.userId!,
+    username: host?.username!,
     followers: host?._count.followers!,
   };
   return (

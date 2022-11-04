@@ -17,28 +17,19 @@ interface IHost {
       userId: string;
       host_id: number;
       followers: number;
-      avatar: string | null;
     };
   };
 }
 export const Host = ({ _data }: IHost) => {
   const theme = _data?.theme!;
-  const isMyPost = _data?.isMyPost!;
   const host = _data?._host!;
-  const avatar = host?.avatar!;
   const userId = host?.userId!;
   const host_id = host?.host_id!;
+  const isMyPost = _data?.isMyPost!;
   const followers = host?.followers!;
   //
   const { onClick, name, isFollowing } = useFollow(host_id, 'user');
-  const _avatar = {
-    theme,
-    size: '4rem',
-    isRound: true,
-    preview: null,
-    host_id,
-    avatar,
-  };
+  const _avatar = { theme, size: '4rem', host_id, isRound: true };
   //
   return (
     <Cont className="host">

@@ -4,12 +4,12 @@ import { IGetUser } from '../../types/user';
 export const useUser = () => {
   const { data } = useSWR<IGetUser>('/api/login');
   return {
-    isLoggedIn: data?.ok,
-    user_id: data?.loggedInUser?.id,
-    loggedInUser: data?.loggedInUser,
-    avatar: data?.loggedInUser?.avatar,
-    userId: data?.loggedInUser?.userId,
-    username: data?.loggedInUser?.username,
+    isLoggedIn: data?.ok!,
+    user_id: data?.loggedInUser?.id!,
+    loggedInUser: data?.loggedInUser!,
+    avatar: data?.loggedInUser?.avatar!,
+    userId: data?.loggedInUser?.userId!,
+    username: data?.loggedInUser?.username!,
   };
 };
 export const useGetUser = (user_id: number) => {
@@ -18,9 +18,9 @@ export const useGetUser = (user_id: number) => {
   const isMyAcct = Boolean(login?.loggedInUser?.id === data?.user.id);
   return {
     isMyAcct,
-    user: data?.user,
+    user: data?.user!,
     userId: data?.user?.userId!,
+    avatar: data?.user?.avatar!,
     username: data?.user?.username!,
-    avatar: data?.user?.username!,
   };
 };

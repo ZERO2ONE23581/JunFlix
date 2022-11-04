@@ -33,7 +33,7 @@ export const Box = ({ _data }: IPostBox) => {
           initial="initial"
           animate="animate"
           whileHover="hover"
-          className="grid-box"
+          className="grid_box"
           key={post_id}
           custom={theme}
           variants={vars}

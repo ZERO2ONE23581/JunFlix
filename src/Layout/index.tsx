@@ -48,7 +48,7 @@ const Cont = styled(motion.section)<{ width?: number }>`
   }
 
   .header {
-    min-height: 86px;
+    //min-height: 86px;
     .flex {
       width: 100%;
       .main-menu {

@@ -20,19 +20,15 @@ interface IBtn {
     isClicked?: boolean;
     isFollowing?: boolean;
   };
+  _vars?: object | any;
   type: 'button' | 'submit' | 'reset';
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
-export const Btn = ({ item, type, onClick }: IBtn) => {
-  const svg = item?.svg!;
-  const name = item?.name!;
-  const theme = item?.theme!;
-  const disabled = item?.disabled!;
-  const className = item?.className!;
-  const isClicked = item?.isClicked!;
-  const isFollowing = item?.isFollowing!;
+export const Btn = ({ item, type, onClick, _vars }: IBtn) => {
+  const { svg, name, theme, disabled, className, isClicked, isFollowing } =
+    item;
+  const variants = _vars ? _vars : vars;
   const custom = { theme, isClicked, isFollowing, disabled };
-  //
   return (
     <AnimatePresence>
       <Cont
@@ -41,7 +37,7 @@ export const Btn = ({ item, type, onClick }: IBtn) => {
         initial="initial"
         whileHover="hover"
         type={type}
-        variants={vars}
+        variants={variants}
         onClick={onClick}
         disabled={disabled}
         className={className}

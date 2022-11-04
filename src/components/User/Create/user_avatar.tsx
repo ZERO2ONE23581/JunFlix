@@ -3,8 +3,6 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../../Tools/Button';
-import { ErrMsg } from '../../../Tools/Input';
-import { inputErrVar } from '../../../../styles/variants';
 import { ICreateUser, IUserForm } from '../../../types/user';
 import { ImageLabel, BtnWrap, Form } from '../../../../styles/global';
 import { Avatar } from '../../../Tools/Avatar';
@@ -55,7 +53,7 @@ export const CreateUserAvatar = ({ wrap, isType }: ICreateUser) => {
       {isType && (
         <Cont onSubmit={handleSubmit(onValid)}>
           <ImageLabel htmlFor="avatar">
-            <Avatar item={{ theme, size: '10rem', preview, avatar: null }} />
+            <Avatar _data={{ theme, size: '10rem', preview, host_id: null }} />
             <input
               {...register('avatar', {
                 required: '프로필 사진 파일을 업로드해주세요.',

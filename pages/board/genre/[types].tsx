@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Slider } from '../../../src/Tools/Slider';
 import { FixedBtns } from '../../../src/Tools/Button/Fixed';
-import { HeadTitle } from '../../../src/Tools/head_title';
+import { Head_ } from '../../../src/Tools/head_title';
 import { PageTitle } from '../../../src/components/Board/Read/BoardTitle';
 
 const GenreBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
@@ -12,7 +12,7 @@ const GenreBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const genre = String(router.query.genre);
   return (
     <>
-      <HeadTitle title={`${genre?.toUpperCase()} Boards`} />
+      <Head_ title={`${genre?.toUpperCase()} Boards`} />
       <Cont>
         <PageTitle
           type="board"

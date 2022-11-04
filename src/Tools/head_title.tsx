@@ -1,9 +1,9 @@
 import Head from 'next/head';
 
-interface IHeadTitle {
+interface IHead_ {
   title: string;
 }
-export const HeadTitle = ({ title }: IHeadTitle) => {
+export const Head_ = ({ title }: IHead_) => {
   return (
     <>
       <Head>

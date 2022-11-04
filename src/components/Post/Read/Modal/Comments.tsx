@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Flex } from '../../../../../styles/global';
 import { useUser } from '../../../../libs/client/useUser';
-import { Avatar } from '../../../../Tools/Avatar';
+
 import { InputWrap } from '../../../../Tools/Input';
 import { Svg } from '../../../../Tools/Svg';
 

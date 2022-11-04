@@ -26,7 +26,7 @@ export const BoardsList = ({ _data }: IBoardsList) => {
           variants={select_board_ul_var}
           onClick={() => clickBoard(board.id)}
         >
-          <motion.li className="board-cover">
+          <motion.li className="board_cover">
             <img src="/img/home-bg-dn.jpg" alt="board cover" />
           </motion.li>
           <motion.li className="board-title">
@@ -51,7 +51,7 @@ export const ListWrap = styled(motion.ul)`
   border-radius: 10px;
   justify-content: center;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  .board-cover {
+  .board_cover {
     padding: 0;
     width: fit-content;
     img {

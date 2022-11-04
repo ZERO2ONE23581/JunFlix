@@ -65,7 +65,7 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
       _data: {
         setError,
         max: [50, 700],
-        texts: [title, description],
+        texts: [title, description!],
         types: ['title', 'description'],
       },
     });
@@ -150,14 +150,9 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
               </SetPrivate>
               <Host>
                 <Avatar
-                  _data={{
-                    theme,
-                    size: '3.3rem',
-                    preview: null,
-                    host_id: original?.host_id,
-                    avatar: original?.host?.avatar!,
-                  }}
+                  _data={{ theme, size: '3.3rem', host_id: original.host_id }}
                 />
+
                 <span>Board Host:</span>
                 <span>@{original.host.userId}</span>
               </Host>

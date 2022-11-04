@@ -19,10 +19,12 @@ export const IconLayer = ({ _data }: IIconLayer) => {
   const { theme, setMax } = _data;
   const { user_id } = router.query;
   const { user_id: id, username, userId } = useUser();
+  const isMeHost = Boolean(Number(user_id) === id);
   const isQS = Boolean(router.asPath.includes('quick_saved'));
-  const isMyPostsPage = Boolean(!isQS && user_id && user_id === id?.toString());
   const onMyPage = () => router.push(`/user/${id}/${username}/page`);
-  const user = useCapLetters(username!);
+  const MyPostsPage = Boolean(
+    !isQS && router.asPath.includes('posts') && isMeHost
+  );
   return (
     <Cont className="icon_layer">
       <div />
@@ -43,7 +45,7 @@ export const IconLayer = ({ _data }: IIconLayer) => {
             </motion.span>
           </h1>
         )}
-        {isMyPostsPage && (
+        {MyPostsPage && (
           <h1>
             <motion.span
               variants={vars}
@@ -54,7 +56,7 @@ export const IconLayer = ({ _data }: IIconLayer) => {
               onClick={onMyPage}
               custom={{ theme, isBig: true }}
             >
-              {user}
+              {useCapLetters(username!)}
             </motion.span>
             <span>'s Posts</span>
           </h1>
@@ -65,23 +67,6 @@ export const IconLayer = ({ _data }: IIconLayer) => {
       </div>
     </Cont>
   );
-};
-const vars = {
-  initial: ({ theme, isBig }: any) => ({
-    fontSize: isBig ? '1.6rem' : '1rem',
-    color: color(theme),
-    transition: { duration: 0.5 },
-  }),
-  animate: ({ theme, isBig }: any) => ({
-    fontSize: isBig ? '1.6rem' : '1rem',
-    color: color(theme),
-    transition: { duration: 0.5 },
-  }),
-  hover: ({ isBig }: any) => ({
-    fontSize: isBig ? '1.7rem' : '1.1rem',
-    color: '#E50914',
-    transition: { duration: 0.5 },
-  }),
 };
 const Cont = styled(Layer_)`
   padding: 0;
@@ -102,3 +87,20 @@ const Cont = styled(Layer_)`
     }
   }
 `;
+const vars = {
+  initial: ({ theme, isBig }: any) => ({
+    fontSize: isBig ? '1.6rem' : '1rem',
+    color: color(theme),
+    transition: { duration: 0.5 },
+  }),
+  animate: ({ theme, isBig }: any) => ({
+    fontSize: isBig ? '1.6rem' : '1rem',
+    color: color(theme),
+    transition: { duration: 0.5 },
+  }),
+  hover: ({ isBig }: any) => ({
+    fontSize: isBig ? '1.7rem' : '1.1rem',
+    color: '#E50914',
+    transition: { duration: 0.5 },
+  }),
+};

@@ -3,12 +3,12 @@ import styled from '@emotion/styled';
 import { Page } from '../styles/global';
 import { Slider } from '../src/Tools/Slider';
 import { Welcome } from '../src/Layout/Home/Welcome';
-import { HeadTitle } from '../src/Tools/head_title';
+import { Head_ } from '../src/Tools/head_title';
 
 const Home: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (
     <>
-      <HeadTitle title="HOME" />
+      <Head_ title="HOME" />
       <Cont className="home">
         <div className="movie-wrap">
           <Welcome theme={theme} />

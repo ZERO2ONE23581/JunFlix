@@ -4,12 +4,17 @@ import { useUser } from './useUser';
 
 export const useGetAllBoards = () => {
   const { data } = useSWR<IGetBoards>(`/api/board/all`);
-  return { boards: data?.boards!, isBoard: Boolean(data?.boards?.length! > 1) };
+  return { boards: data?.boards!, isBoard: Boolean(data?.boards?.length! > 0) };
 };
 export const useGetBoards = (host_id: any) => {
   const { data } = useSWR<IGetBoards>(`/api/board/all`);
   const boards = data?.boards?.filter((e: IGetBoard) => e.host_id === host_id)!;
-  return { boards, isBoard: Boolean(data?.boards?.length! > 1) };
+  return { boards, isBoard: Boolean(data?.boards?.length! > 0) };
+};
+export const useGetFollowingBoards = ({ saves }: any) => {
+  const { data } = useSWR<IGetBoards>(`/api/board/all`);
+  const boards = data?.boards?.filter((board) => saves?.includes(board.id));
+  return { SavedBoards: boards, isSaved: Boolean(boards?.length! > 0) };
 };
 export const useGetBoard = (board_id: any) => {
   const { data } = useSWR<IGetBoard>(board_id && `/api/board/${board_id}`);

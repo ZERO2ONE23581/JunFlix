@@ -21,6 +21,7 @@ export interface IInfo {
     _host: {
       userId: string;
       host_id: number;
+      username: string;
       followers: number;
       avatar: string | null;
     };

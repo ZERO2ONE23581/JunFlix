@@ -7,7 +7,7 @@ import { BoxTitle } from '../../src/Tools/box_title';
 import { ICreateUserRes } from '../../src/types/global';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MsgModal } from '../../src/Tools/msg_modal';
-import { HeadTitle } from '../../src/Tools/head_title';
+import { Head_ } from '../../src/Tools/head_title';
 import useMutation from '../../src/libs/client/useMutation';
 import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
 import { TweenTrans, variants } from '../../styles/variants';
@@ -59,7 +59,7 @@ const Create_User: NextPage<{ theme: boolean }> = ({ theme }) => {
   //
   return (
     <>
-      <HeadTitle title="회원가입" />
+      <Head_ title="회원가입" />
       <Cont>
         <AnimatePresence>
           {!Loading && (

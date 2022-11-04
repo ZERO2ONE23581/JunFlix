@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import useUser from '../src/libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
-import { HeadTitle } from '../src/Tools/head_title';
+import { Head_ } from '../src/Tools/head_title';
 import { BtnWrap, FlexPage, Page } from '../styles/global';
 import { Btn } from '../src/Tools/Button';
 import { useForm } from 'react-hook-form';

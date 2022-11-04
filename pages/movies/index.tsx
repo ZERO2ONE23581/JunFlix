@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
-import { HeadTitle } from '../../src/Tools/head_title';
+import { Head_ } from '../../src/Tools/head_title';
 import { Slider } from '../../src/Tools/Slider';
 import { Title } from '../../src/Tools/box_title';
 
 const Movies: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (
     <>
-      <HeadTitle title="영화" />
+      <Head_ title="영화" />
       <Cont>
         <Title type="movie-page" />
         <Slider pageType="movie" sliderType="movie" sliderDetail="trending" />

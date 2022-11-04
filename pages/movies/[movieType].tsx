@@ -4,14 +4,14 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Title } from '../../src/Tools/box_title';
 import { Slider } from '../../src/Tools/Slider';
-import { HeadTitle } from '../../src/Tools/head_title';
+import { Head_ } from '../../src/Tools/head_title';
 
 const MovieTypes: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const type = router.query.movieType?.toString();
   return (
     <>
-      <HeadTitle title="인기 콘텐츠" />
+      <Head_ title="인기 콘텐츠" />
       <Cont>
         <Title type="movie" movieType={type} />
         <Slider pageType="movie" sliderDetail={type} sliderType="movie" />

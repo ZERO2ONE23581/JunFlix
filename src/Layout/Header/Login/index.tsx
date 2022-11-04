@@ -10,18 +10,17 @@ import { useUser } from '../../../libs/client/useUser';
 import { colorVar, hoverScale } from '../../../../styles/variants';
 
 export const LoginMenu = ({ theme }: ITheme) => {
-  const size = '3.5rem';
+  const size = '3rem';
   const router = useRouter();
   const [modal, setModal] = useState(false);
-  const onClick = () => setModal((p) => !p);
+  const onAvatar = () => setModal((p) => !p);
   const textVar = { ...colorVar, ...hoverScale };
-  const handleClick = { isClick: true, onClick };
-  const { isLoggedIn, user_id: host_id, avatar } = useUser();
+  const { isLoggedIn, user_id: host_id } = useUser();
   return (
     <Cont className="user-menu">
       {isLoggedIn && (
         <Flex className="logged-in">
-          <Avatar _data={{ size, theme, avatar, host_id, handleClick }} />
+          <Avatar _data={{ size, theme, host_id, onAvatar }} />
           <IconModal modal={modal} setModal={setModal} theme={theme} />
         </Flex>
       )}

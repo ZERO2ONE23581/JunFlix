@@ -2,77 +2,153 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { FlexCol } from '../../../../styles/global';
-import { HeadTitle } from '../../../../src/Tools/head_title';
+import { BtnWrap, FlexCol, Page } from '../../../../styles/global';
+import { Head_ } from '../../../../src/Tools/head_title';
 import { useGetUser } from '../../../../src/libs/client/useUser';
 import { CreatePost } from '../../../../src/components/Post/Create';
 import { Host } from '../../../../src/components/User/Read/MyPage/Host';
-import { BtnsWrap } from '../../../../src/components/User/Read/MyPage/BtnsWrap';
-import { MyCreated } from '../../../../src/components/User/Read/MyPage/MyCreated';
+import { useCapLetter } from '../../../../src/libs/client/useTools';
+import { PostSchema } from '../../../../src/components/Post/Read/Schema';
+import {
+  useGetPosts,
+  useGetQuickSaved,
+} from '../../../../src/libs/client/usePosts';
+import { Btn } from '../../../../src/Tools/Button';
+import {
+  color,
+  greyColor,
+  redBrdr,
+  redColor,
+  whiteColor,
+} from '../../../../styles/variants';
+import { BoardSchema } from '../../../../src/Tools/Modal/schema';
+import { BoardsGrid } from '../../../../src/components/Board/Read/Grid';
+import {
+  useGetBoards,
+  useGetFollowingBoards,
+} from '../../../../src/libs/client/useBoards';
 
-const MyPage: NextPage<{ theme: boolean }> = ({ theme }) => {
+const UserPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const { user_id } = router.query;
-  const [type, setType] = useState('created');
-  const { user, isMyAcct } = useGetUser(Number(user_id));
-  const [create, setCreate] = useState({
-    post: false,
-    board: false,
-    review: false,
-  });
+  const host_id = Number(user_id);
+  const { user: host, isMyAcct } = useGetUser(host_id);
+  const title = `${useCapLetter(host?.username!)}'s page`;
   //
+  const { posts } = useGetPosts({ host_id, board_id: 0 });
+  const { boards, isBoard } = useGetBoards(host_id);
+  const { posts: quickSaved } = useGetQuickSaved(host_id);
+  const saves = host?.followings?.map((e) => e.board_id);
+  const { SavedBoards, isSaved } = useGetFollowingBoards({ saves });
+  console.log(SavedBoards, isSaved);
+  //
+  const [clicked, setClicked] = useState('posts');
+  const arr = ['posts', 'likes', 'boards', 'saved'];
   return (
     <>
-      <HeadTitle title={`${user?.username}'s Page`} />
-      <Page>
-        <Host host={user!} theme={theme} isMyAcct={isMyAcct} />
-        <Contents>
-          <BtnsWrap _data={{ theme, type, setType, setCreate, isMyAcct }} />
-          <MyCreated theme={theme} type={type} />
-        </Contents>
-        <CreatePost
-          theme={theme}
-          open={create.post}
-          closeModal={() => setCreate((p) => ({ ...p, post: false }))}
-        />
-      </Page>
+      <Head_ title={title} />
+      <Container>
+        <Host _data={{ theme, host, isMyAcct }} />
+        <BtnWrap className="btn_wrap">
+          {arr.map((type) => (
+            <Btn
+              type="button"
+              _vars={vars}
+              key={arr.indexOf(type)}
+              onClick={() => setClicked(type)}
+              item={{
+                theme,
+                name: useCapLetter(type),
+                isClicked: Boolean(clicked === type),
+              }}
+            />
+          ))}
+        </BtnWrap>
+        <article className="cnts_wrap">
+          {clicked === 'posts' && (
+            <PostSchema _data={{ grid: 5, theme, posts }} />
+          )}
+          {clicked === 'boards' && (
+            <BoardsGrid
+              _data={{ theme, isBoard, boards, quickSaved, user_id: host_id }}
+            />
+          )}
+          {clicked === 'saved' && (
+            <BoardsGrid
+              _data={{ theme, isBoard: isSaved, boards: SavedBoards! }}
+            />
+          )}
+        </article>
+      </Container>
     </>
   );
 };
-export default MyPage;
+export default UserPage;
+const Container = styled(Page)`
+  padding: 1.1rem;
+  .host {
+    //border: 2px solid blueviolet;
+  }
+  .btn_wrap {
+    //border: 2px solid blueviolet;
+    gap: 2rem;
+    margin: 1.5rem auto 0;
+    width: fit-content;
+    button {
+      width: 7rem;
+      border-radius: 0;
+      padding-bottom: 0.5rem;
+      //background-color: inherit;
+    }
+  }
 
-const Contents = styled(FlexCol)`
-  padding: 0 20rem;
-  //border: 10px solid hotpink;
-  .my-created {
-    //border: 10px solid hotpink;
-    .my-created-box {
-      width: fit-content;
-      //border: 5px solid yellow;
+  .cnts_wrap {
+    //border: 5px solid blueviolet;
+    padding: 1rem 10rem;
+    .posts_grid_wrap {
+      //border: 3px solid yellowgreen;
+      padding-top: 1rem;
+      .icon_layer {
+        .icons {
+          gap: 1.5rem;
+        }
+        width: fit-content;
+        //border: 2px solid yellow;
+        position: absolute;
+        top: -1rem;
+        right: 0rem;
+      }
+      .posts_grid {
+        img {
+          width: 100%;
+          max-height: 13rem;
+        }
+      }
+    }
+    .boards_grid {
+      margin-top: 1rem;
+      .grid_box {
+        .board_cover {
+          width: 100%;
+          max-height: 13rem;
+        }
+      }
     }
   }
 `;
-const Page = styled.section`
-  gap: 40px;
-  height: 100%;
-  min-height: 100vh;
-  padding-top: 30px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: flex-start;
-`;
-{
-  /* <Layer>
-        <Blur className="block" isBlur={isBlur}></Blur>
-        {isBlur && <Svg type="lock" theme={theme} item={{ size: '2rem' }} />}
-      </Layer> */
-}
-// .lock {
-//   top: 65%;
-//   left: 50%;
-//   z-index: 1;
-//   position: absolute;
-//   transform: translate(-50%, 0%);
-// }
+const vars = {
+  animate: ({ theme, isClicked }: any) => ({
+    scale: 1,
+    transition: { duration: 0.4 },
+    backgroundColor: color(!theme),
+    color: isClicked ? redColor : color(theme),
+    borderBottom: isClicked ? '4px solid red' : '4px solid transparent',
+  }),
+  hover: ({ theme }: any) => ({
+    color: redColor,
+    scale: 1.1,
+    transition: { duration: 0.4 },
+    backgroundColor: color(!theme),
+    borderBottom: '4px solid red',
+  }),
+};

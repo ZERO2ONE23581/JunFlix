@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { Avatar } from '../../../../../Tools/Avatar';
 
 export interface IProfile {
   theme: boolean;

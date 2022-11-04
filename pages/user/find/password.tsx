@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
 import { VerifyUserID } from '../../../src/components/User/Read/verify/userId';
-import { HeadTitle } from '../../../src/Tools/head_title';
+import { Head_ } from '../../../src/Tools/head_title';
 import { VerifyToken } from '../../../src/components/User/Read/verify/token';
 import { VerifyResult } from '../../../src/components/User/Read/verify/result';
 import { CreatePassword } from '../../../src/components/User/Create/password';
@@ -15,7 +15,7 @@ const FindPassword: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [modal, setModal] = useState(false);
   return (
     <>
-      <HeadTitle title="비밀번호 찾기" />
+      <Head_ title="비밀번호 찾기" />
       <Cont>
         <VerifyUserID theme={theme} isBox={!token} setToken={setToken} />
         <VerifyToken

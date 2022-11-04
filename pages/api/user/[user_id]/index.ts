@@ -10,6 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const user = await client.user.findUnique({
     where: { id: +user_id.toString() },
     include: {
+      _count: true,
       likes: true,
       posts: true,
       boards: true,

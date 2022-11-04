@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { AnimatePresence } from 'framer-motion';
 import { FlexPage } from '../../../styles/global';
 import { NoData } from '../../../src/Tools/NoData';
-import { HeadTitle } from '../../../src/Tools/head_title';
+import { Head_ } from '../../../src/Tools/head_title';
 import { BoardSchema } from '../../../src/Tools/Modal/schema';
 import { Board } from '../../../src/components/Board/Read/Each';
 import { useGetBoard } from '../../../src/libs/client/useBoards';
@@ -25,7 +25,7 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { posts, isPost } = useGetPosts({ host_id, board_id });
   return (
     <>
-      <HeadTitle title={board?.title!} />
+      <Head_ title={board?.title!} />
       <AnimatePresence>
         <Cont>
           {board && (

@@ -15,7 +15,7 @@ export const Cover = ({ theme, posts }: ICover) => {
   const array = posts.slice(0, 3);
 
   return (
-    <Cont className="board-cover">
+    <Cont className="board_cover">
       {array.map((post) => (
         <Img
           alt="보드커버"

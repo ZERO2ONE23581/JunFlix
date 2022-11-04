@@ -6,17 +6,13 @@ interface IHost {
     theme: boolean;
     userId: string;
     host_id: number;
-    avatar: string | null;
   };
 }
 export const Host = ({ _data }: IHost) => {
-  const theme = _data?.theme!;
-  const userId = _data?.userId!;
-  const avatar = _data?.avatar!;
-  const host_id = _data?.host_id!;
+  const { theme, userId, host_id } = _data;
   return (
     <Cont className="board-host">
-      <Avatar _data={{ theme, avatar, host_id, size: '4rem', preview: null }} />
+      <Avatar _data={{ theme, size: '4rem', host_id }} />
       <span>@{userId}</span>
     </Cont>
   );

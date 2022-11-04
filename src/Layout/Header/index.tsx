@@ -22,47 +22,45 @@ export const Header = ({ theme, setTheme }: IHeader) => {
       variants={headerVar}
       custom={{ theme, isBorder: true }}
     >
-      <Logo />
-      <Flex className="flex">
-        <MainMenu theme={theme} />
-        <LoginMenu theme={theme} />
-      </Flex>
-      <ThemeBtn theme={theme} setTheme={setTheme} />
+      <Wrap className="wrap">
+        <Flex className="logo_main">
+          <Logo />
+          <MainMenu theme={theme} />
+        </Flex>
+        <Flex>
+          <ThemeBtn theme={theme} setTheme={setTheme} />
+          <LoginMenu theme={theme} />
+        </Flex>
+      </Wrap>
     </Cont>
   );
 };
 const Cont = styled(motion.header)`
-  padding: 0 10rem;
   gap: 3rem;
-  display: flex;
-  font-size: 1.3em;
+  font-size: 1.3rem;
   margin-bottom: 5px;
+  padding: 0.5rem 12rem;
+  display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: ${(p) => p.theme.boxShadow.input};
-  //border: 2px solid yellow;
   .logo {
-    //border: 5px solid cornflowerblue;
+    //border: 2px solid yellow;
   }
-  .flex {
-    width: 100%;
-    min-width: 620px;
-    justify-content: space-between;
-
+`;
+const Wrap = styled(Flex)`
+  justify-content: space-between;
+  padding: 0 1rem;
+  > div {
+    gap: 2rem;
+    width: fit-content;
+  }
+  .logo_main {
+    width: 60%;
+    justify-content: flex-start;
     .main-menu {
-      width: 60%;
-    }
-    .user-menu {
-      //border: 2px solid red;
-      .logged-in {
-        //border: 2px solid yellow;
-      }
-      .unlogged-in {
-        //border: 2px solid yellow;
-      }
-    }
-    span {
-      cursor: pointer;
+      width: 100%;
+      gap: 2rem;
     }
   }
 `;

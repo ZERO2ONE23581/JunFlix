@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useUser } from '../src/libs/client/useUser';
-import { HeadTitle } from '../src/Tools/head_title';
+import { Head_ } from '../src/Tools/head_title';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const Entrance: NextPage<{ theme: boolean }> = ({ theme }) => {
@@ -18,7 +18,7 @@ const Entrance: NextPage<{ theme: boolean }> = ({ theme }) => {
   }, [router, isLoggedIn]);
   return (
     <>
-      <HeadTitle title="Welcome Page" />
+      <Head_ title="Welcome Page" />
       <AnimatePresence>
         <Cont
           exit="exit"

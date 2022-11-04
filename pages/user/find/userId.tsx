@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
-import { HeadTitle } from '../../../src/Tools/head_title';
+import { Head_ } from '../../../src/Tools/head_title';
 import { VerifyToken } from '../../../src/components/User/Read/verify/token';
 import { VerifyEmail } from '../../../src/components/User/read/verify/email';
 import { VerifyResult } from '../../../src/components/User/Read/verify/result';
@@ -13,7 +13,7 @@ const FindUserId: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [verify, setVerify] = useState(false);
   return (
     <>
-      <HeadTitle title="아이디 찾기" />
+      <Head_ title="아이디 찾기" />
       <Cont>
         <VerifyEmail isBox={!token} setToken={setToken} theme={theme} />
         <VerifyToken
