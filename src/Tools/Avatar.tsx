@@ -45,7 +45,7 @@ export const Avatar = ({ _data }: IAvatar) => {
           whileHover="hover"
           className="avatar"
           transition={TweenTrans}
-          variants={isRound ? circle : vars}
+          variants={vars}
           onClick={onAvatar ? onAvatar : onClick}
         />
       )}
@@ -91,19 +91,16 @@ const vars = {
   }),
   animate: (theme: boolean) => ({
     opacity: 1,
-    borderRadius: '10%',
-    border: TransBorder(theme),
+    borderRadius: '15%',
     transition: { duration: 0.5 },
+    border: TransBorder(theme),
   }),
   exit: () => ({
     opacity: 0,
-    transition: { duration: 0.5 },
   }),
   hover: () => ({
-    scale: 1.2,
-    borderWidth: '3px',
     borderRadius: '100%',
-    borderColor: '#E50914',
+    border: '3px solid #E50914',
     transition: { duration: 0.5 },
   }),
 };
@@ -121,7 +118,7 @@ const circle = {
     transition: { duration: 0.5 },
   }),
   hover: (theme: boolean) => ({
-    scale: 1.2,
+    //scale: 1.2,
     borderWidth: '3px',
     borderColor: '#E50914',
     transition: { duration: 0.5 },

@@ -13,7 +13,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const post = await client.post.findUnique({
     where: { id: +post_id },
-    include: { board: true, host: true, likes: true, comments: true },
+    include: {
+      host: true,
+      board: true,
+      likes: true,
+      comments: true,
+      _count: { select: { likes: true, comments: true } },
+    },
   });
   if (!post) return res.json({ ok: false, error: 'no post found.' });
 

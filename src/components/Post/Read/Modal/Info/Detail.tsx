@@ -1,46 +1,32 @@
 import styled from '@emotion/styled';
+import { IGetPostType } from '../../../../../types/post';
 import { Flex } from '../../../../../../styles/global';
 import { TrimText } from '../../../../../Tools/trimText';
 import { useCapLetters } from '../../../../../libs/client/useTools';
 
-interface IDetail {
-  _post: {
-    desc: string;
-    title: string;
-    hashtags: string;
-    pageLink: string;
-  };
-}
-export const Detail = ({ _post }: IDetail) => {
-  const desc = _post?.desc!;
-  const title = _post?.title!;
-  const hash = _post?.hashtags!;
-  const link = _post?.pageLink!;
-  const isHashLink = Boolean(hash || link);
-  //
+export const Detail = ({ post }: IGetPostType) => {
+  const { description, title, hashtags, pageLink } = post;
   return (
     <Cont className="detail">
       <h1 className="title">
         <TrimText text={useCapLetters(title)} max={30} />
       </h1>
       <p>
-        <TrimText text={desc} max={500} />
+        <TrimText text={description!} max={500} />
       </p>
-      {isHashLink && (
-        <ul>
-          {hash && (
-            <li>
-              <span className="hash">{hash}</span>
-            </li>
-          )}
-          {link && (
-            <li>
-              <span>Website:</span>
-              <span>{link}</span>
-            </li>
-          )}
-        </ul>
-      )}
+      <ul>
+        {hashtags && (
+          <li>
+            <span className="hashtags">{hashtags}</span>
+          </li>
+        )}
+        {pageLink && (
+          <li>
+            <span>Link:</span>
+            <span>{pageLink}</span>
+          </li>
+        )}
+      </ul>
     </Cont>
   );
 };

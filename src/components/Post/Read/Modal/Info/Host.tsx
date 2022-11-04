@@ -1,40 +1,30 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../../../Tools/Svg';
-import { Btn } from '../../../../../Tools/Button';
 import { Avatar } from '../../../../../Tools/Avatar';
-import useFollow from '../../../../../libs/client/useFollow';
+import { IPostType } from '../../../../../types/post';
 import { Flex, FlexCol } from '../../../../../../styles/global';
+import useFollow from '../../../../../libs/client/useFollow';
+import { Btn } from '../../../../../Tools/Button';
+import { useUser } from '../../../../../libs/client/useUser';
 
 interface IHost {
-  _data: {
-    theme: boolean;
-    isMyPost: boolean;
-    board: {
-      isBoard: boolean;
-      onClick: () => void;
-    };
-    _host: {
-      userId: string;
-      host_id: number;
-      followers: number;
-    };
-  };
+  theme: boolean;
+  post: IPostType;
 }
-export const Host = ({ _data }: IHost) => {
-  const theme = _data?.theme!;
-  const host = _data?._host!;
-  const userId = host?.userId!;
-  const host_id = host?.host_id!;
-  const isMyPost = _data?.isMyPost!;
-  const followers = host?.followers!;
-  //
-  const { onClick, name, isFollowing } = useFollow(host_id, 'user');
-  const _avatar = { theme, size: '4rem', host_id, isRound: true };
-  //
+export const Host = ({ theme, post }: IHost) => {
+  const {
+    host_id,
+    host: {
+      userId,
+      _count: { followers },
+    },
+  } = post;
+  const { user_id } = useUser();
+  const isMyPost = Boolean(user_id === host_id);
+  const { onClick: onFollow, name, isFollowing } = useFollow(host_id, 'user');
   return (
     <Cont className="host">
       <Flex className="flex">
-        <Avatar _data={{ ..._avatar }} />
+        <Avatar _data={{ theme, size: '3.5rem', host_id, isRound: true }} />
         <FlexCol className="host-info">
           <span>@{userId}</span>
           <span>
@@ -43,33 +33,25 @@ export const Host = ({ _data }: IHost) => {
           </span>
         </FlexCol>
       </Flex>
-      <Icon className="icon">
-        {_data?.board?.isBoard! && (
-          <Svg type="compass" theme={theme} onClick={_data?.board?.onClick!} />
-        )}
-        <Svg type="like" theme={theme} />
-        <Svg type="comment" theme={theme} />
-        {!isMyPost && (
-          <Btn
-            type="button"
-            onClick={onClick}
-            item={{ name, theme, isFollowing }}
-          />
-        )}
-      </Icon>
+      {!isMyPost && (
+        <Btn
+          type="button"
+          onClick={onFollow}
+          item={{ name, theme, isFollowing }}
+        />
+      )}
     </Cont>
   );
 };
 const Cont = styled(Flex)`
   gap: 10px;
   justify-content: space-between;
-  .icon {
+  button {
     width: fit-content;
-    button {
-      padding: 12px;
-      border-radius: 40px;
-      width: fit-content;
-    }
+  }
+  padding: 0 0.5rem;
+  //border: 1px solid yellow;
+  .icon {
   }
   .flex {
     gap: 10px;
@@ -84,10 +66,4 @@ const Cont = styled(Flex)`
       }
     }
   }
-`;
-const Icon = styled(Flex)`
-  gap: 1.2rem;
-  width: fit-content;
-  justify-content: flex-start;
-  //border: 1px solid yellow;
 `;

@@ -1,6 +1,6 @@
-import { IBoardType } from './board';
+import { IPostType } from './post';
 import { IUserType } from './user';
-import { IPostType, ReviewModel } from './post';
+import { IBoardType } from './board';
 import { Dispatch, SetStateAction } from 'react';
 
 export interface IForm {
@@ -32,7 +32,6 @@ export interface IApi {
   posts?: IPostType[];
   boards?: IBoardType[];
   MyPostLikes?: IPostType[];
-  MyReviewLikes?: ReviewModel[];
 }
 
 export interface IQuery {

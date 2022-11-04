@@ -108,7 +108,10 @@ export default Login;
 const Cont = styled(FlexPage)`
   justify-content: center;
   .box {
-    min-width: 30vw;
+    align-items: flex-start;
+    //min-width: 30vw;
+    //    width: fit-content;
+
     form {
       button {
         margin-top: 20px;

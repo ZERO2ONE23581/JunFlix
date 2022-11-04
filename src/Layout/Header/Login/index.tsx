@@ -19,13 +19,14 @@ export const LoginMenu = ({ theme }: ITheme) => {
   return (
     <Cont className="user-menu">
       {isLoggedIn && (
-        <Flex className="logged-in">
+        <UserIcon className="logged-in">
           <Avatar _data={{ size, theme, host_id, onAvatar }} />
           <IconModal modal={modal} setModal={setModal} theme={theme} />
-        </Flex>
+        </UserIcon>
       )}
+
       {!isLoggedIn && (
-        <div className="unlogged-in">
+        <LoginJoin className="unlogged-in">
           <Text
             exit="exit"
             initial="initial"
@@ -48,17 +49,26 @@ export const LoginMenu = ({ theme }: ITheme) => {
           >
             Join
           </Text>
-        </div>
+        </LoginJoin>
       )}
     </Cont>
   );
 };
-const Cont = styled.article`
-  .unlogged-in {
-    gap: 70px;
-  }
-  .logged-in {
-    position: relative;
+const Cont = styled.article``;
+const UserIcon = styled(Flex)`
+  border: 5px solid blue;
+  position: relative;
+  .avatar {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
   }
 `;
-const Text = styled(motion.span)``;
+const LoginJoin = styled(Flex)`
+  gap: 5rem;
+`;
+
+const Text = styled(motion.span)`
+  cursor: pointer;
+`;

@@ -2,26 +2,19 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { BtnWrap, FlexCol, Page } from '../../../../styles/global';
+import { BtnWrap, Page } from '../../../../styles/global';
 import { Head_ } from '../../../../src/Tools/head_title';
 import { useGetUser } from '../../../../src/libs/client/useUser';
-import { CreatePost } from '../../../../src/components/Post/Create';
 import { Host } from '../../../../src/components/User/Read/MyPage/Host';
 import { useCapLetter } from '../../../../src/libs/client/useTools';
 import { PostSchema } from '../../../../src/components/Post/Read/Schema';
 import {
+  useGetLikedPosts,
   useGetPosts,
   useGetQuickSaved,
 } from '../../../../src/libs/client/usePosts';
 import { Btn } from '../../../../src/Tools/Button';
-import {
-  color,
-  greyColor,
-  redBrdr,
-  redColor,
-  whiteColor,
-} from '../../../../styles/variants';
-import { BoardSchema } from '../../../../src/Tools/Modal/schema';
+import { color, redColor } from '../../../../styles/variants';
 import { BoardsGrid } from '../../../../src/components/Board/Read/Grid';
 import {
   useGetBoards,
@@ -40,7 +33,7 @@ const UserPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { posts: quickSaved } = useGetQuickSaved(host_id);
   const saves = host?.followings?.map((e) => e.board_id);
   const { SavedBoards, isSaved } = useGetFollowingBoards({ saves });
-  console.log(SavedBoards, isSaved);
+  const { posts_liked, isLikedPost } = useGetLikedPosts({ host_id });
   //
   const [clicked, setClicked] = useState('posts');
   const arr = ['posts', 'likes', 'boards', 'saved'];
@@ -68,6 +61,9 @@ const UserPage: NextPage<{ theme: boolean }> = ({ theme }) => {
           {clicked === 'posts' && (
             <PostSchema _data={{ grid: 5, theme, posts }} />
           )}
+          {clicked === 'likes' && (
+            <PostSchema _data={{ grid: 5, theme, posts: posts_liked }} />
+          )}
           {clicked === 'boards' && (
             <BoardsGrid
               _data={{ theme, isBoard, boards, quickSaved, user_id: host_id }}
@@ -85,12 +81,12 @@ const UserPage: NextPage<{ theme: boolean }> = ({ theme }) => {
 };
 export default UserPage;
 const Container = styled(Page)`
+  min-width: 100%;
+  min-height: 100%;
   padding: 1.1rem;
   .host {
-    //border: 2px solid blueviolet;
   }
   .btn_wrap {
-    //border: 2px solid blueviolet;
     gap: 2rem;
     margin: 1.5rem auto 0;
     width: fit-content;
@@ -106,6 +102,7 @@ const Container = styled(Page)`
     //border: 5px solid blueviolet;
     padding: 1rem 10rem;
     .posts_grid_wrap {
+      //min-width: 1000px;
       //border: 3px solid yellowgreen;
       padding-top: 1rem;
       .icon_layer {
@@ -121,7 +118,7 @@ const Container = styled(Page)`
       .posts_grid {
         img {
           width: 100%;
-          max-height: 13rem;
+          max-height: 15rem;
         }
       }
     }
@@ -130,7 +127,7 @@ const Container = styled(Page)`
       .grid_box {
         .board_cover {
           width: 100%;
-          max-height: 13rem;
+          max-height: 15rem;
         }
       }
     }

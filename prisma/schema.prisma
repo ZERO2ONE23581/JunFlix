@@ -31,7 +31,6 @@ model User {
   posts            Post[]
   tokens           Token[]  
   boards           Board[]     
-  reviews          Review[]  
   comments         Comment[]
   followers        Follower[]
   followings       Following[]
@@ -85,7 +84,7 @@ model Post {
   id               Int            @id @default(autoincrement())
   title            String
   host_id          Int               
-  board_id         Int?            @default(0)        
+  board_id         Int?           @default(0)        
   post_image       String?
   description      String?        @db.LongText
   hashtags         String?        
@@ -98,33 +97,15 @@ model Post {
   host             User           @relation(fields: [host_id], references: [id], onDelete: Cascade)
   board            Board?          @relation(fields: [board_id], references: [id], onDelete: Cascade)
 }
-model Review {
-  id               Int            @id @default(autoincrement())
-  title            String  
-  movie            String
-  content          String         @db.LongText
-  score            Float?         @default(1)
-  review_image     String? 
-  isRecommend      Boolean?       @default(false)
-  onPrivate        Boolean?       @default(false)
-  updatedAt        DateTime       @updatedAt
-  createdAt        DateTime       @default(now())
-  likes            Like[]  
-  comments         Comment[]  
-  host_id          Int            
-  host             User           @relation(fields: [host_id], references: [id], onDelete: Cascade)
-  
-}
 model Like {
   id               Int            @id @default(autoincrement()) 
   updatedAt        DateTime       @updatedAt
   createdAt        DateTime       @default(now())
   host_id          Int            
   post_id          Int?           
-  review_id        Int?           
   host             User           @relation(fields: [host_id], references: [id], onDelete: Cascade)
   post             Post?          @relation(fields: [post_id], references: [id], onDelete: Cascade)
-  review           Review?        @relation(fields: [review_id], references: [id], onDelete: Cascade)
+  
 }
 model Comment {
   id               Int            @id @default(autoincrement())
@@ -135,8 +116,7 @@ model Comment {
   createdAt        DateTime       @default(now())
   host_id          Int            
   post_id          Int?           
-  review_id        Int?           
   host             User           @relation(fields: [host_id], references: [id], onDelete: Cascade)
   post             Post?          @relation(fields: [post_id], references: [id], onDelete: Cascade)
-  review           Review?        @relation(fields: [review_id], references: [id], onDelete: Cascade)
+  
 }

@@ -6,12 +6,11 @@ import { withApiSession } from '../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const posts = await client.post.findMany({
     include: {
-      host: {
-        include: { _count: true },
-      },
       board: true,
       likes: true,
+      _count: true,
       comments: true,
+      host: { include: { _count: true } },
     },
   });
   const isArray = Boolean(posts.length > 0);

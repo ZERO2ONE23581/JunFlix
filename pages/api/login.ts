@@ -41,7 +41,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         posts: true,
         tokens: true,
         boards: true,
-        reviews: true,
         comments: true,
         followers: true,
         followings: true,

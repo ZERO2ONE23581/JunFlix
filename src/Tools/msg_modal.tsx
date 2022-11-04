@@ -37,6 +37,10 @@ export const MsgModal = ({ _data }: IMsgModal) => {
       setText({ eng: 'Saved.', kor: '저장되었습니다.' });
       return reload();
     }
+    if (msg === 'need_login') {
+      setText({ eng: 'You must Login.', kor: '로그인이 필요합니다.' });
+      return reload();
+    }
     if (msg === 'deleted') {
       setText({ eng: 'Deleted.', kor: '삭제완료' });
       return reload();
@@ -70,6 +74,7 @@ export const MsgModal = ({ _data }: IMsgModal) => {
   );
 };
 const Cont = styled(Modal)`
+  z-index: 999;
   top: 30%;
   width: fit-content;
   height: fit-content;

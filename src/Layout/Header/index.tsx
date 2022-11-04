@@ -27,7 +27,7 @@ export const Header = ({ theme, setTheme }: IHeader) => {
           <Logo />
           <MainMenu theme={theme} />
         </Flex>
-        <Flex>
+        <Flex className="theme-login">
           <ThemeBtn theme={theme} setTheme={setTheme} />
           <LoginMenu theme={theme} />
         </Flex>
@@ -36,10 +36,16 @@ export const Header = ({ theme, setTheme }: IHeader) => {
   );
 };
 const Cont = styled(motion.header)`
+  .theme-login {
+    //border: 2px solid crimson;
+    min-width: 8rem;
+    height: fit-content;
+    justify-content: space-between;
+  }
   gap: 3rem;
   font-size: 1.3rem;
   margin-bottom: 5px;
-  padding: 0.5rem 12rem;
+  padding: 1.3rem 12rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -57,10 +63,11 @@ const Wrap = styled(Flex)`
   }
   .logo_main {
     width: 60%;
+    max-width: 40vw;
     justify-content: flex-start;
     .main-menu {
-      width: 100%;
       gap: 2rem;
+      width: 100%;
     }
   }
 `;

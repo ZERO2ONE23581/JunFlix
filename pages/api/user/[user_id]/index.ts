@@ -14,7 +14,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       likes: true,
       posts: true,
       boards: true,
-      reviews: true,
       comments: true,
       followers: true,
       followings: true,

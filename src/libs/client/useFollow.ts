@@ -1,11 +1,10 @@
 import useSWR from 'swr';
-
-import { useEffect, useState } from 'react';
+import { useUser } from './useUser';
 import useMutation from './useMutation';
 import { useRouter } from 'next/router';
 import { IRes } from '../../types/global';
+import { useEffect, useState } from 'react';
 import { IGetFollowing } from '../../types/following';
-import { useUser } from './useUser';
 
 export interface IFollowingUsers<T> {
   name?: string;
@@ -31,6 +30,13 @@ export default function useFollow<T = any>(
   //post
   const router = useRouter();
   const { isLoggedIn } = useUser();
+  const [post, { data: post_result }] = useMutation<IRes>(
+    `/api/following/create/${Type}`
+  );
+  //get
+  const { data, mutate } = useSWR<IGetFollowing>(
+    Boolean(Type && key) && `/api/following/${Type}/${key}`
+  );
   const onClick = () => {
     if (!data) return;
     if (!isLoggedIn) return router.push('/login');
@@ -40,9 +46,6 @@ export default function useFollow<T = any>(
       return mutate({ ...data, isFollowing: !isFollowing }, false);
     }
   };
-  const [post, { data: post_result }] = useMutation<IRes>(
-    `/api/following/create/${Type}`
-  );
   useEffect(() => {
     const success = post_result?.ok;
     const error = post_result?.error;
@@ -50,10 +53,6 @@ export default function useFollow<T = any>(
     if (success) console.log(success);
   }, [post_result]);
 
-  //get
-  const { data, mutate } = useSWR<IGetFollowing>(
-    Boolean(Type && key) && `/api/following/${Type}/${key}`
-  );
   const isFollowing = data?.isFollowing;
   const [name, setName] = useState('');
   useEffect(() => {

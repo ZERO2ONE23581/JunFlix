@@ -1,56 +1,32 @@
 import { Host } from './Host';
+import { Icons } from './Icons';
 import { Detail } from './Detail';
 import styled from '@emotion/styled';
-import { FlexCol } from '../../../../../../styles/global';
+import { CommentBox } from '../Comments';
+import { IGetPostType } from '../../../../../types/post';
 import { variants } from '../../../../../../styles/variants';
+import { FlexCol } from '../../../../../../styles/global';
 
-export interface IInfo {
-  _data: {
-    theme: boolean;
-    isMyPost: boolean;
-    _post: {
-      desc: string;
-      title: string;
-      hashtags: string;
-      pageLink: string;
-      board: {
-        isBoard: boolean;
-        onClick: () => void;
-      };
-    };
-    _host: {
-      userId: string;
-      host_id: number;
-      username: string;
-      followers: number;
-      avatar: string | null;
-    };
-  };
+interface IInfo extends IGetPostType {
+  theme: boolean;
 }
-export const Info = ({ _data }: IInfo) => {
-  const theme = _data?.theme!;
-  const isMyPost = _data?.isMyPost!;
-  const _host = _data?._host!;
-  const _post = _data?._post!;
+export const Info = ({ theme, post }: IInfo) => {
   return (
-    <>
-      <Cont
-        custom={theme}
-        className="info"
-        animate="animate"
-        variants={variants}
-      >
-        <Host _data={{ theme, _host, isMyPost, board: _data?._post?.board! }} />
-        <Detail _post={_post!} />
-      </Cont>
-    </>
+    <Cont custom={theme} className="info" animate="animate" variants={variants}>
+      <Icons theme={theme} post={post} />
+      <Host theme={theme} post={post} />
+      <Detail post={post} />
+      <CommentBox theme={theme} />
+    </Cont>
   );
 };
+
 const Cont = styled(FlexCol)`
   gap: 20px;
-  padding: 30px;
+  height: 100%;
   min-height: 55vh;
   padding-bottom: 0;
+  padding: 1rem 1.5rem;
   .host,
   .detail,
   .comment_box {
