@@ -45,7 +45,7 @@ export const LoginMenu = ({ theme }: ITheme) => {
             whileHover={'hover'}
             custom={theme}
             variants={textVar}
-            onClick={() => router.push(`/user/create`)}
+            onClick={() => router.push(`/join`)}
           >
             Join
           </Text>

@@ -32,7 +32,8 @@ export const FlexPage = styled(Page)`
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: flex-start;
+  //justify-content: flex-start;
+  justify-content: center;
 `;
 
 export const Flex = styled(motion.div)`
@@ -116,7 +117,7 @@ export const Layer_ = styled(Flex)`
   }
 `;
 
-export const ImageLabel = styled.label`
+export const AvatarLabel = styled.label`
   cursor: pointer;
   display: flex;
   align-items: center;

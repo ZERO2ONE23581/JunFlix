@@ -19,8 +19,8 @@ interface IInput {
     type: string;
     text: string;
     label: string;
-    error: string;
     theme: boolean;
+    error?: string;
     disabled?: boolean;
     placeholder?: string;
     register: UseFormRegisterReturn;
@@ -28,16 +28,19 @@ interface IInput {
   };
 }
 export const InputWrap = ({ _data }: IInput) => {
-  const id = _data?.id!;
-  const text = _data?.text!;
-  const type = _data?.type!;
-  const error = _data?.error!;
-  const theme = _data?.theme!;
-  const label = _data?.label!;
-  const register = _data?.register!;
-  const disabled = _data?.disabled!;
-  const placeholder = _data?.placeholder!;
-  const clearErrors = _data?.clearErrors!;
+  const {
+    id,
+    text,
+    type,
+    error,
+    theme,
+    label,
+    register,
+    disabled,
+    placeholder,
+    clearErrors,
+  } = _data;
+  console.log(error);
   const [focus, setFocus] = useState(false);
   const custom = { isRed: Boolean(focus || text), theme, disabled };
   return (

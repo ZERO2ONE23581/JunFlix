@@ -3,14 +3,12 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { UseFormSetError } from 'react-hook-form';
 
-export const useUploadImg = async (
-  image: FileList | undefined,
-  host_id: number
-) => {
-  if (image && image.length > 0 && host_id) {
+export const useUploadImg = async (image: FileList | undefined) => {
+  console.log(image, '??!!');
+  if (image && image.length > 0) {
     const { uploadURL } = await (await fetch(`/api/file`)).json();
     const form = new FormData();
-    form.append('file', image[0], host_id.toString());
+    form.append('file', image[0]);
     const {
       result: { id },
     } = await (

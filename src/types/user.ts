@@ -5,7 +5,6 @@ import {
   Following,
   Like,
   Post,
-  Review,
   User,
 } from '@prisma/client';
 import { IRes } from './global';
@@ -18,7 +17,7 @@ export interface IGetUser extends IRes {
 export interface IUserType extends User {
   posts: Post[];
   boards: Board[];
-  reviews: Review[];
+
   likes: Like[];
   comments: Comment[];
   followers: Follower[];
@@ -48,17 +47,10 @@ export interface ICreateUser {
   };
 }
 export interface IUserForm {
-  name?: string;
-  birth?: string;
-  email?: string;
-  userId?: string;
-  gender?: string;
+  email: string;
+  password: string;
   avatar?: FileList;
-  location?: string;
-  username?: string;
-  password?: string;
-  newPassword?: string;
-  pw_confirm?: string;
+  password_confirm: string;
 }
 export interface IJoinForm {
   email?: string;

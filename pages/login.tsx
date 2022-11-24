@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Btn } from '../src/Tools/Button';
 import { Box, FlexPage, Form, Page } from '../styles/global';
 import { AnimatePresence } from 'framer-motion';
-import { ILoginForm } from '../src/types/user';
+import { ILoginForm, IUserForm } from '../src/types/user';
 import { InputWrap } from '../src/Tools/Input';
 import { IRes } from '../src/types/global';
 import { Head_ } from '../src/Tools/head_title';
@@ -14,11 +14,11 @@ import useMutation from '../src/libs/client/useMutation';
 import { LoadingModal } from '../src/Tools/Modal/loading_modal';
 import { MsgModal } from '../src/Tools/msg_modal';
 import { variants } from '../styles/variants';
+import { ErrMsg } from '../src/Error/Message';
 
 const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
   const [msg, setMsg] = useState('');
-  const [Loading, setLoading] = useState(false);
   const [login, { loading, data }] = useMutation<IRes>(`/api/login`);
   const {
     watch,
@@ -26,22 +26,23 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
     clearErrors,
     handleSubmit,
     formState: { errors },
-  } = useForm<ILoginForm>({ mode: 'onSubmit' });
+  } = useForm<IUserForm>({ mode: 'onSubmit' });
   //
-  const onValid = ({ userId, password }: ILoginForm) => {
-    setLoading(true);
+  const onValid = ({ email, password }: IUserForm) => {
     if (loading) return;
-    return login({ userId: userId?.toUpperCase(), password });
+    return login({ email, password });
   };
   useEffect(() => {
     if (data) {
-      setTimeout(() => {
-        setLoading(false);
-        if (data?.ok) return router.replace('/');
-        if (data?.error) return setMsg(data.error);
-      }, 1000);
+      if (data?.error) {
+        setMsg(data.error);
+        setTimeout(() => {
+          return setMsg('');
+        }, 2000);
+      }
+      if (data?.ok) router.replace('/');
     }
-  }, [data, router, setMsg, setTimeout, setLoading]);
+  }, [data, router, setMsg, setTimeout]);
   //
 
   return (
@@ -49,7 +50,7 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
       <Head_ title="로그인" />
       <AnimatePresence>
         <Cont variants={variants} animate="animate" custom={theme}>
-          {!Loading && (
+          {!loading && (
             <Box
               exit="exit"
               className="box"
@@ -67,17 +68,21 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
                 <InputWrap
                   _data={{
                     theme,
-                    clearErrors,
-                    label: 'ID',
-                    id: 'userId',
+                    id: 'email',
                     type: 'text',
-                    text: watch('userId')!,
-                    error: errors.userId?.message!,
-                    register: register('userId', {
-                      required: '아이디를 입력해주세요.',
+                    label: 'Email',
+                    clearErrors,
+                    text: watch('email')!,
+                    register: register('email', {
+                      required: 'need_email',
+                      pattern: {
+                        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                        message: 'invalid_email',
+                      },
                     }),
                   }}
                 />
+                <ErrMsg error={errors.email?.message!} theme={theme} />
                 <InputWrap
                   _data={{
                     theme,
@@ -86,17 +91,17 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
                     type: 'password',
                     label: 'Password',
                     text: watch('password')!,
-                    error: errors.password?.message!,
                     register: register('password', {
-                      required: '비밀번호를 입력해주세요.',
+                      required: 'need_password',
                     }),
                   }}
                 />
+                <ErrMsg error={errors.password?.message!} theme={theme} />
                 <Btn type="submit" item={{ theme, name: 'Submit' }} />
               </Form>
             </Box>
           )}
-          {Loading && <LoadingModal theme={theme} />}
+          {loading && <LoadingModal theme={theme} />}
           <MsgModal _data={{ msg, theme, layoutId: 'login' }} />
         </Cont>
       </AnimatePresence>
@@ -109,12 +114,12 @@ const Cont = styled(FlexPage)`
   justify-content: center;
   .box {
     align-items: flex-start;
-    //min-width: 30vw;
-    //    width: fit-content;
-
     form {
+      .err_msg {
+        margin-top: 1rem;
+      }
       button {
-        margin-top: 20px;
+        margin-top: 1rem;
       }
     }
     h1 {

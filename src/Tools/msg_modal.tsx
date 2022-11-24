@@ -33,6 +33,12 @@ export const MsgModal = ({ _data }: IMsgModal) => {
       setText({ eng: 'Updated.', kor: '업데이트 되었습니다.' });
       return reload();
     }
+    if (msg === 'email_exists') {
+      return setText({
+        eng: 'Email already exists.',
+        kor: '이미 존재하는 이메일 입니다.',
+      });
+    }
     if (msg === 'created') {
       setText({ eng: 'Saved.', kor: '저장되었습니다.' });
       return reload();

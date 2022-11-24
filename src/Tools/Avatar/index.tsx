@@ -1,10 +1,10 @@
-import { Svg } from './Svg';
+import { Svg } from '../Svg';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { TransBorder, TweenTrans } from '../../styles/variants';
-import { useGetUser } from '../libs/client/useUser';
+import { border, TransBorder, TweenTrans } from '../../../styles/variants';
+import { useGetUser } from '../../libs/client/useUser';
 
 export interface IAvatar {
   _data: {
@@ -14,10 +14,11 @@ export interface IAvatar {
     host_id: number | null;
     preview?: string | null;
     onAvatar?: () => void;
+    onMyPage: boolean;
   };
 }
 export const Avatar = ({ _data }: IAvatar) => {
-  const { size, theme, isRound, host_id, onAvatar, preview } = _data;
+  const { onMyPage, size, theme, isRound, host_id, onAvatar, preview } = _data;
   const router = useRouter();
   const [image, setImage] = useState('');
   const { avatar, username } = useGetUser(host_id!);
@@ -28,8 +29,9 @@ export const Avatar = ({ _data }: IAvatar) => {
       return setImage(avatarLink(avatar));
     }
   }, [avatar, preview, setImage, host_id]);
-
-  const onClick = () => router.push(`/user/${host_id}/${username}/page`);
+  const onClick = () => {
+    if (onMyPage) return router.push(`/user/${host_id}/${username}/page`);
+  };
   const isAvatar = Boolean(avatar || preview);
 
   return (
@@ -39,26 +41,27 @@ export const Avatar = ({ _data }: IAvatar) => {
           exit="exit"
           size={size}
           image={image}
-          custom={theme}
           initial="initial"
           animate="animate"
           whileHover="hover"
           className="avatar"
-          transition={TweenTrans}
           variants={vars}
+          transition={TweenTrans}
+          custom={{ theme, isRound }}
           onClick={onAvatar ? onAvatar : onClick}
         />
       )}
       {!isAvatar && (
         <NoAvatar
-          size={size}
-          variants={vars}
-          onClick={onClick}
           exit="exit"
           initial="initial"
           animate="animate"
           whileHover="hover"
           className="avatar"
+          size={size}
+          variants={vars}
+          onClick={onClick}
+          custom={{ theme, isRound }}
         >
           <Svg theme={theme} type="user" />
         </NoAvatar>
@@ -86,42 +89,18 @@ const NoAvatar = styled(motion.div)<{ size: string }>`
   }
 `;
 const vars = {
-  initial: () => ({
-    opacity: 0,
-  }),
-  animate: (theme: boolean) => ({
+  exit: () => ({ opacity: 0 }),
+  initial: () => ({ opacity: 0 }),
+  animate: ({ theme, isRound }: any) => ({
     opacity: 1,
-    borderRadius: '15%',
+    outline: border(theme),
     transition: { duration: 0.5 },
-    border: TransBorder(theme),
-  }),
-  exit: () => ({
-    opacity: 0,
+    borderRadius: isRound ? '100%' : '15%',
   }),
   hover: () => ({
     borderRadius: '100%',
-    border: '3px solid #E50914',
     transition: { duration: 0.5 },
-  }),
-};
-const circle = {
-  initial: (theme: boolean) => ({
-    opacity: 0,
-  }),
-  animate: (theme: boolean) => ({
-    opacity: 1,
-    border: TransBorder(theme),
-    transition: { duration: 0.5 },
-  }),
-  exit: (theme: boolean) => ({
-    opacity: 0,
-    transition: { duration: 0.5 },
-  }),
-  hover: (theme: boolean) => ({
-    //scale: 1.2,
-    borderWidth: '3px',
-    borderColor: '#E50914',
-    transition: { duration: 0.5 },
+    outline: '3px solid #E50914',
   }),
 };
 export const avatarLink = (url: string | any) => {

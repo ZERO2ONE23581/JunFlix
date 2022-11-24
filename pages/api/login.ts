@@ -6,13 +6,13 @@ import { withApiSession } from '../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const { userId, password } = req.body;
-    const isInputs = Boolean(userId && password);
+    const { email, password } = req.body;
+    const isInputs = Boolean(email && password);
     if (!isInputs) return res.json({ ok: false, error: 'input missed.' });
 
     //userId check
     const user = await client.user.findUnique({
-      where: { userId },
+      where: { email },
       select: { id: true, userId: true, password: true },
     });
     if (!user)
