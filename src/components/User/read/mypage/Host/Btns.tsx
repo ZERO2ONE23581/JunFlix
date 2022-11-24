@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { Btn } from '../../../../../Tools/Button';
-import { Avatar } from '../../../../../Tools/Avatar';
+import { Avatar } from '../../../../../Tools/Avatar/indexxx';
 import { IUserType } from '../../../../../types/user';
 import { ITheme } from '../../../../../../styles/theme';
 import { BtnWrap } from '../../../../../../styles/global';

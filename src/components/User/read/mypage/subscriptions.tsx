@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { IGetBoard } from '../../../../types/board';
-import { Avatar } from '../../../../Tools/Avatar';
+import { Avatar } from '../../../../Tools/Avatar/indexxx';
 
 interface IFollowingBoard {
   item: { board_id: number; theme: boolean };

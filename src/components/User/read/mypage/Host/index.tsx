@@ -1,7 +1,7 @@
 import { Btns } from './Btns';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Avatar } from '../../../../../Tools/Avatar';
+import { Avatar } from '../../../../../Tools/Avatar/indexxx';
 import { IUserType } from '../../../../../types/user';
 import { Flex, FlexCol } from '../../../../../../styles/global';
 import { useCapLetter } from '../../../../../libs/client/useTools';

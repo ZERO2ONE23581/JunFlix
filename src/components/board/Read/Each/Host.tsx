@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Avatar } from '../../../../Tools/Avatar';
+import { Avatar } from '../../../../Tools/Avatar/indexxx';
 
 interface IHost {
   _data: {

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { Svg } from '../../../../../../Tools/Svg';
 import { IGetBoard } from '../../../../../../types/board';
-import { avatarLink } from '../../../../../../Tools/Avatar';
+import { avatarLink } from '../../../../../../Tools/Avatar/indexxx';
 import { useUser } from '../../../../../../libs/client/useUser';
 import { Flex, FlexCol } from '../../../../../../../styles/global';
 import { color, redBrdr } from '../../../../../../../styles/variants';

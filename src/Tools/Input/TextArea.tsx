@@ -19,21 +19,25 @@ interface ITextAreaWrap {
     label?: string;
     error?: string;
     disabled?: boolean;
+    placeholder: string;
     register: UseFormRegisterReturn;
     clearErrors: UseFormClearErrors<any>;
   };
 }
 export const TextAreaWrap = ({ _data }: ITextAreaWrap) => {
-  const id = _data?.id!;
-  const min = _data?.min!;
-  const max = _data?.max!;
-  const text = _data?.text!;
-  const error = _data?.error!;
-  const theme = _data?.theme!;
-  const label = _data?.label!;
-  const disabled = _data?.disabled!;
-  const register = _data?.register!;
-  const clearErrors = _data?.clearErrors!;
+  const {
+    id,
+    min,
+    max,
+    text,
+    error,
+    theme,
+    label,
+    disabled,
+    register,
+    placeholder,
+    clearErrors,
+  } = _data;
   const textLength = useLength(text!);
   const [focus, setFocus] = useState(false);
   const height = textLength > max ? max * 0.5 : min + textLength * 0.3;
@@ -66,7 +70,7 @@ export const TextAreaWrap = ({ _data }: ITextAreaWrap) => {
               {...register}
               id={id}
               disabled={disabled}
-              placeholder="내용 입력하기 (Write about your story here)"
+              placeholder={placeholder}
               onFocus={() => setFocus(true)}
               onBlur={() => setFocus(false)}
             />

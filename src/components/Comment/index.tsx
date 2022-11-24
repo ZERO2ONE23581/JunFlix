@@ -1,29 +1,47 @@
-import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Svg } from '../../Tools/Svg';
+import { Comments } from './Comments';
 import { Avatar } from '../../Tools/Avatar';
-import { useUser } from '../../libs/client/useUser';
-import { Flex, Modal } from '../../../styles/global';
-import { OverlayBg } from '../../Tools/overlay';
+import { Flex } from '../../../styles/global';
 import { CreateModal } from './Create/Modal';
+import { ITheme } from '../../../styles/theme';
+import { Dispatch, SetStateAction, useState } from 'react';
 
-interface IPostComment {
-  theme: boolean;
+export interface ISetPost extends ITheme {
+  setPost: Dispatch<SetStateAction<string>>;
 }
-export const PostComment = ({ theme }: IPostComment) => {
-  const { user_id: host_id } = useUser();
-  const [create, setCreate] = useState(false);
+interface IPostComment extends ISetPost {
+  _data: {
+    post_id: number;
+    host_id: number;
+  };
+  setPost: Dispatch<SetStateAction<string>>;
+}
+export const PostComment = ({ theme, _data, setPost }: IPostComment) => {
+  const { post_id, host_id } = _data;
   const openCreate = () => setCreate(true);
+  const [create, setCreate] = useState(false);
   return (
     <>
       <Cont>
-        <h1>Comments</h1>
-        <span>
+        <Title>
+          <h1>Comments</h1>
+          <Svg type="comments" theme={theme} />
+        </Title>
+
+        <Comments
+          theme={theme}
+          setPost={setPost}
+          _data={{ post_id, host_id }}
+        />
+
+        <div className="text">
           <span>댓글을 남겨 피드백을 공유 하세요!</span>
-          <span>Share feedbacks by leaving comments on this post!</span>
-        </span>
+          <span>Share feedbacks by leaving comments!</span>
+        </div>
+
         <Flex className="wrap">
-          <Avatar _data={{ size: '4rem', isRound: true, theme, host_id }} />
+          <Avatar _data={{ size: '3.8rem', isRound: true, theme, host_id }} />
           <Input
             //disabled
             type="text"
@@ -37,20 +55,32 @@ export const PostComment = ({ theme }: IPostComment) => {
             item={{ size: '1.8rem' }}
           />
         </Flex>
+
+        <CreateModal
+          theme={theme}
+          setPost={setPost}
+          _data={{ post_id, modal: create, closeModal: () => setCreate(false) }}
+        />
       </Cont>
-      <CreateModal theme={theme} _data={{ create, setCreate }} />
     </>
   );
 };
+const Title = styled(Flex)`
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  svg {
+  }
+`;
 const Cont = styled.article`
   width: 100%;
   height: 100%;
-  border: 2px solid red;
   padding: 1rem 2rem;
-  h1 {
-    font-size: 1.5rem;
-  }
-  > span {
+
+  .text {
+    //border: 2px solid red;
+    //text-align: center;
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
     span {
       display: block;
       font-style: italic;

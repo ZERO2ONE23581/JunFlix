@@ -4,7 +4,7 @@ import { CheckBox } from '../Box/CheckBox';
 import { PostBox__ } from '../../../Read/Grid/Box';
 import { Dispatch, SetStateAction } from 'react';
 import { UseFormRegister } from 'react-hook-form';
-import { avatarLink } from '../../../../../Tools/Avatar';
+import { avatarLink } from '../../../../../Tools/Avatar/indexxx';
 import { FlexCol, Grid } from '../../../../../../styles/global';
 import { IPostForm, IPostType } from '../../../../../types/post';
 import { usePostTitle } from '../../../../../libs/client/usePosts';

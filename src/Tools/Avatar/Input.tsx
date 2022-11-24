@@ -7,7 +7,7 @@ import { border, TransBorder, TweenTrans } from '../../../styles/variants';
 import { useGetUser } from '../../libs/client/useUser';
 import { Flex } from '../../../styles/global';
 import { UseFormRegister, UseFormReset } from 'react-hook-form';
-import { avatarLink } from '.';
+import { avatarLink } from './indexxx';
 
 export interface IAvatarInput {
   _data: {

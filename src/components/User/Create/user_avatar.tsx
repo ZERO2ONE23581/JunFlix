@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Btn } from '../../../Tools/Button';
 import { ICreateUser, IUserForm } from '../../../types/user';
 import { ImageLabel, BtnWrap, Form } from '../../../../styles/global';
-import { Avatar } from '../../../Tools/Avatar';
+import { Avatar } from '../../../Tools/Avatar/indexxx';
 
 export const CreateUserAvatar = ({ wrap, isType }: ICreateUser) => {
   const router = useRouter();

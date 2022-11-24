@@ -243,7 +243,7 @@ export const Blur = styled.div<{ isBlur: boolean }>`
   filter: ${(p) => p.isBlur && 'blur(5px)'};
 `;
 export const Form = styled(motion.form)`
-  max-height: 50vh;
+  //max-height: 50vh;
   display: flex;
   align-items: center;
   flex-direction: column;

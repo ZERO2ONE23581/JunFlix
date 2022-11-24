@@ -7,7 +7,7 @@ import { ErrMsg } from '../../../Tools/Input';
 import useUser from '../../../libs/client/useUser';
 import { inputErrVar } from '../../../../styles/variants';
 import { IEditUser, IUserForm } from '../../../types/user';
-import { Avatar } from '../../../Tools/Avatar';
+import { Avatar } from '../../../Tools/Avatar/indexxx';
 import { ImageLabel } from '../../../../styles/global';
 
 export const UserAvatar_Form = ({ dataWrap }: IEditUser) => {

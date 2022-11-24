@@ -3,7 +3,7 @@ import { Svg } from '../../Tools/Svg';
 import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { IForm } from '../../types/global';
-import { Avatar } from '../../Tools/Avatar';
+import { Avatar } from '../../Tools/Avatar/indexxx';
 import { InputWrap } from '../../Tools/Input';
 import { IBoardType } from '../../types/board';
 import { AnimatePresence } from 'framer-motion';

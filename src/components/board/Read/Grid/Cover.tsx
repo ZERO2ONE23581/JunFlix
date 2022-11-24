@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { IPostType } from '../../../../types/post';
 import { Grid } from '../../../../../styles/global';
-import { avatarLink } from '../../../../Tools/Avatar';
+import { avatarLink } from '../../../../Tools/Avatar/indexxx';
 
 interface ICover {
   theme: boolean;

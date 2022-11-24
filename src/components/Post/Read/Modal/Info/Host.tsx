@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Avatar } from '../../../../../Tools/Avatar';
+import { Avatar } from '../../../../../Tools/Avatar/indexxx';
 import { IPostType } from '../../../../../types/post';
 import { Flex, FlexCol } from '../../../../../../styles/global';
 import useFollow from '../../../../../libs/client/useFollow';

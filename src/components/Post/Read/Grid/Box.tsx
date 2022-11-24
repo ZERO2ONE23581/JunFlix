@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { UseFormRegister } from 'react-hook-form';
-import { avatarLink } from '../../../../Tools/Avatar';
+import { avatarLink } from '../../../../Tools/Avatar/indexxx';
 import { Flex, FlexCol } from '../../../../../styles/global';
 import { useCapLetters } from '../../../../libs/client/useTools';
 import { TweenTrans, color, variants } from '../../../../../styles/variants';

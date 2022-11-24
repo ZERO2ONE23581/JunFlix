@@ -44,7 +44,6 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
     }
   }, [data, router, setMsg, setTimeout]);
   //
-
   return (
     <>
       <Head_ title="로그인" />

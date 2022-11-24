@@ -1,91 +1,64 @@
 import { Svg } from '../Svg';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { border, TransBorder, TweenTrans } from '../../../styles/variants';
+import { border } from '../../../styles/variants';
+import { Flex } from '../../../styles/global';
+import { avatarLink } from './indexxx';
+import { ITheme } from '../../../styles/theme';
 import { useGetUser } from '../../libs/client/useUser';
 
-export interface IAvatar {
+export interface IAvatarInput {
   _data: {
     size: string;
     theme: boolean;
+    host_id: number;
     isRound?: boolean;
-    host_id: number | null;
-    preview?: string | null;
-    onAvatar?: () => void;
-    onMyPage: boolean;
   };
 }
-export const Avatar = ({ _data }: IAvatar) => {
-  const { onMyPage, size, theme, isRound, host_id, onAvatar, preview } = _data;
-  const router = useRouter();
-  const [image, setImage] = useState('');
-  const { avatar, username } = useGetUser(host_id!);
-
-  useEffect(() => {
-    if (preview) return setImage(preview);
-    if (avatar) {
-      return setImage(avatarLink(avatar));
-    }
-  }, [avatar, preview, setImage, host_id]);
-  const onClick = () => {
-    if (onMyPage) return router.push(`/user/${host_id}/${username}/page`);
-  };
-  const isAvatar = Boolean(avatar || preview);
-
+export const Avatar = ({ _data }: IAvatarInput) => {
+  const { isRound, size, theme, host_id } = _data;
+  const { avatar } = useGetUser(host_id);
   return (
-    <AnimatePresence initial={false}>
-      {isAvatar && (
-        <IsAvatar
-          exit="exit"
-          size={size}
-          image={image}
-          initial="initial"
-          animate="animate"
-          whileHover="hover"
-          className="avatar"
-          variants={vars}
-          transition={TweenTrans}
-          custom={{ theme, isRound }}
-          onClick={onAvatar ? onAvatar : onClick}
-        />
-      )}
-      {!isAvatar && (
-        <NoAvatar
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          whileHover="hover"
-          className="avatar"
-          size={size}
-          variants={vars}
-          onClick={onClick}
-          custom={{ theme, isRound }}
-        >
-          <Svg theme={theme} type="user" />
-        </NoAvatar>
-      )}
+    <AnimatePresence>
+      <Cont
+        exit="exit"
+        initial="initial"
+        animate="animate"
+        whileHover="hover"
+        size={size}
+        variants={vars}
+        className="avatar"
+        custom={{ theme, isRound }}
+      >
+        {avatar && <motion.img src={avatarLink(avatar)} />}
+        {!avatar && (
+          <NoImg>
+            <Svg type="user" theme={theme} item={{ size: '100%' }} />
+          </NoImg>
+        )}
+      </Cont>
     </AnimatePresence>
   );
 };
-const IsAvatar = styled(motion.div)<{ image?: string; size: string }>`
+const Cont = styled(Flex)<{ size: string }>`
   cursor: pointer;
-  border-radius: 100%;
+  overflow: hidden;
+  position: relative;
   width: ${(p) => p.size && p.size};
   height: ${(p) => p.size && p.size};
-  background: ${(p) => p.image && `url(${p.image}) center / cover no-repeat`};
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
-const NoAvatar = styled(motion.div)<{ size: string }>`
+const NoImg = styled(Flex)`
+  width: 50%;
+  height: 50%;
   border-radius: 100%;
-  width: ${(p) => p.size && p.size};
-  height: ${(p) => p.size && p.size};
-  display: flex;
-  align-items: center;
-  justify-content: center;
   svg {
-    width: 60%;
-    height: 60%;
+    pointer-events: none;
   }
 `;
 const vars = {
@@ -94,19 +67,12 @@ const vars = {
   animate: ({ theme, isRound }: any) => ({
     opacity: 1,
     outline: border(theme),
-    transition: { duration: 0.5 },
-    borderRadius: isRound ? '100%' : '15%',
+    borderRadius: isRound ? '100%' : '10%',
+    transition: { duration: isRound ? 0.2 : 0.4 },
   }),
-  hover: () => ({
+  hover: ({ isRound }: any) => ({
     borderRadius: '100%',
-    transition: { duration: 0.5 },
     outline: '3px solid #E50914',
+    transition: { duration: isRound ? 0.2 : 0.4 },
   }),
-};
-export const avatarLink = (url: string | any) => {
-  const no_img = '/img/1.jpg';
-  const variant = 'public';
-  const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
-  if (!Boolean(url)) return no_img;
-  else return `${base}/${url}/${variant}`;
 };

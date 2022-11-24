@@ -2,7 +2,6 @@ import { Host } from './Host';
 import { Icons } from './Icons';
 import { Detail } from './Detail';
 import styled from '@emotion/styled';
-import { CommentBox } from '../Comments';
 import { IGetPostType } from '../../../../../types/post';
 import { variants } from '../../../../../../styles/variants';
 import { FlexCol } from '../../../../../../styles/global';
@@ -16,7 +15,6 @@ export const Info = ({ theme, post }: IInfo) => {
       <Icons theme={theme} post={post} />
       <Host theme={theme} post={post} />
       <Detail post={post} />
-      <CommentBox theme={theme} />
     </Cont>
   );
 };
@@ -24,7 +22,7 @@ export const Info = ({ theme, post }: IInfo) => {
 const Cont = styled(FlexCol)`
   gap: 20px;
   height: 100%;
-  min-height: 55vh;
+  //min-height: 55vh;
   padding-bottom: 0;
   padding: 1rem 1.5rem;
   .host,

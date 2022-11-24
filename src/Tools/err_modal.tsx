@@ -24,6 +24,16 @@ export const ErrModal = ({ _data }: IErrMsg) => {
           eng: 'Please type your email.',
           kor: '이메일을 입력해주세요.',
         });
+      if (error === 'need_comment')
+        return setTxt({
+          eng: 'Please type your Comment.',
+          kor: '댓글을 입력해주세요.',
+        });
+      if (error === 'overmax_comment')
+        return setTxt({
+          eng: `Comment can not exeed more than 700 letters.`,
+          kor: '댓글은 700자를 초과할 수 없습니다.',
+        });
       if (error === 'invalid_email')
         return setTxt({
           eng: 'Please type valid email form.',
@@ -63,6 +73,7 @@ export const ErrModal = ({ _data }: IErrMsg) => {
     }
   }, [error, setTxt]);
   const closeModal = () => clearErrors(id);
+
   return (
     <AnimatePresence>
       {error && (
@@ -89,12 +100,13 @@ export const ErrModal = ({ _data }: IErrMsg) => {
 const Cont = styled(Modal)`
   z-index: 222;
   height: 200px;
-  width: fit-content;
-  height: fit-content;
   min-height: 150px;
   margin-top: 20rem;
   font-size: 1.3rem;
+  width: fit-content;
+  height: fit-content;
   .txt {
+    text-align: center;
     span {
       display: block;
       font-size: 1.6rem;

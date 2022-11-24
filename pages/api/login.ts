@@ -33,7 +33,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === 'GET') {
     const { user } = req.session;
-    if (!user) return res.json({ ok: false, error: 'must login.' });
+    if (!user) return res.json({ ok: false, error: 'no loggedin user.' });
     const loggedInUser = await client.user.findUnique({
       where: { id: +user?.id.toString() },
       include: {

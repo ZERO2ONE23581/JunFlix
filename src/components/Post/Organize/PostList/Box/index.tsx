@@ -1,7 +1,7 @@
 import { CheckBox } from './CheckBox';
 import { PostBox__ } from '../../../Read/Grid/Box';
 import { UseFormRegister } from 'react-hook-form';
-import { avatarLink } from '../../../../../Tools/Avatar';
+import { avatarLink } from '../../../../../Tools/Avatar/indexxx';
 import { useCapLetters } from '../../../../../libs/client/useTools';
 import styled from '@emotion/styled';
 

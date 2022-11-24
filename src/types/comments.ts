@@ -18,7 +18,7 @@ export interface CommentWithUser extends Comment {
   user: User;
 }
 export interface ICmtForm {
-  content?: string;
+  text: string;
 }
 export interface ICmtRes {
   ok: boolean;

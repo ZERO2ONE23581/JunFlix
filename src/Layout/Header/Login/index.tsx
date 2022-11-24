@@ -3,7 +3,7 @@ import { IconModal } from './Modal';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { Avatar } from '../../../Tools/Avatar';
+import { Avatar } from '../../../Tools/Avatar/indexxx';
 import { Flex } from '../../../../styles/global';
 import { ITheme } from '../../../../styles/theme';
 import { useUser } from '../../../libs/client/useUser';
