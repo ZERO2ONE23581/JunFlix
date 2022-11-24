@@ -2,14 +2,17 @@ import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Avatar } from '../../Tools/Avatar';
 import { ITheme } from '../../../styles/theme';
-import { Flex, FlexCol } from '../../../styles/global';
+import { Flex, FlexCol, Modal } from '../../../styles/global';
 import { TheComment, useComments } from '../../libs/client/useComment';
 import { useCapLetter } from '../../libs/client/useTools';
 import { Svg } from '../../Tools/Svg';
 import { CreateModal } from './Create/Modal';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { Comments } from './Comments';
 import { Reply } from './Reply';
+import { cmtModalVar, UpdateModal } from './Update/Modal';
+import { hoverBgColor } from '../../../styles/variants';
+import { OverlayBg } from '../../Tools/overlay';
+import { DeleteModal } from './Delete/Modal';
 
 interface IComment extends ITheme {
   setPost: Dispatch<SetStateAction<string>>;
@@ -22,7 +25,28 @@ interface IComment extends ITheme {
 export const Comment = ({ theme, _data, setPost }: IComment) => {
   const { post_id, host_id, comment } = _data;
   const [select, setSelect] = useState(0);
+  const [option, setOption] = useState(false);
+  const [modal, setModal] = useState('');
   const { replies } = useComments({ post_id, host_id, cmt_id: comment.id });
+  const clickEllips = () => {
+    setOption(true);
+    setSelect(comment.id);
+  };
+  const clickEdit = () => {
+    setOption(false);
+    setSelect(comment.id);
+    setModal('update');
+  };
+  const closeModal = () => {
+    setSelect(0);
+    setModal('');
+    setOption(false);
+  };
+  const clickDelete = () => {
+    setOption(false);
+    setModal('delete');
+    setSelect(comment.id);
+  };
   return (
     <AnimatePresence>
       <Each key={comment.id}>
@@ -39,14 +63,25 @@ export const Comment = ({ theme, _data, setPost }: IComment) => {
               onClick={() => setSelect(comment.id)}
             />
             <Svg type="like" theme={theme} item={{ size: '1.5rem' }} />
-            <Svg type="ellipsis" theme={theme} item={{ size: '1.5rem' }} />
+            <Svg
+              theme={theme}
+              type="ellipsis"
+              onClick={clickEllips}
+              item={{ size: '1.5rem' }}
+            />
           </Btns>
           {replies?.map((reply) => (
             <Array key={reply.id}>
               <Reply
                 theme={theme}
                 setPost={setPost}
-                _data={{ post_id, host_id, reply, og_id: comment.id }}
+                _data={{
+                  replied_to: comment.host.userId,
+                  post_id,
+                  host_id,
+                  reply,
+                  og_id: comment.id,
+                }}
               />
             </Array>
           ))}
@@ -63,13 +98,84 @@ export const Comment = ({ theme, _data, setPost }: IComment) => {
         }}
         _data={{
           post_id,
-          closeModal: () => setSelect(0),
-          modal: Boolean(select === comment.id),
+          closeModal,
+          modal: !option && Boolean(select === comment.id) && !modal,
+        }}
+      />
+      <AnimatePresence>
+        {option && Boolean(select === comment.id) && (
+          <>
+            <OptionModal
+              exit="exit"
+              layoutId="option"
+              initial="initial"
+              animate="animate"
+              className="modal"
+              custom={theme}
+              variants={cmtModalVar}
+            >
+              <Svg type="close" theme={theme} onClick={closeModal} />
+              <Btn
+                whileHover="hover"
+                onClick={clickEdit}
+                variants={hoverBgColor}
+              >
+                Edit
+              </Btn>
+              <Btn
+                whileHover="hover"
+                onClick={clickDelete}
+                variants={hoverBgColor}
+              >
+                Delete
+              </Btn>
+            </OptionModal>
+            <OverlayBg closeModal={closeModal} />
+          </>
+        )}
+      </AnimatePresence>
+      <DeleteModal
+        theme={theme}
+        setPost={setPost}
+        key={comment.id * 44}
+        _data={{
+          post_id,
+          closeModal,
+          cmt_id: comment.id,
+          modal:
+            !option && Boolean(select === comment.id) && modal === 'delete',
+        }}
+      />
+      <UpdateModal
+        theme={theme}
+        setPost={setPost}
+        key={comment.id * 33}
+        _data={{
+          post_id,
+          closeModal,
+          og_cmt: comment,
+          modal:
+            !option && Boolean(select === comment.id) && modal === 'update',
         }}
       />
     </AnimatePresence>
   );
 };
+const OptionModal = styled(Modal)`
+  top: 50%;
+  z-index: 100;
+  width: 40vw;
+  height: fit-content;
+`;
+const Btn = styled(motion.div)`
+  width: 100%;
+  border-radius: 10px;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 0.5rem 1rem;
+`;
 const Each = styled(Flex)`
   gap: 1rem;
   align-items: flex-start;
