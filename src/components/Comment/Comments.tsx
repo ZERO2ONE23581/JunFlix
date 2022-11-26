@@ -1,14 +1,9 @@
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import { Avatar } from '../../Tools/Avatar';
-import { ITheme } from '../../../styles/theme';
-import { Flex, FlexCol } from '../../../styles/global';
-import { useComments } from '../../libs/client/useComment';
-import { useCapLetter } from '../../libs/client/useTools';
-import { Svg } from '../../Tools/Svg';
-import { CreateModal } from './Create/Modal';
-import { Dispatch, SetStateAction, useState } from 'react';
 import { Comment } from './Comment';
+import styled from '@emotion/styled';
+import { ITheme } from '../../../styles/theme';
+import { FlexCol } from '../../../styles/global';
+import { Dispatch, SetStateAction } from 'react';
+import { useComments } from '../../libs/client/useComment';
 
 interface IComments extends ITheme {
   setPost: Dispatch<SetStateAction<string>>;
@@ -19,7 +14,7 @@ interface IComments extends ITheme {
 }
 export const Comments = ({ theme, _data, setPost }: IComments) => {
   const { post_id, host_id } = _data;
-  const { originals, NoCmts } = useComments({ post_id, host_id });
+  const { originals, NoCmts } = useComments({ post_id });
   return (
     <>
       {!NoCmts && (
@@ -52,6 +47,5 @@ const Cont = styled(FlexCol)`
     font-size: 1.3rem;
     font-style: italic;
   }
-  //border: 2px solid red;
 `;
 const Array = styled(FlexCol)``;

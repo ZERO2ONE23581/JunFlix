@@ -40,7 +40,6 @@ export const InputWrap = ({ _data }: IInput) => {
     placeholder,
     clearErrors,
   } = _data;
-  console.log(error);
   const [focus, setFocus] = useState(false);
   const custom = { isRed: Boolean(focus || text), theme, disabled };
   return (

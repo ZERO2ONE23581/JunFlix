@@ -43,7 +43,6 @@ export const PostComment = ({ theme, _data, setPost }: IPostComment) => {
         <Flex className="wrap">
           <Avatar _data={{ size: '3.8rem', isRound: true, theme, host_id }} />
           <Input
-            //disabled
             type="text"
             onClick={openCreate}
             placeholder="Leave comments on this post..."

@@ -6,13 +6,18 @@ import { Flex, FlexCol, Modal } from '../../../styles/global';
 import { TheComment, useComments } from '../../libs/client/useComment';
 import { useCapLetter } from '../../libs/client/useTools';
 import { Svg } from '../../Tools/Svg';
-import { CreateModal } from './Create/Modal';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Reply } from './Reply';
 import { cmtModalVar, UpdateModal } from './Update/Modal';
-import { hoverBgColor } from '../../../styles/variants';
+import { color, hoverBgColor } from '../../../styles/variants';
 import { OverlayBg } from '../../Tools/overlay';
 import { DeleteModal } from './Delete/Modal';
+import { ReplyModal } from './Reply/Modal';
+import { useUser } from '../../libs/client/useUser';
+import { useRouter } from 'next/router';
+import useSWR from 'swr';
+import { IRes } from '../../types/global';
+import useMutation from '../../libs/client/useMutation';
 
 interface IComment extends ITheme {
   setPost: Dispatch<SetStateAction<string>>;
@@ -27,12 +32,22 @@ export const Comment = ({ theme, _data, setPost }: IComment) => {
   const [select, setSelect] = useState(0);
   const [option, setOption] = useState(false);
   const [modal, setModal] = useState('');
-  const { replies } = useComments({ post_id, host_id, cmt_id: comment.id });
+  const { replies } = useComments({ post_id, cmt_id: comment.id });
+  const router = useRouter();
+  const { isLoggedIn, user_id } = useUser();
+  const isMyComment = Boolean(comment.host_id === user_id);
+  const clickComment = () => {
+    if (!isLoggedIn) return router.push(`/login`);
+    setSelect(comment.id);
+  };
   const clickEllips = () => {
+    if (!isLoggedIn) return router.push(`/login`);
+    if (!isMyComment) alert('not my comment');
     setOption(true);
     setSelect(comment.id);
   };
   const clickEdit = () => {
+    if (!isLoggedIn) return router.push(`/login`);
     setOption(false);
     setSelect(comment.id);
     setModal('update');
@@ -43,15 +58,41 @@ export const Comment = ({ theme, _data, setPost }: IComment) => {
     setOption(false);
   };
   const clickDelete = () => {
+    if (!isLoggedIn) return router.push(`/login`);
     setOption(false);
     setModal('delete');
     setSelect(comment.id);
   };
+
+  const [post, { data, loading }] = useMutation('/api/like/comment/create');
+  const { data: getData, mutate } = useSWR<IRes>(
+    Boolean(comment.id) && ` /api/like/comment/${comment.id}`
+  );
+  const num = getData?.num;
+  const isLiked = getData?.isLiked;
+  const count = num === 0 ? '' : num;
+  const clickLike = () => {
+    if (loading) return;
+    if (!isLoggedIn) return router.push(`/login`);
+    setModal('like');
+    setSelect(comment.id);
+    mutate(
+      {
+        ...data,
+        isLiked: !isLiked,
+        num: isLiked ? num - 1 : num + 1,
+      },
+      false
+    );
+    return post({ comment_id: comment.id });
+  };
+  const fill = isLiked ? '#E50914' : color(theme);
+
   return (
     <AnimatePresence>
       <Each key={comment.id}>
         <div className="id">{comment.id}</div>
-        <Avatar _data={{ theme, host_id, size: '3.5rem' }} />
+        <Avatar _data={{ theme, host_id: comment.host_id, size: '3.5rem' }} />
         <Content>
           <span className="userId">{useCapLetter(comment?.host?.userId)}</span>
           <p>{comment.text}</p>
@@ -60,15 +101,26 @@ export const Comment = ({ theme, _data, setPost }: IComment) => {
               theme={theme}
               type="comment_empty"
               item={{ size: '1.5rem' }}
-              onClick={() => setSelect(comment.id)}
+              onClick={clickComment}
             />
-            <Svg type="like" theme={theme} item={{ size: '1.5rem' }} />
-            <Svg
-              theme={theme}
-              type="ellipsis"
-              onClick={clickEllips}
-              item={{ size: '1.5rem' }}
-            />
+            <Like>
+              <Svg
+                type="like"
+                theme={theme}
+                onClick={clickLike}
+                item={{ fill, size: '1.5rem' }}
+              />
+              {/* <span className="number">{likes_count}</span> */}
+              <span className="number">{count}</span>
+            </Like>
+            {isMyComment && (
+              <Svg
+                theme={theme}
+                type="ellipsis"
+                onClick={clickEllips}
+                item={{ size: '1.5rem' }}
+              />
+            )}
           </Btns>
           {replies?.map((reply) => (
             <Array key={reply.id}>
@@ -76,11 +128,11 @@ export const Comment = ({ theme, _data, setPost }: IComment) => {
                 theme={theme}
                 setPost={setPost}
                 _data={{
-                  replied_to: comment.host.userId,
+                  reply,
                   post_id,
                   host_id,
-                  reply,
                   og_id: comment.id,
+                  replied_to: comment.host.userId,
                 }}
               />
             </Array>
@@ -88,7 +140,7 @@ export const Comment = ({ theme, _data, setPost }: IComment) => {
         </Content>
       </Each>
 
-      <CreateModal
+      <ReplyModal
         key={comment.id * 22}
         theme={theme}
         setPost={setPost}
@@ -161,6 +213,20 @@ export const Comment = ({ theme, _data, setPost }: IComment) => {
     </AnimatePresence>
   );
 };
+
+const Like = styled(motion.div)`
+  position: relative;
+  //border: 2px solid red;
+  .number {
+    top: -0.3rem;
+    right: -0.5rem;
+    //color: blue;
+    opacity: 0.8;
+    font-size: 1rem;
+    font-weight: 500;
+    position: absolute;
+  }
+`;
 const OptionModal = styled(Modal)`
   top: 50%;
   z-index: 100;

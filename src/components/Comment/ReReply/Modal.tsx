@@ -16,31 +16,23 @@ import useMutation from '../../../libs/client/useMutation';
 import { useCapLetter, useLength } from '../../../libs/client/useTools';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 
-interface ICreateModal extends ISetPost {
+interface IReplyModal extends ISetPost {
   _data: {
     modal: boolean;
     post_id: number;
     closeModal: () => void;
   };
-  _reply?: {
+  _reply: {
     og_id: number;
     rep_userId: string;
     reply_id?: number;
   };
 }
-export const CreateModal = ({
-  theme,
-  _data,
-  _reply,
-  setPost,
-}: ICreateModal) => {
-  const og_id = _reply?.og_id!;
-  const reply_id = _reply?.reply_id!;
-  const userId = _reply?.rep_userId!;
+export const ReplyModal = ({ theme, _data, _reply, setPost }: IReplyModal) => {
   const { modal, closeModal, post_id } = _data;
-  const [post, { loading, data }] = useMutation<IRes>(`/api/comment/create`);
-  const [reply, { loading: rep_loading, data: rep_data }] = useMutation<IRes>(
-    `/api/comment/reply/${og_id}`
+  const { og_id, rep_userId: userId, reply_id } = _reply;
+  const [reply, { loading, data }] = useMutation<IRes>(
+    `/api/comment/${og_id}/reply`
   );
   const { user_id: host_id } = useUser();
   const {
@@ -53,18 +45,14 @@ export const CreateModal = ({
   } = useForm<ICmtForm>({ mode: 'onSubmit' });
 
   const onValid = ({ text }: ICmtForm) => {
-    if (loading || rep_loading) return;
+    if (loading) return;
     if (useLength(text) > 700)
       return setError('text', { message: 'overmax_comment' });
     setLoading(true);
     if (og_id) {
-      if (reply_id) {
-        reply({ text, post_id, og_id, reply_id });
-      } else {
-        reply({ text, post_id, og_id, reply_id: og_id });
-      }
+      if (reply_id) return reply({ text, post_id, og_id, reply_id });
+      else return reply({ text, post_id, og_id, reply_id: og_id });
     }
-    return post({ text, post_id });
   };
 
   const [Loading, setLoading] = useState(false);
@@ -80,19 +68,6 @@ export const CreateModal = ({
       }
     }
   }, [data, closeModal, setPost]);
-
-  useEffect(() => {
-    if (rep_data) {
-      setLoading(false);
-      if (rep_data.ok) {
-        closeModal();
-        setPost('');
-        setTimeout(() => {
-          setPost('read');
-        }, 500);
-      }
-    }
-  }, [rep_data, closeModal, setPost]);
 
   return (
     <AnimatePresence>
@@ -156,7 +131,6 @@ export const CreateModal = ({
 const Cont = styled(Modal)`
   top: 33vh;
   width: 33vw;
-  min-width: 500px;
   z-index: 100;
   color: inherit;
   height: fit-content;

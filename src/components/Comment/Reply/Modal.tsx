@@ -31,9 +31,7 @@ interface IReplyModal extends ISetPost {
 export const ReplyModal = ({ theme, _data, _reply, setPost }: IReplyModal) => {
   const { modal, closeModal, post_id } = _data;
   const { og_id, rep_userId: userId, reply_id } = _reply;
-  const [reply, { loading, data }] = useMutation<IRes>(
-    `/api/comment/${og_id}/reply`
-  );
+  const [reply, { loading, data }] = useMutation<IRes>(`/api/comment/reply`);
   const { user_id: host_id } = useUser();
   const {
     watch,
@@ -43,7 +41,7 @@ export const ReplyModal = ({ theme, _data, _reply, setPost }: IReplyModal) => {
     handleSubmit,
     formState: { errors },
   } = useForm<ICmtForm>({ mode: 'onSubmit' });
-
+  //  console.log(data);
   const onValid = ({ text }: ICmtForm) => {
     if (loading) return;
     if (useLength(text) > 700)
@@ -133,6 +131,7 @@ const Cont = styled(Modal)`
   width: 33vw;
   z-index: 100;
   color: inherit;
+  min-width: 500px;
   height: fit-content;
   background-color: inherit;
   form {

@@ -1,73 +1,206 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import { NextPage } from 'next';
-import { useForm } from 'react-hook-form';
-import useMutation from '../src/libs/client/useMutation';
-import { useLength } from '../src/libs/client/useTools';
+import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { Btn } from '../src/Tools/Button';
-import { InputWrap } from '../src/Tools/Input';
+import { useForm } from 'react-hook-form';
 import { IRes } from '../src/types/global';
+import { useEffect, useState } from 'react';
 import { IUserForm } from '../src/types/user';
-import { FlexPage, Page } from '../styles/global';
+import { InputWrap } from '../src/Tools/Input';
+import { variants } from '../styles/variants';
+import { ErrMsg } from '../src/Error/Message';
+import { MsgModal } from '../src/Tools/msg_modal';
+import { AvatarInput } from '../src/Tools/Avatar/Input';
+import useMutation from '../src/libs/client/useMutation';
+import { Flex, FlexCol, FlexPage } from '../styles/global';
+import { useUploadImg } from '../src/libs/client/useTools';
+import { LoadingModal } from '../src/Tools/Modal/loading_modal';
 
 const JoinPage: NextPage<{ theme: boolean }> = ({ theme }) => {
-  const [post, { loading, data }] = useMutation<IRes>('/user/create');
+  const [post, { loading, data }] = useMutation<IRes>(`/api/user/create`);
   const {
+    reset,
     watch,
     register,
     setError,
     clearErrors,
     handleSubmit,
     formState: { errors },
-  } = useForm<IUserForm>({ mode: 'onSubmit' });
-  const onValid = ({ email, password, confirm_pw }: IUserForm) => {
-    if (useLength(email) < 1) return setError('email', { message: '!!' });
+  } = useForm<IUserForm>({ mode: 'onBlur' });
+  const avatar = watch('avatar');
+  const [preview, setPreview] = useState('');
+  useEffect(() => {
+    if (avatar && avatar.length > 0) {
+      const file = avatar[0];
+      setPreview(URL.createObjectURL(file));
+    }
+  }, [avatar, setPreview]);
+
+  const onValid = async ({
+    email,
+    avatar,
+    password,
+    password_confirm,
+  }: IUserForm) => {
+    if (loading) return;
+    if (password !== password_confirm)
+      return setError('password_confirm', {
+        message: 'invalid_password_confirm',
+      });
+    setLoading(true);
+    const avatar_id = await useUploadImg(avatar);
+    return post({ email, password, password_confirm, avatar: avatar_id });
   };
-  const useform = { register, clearErrors, watch };
+  const router = useRouter();
+  const [msg, setMsg] = useState('');
+  const [Loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (data) {
+      setTimeout(() => {
+        setLoading(false);
+        if (data.error) {
+          setMsg(data.error);
+          setTimeout(() => {
+            setMsg('');
+          }, 1000);
+        }
+        if (data.ok) router.push(`/home`);
+      }, 2000);
+    }
+  }, [data, router, setLoading, setMsg]);
+  //
   return (
-    <Container>
-      <form onSubmit={handleSubmit(onValid)}>
-        <Box>
-          <h1>Join</h1>
-          <InputWrap
-            theme={theme}
-            useform={useform}
-            _data={{ id: 'email', error: errors.email?.message! }}
-          />
-          <InputWrap
-            theme={theme}
-            useform={useform}
-            _data={{
-              id: 'confirm_pw',
-              type: 'password',
-              error: errors.confirm_pw?.message!,
-            }}
-          />
-          <InputWrap
-            theme={theme}
-            useform={useform}
-            _data={{
-              id: 'password',
-              type: 'password',
-              error: errors.password?.message!,
-            }}
-          />
-          <Btn type="submit" item={{ name: 'Submit', theme }} />
-        </Box>
-      </form>
-    </Container>
+    <FlexPage>
+      <>
+        {msg && <MsgModal _data={{ theme, msg }} />}
+        {Loading && <LoadingModal theme={theme} />}
+        {!Loading && (
+          <Box
+            exit="exit"
+            custom={theme}
+            initial="initial"
+            animate="animate"
+            variants={variants}
+          >
+            <form onSubmit={handleSubmit(onValid)}>
+              <h1>
+                <span>Join</span>
+                <span className="kor">회원가입</span>
+              </h1>
+              <Wrap>
+                <AvatarInput
+                  _data={{ register, theme, preview, setPreview, reset }}
+                />
+                <Inputs>
+                  <InputWrap
+                    _data={{
+                      theme,
+                      id: 'email',
+                      clearErrors,
+                      type: 'text',
+                      label: 'Email',
+                      text: watch('email')!,
+                      register: register('email', {
+                        required: 'need_email',
+                        pattern: {
+                          value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                          message: 'invalid_email',
+                        },
+                      }),
+                    }}
+                  />
+                  <ErrMsg error={errors.email?.message!} theme={theme} />
+                  <InputWrap
+                    _data={{
+                      theme,
+                      clearErrors,
+                      id: 'password',
+                      type: 'password',
+                      label: 'password',
+                      text: watch('password')!,
+                      register: register!('password', {
+                        required: 'need_password',
+                        minLength: { value: 8, message: 'min_password' },
+                        maxLength: { value: 16, message: 'max_password' },
+                        pattern: {
+                          value:
+                            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
+                          message: 'invalid_password',
+                        },
+                      }),
+                    }}
+                  />
+                  <ErrMsg error={errors.password?.message!} theme={theme} />
+                  <InputWrap
+                    _data={{
+                      theme,
+                      clearErrors,
+                      type: 'password',
+                      id: 'password_confirm',
+                      label: 'Confirm Password',
+                      text: watch('password_confirm')!,
+                      register: register('password_confirm', {
+                        required: 'need_password_confirm',
+                      }),
+                    }}
+                  />
+                  <ErrMsg
+                    error={errors.password_confirm?.message!}
+                    theme={theme}
+                  />
+                </Inputs>
+              </Wrap>
+              <Btn type="submit" item={{ theme, name: 'Submit' }} />
+            </form>
+          </Box>
+        )}
+      </>
+    </FlexPage>
   );
 };
 export default JoinPage;
 
-const Container = styled(FlexPage)`
-  justify-content: center;
-`;
-
-const Box = styled(motion.article)`
-  border: 2px solid red;
+const Box = styled(FlexCol)`
   padding: 2rem;
+  border-radius: 10px;
+  align-items: flex-start;
+  border: 1px solid ${(p) => p.theme.color.font};
+  width: fit-content;
+  height: fit-content;
+  form {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+  }
   h1 {
     font-size: 2rem;
+    .kor {
+      font-size: 1.5rem;
+    }
+    span {
+      margin-right: 0.5rem;
+    }
   }
+
+  .err_msg {
+    margin-top: 1rem;
+  }
+  button {
+    margin-top: 1rem;
+  }
+`;
+const Wrap = styled(Flex)`
+  gap: 1rem;
+  align-items: flex-start;
+  .avatar {
+    margin-top: 1rem;
+  }
+  button {
+    margin-top: 1rem;
+  }
+`;
+const Inputs = styled(FlexCol)`
+  width: fit-content;
 `;

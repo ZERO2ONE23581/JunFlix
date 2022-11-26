@@ -15,16 +15,18 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   });
   if (!post) return res.json({ ok: false, error: 'no post found' });
 
-  const comment = await client.comment.findUnique({
+  const target_cmt = await client.comment.findUnique({
     where: { id: +cmt_id.toString() },
   });
-  if (!comment) return res.json({ ok: false, error: 'no comment found' });
-  const isValidPost = Boolean(post.id === comment.post_id);
-  if (!isValidPost) return res.json({ ok: false, error: 'invalid post' });
+  if (!target_cmt) return res.json({ ok: false, error: 'no comment found' });
 
-  await client.comment.deleteMany({ where: { og_id: comment.id } });
+  const isPostMatch = Boolean(post.id === target_cmt.post_id);
+  if (!isPostMatch) return res.json({ ok: false, error: 'invalid post' });
+
+  await client.comment.deleteMany({ where: { og_id: target_cmt.id } });
+  await client.comment.deleteMany({ where: { reply_id: target_cmt.id } });
   const isDeleted = Boolean(
-    await client.comment.delete({ where: { id: comment.id } })
+    await client.comment.delete({ where: { id: target_cmt.id } })
   );
   return res.json({ ok: isDeleted });
 }

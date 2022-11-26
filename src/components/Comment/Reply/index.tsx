@@ -12,6 +12,7 @@ import { cmtModalVar, UpdateModal } from '../Update/Modal';
 import { hoverBgColor } from '../../../../styles/variants';
 import { OverlayBg } from '../../../Tools/overlay';
 import { DeleteModal } from '../Delete/Modal';
+import { ReplyModal } from './Modal';
 
 interface IReply extends ITheme {
   setPost: Dispatch<SetStateAction<string>>;
@@ -24,15 +25,12 @@ interface IReply extends ITheme {
   };
 }
 export const Reply = ({ theme, _data, setPost }: IReply) => {
-  const { replied_to, post_id, host_id, reply, og_id } = _data;
+  const { post_id, host_id, reply, og_id } = _data;
   const [select, setSelect] = useState(0);
   const [option, setOption] = useState(false);
   const [modal, setModal] = useState('');
-  const { re_replies: replies } = useComments({
-    post_id,
-    host_id,
-    cmt_id: reply.id,
-  });
+  const { re_replies: replies } = useComments({ post_id, cmt_id: reply.id });
+
   const clickEllips = () => {
     setOption(true);
     setSelect(reply.id);
@@ -56,7 +54,7 @@ export const Reply = ({ theme, _data, setPost }: IReply) => {
     <AnimatePresence>
       <Each key={reply.id}>
         <div className="id">{reply.id}</div>
-        <Avatar _data={{ theme, host_id, size: '3.5rem' }} />
+        <Avatar _data={{ theme, host_id: reply.host_id, size: '3.5rem' }} />
         <Content>
           <span className="userId">{useCapLetter(reply?.host?.userId)}</span>
           <p>
@@ -98,6 +96,23 @@ export const Reply = ({ theme, _data, setPost }: IReply) => {
           />
         </Array>
       ))}
+
+      <ReplyModal
+        theme={theme}
+        setPost={setPost}
+        key={reply.id * 22}
+        _reply={{
+          og_id,
+          reply_id: reply.id,
+          rep_userId: reply.host.userId,
+        }}
+        _data={{
+          post_id,
+          closeModal,
+          modal: !option && Boolean(select === reply.id) && !modal,
+        }}
+      />
+
       <AnimatePresence>
         {option && Boolean(select === reply.id) && (
           <>
@@ -130,6 +145,7 @@ export const Reply = ({ theme, _data, setPost }: IReply) => {
           </>
         )}
       </AnimatePresence>
+
       <UpdateModal
         theme={theme}
         setPost={setPost}
@@ -150,21 +166,6 @@ export const Reply = ({ theme, _data, setPost }: IReply) => {
           closeModal,
           cmt_id: reply.id,
           modal: !option && Boolean(select === reply.id) && modal === 'delete',
-        }}
-      />
-      <CreateModal
-        key={reply.id * 22}
-        theme={theme}
-        setPost={setPost}
-        _reply={{
-          og_id,
-          reply_id: reply.id,
-          rep_userId: reply.host.userId,
-        }}
-        _data={{
-          post_id,
-          closeModal,
-          modal: !option && Boolean(select === reply.id) && !modal,
         }}
       />
     </AnimatePresence>
