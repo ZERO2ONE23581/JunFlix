@@ -41,7 +41,7 @@ export const ReplyModal = ({ theme, _data, _reply, setPost }: IReplyModal) => {
     handleSubmit,
     formState: { errors },
   } = useForm<ICmtForm>({ mode: 'onSubmit' });
-  //  console.log(data);
+
   const onValid = ({ text }: ICmtForm) => {
     if (loading) return;
     if (useLength(text) > 700)

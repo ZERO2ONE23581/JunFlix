@@ -3,7 +3,7 @@ import { Svg } from '../../Tools/Svg';
 import { Comments } from './Comments';
 import { Avatar } from '../../Tools/Avatar';
 import { Flex } from '../../../styles/global';
-import { CreateModal } from './Create/Modal';
+import { CreateModal } from './Modal/Create';
 import { ITheme } from '../../../styles/theme';
 import { Dispatch, SetStateAction, useState } from 'react';
 
