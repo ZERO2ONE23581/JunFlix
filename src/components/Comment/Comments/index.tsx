@@ -85,4 +85,6 @@ const Cont = styled(FlexCol)`
     font-style: italic;
   }
 `;
-const Array = styled(FlexCol)``;
+const Array = styled(FlexCol)`
+  border: 2px solid yellow;
+`;

@@ -1,12 +1,13 @@
 import { Btns } from './Btns';
 import { IClickSvg } from '..';
+import { UserDate } from './Date';
 import { Replies } from './Replies';
 import styled from '@emotion/styled';
 import { Avatar } from '../../../../Tools/Avatar';
 import { Dispatch, SetStateAction } from 'react';
 import { Flex, FlexCol } from '../../../../../styles/global';
 import { TheComment } from '../../../../libs/client/useComment';
-import { useCapLetter } from '../../../../libs/client/useTools';
+import { useTimeDiff } from '../../../../libs/client/useTime';
 
 interface IComment {
   _data: {
@@ -29,21 +30,25 @@ interface IComment {
   };
 }
 export const Comment = ({ _data, _setState, _modal }: IComment) => {
-  const { modal, select, option } = _modal;
-  const { theme, comment, post_id, host_id, clickSvg } = _data;
-  const { setPost, setModal, setSelect, setOption } = _setState;
+  const { theme, comment, clickSvg } = _data;
+  const { setModal, setSelect } = _setState;
+  const userId = comment.host.userId;
+  const _date = { created: comment.createdAt, updated: comment.updatedAt };
+  const { isUpdated } = useTimeDiff({ _date });
   return (
     <Cont key={comment.id}>
-      <div className="id">{comment.id}</div>
       <Avatar _data={{ theme, host_id: comment.host_id, size: '3.5rem' }} />
       <Content>
-        <span className="userId">{useCapLetter(comment?.host?.userId)}</span>
-        <p>{comment.text}</p>
+        <UserDate _date={_date} userId={userId} />
+        <p>
+          {isUpdated && <span className="update">{isUpdated}</span>}
+          <span>{comment.text}</span>
+        </p>
         <Btns _data={{ theme, comment, setModal, setSelect, clickSvg }} />
         <Replies
-          _modal={{ modal, select, option }}
-          _data={{ theme, post_id, host_id, comment, clickSvg }}
-          _setState={{ setPost, setModal, setOption, setSelect }}
+          _modal={_modal}
+          _setState={_setState}
+          _data={{ ..._data, replied_to: userId }}
         />
       </Content>
     </Cont>
@@ -54,17 +59,16 @@ const Cont = styled(Flex)`
   gap: 1rem;
   align-items: flex-start;
   justify-content: flex-start;
-  .id {
-    color: red;
-    font-size: 2rem;
-  }
 `;
 const Content = styled(FlexCol)`
-  align-items: flex-start;
   width: fit-content;
-  max-width: 80%;
-  .userId {
-    color: #3498db;
-    font-weight: 500;
+  align-items: flex-start;
+  p {
+    .update {
+      opacity: 0.9;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+      color: ${(p) => p.theme.color.logo};
+    }
   }
 `;

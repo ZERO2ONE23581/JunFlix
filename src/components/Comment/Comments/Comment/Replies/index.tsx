@@ -11,6 +11,7 @@ interface IReplies {
     theme: boolean;
     post_id: number;
     host_id: number;
+    replied_to: string;
     comment: TheComment;
     clickSvg: ({ type, comment }: IClickSvg) => void;
   };
@@ -27,8 +28,8 @@ interface IReplies {
   };
 }
 export const Replies = ({ _data, _setState, _modal }: IReplies) => {
-  const { theme, comment, post_id, host_id, clickSvg } = _data;
-  const __data = { theme, post_id, host_id, clickSvg };
+  const { replied_to, theme, comment, post_id, host_id, clickSvg } = _data;
+  const __data = { replied_to, theme, post_id, host_id, clickSvg };
   const { replies } = useComments({ post_id, cmt_id: comment.id });
   return (
     <>

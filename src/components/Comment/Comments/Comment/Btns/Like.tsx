@@ -1,10 +1,10 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { Svg } from '../../../../../Tools/Svg';
-import { IRes } from '../../../../../types/global';
 import { Dispatch, SetStateAction } from 'react';
+import { IRes } from '../../../../../types/global';
+import { AnimatePresence, motion } from 'framer-motion';
 import { color } from '../../../../../../styles/variants';
 import { useUser } from '../../../../../libs/client/useUser';
 import useMutation from '../../../../../libs/client/useMutation';
@@ -53,21 +53,22 @@ export const Like = ({ _data }: ILike) => {
         onClick={clickLike}
         item={{ fill, size: '1.5rem' }}
       />
-      <span className="number">{count}</span>
+      <Number>{count}</Number>
     </Cont>
   );
 };
+
 const Cont = styled(motion.div)`
   width: 1.8rem;
   position: relative;
-  .number {
-    top: -0.4rem;
-    right: -0.4rem;
-    right: -10px;
-    right: -0.5rem;
-    font-weight: 700;
-    font-size: 0.9rem;
-    position: absolute;
-    color: ${(p) => p.theme.color.logo};
-  }
+`;
+const Number = styled(motion.span)`
+  top: -0.4rem;
+  right: -0.4rem;
+  right: -10px;
+  right: -0.5rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  position: absolute;
+  color: ${(p) => p.theme.color.logo};
 `;
