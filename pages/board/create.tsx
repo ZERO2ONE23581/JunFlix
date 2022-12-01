@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IRes } from '../../src/types/global';
 import { FlexPage } from '../../styles/global';
-import { AnimatePresence } from 'framer-motion';
 import { MsgModal } from '../../src/Tools/msg_modal';
 import { Head_ } from '../../src/Tools/head_title';
 import useMutation from '../../src/libs/client/useMutation';

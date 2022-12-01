@@ -160,3 +160,25 @@ export const inputVar = {
   hover: () => ({ transition: { duration: 0.3 }, outline: redBrdr }),
   focus: () => ({ outline: redBrdr, transition: { duration: 0.3 } }),
 };
+export const cmtModalVar = {
+  initial: (theme: boolean) => ({
+    y: 999,
+    opacity: 0,
+    color: color(theme),
+    backgroundColor: color(!theme),
+  }),
+  animate: (theme: boolean) => ({
+    y: 0,
+    opacity: 1,
+    color: color(theme),
+    backgroundColor: color(!theme),
+    transition: { duration: 0.5 },
+  }),
+  exit: (theme: boolean) => ({
+    y: 999,
+    opacity: 0,
+    color: color(theme),
+    backgroundColor: color(!theme),
+    transition: { duration: 0.5 },
+  }),
+};

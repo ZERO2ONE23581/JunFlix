@@ -13,39 +13,34 @@ interface IComments {
 }
 export const More = ({ _data }: IComments) => {
   const { theme, sliced, rep_length, setSliced } = _data;
-
   return (
-    <>
-      {
-        <Cont
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          whileHover="hover"
-          custom={{ theme }}
-          variants={moreVar}
-          onClick={() => setSliced((p) => !p)}
-        >
-          <span>------</span>
-          {sliced && (
-            <>
-              <span>See</span>
-              <span>({rep_length - 1})</span>
-              <span>more</span>
-              <span>{rep_length - 1 > 1 ? 'replies' : 'reply'}</span>
-            </>
-          )}
-          {!sliced && (
-            <>
-              <span>Fold</span>
-              <span>({rep_length - 1})</span>
-              <span>{rep_length - 1 > 1 ? 'replies' : 'reply'}</span>
-            </>
-          )}
-          <span>------</span>
-        </Cont>
-      }
-    </>
+    <Cont
+      exit="exit"
+      initial="initial"
+      animate="animate"
+      whileHover="hover"
+      custom={{ theme }}
+      variants={moreVar}
+      onClick={() => setSliced((p) => !p)}
+    >
+      <span>------</span>
+      {sliced && (
+        <>
+          <span>See</span>
+          <span>({rep_length - 1})</span>
+          <span>more</span>
+          <span>{rep_length - 1 > 1 ? 'replies' : 'reply'}</span>
+        </>
+      )}
+      {!sliced && (
+        <>
+          <span>Fold</span>
+          <span>({rep_length - 1})</span>
+          <span>{rep_length - 1 > 1 ? 'replies' : 'reply'}</span>
+        </>
+      )}
+      <span>------</span>
+    </Cont>
   );
 };
 const Cont = styled(Flex)`

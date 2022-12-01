@@ -1,5 +1,5 @@
 import { More } from './More';
-import { Comment } from './Comment';
+import { ReadCmt } from './Read';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { FlexCol } from '../../../../styles/global';
@@ -8,9 +8,9 @@ import { useAllCmts, useReplies } from '../../../libs/client/useComment';
 
 interface IComments {
   _data: {
-    theme: boolean;
     og_id: number;
     post_id: number;
+    theme: boolean;
     setPost: Dispatch<SetStateAction<string>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
@@ -39,23 +39,14 @@ export const Comments = ({ _data }: IComments) => {
           )}
           {Array?.map((comment) => (
             <Arr key={comment.id} isReply={isReply}>
-              <Comment _data={{ theme, comment, setPost, setCmtModal }} />
+              <ReadCmt _data={{ theme, comment, setPost, setCmtModal }} />
             </Arr>
           ))}
         </Cont>
       )}
-      {!isArray && !isReply && (
-        <>
-          <h1>No Comments...</h1>
-        </>
-      )}
     </AnimatePresence>
   );
 };
-const Arr = styled.div<{ isReply: boolean }>`
-  width: fit-content;
-  margin-left: ${(p) => p.isReply && '1rem'};
-`;
 const Cont = styled(FlexCol)`
   gap: 1rem;
   margin: 0.5rem 0;
@@ -64,4 +55,8 @@ const Cont = styled(FlexCol)`
     font-size: 1.3rem;
     font-style: italic;
   }
+`;
+const Arr = styled.div<{ isReply: boolean }>`
+  width: fit-content;
+  margin-left: ${(p) => p.isReply && '1rem'};
 `;

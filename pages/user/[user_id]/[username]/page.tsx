@@ -7,7 +7,7 @@ import { Head_ } from '../../../../src/Tools/head_title';
 import { useGetUser } from '../../../../src/libs/client/useUser';
 import { Host } from '../../../../src/components/User/Read/MyPage/Host';
 import { useCapLetter } from '../../../../src/libs/client/useTools';
-import { PostSchema } from '../../../../src/components/Post/Read/Schema';
+import { PostSchema } from '../../../../src/components/Post/Schema';
 import {
   useGetLikedPosts,
   useGetPosts,

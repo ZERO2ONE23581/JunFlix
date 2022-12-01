@@ -1,5 +1,5 @@
 import { CheckBox } from './CheckBox';
-import { PostBox__ } from '../../../Read/Grid/Box';
+import { PostBox__ } from '../../../Schema/Grid/Box';
 import { UseFormRegister } from 'react-hook-form';
 import { avatarLink } from '../../../../../Tools/Avatar/indexxx';
 import { useCapLetters } from '../../../../../libs/client/useTools';

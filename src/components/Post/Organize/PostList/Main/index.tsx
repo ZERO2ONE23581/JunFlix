@@ -1,7 +1,7 @@
 import { Title } from './Title';
 import styled from '@emotion/styled';
 import { CheckBox } from '../Box/CheckBox';
-import { PostBox__ } from '../../../Read/Grid/Box';
+import { PostBox__ } from '../../../Schema/Grid/Box';
 import { Dispatch, SetStateAction } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import { avatarLink } from '../../../../../Tools/Avatar/indexxx';

@@ -1,7 +1,8 @@
 import { Comment, Like } from '@prisma/client';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useSWR from 'swr';
+import { IRes } from '../../types/global';
 import { IUserType } from '../../types/user';
-import { useCapLetter } from './useTools';
 
 export interface TheComment extends Comment {
   host: IUserType;
@@ -49,4 +50,31 @@ export const useGetRepHost = ({ post_id, reply_id }: IUseGetRepHost) => {
   const replied_to = all?.find((cmt) => cmt.id === reply_id)?.host.userId;
 
   return { replied_to };
+};
+interface IUseCmtRes {
+  _data: {
+    data: IRes | undefined;
+    closeModal: () => void;
+    setPost: Dispatch<SetStateAction<string>>;
+    setCmtModal: Dispatch<SetStateAction<boolean>>;
+  };
+}
+export const useCmtRes = ({ _data }: IUseCmtRes) => {
+  const { data, closeModal, setPost, setCmtModal } = _data;
+  const [Loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (data) {
+      setLoading(false);
+      if (data.ok) {
+        setPost('');
+        closeModal();
+        setCmtModal(false);
+        setTimeout(() => {
+          setPost('read');
+          setCmtModal(true);
+        }, 500);
+      }
+    }
+  }, [data, closeModal, setPost, setCmtModal]);
+  return { Loading, setLoading };
 };

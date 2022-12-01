@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { PostSchema } from '../../src/components/Post/Read/Schema';
+import { PostSchema } from '../../src/components/Post/Schema';
 import { useGetAllPosts } from '../../src/libs/client/usePosts';
 import { Page } from '../../styles/global';
 

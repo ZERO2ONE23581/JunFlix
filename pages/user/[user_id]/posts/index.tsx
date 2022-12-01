@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { PostPage } from '../../../all/posts';
 import { useGetPosts } from '../../../../src/libs/client/usePosts';
-import { PostSchema } from '../../../../src/components/Post/Read/Schema';
+import { PostSchema } from '../../../../src/components/Post/Schema';
 
 const MyPostsPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();

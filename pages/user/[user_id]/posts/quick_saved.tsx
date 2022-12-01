@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { PostPage } from '../../../all/posts';
 import { color, redColor } from '../../../../styles/variants';
 import { useGetPosts } from '../../../../src/libs/client/usePosts';
-import { PostSchema } from '../../../../src/components/Post/Read/Schema';
+import { PostSchema } from '../../../../src/components/Post/Schema';
 
 const QSPostsPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();

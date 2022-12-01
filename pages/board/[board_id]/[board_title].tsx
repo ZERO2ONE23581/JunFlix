@@ -11,7 +11,7 @@ import { Board } from '../../../src/components/Board/Read/Each';
 import { useGetBoard } from '../../../src/libs/client/useBoards';
 import { useGetPosts } from '../../../src/libs/client/usePosts';
 import { LoadingModal } from '../../../src/Tools/Modal/loading_modal';
-import { PostSchema } from '../../../src/components/Post/Read/Schema';
+import { PostSchema } from '../../../src/components/Post/Schema';
 
 const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();

@@ -108,6 +108,7 @@ export const CreateBox = ({ _data }: ICreateBox) => {
                 label: 'Description',
                 text: watch('description'),
                 register: register('description'),
+                placeholder: 'Fill this blank...',
                 error: errors.description?.message,
               }}
             />
