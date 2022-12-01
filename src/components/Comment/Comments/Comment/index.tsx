@@ -1,58 +1,102 @@
 import { Btns } from './Btns';
-import { IClickSvg } from '..';
 import { UserDate } from './Date';
-import { Replies } from './Replies';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { Comments, IClickSvg } from '..';
+import { Setting } from '../../Modal/Setting';
 import { Avatar } from '../../../../Tools/Avatar';
-import { Dispatch, SetStateAction } from 'react';
+import { useUser } from '../../../../libs/client/useUser';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Flex, FlexCol } from '../../../../../styles/global';
-import { TheComment } from '../../../../libs/client/useComment';
 import { useTimeDiff } from '../../../../libs/client/useTime';
+import { TheComment, useGetRepHost } from '../../../../libs/client/useComment';
+import { AnimatePresence } from 'framer-motion';
 
 interface IComment {
   _data: {
     theme: boolean;
-    post_id: number;
-    host_id: number;
     comment: TheComment;
-    clickSvg: ({ type, comment }: IClickSvg) => void;
-  };
-  _modal: {
-    modal: string;
-    select: number;
-    option: boolean;
-  };
-  _setState: {
     setPost: Dispatch<SetStateAction<string>>;
-    setModal: Dispatch<SetStateAction<string>>;
-    setOption: Dispatch<SetStateAction<boolean>>;
-    setSelect: Dispatch<SetStateAction<number>>;
   };
 }
-export const Comment = ({ _data, _setState, _modal }: IComment) => {
-  const { theme, comment, clickSvg } = _data;
-  const { setModal, setSelect } = _setState;
-  const userId = comment.host.userId;
-  const _date = { created: comment.createdAt, updated: comment.updatedAt };
-  const { isUpdated } = useTimeDiff({ _date });
+export const Comment = ({ _data }: IComment) => {
+  const router = useRouter();
+  const { isLoggedIn, user_id } = useUser();
+  const { theme, comment, setPost } = _data;
+  const { post_id, reply_id, createdAt, updatedAt } = comment;
+
+  const [modal, setModal] = useState('');
+  const [select, setSelect] = useState(0);
+  const [option, setOption] = useState(false);
+  const { isUpdated } = useTimeDiff({ createdAt, updatedAt });
+  const { replied_to } = useGetRepHost({ post_id, reply_id });
+  const avatar_size = replied_to ? '3.2rem' : '3.5rem';
+
+  const clickSvg = ({ type, comment }: IClickSvg) => {
+    if (!isLoggedIn) return router.push(`/login`);
+    const isMyComment = Boolean(comment.host_id === user_id);
+    //
+    setSelect(comment.id);
+    if (type === 'ellipsis' || type === 'edit' || type === 'delete') {
+      if (!isMyComment) return alert('no my comment');
+    }
+    if (type === 'ellipsis') return setOption(true);
+    else {
+      setOption(false);
+      if (type === 'reply') return setModal('reply');
+      if (type === 'edit') return setModal('update');
+      if (type === 'delete') return setModal('delete');
+    }
+  };
   return (
-    <Cont key={comment.id}>
-      <Avatar _data={{ theme, host_id: comment.host_id, size: '3.5rem' }} />
-      <Content>
-        <UserDate _date={_date} userId={userId} />
-        <p>
-          {isUpdated && <span className="update">{isUpdated}</span>}
-          <span>{comment.text}</span>
-        </p>
-        <Btns _data={{ theme, comment, setModal, setSelect, clickSvg }} />
-        <Replies
-          _modal={_modal}
-          _setState={_setState}
-          _data={{ ..._data, replied_to: userId }}
-        />
-      </Content>
-    </Cont>
+    <>
+      <AnimatePresence>
+        <Cont
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          variants={cmtVar}
+          key={comment.id}
+        >
+          <Avatar
+            _data={{ theme, host_id: comment.host_id, size: avatar_size }}
+          />
+          <Content>
+            <UserDate
+              _data={{ userId: comment.host.userId, createdAt, updatedAt }}
+            />
+            <p>
+              {replied_to && <span className="replied_to">@{replied_to}</span>}
+              {isUpdated && <span className="update">{isUpdated}</span>}
+              <span>{comment.text}</span>
+            </p>
+            <Btns _data={{ theme, comment, setModal, setSelect, clickSvg }} />
+          </Content>
+        </Cont>
+      </AnimatePresence>
+
+      <Setting
+        _modal={{ modal, select, option }}
+        _data={{ theme, clickSvg, comment }}
+        _setState={{ setPost, setModal, setSelect, setOption }}
+      />
+      <Comments
+        theme={theme}
+        setPost={setPost}
+        _data={{
+          og_id: comment.id,
+          post_id: comment.post_id,
+          host_id: comment.host_id,
+        }}
+      />
+    </>
   );
+};
+
+const cmtVar = {
+  exit: () => ({ opacity: 0, scale: 0 }),
+  initial: () => ({ opacity: 0, scale: 0 }),
+  animate: () => ({ scale: 1, opacity: 1, transition: { duration: 0.3 } }),
 };
 
 const Cont = styled(Flex)`
@@ -69,6 +113,13 @@ const Content = styled(FlexCol)`
       font-size: 1rem;
       margin-right: 0.5rem;
       color: ${(p) => p.theme.color.logo};
+    }
+    .replied_to {
+      color: #74b9ff;
+      font-size: 1rem;
+      font-weight: 500;
+      font-style: italic;
+      margin-right: 0.5rem;
     }
   }
 `;

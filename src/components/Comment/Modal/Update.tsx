@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { ISetPost } from '..';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Svg } from '../../../Tools/Svg';
 import { IRes } from '../../../types/global';
 import { Avatar } from '../../../Tools/Avatar';
@@ -17,16 +17,18 @@ import { useLength } from '../../../libs/client/useTools';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 import { TheComment } from '../../../libs/client/useComment';
 
-interface IUpdateModal extends ISetPost {
+interface IUpdateModal {
   _data: {
+    theme: boolean;
     modal: boolean;
-    post_id: number;
-    og_cmt: TheComment;
+    comment: TheComment;
     closeModal: () => void;
+    setPost: Dispatch<SetStateAction<string>>;
   };
 }
-export const UpdateModal = ({ theme, _data, setPost }: IUpdateModal) => {
-  const { og_cmt, modal, closeModal, post_id } = _data;
+export const UpdateModal = ({ _data }: IUpdateModal) => {
+  const { theme, modal, closeModal, comment: og_cmt, setPost } = _data;
+  const { post_id } = og_cmt;
   const [post, { loading, data }] = useMutation<IRes>(`/api/comment/update`);
   const { user_id: host_id } = useUser();
   const {

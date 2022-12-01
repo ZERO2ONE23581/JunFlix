@@ -4,11 +4,16 @@ import { IDate, useTimeDiff } from '../../../../libs/client/useTime';
 import { useCapLetter } from '../../../../libs/client/useTools';
 import { ReadDate } from '../../../../Tools/Date';
 
-interface IComment extends IDate {
-  userId: string;
+interface IComment {
+  _data: {
+    userId: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
 }
-export const UserDate = ({ userId, _date }: IComment) => {
-  const { time, type } = useTimeDiff({ _date });
+export const UserDate = ({ _data }: IComment) => {
+  const { userId, createdAt, updatedAt } = _data;
+  const { time, type } = useTimeDiff({ createdAt, updatedAt });
   return (
     <Cont>
       <Host>{useCapLetter(userId)}</Host>

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { UseFormSetError } from 'react-hook-form';
 
 export const useUploadImg = async (image: FileList | undefined) => {
-  console.log(image, '??!!');
   if (image && image.length > 0) {
     const { uploadURL } = await (await fetch(`/api/file`)).json();
     const form = new FormData();

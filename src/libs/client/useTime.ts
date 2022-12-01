@@ -1,14 +1,11 @@
 export interface IDate {
-  _date: {
-    created: Date;
-    updated: Date;
-  };
+  createdAt: Date;
+  updatedAt: Date;
 }
-export const useTimeDiff = ({ _date }: IDate) => {
-  const { created, updated } = _date;
+export const useTimeDiff = ({ createdAt, updatedAt }: IDate) => {
   const today = new Date().getTime();
-  const start = new Date(created).getTime();
-  const update = new Date(updated).getTime();
+  const start = new Date(createdAt).getTime();
+  const update = new Date(updatedAt).getTime();
   const diff =
     start === update ? Math.abs(today - start) : Math.abs(today - update);
   const getSec = (time: number) => time / 1000;
@@ -26,6 +23,10 @@ export const useTimeDiff = ({ _date }: IDate) => {
     else return { time: Math.floor(sec), type: 'second' };
   };
   const { time, type } = getTime();
-  const isUpdated = start === update ? '' : '(updated)';
+  const isUpdated = Boolean(
+    createdAt.toString().slice(0, 20) === updatedAt.toString().slice(0, 20)
+  )
+    ? ''
+    : '(updated)';
   return { isUpdated, time, type };
 };

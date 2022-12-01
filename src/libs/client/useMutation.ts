@@ -25,7 +25,7 @@ export default function useMutation<T = any>(url: string): IMutationReturn<T> {
     })
       .then((dataFromBack) => dataFromBack.json())
       .catch((jsonError) => {
-        console.log(jsonError);
+        alert(jsonError);
       })
       .then((data) => setResult((prev) => ({ ...prev, data })))
       .catch((error) => setResult((prev) => ({ ...prev, error })))

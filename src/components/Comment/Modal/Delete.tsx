@@ -1,25 +1,27 @@
-import { ISetPost } from '..';
 import styled from '@emotion/styled';
 import { Btn } from '../../../Tools/Button';
-import { useEffect, useState } from 'react';
 import { IRes } from '../../../types/global';
 import { AnimatePresence } from 'framer-motion';
 import { OverlayBg } from '../../../Tools/overlay';
 import { color } from '../../../../styles/variants';
+import { BtnWrap, Modal } from '../../../../styles/global';
 import useMutation from '../../../libs/client/useMutation';
+import { TheComment } from '../../../libs/client/useComment';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
-import { BtnWrap, Flex, Modal } from '../../../../styles/global';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-interface IDeleteModal extends ISetPost {
+interface IDeleteModal {
   _data: {
+    theme: boolean;
     modal: boolean;
-    cmt_id: number;
-    post_id: number;
+    comment: TheComment;
     closeModal: () => void;
+    setPost: Dispatch<SetStateAction<string>>;
   };
 }
-export const DeleteModal = ({ theme, _data, setPost }: IDeleteModal) => {
-  const { cmt_id, modal, closeModal, post_id } = _data;
+export const DeleteModal = ({ _data }: IDeleteModal) => {
+  const { theme, setPost, modal, closeModal, comment } = _data;
+  const { id: cmt_id, post_id } = comment;
   const [post, { loading, data }] = useMutation<IRes>(`/api/comment/delete`);
   const [Loading, setLoading] = useState(false);
   const clickDelete = () => {

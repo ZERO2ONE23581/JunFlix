@@ -15,18 +15,35 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   });
   if (!post) return res.json({ ok: false, error: 'no post found' });
 
-  const target_cmt = await client.comment.findUnique({
+  const target = await client.comment.findUnique({
     where: { id: +cmt_id.toString() },
   });
-  if (!target_cmt) return res.json({ ok: false, error: 'no comment found' });
+  if (!target) return res.json({ ok: false, error: 'no comment found' });
 
-  const isPostMatch = Boolean(post.id === target_cmt.post_id);
+  const isPostMatch = Boolean(post.id === target.post_id);
   if (!isPostMatch) return res.json({ ok: false, error: 'invalid post' });
 
-  await client.comment.deleteMany({ where: { og_id: target_cmt.id } });
-  await client.comment.deleteMany({ where: { reply_id: target_cmt.id } });
+  //if replies
+  if (target.og_id && target.id > target.reply_id) {
+    const original = await client.comment.findUnique({
+      where: { id: target.og_id },
+    });
+    if (!original)
+      return res.json({ ok: false, error: 'no original comment found' });
+
+    const replies = await client.comment.findMany({
+      where: { og_id: original.id },
+    });
+    const filterd = replies.filter((cmt) => cmt.id >= target.id);
+    filterd.map(
+      async (target) =>
+        await client.comment.delete({ where: { id: target.id } })
+    );
+    return res.json({ ok: true });
+  }
+  //if no replies
   const isDeleted = Boolean(
-    await client.comment.delete({ where: { id: target_cmt.id } })
+    await client.comment.delete({ where: { id: target.id } })
   );
   return res.json({ ok: isDeleted });
 }

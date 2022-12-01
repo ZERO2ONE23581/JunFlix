@@ -11,12 +11,9 @@ import { TheComment } from '../../../libs/client/useComment';
 import { ReplyModal } from './Reply';
 import { IClickSvg } from '../Comments';
 
-interface IOPtion {
+interface ISetting {
   _data: {
-    og_id: number;
     theme: boolean;
-    post_id: number;
-    reply_id?: number;
     comment: TheComment;
     clickSvg: ({ type, comment }: IClickSvg) => void;
   };
@@ -32,15 +29,17 @@ interface IOPtion {
     setOption: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const Option = ({ _data, _setState, _modal }: IOPtion) => {
+export const Setting = ({ _data, _setState, _modal }: ISetting) => {
   const { modal, select, option } = _modal;
-  const { setPost, setModal, setSelect, setOption } = _setState;
-  const { post_id, comment, clickSvg, theme, og_id, reply_id } = _data;
+  const { comment, clickSvg, theme } = _data;
   const isSelected = Boolean(select === comment.id);
+
   const isOption = option && isSelected;
   const isReply = !option && isSelected && Boolean(modal === 'reply');
   const isDelete = !option && isSelected && Boolean(modal === 'delete');
   const isUpdate = !option && isSelected && Boolean(modal === 'update');
+
+  const { setPost, setModal, setSelect, setOption } = _setState;
   const closeModal = () => {
     setSelect(0);
     setModal('');
@@ -48,6 +47,13 @@ export const Option = ({ _data, _setState, _modal }: IOPtion) => {
   };
   return (
     <AnimatePresence>
+      <ReplyModal
+        key={comment.id * 22}
+        theme={theme}
+        setPost={setPost}
+        _data={{ closeModal, modal: isReply, targetCmt: comment }}
+      />
+
       {isOption && (
         <>
           <Cont
@@ -78,24 +84,14 @@ export const Option = ({ _data, _setState, _modal }: IOPtion) => {
           <OverlayBg closeModal={closeModal} />
         </>
       )}
-      <ReplyModal
-        theme={theme}
-        setPost={setPost}
-        key={comment.id * 22}
-        _data={{ post_id, closeModal, modal: isReply }}
-        _reply={{ og_id, rep_userId: comment.host.userId, reply_id }}
-      />
+
       <UpdateModal
-        theme={theme}
-        setPost={setPost}
         key={comment.id * 33}
-        _data={{ post_id, closeModal, modal: isUpdate, og_cmt: comment }}
+        _data={{ theme, setPost, closeModal, modal: isUpdate, comment }}
       />
       <DeleteModal
-        theme={theme}
-        setPost={setPost}
         key={comment.id * 44}
-        _data={{ post_id, closeModal, modal: isDelete, cmt_id: comment.id }}
+        _data={{ theme, setPost, closeModal, modal: isDelete, comment }}
       />
     </AnimatePresence>
   );

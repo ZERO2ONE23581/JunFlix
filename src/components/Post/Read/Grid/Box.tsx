@@ -1,10 +1,8 @@
 import styled from '@emotion/styled';
-import { UseFormRegister } from 'react-hook-form';
 import { avatarLink } from '../../../../Tools/Avatar/indexxx';
-import { Flex, FlexCol } from '../../../../../styles/global';
+import { FlexCol } from '../../../../../styles/global';
 import { useCapLetters } from '../../../../libs/client/useTools';
-import { TweenTrans, color, variants } from '../../../../../styles/variants';
-import { Svg } from '../../../../Tools/Svg';
+import { TweenTrans, color } from '../../../../../styles/variants';
 
 interface IPostBox {
   _data: {

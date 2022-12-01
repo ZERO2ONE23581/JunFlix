@@ -1,56 +1,66 @@
+import { Hide } from './Hide';
 import { Reply } from './Reply';
-import styled from '@emotion/styled';
 import { IClickSvg } from '../..';
-import { Option } from '../../../Modal/Option';
-import { Dispatch, SetStateAction } from 'react';
+import styled from '@emotion/styled';
+import { Option } from '../../../Modal/Setting';
 import { FlexCol } from '../../../../../../styles/global';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { TheComment, useComments } from '../../../../../libs/client/useComment';
 
 interface IReplies {
   _data: {
     theme: boolean;
-    post_id: number;
-    host_id: number;
-    replied_to: string;
-    comment: TheComment;
+    isReFold: boolean;
+    original: TheComment;
     clickSvg: ({ type, comment }: IClickSvg) => void;
   };
-  _modal: {
+  _usestate: {
     modal: string;
     select: number;
     option: boolean;
-  };
-  _setState: {
     setPost: Dispatch<SetStateAction<string>>;
     setModal: Dispatch<SetStateAction<string>>;
     setSelect: Dispatch<SetStateAction<number>>;
     setOption: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const Replies = ({ _data, _setState, _modal }: IReplies) => {
-  const { replied_to, theme, comment, post_id, host_id, clickSvg } = _data;
-  const __data = { replied_to, theme, post_id, host_id, clickSvg };
-  const { replies } = useComments({ post_id, cmt_id: comment.id });
+export const Replies = ({ _data, _usestate }: IReplies) => {
+  const { theme, isReFold, original, clickSvg } = _data;
+  const { post_id, id: og_id } = original;
+  const { modal, select, option, setPost, setModal, setSelect, setOption } =
+    _usestate;
+  const { replies } = useComments({ post_id, comment_id: og_id });
+  const length = replies?.length!;
+  const [hide, setHide] = useState(false);
+  const sliced = replies?.slice(1, length);
   return (
     <>
-      {replies?.map((comment) => (
-        <Cont key={comment.id}>
-          <Reply _setState={_setState} _data={{ ...__data, comment }} />
-          <Replies
-            _modal={_modal}
-            _setState={_setState}
-            _data={{ ...__data, comment }}
+      {!isReFold && <Hide _data={{ hide, theme, length, setHide }} />}
+      {replies?.map((reply) => (
+        <Cont key={reply.id}>
+          <Reply
+            _data={{
+              theme,
+              post_id,
+              host_id,
+              replied_to,
+              comment,
+              clickSvg,
+              comment: reply,
+            }}
+            _setState={{ setPost, setModal, setSelect }}
           />
           <Option
             _modal={_modal}
-            _setState={_setState}
-            _data={{ ...__data, comment, og_id: comment.id }}
+            _setState={{ setPost, setModal, setSelect, setOption }}
+            _data={{ theme, clickSvg, comment: reply }}
           />
         </Cont>
       ))}
     </>
   );
 };
+
 const Cont = styled(FlexCol)`
   //border: 3px solid crimson;
 `;

@@ -32,7 +32,7 @@ export const PostComment = ({ theme, _data, setPost }: IPostComment) => {
         <Comments
           theme={theme}
           setPost={setPost}
-          _data={{ post_id, host_id }}
+          _data={{ post_id, host_id, og_id: 0 }}
         />
 
         <div className="text">

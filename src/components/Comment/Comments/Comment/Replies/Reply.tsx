@@ -1,13 +1,13 @@
 import { Btns } from '../Btns';
-import styled from '@emotion/styled';
 import { IClickSvg } from '../..';
-import { Avatar } from '../../../../../Tools/Avatar';
+import { UserDate } from '../Date';
+import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
+import { Avatar } from '../../../../../Tools/Avatar';
 import { Flex, FlexCol } from '../../../../../../styles/global';
+import { useTimeDiff } from '../../../../../libs/client/useTime';
 import { useCapLetter } from '../../../../../libs/client/useTools';
 import { TheComment } from '../../../../../libs/client/useComment';
-import { UserDate } from '../Date';
-import { useTimeDiff } from '../../../../../libs/client/useTime';
 
 interface IReply {
   _data: {

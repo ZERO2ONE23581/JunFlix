@@ -15,24 +15,23 @@ import { ICmtForm } from '../../../types/comments';
 import useMutation from '../../../libs/client/useMutation';
 import { useCapLetter, useLength } from '../../../libs/client/useTools';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
+import { TheComment } from '../../../libs/client/useComment';
+import { useRouter } from 'next/router';
 
 interface IReplyModal extends ISetPost {
   _data: {
     modal: boolean;
-    post_id: number;
+    targetCmt: TheComment;
     closeModal: () => void;
   };
-  _reply: {
-    og_id: number;
-    rep_userId: string;
-    reply_id?: number;
-  };
 }
-export const ReplyModal = ({ theme, _data, _reply, setPost }: IReplyModal) => {
-  const { modal, closeModal, post_id } = _data;
-  const { og_id, rep_userId: userId, reply_id } = _reply;
+export const ReplyModal = ({ theme, _data, setPost }: IReplyModal) => {
+  const router = useRouter();
+  const { user_id: host_id, isLoggedIn } = useUser();
+  const { modal, closeModal, targetCmt: comment } = _data;
+  const { id, og_id, reply_id, post_id, host } = comment;
+  const userId = useCapLetter(host.userId);
   const [reply, { loading, data }] = useMutation<IRes>(`/api/comment/reply`);
-  const { user_id: host_id } = useUser();
   const {
     watch,
     register,
@@ -44,13 +43,13 @@ export const ReplyModal = ({ theme, _data, _reply, setPost }: IReplyModal) => {
 
   const onValid = ({ text }: ICmtForm) => {
     if (loading) return;
+    if (!isLoggedIn) return router.push('/login');
     if (useLength(text) > 700)
       return setError('text', { message: 'overmax_comment' });
     setLoading(true);
-    if (og_id) {
-      if (reply_id) return reply({ text, post_id, og_id, reply_id });
-      else return reply({ text, post_id, og_id, reply_id: og_id });
-    }
+    const isOriginal = Boolean(og_id === 0 && reply_id === 0);
+    if (isOriginal) return reply({ text, post_id, og_id: id, reply_id: id });
+    else return reply({ text, post_id, og_id: comment.og_id, reply_id: id });
   };
 
   const [Loading, setLoading] = useState(false);
@@ -66,7 +65,6 @@ export const ReplyModal = ({ theme, _data, _reply, setPost }: IReplyModal) => {
       }
     }
   }, [data, closeModal, setPost]);
-
   return (
     <AnimatePresence>
       {Loading && <LoadingModal theme={theme} />}
@@ -87,10 +85,8 @@ export const ReplyModal = ({ theme, _data, _reply, setPost }: IReplyModal) => {
                 </div>
                 <div>
                   <h1>
-                    {og_id ? `Add Reply ` : 'Add Comment'}
-                    {og_id && (
-                      <span className="userId">@{useCapLetter(userId!)}</span>
-                    )}
+                    <span>Reply to</span>
+                    <span className="userId">@{userId}</span>
                   </h1>
                 </div>
                 <div>
@@ -139,6 +135,11 @@ const Cont = styled(Modal)`
     gap: 1.2rem;
     h1 {
       font-size: 1.5rem;
+      span {
+        :first-of-type {
+          margin-right: 0.5rem;
+        }
+      }
       .userId {
         color: #3498db;
         font-weight: 500;

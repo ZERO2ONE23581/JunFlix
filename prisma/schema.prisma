@@ -111,13 +111,13 @@ model Like {
 }
 model Comment {
   id               Int            @id @default(autoincrement())
-  og_id            Int?           @default(1)      
-  reply_id         Int?           @default(1)      
+  og_id            Int           @default(0)      
+  reply_id         Int           @default(0)      
   text             String?        @db.LongText
   updatedAt        DateTime       @updatedAt
   createdAt        DateTime       @default(now())
   host_id          Int            
-  post_id          Int?       
+  post_id          Int       
   likes            Like[]      
   host             User           @relation(fields: [host_id], references: [id], onDelete: Cascade)
   post             Post?          @relation(fields: [post_id], references: [id], onDelete: Cascade)

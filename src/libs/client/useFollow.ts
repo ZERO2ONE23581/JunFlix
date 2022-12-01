@@ -50,7 +50,7 @@ export default function useFollow<T = any>(
     const success = post_result?.ok;
     const error = post_result?.error;
     if (error) alert(error);
-    if (success) console.log(success);
+    if (success) alert(success);
   }, [post_result]);
 
   const isFollowing = data?.isFollowing;
