@@ -1,21 +1,28 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Svg } from '../../../../../../Tools/Svg';
-import { IGetPostType } from '../../../../../../types/post';
+import { IGetPostType, IPostType } from '../../../../../../types/post';
 import { MsgModal } from '../../../../../../Tools/msg_modal';
 import { useLike } from '../../../../../../libs/client/useLike';
 import { Flex, FlexCol } from '../../../../../../../styles/global';
+import { Dispatch, SetStateAction } from 'react';
 
-interface IIcons extends IGetPostType {
-  theme: boolean;
+interface IIcons {
+  _data: {
+    theme: boolean;
+    post: IPostType;
+    setCmtModal: Dispatch<SetStateAction<boolean>>;
+  };
 }
-export const Icons = ({ theme, post }: IIcons) => {
+export const Icons = ({ _data }: IIcons) => {
   const router = useRouter();
+  const { theme, post, setCmtModal } = _data;
   const { board_id, id: post_id, board, _count } = post;
   const onBoard = () => router.push(`/board/${board_id}/${board.title}`);
   const { msg, fill, createLike, num } = useLike({ post_id, theme });
   const { likes: likes_num } = _count;
   const counts = num ? num : likes_num;
+  const clickCmt = () => setCmtModal((p) => !p);
   return (
     <>
       <Cont className="icons">
@@ -27,7 +34,7 @@ export const Icons = ({ theme, post }: IIcons) => {
               item={{ fill }}
               onClick={createLike}
             />
-            <Svg type="comment" theme={theme} />
+            <Svg type="comment" theme={theme} onClick={clickCmt} />
           </IconWrap>
           {Boolean(board_id) && (
             <Svg type="boards" theme={theme} onClick={onBoard} />

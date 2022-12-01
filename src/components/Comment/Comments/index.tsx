@@ -1,43 +1,34 @@
+import { More } from './More';
 import { Comment } from './Comment';
 import styled from '@emotion/styled';
-import { ITheme } from '../../../../styles/theme';
-import { Flex, FlexCol } from '../../../../styles/global';
-import { Dispatch, SetStateAction, useState } from 'react';
-import {
-  TheComment,
-  useAllCmts,
-  useReplies,
-} from '../../../libs/client/useComment';
 import { AnimatePresence } from 'framer-motion';
-import { color } from '../../../../styles/variants';
-import { More } from './More';
+import { FlexCol } from '../../../../styles/global';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useAllCmts, useReplies } from '../../../libs/client/useComment';
 
-interface IComments extends ITheme {
-  setPost: Dispatch<SetStateAction<string>>;
+interface IComments {
   _data: {
+    theme: boolean;
     og_id: number;
     post_id: number;
-    host_id: number;
+    setPost: Dispatch<SetStateAction<string>>;
+    setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
-export interface IClickSvg {
-  type: string;
-  comment: TheComment;
-}
-export const Comments = ({ theme, _data, setPost }: IComments) => {
-  //
-  const { post_id, og_id } = _data;
+export const Comments = ({ _data }: IComments) => {
+  const { theme, setPost, post_id, og_id, setCmtModal } = _data;
   const { replies, isReplies } = useReplies({ post_id, og_id });
   const { isOriginals, total_length, originals } = useAllCmts({ post_id });
-
   const isReply = Boolean(og_id);
+  const isArray = og_id ? isReplies : isOriginals;
+
   const rep_length = replies?.length!;
-  const isZero = Boolean(rep_length - 1 === 0);
   const [sliced, setSliced] = useState(true);
+  const isZero = Boolean(rep_length - 1 === 0);
   const Relies =
     sliced && !isZero ? replies?.slice(rep_length - 1, rep_length) : replies;
+
   const Array = og_id ? Relies : originals;
-  const isArray = og_id ? isReplies : isOriginals;
   return (
     <AnimatePresence>
       {isArray && (
@@ -46,10 +37,9 @@ export const Comments = ({ theme, _data, setPost }: IComments) => {
           {isReply && !isZero && (
             <More _data={{ theme, sliced, rep_length, setSliced }} />
           )}
-
           {Array?.map((comment) => (
             <Arr key={comment.id} isReply={isReply}>
-              <Comment _data={{ theme, comment, setPost }} />
+              <Comment _data={{ theme, comment, setPost, setCmtModal }} />
             </Arr>
           ))}
         </Cont>
@@ -65,8 +55,6 @@ export const Comments = ({ theme, _data, setPost }: IComments) => {
 const Arr = styled.div<{ isReply: boolean }>`
   width: fit-content;
   margin-left: ${(p) => p.isReply && '1rem'};
-  //border: 2px solid hotpink;
-  //border: ${(p) => p.isReply && '3px solid yellow'};
 `;
 const Cont = styled(FlexCol)`
   gap: 1rem;

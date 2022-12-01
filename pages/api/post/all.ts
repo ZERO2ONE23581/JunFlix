@@ -12,6 +12,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       comments: true,
       host: { include: { _count: true } },
     },
+    orderBy: { id: 'desc' },
   });
   const isArray = Boolean(posts.length > 0);
   if (!isArray) return res.json({ ok: false, error: 'no posts found.' });

@@ -11,10 +11,10 @@ export interface IAvatar {
     size: string;
     theme: boolean;
     isRound?: boolean;
+    onMyPage: boolean;
+    onAvatar?: () => void;
     host_id: number | null;
     preview?: string | null;
-    onAvatar?: () => void;
-    onMyPage: boolean;
   };
 }
 export const Avatar = ({ _data }: IAvatar) => {

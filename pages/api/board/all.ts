@@ -5,6 +5,7 @@ import { withApiSession } from '../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const boards = await client.board.findMany({
+    orderBy: { id: 'desc' },
     include: {
       host: true,
       posts: true,

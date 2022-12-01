@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { ISetPost } from '..';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Svg } from '../../../Tools/Svg';
 import { IRes } from '../../../types/global';
 import { Avatar } from '../../../Tools/Avatar';
@@ -23,12 +23,13 @@ interface IReplyModal extends ISetPost {
     modal: boolean;
     targetCmt: TheComment;
     closeModal: () => void;
+    setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const ReplyModal = ({ theme, _data, setPost }: IReplyModal) => {
   const router = useRouter();
   const { user_id: host_id, isLoggedIn } = useUser();
-  const { modal, closeModal, targetCmt: comment } = _data;
+  const { modal, closeModal, targetCmt: comment, setCmtModal } = _data;
   const { id, og_id, reply_id, post_id, host } = comment;
   const userId = useCapLetter(host.userId);
   const [reply, { loading, data }] = useMutation<IRes>(`/api/comment/reply`);
@@ -56,15 +57,17 @@ export const ReplyModal = ({ theme, _data, setPost }: IReplyModal) => {
   useEffect(() => {
     if (data) {
       setLoading(false);
+      setCmtModal(false);
       if (data.ok) {
         closeModal();
         setPost('');
         setTimeout(() => {
           setPost('read');
+          setCmtModal(true);
         }, 500);
       }
     }
-  }, [data, closeModal, setPost]);
+  }, [data, closeModal, setPost, setCmtModal]);
   return (
     <AnimatePresence>
       {Loading && <LoadingModal theme={theme} />}

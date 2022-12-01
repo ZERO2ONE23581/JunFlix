@@ -24,7 +24,15 @@ export const Host = ({ theme, post }: IHost) => {
   return (
     <Cont className="host">
       <Flex className="flex">
-        <Avatar _data={{ theme, size: '3.5rem', host_id, isRound: true }} />
+        <Avatar
+          _data={{
+            theme,
+            host_id,
+            size: '3.5rem',
+            isRound: true,
+            onMyPage: true,
+          }}
+        />
         <FlexCol className="host-info">
           <span>@{userId}</span>
           <span>

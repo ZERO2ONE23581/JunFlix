@@ -1,8 +1,8 @@
 import { Btns } from './Btns';
+import { Comments } from '..';
 import { UserDate } from './Date';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Comments, IClickSvg } from '..';
 import { Setting } from '../../Modal/Setting';
 import { Avatar } from '../../../../Tools/Avatar';
 import { useUser } from '../../../../libs/client/useUser';
@@ -12,17 +12,22 @@ import { useTimeDiff } from '../../../../libs/client/useTime';
 import { TheComment, useGetRepHost } from '../../../../libs/client/useComment';
 import { AnimatePresence } from 'framer-motion';
 
+export interface IClickSvg {
+  type: string;
+  comment: TheComment;
+}
 interface IComment {
   _data: {
     theme: boolean;
     comment: TheComment;
     setPost: Dispatch<SetStateAction<string>>;
+    setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Comment = ({ _data }: IComment) => {
   const router = useRouter();
   const { isLoggedIn, user_id } = useUser();
-  const { theme, comment, setPost } = _data;
+  const { theme, comment, setPost, setCmtModal } = _data;
   const { post_id, reply_id, createdAt, updatedAt } = comment;
 
   const [modal, setModal] = useState('');
@@ -76,18 +81,13 @@ export const Comment = ({ _data }: IComment) => {
       </AnimatePresence>
 
       <Setting
+        key={comment.id}
         _modal={{ modal, select, option }}
         _data={{ theme, clickSvg, comment }}
-        _setState={{ setPost, setModal, setSelect, setOption }}
+        _setState={{ setPost, setModal, setSelect, setOption, setCmtModal }}
       />
       <Comments
-        theme={theme}
-        setPost={setPost}
-        _data={{
-          og_id: comment.id,
-          post_id: comment.post_id,
-          host_id: comment.host_id,
-        }}
+        _data={{ theme, setPost, post_id, og_id: comment.id, setCmtModal }}
       />
     </>
   );

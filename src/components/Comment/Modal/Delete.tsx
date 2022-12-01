@@ -17,10 +17,11 @@ interface IDeleteModal {
     comment: TheComment;
     closeModal: () => void;
     setPost: Dispatch<SetStateAction<string>>;
+    setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const DeleteModal = ({ _data }: IDeleteModal) => {
-  const { theme, setPost, modal, closeModal, comment } = _data;
+  const { theme, setPost, modal, closeModal, comment, setCmtModal } = _data;
   const { id: cmt_id, post_id } = comment;
   const [post, { loading, data }] = useMutation<IRes>(`/api/comment/delete`);
   const [Loading, setLoading] = useState(false);
@@ -32,15 +33,17 @@ export const DeleteModal = ({ _data }: IDeleteModal) => {
   useEffect(() => {
     if (data) {
       setLoading(false);
+      setCmtModal(false);
       if (data.ok) {
         closeModal();
         setPost('');
         setTimeout(() => {
           setPost('read');
+          setCmtModal(true);
         }, 500);
       }
     }
-  }, [data, closeModal, setPost]);
+  }, [data, closeModal, setPost, setCmtModal]);
   return (
     <AnimatePresence>
       {Loading && <LoadingModal theme={theme} />}
@@ -81,6 +84,7 @@ export const DeleteModal = ({ _data }: IDeleteModal) => {
 const Cont = styled(Modal)`
   top: 40%;
   z-index: 100;
+  min-width: 500px;
   padding-top: 2rem;
   height: fit-content;
   .btn_wrap {

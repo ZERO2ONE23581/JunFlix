@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { ISetPost } from '..';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Svg } from '../../../Tools/Svg';
 import { IRes } from '../../../types/global';
@@ -24,10 +23,18 @@ interface IUpdateModal {
     comment: TheComment;
     closeModal: () => void;
     setPost: Dispatch<SetStateAction<string>>;
+    setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const UpdateModal = ({ _data }: IUpdateModal) => {
-  const { theme, modal, closeModal, comment: og_cmt, setPost } = _data;
+  const {
+    setCmtModal,
+    theme,
+    modal,
+    closeModal,
+    comment: og_cmt,
+    setPost,
+  } = _data;
   const { post_id } = og_cmt;
   const [post, { loading, data }] = useMutation<IRes>(`/api/comment/update`);
   const { user_id: host_id } = useUser();
@@ -57,15 +64,17 @@ export const UpdateModal = ({ _data }: IUpdateModal) => {
   useEffect(() => {
     if (data) {
       setLoading(false);
+      setCmtModal(false);
       if (data.ok) {
         closeModal();
         setPost('');
         setTimeout(() => {
           setPost('read');
+          setCmtModal(true);
         }, 500);
       }
     }
-  }, [data, closeModal, setPost]);
+  }, [data, closeModal, setPost, setCmtModal]);
   return (
     <AnimatePresence>
       {Loading && <LoadingModal theme={theme} />}
@@ -126,6 +135,7 @@ const Cont = styled(Modal)`
   width: 33vw;
   z-index: 100;
   color: inherit;
+  min-width: 500px;
   height: fit-content;
   background-color: inherit;
   form {

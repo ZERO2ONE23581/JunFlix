@@ -13,8 +13,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!post) return res.json({ ok: false, error: 'no post found' });
 
   const comments = await client.comment.findMany({
-    include: { host: true, likes: true },
+    orderBy: { id: 'desc' },
     where: { post_id: post.id },
+    include: { host: true, likes: true },
   });
   const isCmts = Boolean(comments.length > 0);
   return res.json({ ok: isCmts, comments });
