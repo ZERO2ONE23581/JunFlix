@@ -1,10 +1,8 @@
 import { Comments } from '..';
 import { Comment } from './Comment';
-import styled from '@emotion/styled';
 import { ReplyModal } from './Reply';
 import { UpdateModal } from './Update';
 import { DeleteModal } from './Delete';
-import { Flex } from '../../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { TheComment } from '../../../../libs/client/useComment';
 
@@ -39,7 +37,9 @@ export const ReadCmt = ({ _data }: IReadCmt) => {
   const __data = { theme, comment, setPost, closeModal, setCmtModal };
   return (
     <>
-      <Comment _data={{ ...__data, isOption, ...__state }} />
+      <Comment
+        _data={{ ...__data, isOption, ...__state, setPost, setCmtModal }}
+      />
       <Comments _data={{ theme, post_id, og_id, setPost, setCmtModal }} />
       <>
         <ReplyModal _data={{ ...__data, modal: isModal('reply') }} />
@@ -49,15 +49,3 @@ export const ReadCmt = ({ _data }: IReadCmt) => {
     </>
   );
 };
-
-const cmtVar = {
-  exit: () => ({ opacity: 0, scale: 0 }),
-  initial: () => ({ opacity: 0, scale: 0 }),
-  animate: () => ({ scale: 1, opacity: 1, transition: { duration: 0.3 } }),
-};
-
-const Cont = styled(Flex)`
-  gap: 1rem;
-  align-items: flex-start;
-  justify-content: flex-start;
-`;

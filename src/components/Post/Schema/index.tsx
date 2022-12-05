@@ -5,21 +5,23 @@ import { DeletePost } from '../Delete';
 import { ReadPost } from './Read/Modal';
 import { IPostType } from '../../../types/post';
 import { CommentModal } from '../../Comment/Modal';
+import { ISetFixed } from '../../../../pages/_app';
 
-interface IPostSchema {
+interface IPostSchema extends ISetFixed {
   _data: {
     grid: number;
     theme: boolean;
     posts: IPostType[];
   };
 }
-export const PostSchema = ({ _data }: IPostSchema) => {
+export const PostSchema = ({ _data, setFixed }: IPostSchema) => {
   const { theme, posts, grid } = _data;
   const [modal, setModal] = useState('');
   const [postId, setPostId] = useState(0);
   const post = posts?.find((item) => item.id === postId)!;
   const onClickBox = (id: number) => {
     setPostId(id);
+    setFixed(true);
     setModal('read');
   };
   const post_id = post?.id!;
@@ -30,8 +32,12 @@ export const PostSchema = ({ _data }: IPostSchema) => {
   const open = Boolean(modal === 'read' && post && !cmtModal);
   return (
     <>
-      <PostGrid _data={{ grid, theme, posts, onClickBox }} />
+      <PostGrid
+        setFixed={setFixed}
+        _data={{ grid, theme, posts, onClickBox }}
+      />
       <ReadPost
+        setFixed={setFixed}
         _data={{ theme, post, layoutId }}
         _modal={{ modal: open, setModal, setCmtModal }}
       />

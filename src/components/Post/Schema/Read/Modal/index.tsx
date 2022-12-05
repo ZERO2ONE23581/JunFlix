@@ -9,8 +9,9 @@ import { OverlayBg } from '../../../../../Tools/overlay';
 import { useUser } from '../../../../../libs/client/useUser';
 import { avatarLink } from '../../../../../Tools/Avatar/indexxx';
 import { PostModal, postVar } from '../../../../../../styles/post';
+import { ISetFixed } from '../../../../../../pages/_app';
 
-export interface IReadPostModal {
+export interface IReadPostModal extends ISetFixed {
   _data: {
     theme: boolean;
     post: IPostType;
@@ -22,12 +23,16 @@ export interface IReadPostModal {
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const ReadPost = ({ _data, _modal }: IReadPostModal) => {
+export const ReadPost = ({ _data, _modal, setFixed }: IReadPostModal) => {
   const { loggedInUser } = useUser();
   const { layoutId, post, theme } = _data;
   const { modal, setModal, setCmtModal } = _modal;
   const host_id = post?.host_id!;
   const isMyPost = Boolean(host_id === loggedInUser?.id);
+  const closeModal = () => {
+    setModal('');
+    setFixed(false);
+  };
   return (
     <>
       {modal && (
@@ -39,7 +44,6 @@ export const ReadPost = ({ _data, _modal }: IReadPostModal) => {
             custom={theme}
             variants={postVar}
             layoutId={layoutId}
-            className="post-modal"
           >
             <Setting
               theme={theme}
@@ -51,7 +55,7 @@ export const ReadPost = ({ _data, _modal }: IReadPostModal) => {
             <Info _data={{ theme, post, setCmtModal }} />
             <PostCmt _data={{ theme, post, setModal, setCmtModal }} />
           </Cont>
-          <OverlayBg dark={0.3} closeModal={() => setModal('')} />
+          <OverlayBg dark={0.3} closeModal={closeModal} />
         </>
       )}
     </>

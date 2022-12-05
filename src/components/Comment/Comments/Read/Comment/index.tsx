@@ -1,3 +1,4 @@
+import { Option } from './Option';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Content, IClickSvg } from './Content';
@@ -9,7 +10,6 @@ import {
   TheComment,
   useGetRepHost,
 } from '../../../../../libs/client/useComment';
-import { Option } from './Option';
 
 interface IComment {
   _data: {
@@ -21,6 +21,7 @@ interface IComment {
     setModal: Dispatch<SetStateAction<string>>;
     setSelect: Dispatch<SetStateAction<number>>;
     setOption: Dispatch<SetStateAction<boolean>>;
+    setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Comment = ({ _data }: IComment) => {
@@ -32,12 +33,19 @@ export const Comment = ({ _data }: IComment) => {
     setOption,
     closeModal,
     isOption: modal,
+    setPost,
+    setCmtModal,
   } = _data;
   const router = useRouter();
   const { isLoggedIn, user_id } = useUser();
   const { id: cmt_id, post_id, reply_id, host_id } = comment;
-  const { replied_to } = useGetRepHost({ post_id, reply_id });
-
+  const { replied_to } = useGetRepHost({
+    post_id,
+    reply_id,
+    cmt_id,
+    setPost,
+    setCmtModal,
+  });
   const clickSvg = ({ type }: IClickSvg) => {
     if (!isLoggedIn) return router.push(`/login`);
     const isMyComment = Boolean(host_id === user_id);
@@ -53,7 +61,6 @@ export const Comment = ({ _data }: IComment) => {
       if (type === 'delete') return setModal('delete');
     }
   };
-
   const __cmt = { theme, comment, clickSvg };
   const __cnt = { ...__cmt, setModal, setSelect };
   const __option = { ...__cmt, closeModal, modal };
@@ -68,7 +75,7 @@ export const Comment = ({ _data }: IComment) => {
         animate="animate"
       >
         <Avatar _data={{ ...__avatar }} />
-        <Content _data={{ ...__cnt }} />
+        <Content _data={{ ...__cnt, setPost, setCmtModal }} />
       </Cont>
       <Option _data={{ ...__option }} />
     </>

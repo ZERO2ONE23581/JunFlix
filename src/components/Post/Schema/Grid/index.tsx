@@ -4,8 +4,9 @@ import { IconLayer } from './Icon_layer';
 import { IPostType } from '../../../../types/post';
 import { FlexCol, Grid } from '../../../../../styles/global';
 import { usePostsGrid } from '../../../../libs/client/usePosts';
+import { ISetFixed } from '../../../../../pages/_app';
 
-interface IMyPosts {
+interface IMyPosts extends ISetFixed {
   _data: {
     grid: number;
     theme: boolean;
@@ -13,7 +14,7 @@ interface IMyPosts {
     onClickBox: (id: number) => void;
   };
 }
-export const PostGrid = ({ _data }: IMyPosts) => {
+export const PostGrid = ({ _data, setFixed }: IMyPosts) => {
   const { theme, posts, onClickBox, grid } = _data;
   const { ColArr, PostArr, max, setMax } = usePostsGrid({ posts, grid });
   return (

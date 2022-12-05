@@ -1,14 +1,18 @@
-import type { NextPage } from 'next';
 import styled from '@emotion/styled';
+import type { NextPage } from 'next';
+import { Page } from '../../styles/global';
+import { Dispatch, SetStateAction } from 'react';
 import { PostSchema } from '../../src/components/Post/Schema';
 import { useGetAllPosts } from '../../src/libs/client/usePosts';
-import { Page } from '../../styles/global';
 
-const AllPosts: NextPage<{ theme: boolean }> = ({ theme }) => {
+const AllPosts: NextPage<{
+  theme: boolean;
+  setFixed: Dispatch<SetStateAction<boolean>>;
+}> = ({ theme, setFixed }) => {
   const { posts } = useGetAllPosts();
   return (
     <PostPage>
-      <PostSchema _data={{ theme, posts, grid: 6 }} />
+      <PostSchema _data={{ theme, posts, grid: 6 }} setFixed={setFixed} />
     </PostPage>
   );
 };

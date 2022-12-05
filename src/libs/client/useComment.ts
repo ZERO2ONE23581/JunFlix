@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { IRes } from '../../types/global';
 import { IUserType } from '../../types/user';
+import useMutation from './useMutation';
 
 export interface TheComment extends Comment {
   host: IUserType;
@@ -19,6 +20,14 @@ interface IUseComments {
 interface IUseReplies {
   og_id: number;
   post_id: number;
+}
+interface IUseCmtRes {
+  _data: {
+    data: IRes | undefined;
+    closeModal: () => void;
+    setPost: Dispatch<SetStateAction<string>>;
+    setCmtModal: Dispatch<SetStateAction<boolean>>;
+  };
 }
 export const useAllCmts = ({ post_id }: IUseComments) => {
   const { data } = useSWR<IGetComments>(
@@ -39,26 +48,42 @@ export const useReplies = ({ post_id, og_id }: IUseReplies) => {
   return { replies, isReplies };
 };
 interface IUseGetRepHost {
+  cmt_id: number;
   post_id: number;
   reply_id: number;
+  setPost: Dispatch<SetStateAction<string>>;
+  setCmtModal: Dispatch<SetStateAction<boolean>>;
 }
-export const useGetRepHost = ({ post_id, reply_id }: IUseGetRepHost) => {
+export const useGetRepHost = ({
+  cmt_id,
+  post_id,
+  reply_id,
+  setPost,
+  setCmtModal,
+}: IUseGetRepHost) => {
   const { data } = useSWR<IGetComments>(
     `/api/comment/post/${post_id}/comments`
   );
   const all = data?.comments;
-  const replied_to = all?.find((cmt) => cmt.id === reply_id)?.host.userId;
-
-  return { replied_to };
+  const reps = all?.find((cmt) => cmt.id === reply_id);
+  const isReply = Boolean(cmt_id && reply_id && post_id);
+  const { data: data_ } = useSWR<IGetComments>(
+    isReply && `/api/comment/${cmt_id}/delete`
+  );
+  useEffect(() => {
+    if (data_) {
+      if (data_.ok) {
+        setPost('');
+        setCmtModal(false);
+        setTimeout(() => {
+          setPost('read');
+          setCmtModal(true);
+        }, 500);
+      }
+    }
+  }, [data_, setPost, setCmtModal]);
+  return { replied_to: reps?.host.userId };
 };
-interface IUseCmtRes {
-  _data: {
-    data: IRes | undefined;
-    closeModal: () => void;
-    setPost: Dispatch<SetStateAction<string>>;
-    setCmtModal: Dispatch<SetStateAction<boolean>>;
-  };
-}
 export const useCmtRes = ({ _data }: IUseCmtRes) => {
   const { data, closeModal, setPost, setCmtModal } = _data;
   const [Loading, setLoading] = useState(false);

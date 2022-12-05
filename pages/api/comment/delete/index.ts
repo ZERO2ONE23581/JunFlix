@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import client from '../../../src/libs/server/prisma_client';
-import withHandler from '../../../src/libs/server/withHandler';
-import { withApiSession } from '../../../src/libs/server/withSession';
+import client from '../../../../src/libs/server/prisma_client';
+import withHandler from '../../../../src/libs/server/withHandler';
+import { withApiSession } from '../../../../src/libs/server/withSession';
+import replies from '../post/[post_id]/comment/[og_id]/replies';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
@@ -23,28 +24,24 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const isPostMatch = Boolean(post.id === target.post_id);
   if (!isPostMatch) return res.json({ ok: false, error: 'invalid post' });
 
-  //if replies
-  if (target.og_id && target.id > target.reply_id) {
-    const original = await client.comment.findUnique({
-      where: { id: target.og_id },
-    });
-    if (!original)
-      return res.json({ ok: false, error: 'no original comment found' });
-
-    const replies = await client.comment.findMany({
-      where: { og_id: original.id },
-    });
-    const filterd = replies.filter((cmt) => cmt.id >= target.id);
-    filterd.map(
-      async (target) =>
-        await client.comment.delete({ where: { id: target.id } })
+  //IF DELETE OG
+  const isOG = Boolean(!target.og_id && !target.reply_id);
+  if (isOG) {
+    const isRepsDeleted = Boolean(
+      await client.comment.deleteMany({ where: { og_id: target.id } })
     );
-    return res.json({ ok: true });
+    const isDeleted = Boolean(
+      await client.comment.delete({ where: { id: target.id } })
+    );
+    return res.json({ ok: isRepsDeleted && isDeleted });
+  } else {
+    const isRepsDeleted = Boolean(
+      await client.comment.deleteMany({ where: { reply_id: target.id } })
+    );
+    const isDeleted = Boolean(
+      await client.comment.delete({ where: { id: target.id } })
+    );
+    return res.json({ ok: isRepsDeleted && isDeleted });
   }
-  //if no replies
-  const isDeleted = Boolean(
-    await client.comment.delete({ where: { id: target.id } })
-  );
-  return res.json({ ok: isDeleted });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

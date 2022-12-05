@@ -17,17 +17,33 @@ interface IContent {
   _data: {
     theme: boolean;
     comment: TheComment;
+    setPost: Dispatch<SetStateAction<string>>;
     setModal: Dispatch<SetStateAction<string>>;
     setSelect: Dispatch<SetStateAction<number>>;
+    setCmtModal: Dispatch<SetStateAction<boolean>>;
     clickSvg: ({ type, comment }: IClickSvg) => void;
   };
 }
 export const Content = ({ _data }: IContent) => {
-  const { theme, comment, setModal, setSelect, clickSvg } = _data;
-  const { post_id, reply_id } = comment;
-  const { createdAt, updatedAt } = comment;
-  const { replied_to } = useGetRepHost({ post_id, reply_id });
+  const {
+    theme,
+    comment,
+    setModal,
+    setSelect,
+    clickSvg,
+    setPost,
+    setCmtModal,
+  } = _data;
+  const { id: cmt_id, post_id, reply_id, createdAt, updatedAt } = comment;
+  const { replied_to } = useGetRepHost({
+    post_id,
+    reply_id,
+    cmt_id,
+    setPost,
+    setCmtModal,
+  });
   const { isUpdated } = useTimeDiff({ createdAt, updatedAt });
+
   return (
     <Cont>
       <UserDate _data={{ userId: comment.host.userId, createdAt, updatedAt }} />

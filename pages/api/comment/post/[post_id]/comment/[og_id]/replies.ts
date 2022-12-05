@@ -14,8 +14,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!post) return res.json({ ok: false, error: 'no post found' });
 
   const original = await client.comment.findUnique({
-    where: { id: +og_id.toString() },
     include: { host: true },
+    where: { id: +og_id.toString() },
   });
   if (!original)
     return res.json({ ok: false, error: 'no original comment found' });
