@@ -11,6 +11,7 @@ export const Logo = () => {
 };
 const Cont = styled.div`
   width: 8rem;
+  cursor: pointer;
   position: relative;
 `;
 const Path = () => {

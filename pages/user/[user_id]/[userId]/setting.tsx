@@ -2,12 +2,11 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { Svg } from '../../../../src/Tools/Svg';
-import { Flex, Page } from '../../../../styles/global';
-import { AnimatePresence, motion } from 'framer-motion';
 import { Head_ } from '../../../../src/Tools/head_title';
-import { UpdateBox } from '../../../../src/components/User/Update';
+import { Flex, FlexPage } from '../../../../styles/global';
+import { BoxType } from '../../../../src/components/User/Update';
 
-const UpdateUser: NextPage<{ theme: boolean }> = ({ theme }) => {
+const UserSetting: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [page, setPage] = useState(0);
   const [back, setBack] = useState(false);
   const clickArrow = (type: string) => {
@@ -26,141 +25,37 @@ const UpdateUser: NextPage<{ theme: boolean }> = ({ theme }) => {
   useEffect(() => {
     setType(`${array[page]}`);
   }, [setType, page, array]);
-  //
   return (
     <>
       <Head_ title="프로필 편집" />
-      <Cont>
-        <Slider className="slider-flex">
+      <FlexPage>
+        <Slider>
           <Svg
             theme={theme}
             type="left-chev"
             onClick={() => clickArrow('left')}
           />
-          <Control className="control-box">
-            <AnimatePresence initial={false} custom={back}>
-              <BoxWrap
-                exit="exit"
-                initial="initial"
-                animate="animate"
-                key={page}
-                custom={back}
-                variants={slideVar}
-                className="box-wrap"
-              >
-                <UpdateBox theme={theme} type={type} />
-              </BoxWrap>
-            </AnimatePresence>
-          </Control>
+          <BoxType _data={{ page, back, type, theme }} />
           <Svg
             theme={theme}
             type="right-chev"
             onClick={() => clickArrow('right')}
           />
         </Slider>
-      </Cont>
+      </FlexPage>
     </>
   );
 };
-export default UpdateUser;
+export default UserSetting;
 
 const Slider = styled(Flex)`
-  width: 55vw;
-  height: 55vh;
-  min-width: 500px;
-  min-height: 500px;
-  //  width: fit-content;
-  align-items: center;
+  min-width: 700px;
+  position: relative;
+  width: fit-content;
+  height: fit-content;
   justify-content: space-between;
-  .control-box {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    .box-wrap {
-      width: 100%;
-      height: 100%;
-    }
+  .left-chev,
+  .right-chev {
+    z-index: 111;
   }
 `;
-const Cont = styled(Page)`
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const Control = styled.div`
-  .userInfo {
-    max-width: 600px;
-  }
-  .avatar {
-    gap: 20px;
-    min-width: 360px;
-    align-items: center;
-    .box-title {
-      gap: 5px;
-      .desc {
-        display: block;
-        font-size: 1.2rem;
-        span {
-          display: block;
-          margin-right: 5px;
-        }
-      }
-    }
-  }
-  .delete {
-    border: 5px solid ${(p) => p.theme.color.logo};
-    .box-title {
-      gap: 0;
-      h1 {
-        margin-bottom: 10px;
-        color: ${(p) => p.theme.color.logo};
-      }
-      h2 {
-        opacity: 0.9;
-        font-size: 1.5rem;
-        span {
-          display: inline-block;
-        }
-      }
-    }
-    > h2 {
-      font-size: 1.2rem;
-      color: ${(p) => p.theme.color.logo};
-    }
-  }
-`;
-
-const BoxWrap = styled(motion.div)`
-  top: 0%;
-  right: 0%;
-  display: flex;
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-`;
-const slideVar = {
-  initial: (back: boolean) => ({
-    scale: 0,
-    opacity: 0,
-    x: back ? -1000 : 1000,
-  }),
-  animate: (back: boolean) => ({
-    x: 0,
-    opacity: 1,
-    scale: 1,
-    transition: {
-      type: 'tween',
-      duration: 1,
-    },
-  }),
-  exit: (back: boolean) => ({
-    scale: 0,
-    opacity: 0,
-    transition: {
-      type: 'tween',
-      duration: 1,
-    },
-    x: back ? 1000 : -1000,
-  }),
-};

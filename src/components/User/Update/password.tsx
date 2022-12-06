@@ -6,7 +6,7 @@ import { ErrMsg } from '../../../Tools/Error/Message';
 import { IUpdateUser, IUserForm } from '../../../types/user';
 import { Flex, FlexCol, Form } from '../../../../styles/global';
 
-export const UpdatePassword = ({ _data }: IUpdateUser) => {
+export const Password = ({ _data }: IUpdateUser) => {
   const { type, update, theme, loading, setLoading } = _data;
   const {
     watch,
@@ -85,7 +85,7 @@ export const UpdatePassword = ({ _data }: IUpdateUser) => {
               <ErrMsg error={errors.password_confirm?.message!} theme={theme} />
             </FlexCol>
           </Flex>
-          <Btn item={{ theme, name: 'Edit' }} type="submit" />
+          <Btn item={{ theme, name: 'Save' }} type="submit" />
         </Cont>
       )}
     </>

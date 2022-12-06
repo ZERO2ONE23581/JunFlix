@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Page } from '../../../styles/global';
 import { Head_ } from '../../../src/Tools/head_title';
-import { PageTitle } from '../../../src/components/Board/Read/BoardTitle';
 import { BoardsGrid } from '../../../src/components/Board/Read/Grid';
 import { useGetAllBoards } from '../../../src/libs/client/useBoards';
 
@@ -32,7 +31,6 @@ export default GenreBoards;
 export const BoardPage = styled(Page)`
   padding: 0 4rem;
   .no-data {
-    border: 2px solid yellow;
     min-height: 60vh;
   }
   .board-icons {

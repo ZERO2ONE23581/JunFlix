@@ -6,12 +6,12 @@ import { useForm } from 'react-hook-form';
 import { IRes } from '../src/types/global';
 import { useEffect, useState } from 'react';
 import { variants } from '../styles/variants';
-import { ErrMsg } from '../src/Tools/Error/Message';
 import { IUserForm } from '../src/types/user';
 import { InputWrap } from '../src/Tools/Input';
 import { AnimatePresence } from 'framer-motion';
 import { Head_ } from '../src/Tools/head_title';
 import { MsgModal } from '../src/Tools/msg_modal';
+import { ErrMsg } from '../src/Tools/Error/Message';
 import { Box, FlexPage, Form } from '../styles/global';
 import useMutation from '../src/libs/client/useMutation';
 import { LoadingModal } from '../src/Tools/Modal/loading_modal';
@@ -59,10 +59,10 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
               custom={theme}
               variants={variants}
             >
-              <h1>
+              <Title>
                 <span>Login</span>
                 <span className="kor">로그인</span>
-              </h1>
+              </Title>
               <Form onSubmit={handleSubmit(onValid)}>
                 <InputWrap
                   _data={{
@@ -112,23 +112,23 @@ export default Login;
 const Cont = styled(FlexPage)`
   justify-content: center;
   .box {
-    align-items: flex-start;
     form {
+      gap: 0;
       .err_msg {
-        margin-top: 1rem;
+        margin-bottom: 0;
       }
       button {
         margin-top: 1rem;
       }
     }
-    h1 {
-      height: 100%;
-      font-size: 2rem;
-      margin-bottom: 2px;
-      .kor {
-        font-size: 1.5rem;
-        margin-left: 12px;
-      }
-    }
+  }
+`;
+const Title = styled.h1`
+  height: 100%;
+  font-size: 2rem;
+  margin-bottom: 2px;
+  .kor {
+    font-size: 1.5rem;
+    margin-left: 12px;
   }
 `;

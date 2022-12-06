@@ -11,7 +11,7 @@ export interface IAvatarInput {
   _data: {
     theme: boolean;
     preview: string;
-    avatar?: string;
+    avatar: string | null;
     reset: UseFormReset<any>;
     register: UseFormRegister<any>;
     setPreview: Dispatch<SetStateAction<string>>;

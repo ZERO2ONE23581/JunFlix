@@ -9,7 +9,7 @@ import { SelectWrap } from '../../../Tools/Input/Select';
 import { IUpdateUser, IUserForm } from '../../../types/user';
 import { useCapLetters } from '../../../libs/client/useTools';
 
-export const UpdateInfo = ({ _data }: IUpdateUser) => {
+export const UserInfo = ({ _data }: IUpdateUser) => {
   const { User, type, update, theme, loading, setLoading } = _data;
   const {
     watch,
@@ -38,7 +38,7 @@ export const UpdateInfo = ({ _data }: IUpdateUser) => {
     setLoading(true);
     update({ name, birth, gender, location, username });
   };
-  console.log('err', errors.name?.message);
+
   return (
     <>
       {type === 'userInfo' && (
@@ -107,7 +107,7 @@ export const UpdateInfo = ({ _data }: IUpdateUser) => {
           </Flex>
           <ErrMsg error={errors.username?.message!} theme={theme} />
           <ErrMsg error={errors.name?.message!} theme={theme} />
-          <Btn item={{ theme, name: 'Edit' }} type="submit" />
+          <Btn item={{ theme, name: 'Save' }} type="submit" />
         </Cont>
       )}
     </>
@@ -116,7 +116,7 @@ export const UpdateInfo = ({ _data }: IUpdateUser) => {
 const Cont = styled(Form)`
   gap: 0;
   button {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
   }
   .flex {
     gap: 0.5rem;

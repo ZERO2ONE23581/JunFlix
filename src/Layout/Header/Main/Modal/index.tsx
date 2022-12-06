@@ -1,7 +1,7 @@
 import { Lists } from './Lists';
+import { Movie } from './Movie';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { MovieLists } from './Movie_Lists';
 import { Overlay } from '../../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { CreatePost } from '../../../../components/Post/Create';
@@ -13,7 +13,7 @@ interface IMenuModal {
   isModal: boolean;
   setSelected: Dispatch<SetStateAction<string>>;
 }
-export const MenuModal = ({
+export const Modal = ({
   theme,
   isModal,
   selected,
@@ -21,14 +21,8 @@ export const MenuModal = ({
 }: IMenuModal) => {
   const isMovie = Boolean(selected === 'movie');
   const [createPost, setCreatePost] = useState(false);
-
   return (
     <>
-      <CreatePost
-        theme={theme}
-        open={createPost}
-        closeModal={() => setCreatePost(false)}
-      />
       {isModal && (
         <>
           <Cont
@@ -47,11 +41,10 @@ export const MenuModal = ({
                 />
               )}
               {isMovie && (
-                <MovieLists selected={selected} setSelected={setSelected} />
+                <Movie selected={selected} setSelected={setSelected} />
               )}
             </ul>
           </Cont>
-
           <Overlay
             animate={{ opacity: 1 }}
             onClick={() => setSelected('')}
@@ -59,6 +52,11 @@ export const MenuModal = ({
           />
         </>
       )}
+      <CreatePost
+        theme={theme}
+        open={createPost}
+        closeModal={() => setCreatePost(false)}
+      />
     </>
   );
 };

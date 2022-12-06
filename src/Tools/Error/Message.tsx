@@ -8,7 +8,6 @@ interface IErrMsg extends ITheme {
 }
 export const ErrMsg = ({ theme, error }: IErrMsg) => {
   const [txt, setTxt] = useState({ eng: '', kor: '' });
-
   useEffect(() => {
     if (error) {
       if (error === 'max_name')

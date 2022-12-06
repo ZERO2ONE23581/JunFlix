@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import { hoverBgColor, TweenTrans } from '../../../../../styles/variants';
 
-interface IMovieLists {
+interface IMovie {
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
 }
-export const MovieLists = ({ selected, setSelected }: IMovieLists) => {
+export const Movie = ({ selected, setSelected }: IMovie) => {
   const router = useRouter();
   const onClick = (btnType: string, detail?: string) => {
     setSelected('');
@@ -17,25 +17,24 @@ export const MovieLists = ({ selected, setSelected }: IMovieLists) => {
       else router.push(`/movies/${btnType}`);
     }
   };
-  const movieArr = ['all', 'trending', 'now', 'tv', 'upcoming', 'top'];
-  //
+  const array = ['all', 'trending', 'now', 'tv', 'upcoming', 'top'];
   return (
     <>
-      {movieArr.map((e) => (
+      {array.map((e) => (
         <motion.li
           whileHover={'hover'}
           variants={hoverBgColor}
           transition={TweenTrans}
-          key={movieArr.indexOf(e)}
+          key={array.indexOf(e)}
           onClick={() => onClick(e, 'movietype')}
         >
           <span>
             {e === 'all' && 'All Movies'}
-            {e === 'trending' && 'Trending Now'}
-            {e === 'now' && 'Now Playing'}
             {e === 'tv' && 'TV Shows'}
-            {e === 'upcoming' && 'Upcoming'}
             {e === 'top' && 'Classics'}
+            {e === 'now' && 'Now Playing'}
+            {e === 'upcoming' && 'Upcoming'}
+            {e === 'trending' && 'Trending Now'}
           </span>
         </motion.li>
       ))}

@@ -23,7 +23,6 @@ export const SelectWrap = ({ _data }: ISelectWrap) => {
   const { id, text, theme, error, disabled, register, clearErrors } = _data;
   const [focus, setFocus] = useState(false);
   const isRed = Boolean(focus || text);
-  console.log(error);
   return (
     <AnimatePresence initial={false}>
       <>

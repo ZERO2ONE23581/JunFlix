@@ -1,33 +1,48 @@
 import { Title } from './Title';
-import { UpdateInfo } from './Info';
-import { UpdateEmail } from './Email';
+import { Email } from './Email';
+import { UserInfo } from './Info';
+import styled from '@emotion/styled';
+import { Password } from './Password';
+import { UserAvatar } from './Avatar';
 import { DeleteUser } from '../Delete';
 import { useRouter } from 'next/router';
-import { UpdateAvatar } from './Avatar';
-import { UpdatePassword } from './Password';
 import { useEffect, useState } from 'react';
 import { IRes } from '../../../types/global';
-import { Box } from '../../../../styles/global';
-import { ITheme } from '../../../../styles/theme';
+import { AnimatePresence } from 'framer-motion';
 import { MsgModal } from '../../../Tools/msg_modal';
+import { Box, Flex } from '../../../../styles/global';
 import { useUser } from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
-import styled from '@emotion/styled';
 
-interface IUpdateUser extends ITheme {
-  type: string;
+interface IBoxType {
+  _data: {
+    page: number;
+    back: boolean;
+    type: string;
+    theme: boolean;
+  };
 }
-export const UpdateBox = ({ type, theme }: IUpdateUser) => {
+export const BoxType = ({ _data }: IBoxType) => {
   const router = useRouter();
-  const { loggedInUser: User } = useUser();
   const { user_id } = router.query;
   const [api, setApi] = useState('');
   const [msg, setMsg] = useState('');
+  const { loggedInUser: User } = useUser();
+  const { theme, page, back, type } = _data;
   const [Loading, setLoading] = useState(false);
+  const [delAcct, setDelAcct] = useState(false);
   const [update, { loading, data }] = useMutation<IRes>(api && api);
-  const _data = { User, loading, setLoading, type, update, theme };
-
+  const __data = {
+    User,
+    type,
+    update,
+    theme,
+    delAcct,
+    loading,
+    setDelAcct,
+    setLoading,
+  };
   useEffect(() => {
     if (type && user_id) {
       if (type === 'delete') setApi(`/api/user/${user_id}/delete`);
@@ -53,23 +68,63 @@ export const UpdateBox = ({ type, theme }: IUpdateUser) => {
       }, 1000);
     }
   }, [data, type, router, setMsg, setLoading]);
-  const [delAcct, setDelAcct] = useState(false);
-  const __delUser = { ..._data, delAcct, setDelAcct };
+
   return (
     <>
-      {!Loading && (
-        <Cont className={type}>
-          <Title _data={{ theme, type, delAcct, setDelAcct }} />
-          <UpdateEmail _data={_data} />
-          <UpdatePassword _data={_data} />
-          <UpdateInfo _data={_data} />
-          <UpdateAvatar _data={_data} />
-          <DeleteUser _data={__delUser} />
+      <AnimatePresence initial={false} custom={back}>
+        <Cont
+          key={page}
+          custom={back}
+          variants={slideVar}
+          exit="exit"
+          initial="initial"
+          animate="animate"
+        >
+          {!Loading && (
+            <Box_ className="box" isDel={Boolean(type === 'delete')}>
+              <Title _data={{ theme, type, delAcct, setDelAcct }} />
+              <Email _data={__data} />
+              <Password _data={__data} />
+              <UserInfo _data={__data} />
+              <UserAvatar _data={__data} />
+              <DeleteUser _data={__data} />
+            </Box_>
+          )}
+          <MsgModal _data={{ msg, theme, layoutId: 'user_setting' }} />
+          {Loading && <LoadingModal theme={theme} />}
         </Cont>
-      )}
-      <MsgModal _data={{ msg, theme, layoutId: 'user_setting' }} />
-      {Loading && <LoadingModal theme={theme} />}
+      </AnimatePresence>
     </>
   );
 };
-const Cont = styled(Box)``;
+const Box_ = styled(Box)<{ isDel: boolean }>`
+  border: ${(p) => p.isDel && `5px solid red`};
+`;
+const Cont = styled(Flex)`
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+  width: fit-content;
+  position: absolute;
+`;
+const slideVar = {
+  initial: (back: boolean) => ({
+    scale: 0,
+    opacity: 0,
+    x: back ? -1000 : 1000,
+  }),
+  animate: () => ({
+    x: 0,
+    scale: 1,
+    opacity: 1,
+    transition: { type: 'tween', duration: 1 },
+  }),
+  exit: (back: boolean) => ({
+    scale: 0,
+    opacity: 0,
+    x: back ? 1000 : -1000,
+    transition: { type: 'tween', duration: 1 },
+  }),
+};

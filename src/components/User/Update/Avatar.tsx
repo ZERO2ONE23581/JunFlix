@@ -2,26 +2,26 @@ import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
 import { useEffect, useState } from 'react';
-import { Form } from '../../../../styles/global';
+import { BtnWrap, Form } from '../../../../styles/global';
 import { ErrMsg } from '../../../Tools/Error/Message';
 import { AvatarInput } from '../../../Tools/Avatar/Input';
 import { useUploadImg } from '../../../libs/client/useTools';
 import { IUpdateUser, IUserForm } from '../../../types/user';
 
-export const UpdateAvatar = ({ _data }: IUpdateUser) => {
+export const UserAvatar = ({ _data }: IUpdateUser) => {
   const { User, type, update, theme, loading, setLoading } = _data;
   const {
     watch,
     reset,
     register,
     setError,
-    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<IUserForm>({ mode: 'onSubmit' });
 
   const avatar = watch('avatar');
   const [preview, setPreview] = useState('');
+  const [delAvatar, setDelAvatar] = useState(false);
   useEffect(() => {
     if (avatar && avatar.length > 0) {
       const file = avatar[0];
@@ -30,13 +30,16 @@ export const UpdateAvatar = ({ _data }: IUpdateUser) => {
   }, [setPreview, avatar]);
   //
   const onValid = async ({ avatar }: IUserForm) => {
-    if (!preview) return setError('avatar', { message: 'need_avatar' });
     if (loading) return;
     setLoading(true);
     const avatar_id = await useUploadImg(avatar);
+    if (delAvatar) {
+      return update({ avatar: null });
+    }
     return update({ avatar: avatar_id });
   };
   //
+  const userAvatar = !delAvatar ? User?.avatar : null;
   return (
     <>
       {type === 'avatar' && (
@@ -48,26 +51,36 @@ export const UpdateAvatar = ({ _data }: IUpdateUser) => {
               preview,
               register,
               setPreview,
-              avatar: User.avatar!,
+              avatar: userAvatar,
             }}
           />
-          <ErrMsg error={errors.avatar?.message!} theme={theme} />
-          <Btn item={{ theme, name: 'Edit' }} type="submit" />
+          <BtnWrap>
+            {!delAvatar && (
+              <Btn
+                type="button"
+                item={{ theme, name: 'Delete' }}
+                onClick={() => setDelAvatar(true)}
+              />
+            )}
+            {delAvatar && (
+              <Btn
+                type="button"
+                item={{ theme, name: 'Back' }}
+                onClick={() => setDelAvatar(false)}
+              />
+            )}
+            <Btn item={{ theme, name: 'Save' }} type="submit" />
+          </BtnWrap>
         </Cont>
       )}
     </>
   );
 };
 const Cont = styled(Form)`
-  //align-items: center;
-  //border: 2px solid hotpink;
   width: 100%;
-  .avatar_input {
-    //margin: 0;
-    //border: 2px solid hotpink;
-  }
-  button {
-    width: 60%;
-    //margin-top: 1rem;
+  .btn_wrap {
+    button {
+      width: fit-content;
+    }
   }
 `;

@@ -1,12 +1,13 @@
+import { Modal } from './Modal';
 import { useState } from 'react';
-import { MenuModal } from './Modal';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { Flex } from '../../../../styles/global';
 import { ITheme } from '../../../../styles/theme';
 import { useCapLetter } from '../../../libs/client/useTools';
 import { colorVar, hoverScale } from '../../../../styles/variants';
 
-export const MainMenu = ({ theme }: ITheme) => {
+export const Main = ({ theme }: ITheme) => {
   const textVar = { ...colorVar, ...hoverScale };
   const [selected, setSelected] = useState('');
   const menuArr = ['board', 'post', 'review', 'movie'];
@@ -14,25 +15,25 @@ export const MainMenu = ({ theme }: ITheme) => {
   const index = (item: string) => Number(menuArr.indexOf(item));
   //
   return (
-    <Cont className="main-menu">
+    <Cont>
       {menuArr.map((i) => (
         <div key={index(i)} className="array">
-          <Text
-            exit="exit"
-            animate="animate"
-            initial="initial"
-            whileHover="hover"
+          <motion.div
             custom={theme}
             variants={textVar}
             onClick={() => setSelected(i)}
+            exit="exit"
+            className="txt"
+            initial="initial"
+            animate="animate"
+            whileHover="hover"
           >
             {useCapLetter(i)}
-          </Text>
-
-          <MenuModal
+          </motion.div>
+          <Modal
             theme={theme}
-            isModal={isModal(i)}
             selected={selected}
+            isModal={isModal(i)}
             setSelected={setSelected}
           />
         </div>
@@ -40,15 +41,14 @@ export const MainMenu = ({ theme }: ITheme) => {
     </Cont>
   );
 };
-const Cont = styled(motion.article)`
-  display: flex;
-  align-content: center;
-  justify-content: space-around;
+const Cont = styled(Flex)`
+  gap: 4rem;
+  min-width: 440px;
   .array {
     position: relative;
+    .txt {
+      display: block;
+      cursor: pointer;
+    }
   }
-`;
-const Text = styled(motion.span)`
-  display: block;
-  cursor: pointer;
 `;
