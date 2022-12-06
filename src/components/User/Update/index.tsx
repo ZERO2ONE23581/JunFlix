@@ -1,12 +1,11 @@
 import { Title } from './Title';
-import styled from '@emotion/styled';
-import { DeleteUser } from '../Delete';
+import { UpdateInfo } from './Info';
 import { UpdateEmail } from './Email';
+import { DeleteUser } from '../Delete';
 import { useRouter } from 'next/router';
-import { UpdateInfo } from './UserInfo';
+import { UpdateAvatar } from './Avatar';
+import { UpdatePassword } from './Password';
 import { useEffect, useState } from 'react';
-import { UpdatePassword } from './password';
-import { UpdateAvatar } from './user_avatar';
 import { IRes } from '../../../types/global';
 import { Box } from '../../../../styles/global';
 import { ITheme } from '../../../../styles/theme';
@@ -14,6 +13,7 @@ import { MsgModal } from '../../../Tools/msg_modal';
 import { useUser } from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
+import styled from '@emotion/styled';
 
 interface IUpdateUser extends ITheme {
   type: string;

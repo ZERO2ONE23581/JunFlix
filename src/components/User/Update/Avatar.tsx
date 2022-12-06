@@ -1,14 +1,12 @@
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { Btn } from '../../../Tools/Button';
 import { useForm } from 'react-hook-form';
+import { Btn } from '../../../Tools/Button';
 import { useEffect, useState } from 'react';
-import { IUpdateUser, IUserForm } from '../../../types/user';
-import { useUser } from '../../../libs/client/useUser';
+import { Form } from '../../../../styles/global';
+import { ErrMsg } from '../../../Tools/Error/Message';
 import { AvatarInput } from '../../../Tools/Avatar/Input';
 import { useUploadImg } from '../../../libs/client/useTools';
-import { ErrMsg } from '../../../Tools/Error/Message';
-import { Form } from '../../../../styles/global';
+import { IUpdateUser, IUserForm } from '../../../types/user';
 
 export const UpdateAvatar = ({ _data }: IUpdateUser) => {
   const { User, type, update, theme, loading, setLoading } = _data;

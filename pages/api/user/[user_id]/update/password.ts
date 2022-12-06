@@ -8,23 +8,24 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const inputs = req.body;
   const { user } = req.session;
   const { user_id } = req.query;
-  const isMatchQuery = Boolean(user?.id !== +user_id);
   if (!user) return res.json({ ok: false, error: 'must login.' });
   if (!user_id) return res.json({ ok: false, error: 'query missed.' });
   if (!inputs) return res.json({ ok: false, error: 'input missed.' });
-  if (!isMatchQuery) return res.json({ ok: false, error: 'invalid query.' });
+
+  const target = await client.user.findUnique({
+    where: { id: +user_id.toString() },
+  });
+  if (!target) return res.json({ ok: false, error: 'no user found.' });
+  const isMatch = Boolean(user?.id === target.id);
+  if (!isMatch) return res.json({ ok: false, error: 'user no matched.' });
 
   const og_password = inputs.password;
   const new_confirm = inputs.new_confirm;
   const new_password = inputs.new_password;
 
-  const User = await client.user.findUnique({
-    where: { id: user.id },
-    select: { password: true },
-  });
-  if (!User) return res.json({ ok: false, error: 'no user found. ' });
-
-  const isOgMatch = Boolean(await bcrypt.compare(og_password, User.password!));
+  const isOgMatch = Boolean(
+    await bcrypt.compare(og_password, target.password!)
+  );
   if (!isOgMatch) return res.json({ ok: false, error: 'invalid og password.' });
 
   const isNewMatch = Boolean(new_password !== new_confirm);

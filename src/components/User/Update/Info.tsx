@@ -38,7 +38,7 @@ export const UpdateInfo = ({ _data }: IUpdateUser) => {
     setLoading(true);
     update({ name, birth, gender, location, username });
   };
-
+  console.log('err', errors.name?.message);
   return (
     <>
       {type === 'userInfo' && (
@@ -52,11 +52,10 @@ export const UpdateInfo = ({ _data }: IUpdateUser) => {
               label: 'username',
               text: watch('username')!,
               register: register('username', {
-                maxLength: { value: 10, message: 'max_username' },
+                maxLength: { value: 20, message: 'max_username' },
               }),
             }}
           />
-          <ErrMsg error={errors.username?.message!} theme={theme} />
           <Flex className="flex">
             <InputWrap
               _data={{
@@ -67,7 +66,7 @@ export const UpdateInfo = ({ _data }: IUpdateUser) => {
                 label: 'name',
                 text: watch('name')!,
                 register: register('name', {
-                  maxLength: { value: 10, message: 'max_name' },
+                  maxLength: { value: 20, message: 'max_name' },
                 }),
               }}
             />
@@ -83,7 +82,6 @@ export const UpdateInfo = ({ _data }: IUpdateUser) => {
             />
           </Flex>
           <Flex className="flex">
-            <ErrMsg error={errors.name?.message!} theme={theme} />
             <InputWrap
               _data={{
                 theme,
@@ -107,6 +105,8 @@ export const UpdateInfo = ({ _data }: IUpdateUser) => {
               }}
             />
           </Flex>
+          <ErrMsg error={errors.username?.message!} theme={theme} />
+          <ErrMsg error={errors.name?.message!} theme={theme} />
           <Btn item={{ theme, name: 'Edit' }} type="submit" />
         </Cont>
       )}

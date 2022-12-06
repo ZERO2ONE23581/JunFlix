@@ -23,6 +23,7 @@ export const SelectWrap = ({ _data }: ISelectWrap) => {
   const { id, text, theme, error, disabled, register, clearErrors } = _data;
   const [focus, setFocus] = useState(false);
   const isRed = Boolean(focus || text);
+  console.log(error);
   return (
     <AnimatePresence initial={false}>
       <>
@@ -48,6 +49,7 @@ export const SelectWrap = ({ _data }: ISelectWrap) => {
                   <option value="">Sex (성별)</option>
                   <option value="male">Male (남)</option>
                   <option value="female">Female (여)</option>
+                  <option value="none">None (표시안함)</option>
                 </>
               )}
               {id === 'genre' && (

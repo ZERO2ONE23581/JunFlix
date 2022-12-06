@@ -4,16 +4,12 @@ import withHandler from '../../../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { email } = req.body;
   const { user } = req.session;
   const { user_id } = req.query;
-  const isMatchQuery = Boolean(user?.id === +user_id);
-  const { name, birth, gender, location, username } = req.body;
-  const inputs = { name, birth, gender, location, username };
-  const isAny = Boolean(name || birth || gender || location || username);
   if (!user) return res.json({ ok: false, error: 'must login.' });
-  if (!isAny) return res.json({ ok: false, error: 'input missed.' });
+  if (!email) return res.json({ ok: false, error: 'input missed.' });
   if (!user_id) return res.json({ ok: false, error: 'query missed.' });
-  if (!isMatchQuery) return res.json({ ok: false, error: 'invalid query.' });
 
   const target = await client.user.findUnique({
     where: { id: +user_id.toString() },
@@ -22,8 +18,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const isMatch = Boolean(user?.id === target.id);
   if (!isMatch) return res.json({ ok: false, error: 'user no matched.' });
 
+  const otherUser = await client.user.findUnique({
+    where: { email },
+    select: { id: true },
+  });
+  const ExistsAlready = Boolean(otherUser && otherUser.id !== target.id);
+  if (ExistsAlready) return res.json({ ok: false, error: 'dup_email.' });
+
   const isUpdated = Boolean(
-    await client.user.update({ where: { id: target.id }, data: inputs })
+    await client.user.update({ where: { id: target.id }, data: { email } })
   );
   return res.json({ ok: isUpdated });
 }

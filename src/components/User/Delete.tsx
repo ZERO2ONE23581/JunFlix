@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { InputWrap } from '../../Tools/Input';
 import { ErrMsg } from '../../Tools/Error/Message';
-import { IUpdateUser, IUserForm, IUserType } from '../../types/user';
-import { BtnWrap, Flex, FlexCol, Form } from '../../../styles/global';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { opacityVar } from '../../../styles/variants';
-import { AnimatePresence, motion } from 'framer-motion';
+import { IUserForm, IUserType } from '../../types/user';
+import { BtnWrap, Flex, FlexCol, Form } from '../../../styles/global';
 
 interface IDeleteUser {
   _data: {
@@ -22,8 +22,15 @@ interface IDeleteUser {
   };
 }
 export const DeleteUser = ({ _data }: IDeleteUser) => {
-  const { type, update, theme, loading, setLoading, delAcct, setDelAcct } =
-    _data;
+  const {
+    type,
+    theme,
+    loading,
+    setLoading,
+    delAcct,
+    setDelAcct,
+    update: POST,
+  } = _data;
   const {
     watch,
     register,
@@ -31,11 +38,10 @@ export const DeleteUser = ({ _data }: IDeleteUser) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IUserForm>({ mode: 'onSubmit' });
-  const onValid = ({ email }: IUserForm) => {
+  const onValid = ({ password }: IUserForm) => {
     if (loading) return;
-    if (!email) return;
     setLoading(true);
-    return update({ email });
+    return POST({ password });
   };
   return (
     <>

@@ -11,6 +11,21 @@ export const ErrMsg = ({ theme, error }: IErrMsg) => {
 
   useEffect(() => {
     if (error) {
+      if (error === 'max_name')
+        return setTxt({
+          eng: 'Name must be less than 20 words.',
+          kor: '이름은 20자를 초과할 수 없습니다.',
+        });
+      if (error === 'max_username')
+        return setTxt({
+          eng: 'Username must be less than 20 words.',
+          kor: '유저이름은 20자를 초과할 수 없습니다.',
+        });
+      if (error === 'pw_unmatch')
+        return setTxt({
+          eng: 'Passwords are not matched.',
+          kor: '비밀번호가 일치하지 않습니다.',
+        });
       if (error === 'need_avatar')
         return setTxt({
           eng: 'Please select new avatar.',
@@ -94,6 +109,7 @@ const errVar = {
 };
 const Cont = styled(motion.div)`
   font-size: 1.2rem;
+  margin: 1rem auto;
   .kor {
     font-size: 1.1rem;
     margin-bottom: 0.2rem;

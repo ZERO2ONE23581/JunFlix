@@ -19,9 +19,9 @@ export const UpdatePassword = ({ _data }: IUpdateUser) => {
 
   const onValid = ({ password, new_password, password_confirm }: IUserForm) => {
     if (loading) return;
-    const isMatch = Boolean(new_password !== password_confirm);
+    const isMatch = Boolean(new_password === password_confirm);
     if (!isMatch)
-      return setError('password_confirm', { message: 'pw_unmatch.' });
+      return setError('password_confirm', { message: 'pw_unmatch' });
     setLoading(true);
     update({ password, new_password, password_confirm });
   };
@@ -51,7 +51,7 @@ export const UpdatePassword = ({ _data }: IUpdateUser) => {
                   theme,
                   clearErrors,
                   id: 'new_password',
-                  type: 'new_password',
+                  type: 'password',
                   label: 'New Password',
                   text: watch('new_password')!,
                   register: register!('new_password', {

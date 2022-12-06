@@ -69,7 +69,7 @@ const Slider = styled(Flex)`
   height: 55vh;
   min-width: 500px;
   min-height: 500px;
-  width: fit-content;
+  //  width: fit-content;
   align-items: center;
   justify-content: space-between;
   .control-box {
@@ -89,9 +89,6 @@ const Cont = styled(Page)`
   justify-content: center;
 `;
 const Control = styled.div`
-  .password {
-    max-width: 600px;
-  }
   .userInfo {
     max-width: 600px;
   }

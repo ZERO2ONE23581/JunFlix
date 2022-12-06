@@ -93,7 +93,7 @@ const Cont = styled.div<{ isDate: boolean }>`
     position: relative;
     label {
       width: fit-content;
-      width: ${(p) => p.isDate && '50%'};
+      width: ${(p) => p.isDate && '80%'};
       top: 63%;
       left: 1rem;
       z-index: 1;
