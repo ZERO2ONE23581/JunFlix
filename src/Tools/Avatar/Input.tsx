@@ -1,30 +1,28 @@
 import { Svg } from '../Svg';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { border, TransBorder, TweenTrans } from '../../../styles/variants';
-import { useGetUser } from '../../libs/client/useUser';
 import { Flex } from '../../../styles/global';
+import { border } from '../../../styles/variants';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { UseFormRegister, UseFormReset } from 'react-hook-form';
-import { avatarLink } from './indexxx';
+import { avatarLink } from '.';
 
 export interface IAvatarInput {
   _data: {
     theme: boolean;
     preview: string;
+    avatar?: string;
     reset: UseFormReset<any>;
     register: UseFormRegister<any>;
     setPreview: Dispatch<SetStateAction<string>>;
   };
 }
 export const AvatarInput = ({ _data }: IAvatarInput) => {
-  const { reset, register, theme, preview, setPreview } = _data;
+  const { avatar, register, theme, preview, setPreview } = _data;
   const [disabled, setDisabled] = useState(false);
   const clickTrash = () => {
     setPreview('');
     setDisabled(true);
-    //reset({ avatar: undefined });
   };
   return (
     <AnimatePresence>
@@ -56,9 +54,22 @@ export const AvatarInput = ({ _data }: IAvatarInput) => {
             </>
           )}
           {!preview && (
-            <NoPreview>
-              <Svg type="user" theme={theme} item={{ size: '4rem' }} />
-            </NoPreview>
+            <>
+              {avatar && (
+                <Img
+                  exit="exit"
+                  initial="initial"
+                  animate="animate"
+                  variants={imgVar}
+                  src={avatarLink(avatar)}
+                />
+              )}
+              {!avatar && (
+                <NoPreview>
+                  <Svg type="user" theme={theme} item={{ size: '4rem' }} />
+                </NoPreview>
+              )}
+            </>
           )}
           <input
             {...register('avatar')}
@@ -83,8 +94,8 @@ const Cont = styled(Flex)`
   .trash {
     left: 1.8rem;
     bottom: 1.8rem;
+    z-index: 111;
     position: absolute;
-    z-index: 1111;
   }
   input {
     display: none;

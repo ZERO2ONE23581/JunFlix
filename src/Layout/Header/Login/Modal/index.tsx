@@ -1,13 +1,13 @@
-import {
-  menuModalVar,
-  opacityVar,
-  TweenTrans,
-} from '../../../../../styles/variants';
 import { Lists } from './Lists';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 import { Overlay } from '../../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
+import {
+  menuModalVar,
+  opacityVar,
+  TweenTrans,
+} from '../../../../../styles/variants';
 
 interface IUserMenuModal {
   theme: boolean;

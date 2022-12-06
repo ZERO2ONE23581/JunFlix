@@ -5,8 +5,8 @@ import {
 } from 'react-hook-form';
 import styled from '@emotion/styled';
 import { PostInputs } from './Inputs';
+import { IPostForm } from '../../../../../types/post';
 import { FlexCol } from '../../../../../../styles/global';
-import { IPostForm, IPostFormErr } from '../../../../../types/post';
 
 interface IPostInfo {
   _data: {
@@ -14,7 +14,7 @@ interface IPostInfo {
     theme: boolean;
   };
   _useform: {
-    errors: IPostFormErr;
+    errors: any;
     watch: UseFormWatch<IPostForm>;
     register: UseFormRegister<IPostForm>;
     clearErrors: UseFormClearErrors<IPostForm>;

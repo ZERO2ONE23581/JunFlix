@@ -1,9 +1,9 @@
 import { CheckBox } from './CheckBox';
-import { PostBox__ } from '../../../Schema/Grid/Box';
-import { UseFormRegister } from 'react-hook-form';
-import { avatarLink } from '../../../../../Tools/Avatar/indexxx';
-import { useCapLetters } from '../../../../../libs/client/useTools';
 import styled from '@emotion/styled';
+import { UseFormRegister } from 'react-hook-form';
+import { PostBox__ } from '../../../Schema/Grid/Box';
+import { avatarLink } from '../../../../../Tools/Avatar';
+import { useCapLetters } from '../../../../../libs/client/useTools';
 
 interface IPostBox {
   _data: {

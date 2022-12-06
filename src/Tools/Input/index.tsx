@@ -9,7 +9,7 @@ import {
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { ErrModal } from '../err_modal';
+import { ErrModal } from '../Error/Modal';
 import { FlexCol } from '../../../styles/global';
 import { UseFormClearErrors, UseFormRegisterReturn } from 'react-hook-form';
 
@@ -41,10 +41,12 @@ export const InputWrap = ({ _data }: IInput) => {
     clearErrors,
   } = _data;
   const [focus, setFocus] = useState(false);
-  const custom = { isRed: Boolean(focus || text), theme, disabled };
+  const isRed = Boolean(focus || text);
+  const isDate = !isRed && Boolean(type === 'date');
+  const custom = { isRed, theme, disabled };
   return (
     <>
-      <Cont className={id}>
+      <Cont className={id} isDate={isDate}>
         <FlexCol className="input_wrap_flex">
           <Style
             className="input-style"
@@ -79,21 +81,24 @@ export const InputWrap = ({ _data }: IInput) => {
     </>
   );
 };
-const Cont = styled(FlexCol)`
+const Cont = styled.div<{ isDate: boolean }>`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   gap: 20px;
-  //border: 5px solid yellow;
   .input_wrap_flex {
     padding-top: 1rem;
     position: relative;
-    //border: 5px solid blue;
     label {
-      //border: 1px solid yellow;
+      width: fit-content;
+      width: ${(p) => p.isDate && '50%'};
       top: 63%;
       left: 1rem;
       z-index: 1;
       font-size: 1.1rem;
       padding: 5px 10px;
-      width: fit-content;
       position: absolute;
       border-radius: 10px;
       display: inline-block;

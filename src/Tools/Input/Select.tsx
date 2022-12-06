@@ -1,19 +1,11 @@
-import styled from '@emotion/styled';
-import { UseFormRegisterReturn } from 'react-hook-form';
-import { AnimatePresence, motion } from 'framer-motion';
-import { ITheme } from '../../../styles/theme';
 import { useState } from 'react';
-import { ErrMsg } from '../error_message';
-import { FlexCol } from '../../../styles/global';
-import {
-  color,
-  greyBrdr,
-  greyColor,
-  redBrdr,
-  redColor,
-  TransBorder,
-} from '../../../styles/variants';
 import { InpBorderVar } from '.';
+import styled from '@emotion/styled';
+import { ErrModal } from '../Error/Modal';
+import { AnimatePresence } from 'framer-motion';
+import { FlexCol } from '../../../styles/global';
+import { color, greyColor, redColor } from '../../../styles/variants';
+import { UseFormClearErrors, UseFormRegisterReturn } from 'react-hook-form';
 
 interface ISelectWrap {
   _data: {
@@ -23,16 +15,12 @@ interface ISelectWrap {
     error?: string;
     disabled?: boolean;
     register: UseFormRegisterReturn;
+    clearErrors: UseFormClearErrors<any>;
   };
 }
 
 export const SelectWrap = ({ _data }: ISelectWrap) => {
-  const id = _data?.id!;
-  const text = _data?.text!;
-  const error = _data?.error!;
-  const theme = _data?.theme!;
-  const register = _data?.register!;
-  const disabled = _data?.disabled!;
+  const { id, text, theme, error, disabled, register, clearErrors } = _data;
   const [focus, setFocus] = useState(false);
   const isRed = Boolean(focus || text);
   return (
@@ -51,7 +39,6 @@ export const SelectWrap = ({ _data }: ISelectWrap) => {
             id={id}
             name={id}
             disabled={disabled}
-            className="select-wrap"
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
           >
@@ -81,7 +68,7 @@ export const SelectWrap = ({ _data }: ISelectWrap) => {
             </>
           </select>
         </Cont>
-        <ErrMsg error={error} />
+        <ErrModal _data={{ id, theme, error, clearErrors }} />
       </>
     </AnimatePresence>
   );

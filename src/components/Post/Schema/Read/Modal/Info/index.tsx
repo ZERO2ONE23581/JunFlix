@@ -1,11 +1,11 @@
-import { Host } from '../Info/Host';
+import { Host } from './Host';
 import styled from '@emotion/styled';
-import { Icons } from '../Info/Icons';
-import { Detail } from '../Info/Detail';
+import { Icons } from './Icons';
+import { Detail } from './Detail';
 import { Dispatch, SetStateAction } from 'react';
-import { IPostType } from '../../../../../types/post';
-import { FlexCol } from '../../../../../../styles/global';
-import { variants } from '../../../../../../styles/variants';
+import { IPostType } from '../../../../../../types/post';
+import { FlexCol } from '../../../../../../../styles/global';
+import { variants } from '../../../../../../../styles/variants';
 
 export interface IInfo {
   _data: {

@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import { Lists } from './Lists';
+import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { MovieLists } from './Movie_Lists';
 import { Overlay } from '../../../../../styles/global';

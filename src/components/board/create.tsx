@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
-import { IBoardForm } from '../../types/board';
-import { Box, Flex, Form } from '../../../styles/global';
-import { BoxTitle } from '../../Tools/box_title';
 import { InputWrap } from '../../Tools/Input';
-import { TextAreaWrap } from '../../Tools/Input/TextArea';
-import { SelectWrap } from '../../Tools/Input/Select';
+import { IBoardForm } from '../../types/board';
+import { BoxTitle } from '../../Tools/box_title';
 import { Dispatch, SetStateAction } from 'react';
 import { variants } from '../../../styles/variants';
 import { useUser } from '../../libs/client/useUser';
+import { SelectWrap } from '../../Tools/Input/Select';
+import { Box, Flex, Form } from '../../../styles/global';
+import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import { useTextLimit } from '../../libs/client/useTools';
 
 interface ICreateBox {
@@ -90,6 +90,7 @@ export const CreateBox = ({ _data }: ICreateBox) => {
               <SelectWrap
                 _data={{
                   theme,
+                  clearErrors,
                   id: 'genre',
                   text: watch('genre'),
                   register: register('genre'),

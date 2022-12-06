@@ -1,9 +1,9 @@
-import { Dispatch, SetStateAction } from 'react';
-import { UseFormSetError } from 'react-hook-form';
 import { Svg } from '../../../../Tools/Svg';
 import { Btn } from '../../../../Tools/Button';
-import { Layer_ } from '../../../../../styles/global';
+import { Dispatch, SetStateAction } from 'react';
+import { UseFormSetError } from 'react-hook-form';
 import { IPostForm } from '../../../../types/post';
+import { Layer_ } from '../../../../../styles/global';
 
 interface ILayer {
   _data: {

@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { Avatar } from '../../../../../Tools/Avatar/indexxx';
-import { IPostType } from '../../../../../types/post';
-import { Flex, FlexCol } from '../../../../../../styles/global';
-import useFollow from '../../../../../libs/client/useFollow';
-import { Btn } from '../../../../../Tools/Button';
-import { useUser } from '../../../../../libs/client/useUser';
+import { Btn } from '../../../../../../Tools/Button';
+import { Avatar } from '../../../../../../Tools/Avatar';
+import { IPostType } from '../../../../../../types/post';
+import useFollow from '../../../../../../libs/client/useFollow';
+import { useUser } from '../../../../../../libs/client/useUser';
+import { Flex, FlexCol } from '../../../../../../../styles/global';
 
 interface IHost {
   theme: boolean;
@@ -24,15 +24,7 @@ export const Host = ({ theme, post }: IHost) => {
   return (
     <Cont className="host">
       <Flex className="flex">
-        <Avatar
-          _data={{
-            theme,
-            host_id,
-            size: '3.5rem',
-            isRound: true,
-            onMyPage: true,
-          }}
-        />
+        <Avatar _data={{ theme, host_id, size: '3.5rem', isRound: true }} />
         <FlexCol className="host-info">
           <span>@{userId}</span>
           <span>

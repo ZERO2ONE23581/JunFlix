@@ -5,7 +5,7 @@ import { Svg } from '../../../../src/Tools/Svg';
 import { Flex, Page } from '../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Head_ } from '../../../../src/Tools/head_title';
-import { UpdateBox } from '../../../../src/components/User/update';
+import { UpdateBox } from '../../../../src/components/User/Update';
 
 const UpdateUser: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [page, setPage] = useState(0);
@@ -22,7 +22,7 @@ const UpdateUser: NextPage<{ theme: boolean }> = ({ theme }) => {
   };
   //
   const [type, setType] = useState('');
-  const array = ['userId', 'password', 'userInfo', 'avatar', 'delete'];
+  const array = ['email', 'password', 'userInfo', 'avatar', 'delete'];
   useEffect(() => {
     setType(`${array[page]}`);
   }, [setType, page, array]);
@@ -31,10 +31,9 @@ const UpdateUser: NextPage<{ theme: boolean }> = ({ theme }) => {
     <>
       <Head_ title="프로필 편집" />
       <Cont>
-        <Flex className="slider-flex">
+        <Slider className="slider-flex">
           <Svg
             theme={theme}
-            size="2rem"
             type="left-chev"
             onClick={() => clickArrow('left')}
           />
@@ -54,44 +53,42 @@ const UpdateUser: NextPage<{ theme: boolean }> = ({ theme }) => {
             </AnimatePresence>
           </Control>
           <Svg
-            size="2rem"
             theme={theme}
             type="right-chev"
             onClick={() => clickArrow('right')}
           />
-        </Flex>
+        </Slider>
       </Cont>
     </>
   );
 };
 export default UpdateUser;
 
+const Slider = styled(Flex)`
+  width: 55vw;
+  height: 55vh;
+  min-width: 500px;
+  min-height: 500px;
+  width: fit-content;
+  align-items: center;
+  justify-content: space-between;
+  .control-box {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    .box-wrap {
+      width: 100%;
+      height: 100%;
+    }
+  }
+`;
 const Cont = styled(Page)`
   padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  .slider-flex {
-    width: 55vw;
-    height: 55vh;
-    min-width: 800px;
-    min-height: 500px;
-    align-items: center;
-    justify-content: space-between;
-    .control-box {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      .box-wrap {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
 `;
 const Control = styled.div`
-  .userId {
-  }
   .password {
     max-width: 600px;
   }
@@ -115,7 +112,6 @@ const Control = styled.div`
     }
   }
   .delete {
-    gap: 15px;
     border: 5px solid ${(p) => p.theme.color.logo};
     .box-title {
       gap: 0;

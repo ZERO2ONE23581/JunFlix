@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -9,8 +9,8 @@ import { Host } from '../../../../src/components/User/Read/MyPage/Host';
 import { useCapLetter } from '../../../../src/libs/client/useTools';
 import { PostSchema } from '../../../../src/components/Post/Schema';
 import {
-  useGetLikedPosts,
   useGetPosts,
+  useGetLikedPosts,
   useGetQuickSaved,
 } from '../../../../src/libs/client/usePosts';
 import { Btn } from '../../../../src/Tools/Button';
@@ -21,7 +21,10 @@ import {
   useGetFollowingBoards,
 } from '../../../../src/libs/client/useBoards';
 
-const UserPage: NextPage<{ theme: boolean }> = ({ theme }) => {
+const UserPage: NextPage<{
+  theme: boolean;
+  setFixed: Dispatch<SetStateAction<boolean>>;
+}> = ({ theme, setFixed }) => {
   const router = useRouter();
   const { user_id } = router.query;
   const host_id = Number(user_id);
@@ -59,10 +62,13 @@ const UserPage: NextPage<{ theme: boolean }> = ({ theme }) => {
         </BtnWrap>
         <article className="cnts_wrap">
           {clicked === 'posts' && (
-            <PostSchema _data={{ grid: 5, theme, posts }} />
+            <PostSchema setFixed={setFixed} _data={{ grid: 5, theme, posts }} />
           )}
           {clicked === 'likes' && (
-            <PostSchema _data={{ grid: 5, theme, posts: posts_liked }} />
+            <PostSchema
+              setFixed={setFixed}
+              _data={{ grid: 5, theme, posts: posts_liked }}
+            />
           )}
           {clicked === 'boards' && (
             <BoardsGrid

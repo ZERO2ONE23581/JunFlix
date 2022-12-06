@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Svg } from '../../../../../../Tools/Svg';
-import { IGetPostType, IPostType } from '../../../../../../types/post';
-import { MsgModal } from '../../../../../../Tools/msg_modal';
-import { useLike } from '../../../../../../libs/client/useLike';
-import { Flex, FlexCol } from '../../../../../../../styles/global';
 import { Dispatch, SetStateAction } from 'react';
+import { Svg } from '../../../../../../../Tools/Svg';
+import { IPostType } from '../../../../../../../types/post';
+import { MsgModal } from '../../../../../../../Tools/msg_modal';
+import { useLike } from '../../../../../../../libs/client/useLike';
+import { Flex, FlexCol } from '../../../../../../../../styles/global';
 
 interface IIcons {
   _data: {

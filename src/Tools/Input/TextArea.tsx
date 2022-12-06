@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { ErrModal } from '../err_modal';
+import { ErrModal } from '../Error/Modal';
 import { TextLength } from '../TextLength';
 import { FlexCol } from '../../../styles/global';
 import { color } from '../../../styles/variants';
@@ -19,7 +19,7 @@ interface ITextAreaWrap {
     label?: string;
     error?: string;
     disabled?: boolean;
-    placeholder: string;
+    placeholder?: string;
     register: UseFormRegisterReturn;
     clearErrors: UseFormClearErrors<any>;
   };

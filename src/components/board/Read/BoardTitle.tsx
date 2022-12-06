@@ -1,9 +1,8 @@
+import styled from '@emotion/styled';
 import { Svg } from '../../../Tools/Svg';
+import { ITheme } from '../../../../styles/theme';
 import { Movie } from '../../../Tools/Title/movie';
 import { Ropes } from '../../../Tools/Title/ropes';
-import styled from '@emotion/styled';
-import { GenreIcons } from '../../../Tools/GenreIcons';
-import { ITheme } from '../../../../styles/theme';
 import { FlexCol } from '../../../../styles/global';
 import { useUser } from '../../../libs/client/useUser';
 import { useCapLetter, useCapLetters } from '../../../libs/client/useTools';

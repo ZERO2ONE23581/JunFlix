@@ -1,28 +1,32 @@
+import { Title } from './Title';
+import styled from '@emotion/styled';
+import { DeleteUser } from '../Delete';
+import { UpdateEmail } from './Email';
 import { useRouter } from 'next/router';
+import { UpdateInfo } from './UserInfo';
+import { useEffect, useState } from 'react';
+import { UpdatePassword } from './password';
+import { UpdateAvatar } from './user_avatar';
 import { IRes } from '../../../types/global';
 import { Box } from '../../../../styles/global';
-import { BoxTitle } from '../../../Tools/box_title';
 import { ITheme } from '../../../../styles/theme';
-import { useEffect, useState } from 'react';
-import { UserId_Form } from './userId';
-import { Password_Form } from './password';
-import { UserAvatar_Form } from './user_avatar';
 import { MsgModal } from '../../../Tools/msg_modal';
-import { LoadingModal } from '../../../Tools/Modal/loading_modal';
+import { useUser } from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';
-import { UserInfo_Form } from './UserInfo';
-import { DeleteUser_Form } from '../Delete';
+import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 
 interface IUpdateUser extends ITheme {
   type: string;
 }
 export const UpdateBox = ({ type, theme }: IUpdateUser) => {
   const router = useRouter();
+  const { loggedInUser: User } = useUser();
   const { user_id } = router.query;
   const [api, setApi] = useState('');
   const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);
-  const [post, { loading, data }] = useMutation<IRes>(api && api);
+  const [update, { loading, data }] = useMutation<IRes>(api && api);
+  const _data = { User, loading, setLoading, type, update, theme };
 
   useEffect(() => {
     if (type && user_id) {
@@ -40,7 +44,7 @@ export const UpdateBox = ({ type, theme }: IUpdateUser) => {
           if (data.msg) setMsg(data.msg);
         }
         if (data.ok) {
-          setMsg('업데이트 완료 (Update completed)');
+          setMsg('update_user');
           if (type === 'delete') return router.replace(`/home`);
           setTimeout(() => {
             router.reload();
@@ -49,27 +53,23 @@ export const UpdateBox = ({ type, theme }: IUpdateUser) => {
       }, 1000);
     }
   }, [data, type, router, setMsg, setLoading]);
-  //
-  const dataWrap = { loading, setLoading, type, post, theme };
+  const [delAcct, setDelAcct] = useState(false);
+  const __delUser = { ..._data, delAcct, setDelAcct };
   return (
     <>
       {!Loading && (
-        <Box className={type}>
-          <BoxTitle type={`update-user-${type}`} theme={theme} />
-          <UserId_Form dataWrap={{ ...dataWrap }} />
-          <Password_Form dataWrap={{ ...dataWrap }} />
-          <UserInfo_Form dataWrap={{ ...dataWrap }} />
-          <UserAvatar_Form dataWrap={{ ...dataWrap }} />
-          <DeleteUser_Form dataWrap={{ ...dataWrap }} />
-        </Box>
+        <Cont className={type}>
+          <Title _data={{ theme, type, delAcct, setDelAcct }} />
+          <UpdateEmail _data={_data} />
+          <UpdatePassword _data={_data} />
+          <UpdateInfo _data={_data} />
+          <UpdateAvatar _data={_data} />
+          <DeleteUser _data={__delUser} />
+        </Cont>
       )}
-      <MsgModal
-        msg={msg}
-        theme={theme}
-        Loading={Loading}
-        closeModal={() => setMsg('')}
-      />
+      <MsgModal _data={{ msg, theme, layoutId: 'user_setting' }} />
       {Loading && <LoadingModal theme={theme} />}
     </>
   );
 };
+const Cont = styled(Box)``;

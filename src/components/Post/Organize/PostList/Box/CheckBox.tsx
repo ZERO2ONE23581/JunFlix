@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { UseFormRegister } from 'react-hook-form';
 import { Svg } from '../../../../../Tools/Svg';
-import { Flex } from '../../../../../../styles/global';
+import { UseFormRegister } from 'react-hook-form';
 import { IPostForm } from '../../../../../types/post';
+import { Flex } from '../../../../../../styles/global';
 import { variants } from '../../../../../../styles/variants';
 
 interface ICheckBox {

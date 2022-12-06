@@ -1,38 +1,30 @@
 import styled from '@emotion/styled';
-import { OverlayBg } from './overlay';
-import { Modal } from '../../styles/global';
-import { AnimatePresence } from 'framer-motion';
-import { UseFormClearErrors } from 'react-hook-form';
-import { color, redColor } from '../../styles/variants';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { ITheme } from '../../../styles/theme';
 
-interface IErrMsg {
-  _data: {
-    id: string;
-    theme: boolean;
-    error?: string;
-    clearErrors: UseFormClearErrors<any>;
-  };
+interface IErrMsg extends ITheme {
+  error: string;
 }
-export const ErrModal = ({ _data }: IErrMsg) => {
-  const { id, theme, error, clearErrors } = _data;
+export const ErrMsg = ({ theme, error }: IErrMsg) => {
   const [txt, setTxt] = useState({ eng: '', kor: '' });
+
   useEffect(() => {
     if (error) {
+      if (error === 'need_avatar')
+        return setTxt({
+          eng: 'Please select new avatar.',
+          kor: '새로운 아바타를 선택해주세요.',
+        });
       if (error === 'need_email')
         return setTxt({
           eng: 'Please type your email.',
           kor: '이메일을 입력해주세요.',
         });
-      if (error === 'need_comment')
+      if (error === 'need_new_password')
         return setTxt({
-          eng: 'Please type your Comment.',
-          kor: '댓글을 입력해주세요.',
-        });
-      if (error === 'overmax_comment')
-        return setTxt({
-          eng: `Comment can not exeed more than 700 letters.`,
-          kor: '댓글은 700자를 초과할 수 없습니다.',
+          eng: 'Please type new password.',
+          kor: '새로운 비밀번호를 입력해주세요.',
         });
       if (error === 'invalid_email')
         return setTxt({
@@ -72,65 +64,43 @@ export const ErrModal = ({ _data }: IErrMsg) => {
         });
     }
   }, [error, setTxt]);
-  const closeModal = () => clearErrors(id);
-
   return (
-    <AnimatePresence>
+    <>
       {error && (
-        <>
-          <Cont
-            exit="exit"
-            custom={theme}
-            initial="initial"
-            animate="animate"
-            className="err-modal"
-            variants={errModalVar}
-          >
-            <span className="txt">
-              {txt.kor && <span className="kor">{txt.kor}</span>}
-              {txt.eng && <span>{txt.eng}</span>}
-            </span>
-          </Cont>
-          <OverlayBg dark={0.8} zIndex={221} closeModal={closeModal} />
-        </>
+        <Cont
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          className="err_msg"
+          variants={errVar}
+        >
+          <span className="kor">{txt.kor}</span>
+          <span>{txt.eng}</span>
+        </Cont>
       )}
-    </AnimatePresence>
+    </>
   );
 };
-const Cont = styled(Modal)`
-  z-index: 222;
-  height: 200px;
-  min-height: 150px;
-  margin-top: 20rem;
-  font-size: 1.3rem;
-  width: fit-content;
-  height: fit-content;
-  .txt {
-    text-align: center;
-    span {
-      display: block;
-      font-size: 1.6rem;
-    }
-    .kor {
-      font-size: 1.5rem;
-    }
-  }
-`;
-const errModalVar = {
-  initial: (theme: boolean) => ({
-    scale: 0.1,
-    opacity: 0,
-  }),
-  animate: (theme: boolean) => ({
+
+const errVar = {
+  exit: () => ({ opacity: 0, scale: 0.1 }),
+  initial: () => ({ opacity: 0, scale: 0.1 }),
+  animate: () => ({
     scale: 1,
     opacity: 1,
-    color: redColor,
-    transition: { duration: 0.3 },
-    backgroundColor: color(!theme),
-  }),
-  exit: (theme: boolean) => ({
-    scale: 0.1,
-    opacity: 0,
+    color: '#E50914',
     transition: { duration: 0.3 },
   }),
 };
+const Cont = styled(motion.div)`
+  font-size: 1.2rem;
+  .kor {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+  }
+  span {
+    display: block;
+    text-align: center;
+    font-style: italic;
+  }
+`;

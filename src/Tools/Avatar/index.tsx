@@ -1,13 +1,10 @@
 import { Svg } from '../Svg';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { border } from '../../../styles/variants';
 import { Flex } from '../../../styles/global';
-import { avatarLink } from './indexxx';
-import { ITheme } from '../../../styles/theme';
+import { border } from '../../../styles/variants';
 import { useGetUser } from '../../libs/client/useUser';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export interface IAvatarInput {
   _data: {
@@ -15,22 +12,30 @@ export interface IAvatarInput {
     theme: boolean;
     host_id: number;
     isRound?: boolean;
+    isOther?: boolean;
+    handleClick?: () => void;
   };
 }
 export const Avatar = ({ _data }: IAvatarInput) => {
-  const { isRound, size, theme, host_id } = _data;
-  const { avatar } = useGetUser(host_id);
+  const router = useRouter();
+  const { isRound, size, theme, host_id, isOther, handleClick } = _data;
+  const { avatar, userId } = useGetUser(host_id);
+  const onClick = () => {
+    if (isOther) return handleClick!();
+    else return router.push(`/user/${host_id}/${userId}/page`);
+  };
   return (
     <AnimatePresence>
       <Cont
+        size={size}
+        variants={vars}
+        onClick={onClick}
+        custom={{ theme, isRound }}
         exit="exit"
         initial="initial"
         animate="animate"
         whileHover="hover"
-        size={size}
-        variants={vars}
         className="avatar"
-        custom={{ theme, isRound }}
       >
         {avatar && <motion.img src={avatarLink(avatar)} />}
         {!avatar && (
@@ -75,4 +80,11 @@ const vars = {
     outline: '3px solid #E50914',
     transition: { duration: isRound ? 0.2 : 0.4 },
   }),
+};
+export const avatarLink = (url: string | any) => {
+  const no_img = '/img/1.jpg';
+  const variant = 'public';
+  const base = 'https://imagedelivery.net/akzZnR6sxZ1bwXZp9XYgsg/';
+  if (!Boolean(url)) return no_img;
+  else return `${base}/${url}/${variant}`;
 };

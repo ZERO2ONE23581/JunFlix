@@ -244,11 +244,12 @@ export const Blur = styled.div<{ isBlur: boolean }>`
 `;
 export const Form = styled(motion.form)`
   //max-height: 50vh;
+  gap: 1rem;
   display: flex;
+  overflow-y: auto;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  overflow-y: auto;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -258,6 +259,7 @@ export const Box = styled(FlexCol)`
   position: relative;
   width: fit-content;
   border-radius: 5px;
+  align-items: flex-start;
   border: ${(p) => p.theme.border.thick};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   form {

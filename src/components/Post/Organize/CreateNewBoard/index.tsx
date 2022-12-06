@@ -8,7 +8,7 @@ import { IPostType } from '../../../../types/post';
 import { IBoardForm } from '../../../../types/board';
 import { OverlayBg } from '../../../../Tools/overlay';
 import { PostModal } from '../../../../../styles/post';
-import { ErrModal } from '../../../../Tools/err_modal';
+import { ErrModal } from '../../../../Tools/Error/Modal';
 import { MsgModal } from '../../../../Tools/msg_modal';
 import { useUser } from '../../../../libs/client/useUser';
 import { scaleVar } from '../../../../../styles/variants';

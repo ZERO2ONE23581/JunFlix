@@ -7,18 +7,17 @@ import { ITheme } from '../../../../../styles/theme';
 import { useUser } from '../../../../libs/client/useUser';
 import useMutation from '../../../../libs/client/useMutation';
 import { hoverBgColor, SpringTrans } from '../../../../../styles/variants';
-import { ThemeBtn } from '../../../../Tools/Button/Theme';
 
 export const Lists = ({ theme }: ITheme) => {
   const router = useRouter();
-  const { user_id, username } = useUser();
+  const { user_id, userId } = useUser();
   const [logout, { data }] = useMutation(`/api/exit`);
   const onClick = (type: string) => {
     if (type === 'logout') return logout({});
     if (type === 'mypage')
-      return router.push(`/user/${user_id}/${username}/page`);
+      return router.push(`/user/${user_id}/${userId}/page`);
     if (type === 'setting')
-      return router.push(`/user/${user_id}/${username}/setting`);
+      return router.push(`/user/${user_id}/${userId}/setting`);
   };
   useEffect(() => {
     if (data && data.ok) router.reload();

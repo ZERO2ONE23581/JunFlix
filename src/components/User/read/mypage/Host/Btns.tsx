@@ -1,10 +1,5 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import { useRouter } from 'next/router';
 import { Btn } from '../../../../../Tools/Button';
-import { Avatar } from '../../../../../Tools/Avatar/indexxx';
-import { IUserType } from '../../../../../types/user';
-import { ITheme } from '../../../../../../styles/theme';
 import { BtnWrap } from '../../../../../../styles/global';
 import useFollow from '../../../../../libs/client/useFollow';
 
@@ -13,16 +8,16 @@ interface IBtns {
     host_id: number;
     theme: boolean;
     isMyAcct: boolean;
-    onEdit: () => void;
+    onSetting: () => void;
   };
 }
 export const Btns = ({ _data }: IBtns) => {
-  const { theme, host_id, isMyAcct, onEdit } = _data;
+  const { theme, host_id, isMyAcct, onSetting } = _data;
   const { onClick, name, isFollowing } = useFollow(host_id, 'user');
   return (
     <Cont className="btn-wrap">
       {isMyAcct && (
-        <Btn type="button" onClick={onEdit} item={{ theme, name: 'Edit' }} />
+        <Btn type="button" onClick={onSetting} item={{ theme, name: 'Edit' }} />
       )}
       {!isMyAcct && (
         <Btn

@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { OverlayBg } from '../../../../Tools/overlay';
 import { IPostUseform } from '../../../../types/post';
 import { PostModal } from '../../../../../styles/post';
-import { ErrModal } from '../../../../Tools/err_modal';
+import { ErrModal } from '../../../../Tools/Error/Modal';
 import { scaleVar } from '../../../../../styles/variants';
 import { useUser } from '../../../../libs/client/useUser';
 import { useGetPosts } from '../../../../libs/client/usePosts';
@@ -51,8 +51,8 @@ export const PostsModal = ({ _data, _useform }: IPostsModal) => {
             <ErrModal
               _data={{
                 theme,
-                clearErrors,
                 id: 'chosenId',
+                clearErrors: clearErrors!,
                 error: errors?.chosenId?.message,
               }}
             />

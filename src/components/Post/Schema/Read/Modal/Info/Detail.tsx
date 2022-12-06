@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { IGetPostType } from '../../../../../types/post';
-import { Flex } from '../../../../../../styles/global';
-import { TrimText } from '../../../../../Tools/trimText';
-import { useCapLetters } from '../../../../../libs/client/useTools';
+import { IGetPostType } from '../../../../../../types/post';
+import { Flex } from '../../../../../../../styles/global';
+import { TrimText } from '../../../../../../Tools/trimText';
+import { useCapLetters } from '../../../../../../libs/client/useTools';
 
 export const Detail = ({ post }: IGetPostType) => {
   const { description, title, hashtags, pageLink } = post;

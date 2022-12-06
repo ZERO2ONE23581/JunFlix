@@ -3,7 +3,7 @@ import { IconModal } from './Modal';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { Avatar } from '../../../Tools/Avatar/indexxx';
+import { Avatar } from '../../../Tools/Avatar';
 import { Flex } from '../../../../styles/global';
 import { ITheme } from '../../../../styles/theme';
 import { useUser } from '../../../libs/client/useUser';
@@ -20,7 +20,15 @@ export const LoginMenu = ({ theme }: ITheme) => {
     <Cont className="user-menu">
       {isLoggedIn && (
         <UserIcon className="logged-in">
-          <Avatar _data={{ size, theme, host_id, onAvatar }} />
+          <Avatar
+            _data={{
+              size,
+              theme,
+              host_id,
+              isOther: true,
+              handleClick: onAvatar,
+            }}
+          />
           <IconModal modal={modal} setModal={setModal} theme={theme} />
         </UserIcon>
       )}

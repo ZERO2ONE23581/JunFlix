@@ -1,20 +1,16 @@
-import { Layer } from './Layer';
+import { Form } from './Form';
 import styled from '@emotion/styled';
-import { BoardsList } from './List';
 import { AnimatePresence } from 'framer-motion';
+import { IRes } from '../../../../types/global';
+import { UseFormHandleSubmit } from 'react-hook-form';
 import { OverlayBg } from '../../../../Tools/overlay';
 import { PostModal } from '../../../../../styles/post';
-import { scaleVar } from '../../../../../styles/variants';
-import { FlexCol } from '../../../../../styles/global';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { NewBtn } from './New_Btn';
-import useMutation from '../../../../libs/client/useMutation';
 import { MsgModal } from '../../../../Tools/msg_modal';
-import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
-import { IRes } from '../../../../types/global';
-import { Form } from './Form';
+import { scaleVar } from '../../../../../styles/variants';
+import useMutation from '../../../../libs/client/useMutation';
 import { IPostForm, IPostType } from '../../../../types/post';
-import { UseFormHandleSubmit } from 'react-hook-form';
+import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IBoardsModal {
   _data: {

@@ -2,7 +2,7 @@ import { PostImg } from './Img';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { avatarLink } from '../../../../../../Tools/Avatar/indexxx';
+import { avatarLink } from '../../../../../../Tools/Avatar';
 
 interface IPostImage {
   hide: boolean;

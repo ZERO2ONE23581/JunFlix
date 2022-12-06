@@ -1,19 +1,13 @@
 import { Title } from './Title';
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 import { CheckBox } from '../Box/CheckBox';
-import { PostBox__ } from '../../../Schema/Grid/Box';
-import { Dispatch, SetStateAction } from 'react';
 import { UseFormRegister } from 'react-hook-form';
-import { avatarLink } from '../../../../../Tools/Avatar/indexxx';
+import { PostBox__ } from '../../../Schema/Grid/Box';
+import { avatarLink } from '../../../../../Tools/Avatar';
 import { FlexCol, Grid } from '../../../../../../styles/global';
 import { IPostForm, IPostType } from '../../../../../types/post';
 import { usePostTitle } from '../../../../../libs/client/usePosts';
-import {
-  border,
-  TransBorder,
-  TweenTrans,
-} from '../../../../../../styles/variants';
-import { AnimatePresence, motion } from 'framer-motion';
 
 interface IMain {
   _data: {

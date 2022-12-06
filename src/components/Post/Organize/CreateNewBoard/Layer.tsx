@@ -1,6 +1,6 @@
 import { Svg } from '../../../../Tools/Svg';
-import { Layer_ } from '../../../../../styles/global';
 import { Btn } from '../../../../Tools/Button';
+import { Layer_ } from '../../../../../styles/global';
 
 interface ILayer {
   theme: boolean;

@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { IUserForm } from '../src/types/user';
 import { InputWrap } from '../src/Tools/Input';
 import { variants } from '../styles/variants';
-import { ErrMsg } from '../src/Error/Message';
+import { ErrMsg } from '../src/Tools/Error/Message';
 import { MsgModal } from '../src/Tools/msg_modal';
 import { AvatarInput } from '../src/Tools/Avatar/Input';
 import useMutation from '../src/libs/client/useMutation';

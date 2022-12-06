@@ -1,126 +1,110 @@
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
-import { IEditUser, IUserForm } from '../../../types/user';
-import { Flex, Form } from '../../../../styles/global';
 import { InputWrap } from '../../../Tools/Input';
-import useUser from '../../../libs/client/useUser';
+import { ErrMsg } from '../../../Tools/Error/Message';
+import { Flex, Form } from '../../../../styles/global';
 import { SelectWrap } from '../../../Tools/Input/Select';
-import { useEffect } from 'react';
+import { IUpdateUser, IUserForm } from '../../../types/user';
 import { useCapLetters } from '../../../libs/client/useTools';
 
-export const UserInfo_Form = ({ dataWrap }: IEditUser) => {
-  const type = dataWrap.type;
-  const post = dataWrap.post;
-  const theme = dataWrap.theme;
-  const loading = dataWrap.loading;
-  const setLoading = dataWrap.setLoading;
-  const { loggedInUser } = useUser();
+export const UpdateInfo = ({ _data }: IUpdateUser) => {
+  const { User, type, update, theme, loading, setLoading } = _data;
   const {
     watch,
-    register,
     setValue,
+    register,
+    setError,
+    clearErrors,
     handleSubmit,
     formState: { errors },
   } = useForm<IUserForm>({ mode: 'onSubmit' });
   //
   useEffect(() => {
-    const user = loggedInUser;
-    if (user) {
-      if (user.name) setValue('name', user?.name);
-      if (user.email) setValue('email', user?.email);
-      if (user.birth) setValue('birth', user?.birth);
-      if (user.gender) setValue('gender', user?.gender);
-      if (user.location) setValue('location', user?.location);
-      if (user.username) setValue('username', useCapLetters(user?.username));
+    if (User) {
+      if (User.name) setValue('name', User?.name);
+      if (User.birth) setValue('birth', User?.birth);
+      if (User.gender) setValue('gender', User?.gender);
+      if (User.location) setValue('location', User?.location);
+      if (User.username) setValue('username', useCapLetters(User?.username));
     }
-  }, [loggedInUser, setValue]);
-  //
-  const onValid = ({
-    name,
-    email,
-    birth,
-    gender,
-    location,
-    username,
-  }: IUserForm) => {
+  }, [User, setValue]);
+
+  const onValid = ({ name, birth, gender, location, username }: IUserForm) => {
+    const isAny = Boolean(name || birth || gender || location || username);
+    if (!isAny) return setError('gender', { message: 'need_userInfo' });
     if (loading) return;
     setLoading(true);
-    post({ name, email, birth, gender, location, username });
+    update({ name, birth, gender, location, username });
   };
-  //
+
   return (
     <>
       {type === 'userInfo' && (
         <Cont onSubmit={handleSubmit(onValid)}>
           <InputWrap
-            theme={theme}
-            id="username"
-            type="text"
-            label="Username"
-            error={errors.username?.msg}
-            watch={Boolean(watch('username'))}
-            register={register('username', {
-              maxLength: {
-                value: 10,
-                msg: '유저의 이름은 10자를 초과할수 없습니다.',
-              },
-            })}
+            _data={{
+              theme,
+              clearErrors,
+              type: 'text',
+              id: 'username',
+              label: 'username',
+              text: watch('username')!,
+              register: register('username', {
+                maxLength: { value: 10, message: 'max_username' },
+              }),
+            }}
           />
-          <InputWrap
-            theme={theme}
-            id="email"
-            type="email"
-            label="Email"
-            watch={Boolean(watch('email'))}
-            error={errors.email?.msg}
-            register={register('email', {
-              required: '이메일을 입력해주세요.',
-              pattern: {
-                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                msg: '이메일 형식이 올바르지 않습니다.',
-              },
-            })}
-          />
-          <SelectWrap
-            id="gender"
-            theme={theme}
-            error={errors.gender?.msg}
-            watch={Boolean(watch('gender'))}
-            register={register('gender')}
-          />
+          <ErrMsg error={errors.username?.message!} theme={theme} />
           <Flex className="flex">
             <InputWrap
-              theme={theme}
-              id="name"
-              type="text"
-              label="Name"
-              watch={Boolean(watch('name'))}
-              error={errors.name?.msg}
-              register={register('name', {
-                maxLength: {
-                  value: 10,
-                  msg: '이름은 10자를 초과할수 없습니다.',
-                },
-              })}
+              _data={{
+                theme,
+                clearErrors,
+                type: 'text',
+                id: 'name',
+                label: 'name',
+                text: watch('name')!,
+                register: register('name', {
+                  maxLength: { value: 10, message: 'max_name' },
+                }),
+              }}
+            />
+            <SelectWrap
+              _data={{
+                theme,
+                clearErrors,
+                id: 'gender',
+                text: watch('gender'),
+                error: errors.gender?.message,
+                register: register('gender'),
+              }}
+            />
+          </Flex>
+          <Flex className="flex">
+            <ErrMsg error={errors.name?.message!} theme={theme} />
+            <InputWrap
+              _data={{
+                theme,
+                clearErrors,
+                type: 'date',
+                id: 'birth',
+                label: 'Birth',
+                text: watch('birth')!,
+                register: register('birth'),
+              }}
             />
             <InputWrap
-              theme={theme}
-              id="birth"
-              type="date"
-              label="Birth"
-              watch={Boolean(watch('birth'))}
-              error={errors.birth?.msg}
-              register={register('birth')}
-            />
-            <InputWrap
-              theme={theme}
-              id="location"
-              type="text"
-              label="Location"
-              error={errors.location?.msg}
-              watch={Boolean(watch('location'))}
-              register={register('location')}
+              _data={{
+                theme,
+                clearErrors,
+                type: 'text',
+                id: 'location',
+                label: 'location',
+                text: watch('location')!,
+                register: register('location'),
+              }}
             />
           </Flex>
           <Btn item={{ theme, name: 'Edit' }} type="submit" />
@@ -130,10 +114,14 @@ export const UserInfo_Form = ({ dataWrap }: IEditUser) => {
   );
 };
 const Cont = styled(Form)`
-  gap: 22px;
+  gap: 0;
+  button {
+    margin-top: 0.5rem;
+  }
   .flex {
-    .birth {
-      height: 40px;
+    gap: 0.5rem;
+    .select-wrap {
+      margin-top: 1rem;
     }
   }
 `;

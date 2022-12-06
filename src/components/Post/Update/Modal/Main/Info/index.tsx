@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { DangerZone } from './DangerZone';
-import { BlockComment } from './BlockComment';
+import { DangerZone } from './Danger';
+import { BlockComment } from './BlockCmt';
 import { Dispatch, SetStateAction } from 'react';
-import { SelectBoardBtn } from './SelectBoardBtn';
+import { SelectBoardBtn } from './SelectBoard';
 import { IPostUseform } from '../../../../../../types/post';
 import { FlexCol } from '../../../../../../../styles/global';
 import { PostInputs } from '../../../../Create/Modal/Info/Inputs';

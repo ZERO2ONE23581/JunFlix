@@ -60,9 +60,9 @@ export const hoverBgVars = {
   }),
 };
 export const opacityVar = {
+  exit: { opacity: 0, transition: { duration: 0.3 } },
   initial: { opacity: 0, transition: { duration: 0.3 } },
   animate: { opacity: 1, transition: { duration: 0.3 } },
-  exit: { opacity: 0, transition: { duration: 0.3 } },
 };
 export const hoverBgColor = {
   animate: (theme: boolean) => ({ color: color(theme) }),

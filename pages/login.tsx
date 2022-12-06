@@ -1,20 +1,20 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
 import { Btn } from '../src/Tools/Button';
-import { Box, FlexPage, Form, Page } from '../styles/global';
-import { AnimatePresence } from 'framer-motion';
-import { ILoginForm, IUserForm } from '../src/types/user';
-import { InputWrap } from '../src/Tools/Input';
+import { useForm } from 'react-hook-form';
 import { IRes } from '../src/types/global';
+import { useEffect, useState } from 'react';
+import { variants } from '../styles/variants';
+import { ErrMsg } from '../src/Tools/Error/Message';
+import { IUserForm } from '../src/types/user';
+import { InputWrap } from '../src/Tools/Input';
+import { AnimatePresence } from 'framer-motion';
 import { Head_ } from '../src/Tools/head_title';
+import { MsgModal } from '../src/Tools/msg_modal';
+import { Box, FlexPage, Form } from '../styles/global';
 import useMutation from '../src/libs/client/useMutation';
 import { LoadingModal } from '../src/Tools/Modal/loading_modal';
-import { MsgModal } from '../src/Tools/msg_modal';
-import { variants } from '../styles/variants';
-import { ErrMsg } from '../src/Error/Message';
 
 const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();

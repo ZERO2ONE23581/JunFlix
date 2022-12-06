@@ -6,10 +6,10 @@ import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { IPostType } from '../../../../../types/post';
 import { OverlayBg } from '../../../../../Tools/overlay';
-import { useUser } from '../../../../../libs/client/useUser';
-import { avatarLink } from '../../../../../Tools/Avatar/indexxx';
-import { PostModal, postVar } from '../../../../../../styles/post';
+import { avatarLink } from '../../../../../Tools/Avatar';
 import { ISetFixed } from '../../../../../../pages/_app';
+import { useUser } from '../../../../../libs/client/useUser';
+import { PostModal, postVar } from '../../../../../../styles/post';
 
 export interface IReadPostModal extends ISetFixed {
   _data: {

@@ -1,94 +1,89 @@
+import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
-import { IEditUser, IUserForm } from '../../../types/user';
 import { InputWrap } from '../../../Tools/Input';
-import useUser from '../../../libs/client/useUser';
-import { useEffect } from 'react';
-import { Flex, Form } from '../../../../styles/global';
-import styled from '@emotion/styled';
+import { ErrMsg } from '../../../Tools/Error/Message';
+import { IUpdateUser, IUserForm } from '../../../types/user';
+import { Flex, FlexCol, Form } from '../../../../styles/global';
 
-export const Password_Form = ({ dataWrap }: IEditUser) => {
-  const type = dataWrap.type;
-  const post = dataWrap.post;
-  const theme = dataWrap.theme;
-  const loading = dataWrap.loading;
-  const setLoading = dataWrap.setLoading;
-  const { loggedInUser } = useUser();
-  const userId = loggedInUser?.userId;
+export const UpdatePassword = ({ _data }: IUpdateUser) => {
+  const { type, update, theme, loading, setLoading } = _data;
   const {
     watch,
     register,
-    setValue,
     setError,
+    clearErrors,
     handleSubmit,
     formState: { errors },
   } = useForm<IUserForm>({ mode: 'onSubmit' });
-  //
-  useEffect(() => {
-    if (userId) setValue('userId', userId);
-  }, [userId, setValue]);
-  //
-  const onValid = ({ password, newPassword, pw_confirm }: IUserForm) => {
-    if (newPassword !== pw_confirm)
-      return setError('pw_confirm', {
-        msg: '비밀번호가 일치하지 않습니다.',
-      });
+
+  const onValid = ({ password, new_password, password_confirm }: IUserForm) => {
     if (loading) return;
+    const isMatch = Boolean(new_password !== password_confirm);
+    if (!isMatch)
+      return setError('password_confirm', { message: 'pw_unmatch.' });
     setLoading(true);
-    post({ password, newPassword, pw_confirm });
+    update({ password, new_password, password_confirm });
   };
   //
   return (
     <>
       {type === 'password' && (
         <Cont onSubmit={handleSubmit(onValid)}>
-          <InputWrap
-            theme={theme}
-            id="password"
-            type="password"
-            label="Password"
-            watch={Boolean(watch('password'))}
-            error={errors.password?.msg}
-            register={register('password', {
-              required: '현재 비밀번호를 입력해주세요.',
-            })}
-          />
+          <FlexCol className="inp_err_wrap">
+            <InputWrap
+              _data={{
+                theme,
+                clearErrors,
+                id: 'password',
+                type: 'password',
+                label: 'Password',
+                text: watch('password')!,
+                register: register!('password', { required: 'need_password' }),
+              }}
+            />
+            <ErrMsg error={errors.password?.message!} theme={theme} />
+          </FlexCol>
           <Flex className="flex">
-            <InputWrap
-              theme={theme}
-              type="password"
-              id="newPassword"
-              label="New Password"
-              watch={Boolean(watch('newPassword'))}
-              error={errors.newPassword?.msg}
-              register={register('newPassword', {
-                required: '새로운 비밀번호를 입력해주세요.',
-                minLength: {
-                  value: 8,
-                  msg: '비밀번호는 최소 8자리여야 합니다.',
-                },
-                maxLength: {
-                  value: 16,
-                  msg: '비밀번호는 최대 16자리여야 합니다.',
-                },
-                pattern: {
-                  value:
-                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
-                  msg: '비밀번호는 최소 1개이상의 숫자, 문자, 정의된 특수문자를 포함해야 합니다.',
-                },
-              })}
-            />
-            <InputWrap
-              theme={theme}
-              type="password"
-              id="pw_confirm"
-              label="Confirm Password"
-              error={errors.pw_confirm?.msg}
-              watch={Boolean(watch('pw_confirm'))}
-              register={register('pw_confirm', {
-                required: '새로운 비밀번호를 재입력해주세요.',
-              })}
-            />
+            <FlexCol className="inp_err_wrap">
+              <InputWrap
+                _data={{
+                  theme,
+                  clearErrors,
+                  id: 'new_password',
+                  type: 'new_password',
+                  label: 'New Password',
+                  text: watch('new_password')!,
+                  register: register!('new_password', {
+                    required: 'need_new_password',
+                    minLength: { value: 8, message: 'min_password' },
+                    maxLength: { value: 16, message: 'max_password' },
+                    pattern: {
+                      value:
+                        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
+                      message: 'invalid_password',
+                    },
+                  }),
+                }}
+              />
+              <ErrMsg error={errors.new_password?.message!} theme={theme} />
+            </FlexCol>
+            <FlexCol className="inp_err_wrap">
+              <InputWrap
+                _data={{
+                  theme,
+                  clearErrors,
+                  type: 'password',
+                  id: 'password_confirm',
+                  label: 'Confirm',
+                  text: watch('password_confirm')!,
+                  register: register('password_confirm', {
+                    required: 'need_password_confirm',
+                  }),
+                }}
+              />
+              <ErrMsg error={errors.password_confirm?.message!} theme={theme} />
+            </FlexCol>
           </Flex>
           <Btn item={{ theme, name: 'Edit' }} type="submit" />
         </Cont>
@@ -97,8 +92,14 @@ export const Password_Form = ({ dataWrap }: IEditUser) => {
   );
 };
 const Cont = styled(Form)`
-  gap: 20px;
-  .input-wrap {
-    gap: 20px;
+  gap: 0;
+  .flex {
+    gap: 0.8rem;
+  }
+  .inp_err_wrap {
+    gap: 1rem;
+  }
+  button {
+    margin-top: 1rem;
   }
 `;

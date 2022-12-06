@@ -1,12 +1,12 @@
 import { Modal } from './Modal';
-import { useEffect, useState } from 'react';
 import { SelectModal } from './Select';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { MsgModal } from '../../../Tools/msg_modal';
 import { ICreatePostRes } from '../../../types/post';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
-import { useRouter } from 'next/router';
 
 interface ICreatePost {
   open: boolean;

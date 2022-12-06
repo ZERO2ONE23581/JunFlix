@@ -1,11 +1,10 @@
-import styled from '@emotion/styled';
 import { Label } from './Label';
-import { useEffect, useState } from 'react';
-import { IPostForm } from '../../../../../types/post';
-import { AnimatePresence, motion } from 'framer-motion';
-import { UseFormRegister, UseFormWatch } from 'react-hook-form';
 import { DeleteIcon } from './Delete_Icon';
+import { useEffect, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { IPostForm } from '../../../../../types/post';
 import { FlexCol } from '../../../../../../styles/global';
+import { UseFormRegister, UseFormWatch } from 'react-hook-form';
 
 interface IImageInput {
   data: {

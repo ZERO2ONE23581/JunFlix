@@ -1,11 +1,11 @@
 import { Btns } from './Btns';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { Avatar } from '../../../../../Tools/Avatar/indexxx';
-import { IUserType } from '../../../../../types/user';
-import { Flex, FlexCol } from '../../../../../../styles/global';
-import { useCapLetter } from '../../../../../libs/client/useTools';
 import { FollowInfo } from './Follow';
+import { useRouter } from 'next/router';
+import { Avatar } from '../../../../../Tools/Avatar';
+import { IUserType } from '../../../../../types/user';
+import { FlexCol } from '../../../../../../styles/global';
+import { useCapLetter } from '../../../../../libs/client/useTools';
 
 interface IUserBox {
   _data: {
@@ -15,34 +15,36 @@ interface IUserBox {
   };
 }
 export const Host = ({ _data }: IUserBox) => {
-  const { theme, host, isMyAcct } = _data;
-  const host_id = host?.id;
   const router = useRouter();
-  const onEdit = () =>
-    router.push(`/user/${host.id}/${host.username}/edit_profile`);
-
-  const _avatar = {
-    theme,
-    size: '7.5rem',
-    host_id: host?.id,
-    avatar: host?.avatar,
-    handleClick: { isClick: true, onClick: onEdit },
-  };
+  const { theme, host, isMyAcct } = _data;
+  const host_id = host?.id!;
+  const userId = host?.userId!;
+  const username = host?.username!;
+  const onSetting = () => router.push(`/user/${host_id}/${userId}/setting`);
   const _follow = {
     followers: host?._count.followers,
     followings: host?._count.followings,
   };
+  const Name = username ? username : userId;
   return (
     <>
       {host && (
         <Cont className="host">
-          <Avatar _data={{ ..._avatar }} />
+          <Avatar
+            _data={{
+              theme,
+              host_id,
+              isOther: true,
+              size: '7.5rem',
+              handleClick: onSetting,
+            }}
+          />
           <Info>
-            <span className="name">{useCapLetter(host.username!)}</span>
-            <span className="small">@{host.userId}</span>
+            <span className="name">{useCapLetter(Name)}</span>
+            <span className="small">@{userId}</span>
             <FollowInfo _data={{ ..._follow }} />
           </Info>
-          <Btns _data={{ theme, onEdit, isMyAcct, host_id }} />
+          <Btns _data={{ theme, onSetting, isMyAcct, host_id }} />
         </Cont>
       )}
     </>

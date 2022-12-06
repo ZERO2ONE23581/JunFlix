@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { avatarLink } from '../../../../Tools/Avatar/indexxx';
+import { avatarLink } from '../../../../Tools/Avatar';
 import { FlexCol } from '../../../../../styles/global';
 import { useCapLetters } from '../../../../libs/client/useTools';
 import { TweenTrans, color } from '../../../../../styles/variants';

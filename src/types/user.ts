@@ -50,7 +50,14 @@ export interface IUserForm {
   email: string;
   password: string;
   avatar?: FileList;
+  new_password?: string;
   password_confirm: string;
+  //
+  name?: string;
+  birth?: string;
+  gender?: string;
+  location?: string;
+  username?: string;
 }
 export interface IJoinForm {
   email?: string;
@@ -85,12 +92,13 @@ export interface IFindPostRes {
   error?: string;
   FoundUserID?: string;
 }
-export interface IEditUser {
-  dataWrap: {
-    theme: boolean;
+export interface IUpdateUser {
+  _data: {
     type: string;
+    theme: boolean;
+    User: IUserType;
     loading: boolean;
-    post: ({}) => void;
+    update: ({}) => void;
     setLoading: Dispatch<SetStateAction<boolean>>;
   };
 }
