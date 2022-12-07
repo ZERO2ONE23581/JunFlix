@@ -243,12 +243,15 @@ export const Blur = styled.div<{ isBlur: boolean }>`
   filter: ${(p) => p.isBlur && 'blur(5px)'};
 `;
 export const Form = styled(motion.form)`
-  gap: 1rem;
+  width: 100%;
   display: flex;
   overflow-y: auto;
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  button {
+    margin-top: 0.8rem;
+  }
   ::-webkit-scrollbar {
     display: none;
   }

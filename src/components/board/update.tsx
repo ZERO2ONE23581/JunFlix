@@ -117,6 +117,7 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
                 <SelectWrap
                   _data={{
                     theme,
+                    clearErrors,
                     id: 'genre',
                     text: watch('genre'),
                     register: register('genre'),

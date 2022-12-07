@@ -17,12 +17,12 @@ interface IInput {
   _data: {
     id: string;
     type: string;
-    text: string;
     label: string;
     theme: boolean;
     error?: string;
     disabled?: boolean;
     placeholder?: string;
+    text: string | number;
     register: UseFormRegisterReturn;
     clearErrors: UseFormClearErrors<any>;
   };

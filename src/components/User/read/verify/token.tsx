@@ -1,49 +1,49 @@
-import { useEffect, useState } from 'react';
+import { Title } from './Title';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import { Btn } from '../../../../Tools/Button';
-import { InputWrap } from '../../../../Tools/Input';
-import { Dispatch, SetStateAction } from 'react';
-import { Box, Form } from '../../../../../styles/global';
-import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
-import useMutation from '../../../../libs/client/useMutation';
-import { IFindForm, IFindPostRes } from '../../../../types/user';
-import { BoxTitle } from '../../../../Tools/box_title';
-import { ITheme } from '../../../../../styles/theme';
 import { AnimatePresence } from 'framer-motion';
+import { Dispatch, SetStateAction } from 'react';
+import { InputWrap } from '../../../../Tools/Input';
 import { MsgModal } from '../../../../Tools/msg_modal';
-import { Cont } from './email';
+import { Box, Form } from '../../../../../styles/global';
+import { ErrMsg } from '../../../../Tools/Error/Message';
 import { variants } from '../../../../../styles/variants';
+import useMutation from '../../../../libs/client/useMutation';
+import { IFindID, IUserForm } from '../../../../types/user';
+import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
 
-interface VerifyToken extends ITheme {
-  isBox: boolean;
-  titleType: string;
-  setUserId: Dispatch<SetStateAction<string>>;
-  setVerify: Dispatch<SetStateAction<boolean>>;
+interface VerifyToken {
+  _data: {
+    type: string;
+    isBox: boolean;
+    theme: boolean;
+    layoutId: string;
+    setUserId: Dispatch<SetStateAction<string>>;
+    setVerify: Dispatch<SetStateAction<boolean>>;
+  };
 }
-export const VerifyToken = ({
-  isBox,
-  theme,
-  titleType,
-  setUserId,
-  setVerify,
-}: VerifyToken) => {
+export const Token = ({ _data }: VerifyToken) => {
   const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);
-  const [verifyToken, { loading, data }] = useMutation<IFindPostRes>(
-    `/api/user/login/verify/token`
+  const { isBox, theme, type, setUserId, setVerify, layoutId } = _data;
+  const [post, { loading, data }] = useMutation<IFindID>(
+    `/api/user/verify/token`
   );
   const {
     watch,
     register,
+    clearErrors,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFindForm>({ mode: 'onSubmit' });
+  } = useForm<IUserForm>({ mode: 'onSubmit' });
 
-  const onValid = ({ token }: IFindForm) => {
+  const onValid = ({ token }: IUserForm) => {
     setLoading(true);
     if (loading) return;
-    return verifyToken(token);
+    const digits = Number(token);
+    return post({ digits });
   };
   //
   useEffect(() => {
@@ -53,7 +53,7 @@ export const VerifyToken = ({
         if (data.error) setMsg(data.error);
         if (data.ok) {
           setVerify(data.ok);
-          setUserId(data.FoundUserID!);
+          setUserId(data.found!);
         }
       }, 1000);
     }
@@ -70,35 +70,32 @@ export const VerifyToken = ({
           custom={theme}
           variants={variants}
         >
-          <BoxTitle type={titleType} theme={theme} />
+          <Title theme={theme} type={type} />
           <Form onSubmit={handleSubmit(onValid)}>
             <InputWrap
-              id="token"
-              type="number"
-              theme={theme}
-              label="Token Number"
-              watch={watch('token')}
-              error={errors.token?.message}
-              register={register('token', {
-                required: '6자리 토큰번호를 입력하세요.',
-                maxLength: {
-                  value: 6,
-                  message:
-                    '인증번호는 6자리 숫자입니다. 이메일을 확인해주세요.',
-                },
-              })}
+              _data={{
+                theme,
+                clearErrors,
+                id: 'token',
+                type: 'number',
+                label: 'Token',
+                text: watch('token')!,
+                register: register('token', {
+                  required: 'need_token',
+                  maxLength: { value: 6, message: 'max_token' },
+                }),
+              }}
             />
+            <ErrMsg error={errors.token?.message!} theme={theme} />
             <Btn item={{ theme, name: 'Submit' }} type="submit" />
           </Form>
         </Cont>
       )}
-      <MsgModal
-        msg={msg}
-        theme={theme}
-        Loading={isBox && Loading}
-        closeModal={() => setMsg('')}
-      />
+      <MsgModal _data={{ msg, theme, layoutId }} />
       {isBox && Loading && <LoadingModal theme={theme} />}
     </AnimatePresence>
   );
 };
+const Cont = styled(Box)`
+  max-width: 500px;
+`;

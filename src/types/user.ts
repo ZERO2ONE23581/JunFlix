@@ -54,6 +54,7 @@ export interface IUserForm {
   password_confirm: string;
   //
   name?: string;
+  token?: number;
   birth?: string;
   gender?: string;
   location?: string;
@@ -87,10 +88,10 @@ export interface IFindForm {
   password?: string;
   confirmPassword?: string;
 }
-export interface IFindPostRes {
+export interface IFindID {
   ok?: boolean;
   error?: string;
-  FoundUserID?: string;
+  found?: string;
 }
 export interface IUpdateUser {
   _data: {

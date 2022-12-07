@@ -36,15 +36,8 @@ export const animateColorVar = {
   }),
 };
 export const hoverVars = {
-  animate: (theme: boolean) => ({
-    color: color(theme),
-    //backgroundColor: color(!theme),
-  }),
-  hover: () => ({
-    scale: 1.1,
-    color: redColor,
-    transition: { duration: 0.4, delay: 0.4 },
-  }),
+  animate: (theme: boolean) => ({ color: color(theme) }),
+  hover: () => ({ scale: 1.1, color: redColor, transition: { duration: 0.4 } }),
 };
 export const hoverBgVars = {
   animate: (theme: boolean) => ({
