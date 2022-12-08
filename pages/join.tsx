@@ -15,6 +15,7 @@ import useMutation from '../src/libs/client/useMutation';
 import { Flex, FlexCol, FlexPage } from '../styles/global';
 import { useUploadImg } from '../src/libs/client/useTools';
 import { LoadingModal } from '../src/Tools/Modal/loading_modal';
+import { FindUser } from '../src/components/User/Find';
 
 const JoinPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [post, { loading, data }] = useMutation<IRes>(`/api/user/create`);
@@ -146,13 +147,14 @@ const JoinPage: NextPage<{ theme: boolean }> = ({ theme }) => {
                     }}
                   />
                   <ErrMsg
-                    error={errors.password_confirm?.message!}
                     theme={theme}
+                    error={errors.password_confirm?.message!}
                   />
                 </Inputs>
               </Wrap>
               <Btn type="submit" item={{ theme, name: 'Submit' }} />
             </form>
+            <FindUser theme={theme} type="join" />
           </Box>
         )}
       </>

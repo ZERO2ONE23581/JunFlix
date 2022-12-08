@@ -1,5 +1,6 @@
 import { Title } from './Title';
 import styled from '@emotion/styled';
+import { FindUser } from '../../Find';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../../../Tools/Button';
@@ -89,6 +90,7 @@ export const Token = ({ _data }: VerifyToken) => {
             <ErrMsg error={errors.token?.message!} theme={theme} />
             <Btn item={{ theme, name: 'Submit' }} type="submit" />
           </Form>
+          <FindUser theme={theme} />
         </Cont>
       )}
       <MsgModal _data={{ msg, theme, layoutId }} />

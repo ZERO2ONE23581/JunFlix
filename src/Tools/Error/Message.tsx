@@ -15,6 +15,11 @@ export const ErrMsg = ({ theme, error }: IErrMsg) => {
           kor: '6자리 토큰을 입력해 주세요.',
           eng: 'Please type 6 digits token.',
         });
+      if (error === 'need_userId')
+        return setTxt({
+          kor: '아이디를 입력해 주세요.',
+          eng: 'Please type your ID.',
+        });
       if (error === 'max_name')
         return setTxt({
           eng: 'Name must be less than 20 words.',

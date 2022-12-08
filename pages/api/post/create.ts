@@ -18,7 +18,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const isMeHost = Boolean(host_id === user.id);
   if (!isMeHost) return res.json({ ok: false, error: 'invalid host.' });
   if (!host_id) return res.json({ ok: false, error: 'host id missed.' });
-  if (!title) return res.json({ ok: false, error: 'title input missed.' });
+  if (!title) return res.json({ ok: false, error: 'title miss_input' });
   const must = {
     title,
     pageLink,

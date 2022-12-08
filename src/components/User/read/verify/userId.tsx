@@ -1,39 +1,47 @@
+import { Title } from './Title';
+import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../../Tools/Button';
-import { InputWrap } from '../../../../Tools/Input';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import useMutation from '../../../../libs/client/useMutation';
-import { IFindForm, IFindPostRes } from '../../../../types/user';
-import { Form } from '../../../../../styles/global';
-import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
-import { ITheme } from '../../../../../styles/theme';
-import { BoxTitle } from '../../../../Tools/box_title';
+import { IRes } from '../../../../types/global';
 import { AnimatePresence } from 'framer-motion';
+import { IUserForm } from '../../../../types/user';
+import { InputWrap } from '../../../../Tools/Input';
 import { MsgModal } from '../../../../Tools/msg_modal';
-import { Cont } from './email';
+import { Box, Form } from '../../../../../styles/global';
+import { ErrMsg } from '../../../../Tools/Error/Message';
 import { variants } from '../../../../../styles/variants';
+import useMutation from '../../../../libs/client/useMutation';
+import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { FindUser } from '../../Find';
 
-interface IVerfiyID extends ITheme {
-  isBox: boolean;
-  setToken: Dispatch<SetStateAction<boolean>>;
+interface IVerfiyID {
+  _data: {
+    isBox: boolean;
+    theme: boolean;
+    layoutId: string;
+    setToken: Dispatch<SetStateAction<boolean>>;
+  };
 }
-export const VerifyUserID = ({ isBox, setToken, theme }: IVerfiyID) => {
+export const VerifyID = ({ _data }: IVerfiyID) => {
   const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);
-  const [verifyUserId, { loading, data }] = useMutation<IFindPostRes>(
-    `/api/user/login/verify/user_id`
+  const { isBox, setToken, theme, layoutId } = _data;
+  const [post, { loading, data }] = useMutation<IRes>(
+    `/api/user/verify/userId`
   );
   const {
     watch,
     register,
+    clearErrors,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFindForm>({ mode: 'onSubmit' });
+  } = useForm<IUserForm>({ mode: 'onSubmit' });
 
-  const onValid = ({ userId }: IFindForm) => {
+  const onValid = ({ userId }: IUserForm) => {
     setLoading(true);
     if (loading) return;
-    return verifyUserId(userId);
+    return post({ userId });
   };
   //
   useEffect(() => {
@@ -45,41 +53,44 @@ export const VerifyUserID = ({ isBox, setToken, theme }: IVerfiyID) => {
       }, 1000);
     }
   }, [data, setToken, setMsg, setLoading, setTimeout]);
+
   return (
     <AnimatePresence>
       {isBox && !Loading && (
-        <Cont
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          className="loading"
-          custom={theme}
-          variants={variants}
-        >
-          <BoxTitle theme={theme} type="verify-userId" />
-          <Form onSubmit={handleSubmit(onValid)}>
-            <InputWrap
-              type="text"
-              id="userId"
-              theme={theme}
-              label="USER ID"
-              error={errors.userId?.message}
-              watch={watch('userId')}
-              register={register('userId', {
-                required: '아이디를 입력해주세요.',
-              })}
-            />
-            <Btn item={{ theme, name: 'Submit' }} type="submit" />
-          </Form>
-        </Cont>
+        <>
+          <Cont
+            exit="exit"
+            initial="initial"
+            animate="animate"
+            className="loading"
+            custom={theme}
+            variants={variants}
+          >
+            <Title theme={theme} type="password" />
+            <Form onSubmit={handleSubmit(onValid)}>
+              <InputWrap
+                _data={{
+                  theme,
+                  clearErrors,
+                  id: 'userId',
+                  type: 'text',
+                  label: 'userId',
+                  text: watch('userId')!,
+                  register: register('userId', { required: 'need_userId' }),
+                }}
+              />
+              <ErrMsg theme={theme} error={errors.userId?.message!} />
+              <Btn item={{ theme, name: 'Submit' }} type="submit" />
+            </Form>
+            <FindUser theme={theme} />
+          </Cont>
+        </>
       )}
-      <MsgModal
-        msg={msg}
-        theme={theme}
-        Loading={isBox && Loading}
-        closeModal={() => setMsg('')}
-      />
+      <MsgModal _data={{ msg, theme, layoutId }} />
       {isBox && Loading && <LoadingModal theme={theme} />}
     </AnimatePresence>
   );
 };
+const Cont = styled(Box)`
+  max-width: 500px;
+`;

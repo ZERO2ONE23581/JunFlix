@@ -5,17 +5,17 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = req.body;
-  if (!userId) return res.json({ ok: false, error: 'input missed.' });
+  if (!userId) return res.json({ ok: false, error: 'input_miss' });
   //
-  const user = await client.user.findUnique({
+  const found = await client.user.findUnique({
     where: { userId },
     select: { id: true, userId: true },
   });
-  if (!user) return res.json({ ok: false, error: 'no userId found.' });
+  if (!found) return res.json({ ok: false, error: 'no_data' });
   //
   const digits = Math.floor(Math.random() * 90000) + 100000;
   const token = await client.token.create({
-    data: { digits, host: { connect: { id: user.id } } },
+    data: { digits, host: { connect: { id: found.id } } },
     select: { id: true },
   });
   if (!token) return res.json({ ok: false, error: 'token failed' });

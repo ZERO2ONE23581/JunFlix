@@ -1,47 +1,40 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Page } from '../../../styles/global';
+import { FlexPage, Page } from '../../../styles/global';
 import { Head_ } from '../../../src/Tools/head_title';
-import { VerifyToken } from '../../../src/components/User/Read/Verify/Token';
-import { VerifyResult } from '../../../src/components/User/Read/Verify/result';
-import { VerifyUserID } from '../../../src/components/User/Read/Verify/userId';
-import { CreatePassword } from '../../../src/components/User/Create/password';
+import { Token } from '../../../src/components/User/Read/Verify/Token';
+import { Result } from '../../../src/components/User/Read/Verify/result';
+import { VerifyID } from '../../../src/components/User/Read/Verify/userId';
+import { NewPassord } from '../../../src/components/User/NewPassword';
 
 const FindPassword: NextPage<{ theme: boolean }> = ({ theme }) => {
+  const type = 'token_pw';
+  const layoutId = 'find_pw';
   const [userId, setUserId] = useState('');
   const [token, setToken] = useState(false);
-  const [verify, setVerify] = useState(false);
   const [modal, setModal] = useState(false);
+  const [verify, setVerify] = useState(false);
+  const isBox = token && !verify;
+  const isNew = Boolean(token && userId);
+  const __data = { theme, layoutId };
   return (
     <>
       <Head_ title="비밀번호 찾기" />
       <Cont>
-        <VerifyUserID theme={theme} isBox={!token} setToken={setToken} />
-        <VerifyToken
-          theme={theme}
-          setUserId={setUserId}
-          setVerify={setVerify}
-          isBox={token && !verify}
-          titleType="verify-token-password"
-        />
-        <CreatePassword
-          theme={theme}
-          isBox={verify}
-          userId={userId}
-          setModal={setModal}
+        <VerifyID _data={{ theme, isBox: !token, setToken, layoutId }} />
+        <Token _data={{ ...__data, isBox, setUserId, setVerify, type }} />
+        <NewPassord
+          _data={{ isBox: isNew, theme, userId, layoutId, setModal }}
         />
       </Cont>
-      <VerifyResult userId={'isPassword'} verified={modal} theme={theme} />
+      <Result _data={{ userId: 'isPassword', verify: modal, theme }} />
     </>
   );
 };
 
 export default FindPassword;
 
-const Cont = styled(Page)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
+const Cont = styled(FlexPage)`
+  flex-direction: column;
 `;

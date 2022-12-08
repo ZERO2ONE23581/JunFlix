@@ -56,6 +56,7 @@ export interface IUserForm {
   name?: string;
   token?: number;
   birth?: string;
+  userId?: string;
   gender?: string;
   location?: string;
   username?: string;

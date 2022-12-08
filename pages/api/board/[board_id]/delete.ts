@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { board_id } = req.query; //현보드 아이디
   const isMatch = Boolean(user?.id === +inputs.user_id);
   if (!user) return res.json({ ok: false, error: 'must login.' });
-  if (!inputs) return res.json({ ok: false, error: 'input missed.' });
+  if (!inputs) return res.json({ ok: false, error: 'miss_input' });
   if (!board_id) return res.json({ ok: false, error: 'query missed.' });
   if (!isMatch) return res.json({ ok: false, error: 'invalid user.' });
   //

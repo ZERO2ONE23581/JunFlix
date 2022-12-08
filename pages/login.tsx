@@ -13,9 +13,9 @@ import { Head_ } from '../src/Tools/head_title';
 import { MsgModal } from '../src/Tools/msg_modal';
 import { ErrMsg } from '../src/Tools/Error/Message';
 import { Box, FlexPage, Form } from '../styles/global';
+import { FindUser } from '../src/components/User/Find';
 import useMutation from '../src/libs/client/useMutation';
 import { LoadingModal } from '../src/Tools/Modal/loading_modal';
-import { FindUser } from '../src/components/User/Find';
 
 const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
@@ -100,8 +100,8 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
                   <ErrMsg error={errors.password?.message!} theme={theme} />
                   <Btn type="submit" item={{ theme, name: 'Submit' }} />
                 </Form>
+                <FindUser theme={theme} type="login" />
               </Box>
-              <FindUser theme={theme} />
             </>
           )}
           {loading && <LoadingModal theme={theme} />}

@@ -11,7 +11,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const inputs = { name, birth, gender, location, username };
   const isAny = Boolean(name || birth || gender || location || username);
   if (!user) return res.json({ ok: false, error: 'must login.' });
-  if (!isAny) return res.json({ ok: false, error: 'input missed.' });
+  if (!isAny) return res.json({ ok: false, error: 'miss_input' });
   if (!user_id) return res.json({ ok: false, error: 'query missed.' });
   if (!isMatchQuery) return res.json({ ok: false, error: 'invalid query.' });
 

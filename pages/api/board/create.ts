@@ -11,7 +11,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const isHost = Boolean(user?.id === user_id);
   if (!user) return res.json({ ok: false, error: 'must login.' });
   if (!isHost) return res.json({ ok: false, error: 'invalid host.' });
-  if (!isInputs) return res.json({ ok: false, error: 'input missed.' });
+  if (!isInputs) return res.json({ ok: false, error: 'miss_input' });
   //
   const UpdatePosts = Boolean(posts.length > 0);
   if (UpdatePosts) {

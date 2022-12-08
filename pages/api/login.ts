@@ -8,7 +8,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const { email, password } = req.body;
     const isInputs = Boolean(email && password);
-    if (!isInputs) return res.json({ ok: false, error: 'input missed.' });
+    if (!isInputs) return res.json({ ok: false, error: 'miss_input' });
 
     //userId check
     const user = await client.user.findUnique({
