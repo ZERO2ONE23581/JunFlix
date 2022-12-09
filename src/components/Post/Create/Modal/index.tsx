@@ -72,7 +72,7 @@ export const Modal = ({ _data }: ICreatePostModal) => {
       if (hashtags && pageLink) return post({ ...inputs });
     };
     const host_id = loggedInUser?.id!;
-    const img_id = await useUploadImg(inputs.post_image, host_id);
+    const img_id = await useUploadImg(inputs.post_image);
     if (!img_id)
       return option({ ...inputs, host_id, post_image: null, board_id });
     if (img_id)

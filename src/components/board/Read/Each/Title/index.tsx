@@ -12,14 +12,12 @@ interface IBoardTitle {
     theme: boolean;
     isMyBoard: boolean;
     setType: Dispatch<SetStateAction<string>>;
+    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Title = ({ _data }: IBoardTitle) => {
-  const title = _data?.title!;
-  const theme = _data?.theme!;
-  const setType = _data?.setType!;
-  const isMyBoard = _data?.isMyBoard!;
   const [modal, setModal] = useState(false);
+  const { title, theme, setType, isMyBoard, setFixed } = _data;
   return (
     <>
       <Cont className="board-title">
@@ -27,12 +25,12 @@ export const Title = ({ _data }: IBoardTitle) => {
         {isMyBoard && (
           <>
             <Setting
-              animate="animate"
-              whileHover="hover"
-              className="setting"
               custom={!theme}
               variants={hoverBgVars}
               onClick={() => setModal((p) => !p)}
+              animate="animate"
+              whileHover="hover"
+              className="setting"
             >
               <Svg
                 type="more"
@@ -41,7 +39,7 @@ export const Title = ({ _data }: IBoardTitle) => {
               />
             </Setting>
             <SettingModal
-              item={{ modal, theme, isMyBoard, setType, setModal }}
+              _data={{ modal, theme, isMyBoard, setType, setModal, setFixed }}
             />
           </>
         )}

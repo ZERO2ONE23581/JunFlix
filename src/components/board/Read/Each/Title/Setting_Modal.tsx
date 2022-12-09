@@ -11,26 +11,26 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useUser } from '../../../../../libs/client/useUser';
 
 interface ISettingModal {
-  item: {
+  _data: {
     modal: boolean;
     theme: boolean;
     isMyBoard: boolean;
     setType: Dispatch<SetStateAction<string>>;
     setModal: Dispatch<SetStateAction<boolean>>;
+    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const SettingModal = ({ item }: ISettingModal) => {
-  const modal = item?.modal!;
-  const theme = item?.theme!;
-  const setType = item?.setType!;
-  const setModal = item?.setModal!;
-  const isMyBoard = item?.isMyBoard!;
-  //
+export const SettingModal = ({ _data }: ISettingModal) => {
   const router = useRouter();
   const { user_id } = useUser();
+  const { modal, theme, setType, setModal, isMyBoard, setFixed } = _data;
   const onClick = (type: string) => {
+    const mustFix = Boolean(
+      type === 'create' || type === 'update' || type === 'delete'
+    );
     if (!isMyBoard) return alert('not allowed.');
     if (isMyBoard) {
+      if (mustFix) setFixed(true);
       if (type === 'my') router.push(`/user/${user_id}/boards`);
       if (type === 'create') router.push(`/board/create`);
       if (type === 'update') setType('update-board');

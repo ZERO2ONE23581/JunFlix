@@ -14,19 +14,16 @@ interface IBtnWrap {
     genre: string;
     isMyBoard: boolean;
     board_id: number;
+    setFixed: Dispatch<SetStateAction<boolean>>;
     setCreatePost: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const BtnWrap = ({ _data }: IBtnWrap) => {
-  const theme = _data?.theme!;
-  const genre = _data?.genre!;
-  const board_id = _data?.board_id!;
-  const isMyBoard = _data?.isMyBoard!;
-  const setCreatePost = _data?.setCreatePost!;
-  //
+  const { theme, genre, board_id, isMyBoard, setCreatePost, setFixed } = _data;
   const router = useRouter();
   const { isFollowing, onClick, name } = useFollow(Number(board_id), 'board');
   const handleClick = () => {
+    setFixed(true);
     if (isMyBoard) return setCreatePost(true);
     else return onClick();
   };

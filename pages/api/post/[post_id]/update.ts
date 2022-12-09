@@ -26,17 +26,19 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!Boolean(post.host_id === user.id))
     return res.json({ ok: false, error: 'invalid host.' });
 
+  const board_ID = board_id ? board_id : post.board_id;
+
   const isUpdate = Boolean(
     await client.post.update({
       where: { id: post.id },
       data: {
         title,
-        onPrivate,
-        board_id,
         hashtags,
         pageLink,
+        onPrivate,
         post_image,
         description,
+        board_id: board_ID,
       },
     })
   );

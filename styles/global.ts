@@ -11,10 +11,10 @@ export const Page = styled(motion.section)`
 `;
 
 export const SetPrivate = styled.div`
-  font-style: italic;
-  width: 100%;
   gap: 12px;
+  width: 100%;
   display: flex;
+  font-style: italic;
   align-items: center;
   label {
     gap: 5px;
@@ -32,7 +32,6 @@ export const FlexPage = styled(Page)`
   display: flex;
   align-items: center;
   flex-direction: column;
-  //justify-content: flex-start;
   justify-content: center;
 `;
 

@@ -9,12 +9,15 @@ import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
 
 interface ICreatePost {
-  open: boolean;
-  theme: boolean;
-  closeModal: () => void;
+  _data: {
+    theme: boolean;
+    createPost: boolean;
+    closeModal: () => void;
+  };
 }
-export const CreatePost = ({ open, theme, closeModal }: ICreatePost) => {
+export const CreatePost = ({ _data }: ICreatePost) => {
   const router = useRouter();
+  const { createPost: open, theme, closeModal } = _data;
   const { board_id } = router.query;
   const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);

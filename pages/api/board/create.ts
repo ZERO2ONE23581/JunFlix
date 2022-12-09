@@ -1,4 +1,3 @@
-import { IPostType } from '../../../src/types/post';
 import { NextApiRequest, NextApiResponse } from 'next';
 import client from '../../../src/libs/server/prisma_client';
 import withHandler from '../../../src/libs/server/withHandler';

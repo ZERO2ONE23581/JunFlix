@@ -1,25 +1,25 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import styled from '@emotion/styled';
-import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { BtnWrap, Page } from '../../../../styles/global';
-import { Head_ } from '../../../../src/Tools/head_title';
-import { useGetUser } from '../../../../src/libs/client/useUser';
-import { Host } from '../../../../src/components/User/Read/MyPage/Host';
-import { useCapLetter } from '../../../../src/libs/client/useTools';
-import { PostSchema } from '../../../../src/components/Post/Schema';
 import {
   useGetPosts,
   useGetLikedPosts,
   useGetQuickSaved,
 } from '../../../../src/libs/client/usePosts';
-import { Btn } from '../../../../src/Tools/Button';
-import { color, redColor } from '../../../../styles/variants';
-import { BoardsGrid } from '../../../../src/components/Board/Read/Grid';
 import {
   useGetBoards,
   useGetFollowingBoards,
 } from '../../../../src/libs/client/useBoards';
+import type { NextPage } from 'next';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { Btn } from '../../../../src/Tools/Button';
+import { Head_ } from '../../../../src/Tools/head_title';
+import { BtnWrap, Page } from '../../../../styles/global';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { color, redColor } from '../../../../styles/variants';
+import { useGetUser } from '../../../../src/libs/client/useUser';
+import { useCapLetter } from '../../../../src/libs/client/useTools';
+import { PostSchema } from '../../../../src/components/Post/Schema';
+import { Host } from '../../../../src/components/User/Read/MyPage/Host';
+import { BoardsGrid } from '../../../../src/components/Board/Read/Grid';
 
 const UserPage: NextPage<{
   theme: boolean;

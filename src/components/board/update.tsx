@@ -6,14 +6,14 @@ import { IForm } from '../../types/global';
 import { Avatar } from '../../Tools/Avatar';
 import { InputWrap } from '../../Tools/Input';
 import { IBoardType } from '../../types/board';
-import { AnimatePresence } from 'framer-motion';
 import { OverlayBg } from '../../Tools/overlay';
 import { scaleVar } from '../../../styles/variants';
 import { useUser } from '../../libs/client/useUser';
 import { SelectWrap } from '../../Tools/Input/Select';
+import { AnimatePresence, motion } from 'framer-motion';
 import { TextAreaWrap } from '../../Tools/Input/TextArea';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { Flex, Form, Modal, SetPrivate } from '../../../styles/global';
+import { Flex, Modal, SetPrivate } from '../../../styles/global';
 import { useCapLetters, useTextLimit } from '../../libs/client/useTools';
 
 export interface ITypeModal {
@@ -29,16 +29,17 @@ export interface ITypeModal {
   };
 }
 export const UpdateBoard = ({ _data }: ITypeModal) => {
-  const post = _data?.post!;
-  const open = _data?.open!;
-  const theme = _data?.theme!;
-  const loading = _data?.loading!;
-  const original = _data?.original!;
-  const closeModal = _data?.closeModal!;
-  const layoutId = _data?.layoutId!;
-  const setLoading = _data?.setLoading!;
-  //
   const { loggedInUser } = useUser();
+  const {
+    post,
+    open,
+    theme,
+    loading,
+    original,
+    layoutId,
+    closeModal,
+    setLoading,
+  } = _data;
   const {
     watch,
     setValue,
@@ -49,7 +50,6 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
     formState: { errors },
   } = useForm<IForm>({ mode: 'onSubmit' });
 
-  //set value
   useEffect(() => {
     if (original) {
       if (original.genre) setValue('genre', original.genre);
@@ -79,7 +79,7 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
     <AnimatePresence>
       {open && (
         <>
-          <Container
+          <BoardModal
             variants={scaleVar}
             layoutId={layoutId}
             custom={{ theme, duration: 0.6 }}
@@ -96,7 +96,7 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
             />
             <h1>Edit Board</h1>
             <Form onSubmit={handleSubmit(onValid)}>
-              <Flex className="flex">
+              <Wrap>
                 <InputWrap
                   _data={{
                     theme,
@@ -112,7 +112,7 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
                   }}
                 />
                 <Btn type="submit" item={{ theme, name: 'Save' }} />
-              </Flex>
+              </Wrap>
               <Flex>
                 <SelectWrap
                   _data={{
@@ -138,7 +138,7 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
                   error: errors.description?.message,
                 }}
               />
-              <SetPrivate className="set-private">
+              <IsPrivate>
                 <label htmlFor="private-mode">
                   <span>비공개 보드로 전환</span>
                   <span>(On private mode)</span>
@@ -148,7 +148,7 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
                   id="private-mode"
                   {...register('onPrivate')}
                 />
-              </SetPrivate>
+              </IsPrivate>
               <Host>
                 <Avatar
                   _data={{ theme, size: '3.3rem', host_id: original.host_id }}
@@ -158,7 +158,7 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
                 <span>@{original.host.userId}</span>
               </Host>
             </Form>
-          </Container>
+          </BoardModal>
           <OverlayBg closeModal={closeModal} />
         </>
       )}
@@ -166,38 +166,41 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
   );
 };
 
-export const Container = styled(Modal)`
+export const BoardModal = styled(Modal)`
   z-index: 100;
-  height: 85vh;
+  padding: 2.5rem;
   min-width: 520px;
-  width: fit-content;
   margin: 3rem auto;
-  padding: 3rem 2.5rem;
+  width: fit-content;
   h1 {
     font-size: 2rem;
   }
-  form {
-    width: 100%;
-    height: 100%;
-    gap: 1.2rem;
-    margin-top: 1rem;
-    max-height: 70vh;
-    justify-content: flex-start;
-    .set-private {
-      font-size: 1.1rem;
-      //border: 2px solid yellow;
-      justify-content: space-between;
-    }
-    .flex {
-      align-items: flex-end;
-      gap: 1rem;
-      button {
-        width: 100px;
-        padding: 10px;
-        border-radius: 10px;
-      }
-    }
+`;
+const Wrap = styled(Flex)`
+  align-items: flex-end;
+  gap: 1rem;
+  button {
+    width: 100px;
+    padding: 10px;
+    border-radius: 10px;
   }
+`;
+const Form = styled(motion.form)`
+  gap: 1.2rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 1rem;
+  overflow-y: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+const IsPrivate = styled(SetPrivate)`
+  font-size: 1.1rem;
+  justify-content: space-between;
 `;
 const Host = styled(Flex)`
   gap: 10px;

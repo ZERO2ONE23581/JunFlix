@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { OverlayBg } from '../overlay';
+import { useEffect, useState } from 'react';
 import { Modal } from '../../../styles/global';
 import { AnimatePresence } from 'framer-motion';
 import { UseFormClearErrors } from 'react-hook-form';
 import { color, redColor } from '../../../styles/variants';
-import { useEffect, useState } from 'react';
 
 interface IErrMsg {
   _data: {

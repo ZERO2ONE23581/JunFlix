@@ -108,7 +108,7 @@ export const UpdatePost = ({ _data }: IUpdate) => {
       if (!ok) return;
       setLoading!(true);
       const board_id = new_boardId;
-      const file_id = await useUploadImg(inputs?.post_image, post?.host_id!);
+      const file_id = await useUploadImg(inputs?.post_image);
       if (hide) return update({ ...inputs, board_id, post_image: null });
       if (file_id) return update({ ...inputs, post_image: file_id, board_id });
       else return update({ ...inputs, board_id });

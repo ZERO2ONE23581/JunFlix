@@ -14,31 +14,26 @@ interface IBoardSchema {
     modal: boolean;
     theme: boolean;
     board: IBoardType;
-    closeModal: () => void;
+    closeBoard: () => void;
   };
 }
 export const BoardSchema = ({ _data }: IBoardSchema) => {
-  const type = _data?.type!;
-  const modal = _data?.modal!;
-  const theme = _data?.theme!;
-  const original = _data?.board!;
-  const closeModal = _data?.closeModal!;
-  //
   const router = useRouter();
   const [api, setApi] = useState('');
   const [msg, setMsg] = useState('');
   const [layoutId, setLayoutId] = useState('');
   const [Loading, setLoading] = useState(false);
   const [post, { data, loading }] = useMutation<IRes>(api && api);
+  const { type, modal, theme, board: original, closeBoard } = _data;
   const open = (Type: string) => Boolean(modal && !Loading && type === Type);
   const __data = {
-    layoutId,
+    post,
     theme,
     loading,
-    closeModal,
-    setLoading,
-    post,
     original,
+    layoutId,
+    setLoading,
+    closeModal: closeBoard,
   };
 
   useEffect(() => {
@@ -60,7 +55,7 @@ export const BoardSchema = ({ _data }: IBoardSchema) => {
           }, 2000);
         }
         if (data.ok) {
-          closeModal();
+          closeBoard();
           if (type === 'update-board') {
             setMsg('updated');
             setTimeout(() => {
@@ -76,7 +71,7 @@ export const BoardSchema = ({ _data }: IBoardSchema) => {
         }
       }, 1000);
     }
-  }, [type, data, setLoading, setTimeout, router, setMsg, closeModal]);
+  }, [type, data, setLoading, setTimeout, router, setMsg, closeBoard]);
   return (
     <>
       <UpdateBoard _data={{ ...__data, open: open('update-board') }} />

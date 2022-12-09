@@ -2,9 +2,9 @@ import { Box } from './Box';
 import styled from '@emotion/styled';
 import { IconLayer } from './Icon_layer';
 import { IPostType } from '../../../../types/post';
+import { ISetFixed } from '../../../../../pages/_app';
 import { FlexCol, Grid } from '../../../../../styles/global';
 import { usePostsGrid } from '../../../../libs/client/usePosts';
-import { ISetFixed } from '../../../../../pages/_app';
 
 interface IMyPosts extends ISetFixed {
   _data: {

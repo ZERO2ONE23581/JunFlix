@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -6,23 +5,38 @@ import { AnimatePresence } from 'framer-motion';
 import { FlexPage } from '../../../styles/global';
 import { NoData } from '../../../src/Tools/NoData';
 import { Head_ } from '../../../src/Tools/head_title';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { BoardSchema } from '../../../src/Tools/Modal/schema';
 import { Board } from '../../../src/components/Board/Read/Each';
 import { useGetBoard } from '../../../src/libs/client/useBoards';
 import { useGetPosts } from '../../../src/libs/client/usePosts';
-import { LoadingModal } from '../../../src/Tools/Modal/loading_modal';
 import { PostSchema } from '../../../src/components/Post/Schema';
+import { CreatePost } from '../../../src/components/Post/Create';
+import { LoadingModal } from '../../../src/Tools/Modal/loading_modal';
 
-const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
+const BoardPage: NextPage<{
+  theme: boolean;
+  setFixed: Dispatch<SetStateAction<boolean>>;
+}> = ({ theme, setFixed }) => {
   const router = useRouter();
-  const { board_id: board__id } = router.query;
-  const board_id = Number(board__id);
+  const { board_id } = router.query;
   const [type, setType] = useState('');
-  const [create, setCreate] = useState(false);
-  const { board, isMyBoard } = useGetBoard(board_id);
+  const [createPost, setCreatePost] = useState(false);
+  const { board, isMyBoard } = useGetBoard(Number(board_id));
   const host_id = board?.host_id!;
   const modal = Boolean(type && isMyBoard);
-  const { posts, isPost } = useGetPosts({ host_id, board_id });
+  const { posts, isPost } = useGetPosts({
+    host_id,
+    board_id: Number(board_id),
+  });
+  const closeBoard = () => {
+    setFixed(false);
+    setType('');
+  };
+  const closeModal = () => {
+    setFixed(false);
+    setCreatePost(false);
+  };
   return (
     <>
       <Head_ title={board?.title!} />
@@ -31,24 +45,19 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
           {board && (
             <>
               <Board
-                theme={theme}
-                board={board}
-                setType={setType}
-                setCreate={setCreate}
+                _data={{ theme, board, setType, setCreatePost, setFixed }}
               />
+              <BoardSchema _data={{ type, modal, theme, board, closeBoard }} />
               <Layer className="layer">
-                {isPost && <PostSchema _data={{ theme, posts, grid: 5 }} />}
+                <CreatePost _data={{ theme, createPost, closeModal }} />
+                {isPost && (
+                  <PostSchema
+                    setFixed={setFixed}
+                    _data={{ theme, posts, grid: 5 }}
+                  />
+                )}
                 {!isPost && <NoData theme={theme} />}
               </Layer>
-              <BoardSchema
-                _data={{
-                  type,
-                  modal,
-                  theme,
-                  board,
-                  closeModal: () => setType(''),
-                }}
-              />
             </>
           )}
           {!board && <LoadingModal theme={theme} />}
@@ -57,7 +66,7 @@ const Board_Page: NextPage<{ theme: boolean }> = ({ theme }) => {
     </>
   );
 };
-export default Board_Page;
+export default BoardPage;
 
 const Cont = styled(FlexPage)`
   gap: 4rem;
@@ -75,9 +84,9 @@ const Cont = styled(FlexPage)`
   }
 `;
 const Layer = styled(FlexPage)`
-  position: relative;
-  //border: 2px solid red;
   padding: 0 10rem;
+  position: relative;
+  justify-content: flex-start;
   .lock {
     top: 50%;
     left: 50%;

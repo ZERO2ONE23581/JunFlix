@@ -21,6 +21,7 @@ export const Modal = ({
 }: IMenuModal) => {
   const isMovie = Boolean(selected === 'movie');
   const [createPost, setCreatePost] = useState(false);
+  const closeModal = () => setCreatePost(false);
   return (
     <>
       {isModal && (
@@ -52,11 +53,7 @@ export const Modal = ({
           />
         </>
       )}
-      <CreatePost
-        theme={theme}
-        open={createPost}
-        closeModal={() => setCreatePost(false)}
-      />
+      <CreatePost _data={{ theme, createPost, closeModal }} />
     </>
   );
 };

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { LinkModal } from './Modal/Link';
 import { SetGridModal } from './Modal/Size';
 import { CreatePost } from '../../../Create';
@@ -7,7 +8,6 @@ import { OrganizePosts } from './Modal/Organize';
 import { Flex } from '../../../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Answer } from '../../../../../Tools/Modal/answer_modal';
-import { useRouter } from 'next/router';
 
 interface IPostsIcon {
   _data: {
@@ -35,6 +35,7 @@ export const Icons = ({ _data }: IPostsIcon) => {
 
   const openAnswer = Boolean(modal === 'question');
   const _answerModal = { theme, closeModal, answer: openAnswer, type: 'post' };
+  const createPost = Boolean(modal === 'plus');
   return (
     <Cont className="icons">
       {icons.map((el) => (
@@ -46,11 +47,7 @@ export const Icons = ({ _data }: IPostsIcon) => {
           />
 
           {el.svg === 'plus' && !isBoardPage && (
-            <CreatePost
-              theme={theme}
-              closeModal={closeModal}
-              open={Boolean(modal === 'plus')}
-            />
+            <CreatePost _data={{ theme, createPost, closeModal }} />
           )}
           {el.svg === 'compass' && <LinkModal _data={{ ...item }} />}
           {el.svg === 'posts' && <OrganizePosts _data={{ ...item }} />}

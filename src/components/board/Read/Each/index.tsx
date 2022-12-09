@@ -11,37 +11,35 @@ import { useUser } from '../../../../libs/client/useUser';
 import { hoverBgVars } from '../../../../../styles/variants';
 
 interface IBoardBox {
-  theme: boolean;
-  board: IBoardType;
-  setType: Dispatch<SetStateAction<string>>;
-  setCreate: Dispatch<SetStateAction<boolean>>;
+  _data: {
+    theme: boolean;
+    board: IBoardType;
+    setType: Dispatch<SetStateAction<string>>;
+    setFixed: Dispatch<SetStateAction<boolean>>;
+    setCreatePost: Dispatch<SetStateAction<boolean>>;
+  };
 }
-export const Board = ({ theme, board, setType, setCreate }: IBoardBox) => {
+export const Board = ({ _data }: IBoardBox) => {
+  const { theme, board, setType, setCreatePost, setFixed } = _data;
   const host = board?.host;
   const host_id = host?.id;
+  const board_id = board?.id;
   const genre = board?.genre!;
   const title = board?.title!;
   const userId = host?.userId!;
   const { loggedInUser } = useUser();
   const onPrivate = board?.onPrivate!;
   const isMyBoard = Boolean(loggedInUser?.id === host?.id);
+  const __btn = { theme, genre, board_id, isMyBoard, setFixed, setCreatePost };
   //
   return (
     <>
       {board && (
         <Box className="board-box">
-          <Title _data={{ title, theme, isMyBoard, setType }} />
+          <Title _data={{ title, theme, isMyBoard, setType, setFixed }} />
           <Host _data={{ theme, userId, host_id }} />
           <Detail _data={{ onPrivate }} />
-          <BtnWrap
-            _data={{
-              theme,
-              genre,
-              isMyBoard,
-              board_id: board?.id,
-              setCreatePost: setCreate,
-            }}
-          />
+          <BtnWrap _data={__btn} />
           <TrimText text={board?.description} max={200} />
         </Box>
       )}

@@ -43,3 +43,7 @@ const Fixed = styled.section<{ isFixed: boolean }>`
 export interface ISetFixed {
   setFixed: Dispatch<SetStateAction<boolean>>;
 }
+export interface IPage {
+  theme: boolean;
+  setFixed: Dispatch<SetStateAction<boolean>>;
+}

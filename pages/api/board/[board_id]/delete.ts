@@ -36,7 +36,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ok: false,
       error: '보드를 찾을수 없습니다. (no board found)',
     });
-  const isMyBoard = Boolean(board.host.userId === inputs.userId.toUpperCase());
+  const userId = board.host.userId;
+  const input_id = inputs.userId;
+  const isMyBoard = Boolean(
+    userId === input_id || userId === input_id.toUpperCase()
+  );
   if (!isMyBoard)
     return res.json({
       ok: false,

@@ -6,22 +6,24 @@ import { useForm } from 'react-hook-form';
 import { IForm } from '../../types/global';
 import { InputWrap } from '../../Tools/Input';
 import { OverlayBg } from '../../Tools/overlay';
-import { Container, ITypeModal } from './Update';
+import { BoardModal, ITypeModal } from './Update';
 import { useUser } from '../../libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
 import { opacityVar, variants } from '../../../styles/variants';
 
 export const DeleteBoard = ({ _data }: ITypeModal) => {
-  const open = _data?.open!;
-  const post = _data?.post!;
-  const theme = _data?.theme!;
-  const loading = _data?.loading!;
-  const layoutId = _data?.layoutId!;
-  const original = _data?.original!;
-  const setLoading = _data?.setLoading!;
-  const closeModal = _data?.closeModal!;
-  //
-  const { loggedInUser } = useUser();
+  const { user_id } = useUser();
+  const {
+    open,
+    post,
+    theme,
+    loading,
+    layoutId,
+    original,
+    setLoading,
+    closeModal,
+  } = _data;
+
   const {
     watch,
     register,
@@ -31,17 +33,12 @@ export const DeleteBoard = ({ _data }: ITypeModal) => {
     formState: { errors },
   } = useForm<IForm>({ mode: 'onSubmit' });
 
-  //input
   const onValid = async ({ userId }: IForm) => {
-    const isMatch = Boolean(original.host.userId !== userId);
-    if (!isMatch) {
-      setError('userId', {
-        message: '보드의 호스트가 아닙니다. (invalid board host.)',
-      });
-    }
+    const isMatch = Boolean(original.host.userId === userId);
+    if (!isMatch) return setError('userId', { message: 'invalid_host' });
     setLoading(true);
     if (loading) return;
-    return post({ userId: userId.toUpperCase(), user_id: loggedInUser?.id });
+    return post({ userId, user_id });
   };
   //
   const [isDel, setIsDel] = useState(false);
@@ -135,11 +132,11 @@ export const DeleteBoard = ({ _data }: ITypeModal) => {
   );
 };
 
-const Cont = styled(Container)`
+const Cont = styled(BoardModal)`
+  font-size: 1.4rem;
   margin-top: 15rem;
   height: fit-content;
   justify-content: space-around;
-  font-size: 1.4rem;
   h1 {
     font-size: 2rem;
     margin-bottom: 20px;
@@ -171,13 +168,14 @@ const Cont = styled(Container)`
     }
   }
   .delete-board-form {
-    //border: 2px solid yellow;
+    border: 2px solid yellow;
   }
 `;
 const Form = styled(motion.form)`
-  padding: 0 50px;
   gap: 20px;
+  margin-top: 0;
   display: flex;
+  padding: 0 50px;
   align-items: flex-end;
   flex-direction: column;
   justify-content: flex-end;

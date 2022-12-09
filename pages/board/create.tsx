@@ -1,20 +1,52 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { IRes } from '../../src/types/global';
-import { FlexPage } from '../../styles/global';
-import { MsgModal } from '../../src/Tools/msg_modal';
+import { variants } from '../../styles/variants';
+import { IBoardForm } from '../../src/types/board';
 import { Head_ } from '../../src/Tools/head_title';
+import { MsgModal } from '../../src/Tools/msg_modal';
+import { useUser } from '../../src/libs/client/useUser';
+import { Box, FlexPage, Form } from '../../styles/global';
+import { useLength } from '../../src/libs/client/useTools';
 import useMutation from '../../src/libs/client/useMutation';
-import { CreateBox } from '../../src/components/Board/Create';
+import { Wrap } from '../../src/components/Board/Create/Wrap';
+import { TextAreaWrap } from '../../src/Tools/Input/TextArea';
+import { Title } from '../../src/components/Board/Create/Title';
 import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
 
 const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
+  const layoutId = 'create-board';
+  const { user_id } = useUser();
   const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);
-  const [post, { loading, data }] = useMutation<IRes>(`/api/board/create`);
+  const [POST, { loading, data }] = useMutation<IRes>(`/api/board/create`);
+
+  const {
+    watch,
+    register,
+    setError,
+    clearErrors,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IBoardForm>({ mode: 'onSubmit' });
+
+  const error = errors.title?.message!;
+  const onValid = async ({ title, genre, description }: IBoardForm) => {
+    if (loading) return;
+    setLoading(true);
+    const desc_len = useLength(title);
+    const title_len = useLength(title);
+    if (title_len > 30)
+      return setError('title', { message: 'max_board_title' });
+    if (desc_len > 700)
+      return setError('description', { message: 'max_board_desc' });
+    return POST({ title, genre, user_id, posts: [], description });
+  };
+
   useEffect(() => {
     if (data) {
       setTimeout(() => {
@@ -25,30 +57,56 @@ const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
       }, 1000);
     }
   }, [data, router, setMsg, setTimeout, setLoading]);
-  //
-  const layoutId = 'create-board';
+
   return (
     <>
       <Head_ title="보드생성" />
-      <Cont>
-        <CreateBox
-          _data={{
-            post,
-            theme,
-            loading,
-            layoutId,
-            setLoading,
-            open: !Loading,
-          }}
-        />
-        {Loading && <LoadingModal theme={theme} />}
+      <FlexPage>
         <MsgModal _data={{ msg, theme, layoutId }} />
-      </Cont>
+        {!Loading && (
+          <Cont
+            exit="exit"
+            initial="initial"
+            animate="animate"
+            custom={theme}
+            layoutId={layoutId}
+            variants={variants}
+          >
+            <Title />
+            <Form onSubmit={handleSubmit(onValid)}>
+              <Wrap _data={{ error, theme, watch, register, clearErrors }} />
+              <TextAreaWrap
+                _data={{
+                  theme,
+                  min: 150,
+                  max: 700,
+                  clearErrors,
+                  id: 'description',
+                  label: 'Description',
+                  text: watch('description'),
+                  placeholder: 'Fill this blank...',
+                  error: errors.description?.message,
+                  register: register('description', { required: 'need_txt' }),
+                }}
+              />
+            </Form>
+          </Cont>
+        )}
+        {Loading && <LoadingModal theme={theme} />}
+      </FlexPage>
     </>
   );
 };
 export default CreateBoard;
 
-const Cont = styled(FlexPage)`
-  margin-top: 8rem;
+const Cont = styled(Box)`
+  form {
+    gap: 2rem;
+    .textarea-wrap {
+      textarea {
+        font-size: 1.2rem;
+        max-height: 50vh;
+      }
+    }
+  }
 `;
