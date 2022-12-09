@@ -1,6 +1,6 @@
 import { Box } from './Box';
 import styled from '@emotion/styled';
-import { IconLayer } from './Icon_layer';
+import { IconLayer } from './IconLayer';
 import { IPostType } from '../../../../types/post';
 import { ISetFixed } from '../../../../../pages/_app';
 import { FlexCol, Grid } from '../../../../../styles/global';
@@ -19,7 +19,7 @@ export const PostGrid = ({ _data, setFixed }: IMyPosts) => {
   const { ColArr, PostArr, max, setMax } = usePostsGrid({ posts, grid });
   return (
     <Cont className="posts_grid_wrap">
-      <IconLayer _data={{ theme, setMax }} />
+      <IconLayer _data={{ theme, setMax, setFixed }} />
       <Grid box={max} className="posts_grid">
         {ColArr.map((column) => (
           <Column key={column}>

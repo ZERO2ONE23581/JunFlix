@@ -21,7 +21,6 @@ export const PostSchema = ({ _data, setFixed }: IPostSchema) => {
   const post = posts?.find((item) => item.id === postId)!;
   const onClickBox = (id: number) => {
     setPostId(id);
-    setFixed(true);
     setModal('read');
   };
   const post_id = post?.id!;

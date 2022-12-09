@@ -19,7 +19,8 @@ interface IBoardPageHeading extends ITheme {
   };
 }
 export const PageHeading = ({ detail, type, theme }: IBoardPageHeading) => {
-  const { loggedInUser } = useUser();
+  const { username, userId } = useUser();
+  const NAME = username ? username : userId;
   const isMyBoards = Boolean(type === 'board' && detail?.my);
   const isAllBoards = Boolean(type === 'board' && detail?.all);
   const boardGenre = detail?.genre?.type;
@@ -40,7 +41,7 @@ export const PageHeading = ({ detail, type, theme }: IBoardPageHeading) => {
           )}
           {isMyBoards && (
             <>
-              <span>{useCapLetter(loggedInUser?.username!)}'s Boards</span>
+              <span>{useCapLetter(NAME)}'s Boards</span>
               <Svg theme={theme} type="board" />
             </>
           )}

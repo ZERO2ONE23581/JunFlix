@@ -18,13 +18,19 @@ interface IPostsModal extends IPostUseform {
     theme: boolean;
     layoutId: string;
     setModal: Dispatch<SetStateAction<string>>;
+    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const PostsModal = ({ _data, _useform }: IPostsModal) => {
   const { user_id } = useUser();
-  const { posts } = useGetPosts({ board_id: 0, host_id: user_id! });
-  const { theme, modal, array, layoutId, setModal } = _data;
   const { register, clearErrors, setError, errors } = _useform;
+  const { posts } = useGetPosts({ board_id: 0, host_id: user_id! });
+  const { theme, modal, array, layoutId, setModal, setFixed } = _data;
+  const closeModal = () => {
+    setModal('');
+    setFixed(false);
+  };
+  const isClicked = Boolean(array?.length > 0);
   return (
     <AnimatePresence>
       <>
@@ -39,12 +45,7 @@ export const PostsModal = ({ _data, _useform }: IPostsModal) => {
               custom={{ theme, duration: 0.5 }}
             >
               <Layer
-                _data={{
-                  theme,
-                  setModal,
-                  setError,
-                  isClicked: Boolean(array?.length > 0),
-                }}
+                _data={{ theme, setModal, setError, closeModal, isClicked }}
               />
               <Main _data={{ array, theme, posts, register }} />
             </Modal>

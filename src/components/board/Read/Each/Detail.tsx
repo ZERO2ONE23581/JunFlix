@@ -2,11 +2,14 @@ import styled from '@emotion/styled';
 
 interface IBoardDetail {
   _data: {
+    saved: number;
+    postLen: number;
     onPrivate: boolean;
   };
 }
 export const Detail = ({ _data }: IBoardDetail) => {
-  const onPrivate = _data?.onPrivate!;
+  const { postLen, onPrivate, saved } = _data;
+  console.log(saved);
   return (
     <Container className="board-detail">
       <ul>
@@ -17,15 +20,15 @@ export const Detail = ({ _data }: IBoardDetail) => {
         )}
         {!onPrivate && (
           <li>
-            <span>public</span>
+            <span>Public</span>
           </li>
         )}
         <li>
-          <span>0</span>
+          <span>{saved}</span>
           <span>saved</span>
         </li>
         <li>
-          <span>0</span>
+          <span>{postLen}</span>
           <span>posts</span>
         </li>
       </ul>

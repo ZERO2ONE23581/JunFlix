@@ -14,7 +14,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     include: {
       host: true,
       posts: true,
-      folllowers: true,
+      followers: true,
       _count: true,
     },
   });

@@ -9,12 +9,13 @@ interface ILayer {
   _data: {
     theme: boolean;
     isClicked: boolean;
+    closeModal: () => void;
     setError?: UseFormSetError<IPostForm>;
     setModal: Dispatch<SetStateAction<string>>;
   };
 }
 export const Layer = ({ _data }: ILayer) => {
-  const { theme, setModal, setError, isClicked } = _data;
+  const { closeModal, theme, setModal, setError, isClicked } = _data;
   const onClick = () => {
     if (!isClicked) {
       return setError!('chosenId', { message: '포스트를 선택해주세요.' });
@@ -24,7 +25,7 @@ export const Layer = ({ _data }: ILayer) => {
     <>
       <Layer_>
         <div>
-          <Svg type="close_" theme={theme} onClick={() => setModal('')} />
+          <Svg type="close_" theme={theme} onClick={closeModal} />
         </div>
         <div />
         <div>

@@ -13,13 +13,17 @@ interface IPostsIcon {
   _data: {
     theme: boolean;
     setMax: Dispatch<SetStateAction<number>>;
+    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Icons = ({ _data }: IPostsIcon) => {
   const router = useRouter();
-  const { theme, setMax } = _data;
-  const closeModal = () => setModal('');
   const [modal, setModal] = useState('');
+  const { theme, setMax, setFixed } = _data;
+  const closeModal = () => {
+    setModal('');
+    setFixed(false);
+  };
   const isBoardPage = Boolean(router.query.board_id);
 
   const item = { theme, modal, setModal, closeModal };
@@ -33,9 +37,9 @@ export const Icons = ({ _data }: IPostsIcon) => {
     ? [_answer, _link, _org, _grid]
     : [_create, _answer, _link, _org, _grid];
 
+  const createPost = Boolean(modal === 'plus');
   const openAnswer = Boolean(modal === 'question');
   const _answerModal = { theme, closeModal, answer: openAnswer, type: 'post' };
-  const createPost = Boolean(modal === 'plus');
   return (
     <Cont className="icons">
       {icons.map((el) => (
@@ -45,12 +49,13 @@ export const Icons = ({ _data }: IPostsIcon) => {
             type={el.svg}
             onClick={() => el.setModal(el.svg)}
           />
-
           {el.svg === 'plus' && !isBoardPage && (
             <CreatePost _data={{ theme, createPost, closeModal }} />
           )}
           {el.svg === 'compass' && <LinkModal _data={{ ...item }} />}
-          {el.svg === 'posts' && <OrganizePosts _data={{ ...item }} />}
+          {el.svg === 'posts' && (
+            <OrganizePosts _data={{ ...item, setFixed }} />
+          )}
           {el.svg === 'question' && <Answer _data={{ ..._answerModal }} />}
           {el.svg === 'grid' && <SetGridModal _data={{ ..._grid, setMax }} />}
         </Icon>

@@ -107,7 +107,7 @@ export const Layer_ = styled(Flex)`
     :last-of-type {
       justify-content: flex-end;
       button {
-        width: 80px;
+        //width: 80px;
         padding: 0.3rem;
         font-size: 1.1rem;
         border-radius: 40px;

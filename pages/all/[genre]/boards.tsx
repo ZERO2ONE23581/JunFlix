@@ -5,6 +5,7 @@ import { Page } from '../../../styles/global';
 import { Head_ } from '../../../src/Tools/head_title';
 import { BoardsGrid } from '../../../src/components/Board/Read/Grid';
 import { useGetAllBoards } from '../../../src/libs/client/useBoards';
+import { PageHeading } from '../../../src/components/Board/Read/BoardTitle';
 
 const GenreBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
@@ -16,7 +17,7 @@ const GenreBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
     <>
       <Head_ title="All Boards" />
       <BoardPage>
-        <PageTitle
+        <PageHeading
           type="board"
           theme={theme}
           detail={{ genre: { isGenre: true, type: String(gen_type) } }}

@@ -21,24 +21,25 @@ interface IBoardBox {
 }
 export const Board = ({ _data }: IBoardBox) => {
   const { theme, board, setType, setCreatePost, setFixed } = _data;
-  const host = board?.host;
-  const host_id = host?.id;
   const board_id = board?.id;
   const genre = board?.genre!;
+  const host = board?.host!;
+  const host_id = host?.id!;
   const title = board?.title!;
   const userId = host?.userId!;
   const { loggedInUser } = useUser();
   const onPrivate = board?.onPrivate!;
+  const postLen = board?.posts?.length!;
+  const saved = board?.followers?.length!;
   const isMyBoard = Boolean(loggedInUser?.id === host?.id);
   const __btn = { theme, genre, board_id, isMyBoard, setFixed, setCreatePost };
-  //
   return (
     <>
       {board && (
         <Box className="board-box">
           <Title _data={{ title, theme, isMyBoard, setType, setFixed }} />
           <Host _data={{ theme, userId, host_id }} />
-          <Detail _data={{ onPrivate }} />
+          <Detail _data={{ onPrivate, postLen, saved }} />
           <BtnWrap _data={__btn} />
           <TrimText text={board?.description} max={200} />
         </Box>

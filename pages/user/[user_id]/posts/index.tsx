@@ -21,6 +21,5 @@ const Page = styled(PostPage)`
   .icon_layer {
     padding: 0 1rem;
     margin: 1rem auto 0.8rem;
-    //border: 1px solid yellow;
   }
 `;

@@ -12,7 +12,7 @@ import { IPostForm, IPostType } from '../../../../types/post';
 import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-interface IBoardsModal {
+interface ISelectBoardModal {
   _data: {
     modal: string;
     theme: boolean;
@@ -22,7 +22,7 @@ interface IBoardsModal {
     handleSubmit?: UseFormHandleSubmit<IPostForm>;
   };
 }
-export const BoardsModal = ({ _data }: IBoardsModal) => {
+export const SelectBoard = ({ _data }: ISelectBoardModal) => {
   const { theme, modal, layoutId, posts, handleSubmit, setModal } = _data;
   const [boardId, setBoardId] = useState(0);
   const [post, { data, loading }] = useMutation<IRes>(
@@ -84,6 +84,8 @@ const Cont = styled(PostModal)`
   top: 0rem;
   z-index: 114;
   min-height: 85vh;
+  min-width: 500px;
   width: fit-content;
+  padding: 0.5rem 1rem;
   align-items: flex-start;
 `;

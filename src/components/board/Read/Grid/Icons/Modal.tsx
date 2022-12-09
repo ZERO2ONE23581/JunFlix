@@ -54,8 +54,9 @@ export const FilterModal = ({ _data }: IFilterModal) => {
           >
             <ul>
               <li className="small">Genre (장르별로 보기)</li>
-              {genre.map((genre) => (
+              {array.map((genre) => (
                 <List
+                  key={array.indexOf(genre)}
                   _data={{
                     theme,
                     onClick: () => onClick(genre),
@@ -86,7 +87,7 @@ const Cont = styled(MiniModal)`
     }
   }
 `;
-const genre = [
+const array = [
   'all',
   'sf',
   'drama',

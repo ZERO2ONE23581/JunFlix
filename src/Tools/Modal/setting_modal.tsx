@@ -1,12 +1,10 @@
 import styled from '@emotion/styled';
-import { IModal } from '../../types/global';
-import useUser from '../../libs/client/useUser';
-import { Overlay } from '../../../styles/global';
-import useFollow from '../../libs/client/useFollowingBoards';
-import { AnimatePresence, motion } from 'framer-motion';
-import { hoverBgColor, variants } from '../../../styles/variants';
 import { useRouter } from 'next/router';
+import { Overlay } from '../../../styles/global';
 import { Dispatch, SetStateAction } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import useFollow from '../../libs/client/useFollowingBoards';
+import { hoverBgColor, variants } from '../../../styles/variants';
 
 interface ISettingModal {
   item: {

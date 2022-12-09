@@ -13,13 +13,9 @@ interface IList {
   };
 }
 export const List = ({ _data }: IList) => {
-  const svg = _data?.svg!;
-  const name = _data?.name!;
-  const theme = _data?.theme!;
-  const hidden = _data?.hidden!;
-  const onClick = _data?.onClick!;
+  const { svg, name, theme, hidden, onClick } = _data;
   return (
-    <Container
+    <Cont
       className="list"
       animate="aniamte"
       whileHover="hover"
@@ -37,10 +33,10 @@ export const List = ({ _data }: IList) => {
           <Svg type={svg!} theme={theme} item={{ size: '1.5rem' }} />
         </span>
       )}
-    </Container>
+    </Cont>
   );
 };
-const Container = styled(motion.li)<{ hidden?: boolean }>`
+const Cont = styled(motion.li)<{ hidden?: boolean }>`
   display: ${(p) => p.hidden && 'none'};
   .name {
     span {

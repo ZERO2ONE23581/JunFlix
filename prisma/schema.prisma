@@ -58,7 +58,7 @@ model Board {
   onPrivate         Boolean?      @default(false)
   description       String        @default("") @db.LongText
   posts             Post[]
-  folllowers        Follower[]
+  followers         Follower[]
   host              User          @relation(fields: [host_id], references: [id], onDelete: Cascade)
 }
 model Following {

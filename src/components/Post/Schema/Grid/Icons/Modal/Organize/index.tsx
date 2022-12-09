@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
 import { OptionModal } from './Modal';
 import { useForm } from 'react-hook-form';
-import { BoardsModal } from '../../../../../Organize/BoardList';
-import { PostsModal } from '../../../../../Organize/PostList';
 import { IPostForm } from '../../../../../../../types/post';
+import { PostsModal } from '../../../../../Organize/PostList';
+import { SelectBoard } from '../../../../../Organize/BoardList';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { CreateNewModal } from '../../../../../Organize/CreateNewBoard';
 
 interface IOrgPosts {
@@ -11,10 +11,11 @@ interface IOrgPosts {
     theme: boolean;
     modal: string;
     closeModal: () => void;
+    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const OrganizePosts = ({ _data }: IOrgPosts) => {
-  const { theme, modal: mdoal_, closeModal } = _data;
+  const { theme, modal: mdoal_, closeModal, setFixed } = _data;
   const [modal, setModal] = useState('');
   const [array, setArray] = useState<any>();
   const layoutId = 'organize_posts';
@@ -35,12 +36,12 @@ export const OrganizePosts = ({ _data }: IOrgPosts) => {
   const open = Boolean(mdoal_ === 'posts');
   return (
     <>
-      <OptionModal _data={{ open, theme, setModal, closeModal }} />
+      <OptionModal _data={{ open, theme, setModal, closeModal, setFixed }} />
       <PostsModal
         _useform={{ register, clearErrors, setError, errors }}
-        _data={{ array, modal, theme, layoutId, setModal }}
+        _data={{ array, modal, theme, layoutId, setModal, setFixed }}
       />
-      <BoardsModal
+      <SelectBoard
         _data={{ theme, modal, layoutId, posts: array, handleSubmit, setModal }}
       />
       <CreateNewModal
