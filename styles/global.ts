@@ -235,6 +235,7 @@ export const DimBackground = styled.article<{ zIndex?: number }>`
 export const Grid = styled(motion.article)<{ box?: number }>`
   gap: 1.3rem;
   display: grid;
+  width: fit-content;
   position: relative;
   background-color: inherit;
   grid-template-columns: ${(p) => p.box && `repeat(${p.box}, 1fr)`};

@@ -21,7 +21,7 @@ export default function useFollowingBoard<T = any>(
     `/api/following/create/board`
   );
   const { data, mutate } = useSWR<IGetFollowingBoard>(
-    `/api/following/board/${board_id}`
+    Boolean(board_id) && `/api/following/board/${board_id}`
   );
   const Saved = data?.length!;
   const onClick = () => {

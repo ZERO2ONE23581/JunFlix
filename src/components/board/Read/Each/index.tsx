@@ -7,11 +7,21 @@ import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { IBoardType } from '../../../../types/board';
 import { TrimText } from '../../../../Tools/trimText';
+import { OnPrivateBtn } from '../../../../Tools/Private';
 import { useUser } from '../../../../libs/client/useUser';
 import { hoverBgVars } from '../../../../../styles/variants';
-import useFollowingBoard from '../../../../libs/client/useFollowing/Board';
 
 interface IBoardBox {
+  _mode: {
+    onPrivate: boolean;
+    onMode: () => void;
+  };
+  _follow: {
+    name: string;
+    Saved: number;
+    onClick: () => void;
+    isFollowing: boolean;
+  };
   _data: {
     theme: boolean;
     board: IBoardType;
@@ -20,27 +30,29 @@ interface IBoardBox {
     setCreatePost: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const Board = ({ _data }: IBoardBox) => {
-  const { theme, board, setType, setCreatePost, setFixed } = _data;
-  const board_id = board?.id;
-  const genre = board?.genre!;
+export const Board = ({ _data, _mode, _follow }: IBoardBox) => {
+  const board = _data.board!;
   const host = board?.host!;
   const host_id = host?.id!;
+  const board_id = board?.id;
+  const genre = board?.genre!;
   const title = board?.title!;
   const userId = host?.userId!;
+
   const { loggedInUser } = useUser();
-  const onPrivate = board?.onPrivate!;
   const Posts = board?.posts?.length!;
+  const { onMode, onPrivate } = _mode;
+  const { name, Saved, onClick, isFollowing } = _follow;
   const isMyBoard = Boolean(loggedInUser?.id === host?.id);
-  const { Saved, isFollowing, onClick, name } = useFollowingBoard(board_id);
+  const { theme, setType, setCreatePost, setFixed } = _data;
   const __btn = { theme, genre, board_id, isMyBoard, setFixed, setCreatePost };
-  console.log(Saved);
   return (
     <>
       {board && (
         <Box className="board-box">
           <Title _data={{ title, theme, isMyBoard, setType, setFixed }} />
           <Host _data={{ theme, userId, host_id }} />
+          {isMyBoard && <OnPrivateBtn _data={{ theme, onMode, onPrivate }} />}
           <Detail _data={{ onPrivate, Posts, Saved }} />
           <BtnWrap _data={__btn} _follow={{ name, onClick, isFollowing }} />
           <TrimText text={board?.description} max={200} />

@@ -27,14 +27,14 @@ export const useGetUser = (user_id: number) => {
     },
   };
 };
-interface IUserPrivate extends IRes {
+export interface IPrivate extends IRes {
   onPrivate: boolean;
 }
 export const useUserPrivate = (user_id: number, isMyAcct: boolean) => {
   const [POST, { loading }] = useMutation(
     `/api/user/${user_id}/update/private`
   );
-  const { data, mutate } = useSWR<IUserPrivate>(
+  const { data, mutate } = useSWR<IPrivate>(
     Boolean(user_id) && `/api/user/${user_id}/private`
   );
   const onPrivate = data?.onPrivate!;

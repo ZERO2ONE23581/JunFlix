@@ -14,7 +14,7 @@ export const Detail = ({ _data }: IBoardDetail) => {
       <ul>
         {onPrivate && (
           <li>
-            <span>private</span>
+            <span>Private</span>
           </li>
         )}
         {!onPrivate && (

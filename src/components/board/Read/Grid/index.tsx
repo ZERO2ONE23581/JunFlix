@@ -35,7 +35,7 @@ export const BoardsGrid = ({ _data }: IBoards) => {
   const Boards = genre.select ? (allGenre ? boards : genreBoard) : boards;
   const isBoard = Boolean(_data?.isBoard! && Boards.length > 0);
   return (
-    <Cont>
+    <Cont className="boards_grid">
       <Icons theme={theme} setGenre={setGenre} hideFilter={hideFilter} />
       <AnimatePresence>
         {isBoard && (
@@ -45,7 +45,6 @@ export const BoardsGrid = ({ _data }: IBoards) => {
             animate="animate"
             initial="initial"
             variants={scaleVar}
-            className="boards_grid"
             custom={{ theme, duration: 0.6 }}
           >
             {isQuickSaved && (
@@ -84,8 +83,5 @@ const Cont = styled.section`
   .icons {
     top: -3rem;
     right: 1rem;
-  }
-  .boards_grid {
-    width: fit-content;
   }
 `;

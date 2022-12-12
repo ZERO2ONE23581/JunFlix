@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/router';
-import { color } from '../../../../../../styles/variants';
+import { color } from '../../styles/variants';
 
 interface IUserPrivate {
   _data: {
@@ -10,7 +9,7 @@ interface IUserPrivate {
     onPrivate: boolean;
   };
 }
-export const UserPrivate = ({ _data }: IUserPrivate) => {
+export const OnPrivateBtn = ({ _data }: IUserPrivate) => {
   const { theme, onMode: onClick, onPrivate } = _data;
   return (
     <>

@@ -39,6 +39,20 @@ export const MsgModal = ({ _data }: IMsgModal) => {
         kor: '이미 존재하는 이메일 입니다.',
       });
     }
+    if (msg === 'blur_board') {
+      setText({
+        kor: '블러를 지우려면 해당 보드를 팔로우(저장) 해야합니다.',
+        eng: 'You need to follow(save) the BOARD to unblur the content.',
+      });
+      return reload();
+    }
+    if (msg === 'blur_user') {
+      setText({
+        kor: '블러를 지우려면 해당 유저를 팔로우 해야합니다.',
+        eng: 'You need to follow the USER to unblur the content.',
+      });
+      return reload();
+    }
     if (msg === 'created') {
       setText({ eng: 'Saved.', kor: '저장되었습니다.' });
       return reload();

@@ -1,42 +1,40 @@
+import {
+  useGetBoard,
+  useBoardPrivate,
+} from '../../../src/libs/client/useBoards';
+import { useState } from 'react';
+import { IPage } from '../../_app';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { AnimatePresence } from 'framer-motion';
 import { FlexPage } from '../../../styles/global';
-import { NoData } from '../../../src/Tools/NoData';
 import { Head_ } from '../../../src/Tools/head_title';
-import { Dispatch, SetStateAction, useState } from 'react';
 import { BoardSchema } from '../../../src/Tools/Modal/schema';
 import { Board } from '../../../src/components/Board/Read/Each';
-import { useGetBoard } from '../../../src/libs/client/useBoards';
-import { useGetPosts } from '../../../src/libs/client/usePosts';
-import { PostSchema } from '../../../src/components/Post/Schema';
-import { CreatePost } from '../../../src/components/Post/Create';
 import { LoadingModal } from '../../../src/Tools/Modal/loading_modal';
+import { BoardContent } from '../../../src/components/Board/Read/Content';
+import useFollowingBoard from '../../../src/libs/client/useFollowing/Board';
 
-const BoardPage: NextPage<{
-  theme: boolean;
-  setFixed: Dispatch<SetStateAction<boolean>>;
-}> = ({ theme, setFixed }) => {
+const BoardPage: NextPage<IPage> = ({ theme, setFixed }) => {
   const router = useRouter();
-  const { board_id } = router.query;
   const [type, setType] = useState('');
+  const board_id = Number(router.query.board_id);
+  const { board, isMyBoard } = useGetBoard(board_id);
   const [createPost, setCreatePost] = useState(false);
-  const { board, isMyBoard } = useGetBoard(Number(board_id));
   const host_id = board?.host_id!;
   const modal = Boolean(type && isMyBoard);
-  const { posts, isPost } = useGetPosts({
-    host_id,
-    board_id: Number(board_id),
-  });
   const closeBoard = () => {
-    setFixed(false);
     setType('');
-  };
-  const closeModal = () => {
     setFixed(false);
-    setCreatePost(false);
   };
+  const {
+    isBlur,
+    onPrivate,
+    onClick: onMode,
+  } = useBoardPrivate({ host_id, board_id, isMyBoard });
+  const { Saved, isFollowing, onClick, name } = useFollowingBoard(board_id);
+  const IsBlur = isBlur && !isFollowing;
   return (
     <>
       <Head_ title={board?.title!} />
@@ -45,19 +43,22 @@ const BoardPage: NextPage<{
           {board && (
             <>
               <Board
+                _mode={{ onPrivate, onMode }}
+                _follow={{ Saved, isFollowing, onClick, name }}
                 _data={{ theme, board, setType, setCreatePost, setFixed }}
               />
               <BoardSchema _data={{ type, modal, theme, board, closeBoard }} />
-              <Layer className="layer">
-                <CreatePost _data={{ theme, createPost, closeModal }} />
-                {isPost && (
-                  <PostSchema
-                    setFixed={setFixed}
-                    _data={{ theme, posts, grid: 5 }}
-                  />
-                )}
-                {!isPost && <NoData theme={theme} />}
-              </Layer>
+              <BoardContent
+                _data={{
+                  theme,
+                  IsBlur,
+                  host_id,
+                  board_id,
+                  setFixed,
+                  createPost,
+                  setCreatePost,
+                }}
+              />
             </>
           )}
           {!board && <LoadingModal theme={theme} />}
@@ -81,16 +82,5 @@ const Cont = styled(FlexPage)`
     .content-text {
       max-width: 30vw;
     }
-  }
-`;
-const Layer = styled(FlexPage)`
-  padding: 0 10rem;
-  position: relative;
-  justify-content: flex-start;
-  .lock {
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
   }
 `;

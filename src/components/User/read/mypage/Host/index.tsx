@@ -2,14 +2,13 @@ import { Btns } from './Btns';
 import styled from '@emotion/styled';
 import { FollowInfo } from './Follow';
 import { useRouter } from 'next/router';
-import { UserPrivate } from './Private';
 import { Dispatch, SetStateAction } from 'react';
 import { Avatar } from '../../../../../Tools/Avatar';
 import { IUserType } from '../../../../../types/user';
 import { FlexCol } from '../../../../../../styles/global';
+import { OnPrivateBtn } from '../../../../../Tools/Private';
 import { useCapLetter } from '../../../../../libs/client/useTools';
 import useFollowUser from '../../../../../libs/client/useFollowing/User';
-import { useUserPrivate } from '../../../../../libs/client/useUser';
 
 interface IUserBox {
   _mode: {
@@ -51,7 +50,7 @@ export const Host = ({ _data, _mode }: IUserBox) => {
           <Info>
             <span className="name">{useCapLetter(Name)}</span>
             <span className="small">@{userId.toUpperCase()}</span>
-            {isMyAcct && <UserPrivate _data={{ theme, onMode, onPrivate }} />}
+            {isMyAcct && <OnPrivateBtn _data={{ theme, onMode, onPrivate }} />}
             <FollowInfo
               _data={{ theme, setFixed, Follower, Following, num: follower }}
             />

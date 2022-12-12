@@ -43,7 +43,12 @@ export const UserContent = ({ _data }: IUserContent) => {
 };
 const Cont = styled.article`
   padding: 1rem 10rem;
-  .posts_grid_wrap {
-    //min-width: 900px;
+  .boards_grid {
+    margin-top: 2.2rem;
+    .icons {
+      z-index: 1;
+      margin-top: 0.7rem;
+    }
+    //border: 2px solid red;
   }
 `;
