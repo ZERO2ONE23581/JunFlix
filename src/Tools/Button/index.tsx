@@ -28,7 +28,8 @@ export const Btn = ({ item, type, onClick, _vars }: IBtn) => {
   const { svg, name, theme, disabled, className, isClicked, isFollowing } =
     item;
   const variants = _vars ? _vars : vars;
-  const custom = { theme, isClicked, isFollowing, disabled };
+  const isRed = Boolean(isClicked || isFollowing);
+  const custom = { theme, isRed, isClicked, isFollowing, disabled };
   return (
     <AnimatePresence>
       <Cont
@@ -66,14 +67,14 @@ export const Cont = styled(motion.button)`
   justify-content: center;
 `;
 const vars = {
-  animate: ({ theme, disabled, isClicked }: any) => ({
+  animate: ({ theme, disabled, isClicked, isRed }: any) => ({
     transition: { duration: 0.3 },
     color: isClicked ? whiteColor : color(!theme),
-    backgroundColor: disabled ? greyColor : isClicked ? redColor : color(theme),
+    backgroundColor: disabled ? greyColor : isRed ? redColor : color(theme),
   }),
-  hover: ({ theme, disabled }: any) => ({
+  hover: ({ theme, disabled, isRed }: any) => ({
     transition: { duration: 0.3 },
-    color: disabled ? color(!theme) : whiteColor,
-    backgroundColor: disabled ? greyColor : redColor,
+    color: disabled ? color(!theme) : isRed ? redColor : whiteColor,
+    backgroundColor: disabled ? greyColor : isRed ? whiteColor : redColor,
   }),
 };

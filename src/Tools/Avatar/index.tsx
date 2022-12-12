@@ -7,6 +7,10 @@ import { useGetUser } from '../../libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export interface IAvatarInput {
+  _modal?: {
+    isModal?: boolean;
+    closeModal?: () => void;
+  };
   _data: {
     size: string;
     theme: boolean;
@@ -16,11 +20,14 @@ export interface IAvatarInput {
     handleClick?: () => void;
   };
 }
-export const Avatar = ({ _data }: IAvatarInput) => {
+export const Avatar = ({ _data, _modal }: IAvatarInput) => {
   const router = useRouter();
   const { isRound, size, theme, host_id, isOther, handleClick } = _data;
   const { avatar, userId } = useGetUser(host_id);
   const onClick = () => {
+    const isModal = _modal?.isModal!;
+    const closeModal = _modal?.closeModal!;
+    if (isModal) closeModal();
     if (isOther) return handleClick!();
     else return router.push(`/user/${host_id}/${userId}/page`);
   };

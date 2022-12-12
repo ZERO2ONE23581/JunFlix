@@ -15,7 +15,7 @@ import { Head_ } from '../../../../src/Tools/head_title';
 import { BtnWrap, Page } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { color, redColor } from '../../../../styles/variants';
-import { useGetUser } from '../../../../src/libs/client/useUser';
+import { useGetUser, useUser } from '../../../../src/libs/client/useUser';
 import { useCapLetter } from '../../../../src/libs/client/useTools';
 import { PostSchema } from '../../../../src/components/Post/Schema';
 import { Host } from '../../../../src/components/User/Read/MyPage/Host';
@@ -26,14 +26,14 @@ const UserPage: NextPage<{
   setFixed: Dispatch<SetStateAction<boolean>>;
 }> = ({ theme, setFixed }) => {
   const router = useRouter();
-  const { user_id } = router.query;
-  const host_id = Number(user_id);
-  const { user: host, isMyAcct, userId, username } = useGetUser(host_id);
+  const { user_id } = useUser();
+  const host_id = Number(router.query.user_id!);
+  const isMyAcct = Boolean(host_id === user_id);
+  const { user: host, userId, username } = useGetUser(host_id);
   const NAME = username ? username : userId;
-  const title = `${useCapLetter(NAME)}'s page`;
-  //
-  const { posts } = useGetPosts({ host_id, board_id: 0 });
+
   const { boards, isBoard } = useGetBoards(host_id);
+  const { posts } = useGetPosts({ host_id, board_id: 0 });
   const { posts: quickSaved } = useGetQuickSaved(host_id);
   const saves = host?.followings?.map((e) => e.board_id);
   const { SavedBoards, isSaved } = useGetFollowingBoards({ saves });
@@ -43,7 +43,7 @@ const UserPage: NextPage<{
   const arr = ['posts', 'likes', 'boards', 'saved'];
   return (
     <>
-      <Head_ title={title} />
+      <Head_ title={`${useCapLetter(NAME)}'s page`} />
       <Container>
         <Host _data={{ theme, host, isMyAcct, setFixed }} />
         <BtnWrap className="btn_wrap">

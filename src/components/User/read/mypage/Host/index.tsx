@@ -29,7 +29,6 @@ export const Host = ({ _data }: IUserBox) => {
   const Following = host?.followings;
   const { onClick, name, isFollowing, follower } = useFollowUser(host_id);
   const onSetting = () => router.push(`/user/${host_id}/${userId}/setting`);
-  console.log(follower);
   return (
     <>
       {host && (
@@ -52,12 +51,12 @@ export const Host = ({ _data }: IUserBox) => {
           </Info>
           <Btns
             _data={{
+              name,
               theme,
-              onSetting,
-              isMyAcct,
               host_id,
               onClick,
-              name,
+              isMyAcct,
+              onSetting,
               isFollowing,
             }}
           />

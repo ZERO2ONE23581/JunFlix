@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { FollowerModal } from './Modal/Follower';
+import { FollowModal } from './Modal/Follower';
 import { Follower, Following } from '@prisma/client';
 import { Flex } from '../../../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -17,24 +17,22 @@ interface IFollowInfo {
 export const FollowInfo = ({ _data }: IFollowInfo) => {
   const layoutId = 'follow';
   const { setFixed, theme, num, Follower, Following } = _data;
-  const count_following = Following?.length!;
-  const [openFollower, setOpenFollower] = useState(false);
-  const [openFolowing, setOpenFollowing] = useState(false);
+  const count_following = Following.filter((e) => !e.board_id)?.length!;
+  const [type, setType] = useState('');
   const onClick = (type: string) => {
     setFixed(true);
-    if (type === 'follower') return setOpenFollower(true);
-    if (type === 'following') return setOpenFollowing(true);
+    return setType(type);
   };
-  const closeModal = (type: string) => {
+  const closeModal = () => {
     setFixed(false);
-    if (type === 'follower') return setOpenFollower(false);
-    if (type === 'following') return setOpenFollowing(false);
+    return setType('');
   };
   return (
     <>
-      {/* <FollowerModal
-        _data={{ open: openFollower, theme, Follower, layoutId, closeModal }}
-      /> */}
+      <FollowModal
+        _follow={{ Follower, Following, type }}
+        _data={{ theme, layoutId, closeModal }}
+      />
       <Cont>
         <Each
           animate="animate"

@@ -15,7 +15,6 @@ interface IBtns {
 }
 export const Btns = ({ _data }: IBtns) => {
   const { theme, isMyAcct, onSetting, name, onClick, isFollowing } = _data;
-
   return (
     <Cont className="btn-wrap">
       {isMyAcct && (
