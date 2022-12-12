@@ -11,7 +11,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const board = await client.board.findUnique({
     where: { id: +board_id.toString() },
-    select: { id: true },
+    include: { followers: true },
   });
   if (!board) return res.json({ ok: false, error: 'no board found.' });
 
@@ -21,8 +21,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     })
   );
   //
-  if (!isFollowing) return res.json({ ok: false, isFollowing });
-  return res.json({ ok: true, isFollowing });
+  const length = board?.followers?.length!;
+  if (!isFollowing) return res.json({ ok: false, isFollowing, length });
+  return res.json({ ok: true, isFollowing, length });
 }
 export default withApiSession(
   withHandler({ methods: ['GET'], handler, isPrivate: false })

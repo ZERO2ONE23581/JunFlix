@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import { Overlay } from '../../../styles/global';
 import { Dispatch, SetStateAction } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import useFollow from '../../libs/client/useFollowingBoards';
 import { hoverBgColor, variants } from '../../../styles/variants';
+import useFollowingBoard from '../../libs/client/useFollowing/Board';
 
 interface ISettingModal {
   item: {
@@ -21,7 +21,11 @@ export const SettingModal = ({ onClick, setModal, item }: ISettingModal) => {
   const router = useRouter();
   const isMyBoard = item?.isMyBoard;
   const { board_id } = router.query;
-  const { isFollowing, follow } = useFollow(board_id);
+  const {
+    Saved,
+    isFollowing,
+    onClick: follow,
+  } = useFollowingBoard(Number(board_id));
   //
   return (
     <AnimatePresence>

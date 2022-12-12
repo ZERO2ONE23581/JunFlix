@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../../../../Tools/Button';
 import { BtnWrap } from '../../../../../../styles/global';
-import useFollow from '../../../../../libs/client/useFollow';
 
 interface IBtns {
   _data: {
@@ -9,11 +8,14 @@ interface IBtns {
     theme: boolean;
     isMyAcct: boolean;
     onSetting: () => void;
+    name?: string;
+    onClick: () => void;
+    isFollowing?: boolean;
   };
 }
 export const Btns = ({ _data }: IBtns) => {
-  const { theme, host_id, isMyAcct, onSetting } = _data;
-  const { onClick, name, isFollowing } = useFollow(host_id, 'user');
+  const { theme, isMyAcct, onSetting, name, onClick, isFollowing } = _data;
+
   return (
     <Cont className="btn-wrap">
       {isMyAcct && (

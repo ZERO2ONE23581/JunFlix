@@ -9,6 +9,7 @@ import { IBoardType } from '../../../../types/board';
 import { TrimText } from '../../../../Tools/trimText';
 import { useUser } from '../../../../libs/client/useUser';
 import { hoverBgVars } from '../../../../../styles/variants';
+import useFollowingBoard from '../../../../libs/client/useFollowing/Board';
 
 interface IBoardBox {
   _data: {
@@ -29,18 +30,19 @@ export const Board = ({ _data }: IBoardBox) => {
   const userId = host?.userId!;
   const { loggedInUser } = useUser();
   const onPrivate = board?.onPrivate!;
-  const postLen = board?.posts?.length!;
-  const saved = board?.followers?.length!;
+  const Posts = board?.posts?.length!;
   const isMyBoard = Boolean(loggedInUser?.id === host?.id);
+  const { Saved, isFollowing, onClick, name } = useFollowingBoard(board_id);
   const __btn = { theme, genre, board_id, isMyBoard, setFixed, setCreatePost };
+  console.log(Saved);
   return (
     <>
       {board && (
         <Box className="board-box">
           <Title _data={{ title, theme, isMyBoard, setType, setFixed }} />
           <Host _data={{ theme, userId, host_id }} />
-          <Detail _data={{ onPrivate, postLen, saved }} />
-          <BtnWrap _data={__btn} />
+          <Detail _data={{ onPrivate, Posts, Saved }} />
+          <BtnWrap _data={__btn} _follow={{ name, onClick, isFollowing }} />
           <TrimText text={board?.description} max={200} />
         </Box>
       )}

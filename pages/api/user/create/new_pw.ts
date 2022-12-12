@@ -6,7 +6,7 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId, password, password_confirm } = req.body;
-  console.log(password, password_confirm, password === password_confirm);
+
   const isMatch = Boolean(password === password_confirm);
   const isInputs = Boolean(userId || password || password_confirm);
 

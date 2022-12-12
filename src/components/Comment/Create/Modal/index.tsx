@@ -68,12 +68,12 @@ export const CreateModal = ({ _data }: ICreateModal) => {
       {create && !Loading && (
         <>
           <Cont
+            custom={theme}
+            variants={vars}
             exit="exit"
             initial="initial"
             animate="animate"
             className="modal"
-            custom={theme}
-            variants={vars}
           >
             <Form onSubmit={handleSubmit(onValid)}>
               <Layer _data={{ theme, closeCreate }} />

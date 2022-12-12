@@ -49,12 +49,12 @@ export default function useFollow<T = any>(
   useEffect(() => {
     const success = post_result?.ok;
     const error = post_result?.error;
-    if (error) alert(error);
-    if (success) alert(success);
+    if (error) console.log(error);
+    if (success) console.log(success);
   }, [post_result]);
 
-  const isFollowing = data?.isFollowing;
   const [name, setName] = useState('');
+  const isFollowing = data?.isFollowing;
   useEffect(() => {
     if (Type) {
       if (Type === 'user') {

@@ -9,20 +9,20 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!user) return res.json({ ok: false, error: 'must login.' });
   if (!user_id) return res.json({ ok: false, error: 'query missed.' });
 
-  const found = await client.user.findUnique({
+  const target = await client.user.findUnique({
     where: { id: +user_id.toString() },
-    select: { id: true },
+    include: { followers: true, followings: true },
   });
-  if (!found) return res.json({ ok: false, error: 'no user found.' });
+  if (!target) return res.json({ ok: false, error: 'no user target.' });
 
-  //
   const isFollowing = Boolean(
     await client.following.findFirst({
-      where: { host_id: user.id, user_id: found.id },
+      where: { host_id: user.id, user_id: target.id },
     })
   );
-  if (!isFollowing) return res.json({ ok: false, isFollowing });
-  return res.json({ ok: true, isFollowing });
+  const length = target.followers?.length!;
+  if (!isFollowing) return res.json({ ok: false, length, isFollowing });
+  return res.json({ ok: true, length, isFollowing });
 }
 export default withApiSession(
   withHandler({ methods: ['GET'], handler, isPrivate: false })

@@ -28,8 +28,9 @@ const UserPage: NextPage<{
   const router = useRouter();
   const { user_id } = router.query;
   const host_id = Number(user_id);
-  const { user: host, isMyAcct } = useGetUser(host_id);
-  const title = `${useCapLetter(host?.username!)}'s page`;
+  const { user: host, isMyAcct, userId, username } = useGetUser(host_id);
+  const NAME = username ? username : userId;
+  const title = `${useCapLetter(NAME)}'s page`;
   //
   const { posts } = useGetPosts({ host_id, board_id: 0 });
   const { boards, isBoard } = useGetBoards(host_id);
@@ -44,7 +45,7 @@ const UserPage: NextPage<{
     <>
       <Head_ title={title} />
       <Container>
-        <Host _data={{ theme, host, isMyAcct }} />
+        <Host _data={{ theme, host, isMyAcct, setFixed }} />
         <BtnWrap className="btn_wrap">
           {arr.map((type) => (
             <Btn

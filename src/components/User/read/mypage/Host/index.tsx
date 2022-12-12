@@ -2,30 +2,34 @@ import { Btns } from './Btns';
 import styled from '@emotion/styled';
 import { FollowInfo } from './Follow';
 import { useRouter } from 'next/router';
+import { Dispatch, SetStateAction } from 'react';
 import { Avatar } from '../../../../../Tools/Avatar';
 import { IUserType } from '../../../../../types/user';
 import { FlexCol } from '../../../../../../styles/global';
+import useFollow from '../../../../../libs/client/useFollow';
 import { useCapLetter } from '../../../../../libs/client/useTools';
+import useFollowUser from '../../../../../libs/client/useFollowing/User';
 
 interface IUserBox {
   _data: {
     theme: boolean;
     host: IUserType;
     isMyAcct: boolean;
+    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Host = ({ _data }: IUserBox) => {
   const router = useRouter();
-  const { theme, host, isMyAcct } = _data;
+  const { theme, host, isMyAcct, setFixed } = _data;
   const host_id = host?.id!;
   const userId = host?.userId!;
   const username = host?.username!;
-  const onSetting = () => router.push(`/user/${host_id}/${userId}/setting`);
-  const _follow = {
-    followers: host?._count.followers,
-    followings: host?._count.followings,
-  };
   const Name = username ? username : userId;
+  const Follower = host?.followers;
+  const Following = host?.followings;
+  const { onClick, name, isFollowing, follower } = useFollowUser(host_id);
+  const onSetting = () => router.push(`/user/${host_id}/${userId}/setting`);
+  console.log(follower);
   return (
     <>
       {host && (
@@ -42,9 +46,21 @@ export const Host = ({ _data }: IUserBox) => {
           <Info>
             <span className="name">{useCapLetter(Name)}</span>
             <span className="small">@{userId}</span>
-            <FollowInfo _data={{ ..._follow }} />
+            <FollowInfo
+              _data={{ num: follower, theme, Follower, Following, setFixed }}
+            />
           </Info>
-          <Btns _data={{ theme, onSetting, isMyAcct, host_id }} />
+          <Btns
+            _data={{
+              theme,
+              onSetting,
+              isMyAcct,
+              host_id,
+              onClick,
+              name,
+              isFollowing,
+            }}
+          />
         </Cont>
       )}
     </>

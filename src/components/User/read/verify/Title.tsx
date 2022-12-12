@@ -20,7 +20,7 @@ export const Title = ({ theme, type }: ITitle) => {
   };
   const isNew = Boolean(type === 'new_password');
   const isID = Boolean(type === 'email' || type === 'token_id') && !isNew;
-  console.log(isNew);
+
   return (
     <Cont>
       <h1>

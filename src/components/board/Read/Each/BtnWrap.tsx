@@ -9,19 +9,23 @@ import { Flex, FlexCol } from '../../../../../styles/global';
 import { useCapLetter } from '../../../../libs/client/useTools';
 
 interface IBtnWrap {
+  _follow: {
+    name: string;
+    onClick: () => void;
+    isFollowing: boolean;
+  };
   _data: {
     theme: boolean;
     genre: string;
     isMyBoard: boolean;
-    board_id: number;
     setFixed: Dispatch<SetStateAction<boolean>>;
     setCreatePost: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const BtnWrap = ({ _data }: IBtnWrap) => {
-  const { theme, genre, board_id, isMyBoard, setCreatePost, setFixed } = _data;
+export const BtnWrap = ({ _data, _follow }: IBtnWrap) => {
+  const { name, onClick, isFollowing } = _follow;
+  const { theme, genre, isMyBoard, setFixed, setCreatePost } = _data;
   const router = useRouter();
-  const { isFollowing, onClick, name } = useFollow(Number(board_id), 'board');
   const handleClick = () => {
     setFixed(true);
     if (isMyBoard) return setCreatePost(true);

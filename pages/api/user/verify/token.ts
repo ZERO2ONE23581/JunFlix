@@ -19,7 +19,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   });
   if (!user) return res.json({ ok: false, error: 'no_data' });
   //
-  console.log('?', user.userId);
+
   await client.token.deleteMany({ where: { host_id: token.host_id } });
   return res.json({ ok: true, found: user.userId });
 }
