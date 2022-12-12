@@ -81,14 +81,14 @@ export const BoxType = ({ _data }: IBoxType) => {
           animate="animate"
         >
           {!Loading && (
-            <Box_ className="box" isDel={Boolean(type === 'delete')}>
+            <Box>
               <Title _data={{ theme, type, delAcct, setDelAcct }} />
               <Email _data={__data} />
               <Password _data={__data} />
               <UserInfo _data={__data} />
               <UserAvatar _data={__data} />
               <DeleteUser _data={__data} />
-            </Box_>
+            </Box>
           )}
           <MsgModal _data={{ msg, theme, layoutId: 'user_setting' }} />
           {Loading && <LoadingModal theme={theme} />}
@@ -97,9 +97,6 @@ export const BoxType = ({ _data }: IBoxType) => {
     </>
   );
 };
-const Box_ = styled(Box)<{ isDel: boolean }>`
-  border: ${(p) => p.isDel && `5px solid red`};
-`;
 const Cont = styled(Flex)`
   top: 0;
   left: 0;

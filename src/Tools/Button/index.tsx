@@ -1,13 +1,14 @@
-import { Svg } from '../Svg';
-import styled from '@emotion/styled';
-import { MouseEventHandler } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
 import {
   color,
   greyColor,
   redColor,
   whiteColor,
 } from '../../../styles/variants';
+import { Svg } from '../Svg';
+import styled from '@emotion/styled';
+import { MouseEventHandler } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useUser } from '../../libs/client/useUser';
 
 interface IBtn {
   item: {
@@ -27,8 +28,9 @@ interface IBtn {
 export const Btn = ({ item, type, onClick, _vars }: IBtn) => {
   const { svg, name, theme, disabled, className, isClicked, isFollowing } =
     item;
+  const { isLoggedIn } = useUser();
   const variants = _vars ? _vars : vars;
-  const isRed = Boolean(isClicked || isFollowing);
+  const isRed = Boolean(isClicked || (isFollowing && isLoggedIn));
   const custom = { theme, isRed, isClicked, isFollowing, disabled };
   return (
     <AnimatePresence>

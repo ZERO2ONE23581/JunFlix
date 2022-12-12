@@ -8,14 +8,14 @@ import { useEffect, useState } from 'react';
 import { IUserForm } from '../src/types/user';
 import { InputWrap } from '../src/Tools/Input';
 import { variants } from '../styles/variants';
-import { ErrMsg } from '../src/Tools/Error/Message';
 import { MsgModal } from '../src/Tools/msg_modal';
+import { ErrMsg } from '../src/Tools/Error/Message';
+import { FindUser } from '../src/components/User/Find';
 import { AvatarInput } from '../src/Tools/Avatar/Input';
 import useMutation from '../src/libs/client/useMutation';
 import { Flex, FlexCol, FlexPage } from '../styles/global';
 import { useUploadImg } from '../src/libs/client/useTools';
 import { LoadingModal } from '../src/Tools/Modal/loading_modal';
-import { FindUser } from '../src/components/User/Find';
 
 const JoinPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [post, { loading, data }] = useMutation<IRes>(`/api/user/create`);

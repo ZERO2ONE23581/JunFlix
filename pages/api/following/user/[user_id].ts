@@ -6,7 +6,6 @@ import { withApiSession } from '../../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { user_id } = req.query;
-  if (!user) return res.json({ ok: false, error: 'must login.' });
   if (!user_id) return res.json({ ok: false, error: 'query missed.' });
 
   const target = await client.user.findUnique({
@@ -17,7 +16,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const isFollowing = Boolean(
     await client.following.findFirst({
-      where: { host_id: user.id, user_id: target.id },
+      where: { host_id: user?.id, user_id: target.id },
     })
   );
   const length = target.followers?.length!;

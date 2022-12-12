@@ -37,7 +37,12 @@ export const useGetLikedPosts = ({ host_id }: useGetLikedPosts) => {
 };
 
 export const useGetPosts = ({ host_id, board_id, isQs }: IUseGetPosts) => {
+  const { user } = useGetUser(Number(host_id));
   const { data } = useSWR<IGetPosts>(`/api/post/all`);
+  const posts = data?.posts!;
+  const likes = user?.likes?.map((el) => el.post_id);
+  const likedPosts = posts?.filter((post) => likes?.includes(post?.id));
+
   if (board_id || isQs) {
     const posts = data?.posts?.filter(
       (e) => e.host_id === Number(host_id) && e.board_id === Number(board_id)
@@ -47,7 +52,10 @@ export const useGetPosts = ({ host_id, board_id, isQs }: IUseGetPosts) => {
   } else {
     const posts = data?.posts?.filter((e) => e.host_id === Number(host_id))!;
     const isPost = data?.ok && Boolean(posts.length > 0);
-    return { posts, isPost };
+    const QS = data?.posts?.filter(
+      (e) => e.host_id === host_id && e.board_id === 0
+    );
+    return { posts, isPost, likedPosts, QS };
   }
 };
 export const useGetQuickSaved = (host_id: number) => {

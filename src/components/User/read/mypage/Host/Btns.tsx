@@ -4,17 +4,16 @@ import { BtnWrap } from '../../../../../../styles/global';
 
 interface IBtns {
   _data: {
-    host_id: number;
+    name?: string;
     theme: boolean;
     isMyAcct: boolean;
-    onSetting: () => void;
-    name?: string;
     onClick: () => void;
+    onSetting: () => void;
     isFollowing?: boolean;
   };
 }
 export const Btns = ({ _data }: IBtns) => {
-  const { theme, isMyAcct, onSetting, name, onClick, isFollowing } = _data;
+  const { name, theme, isMyAcct, onClick, onSetting, isFollowing } = _data;
   return (
     <Cont className="btn-wrap">
       {isMyAcct && (
@@ -24,7 +23,7 @@ export const Btns = ({ _data }: IBtns) => {
         <Btn
           type="button"
           onClick={onClick}
-          item={{ theme, name, isFollowing, className: 'follow-btn' }}
+          item={{ theme, name, isFollowing }}
         />
       )}
       <Btn
