@@ -6,6 +6,7 @@ import { ReadPost } from './Read/Modal';
 import { IPostType } from '../../../types/post';
 import { CommentModal } from '../../Comment/Modal';
 import { ISetFixed } from '../../../../pages/_app';
+import styled from '@emotion/styled';
 
 interface IPostSchema extends ISetFixed {
   _data: {
@@ -30,7 +31,7 @@ export const PostSchema = ({ _data, setFixed }: IPostSchema) => {
   const [cmtModal, setCmtModal] = useState(false);
   const open = Boolean(modal === 'read' && post && !cmtModal);
   return (
-    <>
+    <Cont className="posts_schema">
       <PostGrid
         setFixed={setFixed}
         _data={{ grid, theme, posts, onClickBox }}
@@ -46,6 +47,7 @@ export const PostSchema = ({ _data, setFixed }: IPostSchema) => {
       />
       <UpdatePost _data={{ ..._modal }} />
       <DeletePost _data={{ ..._modal }} />
-    </>
+    </Cont>
   );
 };
+const Cont = styled.section``;

@@ -1,9 +1,9 @@
 import { layerVar } from '.';
+import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useUser } from '../../../../../libs/client/useUser';
 import { useCapLetters } from '../../../../../libs/client/useTools';
-import styled from '@emotion/styled';
 
 interface ILayerMyPosts {
   _data: {

@@ -1,64 +1,76 @@
-import { useEffect } from 'react';
+import { IPage } from './_app';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useUser } from '../src/libs/client/useUser';
+import { useEffect, useState } from 'react';
 import { Head_ } from '../src/Tools/head_title';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
+import { opacityVar } from '../styles/variants';
+import { Txts } from '../src/Layout/Home/Txts';
+import { Start } from '../src/Layout/Home/Start';
+import { useUser } from '../src/libs/client/useUser';
+import { FlexCol, FlexPage, Page } from '../styles/global';
+import { PostSchema } from '../src/components/Post/Schema';
+import { useGetAllPosts } from '../src/libs/client/usePosts';
 
-const Entrance: NextPage<{ theme: boolean }> = ({ theme }) => {
+const Home: NextPage<IPage> = ({ theme, setHide, setFixed }) => {
   const router = useRouter();
+
   const { isLoggedIn } = useUser();
+  const { posts } = useGetAllPosts();
+  const [start, setStart] = useState(false);
+  const isHide = !isLoggedIn && !start;
+
   useEffect(() => {
-    if (isLoggedIn) router.replace(`/home`);
-    else
-      setTimeout(() => {
-        router.replace(`/home`);
-      }, 3000);
-  }, [router, isLoggedIn]);
+    if (isHide) return setHide(true);
+    else return setHide(false);
+  }, [setHide, isHide]);
   return (
     <>
-      <Head_ title="Welcome Page" />
+      <Head_ title="Home" />
       <AnimatePresence>
-        <Cont
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          variants={welcomeVar}
-        >
-          <h1>Welcome</h1>
-        </Cont>
+        {isHide && (
+          <Cont
+            exit="exit"
+            initial="initial"
+            animate="animate"
+            variants={opacityVar}
+          >
+            <Front>
+              <Txts type="main" />
+              <Start _data={{ theme, setStart }} />
+              <Txts type="sub" />
+            </Front>
+          </Cont>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {!isHide && (
+          <Clicked>
+            <PostSchema _data={{ theme, posts, grid: 6 }} setFixed={setFixed} />
+          </Clicked>
+        )}
       </AnimatePresence>
     </>
   );
 };
-export default Entrance;
+export default Home;
 
-const welcomeVar = {
-  initial: {
-    opacity: 0,
-  },
-  animate: {
-    opacity: 1,
-  },
-  exit: {
-    opacity: 0,
-  },
-};
+const Cont = styled(FlexPage)`
+  background: linear-gradient(to top, black, transparent),
+    url('/img/1.jpg') center / cover no-repeat;
+`;
 
-const Cont = styled(motion.section)`
-  gap: 20px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 100vw;
-  min-height: 100vh;
-  position: relative;
-  padding-bottom: 10%;
-  color: ${(p) => p.theme.color.font};
-  background-color: ${(p) => p.theme.color.bg};
-  h1 {
-    font-size: 5rem;
+const Front = styled(FlexCol)`
+  gap: 2rem;
+  padding-top: 4rem;
+  color: whitesmoke;
+`;
+const Clicked = styled(Page)`
+  padding: 0rem 10rem;
+  .posts_schema {
+    //padding-top: 1.4rem;
+    //border: 5px solid cornflowerblue;
   }
 `;

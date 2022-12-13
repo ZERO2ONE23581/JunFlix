@@ -1,77 +1,53 @@
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
+import { FlexCol } from '../../../styles/global';
 
 export const Texts = () => {
-  const router = useRouter();
   return (
-    <>
-      <Big>
+    <Cont>
+      <Txt>
         <span className="kor">"영화를 사랑하는 사람들을 위한 공간."</span>
         <span>"Place for people who love movies."</span>
-      </Big>
-      <Small>
-        <span>
-          영화인을 위한 소셜미디어, Junflix에서 영화
-          <span className="red" onClick={() => router.push(`/boards`)}>
-            보드를
-          </span>
-          만들고 영화관련
-          <span className="red" onClick={() => router.push(`/posts`)}>
-            포스트를
-          </span>
-          공유할 수 있습니다.
-        </span>
-        <span>
-          Social media platform for movie fans. Make your own movie
-          <span className="red" onClick={() => router.push(`/boards`)}>
-            Board
-          </span>
-          and share your
-          <span className="red" onClick={() => router.push(`/posts`)}>
-            Posts
-          </span>
-          with others!
-        </span>
-      </Small>
-    </>
+      </Txt>
+      <Sub>
+        <FlexCol className="kor">
+          JUNFLIX는 영화인을 위한 소셜 플랫폼 으로서 영화에 <br /> 대한
+          아이디어, 글, 이미지 등을 공유하는 공간입니다.
+        </FlexCol>
+        <FlexCol className="eng">
+          JUNFLIX is a social platform where people who love <br /> movies can
+          share their ideas, articles and images.
+        </FlexCol>
+      </Sub>
+    </Cont>
   );
 };
-
-const Big = styled.h1`
-  gap: 15px;
-  display: flex;
-  font-style: italic;
-  flex-direction: column;
+const Cont = styled(FlexCol)`
+  gap: 1rem;
+  margin: 0 auto;
   justify-content: center;
-  align-items: flex-start;
-  font-size: 2.2rem;
+`;
+const Txt = styled(FlexCol)`
+  gap: 0.2rem;
+  font-size: 2rem;
+  text-align: center;
   .kor {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 `;
-const Small = styled(Big)`
-  gap: 5px;
-  margin-top: 30px;
-  font-size: 1.4rem;
-  span {
-    opacity: 1;
-  }
-  .red {
-    opacity: 1;
-    margin: 0 10px;
-    font-weight: 500;
-    font-size: 1.5rem;
-    :hover {
-      cursor: pointer;
-      text-decoration: underline;
-      text-underline-offset: 2px;
-      color: ${(p) => p.theme.color.logo};
+const Sub = styled(Txt)`
+  opacity: 0.8;
+  font-size: 1.6rem;
+  font-style: italic;
+  > div {
+    > span {
+      margin-bottom: 0.5rem;
     }
   }
-  .kor {
-    font-size: 1.3rem;
+  .kor,
+  .eng {
+    line-height: 1.7rem;
   }
-  .unspace {
-    margin: 0;
+  .kor {
+    font-size: 1.4rem;
   }
 `;

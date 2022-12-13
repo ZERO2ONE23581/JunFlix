@@ -8,6 +8,8 @@ import { OrganizePosts } from './Modal/Organize';
 import { Flex } from '../../../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Answer } from '../../../../../Tools/Modal/answer_modal';
+import { BoardPage } from '../../../../../../pages/all/boards';
+import { useUser } from '../../../../../libs/client/useUser';
 
 interface IPostsIcon {
   _data: {
@@ -18,6 +20,7 @@ interface IPostsIcon {
 }
 export const Icons = ({ _data }: IPostsIcon) => {
   const router = useRouter();
+  const { isLoggedIn } = useUser();
   const [modal, setModal] = useState('');
   const { theme, setMax, setFixed } = _data;
   const closeModal = () => {
@@ -25,7 +28,6 @@ export const Icons = ({ _data }: IPostsIcon) => {
     setFixed(false);
   };
   const isBoardPage = Boolean(router.query.board_id);
-
   const item = { theme, modal, setModal, closeModal };
   const _grid = { ...item, svg: 'grid' };
   const _org = { ...item, svg: 'posts' };
@@ -40,16 +42,22 @@ export const Icons = ({ _data }: IPostsIcon) => {
   const createPost = Boolean(modal === 'plus');
   const openAnswer = Boolean(modal === 'question');
   const _answerModal = { theme, closeModal, answer: openAnswer, type: 'post' };
+
+  const isHide = (type: string) =>
+    Boolean(!isLoggedIn && (type === 'question' || type === 'grid'));
+  const onClick = (type: string) => {
+    const needLogin = !Boolean(type === 'question' || type === 'grid');
+    if (!isLoggedIn && needLogin) return router.push(`/login`);
+    return setModal(type);
+  };
   return (
     <Cont className="icons">
       {icons.map((el) => (
         <Icon key={icons.indexOf(el)}>
-          <Svg
-            theme={theme}
-            type={el.svg}
-            onClick={() => el.setModal(el.svg)}
-          />
-          {el.svg === 'plus' && !isBoardPage && (
+          {isHide(el.svg) && (
+            <Svg type={el.svg} theme={theme} onClick={() => onClick(el.svg)} />
+          )}
+          {el.svg === 'plus' && (
             <CreatePost _data={{ theme, createPost, closeModal }} />
           )}
           {el.svg === 'compass' && <LinkModal _data={{ ...item }} />}
@@ -64,9 +72,8 @@ export const Icons = ({ _data }: IPostsIcon) => {
   );
 };
 const Cont = styled(Flex)`
-  gap: 2rem;
+  gap: 10px;
   width: fit-content;
-  height: fit-content;
 `;
 const Icon = styled.div`
   position: relative;

@@ -1,14 +1,15 @@
 import '../styles/reset.css';
 import { SWRConfig } from 'swr';
-import { Dispatch, SetStateAction, useState } from 'react';
+import styled from '@emotion/styled';
 import { Layout } from '../src/Layout';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@emotion/react';
 import { AnimatePresence } from 'framer-motion';
 import { darkTheme, lightTheme } from '../styles/theme';
-import styled from '@emotion/styled';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [hide, setHide] = useState(false);
   const [theme, setTheme] = useState(false);
   const [fixed, setFixed] = useState(false);
   const Fetcher = {
@@ -20,11 +21,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       <AnimatePresence>
         <ThemeProvider theme={theme ? lightTheme : darkTheme}>
           <Fixed isFixed={fixed}>
-            <Layout setTheme={setTheme} theme={theme}>
+            <Layout _data={{ setTheme, theme, hide, setHide }}>
               <Component
                 {...pageProps}
                 key={url}
                 theme={theme}
+                setHide={setHide}
                 setFixed={setFixed}
               />
             </Layout>
@@ -45,5 +47,6 @@ export interface ISetFixed {
 }
 export interface IPage {
   theme: boolean;
+  setHide: Dispatch<SetStateAction<boolean>>;
   setFixed: Dispatch<SetStateAction<boolean>>;
 }

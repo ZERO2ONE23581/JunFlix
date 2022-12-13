@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 export const Logo = () => {
   const router = useRouter();
   return (
-    <Cont className="logo" onClick={() => router.push('/home')}>
+    <Cont className="logo" onClick={() => router.push('/')}>
       <Path />
     </Cont>
   );

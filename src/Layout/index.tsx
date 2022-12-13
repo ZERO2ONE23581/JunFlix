@@ -12,12 +12,17 @@ import { motion } from 'framer-motion';
 import { variants } from '../../styles/variants';
 
 interface ILayoutProps {
-  theme: boolean;
   children: ReactElement;
-  setTheme: Dispatch<SetStateAction<boolean>>;
+  _data: {
+    hide: boolean;
+    theme: boolean;
+    setTheme: Dispatch<SetStateAction<boolean>>;
+    setHide: Dispatch<SetStateAction<boolean>>;
+  };
 }
-export const Layout = ({ theme, children, setTheme }: ILayoutProps) => {
+export const Layout = ({ _data, children }: ILayoutProps) => {
   const [width, setWidth] = useState(0);
+  const { theme, hide, setTheme, setHide } = _data;
   useEffect(() => {
     if (typeof window !== undefined) setWidth(window?.innerWidth);
   }, []);
@@ -30,9 +35,9 @@ export const Layout = ({ theme, children, setTheme }: ILayoutProps) => {
       custom={theme}
       variants={variants}
     >
-      <Header theme={theme} setTheme={setTheme} />
+      {!hide && <Header theme={theme} setTheme={setTheme} />}
       <section className="children">{children}</section>
-      <Footer theme={!theme} />
+      {!hide && <Footer theme={!theme} />}
     </Cont>
   );
 };

@@ -1,5 +1,6 @@
 import { Box } from './Box';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { IconLayer } from './IconLayer';
 import { IPostType } from '../../../../types/post';
 import { ISetFixed } from '../../../../../pages/_app';
@@ -15,14 +16,16 @@ interface IMyPosts extends ISetFixed {
   };
 }
 export const PostGrid = ({ _data, setFixed }: IMyPosts) => {
+  const router = useRouter();
   const { theme, posts, onClickBox, grid } = _data;
+  const isHome = Boolean(router.asPath.includes('home'));
   const { ColArr, PostArr, max, setMax } = usePostsGrid({ posts, grid });
   return (
-    <Cont className="posts_grid_wrap">
-      <IconLayer _data={{ theme, setMax, setFixed }} />
-      <Grid box={max} className="posts_grid">
+    <Cont className="posts_grid">
+      {!isHome && <IconLayer _data={{ theme, setMax, setFixed }} />}
+      <Grid box={max}>
         {ColArr.map((column) => (
-          <Column key={column}>
+          <Array key={column}>
             {PostArr(column)?.map((post) => (
               <Box
                 key={post.id}
@@ -35,28 +38,18 @@ export const PostGrid = ({ _data, setFixed }: IMyPosts) => {
                 }}
               />
             ))}
-          </Column>
+          </Array>
         ))}
       </Grid>
     </Cont>
   );
 };
 const Cont = styled.section`
+  min-width: 1200px;
   position: relative;
-  .posts_grid {
-    padding-top: 1rem;
-  }
 `;
-const Column = styled(FlexCol)`
+const Array = styled(FlexCol)`
   gap: 2rem;
   height: fit-content;
   justify-content: space-between;
-  .grid_box {
-    height: fit-content;
-    img {
-      width: 100%;
-      max-height: 600px;
-      height: fit-content;
-    }
-  }
 `;

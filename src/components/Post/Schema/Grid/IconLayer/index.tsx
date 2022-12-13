@@ -1,6 +1,5 @@
 import { Icons } from '../Icons';
 import { QuickSaved } from './QS';
-import styled from '@emotion/styled';
 import { MyPosts } from './IsMyPosts';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
@@ -22,7 +21,7 @@ export const IconLayer = ({ _data }: IIconLayer) => {
   const isQuick = Boolean(router.asPath.includes('quick_saved'));
   const onClick = () => router.push(`/user/${id}/${username}/page`);
   return (
-    <Cont className="icon_layer">
+    <Layer_ className="icon_layer">
       <div />
       <div>
         <QuickSaved _data={{ theme, isQuick, onClick }} />
@@ -31,14 +30,9 @@ export const IconLayer = ({ _data }: IIconLayer) => {
       <div>
         <Icons _data={{ theme, setMax, setFixed }} />
       </div>
-    </Cont>
+    </Layer_>
   );
 };
-
-const Cont = styled(Layer_)`
-  padding: 0;
-  position: relative;
-`;
 export const layerVar = {
   initial: ({ theme, isBig }: any) => ({
     fontSize: isBig ? '1.6rem' : '1rem',
@@ -51,8 +45,8 @@ export const layerVar = {
     transition: { duration: 0.5 },
   }),
   hover: ({ isBig }: any) => ({
-    fontSize: isBig ? '1.7rem' : '1.1rem',
     color: '#E50914',
     transition: { duration: 0.5 },
+    fontSize: isBig ? '1.7rem' : '1.1rem',
   }),
 };

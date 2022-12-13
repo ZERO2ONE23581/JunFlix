@@ -52,12 +52,12 @@ export const PostBox__ = styled(FlexCol)`
   cursor: pointer;
   overflow: hidden;
   align-items: center;
-  justify-content: flex-start;
-  position: static;
+  height: fit-content;
   img {
-    border: none;
-    display: block;
-    border-radius: 20px;
+    width: 100%;
+    max-height: 600px;
+    height: fit-content;
+    border-radius: 0.5rem;
     box-shadow: ${(p) => p.theme.boxShadow.nav};
   }
   h2 {
