@@ -5,7 +5,7 @@ import { useUser } from '../../../src/libs/client/useUser';
 import { useGetBoards } from '../../../src/libs/client/useBoards';
 import { BoardsGrid } from '../../../src/components/Board/Read/Grid';
 import { useGetQuickSaved } from '../../../src/libs/client/usePosts';
-import { PageHeading } from '../../../src/components/Board/Read/BoardTitle';
+import { PageHeading } from '../../../src/components/PageHeading';
 
 const UserBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { user_id, username } = useUser();

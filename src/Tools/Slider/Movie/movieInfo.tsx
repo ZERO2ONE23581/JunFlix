@@ -1,50 +1,44 @@
 import { Svg } from '../../Svg';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { Flex } from '../../../../styles/global';
 
 interface IMovieInfo {
-  date?: string;
-  rate?: number;
-  movieId: number;
+  _data: {
+    rate: number;
+    date: string;
+    theme: boolean;
+    movie_id: number;
+  };
 }
-export const MovieInfo = ({ date, rate, movieId }: IMovieInfo) => {
+export const MovieInfo = ({ _data }: IMovieInfo) => {
+  const { theme, date, rate, movie_id } = _data;
   const router = useRouter();
+  const Date = date ? date : '-';
+  const Rate = rate ? Math.round(rate! * 100) / 100 : '-';
   return (
     <Cont>
-      {date && (
-        <li>
-          <span>Date:</span>
-          <span className="data">{date}</span>
-        </li>
-      )}
-      {rate && (
-        <li>
-          <span>Rate:</span>
-          <span className="data">{Math.round(rate! * 100) / 100}</span>
-        </li>
-      )}
-      <Svg
-        size="1.2rem"
-        type="caret-down"
-        onClick={() => router.replace(`/home/${movieId}`)}
-      />
+      <Txt className="date">
+        <span>Date:</span>
+        <span className="data">{Date}</span>
+      </Txt>
+      <Txt>
+        <span>Rate:</span>
+        <span className="data">{Rate}</span>
+      </Txt>
     </Cont>
   );
 };
-const Cont = styled.ul`
-  gap: 5px;
-  display: flex;
-  padding: 5px 10px 0;
-  align-items: center;
-  justify-content: center;
-  svg {
-    margin-bottom: 2px;
-  }
-  li {
-    font-size: 8px;
-    .data {
-      margin-left: 5px;
-      color: ${(p) => p.theme.color.logo};
-    }
+const Cont = styled(Flex)`
+  gap: 0.5rem;
+  padding: 0.5rem;
+`;
+const Txt = styled(Flex)`
+  gap: 0.2rem;
+  width: fit-content;
+  align-items: flex-end;
+  .data {
+    font-size: 0.9rem;
+    color: ${(p) => p.theme.color.logo};
   }
 `;

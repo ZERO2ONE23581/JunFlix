@@ -1,81 +1,78 @@
+import { Svg } from '../Svg';
+import { Array } from './Array';
 import styled from '@emotion/styled';
-import { BoxArray } from './BoxArray';
+import { IMovie } from '../../types/global';
+import { Flex } from '../../../styles/global';
 import { Dispatch, SetStateAction } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { slideVars, SpringTrans } from '../../../styles/variants';
-import { ITheme } from '../../../styles/theme';
+import { SpringTrans } from '../../../styles/variants';
 
-interface IRow extends ITheme {
-  array: [];
-  page: number;
-  boxes: number;
-  reverse: boolean;
-  type: {
-    pageType: string;
-    sliderType: string;
-    sliderDetail?: string;
+interface IRow {
+  _data: {
+    page: number;
+    boxes: number;
+    theme: boolean;
+    array: IMovie[];
+    reverse: boolean;
+    onClick: (type: string) => void;
   };
-  setLeave: Dispatch<SetStateAction<boolean>>;
+  _set: {
+    setFixed: Dispatch<SetStateAction<boolean>>;
+    setLeave: Dispatch<SetStateAction<boolean>>;
+  };
 }
-export const Row = ({
-  theme,
-  array,
-  page,
-  boxes,
-  reverse,
-  setLeave,
-  type,
-}: IRow) => {
+export const Row = ({ _data, _set }: IRow) => {
+  const { setFixed, setLeave } = _set;
+  const { theme, array, page, boxes, reverse, onClick } = _data;
   return (
-    <Cont className="row">
-      <AnimatePresence
-        custom={reverse}
-        initial={false}
-        onExitComplete={() => setLeave((p) => !p)}
-      >
-        <Slide
-          key={page}
-          boxes={boxes}
+    <Cont>
+      <Svg theme={theme} type="left-chev" onClick={() => onClick('left')} />
+      <Wrap>
+        <AnimatePresence
+          initial={false}
           custom={reverse}
-          variants={slideVars}
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          className="slide"
-          transition={SpringTrans}
+          onExitComplete={() => setLeave((p) => !p)}
         >
-          <BoxArray theme={theme} type={type} array={array} reverse={reverse} />
-        </Slide>
-      </AnimatePresence>
+          <Slide
+            key={page}
+            boxes={boxes}
+            variants={vars}
+            custom={reverse}
+            transition={SpringTrans}
+            exit="exit"
+            initial="initial"
+            animate="animate"
+            className="slide"
+          >
+            <Array _data={{ theme, array, setFixed }} />
+          </Slide>
+        </AnimatePresence>
+      </Wrap>
+      <Svg theme={theme} type="right-chev" onClick={() => onClick('right')} />
     </Cont>
   );
 };
-
-const Cont = styled.div`
+const Cont = styled(Flex)`
+  gap: 0.5rem;
+  height: fit-content;
+  margin-bottom: 2rem;
+`;
+const Wrap = styled(Flex)`
+  min-height: 150px;
   position: relative;
-  width: 100%;
-  height: 100%;
 `;
 const Slide = styled(motion.div)<{ boxes?: number }>`
-  top: 0;
-  right: 0;
-  position: absolute;
+  gap: 1rem;
   width: 100%;
-  height: 100%;
-  gap: 10px;
   display: grid;
-  grid-template-columns: ${(p) => `repeat(${p?.boxes},1fr)`};
-  .movie-box {
-    z-index: 1;
-    overflow: hidden;
-  }
-  .post-box {
-    min-height: 15rem;
-    .post-bg {
-      min-height: 15rem;
-      .post-icon {
-        min-height: 15rem;
-      }
-    }
-  }
+  position: absolute;
+  grid-template-columns: ${(p) => `repeat(${p?.boxes}, 1fr)`};
 `;
+const vars = {
+  exit: (reverse: boolean) => ({
+    x: reverse ? 2000 : -2000,
+    transition: { duration: 1 },
+  }),
+  initial: (reverse: boolean) => ({ y: 0, x: reverse ? -2000 : 2000 }),
+  animate: () => ({ x: 0, y: 0, transition: { duration: 1 } }),
+};

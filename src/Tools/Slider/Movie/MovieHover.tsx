@@ -1,26 +1,32 @@
+import { Svg } from '../../Svg';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { MovieInfo } from './movieInfo';
+import { useEffect, useState } from 'react';
+import { Flex } from '../../../../styles/global';
+import { ITheme } from '../../../../styles/theme';
 
-interface IMovieHover {
+interface IMovieHover extends ITheme {
   data: {
     id: number;
     title?: string;
     overview?: string;
+    poster_path?: string;
     vote_average?: number;
     release_date?: string;
+    backdrop_path?: string;
+    original_name?: string;
     original_title?: string;
     original_language?: string;
-    original_name?: string;
-    poster_path?: string;
-    backdrop_path?: string;
   };
 }
-export const MovieHover = ({ data }: IMovieHover) => {
+export const MovieHover = ({ data, theme }: IMovieHover) => {
+  const router = useRouter();
+  const movie_id = data.id!;
+  const date = data.release_date!;
+  const rate = data.vote_average!;
   const [title, setTitle] = useState('');
   const [sliced, setSliced] = useState(title);
-
   useEffect(() => {
     if (data) {
       if (data.title) setTitle(data.title);
@@ -30,60 +36,55 @@ export const MovieHover = ({ data }: IMovieHover) => {
       if (title.length > 10) setSliced(title.slice(0, 8) + '...');
     }
   }, [data, setTitle, setSliced, title]);
-
   return (
-    <Cont className="movie-hover">
-      <Original
-        className="movie-box-unhover"
-        variants={{ hover: { opacity: 0 } }}
-      >
+    <Cont>
+      <Front variants={{ hover: { opacity: 0 } }}>
         <h1>{sliced}</h1>
-      </Original>
-
-      <Hovered className="movie-box-hover" variants={{ hover: { opacity: 1 } }}>
-        <h2>{title}</h2>
-        <MovieInfo
-          movieId={data.id}
-          date={data.release_date}
-          rate={data.vote_average}
-        />
+      </Front>
+      <Hovered variants={{ hover: { opacity: 1 } }}>
+        <Flex className="title">
+          <h2>{title}</h2>
+          <Svg
+            theme={theme}
+            type="caret-down"
+            onClick={() => router.replace(`/home/${movie_id}`)}
+          />
+        </Flex>
+        <MovieInfo _data={{ theme, movie_id, date, rate }} />
       </Hovered>
     </Cont>
   );
 };
-const Cont = styled(motion.article)`
+const Cont = styled(Flex)`
   opacity: 1;
-  display: flex;
-  align-items: flex-end;
-  width: 100%;
-  height: 100%;
   font-weight: 500;
-  text-align: center;
   position: relative;
+  align-items: flex-end;
 `;
-const Original = styled(motion.div)`
-  width: 100%;
-  opacity: 0.5;
+const Front = styled(Flex)`
   padding: 8px;
-  font-size: 1.2rem;
+  opacity: 0.5;
+  font-size: 1.3rem;
   margin-bottom: 12px;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
-const Hovered = styled(motion.div)`
-  opacity: 0;
+const Hovered = styled(Flex)`
   bottom: 0;
-  width: 100%;
-  display: flex;
-  height: fit-content;
+  opacity: 0;
   position: absolute;
   flex-direction: column-reverse;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
-  h2 {
-    padding: 10px;
-    font-size: 1rem;
-    text-align: center;
-    font-size: 1rem;
+  > .title {
+    gap: 0.2rem;
+    //border: 2px solid lightblue;
+    h2 {
+      max-width: 70%;
+      font-size: 1rem;
+      width: fit-content;
+      text-align: center;
+      //border: 2px solid lightblue;
+    }
   }
 `;

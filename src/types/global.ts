@@ -15,17 +15,19 @@ export interface IForm {
 
 export interface IMovie {
   id: number;
-  title?: string;
-  overview?: string;
-  poster_path?: string;
-  vote_average?: number;
-  release_date?: string;
-  original_name?: string;
-  backdrop_path?: string;
-  original_title?: string;
-  original_language?: string;
+  title: string;
+  overview: string;
+  poster_path: string;
+  vote_average: number;
+  release_date: string;
+  original_name: string;
+  backdrop_path: string;
+  original_title: string;
+  original_language: string;
 }
-
+export interface IMovie {
+  movies: [IMovie];
+}
 export interface IApi {
   movies: [IMovie];
   users?: IUserType[];

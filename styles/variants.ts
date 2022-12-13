@@ -126,17 +126,6 @@ export const TransBorderVar = {
     transition: { duration: 0.5 },
   }),
 };
-export const boxVars = {
-  hover: { y: -20, scale: 1.1, transition: { duration: 0.3 } },
-};
-export const slideVars = {
-  initial: (reverse: boolean) => ({ x: reverse ? -2000 : 2000 }),
-  animate: (reverse: boolean) => ({ x: 0, transition: TweenTrans }),
-  exit: (reverse: boolean) => ({
-    x: reverse ? 2000 : -2000,
-    transition: TweenTrans,
-  }),
-};
 export const menuModalVar = {
   initial: { y: '0', x: '-50%', opacity: 0 },
   exit: { y: '0', opacity: 0, transition: { duration: 0.3 } },

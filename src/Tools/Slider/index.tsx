@@ -1,90 +1,36 @@
 import useSWR from 'swr';
-import { Svg } from '../Svg';
 import { Row } from './Row';
-import { NoData } from '../NoData';
+import { Title } from './Title';
 import styled from '@emotion/styled';
-import { SlideTitle } from './SlideTitle';
-import { useEffect, useState } from 'react';
-import { IApi } from '../../types/global';
+import { IMovie } from '../../types/global';
+import { FlexCol } from '../../../styles/global';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-import { useCapLetter } from '../../libs/client/useTools';
-import { ITheme } from '../../../styles/theme';
-import { motion } from 'framer-motion';
-import { useUser } from '../../libs/client/useUser';
-
-interface ISlider extends ITheme {
-  pageType?: string;
-  sliderType: string;
-  sliderDetail?: string;
+interface ISlider {
+  _data: {
+    theme: boolean;
+    type: string;
+    setFixed: Dispatch<SetStateAction<boolean>>;
+  };
 }
-export const Slider = ({
-  pageType,
-  sliderType,
-  sliderDetail,
-  theme,
-}: ISlider) => {
-  const { loggedInUser } = useUser();
-  const [api, setApi] = useState('');
-  const { data } = useSWR<IApi>(api);
-  const [boxes, setBoxes] = useState(6);
+export const Slider = ({ _data }: ISlider) => {
   const [page, setPage] = useState(0);
+  const [boxes, setBoxes] = useState(6);
   const [leave, setLeave] = useState(false);
-  const [array, setArray] = useState<any>([]);
   const [reverse, setReverse] = useState(false);
-  const slicedArray = array?.slice(boxes * page, boxes + boxes * page);
 
-  //api
-  useEffect(() => {
-    if (sliderType === 'post') setApi(`/api/post/all`);
-    if (sliderType === 'board') setApi(`/api/board/all`);
-    if (sliderType === 'movie') {
-      if (pageType === 'home') setApi(`/api/movie/trending`);
-      else setApi(`/api/movie/${sliderDetail}`);
-    }
-  }, [pageType, sliderType, setApi, sliderDetail]);
+  const { theme, type, setFixed } = _data;
+  const { data } = useSWR<IMovie>(`/api/movie/${type}`);
 
-  //array
-  useEffect(() => {
-    if (sliderType === 'movie') setArray(data?.movies);
-    if (sliderType === 'board') {
-      if (sliderDetail === 'my')
-        setArray(data?.boards?.filter((p) => p.host_id === loggedInUser?.id));
-      else if (pageType === 'genre-boards')
-        setArray(
-          data?.boards?.filter((p) => p.genre === useCapLetter(sliderDetail!))
-        );
-      else setArray(data?.boards);
-    }
-    if (sliderType === 'post') {
-      if (sliderDetail === 'my')
-        setArray(data?.posts?.filter((p) => p.host_id === loggedInUser?.id));
-      else if (sliderDetail === 'likes') setArray(data?.MyPostLikes);
-      else setArray(data?.posts);
-    }
-  }, [
-    data,
-    setArray,
-    pageType,
-    sliderType,
-    sliderDetail,
-    loggedInUser,
-    useCapLetter,
-  ]);
+  const MOVIES = data?.movies!;
+  const LastPage = Math.ceil(MOVIES?.length / boxes);
+  const isSingleRow = Boolean(MOVIES?.length <= boxes);
+  const array = MOVIES?.slice(boxes * page, boxes + boxes * page);
 
-  //Boxes
-  useEffect(() => {
-    if (sliderType === 'movie') return setBoxes(6);
-    if (sliderType === 'board') return setBoxes(4);
-    if (sliderDetail === 'likes') return setBoxes(5);
-    else return setBoxes(5);
-  }, [pageType, sliderType, setBoxes, sliderDetail]);
-
-  const isSingleRow = Boolean(array?.length <= boxes);
-  const clickArrow = (arrow: string) => {
-    if (isSingleRow) return;
+  const onClick = (arrow: string) => {
     if (leave) return;
+    if (isSingleRow) return;
     setLeave((p) => !p);
-    const LastPage = Math.ceil(array?.length / boxes);
     if (arrow === 'left') {
       setReverse(true);
       setPage((p) => (p === 0 ? LastPage - 1 : p - 1));
@@ -94,57 +40,21 @@ export const Slider = ({
       setPage((p) => (p === LastPage - 1 ? 0 : p + 1));
     }
   };
-  const isData = Boolean(array?.length > 0);
-  //
+  useEffect(() => {
+    if (type) return setBoxes(5);
+  }, [type, setBoxes]);
+
   return (
     <Cont className="slider">
-      <SlideTitle
-        pageType={pageType}
-        sliderType={sliderType}
-        sliderDetail={sliderDetail}
+      <Title _data={{ theme, type }} />
+      <Row
+        _set={{ setFixed, setLeave }}
+        _data={{ theme, array, page, boxes, reverse, onClick }}
       />
-      {isData && (
-        <Flex className="flex" isSingleRow={isSingleRow}>
-          <Svg
-            theme={!theme}
-            type="left-chev"
-            onClick={() => clickArrow('left')}
-          />
-          <Row
-            page={page}
-            boxes={boxes}
-            theme={theme}
-            reverse={reverse}
-            setLeave={setLeave}
-            array={slicedArray}
-            type={{
-              pageType: pageType!,
-              sliderType: sliderType,
-              sliderDetail: sliderDetail,
-            }}
-          />
-          <Svg
-            theme={!theme}
-            type="right-chev"
-            onClick={() => clickArrow('right')}
-          />
-        </Flex>
-      )}
-      <NoData _data={{ no_data: !isData, theme }} />
     </Cont>
   );
 };
-const Cont = styled(motion.article)`
-  width: 100%;
-`;
-const Flex = styled.article<{ isSingleRow: boolean }>`
-  gap: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .right-chev,
-  .left-chev {
-    opacity: ${(p) => p.isSingleRow && 0};
-    pointer-events: ${(p) => p.isSingleRow && 'none'};
-  }
+const Cont = styled(FlexCol)`
+  padding: 0 5rem;
+  align-items: flex-start;
 `;

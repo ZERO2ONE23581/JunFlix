@@ -1,52 +1,31 @@
+import { IPage } from '../_app';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
-import { Head_ } from '../../src/Tools/head_title';
 import { Slider } from '../../src/Tools/Slider';
-import { Title } from '../../src/Tools/box_title';
+import { Head_ } from '../../src/Tools/head_title';
+import { PageHeading } from '../../src/components/PageHeading';
 
-const Movies: NextPage<{ theme: boolean }> = ({ theme }) => {
+const Movies: NextPage<IPage> = ({ theme, setFixed }) => {
+  const array = ['trending', 'upcoming', 'tv', 'now', 'top'];
   return (
     <>
       <Head_ title="영화" />
       <Cont>
-        <Title type="movie-page" />
-        <Slider pageType="movie" sliderType="movie" sliderDetail="trending" />
-        <Slider pageType="movie" sliderType="movie" sliderDetail="upcoming" />
-        <Slider pageType="movie" sliderType="movie" sliderDetail="tv" />
-        <Slider pageType="movie" sliderType="movie" sliderDetail="now" />
-        <Slider pageType="movie" sliderType="movie" sliderDetail="top" />
+        <PageHeading theme={theme} type="movie" />
+        {array.map((type) => (
+          <Slider key={array.indexOf(type)} _data={{ theme, setFixed, type }} />
+        ))}
       </Cont>
     </>
   );
 };
 export default Movies;
 
-export const MoviePage = styled(Page)`
-  padding-top: 8%;
-  .slider {
-    margin-bottom: 30px;
-    .title {
-      padding-left: 50px;
-    }
-    .flex {
-      gap: 5px;
-      .left-chev,
-      .right-chev {
-        width: 50px;
-        height: 50px;
-      }
-      .row {
-        min-height: 200px;
-        .slide {
-          .box {
-            .slide {
-              gap: 20px;
-            }
-          }
-        }
-      }
-    }
+const Cont = styled(Page)`
+  padding: 0 3rem;
+  .page-title {
+    margin-left: 8rem;
+    margin-bottom: 2rem;
   }
 `;
-const Cont = styled(MoviePage)``;

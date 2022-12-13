@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Slider } from '../../../src/Tools/Slider';
 import { FixedBtns } from '../../../src/Tools/Button/Fixed';
 import { Head_ } from '../../../src/Tools/head_title';
-import { PageTitle } from '../../../src/components/Board/Read/BoardTitle';
+import { PageTitle } from '../../../src/components/PageHeading';
 
 const GenreBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
