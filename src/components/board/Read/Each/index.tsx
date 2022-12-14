@@ -38,7 +38,6 @@ export const Board = ({ _data, _mode, _follow }: IBoardBox) => {
   const genre = board?.genre!;
   const title = board?.title!;
   const userId = host?.userId!;
-
   const { loggedInUser } = useUser();
   const Posts = board?.posts?.length!;
   const { onMode, onPrivate } = _mode;

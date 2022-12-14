@@ -12,8 +12,8 @@ const Users: NextPage<IPage> = ({ theme }) => {
   const { users, noData } = useGetUsers();
   const length = users?.length!;
   const tops = users?.slice(0, 3);
-  const grid = length > 5 ? 5 : length;
   const rests = users?.slice(3, length);
+  const grid = rests?.length! > 5 ? 5 : rests?.length!;
   const isTop = (num: number) => Boolean(num === 0);
   const Txt = (type: string, num: number) => {
     if (num > 1) return `${num} ${type}s`;
@@ -44,7 +44,7 @@ const Users: NextPage<IPage> = ({ theme }) => {
           {rests?.map((user) => (
             <Avatar
               key={user.id}
-              _data={{ size: '10rem', theme, host_id: user.id }}
+              _data={{ size: '9.5rem', theme, host_id: user.id }}
             />
           ))}
         </Rest>

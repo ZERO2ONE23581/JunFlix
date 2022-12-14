@@ -65,7 +65,7 @@ const Front = styled(FlexCol)`
   color: whitesmoke;
 `;
 const Clicked = styled(Page)`
-  padding: 0rem 10rem;
+  padding: 1rem 10rem;
   .posts_schema {
     //padding-top: 1.4rem;
     //border: 5px solid cornflowerblue;

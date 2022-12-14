@@ -1,7 +1,5 @@
 import useSWR from 'swr';
 import { useEffect } from 'react';
-import { useUser } from '../useUser';
-import { useRouter } from 'next/router';
 import useMutation from '../useMutation';
 import { IRes } from '../../../types/global';
 import { IGetFollowing } from '../../../types/following';
@@ -13,8 +11,6 @@ interface IResult<T> {
   isFollowing?: boolean;
 }
 export default function useFollowUser<T = any>(user_id: number): IResult<T> {
-  const router = useRouter();
-  const { isLoggedIn } = useUser();
   const [POST, { data: post_data, loading }] = useMutation<IRes>(
     `/api/following/create/user`
   );
@@ -30,11 +26,8 @@ export default function useFollowUser<T = any>(user_id: number): IResult<T> {
     const isZero = Boolean(length === 0);
     const Length = isFollowing ? (isZero ? 0 : length - 1) : length + 1;
     if (!data) return;
-    if (!isLoggedIn) return router.push('/login');
-    else {
-      POST({ user_id });
-      mutate({ length: Length, isFollowing: !data.isFollowing }, false);
-    }
+    POST({ user_id });
+    mutate({ length: Length, isFollowing: !data.isFollowing }, false);
   };
   useEffect(() => {
     if (post_data?.error) console.log(post_data.error);

@@ -25,11 +25,7 @@ export const BoardsGrid = ({ _data }: IBoards) => {
   const quickSaved = _data?.quickSaved!;
   const hideFilter = _data?.hideFilter!;
   const isQuickSaved = Boolean(quickSaved?.length);
-
-  const [genre, setGenre] = useState({
-    select: false,
-    type: 'all',
-  });
+  const [genre, setGenre] = useState({ select: false, type: 'all' });
   const allGenre = Boolean(genre.type === 'all');
   const genreBoard = boards?.filter((e) => e.genre === genre.type);
   const Boards = genre.select ? (allGenre ? boards : genreBoard) : boards;
@@ -80,8 +76,4 @@ export const BoardsGrid = ({ _data }: IBoards) => {
 };
 const Cont = styled.section`
   position: relative;
-  .icons {
-    top: -3rem;
-    right: 1rem;
-  }
 `;

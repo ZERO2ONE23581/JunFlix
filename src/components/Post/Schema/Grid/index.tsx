@@ -4,8 +4,9 @@ import { useRouter } from 'next/router';
 import { IconLayer } from './IconLayer';
 import { IPostType } from '../../../../types/post';
 import { ISetFixed } from '../../../../../pages/_app';
-import { FlexCol, Grid } from '../../../../../styles/global';
+import { Flex, FlexCol, Grid } from '../../../../../styles/global';
 import { usePostsGrid } from '../../../../libs/client/usePosts';
+import { Icons } from './Icons';
 
 interface IMyPosts extends ISetFixed {
   _data: {
@@ -16,13 +17,13 @@ interface IMyPosts extends ISetFixed {
   };
 }
 export const PostGrid = ({ _data, setFixed }: IMyPosts) => {
-  const router = useRouter();
   const { theme, posts, onClickBox, grid } = _data;
-  const isHome = Boolean(router.asPath.includes('home'));
   const { ColArr, PostArr, max, setMax } = usePostsGrid({ posts, grid });
   return (
     <Cont className="posts_grid">
-      {!isHome && <IconLayer _data={{ theme, setMax, setFixed }} />}
+      {/* {!isHome && <IconLayer _data={{ theme, setMax, setFixed }} />} */}
+      {/* <IconLayer _data={{ theme, setMax, setFixed }} /> */}
+      <Icons _data={{ theme, setMax, setFixed }} />
       <Grid box={max}>
         {ColArr.map((column) => (
           <Array key={column}>
@@ -44,9 +45,10 @@ export const PostGrid = ({ _data, setFixed }: IMyPosts) => {
     </Cont>
   );
 };
-const Cont = styled.section`
+const Cont = styled(FlexCol)`
   min-width: 1200px;
   position: relative;
+  align-items: flex-end;
 `;
 const Array = styled(FlexCol)`
   gap: 2rem;

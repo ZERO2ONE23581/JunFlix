@@ -15,6 +15,7 @@ import { Board } from '../../../src/components/Board/Read/Each';
 import { LoadingModal } from '../../../src/Tools/Modal/loading_modal';
 import { BoardContent } from '../../../src/components/Board/Read/Content';
 import useFollowingBoard from '../../../src/libs/client/useFollowing/Board';
+import useFollowUser from '../../../src/libs/client/useFollowing/User';
 
 const BoardPage: NextPage<IPage> = ({ theme, setFixed }) => {
   const router = useRouter();
@@ -28,13 +29,29 @@ const BoardPage: NextPage<IPage> = ({ theme, setFixed }) => {
     setType('');
     setFixed(false);
   };
-  const {
-    isBlur,
-    onPrivate,
-    onClick: onMode,
-  } = useBoardPrivate({ host_id, board_id, isMyBoard });
-  const { Saved, isFollowing, onClick, name } = useFollowingBoard(board_id);
-  const IsBlur = isBlur && !isFollowing;
+  const { name, Saved, onClick, isFollowing } = useFollowingBoard(board_id);
+  const { onPrivate, handleBoard } = useBoardPrivate({ host_id, board_id });
+  const onMode = () => {
+    if (!isMyBoard) alert('no_right');
+    else handleBoard();
+  };
+  const isPrivate = (type: string) => {
+    if (type === 'board') return onPrivate!;
+    if (type === 'user') return board?.host?.onPrivate!;
+  };
+  const { isFollowing: isUser } = useFollowUser(board?.host_id!);
+  const IsBlur = () => {
+    if (isPrivate('user')) {
+      if (!isUser) return { isBlur: true, msg: 'blur_user' };
+      else if (isPrivate('board') && !isFollowing)
+        return { isBlur: true, msg: 'blur_board' };
+    }
+    const isPublic = !isPrivate('user');
+    if (isPublic) {
+      if (isPrivate('board') && !isFollowing)
+        return { isBlur: true, msg: 'blur_board' };
+    }
+  };
   return (
     <>
       <Head_ title={board?.title!} />
@@ -43,21 +60,16 @@ const BoardPage: NextPage<IPage> = ({ theme, setFixed }) => {
           {board && (
             <>
               <Board
-                _mode={{ onPrivate, onMode }}
                 _follow={{ Saved, isFollowing, onClick, name }}
+                _mode={{ onPrivate: isPrivate('board')!, onMode }}
                 _data={{ theme, board, setType, setCreatePost, setFixed }}
               />
               <BoardSchema _data={{ type, modal, theme, board, closeBoard }} />
               <BoardContent
-                _data={{
-                  theme,
-                  IsBlur,
-                  host_id,
-                  board_id,
-                  setFixed,
-                  createPost,
-                  setCreatePost,
-                }}
+                _set={{ setFixed, setCreatePost }}
+                _data={{ theme, host_id, board_id, createPost }}
+                _blur={{ msg: IsBlur()?.msg!, IsBlur: IsBlur()?.isBlur! }}
+                //                _blur={{ msg: '', IsBlur: true }}
               />
             </>
           )}

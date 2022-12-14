@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { PostGrid } from './Grid';
+import styled from '@emotion/styled';
 import { UpdatePost } from '../Update';
 import { DeletePost } from '../Delete';
 import { ReadPost } from './Read/Modal';
 import { IPostType } from '../../../types/post';
 import { CommentModal } from '../../Comment/Modal';
 import { ISetFixed } from '../../../../pages/_app';
-import styled from '@emotion/styled';
 
 interface IPostSchema extends ISetFixed {
   _data: {

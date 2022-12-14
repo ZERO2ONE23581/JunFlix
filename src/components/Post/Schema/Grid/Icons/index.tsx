@@ -7,9 +7,8 @@ import { Svg } from '../../../../../Tools/Svg';
 import { OrganizePosts } from './Modal/Organize';
 import { Flex } from '../../../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { Answer } from '../../../../../Tools/Modal/answer_modal';
-import { BoardPage } from '../../../../../../pages/all/boards';
 import { useUser } from '../../../../../libs/client/useUser';
+import { Answer } from '../../../../../Tools/Modal/answer_modal';
 
 interface IPostsIcon {
   _data: {
@@ -23,56 +22,61 @@ export const Icons = ({ _data }: IPostsIcon) => {
   const { isLoggedIn } = useUser();
   const [modal, setModal] = useState('');
   const { theme, setMax, setFixed } = _data;
+  const isHome = Boolean(router.asPath === '/');
   const closeModal = () => {
     setModal('');
     setFixed(false);
   };
-  const isBoardPage = Boolean(router.query.board_id);
+
   const item = { theme, modal, setModal, closeModal };
   const _grid = { ...item, svg: 'grid' };
   const _org = { ...item, svg: 'posts' };
   const _create = { ...item, svg: 'plus' };
   const _link = { ...item, svg: 'compass' };
   const _answer = { ...item, svg: 'question' };
-
-  const icons = isBoardPage
-    ? [_answer, _link, _org, _grid]
-    : [_create, _answer, _link, _org, _grid];
+  const array = [_answer, _link, _org, _create, _grid];
 
   const createPost = Boolean(modal === 'plus');
   const openAnswer = Boolean(modal === 'question');
   const _answerModal = { theme, closeModal, answer: openAnswer, type: 'post' };
 
-  const isHide = (type: string) =>
-    Boolean(!isLoggedIn && (type === 'question' || type === 'grid'));
   const onClick = (type: string) => {
     const needLogin = !Boolean(type === 'question' || type === 'grid');
     if (!isLoggedIn && needLogin) return router.push(`/login`);
     return setModal(type);
   };
   return (
-    <Cont className="icons">
-      {icons.map((el) => (
-        <Icon key={icons.indexOf(el)}>
-          {isHide(el.svg) && (
-            <Svg type={el.svg} theme={theme} onClick={() => onClick(el.svg)} />
-          )}
-          {el.svg === 'plus' && (
-            <CreatePost _data={{ theme, createPost, closeModal }} />
-          )}
-          {el.svg === 'compass' && <LinkModal _data={{ ...item }} />}
-          {el.svg === 'posts' && (
-            <OrganizePosts _data={{ ...item, setFixed }} />
-          )}
-          {el.svg === 'question' && <Answer _data={{ ..._answerModal }} />}
-          {el.svg === 'grid' && <SetGridModal _data={{ ..._grid, setMax }} />}
-        </Icon>
-      ))}
-    </Cont>
+    <>
+      {!isHome && (
+        <Cont className="icons">
+          {array.map((el) => (
+            <Icon key={array.indexOf(el)}>
+              <Svg
+                type={el.svg}
+                theme={theme}
+                onClick={() => onClick(el.svg)}
+              />
+              {el.svg === 'plus' && (
+                <CreatePost _data={{ theme, createPost, closeModal }} />
+              )}
+              {el.svg === 'compass' && <LinkModal _data={{ ...item }} />}
+              {el.svg === 'posts' && (
+                <OrganizePosts _data={{ ...item, setFixed }} />
+              )}
+              {el.svg === 'question' && <Answer _data={{ ..._answerModal }} />}
+              {el.svg === 'grid' && (
+                <SetGridModal _data={{ ..._grid, setMax }} />
+              )}
+            </Icon>
+          ))}
+        </Cont>
+      )}
+    </>
   );
 };
 const Cont = styled(Flex)`
-  gap: 10px;
+  gap: 2rem;
+  margin: 0.5rem 0;
   width: fit-content;
 `;
 const Icon = styled.div`

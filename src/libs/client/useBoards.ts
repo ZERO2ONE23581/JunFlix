@@ -34,26 +34,19 @@ export const useGetBoard = (board_id: any) => {
 interface IUseBoardPrivate {
   host_id: number;
   board_id: number;
-  isMyBoard: boolean;
 }
-export const useBoardPrivate = ({
-  host_id,
-  board_id,
-  isMyBoard,
-}: IUseBoardPrivate) => {
-  const [POST, { loading, data: check }] = useMutation(
+export const useBoardPrivate = ({ host_id, board_id }: IUseBoardPrivate) => {
+  const [POST, { loading }] = useMutation(
     `/api/board/${board_id}/update/private`
   );
   const { data, mutate } = useSWR<IPrivate>(
     Boolean(board_id) && `/api/board/${board_id}/private`
   );
   const onPrivate = data?.onPrivate!;
-  const onClick = () => {
-    if (!isMyBoard) alert(`no right to edit`);
+  const handleBoard = () => {
     if (loading) return;
     mutate({ onPrivate: !onPrivate }, false);
     return POST({ user_id: host_id });
   };
-  const isBlur = !isMyBoard && onPrivate;
-  return { onPrivate, onClick, data, isBlur };
+  return { onPrivate, handleBoard, data };
 };
