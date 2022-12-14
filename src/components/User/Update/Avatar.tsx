@@ -3,22 +3,15 @@ import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
 import { useEffect, useState } from 'react';
 import { BtnWrap, Form } from '../../../../styles/global';
-import { ErrMsg } from '../../../Tools/Error/Message';
 import { AvatarInput } from '../../../Tools/Avatar/Input';
 import { useUploadImg } from '../../../libs/client/useTools';
 import { IUpdateUser, IUserForm } from '../../../types/user';
 
 export const UserAvatar = ({ _data }: IUpdateUser) => {
   const { User, type, update, theme, loading, setLoading } = _data;
-  const {
-    watch,
-    reset,
-    register,
-    setError,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IUserForm>({ mode: 'onSubmit' });
-
+  const { watch, reset, register, handleSubmit } = useForm<IUserForm>({
+    mode: 'onSubmit',
+  });
   const avatar = watch('avatar');
   const [preview, setPreview] = useState('');
   const [delAvatar, setDelAvatar] = useState(false);

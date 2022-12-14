@@ -1,7 +1,7 @@
-import { Svg } from '../Svg';
 import styled from '@emotion/styled';
+import { Svg } from '../../../Tools/Svg';
 import { Dispatch, SetStateAction } from 'react';
-import { Flex } from '../../../styles/global';
+import { Flex } from '../../../../styles/global';
 
 export interface IBtns {
   theme: boolean;

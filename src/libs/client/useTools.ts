@@ -10,12 +10,8 @@ export const useUploadImg = async (image: FileList | undefined) => {
     form.append('file', image[0]);
     const {
       result: { id },
-    } = await (
-      await fetch(uploadURL, {
-        method: 'POST',
-        body: form,
-      })
-    ).json();
+    } = await (await fetch(uploadURL, { method: 'POST', body: form })).json();
+    alert(id);
     return id;
   }
 };

@@ -12,7 +12,7 @@ const AllBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
     <>
       <Head_ title="All Boards" />
       <BoardPage>
-        <PageHeading type="board" theme={theme} detail={{ all: true }} />
+        <PageHeading type="board" theme={theme} />
         <BoardsGrid _data={{ theme, isBoard, boards }} />
       </BoardPage>
     </>

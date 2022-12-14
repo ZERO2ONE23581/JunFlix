@@ -1,8 +1,14 @@
 import useSWR from 'swr';
-import { IRes } from '../../types/global';
-import { IGetUser } from '../../types/user';
 import useMutation from './useMutation';
+import { IRes } from '../../types/global';
+import { IGetUser, IGetUsers } from '../../types/user';
 
+export const useGetUsers = () => {
+  const { data } = useSWR<IGetUsers>('/api/user/all');
+  const users = data?.users;
+  const noData = data?.noData;
+  return { users, noData };
+};
 export const useUser = () => {
   const { data } = useSWR<IGetUser>('/api/login');
   return {

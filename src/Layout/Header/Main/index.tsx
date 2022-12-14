@@ -1,54 +1,58 @@
 import { Modal } from './Modal';
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 import { Flex } from '../../../../styles/global';
 import { ITheme } from '../../../../styles/theme';
 import { useCapLetter } from '../../../libs/client/useTools';
 import { colorVar, hoverScale } from '../../../../styles/variants';
 
 export const Main = ({ theme }: ITheme) => {
-  const textVar = { ...colorVar, ...hoverScale };
+  const router = useRouter();
   const [selected, setSelected] = useState('');
-  const menuArr = ['board', 'post', 'review', 'movie'];
-  const isModal = (i: string) => Boolean(selected === i);
-  const index = (item: string) => Number(menuArr.indexOf(item));
+  const textVar = { ...colorVar, ...hoverScale };
+  const array = ['user', 'board', 'post', 'movie'];
+  const isModal = (element: string) => Boolean(selected === element);
+  const index = (element: string) => Number(array.indexOf(element));
+  const onClick = (element: string) => {
+    if (element === 'user') return router.push('/user/all');
+    else return setSelected(element);
+  };
   //
   return (
     <Cont>
-      {menuArr.map((i) => (
-        <div key={index(i)} className="array">
-          <motion.div
+      {array.map((el) => (
+        <Array key={index(el)}>
+          <Txt
             custom={theme}
             variants={textVar}
-            onClick={() => setSelected(i)}
+            onClick={() => onClick(el)}
             exit="exit"
-            className="txt"
             initial="initial"
             animate="animate"
             whileHover="hover"
           >
-            {useCapLetter(i)}
-          </motion.div>
+            {useCapLetter(el)}
+          </Txt>
           <Modal
-            theme={theme}
-            selected={selected}
-            isModal={isModal(i)}
-            setSelected={setSelected}
+            _data={{ theme, selected, setSelected, isModal: isModal(el) }}
           />
-        </div>
+        </Array>
       ))}
     </Cont>
   );
 };
 const Cont = styled(Flex)`
-  gap: 4rem;
-  min-width: 440px;
-  .array {
-    position: relative;
-    .txt {
-      display: block;
-      cursor: pointer;
-    }
-  }
+  gap: 7rem;
+  padding: 0 2rem;
+  width: fit-content;
+`;
+
+const Txt = styled(Flex)`
+  cursor: pointer;
+  //border: 2px solid blue;
+`;
+const Array = styled(Flex)`
+  position: relative;
+  width: fit-content;
 `;

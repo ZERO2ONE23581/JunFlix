@@ -46,8 +46,9 @@ export interface IQuery {
 }
 export interface IRes {
   ok?: boolean;
-  error?: string;
   msg?: string;
+  error?: string;
+  noData?: boolean;
   [key: string]: any;
 }
 export interface ICreateUserRes extends IRes {

@@ -16,13 +16,14 @@ export const PageHeading = ({ type, theme }: IBoardPageHeading) => {
   const [txt, setTxt] = useState({ eng: '', kor: '' });
   useEffect(() => {
     if (type) {
+      if (type === 'users') return setTxt({ eng: 'HALL of FAME', kor: '' });
       if (type === 'movie') return setTxt({ eng: 'Movies', kor: '영화' });
       if (type === 'all_board') return setTxt({ eng: 'Boards', kor: '' });
       if (type === 'user_board')
         return setTxt({ eng: `${USERNAME}'s Board`, kor: `` });
     }
   }, [type, setTxt, USERNAME]);
-  const svg = type === 'movie' ? 'film' : '';
+  const svg = type === 'movie' ? 'film' : type === 'users' ? 'crown' : '';
   return (
     <Cont className="page-title">
       <Wrap>

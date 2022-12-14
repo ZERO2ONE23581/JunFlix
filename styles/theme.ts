@@ -7,11 +7,12 @@ export interface ITheme {
 export const lightTheme: Theme = {
   color: {
     bg: 'white',
-    background: '#bdc3c7',
     font: 'black',
     btn: 'black',
     logo: '#E50914',
     green: '#2ecc71',
+    lightBlue: '#74b9ff',
+    background: '#bdc3c7',
     grey: {
       reg: '#4b4b4b',
       dark: '#262626',
@@ -33,11 +34,12 @@ export const lightTheme: Theme = {
 export const darkTheme: Theme = {
   color: {
     bg: 'black',
-    background: 'black',
     font: 'white',
     btn: '#dfe6e9',
     logo: '#E50914',
     green: '#2ecc71',
+    background: 'black',
+    lightBlue: '#74b9ff',
     grey: {
       reg: '#fffff',
       //dark: '#262626',

@@ -10,6 +10,9 @@ import {
 import { IRes } from './global';
 import { Dispatch, SetStateAction } from 'react';
 
+export interface IGetUsers extends IRes {
+  users: IUserType[];
+}
 export interface IGetUser extends IRes {
   user: IUserType;
   loggedInUser?: IUserType;

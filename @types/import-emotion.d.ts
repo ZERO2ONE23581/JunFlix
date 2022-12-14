@@ -9,6 +9,7 @@ declare module '@emotion/react' {
       font: string;
       logo: string;
       green: string;
+      lightBlue: string;
       grey: {
         reg: string;
         dark: string;

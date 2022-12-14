@@ -74,9 +74,10 @@ const NoImg = styled(Flex)`
   }
 `;
 const vars = {
-  exit: () => ({ opacity: 0 }),
-  initial: () => ({ opacity: 0 }),
+  exit: () => ({ opacity: 0, scale: 0 }),
+  initial: () => ({ opacity: 0, scale: 0 }),
   animate: ({ theme, isRound }: any) => ({
+    scale: 1,
     opacity: 1,
     outline: border(theme),
     borderRadius: isRound ? '100%' : '10%',

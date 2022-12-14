@@ -1,82 +1,64 @@
 import { useState } from 'react';
-import { IconModal } from './Modal';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
+import { AvatarModal } from './Avatar/Modal';
 import { Avatar } from '../../../Tools/Avatar';
 import { Flex } from '../../../../styles/global';
 import { ITheme } from '../../../../styles/theme';
 import { useUser } from '../../../libs/client/useUser';
+import { useCapLetter } from '../../../libs/client/useTools';
 import { colorVar, hoverScale } from '../../../../styles/variants';
 
 export const LoginMenu = ({ theme }: ITheme) => {
-  const size = '3rem';
   const router = useRouter();
+  const array = ['join', 'login'];
   const [modal, setModal] = useState(false);
-  const onAvatar = () => setModal((p) => !p);
-  const textVar = { ...colorVar, ...hoverScale };
+  const handleClick = () => setModal((p) => !p);
   const { isLoggedIn, user_id: host_id } = useUser();
+  const textVar = { ...colorVar, ...hoverScale };
+  const onClick = (type: string) => router.push(`/${type}`);
   return (
-    <Cont className="user-menu">
+    <>
       {isLoggedIn && (
-        <UserIcon className="logged-in">
+        <Cont>
           <Avatar
-            _data={{
-              size,
-              theme,
-              host_id,
-              isOther: true,
-              handleClick: onAvatar,
-            }}
+            _data={{ theme, host_id, size: '3rem', isOther: true, handleClick }}
           />
-          <IconModal modal={modal} setModal={setModal} theme={theme} />
-        </UserIcon>
+          <AvatarModal _data={{ modal, setModal, theme }} />
+        </Cont>
       )}
-
       {!isLoggedIn && (
-        <LoginJoin className="unlogged-in">
-          <Text
-            exit="exit"
-            initial="initial"
-            animate="animate"
-            whileHover={'hover'}
-            custom={theme}
-            variants={textVar}
-            onClick={() => router.push(`/login`)}
-          >
-            Login
-          </Text>
-          <Text
-            exit="exit"
-            initial="initial"
-            animate="animate"
-            whileHover={'hover'}
-            custom={theme}
-            variants={textVar}
-            onClick={() => router.push(`/join`)}
-          >
-            Join
-          </Text>
-        </LoginJoin>
+        <UnLogged>
+          {array.map((item) => (
+            <Txt
+              custom={theme}
+              variants={textVar}
+              key={array.indexOf(item)}
+              onClick={() => onClick(item)}
+              exit="exit"
+              initial="initial"
+              animate="animate"
+              whileHover="hover"
+            >
+              {useCapLetter(item)}
+            </Txt>
+          ))}
+        </UnLogged>
       )}
-    </Cont>
+    </>
   );
 };
-const Cont = styled.article``;
-const UserIcon = styled(Flex)`
-  border: 5px solid blue;
+const Cont = styled(Flex)`
+  margin-left: 1rem;
   position: relative;
   .avatar {
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
+    margin: 0.5rem 0;
   }
 `;
-const LoginJoin = styled(Flex)`
-  gap: 5rem;
+const UnLogged = styled(Flex)`
+  gap: 4rem;
+  height: 4rem;
 `;
-
-const Text = styled(motion.span)`
+const Txt = styled(Flex)`
   cursor: pointer;
 `;

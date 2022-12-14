@@ -8,20 +8,18 @@ import { CreatePost } from '../../../../components/Post/Create';
 import { menuModalVar, TweenTrans } from '../../../../../styles/variants';
 
 interface IMenuModal {
-  theme: boolean;
-  selected: string;
-  isModal: boolean;
-  setSelected: Dispatch<SetStateAction<string>>;
+  _data: {
+    theme: boolean;
+    selected: string;
+    isModal: boolean;
+    setSelected: Dispatch<SetStateAction<string>>;
+  };
 }
-export const Modal = ({
-  theme,
-  isModal,
-  selected,
-  setSelected,
-}: IMenuModal) => {
-  const isMovie = Boolean(selected === 'movie');
-  const [createPost, setCreatePost] = useState(false);
+export const Modal = ({ _data }: IMenuModal) => {
   const closeModal = () => setCreatePost(false);
+  const [createPost, setCreatePost] = useState(false);
+  const { theme, isModal, selected, setSelected } = _data;
+  const isMovie = Boolean(selected === 'movie');
   return (
     <>
       {isModal && (

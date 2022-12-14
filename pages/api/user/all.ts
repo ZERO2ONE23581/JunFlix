@@ -4,19 +4,16 @@ import withHandler from '../../../src/libs/server/withHandler';
 import { withApiSession } from '../../../src/libs/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const boards = await client.board.findMany({
-    orderBy: { id: 'desc' },
-    include: {
-      host: true,
-      posts: true,
-      _count: true,
-      followers: true,
+  const users = await client.user.findMany({
+    orderBy: { followers: { _count: 'desc' } },
+    select: {
+      id: true,
+      userId: true,
+      _count: { select: { posts: true, followers: true } },
     },
   });
-  const isArray = Boolean(boards.length > 0);
-  if (!isArray) return res.json({ ok: false, error: 'no boards found.' });
-  //
-  return res.json({ ok: true, boards });
+  const noData = !Boolean(users.length > 0);
+  return res.json({ ok: true, users, noData });
 }
 export default withApiSession(
   withHandler({ methods: ['GET'], handler, isPrivate: false })

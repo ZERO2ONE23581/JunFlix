@@ -14,13 +14,10 @@ import { PostSchema } from '../src/components/Post/Schema';
 import { useGetAllPosts } from '../src/libs/client/usePosts';
 
 const Home: NextPage<IPage> = ({ theme, setHide, setFixed }) => {
-  const router = useRouter();
-
   const { isLoggedIn } = useUser();
   const { posts } = useGetAllPosts();
   const [start, setStart] = useState(false);
   const isHide = !isLoggedIn && !start;
-
   useEffect(() => {
     if (isHide) return setHide(true);
     else return setHide(false);
