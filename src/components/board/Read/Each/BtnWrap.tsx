@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { Svg } from '../../../../Tools/Svg';
 import { Dispatch, SetStateAction } from 'react';
-import useFollow from '../../../../libs/client/useFollow';
 import { hoverBgVars } from '../../../../../styles/variants';
 import { Flex, FlexCol } from '../../../../../styles/global';
 import { useCapLetter } from '../../../../libs/client/useTools';
@@ -27,7 +26,6 @@ export const BtnWrap = ({ _data, _follow }: IBtnWrap) => {
   const { theme, genre, isMyBoard, setFixed, setCreatePost } = _data;
   const router = useRouter();
   const handleClick = () => {
-    setFixed(true);
     if (isMyBoard) return setCreatePost(true);
     else return onClick();
   };

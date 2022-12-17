@@ -67,7 +67,6 @@ const Box = styled(motion.article)`
   flex-direction: column;
   justify-content: center;
   padding-top: 1rem;
-
   .box-btns {
     gap: 1rem;
     width: fit-content;

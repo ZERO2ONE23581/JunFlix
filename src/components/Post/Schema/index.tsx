@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PostGrid } from './Grid';
 import styled from '@emotion/styled';
 import { UpdatePost } from '../Update';
@@ -30,6 +30,9 @@ export const PostSchema = ({ _data, setFixed }: IPostSchema) => {
   const _modal = { post, modal, theme, setModal };
   const [cmtModal, setCmtModal] = useState(false);
   const open = Boolean(modal === 'read' && post && !cmtModal);
+  useEffect(() => {
+    if (open) setFixed(true);
+  }, [setFixed, open]);
   return (
     <Cont className="posts_schema">
       <PostGrid

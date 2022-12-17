@@ -4,9 +4,9 @@ import { NoData } from '../../../Tools/NoData';
 import { PostSchema } from '../../Post/Schema';
 import { CreatePost } from '../../Post/Create';
 import { MsgModal } from '../../../Tools/msg_modal';
-import { Dispatch, SetStateAction, useState } from 'react';
 import { Blur, FlexPage } from '../../../../styles/global';
 import { useGetPosts } from '../../../libs/client/usePosts';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IBoardCnt {
   _blur: {
@@ -39,6 +39,9 @@ export const BoardContent = ({ _data, _blur, _set }: IBoardCnt) => {
     setFixed(true);
     setMsg(blur_msg);
   };
+  useEffect(() => {
+    if (createPost) setFixed(true);
+  }, [setFixed, createPost]);
   return (
     <Cont>
       {IsBlur && (
@@ -47,8 +50,8 @@ export const BoardContent = ({ _data, _blur, _set }: IBoardCnt) => {
           <Svg type="lock" theme={theme} onClick={onSvg} />
         </>
       )}
+      <CreatePost _data={{ theme, createPost, closeModal }} />
       <Blur isBlur={IsBlur}>
-        <CreatePost _data={{ theme, createPost, closeModal }} />
         {isPost && (
           <PostSchema setFixed={setFixed} _data={{ theme, posts, grid: 5 }} />
         )}
@@ -64,7 +67,9 @@ const Cont = styled(FlexPage)`
   justify-content: flex-start;
   .lock {
     top: 25%;
-    z-index: 999;
+    left: 50%;
+    z-index: 1;
     position: absolute;
+    transform: translate(-50%, -50%);
   }
 `;

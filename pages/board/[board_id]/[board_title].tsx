@@ -41,6 +41,7 @@ const BoardPage: NextPage<IPage> = ({ theme, setFixed }) => {
   };
   const { isFollowing: isUser } = useFollowUser(board?.host_id!);
   const IsBlur = () => {
+    if (isMyBoard) return { isBlur: false, msg: 'my_board' };
     if (isPrivate('user')) {
       if (!isUser) return { isBlur: true, msg: 'blur_user' };
       else if (isPrivate('board') && !isFollowing)
@@ -69,7 +70,6 @@ const BoardPage: NextPage<IPage> = ({ theme, setFixed }) => {
                 _set={{ setFixed, setCreatePost }}
                 _data={{ theme, host_id, board_id, createPost }}
                 _blur={{ msg: IsBlur()?.msg!, IsBlur: IsBlur()?.isBlur! }}
-                //                _blur={{ msg: '', IsBlur: true }}
               />
             </>
           )}

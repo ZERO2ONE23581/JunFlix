@@ -45,9 +45,9 @@ export const Flex = styled(motion.div)`
   }
 `;
 export const Circle = styled(Flex)`
-  cursor: pointer;
   width: 2rem;
   height: 2rem;
+  cursor: pointer;
   border-radius: 100%;
   svg {
     display: block;
