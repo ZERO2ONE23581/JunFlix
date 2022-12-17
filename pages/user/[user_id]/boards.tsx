@@ -1,11 +1,12 @@
 import type { NextPage } from 'next';
-import { BoardPage } from '../../all/boards';
 import { Head_ } from '../../../src/Tools/head_title';
 import { useUser } from '../../../src/libs/client/useUser';
 import { useGetBoards } from '../../../src/libs/client/useBoards';
+import { PageHeading } from '../../../src/components/PageHeading';
 import { BoardsGrid } from '../../../src/components/Board/Read/Grid';
 import { useGetQuickSaved } from '../../../src/libs/client/usePosts';
-import { PageHeading } from '../../../src/components/PageHeading';
+import styled from '@emotion/styled';
+import { Page } from '../../../styles/global';
 
 const UserBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { user_id, username } = useUser();
@@ -14,11 +15,15 @@ const UserBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   return (
     <>
       <Head_ title={`${username}'s Board`} />
-      <BoardPage>
-        <PageHeading type="board" theme={theme} detail={{ my: true }} />
+      <Cont>
+        <PageHeading type="user_board" theme={theme} />
         <BoardsGrid _data={{ theme, isBoard, boards, quickSaved, user_id }} />
-      </BoardPage>
+      </Cont>
     </>
   );
 };
 export default UserBoards;
+
+const Cont = styled(Page)`
+  padding: 0 8rem;
+`;

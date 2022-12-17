@@ -47,22 +47,20 @@ export const Icons = ({ theme, setGenre, hideFilter }: IBoardIcons) => {
     </Cont>
   );
 };
+const Cont = styled(Flex)`
+  gap: 1.5rem;
+  width: fit-content;
+  border: 2px solid red;
+`;
+
 const Icon = styled(Flex)`
   position: relative;
+  cursor: pointer;
   .link_modal,
   .filter-modal {
     top: 2rem;
     left: 50%;
     min-width: 13rem;
     transform: translateX(-50%);
-  }
-`;
-const Cont = styled(Flex)`
-  gap: 1.5rem;
-  position: absolute;
-  width: fit-content;
-  height: fit-content;
-  svg {
-    cursor: pointer;
   }
 `;

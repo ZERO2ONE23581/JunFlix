@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <AnimatePresence>
         <ThemeProvider theme={theme ? lightTheme : darkTheme}>
           <Fixed isFixed={fixed}>
-            <Layout _data={{ setTheme, theme, hide, setHide }}>
+            <Layout _data={{ setTheme, theme, hide, setFixed }}>
               <Component
                 {...pageProps}
                 key={url}

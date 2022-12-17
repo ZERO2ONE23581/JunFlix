@@ -9,19 +9,15 @@ import { PageHeading } from '../../../src/components/PageHeading';
 
 const GenreBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
-  const { genre: gen_type } = router.query;
+  const { genre } = router.query;
+  const hideFilter = Boolean(genre);
   const { boards, isBoard } = useGetAllBoards();
-  const Boards = boards?.filter((e) => e.genre === gen_type);
-  const hideFilter = Boolean(gen_type);
+  const Boards = boards?.filter((e) => e.genre === genre);
   return (
     <>
       <Head_ title="All Boards" />
       <BoardPage>
-        <PageHeading
-          type="board"
-          theme={theme}
-          detail={{ genre: { isGenre: true, type: String(gen_type) } }}
-        />
+        <PageHeading type={genre} theme={theme} />
         <BoardsGrid _data={{ theme, isBoard, boards: Boards, hideFilter }} />
       </BoardPage>
     </>

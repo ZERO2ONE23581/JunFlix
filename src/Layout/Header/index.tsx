@@ -8,10 +8,14 @@ import { Flex } from '../../../styles/global';
 import { Dispatch, SetStateAction } from 'react';
 
 interface IHeader {
-  theme: boolean;
-  setTheme: Dispatch<SetStateAction<boolean>>;
+  _data: {
+    theme: boolean;
+    setTheme: Dispatch<SetStateAction<boolean>>;
+    setFixed: Dispatch<SetStateAction<boolean>>;
+  };
 }
-export const Header = ({ theme, setTheme }: IHeader) => {
+export const Header = ({ _data }: IHeader) => {
+  const { theme, setTheme, setFixed } = _data;
   return (
     <Cont
       custom={theme}
@@ -23,7 +27,7 @@ export const Header = ({ theme, setTheme }: IHeader) => {
       <Flex className="wrap">
         <Left>
           <Logo />
-          <Main theme={theme} />
+          <Main theme={theme} setFixed={setFixed} />
         </Left>
         <Right>
           <ThemeBtn theme={theme} setTheme={setTheme} />

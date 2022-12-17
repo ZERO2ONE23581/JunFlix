@@ -1,13 +1,17 @@
 import { Modal } from './Modal';
-import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Flex } from '../../../../styles/global';
 import { ITheme } from '../../../../styles/theme';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useCapLetter } from '../../../libs/client/useTools';
 import { colorVar, hoverScale } from '../../../../styles/variants';
 
-export const Main = ({ theme }: ITheme) => {
+interface IMain extends ITheme {
+  setFixed: Dispatch<SetStateAction<boolean>>;
+}
+
+export const Main = ({ theme, setFixed }: IMain) => {
   const router = useRouter();
   const [selected, setSelected] = useState('');
   const textVar = { ...colorVar, ...hoverScale };
@@ -35,7 +39,13 @@ export const Main = ({ theme }: ITheme) => {
             {useCapLetter(el)}
           </Txt>
           <Modal
-            _data={{ theme, selected, setSelected, isModal: isModal(el) }}
+            _data={{
+              theme,
+              selected,
+              setSelected,
+              isModal: isModal(el),
+              setFixed,
+            }}
           />
         </Array>
       ))}

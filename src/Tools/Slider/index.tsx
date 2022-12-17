@@ -9,7 +9,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 interface ISlider {
   _data: {
     theme: boolean;
-    type: string;
+    hideTitle?: boolean;
+    type: string | any;
     setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
@@ -19,7 +20,7 @@ export const Slider = ({ _data }: ISlider) => {
   const [leave, setLeave] = useState(false);
   const [reverse, setReverse] = useState(false);
 
-  const { theme, type, setFixed } = _data;
+  const { theme, type, setFixed, hideTitle } = _data;
   const { data } = useSWR<IMovie>(`/api/movie/${type}`);
 
   const MOVIES = data?.movies!;
@@ -46,7 +47,7 @@ export const Slider = ({ _data }: ISlider) => {
 
   return (
     <Cont className="slider">
-      <Title _data={{ theme, type }} />
+      {!hideTitle && <Title _data={{ theme, type }} />}
       <Row
         _set={{ setFixed, setLeave }}
         _data={{ theme, array, page, boxes, reverse, onClick }}

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { IPage } from '../../../_app';
 import { useRouter } from 'next/router';
-import { PostPage } from '../../../all/posts';
+import { PostPage } from '../../../post/all';
 import { useGetPosts } from '../../../../src/libs/client/usePosts';
 import { PostSchema } from '../../../../src/components/Post/Schema';
 

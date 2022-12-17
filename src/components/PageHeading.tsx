@@ -8,9 +8,10 @@ import { Flex, FlexCol } from '../../styles/global';
 import { useCapLetter } from '../libs/client/useTools';
 
 interface IBoardPageHeading extends ITheme {
-  type: string;
+  type: string | any;
 }
 export const PageHeading = ({ type, theme }: IBoardPageHeading) => {
+  console.log(type, '??');
   const { username, userId } = useUser();
   const USERNAME = useCapLetter(username ? username : userId);
   const [txt, setTxt] = useState({ eng: '', kor: '' });
@@ -18,12 +19,24 @@ export const PageHeading = ({ type, theme }: IBoardPageHeading) => {
     if (type) {
       if (type === 'users') return setTxt({ eng: 'HALL of FAME', kor: '' });
       if (type === 'movie') return setTxt({ eng: 'Movies', kor: '영화' });
-      if (type === 'all_board') return setTxt({ eng: 'Boards', kor: '' });
+      if (type === 'all_board') return setTxt({ eng: 'All Boards', kor: '' });
+      if (type === 'user_board')
+        return setTxt({ eng: `${USERNAME}'s Boards`, kor: '' });
       if (type === 'user_board')
         return setTxt({ eng: `${USERNAME}'s Board`, kor: `` });
+      if (type === 'tv') return setTxt({ eng: `TV Shows`, kor: `` });
+      if (type === 'top') return setTxt({ eng: `Classics`, kor: `` });
+      if (type === 'now') return setTxt({ eng: `Now Playing`, kor: `` });
+      if (type === 'upcoming')
+        return setTxt({ eng: `Upcoming Movies`, kor: `` });
+      if (type === 'trending') return setTxt({ eng: `Trending`, kor: `` });
     }
   }, [type, setTxt, USERNAME]);
-  const svg = type === 'movie' ? 'film' : type === 'users' ? 'crown' : '';
+  const svg = (txt: string) => {
+    if (txt === 'users') return 'crown';
+    if (txt === 'all_board' || txt === 'user_board') return 'grid';
+    else return 'film';
+  };
   return (
     <Cont className="page-title">
       <Wrap>
@@ -33,7 +46,7 @@ export const PageHeading = ({ type, theme }: IBoardPageHeading) => {
             <span>{txt.eng}</span>
             <span className="kor">{txt.kor}</span>
           </span>
-          <Svg theme={theme} type={svg} />
+          <Svg theme={theme} type={svg(type)!} />
         </Txt>
       </Wrap>
     </Cont>

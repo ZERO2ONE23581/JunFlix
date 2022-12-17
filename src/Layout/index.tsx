@@ -16,13 +16,13 @@ interface ILayoutProps {
   _data: {
     hide: boolean;
     theme: boolean;
+    setFixed: Dispatch<SetStateAction<boolean>>;
     setTheme: Dispatch<SetStateAction<boolean>>;
-    setHide: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Layout = ({ _data, children }: ILayoutProps) => {
   const [width, setWidth] = useState(0);
-  const { theme, hide, setTheme, setHide } = _data;
+  const { theme, hide, setTheme, setFixed } = _data;
   useEffect(() => {
     if (typeof window !== undefined) setWidth(window?.innerWidth);
   }, []);
@@ -35,7 +35,7 @@ export const Layout = ({ _data, children }: ILayoutProps) => {
       custom={theme}
       variants={variants}
     >
-      {!hide && <Header theme={theme} setTheme={setTheme} />}
+      {!hide && <Header _data={{ theme, setTheme, setFixed }} />}
       <section className="children">{children}</section>
       {!hide && <Footer theme={!theme} />}
     </Cont>

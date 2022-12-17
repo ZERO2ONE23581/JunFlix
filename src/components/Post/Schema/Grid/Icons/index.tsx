@@ -6,7 +6,7 @@ import { CreatePost } from '../../../Create';
 import { Svg } from '../../../../../Tools/Svg';
 import { OrganizePosts } from './Modal/Organize';
 import { Flex } from '../../../../../../styles/global';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useUser } from '../../../../../libs/client/useUser';
 import { Answer } from '../../../../../Tools/Modal/answer_modal';
 
@@ -45,6 +45,9 @@ export const Icons = ({ _data }: IPostsIcon) => {
     if (!isLoggedIn && needLogin) return router.push(`/login`);
     return setModal(type);
   };
+  useEffect(() => {
+    if (createPost) setFixed(true);
+  }, [createPost, setFixed]);
   return (
     <>
       {!isHome && (
@@ -76,7 +79,7 @@ export const Icons = ({ _data }: IPostsIcon) => {
 };
 const Cont = styled(Flex)`
   gap: 2rem;
-  margin: 0.5rem 0;
+  margin: 1rem 0;
   width: fit-content;
 `;
 const Icon = styled.div`

@@ -4,10 +4,10 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { NoData } from '../../../../Tools/NoData';
-import { Grid } from '../../../../../styles/global';
+import { IPostType } from '../../../../types/post';
 import { IBoardType } from '../../../../types/board';
 import { scaleVar } from '../../../../../styles/variants';
-import { IPostType } from '../../../../types/post';
+import { FlexCol, Grid } from '../../../../../styles/global';
 
 interface IBoards {
   _data: {
@@ -74,6 +74,10 @@ export const BoardsGrid = ({ _data }: IBoards) => {
     </Cont>
   );
 };
-const Cont = styled.section`
-  position: relative;
+const Cont = styled(FlexCol)`
+  min-width: 1250px;
+  width: fit-content;
+  align-items: flex-end;
+  justify-content: flex-start;
+  //border: 10px solid blue;
 `;

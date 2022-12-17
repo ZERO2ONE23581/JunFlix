@@ -4,7 +4,6 @@ import { Svg } from '../../../../Tools/Svg';
 import { IPostType } from '../../../../types/post';
 import { avatarLink } from '../../../../Tools/Avatar';
 import { IsBlur } from '../../../../libs/client/useBlur';
-import { useUser } from '../../../../libs/client/useUser';
 import { Blur, FlexCol } from '../../../../../styles/global';
 import { useCapLetters } from '../../../../libs/client/useTools';
 import { TweenTrans, color } from '../../../../../styles/variants';

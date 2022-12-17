@@ -129,7 +129,7 @@ export const TransBorderVar = {
 export const menuModalVar = {
   initial: { y: '0', x: '-50%', opacity: 0 },
   exit: { y: '0', opacity: 0, transition: { duration: 0.3 } },
-  hover: { backgroundColor: redColor, transition: { duration: 0.2 } },
+  hover: { backgroundColor: redColor, transition: { duration: 0.3 } },
   animate: { x: '-50%', y: '30px', opacity: 1, transition: { duration: 0.3 } },
 };
 export const inputVar = {
