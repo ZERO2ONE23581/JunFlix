@@ -4,8 +4,10 @@ import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { PostSchema } from '../../src/components/Post/Schema';
 import { useGetAllPosts } from '../../src/libs/client/usePosts';
+import { useLogin } from '../../src/libs/client/useLogin';
 
 const AllPosts: NextPage<IPage> = ({ theme, setFixed }) => {
+  useLogin();
   const { posts } = useGetAllPosts();
   return (
     <PostPage>

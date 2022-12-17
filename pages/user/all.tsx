@@ -6,7 +6,7 @@ import { Avatar } from '../../src/Tools/Avatar';
 import { Head_ } from '../../src/Tools/head_title';
 import { useGetUsers } from '../../src/libs/client/useUser';
 import { PageHeading } from '../../src/components/PageHeading';
-import { Flex, FlexCol, FlexPage, Grid, Page } from '../../styles/global';
+import { Flex, FlexCol, FlexPage, Grid } from '../../styles/global';
 
 const Users: NextPage<IPage> = ({ theme }) => {
   const { users, noData } = useGetUsers();

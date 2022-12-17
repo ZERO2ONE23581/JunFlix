@@ -10,14 +10,16 @@ import { useRouter } from 'next/router';
 import { AnimatePresence } from 'framer-motion';
 import { FlexPage } from '../../../styles/global';
 import { Head_ } from '../../../src/Tools/head_title';
+import { useLogin } from '../../../src/libs/client/useLogin';
 import { BoardSchema } from '../../../src/Tools/Modal/schema';
 import { Board } from '../../../src/components/Board/Read/Each';
 import { LoadingModal } from '../../../src/Tools/Modal/loading_modal';
+import useFollowUser from '../../../src/libs/client/useFollowing/User';
 import { BoardContent } from '../../../src/components/Board/Read/Content';
 import useFollowingBoard from '../../../src/libs/client/useFollowing/Board';
-import useFollowUser from '../../../src/libs/client/useFollowing/User';
 
 const BoardPage: NextPage<IPage> = ({ theme, setFixed }) => {
+  useLogin();
   const router = useRouter();
   const [type, setType] = useState('');
   const board_id = Number(router.query.board_id);

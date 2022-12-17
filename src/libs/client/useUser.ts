@@ -11,14 +11,13 @@ export const useGetUsers = () => {
 };
 export const useUser = () => {
   const { data } = useSWR<IGetUser>('/api/login');
-  return {
-    isLoggedIn: data?.ok!,
-    user_id: data?.loggedInUser?.id!,
-    loggedInUser: data?.loggedInUser!,
-    avatar: data?.loggedInUser?.avatar!,
-    userId: data?.loggedInUser?.userId!,
-    username: data?.loggedInUser?.username!,
-  };
+  const isLoggedIn = data?.ok!;
+  const user = data?.loggedInUser!;
+  const user_id = user?.id!;
+  const avatar = user?.avatar!;
+  const userId = user?.userId!;
+  const username = user?.username!;
+  return { avatar, userId, user_id, username, isLoggedIn, loggedInUser: user! };
 };
 export const useGetUser = (user_id: number) => {
   const { data } = useSWR<IGetUser>(Boolean(user_id) && `/api/user/${user_id}`);

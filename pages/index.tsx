@@ -1,7 +1,6 @@
 import { IPage } from './_app';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Head_ } from '../src/Tools/head_title';
 import { AnimatePresence } from 'framer-motion';

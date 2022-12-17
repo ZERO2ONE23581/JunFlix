@@ -10,6 +10,7 @@ import { Head_ } from '../../src/Tools/head_title';
 import { MsgModal } from '../../src/Tools/msg_modal';
 import { useUser } from '../../src/libs/client/useUser';
 import { Box, FlexPage, Form } from '../../styles/global';
+import { useLogin } from '../../src/libs/client/useLogin';
 import { useLength } from '../../src/libs/client/useTools';
 import useMutation from '../../src/libs/client/useMutation';
 import { Wrap } from '../../src/components/Board/Create/Wrap';
@@ -18,6 +19,7 @@ import { Title } from '../../src/components/Board/Create/Title';
 import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
 
 const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
+  useLogin();
   const router = useRouter();
   const layoutId = 'create-board';
   const { user_id } = useUser();

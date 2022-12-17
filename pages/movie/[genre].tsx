@@ -1,11 +1,11 @@
 import { IPage } from '../_app';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { Page } from '../../styles/global';
 import { Slider } from '../../src/Tools/Slider';
 import { Head_ } from '../../src/Tools/head_title';
 import { PageHeading } from '../../src/components/PageHeading';
-import { useRouter } from 'next/router';
 
 const GenreMovie: NextPage<IPage> = ({ theme, setFixed }) => {
   const router = useRouter();

@@ -50,12 +50,10 @@ export const Icons = ({ theme, setGenre, hideFilter }: IBoardIcons) => {
 const Cont = styled(Flex)`
   gap: 1.5rem;
   width: fit-content;
-  border: 2px solid red;
 `;
-
 const Icon = styled(Flex)`
-  position: relative;
   cursor: pointer;
+  position: relative;
   .link_modal,
   .filter-modal {
     top: 2rem;

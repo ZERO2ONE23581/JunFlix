@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { FlexPage, Page } from '../../../styles/global';
+import { FlexPage } from '../../../styles/global';
 import { Head_ } from '../../../src/Tools/head_title';
+import { NewPassord } from '../../../src/components/User/NewPassword';
 import { Token } from '../../../src/components/User/Read/Verify/Token';
 import { Result } from '../../../src/components/User/Read/Verify/result';
 import { VerifyID } from '../../../src/components/User/Read/Verify/userId';
-import { NewPassord } from '../../../src/components/User/NewPassword';
 
 const FindPassword: NextPage<{ theme: boolean }> = ({ theme }) => {
   const type = 'token_pw';

@@ -12,6 +12,7 @@ import { Svg } from '../../../../src/Tools/Svg';
 import { Blur, Page } from '../../../../styles/global';
 import { Head_ } from '../../../../src/Tools/head_title';
 import { MsgModal } from '../../../../src/Tools/msg_modal';
+import { useLogin } from '../../../../src/libs/client/useLogin';
 import { useCapLetter } from '../../../../src/libs/client/useTools';
 import { Host } from '../../../../src/components/User/Read/MyPage/Host';
 import useFollowUser from '../../../../src/libs/client/useFollowing/User';
@@ -19,6 +20,7 @@ import { UserContent } from '../../../../src/components/User/Read/MyPage/Content
 import { UserBtns } from '../../../../src/components/User/Read/MyPage/Content/Btns';
 
 const UserPage: NextPage<IPage> = ({ theme, setFixed }) => {
+  useLogin();
   const router = useRouter();
   const { user_id } = useUser();
   const host_id = Number(router.query.user_id!);

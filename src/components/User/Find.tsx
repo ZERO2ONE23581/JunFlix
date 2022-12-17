@@ -10,12 +10,12 @@ interface IFindUser extends ITheme {
 export const FindUser = ({ theme, type }: IFindUser) => {
   const router = useRouter();
   const isJoin = Boolean(type === 'join');
-  const join_arr = ['id', '|', 'pw', , '|', `login`];
-  const login_arr = ['id', '|', 'pw', '|', `join`];
+  const join_arr = ['id', '|', 'pw', , '||', `login`];
+  const login_arr = ['id', '|', 'pw', '||', `join`];
   const array = isJoin ? join_arr : login_arr;
   const setTxt = (type: string | undefined) => {
     if (type) {
-      if (type === '|') return { kor: '', eng: '|' };
+      if (type === '|' || type === '||') return { kor: '', eng: '|' };
       if (type === 'id') return { kor: '아이디 찾기', eng: 'Find ID' };
       if (type === 'pw') return { kor: '비밀번호 찾기', eng: 'Find Password' };
       if (type === 'join') return { kor: '회원가입', eng: 'Register' };
@@ -32,7 +32,7 @@ export const FindUser = ({ theme, type }: IFindUser) => {
   return (
     <Cont>
       {array.map((element) => (
-        <Arr key={array.indexOf(element)} isBar={Boolean(element === '|')}>
+        <Arr key={array.lastIndexOf(element)} isBar={Boolean(element === '|')}>
           <Txt
             custom={theme}
             animate="animate"
@@ -55,7 +55,7 @@ const Cont = styled(Flex)`
   gap: 1.2rem;
   margin-top: 1rem;
 `;
-const Arr = styled(Flex)<{ isBar: boolean }>`
+const Arr = styled.div<{ isBar: boolean }>`
   width: fit-content;
   span {
     cursor: ${(p) => !p.isBar && 'pointer'};

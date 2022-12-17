@@ -1,21 +1,21 @@
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { Btn } from '../src/Tools/Button';
+import { Btn } from '../../src/Tools/Button';
 import { useForm } from 'react-hook-form';
-import { IRes } from '../src/types/global';
+import { IRes } from '../../src/types/global';
 import { useEffect, useState } from 'react';
-import { IUserForm } from '../src/types/user';
-import { InputWrap } from '../src/Tools/Input';
-import { variants } from '../styles/variants';
-import { MsgModal } from '../src/Tools/msg_modal';
-import { ErrMsg } from '../src/Tools/Error/Message';
-import { FindUser } from '../src/components/User/Find';
-import { AvatarInput } from '../src/Tools/Avatar/Input';
-import useMutation from '../src/libs/client/useMutation';
-import { Flex, FlexCol, FlexPage } from '../styles/global';
-import { useUploadImg } from '../src/libs/client/useTools';
-import { LoadingModal } from '../src/Tools/Modal/loading_modal';
+import { IUserForm } from '../../src/types/user';
+import { InputWrap } from '../../src/Tools/Input';
+import { variants } from '../../styles/variants';
+import { MsgModal } from '../../src/Tools/msg_modal';
+import { ErrMsg } from '../../src/Tools/Error/Message';
+import { FindUser } from '../../src/components/User/Find';
+import { AvatarInput } from '../../src/Tools/Avatar/Input';
+import useMutation from '../../src/libs/client/useMutation';
+import { Flex, FlexCol, FlexPage } from '../../styles/global';
+import { useUploadImg } from '../../src/libs/client/useTools';
+import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
 
 const JoinPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [post, { loading, data }] = useMutation<IRes>(`/api/user/create`);

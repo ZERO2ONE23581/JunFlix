@@ -46,8 +46,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         followings: true,
       },
     });
-    if (!loggedInUser) return req.session.destroy();
-
+    if (!loggedInUser) {
+      res.json({ ok: false });
+      return req.session.destroy();
+    }
     return res.json({ ok: true, loggedInUser });
   }
 }
