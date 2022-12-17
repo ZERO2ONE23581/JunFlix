@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { Svg } from '../../../Tools/Svg';
 import { NoData } from '../../../Tools/NoData';
 import { PostSchema } from '../../Post/Schema';
 import { CreatePost } from '../../Post/Create';
 import { MsgModal } from '../../../Tools/msg_modal';
+import { useUser } from '../../../libs/client/useUser';
 import { Blur, FlexPage } from '../../../../styles/global';
 import { useGetPosts } from '../../../libs/client/usePosts';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -26,10 +28,12 @@ interface IBoardCnt {
 }
 
 export const BoardContent = ({ _data, _blur, _set }: IBoardCnt) => {
+  const { user_id } = useUser();
+  const router = useRouter();
   const { msg: blur_msg, IsBlur } = _blur;
   const { setFixed, setCreatePost } = _set;
   const { theme, host_id, board_id, createPost } = _data;
-  const { posts, isPost } = useGetPosts({ host_id, board_id });
+  const { posts } = useGetPosts({ host_id, board_id });
   const closeModal = () => {
     setFixed(false);
     setCreatePost(false);
@@ -42,6 +46,7 @@ export const BoardContent = ({ _data, _blur, _set }: IBoardCnt) => {
   useEffect(() => {
     if (createPost) setFixed(true);
   }, [setFixed, createPost]);
+  const noPosts = !Boolean(posts?.length! > 0);
   return (
     <Cont>
       {IsBlur && (
@@ -50,12 +55,14 @@ export const BoardContent = ({ _data, _blur, _set }: IBoardCnt) => {
           <Svg type="lock" theme={theme} onClick={onSvg} />
         </>
       )}
-      <CreatePost _data={{ theme, createPost, closeModal }} />
+      <CreatePost _data={{ theme, createPost, closeModal, setFixed }} />
       <Blur isBlur={IsBlur}>
-        {isPost && (
+        {!noPosts && (
           <PostSchema setFixed={setFixed} _data={{ theme, posts, grid: 5 }} />
         )}
-        {!isPost && <NoData theme={theme} />}
+        {noPosts && (
+          <NoData _data={{ theme, isMy: false, type: 'board_post' }} />
+        )}
       </Blur>
     </Cont>
   );

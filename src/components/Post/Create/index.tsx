@@ -1,7 +1,7 @@
 import { Modal } from './Modal';
 import { SelectModal } from './Select';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { MsgModal } from '../../../Tools/msg_modal';
 import { ICreatePostRes } from '../../../types/post';
@@ -13,11 +13,15 @@ interface ICreatePost {
     theme: boolean;
     createPost: boolean;
     closeModal: () => void;
+    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const CreatePost = ({ _data }: ICreatePost) => {
   const router = useRouter();
-  const { createPost: open, theme, closeModal } = _data;
+  const { createPost: open, theme, closeModal, setFixed } = _data;
+  useEffect(() => {
+    if (open) setFixed(true);
+  }, [setFixed, open]);
   const { board_id } = router.query;
   const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);

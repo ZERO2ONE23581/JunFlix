@@ -66,7 +66,7 @@ const JoinPage: NextPage<{ theme: boolean }> = ({ theme }) => {
             setMsg('');
           }, 1000);
         }
-        if (data.ok) router.push(`/home`);
+        if (data.ok) router.push(`/`);
       }, 2000);
     }
   }, [data, router, setLoading, setMsg]);

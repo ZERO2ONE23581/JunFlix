@@ -6,9 +6,9 @@ import { CreatePost } from '../../../Create';
 import { Svg } from '../../../../../Tools/Svg';
 import { OrganizePosts } from './Modal/Organize';
 import { Flex } from '../../../../../../styles/global';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useUser } from '../../../../../libs/client/useUser';
 import { Answer } from '../../../../../Tools/Modal/answer_modal';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IPostsIcon {
   _data: {
@@ -45,9 +45,6 @@ export const Icons = ({ _data }: IPostsIcon) => {
     if (!isLoggedIn && needLogin) return router.push(`/login`);
     return setModal(type);
   };
-  useEffect(() => {
-    if (createPost) setFixed(true);
-  }, [createPost, setFixed]);
   return (
     <>
       {!isHome && (
@@ -60,7 +57,9 @@ export const Icons = ({ _data }: IPostsIcon) => {
                 onClick={() => onClick(el.svg)}
               />
               {el.svg === 'plus' && (
-                <CreatePost _data={{ theme, createPost, closeModal }} />
+                <CreatePost
+                  _data={{ theme, createPost, closeModal, setFixed }}
+                />
               )}
               {el.svg === 'compass' && <LinkModal _data={{ ...item }} />}
               {el.svg === 'posts' && (

@@ -1,49 +1,114 @@
+import { Btn } from './Button';
 import styled from '@emotion/styled';
-import { ITheme } from '../../styles/theme';
-import { scaleVar } from '../../styles/variants';
-import { AnimatePresence, motion } from 'framer-motion';
+import { FlexCol } from '../../styles/global';
+import { useEffect, useState } from 'react';
 
-export const NoData = ({ theme }: ITheme) => {
+interface IUserContent {
+  _data: {
+    type: string;
+    isMy: boolean;
+    theme: boolean;
+    onClick?: () => void;
+  };
+}
+export const NoData = ({ _data }: IUserContent) => {
+  const { theme, type, isMy } = _data;
+  const onClick = _data?.onClick!;
+  const [btn, setBtn] = useState('');
+  const [txt, setTxt] = useState({ kor: '', eng: '' });
+  const [sub, setSub] = useState({ kor: '', eng: '' });
+  useEffect(() => {
+    if (type === 'saved') {
+      setTxt({ eng: 'No saved boards.', kor: '저장된 보드가 없습니다.' });
+      if (isMy) {
+        setBtn('All Boards');
+        setSub({
+          eng: 'Click the button to see Boards.',
+          kor: '아래 버튼을 눌러 보드를 둘러봅니다.',
+        });
+      }
+    }
+    if (type === 'likes') {
+      setTxt({
+        eng: 'No liked posts.',
+        kor: '좋아요를 누른 포스트가 없습니다.',
+      });
+      if (isMy) {
+        setBtn('All Posts');
+        setSub({
+          eng: 'Click the button to see Posts.',
+          kor: '아래 버튼을 눌러 포스트를 둘러봅니다.',
+        });
+      }
+    }
+    if (type === 'post' || type === 'board_post') {
+      setTxt({
+        eng: 'No posts created.',
+        kor: '생성된 포스트가 없습니다.',
+      });
+      if (isMy) {
+        setBtn('Create Post');
+        setSub({
+          eng: 'Click the button to create Post.',
+          kor: '아래 버튼을 눌러 포스트를 생성합니다.',
+        });
+      }
+    }
+    if (type === 'board') {
+      setTxt({
+        eng: 'No boards created.',
+        kor: '생성된 보드가 없습니다',
+      });
+      setBtn('Create Board');
+      setSub({
+        eng: 'Click the button to create Board.',
+        kor: '아래 버튼을 눌러 보드를 생성합니다.',
+      });
+    }
+  }, [type, setTxt, setSub, isMy, setBtn]);
   return (
-    <AnimatePresence>
-      <Cont
-        exit="exit"
-        initial="initial"
-        animate="animate"
-        className="no-data"
-        variants={scaleVar}
-        custom={{ theme, duration: 1 }}
-      >
-        <ul>
-          <li className="emoji">🤔</li>
-          <li>
-            <span className="eng">No data. </span>
-            <span className="kor">데이터를 찾을수 없습니다.</span>
-          </li>
-        </ul>
-      </Cont>
-    </AnimatePresence>
+    <Cont>
+      <span className="main">
+        <span>{txt.eng}</span>
+        <span className="kor">{txt.kor}</span>
+      </span>
+      {isMy && (
+        <>
+          <span className="sub">
+            <span>{sub.eng}</span>
+            <span className="kor">{sub.kor}</span>
+          </span>
+          <Btn
+            type="button"
+            onClick={onClick}
+            item={{ theme, name: btn.toUpperCase() }}
+          />
+        </>
+      )}
+    </Cont>
   );
 };
-const Cont = styled(motion.article)`
-  width: 100%;
-  display: flex;
-  margin: 0 auto;
-  text-align: center;
-  align-items: center;
+const Cont = styled(FlexCol)`
+  gap: 0.5rem;
+  opacity: 0.9;
+  min-height: 50vh;
+  font-size: 1.6rem;
   justify-content: center;
-  .emoji {
-    font-size: 4rem;
+  .kor {
+    font-size: 1.4rem;
   }
-  li {
-    margin-bottom: 10px;
-    .eng,
-    .kor {
-      font-style: italic;
-      font-size: 1.5rem;
+  > .main,
+  > .sub {
+    span {
+      display: block;
+      text-align: center;
+      line-height: 1.8rem;
     }
-    .eng {
-      font-size: 1.6rem;
-    }
+  }
+  button {
+    font-weight: 600;
+    margin-top: 1rem;
+    width: fit-content;
+    padding: 0.7rem 1rem;
   }
 `;

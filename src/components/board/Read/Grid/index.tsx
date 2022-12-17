@@ -70,7 +70,6 @@ export const BoardsGrid = ({ _data }: IBoards) => {
           </Grid>
         )}
       </AnimatePresence>
-      {!isBoard && <NoData theme={theme} />}
     </Cont>
   );
 };

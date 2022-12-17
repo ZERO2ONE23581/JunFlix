@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { OverlayBg } from '../../../../Tools/overlay';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CreatePost } from '../../../../components/Post/Create';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { menuModalVar, TweenTrans } from '../../../../../styles/variants';
 
 interface IMenuModal {
@@ -18,10 +18,6 @@ interface IMenuModal {
 export const Modal = ({ _data }: IMenuModal) => {
   const [createPost, setCreatePost] = useState(false);
   const { theme, isModal, selected, setSelected, setFixed } = _data;
-
-  useEffect(() => {
-    if (createPost) setFixed(true);
-  }, [createPost, setFixed]);
 
   const closeModal = () => {
     setSelected('');
@@ -60,7 +56,7 @@ export const Modal = ({ _data }: IMenuModal) => {
           </>
         )}
       </AnimatePresence>
-      <CreatePost _data={{ theme, createPost, closeModal }} />
+      <CreatePost _data={{ theme, createPost, closeModal, setFixed }} />
     </>
   );
 };

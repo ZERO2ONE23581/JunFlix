@@ -63,7 +63,7 @@ export const Cont = styled(motion.button)`
   font-size: 1.2rem;
   border-radius: 3px;
   position: relative;
-  gap: 20px;
+  gap: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;

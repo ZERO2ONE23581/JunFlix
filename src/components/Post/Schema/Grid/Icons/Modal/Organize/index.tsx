@@ -30,7 +30,7 @@ export const OrganizePosts = ({ _data }: IOrgPosts) => {
 
   useEffect(() => {
     if (watch!('chosenId'))
-      setArray([...watch!('chosenId').map((id) => Number(id))]);
+      setArray([...watch!('chosenId')?.map((id) => Number(id))])!;
   }, [setArray, watch!('chosenId')]);
   //
   const open = Boolean(mdoal_ === 'posts');
