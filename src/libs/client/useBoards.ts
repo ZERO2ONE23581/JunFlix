@@ -7,6 +7,11 @@ export const useGetAllBoards = () => {
   const { data } = useSWR<IGetBoards>(`/api/board/all`);
   return { boards: data?.boards!, isBoard: Boolean(data?.boards?.length! > 0) };
 };
+export const useGenreBoards = (genre: string) => {
+  const { data } = useSWR<IGetBoards>(`/api/board/all`);
+  const boards = data?.boards?.filter((e) => e.genre === genre)!;
+  return { boards, isBoard: Boolean(boards?.length! > 0) };
+};
 export const useGetBoards = (host_id: any) => {
   const { user } = useGetUser(host_id);
   const { data } = useSWR<IGetBoards>(`/api/board/all`);

@@ -1,22 +1,24 @@
 import { Svg } from '../Tools/Svg';
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
 import { ITheme } from '../../styles/theme';
+import { useEffect, useState } from 'react';
 import { Ropes } from '../Tools/Title/ropes';
 import { useUser } from '../libs/client/useUser';
 import { Flex, FlexCol } from '../../styles/global';
-import { useCapLetter } from '../libs/client/useTools';
+import { useCapLetter, useCapLetters } from '../libs/client/useTools';
 
-interface IBoardPageHeading extends ITheme {
-  type: string | any;
+interface IPageHeading extends ITheme {
+  _genre?: string;
+  type?: string | any;
 }
-export const PageHeading = ({ type, theme }: IBoardPageHeading) => {
-  console.log(type, '??');
+export const PageHeading = ({ type, theme, _genre }: IPageHeading) => {
   const { username, userId } = useUser();
-  const USERNAME = useCapLetter(username ? username : userId);
   const [txt, setTxt] = useState({ eng: '', kor: '' });
+  const USERNAME = useCapLetter(username ? username : userId);
   useEffect(() => {
-    if (type) {
+    if (_genre) {
+      return setTxt({ eng: `${useCapLetters(_genre)} Boards`, kor: '' });
+    } else if (type) {
       if (type === 'users') return setTxt({ eng: 'HALL of FAME', kor: '' });
       if (type === 'movie') return setTxt({ eng: 'Movies', kor: '영화' });
       if (type === 'all_board') return setTxt({ eng: 'All Boards', kor: '' });
@@ -31,10 +33,11 @@ export const PageHeading = ({ type, theme }: IBoardPageHeading) => {
         return setTxt({ eng: `Upcoming Movies`, kor: `` });
       if (type === 'trending') return setTxt({ eng: `Trending`, kor: `` });
     }
-  }, [type, setTxt, USERNAME]);
-  const svg = (txt: string) => {
-    if (txt === 'users') return 'crown';
-    if (txt === 'all_board' || txt === 'user_board') return 'grid';
+  }, [type, setTxt, USERNAME, _genre, useCapLetters]);
+
+  const svg = () => {
+    if (type === 'users') return 'crown';
+    else if (type === 'all_board' || type === 'user_board') return 'grid';
     else return 'film';
   };
   return (
@@ -46,7 +49,16 @@ export const PageHeading = ({ type, theme }: IBoardPageHeading) => {
             <span>{txt.eng}</span>
             <span className="kor">{txt.kor}</span>
           </span>
-          <Svg theme={theme} type={svg(type)!} />
+          {!_genre && <Svg theme={theme} type={svg()!} />}
+          {_genre === 'drama' && <Svg theme={theme} type={'drama'} />}
+          {_genre === 'action' && <Svg theme={theme} type={'action'} />}
+          {_genre === 'horror' && <Svg theme={theme} type={'horror'} />}
+          {_genre === 'comedy' && <Svg theme={theme} type={'comedy'} />}
+          {_genre === 'romance' && <Svg theme={theme} type={'romance'} />}
+          {_genre === 'fantasy' && <Svg theme={theme} type={'fantasy'} />}
+          {_genre === 'mystery' && <Svg theme={theme} type={'mystery'} />}
+          {_genre === 'thriller' && <Svg theme={theme} type={'thriller'} />}
+          {_genre === 'adventure' && <Svg theme={theme} type={'adventure'} />}
         </Txt>
       </Wrap>
     </Cont>

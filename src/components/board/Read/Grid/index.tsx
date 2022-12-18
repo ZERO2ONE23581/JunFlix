@@ -10,6 +10,7 @@ import { scaleVar } from '../../../../../styles/variants';
 import { FlexCol, Grid } from '../../../../../styles/global';
 
 interface IBoards {
+  _genre?: string;
   _data: {
     theme: boolean;
     user_id?: number;
@@ -19,20 +20,25 @@ interface IBoards {
     quickSaved?: IPostType[];
   };
 }
-export const BoardsGrid = ({ _data }: IBoards) => {
+export const BoardsGrid = ({ _data, _genre }: IBoards) => {
   const theme = _data?.theme!;
   const boards = _data?.boards!;
   const quickSaved = _data?.quickSaved!;
-  const hideFilter = _data?.hideFilter!;
   const isQuickSaved = Boolean(quickSaved?.length);
+  const hideFilter = Boolean(_data?.hideFilter! || _genre);
   const [genre, setGenre] = useState({ select: false, type: 'all' });
-  const allGenre = Boolean(genre.type === 'all');
-  const genreBoard = boards?.filter((e) => e.genre === genre.type);
-  const Boards = genre.select ? (allGenre ? boards : genreBoard) : boards;
-  const isBoard = Boolean(_data?.isBoard! && Boards.length > 0);
+  const Array = () => {
+    const type = genre.type;
+    const selected = genre.select;
+    if (selected) {
+      if (type === 'all') return boards;
+      else return boards?.filter((e) => e.genre === genre.type);
+    } else return boards;
+  };
+  const isBoard = Boolean(_data?.isBoard! && Array()?.length! > 0);
   return (
     <Cont className="boards_grid">
-      <Icons theme={theme} setGenre={setGenre} hideFilter={hideFilter} />
+      <Icons _data={{ theme, setGenre, hideFilter }} />
       <AnimatePresence>
         {isBoard && (
           <Grid
@@ -55,7 +61,7 @@ export const BoardsGrid = ({ _data }: IBoards) => {
                 }}
               />
             )}
-            {Boards?.map((board) => (
+            {Array()?.map((board) => (
               <GridBox
                 key={board.id}
                 _data={{
@@ -69,6 +75,7 @@ export const BoardsGrid = ({ _data }: IBoards) => {
             ))}
           </Grid>
         )}
+        {!isBoard && <NoData _data={{ theme, isMy: false, type: 'board' }} />}
       </AnimatePresence>
     </Cont>
   );

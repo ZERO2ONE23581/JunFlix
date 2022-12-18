@@ -41,10 +41,10 @@ export const Main = ({ theme, setFixed }: IMain) => {
           <Modal
             _data={{
               theme,
+              setFixed,
               selected,
               setSelected,
               isModal: isModal(el),
-              setFixed,
             }}
           />
         </Array>

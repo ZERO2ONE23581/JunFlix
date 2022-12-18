@@ -8,19 +8,23 @@ import { Answer } from '../../../../../Tools/Modal/answer_modal';
 import { LinkModal } from '../../../../Post/Schema/Grid/Icons/Modal/Link';
 
 interface IBoardIcons {
-  theme: boolean;
-  hideFilter: boolean;
-  setGenre: Dispatch<SetStateAction<{ select: boolean; type: string }>>;
+  _data: {
+    theme: boolean;
+    hideFilter: boolean;
+    setGenre: Dispatch<SetStateAction<{ select: boolean; type: string }>>;
+  };
 }
-export const Icons = ({ theme, setGenre, hideFilter }: IBoardIcons) => {
+export const Icons = ({ _data }: IBoardIcons) => {
   const router = useRouter();
   const [modal, setModal] = useState('');
+  const { theme, setGenre, hideFilter } = _data;
   const onClick = (type: string) => {
-    if (type === 'boards') return router.push(`/all/boards`);
+    if (type === 'boards') return router.push(`/board/all`);
     if (type === 'plus') return router.push(`/board/create`);
     else return setModal(type);
   };
   const closeModal = () => setModal('');
+
   const icons = hideFilter
     ? ['compass', 'question', 'plus', 'boards']
     : ['compass', 'question', 'plus', 'filter'];

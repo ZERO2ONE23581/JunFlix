@@ -3,13 +3,12 @@ import { Title } from './Title';
 import { Detail } from './Detail';
 import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { IBoardType } from '../../../../types/board';
 import { TrimText } from '../../../../Tools/trimText';
+import { FlexCol } from '../../../../../styles/global';
 import { OnPrivateBtn } from '../../../../Tools/Private';
 import { useUser } from '../../../../libs/client/useUser';
-import { hoverBgVars } from '../../../../../styles/variants';
 
 interface IBoardBox {
   _mode: {
@@ -60,40 +59,8 @@ export const Board = ({ _data, _mode, _follow }: IBoardBox) => {
     </>
   );
 };
-const Box = styled(motion.article)`
+const Box = styled(FlexCol)`
   gap: 1.1rem;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
   padding-top: 1rem;
-  .box-btns {
-    gap: 1rem;
-    width: fit-content;
-    //border: 2px solid yellow;
-    .box-btn {
-      gap: 0.5rem;
-      width: fit-content;
-      //border: 2px solid blue;
-      .name {
-        width: fit-content;
-        font-size: 1rem;
-        text-align: center;
-        height: fit-content;
-        //border: 2px solid blue;
-      }
-      > div {
-        cursor: pointer;
-        width: 4.4rem;
-        height: 4.4rem;
-        border-radius: 10px;
-        svg {
-          pointer-events: none;
-        }
-      }
-    }
-  }
+  justify-content: center;
 `;
-const boxBtnVar = {
-  ...hoverBgVars,
-};

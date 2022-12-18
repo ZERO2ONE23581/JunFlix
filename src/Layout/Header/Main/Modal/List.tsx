@@ -21,12 +21,38 @@ export const ListModal = ({ _data }: IListModal) => {
   const { user_id, isLoggedIn } = useUser();
   const { type, selected, setSelected, setCreatePost, isMovie, isBoard } =
     _data;
+  const Text = (txt: string) => {
+    const isHideTxt =
+      isBoard && !Boolean(txt === 'all' || txt === 'my' || txt === 'create');
+    if (isMovie) {
+      if (txt === 'tv') return `TV Shows`;
+      if (txt === 'top') return `Classics`;
+      if (txt === 'all') return `All Movies`;
+      if (txt === 'now') return `Now Playing`;
+      if (txt === 'upcoming') return `Upcoming`;
+      if (txt === 'trending') return `Trending`;
+    } else if (txt === 'quick') return useCapLetters(`Quick Saved`);
+    else if (isHideTxt) return useCapLetters(`${txt} `);
+    else return useCapLetters(`${txt} ${selected}`);
+  };
+  const isGenre = Boolean(
+    type === 'drama' ||
+      type === 'action' ||
+      type === 'horror' ||
+      type === 'comedy' ||
+      type === 'romance' ||
+      type === 'fantasy' ||
+      type === 'mystery' ||
+      type === 'thriller' ||
+      type === 'adventure'
+  );
   const onClick = () => {
     setSelected('');
     const noNeedToLogin = Boolean(type === 'all' || isMovie);
     if (!isLoggedIn && !noNeedToLogin) return router.push('/login');
     if (Boolean(isMovie)) return router.push(`/movie/${type}`);
     else if (isBoard) {
+      if (isGenre) return router.push(`/board/all/${type}`);
       if (type === 'all') return router.push(`/board/all`);
       if (type === 'create') return router.push(`/board/create`);
       if (type === 'my') return router.push(`/user/${user_id}/boards`);
@@ -37,18 +63,6 @@ export const ListModal = ({ _data }: IListModal) => {
       if (type === 'quick')
         return router.push(`/user/${user_id}/posts/quick_saved`);
     }
-  };
-  const Text = (txt: string) => {
-    if (isMovie) {
-      if (txt === 'tv') return `TV Shows`;
-      if (txt === 'top') return `Classics`;
-      if (txt === 'all') return `All Movies`;
-      if (txt === 'now') return `Now Playing`;
-      if (txt === 'upcoming') return `Upcoming`;
-      if (txt === 'trending') return `Trending`;
-    }
-    if (txt === 'quick') return useCapLetters(`Quick Saved`);
-    else return useCapLetters(`${txt} ${selected}`);
   };
   return (
     <Cont

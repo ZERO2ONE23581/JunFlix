@@ -23,10 +23,21 @@ export const Modal = ({ _data }: IMenuModal) => {
     setSelected('');
     setCreatePost(false);
   };
-  const boards = ['all', 'my', 'create'];
-  const posts = ['all', 'my', , 'quick', 'create'];
+  const genre = [
+    'drama',
+    'action',
+    'horror',
+    'comedy',
+    'romance',
+    'fantasy',
+    'mystery',
+    'thriller',
+    'adventure',
+  ];
   const isMovie = Boolean(selected === 'movie');
   const isBoard = Boolean(selected === 'board');
+  const posts = ['all', 'my', 'quick', 'create'];
+  const boards = ['all', 'my', 'create', ...genre];
   const movies = ['all', 'trending', 'now', 'tv', 'upcoming', 'top'];
   const arr = isMovie ? movies : isBoard ? boards : posts;
   const _list = { isMovie, isBoard, selected, setSelected, setCreatePost };

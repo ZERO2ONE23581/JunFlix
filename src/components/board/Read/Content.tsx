@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { Svg } from '../../../Tools/Svg';
 import { NoData } from '../../../Tools/NoData';
 import { PostSchema } from '../../Post/Schema';
 import { CreatePost } from '../../Post/Create';
 import { MsgModal } from '../../../Tools/msg_modal';
-import { useUser } from '../../../libs/client/useUser';
 import { Blur, FlexPage } from '../../../../styles/global';
 import { useGetPosts } from '../../../libs/client/usePosts';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -28,8 +26,6 @@ interface IBoardCnt {
 }
 
 export const BoardContent = ({ _data, _blur, _set }: IBoardCnt) => {
-  const { user_id } = useUser();
-  const router = useRouter();
   const { msg: blur_msg, IsBlur } = _blur;
   const { setFixed, setCreatePost } = _set;
   const { theme, host_id, board_id, createPost } = _data;

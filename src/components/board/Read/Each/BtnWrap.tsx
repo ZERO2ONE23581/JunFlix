@@ -30,12 +30,12 @@ export const BtnWrap = ({ _data, _follow }: IBtnWrap) => {
     else return onClick();
   };
   const clickGen = () => {
-    if (genre) router.push(`/all/${genre}/boards`);
-    else router.push(`/all/boards`);
+    if (genre) router.push(`/board/all/${genre}`);
+    else router.push(`/board/all`);
   };
   return (
-    <Cont className="box-btns">
-      <Btn className="box-btn" onClick={() => router.push(`/all/boards`)}>
+    <Cont>
+      <Btn onClick={() => router.push(`/all/boards`)}>
         <Box
           animate="animate"
           whileHover="hover"
@@ -47,7 +47,7 @@ export const BtnWrap = ({ _data, _follow }: IBtnWrap) => {
         <Name className="name">All Boards</Name>
       </Btn>
 
-      <Btn className="box-btn" onClick={clickGen}>
+      <Btn onClick={clickGen}>
         <Box
           animate="animate"
           whileHover="hover"
@@ -59,7 +59,7 @@ export const BtnWrap = ({ _data, _follow }: IBtnWrap) => {
         <Name className="name"> {useCapLetter(genre ? genre : 'genre')}</Name>
       </Btn>
 
-      <Btn className="box-btn" onClick={handleClick}>
+      <Btn onClick={handleClick}>
         <Box
           animate="animate"
           whileHover="hover"
@@ -81,6 +81,21 @@ const Cont = styled(Flex)`
 const Btn = styled(FlexCol)`
   gap: 0.5rem;
   width: fit-content;
+  .name {
+    width: fit-content;
+    font-size: 1rem;
+    text-align: center;
+    height: fit-content;
+  }
+  > div {
+    width: 4.4rem;
+    height: 4.4rem;
+    cursor: pointer;
+    border-radius: 10px;
+    svg {
+      pointer-events: none;
+    }
+  }
 `;
 const Box = styled(Flex)`
   cursor: pointer;
