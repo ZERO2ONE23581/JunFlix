@@ -9,7 +9,7 @@ import { IBoardForm } from '../../../../types/board';
 import { OverlayBg } from '../../../../Tools/overlay';
 import { PostModal } from '../../../../../styles/post';
 import { ErrModal } from '../../../../Tools/Error/Modal';
-import { MsgModal } from '../../../../Tools/msg_modal';
+import { MsgModal } from '../../../../Tools/Msg';
 import { useUser } from '../../../../libs/client/useUser';
 import { scaleVar } from '../../../../../styles/variants';
 import { useLength } from '../../../../libs/client/useTools';
@@ -44,9 +44,7 @@ export const CreateNewModal = ({ _data }: ICreateNewModal) => {
   const onValid = ({ title }: any) => {
     if (loading) return;
     if (useLength(title) > max)
-      return setError('title', {
-        message: `제목은 ${max}를 초과할수 없습니다.`,
-      });
+      return setError('title', { message: `max_board_title` });
     setLoading(true);
     return post({ title, user_id: host_id, posts });
   };
@@ -62,6 +60,7 @@ export const CreateNewModal = ({ _data }: ICreateNewModal) => {
       }, 1000);
     }
   }, [data, setMsg, setLoading]);
+  console.log(errors.title?.message);
   return (
     <>
       <AnimatePresence>

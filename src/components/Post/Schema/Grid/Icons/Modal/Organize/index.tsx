@@ -4,7 +4,7 @@ import { IPostForm } from '../../../../../../../types/post';
 import { PostsModal } from '../../../../../Organize/PostList';
 import { SelectBoard } from '../../../../../Organize/BoardList';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { CreateNewModal } from '../../../../../Organize/CreateNewBoard';
+import { CreateNewModal } from '../../../../../Organize/NewBoard';
 
 interface IOrgPosts {
   _data: {

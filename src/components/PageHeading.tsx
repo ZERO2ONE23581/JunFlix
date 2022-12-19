@@ -19,11 +19,12 @@ export const PageHeading = ({ type, theme, _genre }: IPageHeading) => {
     if (_genre) {
       return setTxt({ eng: `${useCapLetters(_genre)} Boards`, kor: '' });
     } else if (type) {
+      if (type === 'qs') return setTxt({ eng: 'Quick Saved', kor: '' });
       if (type === 'users') return setTxt({ eng: 'HALL of FAME', kor: '' });
       if (type === 'movie') return setTxt({ eng: 'Movies', kor: '영화' });
       if (type === 'all_board') return setTxt({ eng: 'All Boards', kor: '' });
-      if (type === 'user_board')
-        return setTxt({ eng: `${USERNAME}'s Boards`, kor: '' });
+      if (type === 'user_posts')
+        return setTxt({ eng: `${USERNAME}'s Posts`, kor: '' });
       if (type === 'user_board')
         return setTxt({ eng: `${USERNAME}'s Board`, kor: `` });
       if (type === 'tv') return setTxt({ eng: `TV Shows`, kor: `` });
@@ -37,6 +38,7 @@ export const PageHeading = ({ type, theme, _genre }: IPageHeading) => {
 
   const svg = () => {
     if (type === 'users') return 'crown';
+    else if (type === 'qs') return 'posts';
     else if (type === 'all_board' || type === 'user_board') return 'grid';
     else return 'film';
   };

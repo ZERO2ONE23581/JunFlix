@@ -9,11 +9,12 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IRes } from '../../../types/global';
 import { AnimatePresence } from 'framer-motion';
-import { MsgModal } from '../../../Tools/msg_modal';
+import { MsgModal } from '../../../Tools/Msg';
 import { Box, Flex } from '../../../../styles/global';
 import { useUser } from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
+import { ErrModal } from '../../../Tools/Error/Modal';
 
 interface IBoxType {
   _data: {
@@ -33,16 +34,6 @@ export const BoxType = ({ _data }: IBoxType) => {
   const [Loading, setLoading] = useState(false);
   const [delAcct, setDelAcct] = useState(false);
   const [update, { loading, data }] = useMutation<IRes>(api && api);
-  const __data = {
-    User,
-    type,
-    update,
-    theme,
-    delAcct,
-    loading,
-    setDelAcct,
-    setLoading,
-  };
   useEffect(() => {
     if (type && user_id) {
       if (type === 'delete') setApi(`/api/user/${user_id}/delete`);
@@ -55,45 +46,54 @@ export const BoxType = ({ _data }: IBoxType) => {
       setTimeout(() => {
         setLoading(false);
         if (!data.ok) {
-          if (data.error) setMsg(data.error);
           if (data.msg) setMsg(data.msg);
+          if (data.error) setMsg(data.error);
         }
-        if (data.ok) {
-          setMsg('update_user');
-          if (type === 'delete') return router.replace(`/home`);
-          setTimeout(() => {
-            router.reload();
-          }, 1000);
-        }
+        if (data.ok && type === 'delete') return router.replace(`/`);
       }, 1000);
     }
   }, [data, type, router, setMsg, setLoading]);
 
+  const __data = {
+    User,
+    type,
+    update,
+    theme,
+    delAcct,
+    loading,
+    setDelAcct,
+    setLoading,
+    data_err: msg,
+  };
+  const layoutId = 'user_setting';
   return (
     <>
-      <AnimatePresence initial={false} custom={back}>
-        <Cont
-          key={page}
-          custom={back}
-          variants={slideVar}
-          exit="exit"
-          initial="initial"
-          animate="animate"
-        >
-          {!Loading && (
-            <Box>
-              <Title _data={{ theme, type, delAcct, setDelAcct }} />
-              <Email _data={__data} />
-              <Password _data={__data} />
-              <UserInfo _data={__data} />
-              <UserAvatar _data={__data} />
-              <DeleteUser _data={__data} />
-            </Box>
-          )}
-          <MsgModal _data={{ msg, theme, layoutId: 'user_setting' }} />
-          {Loading && <LoadingModal theme={theme} />}
-        </Cont>
-      </AnimatePresence>
+      <>
+        <AnimatePresence initial={false} custom={back}>
+          <Cont
+            key={page}
+            custom={back}
+            variants={slideVar}
+            exit="exit"
+            initial="initial"
+            animate="animate"
+          >
+            {!Loading && (
+              <Box>
+                <Title _data={{ theme, type, delAcct, setDelAcct }} />
+                <Email _data={__data} />
+                <Password _data={__data} />
+                <UserInfo _data={__data} />
+                <UserAvatar _data={__data} />
+                <DeleteUser _data={__data} />
+              </Box>
+            )}
+          </Cont>
+        </AnimatePresence>
+        <ErrModal _data={{ theme, error: msg }} />
+        <MsgModal _data={{ msg: data?.msg!, theme, layoutId }} />
+        {Loading && <LoadingModal theme={theme} layoutId={layoutId} />}
+      </>
     </>
   );
 };
@@ -105,7 +105,11 @@ const Cont = styled(Flex)`
   margin: 0 auto;
   width: fit-content;
   position: absolute;
+  .overlay {
+    // background-color: palevioletred;
+  }
 `;
+
 const slideVar = {
   initial: (back: boolean) => ({
     scale: 0,

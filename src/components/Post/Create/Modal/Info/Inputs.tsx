@@ -20,7 +20,7 @@ export const PostInputs = ({ _useform, theme }: IPostInputs) => {
     register: register!(id, { required }),
   });
   const __title = {
-    ...__data('title', '제목을 입력하세요'),
+    ...__data('title', 'need_title'),
     error: errors?.title?.message!,
   };
   const __desc = {

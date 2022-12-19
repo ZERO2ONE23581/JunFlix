@@ -1,20 +1,20 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../Tools/Svg';
-import { Btn } from '../../Tools/Button';
+import { Svg } from '../../../Tools/Svg';
+import { Btn } from '../../../Tools/Button';
 import { useForm } from 'react-hook-form';
-import { IForm } from '../../types/global';
-import { Avatar } from '../../Tools/Avatar';
-import { InputWrap } from '../../Tools/Input';
-import { IBoardType } from '../../types/board';
-import { OverlayBg } from '../../Tools/overlay';
-import { scaleVar } from '../../../styles/variants';
-import { useUser } from '../../libs/client/useUser';
-import { SelectWrap } from '../../Tools/Input/Select';
+import { IForm } from '../../../types/global';
+import { Avatar } from '../../../Tools/Avatar';
+import { InputWrap } from '../../../Tools/Input';
+import { IBoardType } from '../../../types/board';
+import { OverlayBg } from '../../../Tools/overlay';
+import { scaleVar } from '../../../../styles/variants';
+import { useUser } from '../../../libs/client/useUser';
+import { SelectWrap } from '../../../Tools/Input/Select';
 import { AnimatePresence, motion } from 'framer-motion';
-import { TextAreaWrap } from '../../Tools/Input/TextArea';
+import { TextAreaWrap } from '../../../Tools/Input/TextArea';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { Flex, Modal, SetPrivate } from '../../../styles/global';
-import { useCapLetters, useTextLimit } from '../../libs/client/useTools';
+import { Flex, Modal, SetPrivate } from '../../../../styles/global';
+import { useCapLetters, useLength } from '../../../libs/client/useTools';
 
 export interface ITypeModal {
   _data: {
@@ -61,15 +61,12 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
 
   const onValid = async ({ title, genre, onPrivate, description }: IForm) => {
     const user_id = loggedInUser?.id;
-    const { ok } = useTextLimit({
-      _data: {
-        setError,
-        max: [50, 700],
-        texts: [title, description!],
-        types: ['title', 'description'],
-      },
-    });
-    if (!ok) return;
+    const title_len = useLength(title);
+    const desc_len = useLength(description!);
+    if (title_len >= 30)
+      return setError('title', { message: 'max_board_title' });
+    if (desc_len >= 700)
+      return setError('description', { message: 'max_board_desc' });
     setLoading(true);
     if (loading) return;
     return post({ title, genre, onPrivate, description, user_id });
@@ -107,7 +104,7 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
                     text: watch('title'),
                     error: errors.title?.message!,
                     register: register('title', {
-                      required: '제목을 입력하세요.',
+                      required: 'need_title',
                     }),
                   }}
                 />

@@ -6,15 +6,15 @@ import { withApiSession } from '../../../../../src/libs/server/withSession';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session;
   const { user_id } = req.query;
-  if (!user) return res.json({ ok: false, error: 'must login.' });
-  if (!user_id) return res.json({ ok: false, error: 'query missed.' });
+  if (!user) return res.json({ ok: false, error: 'must_login.' });
+  if (!user_id) return res.json({ ok: false, error: 'query_miss' });
 
   const target = await client.user.findUnique({
     where: { id: +user_id.toString() },
   });
-  if (!target) return res.json({ ok: false, error: 'no user found.' });
+  if (!target) return res.json({ ok: false, error: 'no_data' });
   const isMatch = Boolean(user?.id === target.id);
-  if (!isMatch) return res.json({ ok: false, error: 'user no matched.' });
+  if (!isMatch) return res.json({ ok: false, error: 'invalid_host' });
 
   const isPrivate = target.onPrivate;
   if (isPrivate) {

@@ -9,6 +9,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Overlay } from '../../../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useUser } from '../../../../../libs/client/useUser';
+import { OverlayBg } from '../../../../../Tools/overlay';
 
 interface ISettingModal {
   _data: {
@@ -86,12 +87,7 @@ export const SettingModal = ({ _data }: ISettingModal) => {
               </List>
             </ul>
           </Cont>
-          <Overlay
-            zindex={1}
-            exit={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            onClick={() => setModal(false)}
-          />
+          <OverlayBg zIndex={1} closeModal={() => setModal(false)} />
         </>
       )}
     </AnimatePresence>

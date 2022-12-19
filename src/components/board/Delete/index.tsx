@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { Svg } from '../../Tools/Svg';
-import { Btn } from '../../Tools/Button';
+import { Svg } from '../../../Tools/Svg';
+import { Btn } from '../../../Tools/Button';
 import { useForm } from 'react-hook-form';
-import { IForm } from '../../types/global';
-import { InputWrap } from '../../Tools/Input';
-import { OverlayBg } from '../../Tools/overlay';
-import { BoardModal, ITypeModal } from './Update';
-import { useUser } from '../../libs/client/useUser';
+import { IForm } from '../../../types/global';
+import { InputWrap } from '../../../Tools/Input';
+import { OverlayBg } from '../../../Tools/overlay';
+import { BoardModal, ITypeModal } from '../Update';
+import { useUser } from '../../../libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
-import { opacityVar, variants } from '../../../styles/variants';
+import { opacityVar, variants } from '../../../../styles/variants';
 
 export const DeleteBoard = ({ _data }: ITypeModal) => {
   const { user_id } = useUser();
@@ -116,9 +116,7 @@ export const DeleteBoard = ({ _data }: ITypeModal) => {
                     clearErrors,
                     text: watch('userId'),
                     error: errors.userId?.message!,
-                    register: register('userId', {
-                      required: '아이디를 입력해주세요.',
-                    }),
+                    register: register('userId', { required: 'need_txt' }),
                   }}
                 />
                 <Btn type="submit" item={{ theme, name: 'Delete' }} />
@@ -166,9 +164,6 @@ const Cont = styled(BoardModal)`
         }
       }
     }
-  }
-  .delete-board-form {
-    border: 2px solid yellow;
   }
 `;
 const Form = styled(motion.form)`

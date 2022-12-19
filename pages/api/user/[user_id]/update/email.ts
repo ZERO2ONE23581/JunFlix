@@ -7,6 +7,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { email } = req.body;
   const { user } = req.session;
   const { user_id } = req.query;
+  const userId = email.slice(0, email.indexOf('@'));
   if (!user) return res.json({ ok: false, error: 'must login.' });
   if (!email) return res.json({ ok: false, error: 'miss_input' });
   if (!user_id) return res.json({ ok: false, error: 'query missed.' });
@@ -23,11 +24,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     select: { id: true },
   });
   const ExistsAlready = Boolean(otherUser && otherUser.id !== target.id);
-  if (ExistsAlready) return res.json({ ok: false, error: 'dup_email.' });
+  if (ExistsAlready) return res.json({ ok: false, error: 'email_exists' });
 
   const isUpdated = Boolean(
-    await client.user.update({ where: { id: target.id }, data: { email } })
+    await client.user.update({
+      where: { id: target.id },
+      data: { email, userId },
+    })
   );
-  return res.json({ ok: isUpdated });
+  return res.json({ ok: isUpdated, msg: 'updated' });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

@@ -1,6 +1,6 @@
 import { Layer } from './Layer';
-import styled from '@emotion/styled';
 import { PostInfo } from './Info';
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { ImageInput } from './Image_Input';
@@ -11,7 +11,11 @@ import { PostModal } from '../../../../../styles/post';
 import { useUser } from '../../../../libs/client/useUser';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { TransBorderVar } from '../../../../../styles/variants';
-import { useTextLimit, useUploadImg } from '../../../../libs/client/useTools';
+import {
+  useLength,
+  useTextLimit,
+  useUploadImg,
+} from '../../../../libs/client/useTools';
 
 interface ICreatePostModal {
   _data: {
@@ -25,40 +29,39 @@ interface ICreatePostModal {
   };
 }
 export const Modal = ({ _data }: ICreatePostModal) => {
-  const router = useRouter();
-  const { board_id } = router.query;
-  const post = _data?.post!;
-  const theme = _data?.theme!;
-  const modal = _data?.modal!;
-  const loading = _data?.loading!;
-  const close = _data?.closeModal!;
-  const layoutId = _data?.layoutId!;
-  const setLoading = _data?.setLoading!;
-  //
-  const { loggedInUser, isLoggedIn } = useUser();
+  const {
+    post,
+    theme,
+    modal,
+    loading,
+    layoutId,
+    setLoading,
+    closeModal: close,
+  } = _data;
   const {
     reset,
     watch,
-    register,
     setError,
+    register,
     clearErrors,
     handleSubmit,
     formState: { errors },
   } = useForm<IPostForm>({
     mode: 'onSubmit',
   });
+  const router = useRouter();
+  const { board_id } = router.query;
+  const { loggedInUser, isLoggedIn } = useUser();
   const onValid = async (inputs: IPostForm) => {
     if (loading) return;
     if (!isLoggedIn) return;
-    const { ok } = useTextLimit({
-      _data: {
-        setError,
-        max: [50, 1000],
-        types: ['title', 'description'],
-        texts: [inputs.title, inputs.description!],
-      },
-    });
-    if (!ok) return;
+    const title_len = useLength(inputs.title);
+    const desc_len = useLength(inputs.description!);
+    if (title_len >= 50)
+      return setError('title', { message: 'max_post_title' });
+    if (desc_len >= 1000)
+      return setError('description', { message: 'max_post_desc' });
+    //
     setLoading(true);
     const option = (inputs: any) => {
       const { hashtags, pageLink } = inputs;
@@ -89,6 +92,7 @@ export const Modal = ({ _data }: ICreatePostModal) => {
   const layer_data = { ...__data, setStep, closeModal };
   const _useform = { watch, errors, register, clearErrors };
   const ImageInput_data = { ...__data, _useform, isCreate: true };
+
   return (
     <AnimatePresence>
       {modal && (

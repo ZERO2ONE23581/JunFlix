@@ -6,7 +6,7 @@ import { IRes } from '../../../../types/global';
 import { AnimatePresence } from 'framer-motion';
 import { IUserForm } from '../../../../types/user';
 import { InputWrap } from '../../../../Tools/Input';
-import { MsgModal } from '../../../../Tools/msg_modal';
+import { MsgModal } from '../../../../Tools/Msg';
 import { Box, Form } from '../../../../../styles/global';
 import { ErrMsg } from '../../../../Tools/Error/Message';
 import { variants } from '../../../../../styles/variants';
@@ -56,38 +56,40 @@ export const VerifyID = ({ _data }: IVerfiyID) => {
 
   return (
     <AnimatePresence>
-      {isBox && !Loading && (
-        <>
-          <Cont
-            exit="exit"
-            initial="initial"
-            animate="animate"
-            className="loading"
-            custom={theme}
-            variants={variants}
-          >
-            <Title theme={theme} type="password" />
-            <Form onSubmit={handleSubmit(onValid)}>
-              <InputWrap
-                _data={{
-                  theme,
-                  clearErrors,
-                  id: 'userId',
-                  type: 'text',
-                  label: 'userId',
-                  text: watch('userId')!,
-                  register: register('userId', { required: 'need_userId' }),
-                }}
-              />
-              <ErrMsg theme={theme} error={errors.userId?.message!} />
-              <Btn item={{ theme, name: 'Submit' }} type="submit" />
-            </Form>
-            <FindUser theme={theme} />
-          </Cont>
-        </>
-      )}
-      <MsgModal _data={{ msg, theme, layoutId }} />
-      {isBox && Loading && <LoadingModal theme={theme} />}
+      <>
+        {isBox && !Loading && (
+          <>
+            <Cont
+              exit="exit"
+              initial="initial"
+              animate="animate"
+              className="loading"
+              custom={theme}
+              variants={variants}
+            >
+              <Title theme={theme} type="password" />
+              <Form onSubmit={handleSubmit(onValid)}>
+                <InputWrap
+                  _data={{
+                    theme,
+                    clearErrors,
+                    id: 'userId',
+                    type: 'text',
+                    label: 'userId',
+                    text: watch('userId')!,
+                    register: register('userId', { required: 'need_userId' }),
+                  }}
+                />
+                <ErrMsg theme={theme} error={errors.userId?.message!} />
+                <Btn item={{ theme, name: 'Submit' }} type="submit" />
+              </Form>
+              <FindUser theme={theme} />
+            </Cont>
+          </>
+        )}
+        <MsgModal _data={{ msg, theme, layoutId }} />
+        {isBox && Loading && <LoadingModal theme={theme} />}
+      </>
     </AnimatePresence>
   );
 };

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { Btn } from '../../../Tools/Button';
-import { Form } from '../../../../styles/global';
-import { InputWrap } from '../../../Tools/Input';
-import { ErrMsg } from '../../../Tools/Error/Message';
-import { IUpdateUser, IUserForm } from '../../../types/user';
 import styled from '@emotion/styled';
+import { useForm } from 'react-hook-form';
+import { Btn } from '../../../../Tools/Button';
+import { Form } from '../../../../../styles/global';
+import { InputWrap } from '../../../../Tools/Input';
+import { ErrMsg } from '../../../../Tools/Error/Message';
+import { IUpdateUser, IUserForm } from '../../../../types/user';
 
 export const Email = ({ _data }: IUpdateUser) => {
   const { User, type, update, theme, loading, setLoading } = _data;

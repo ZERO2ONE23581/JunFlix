@@ -5,7 +5,7 @@ import { IRes } from '../../../../types/global';
 import { UseFormHandleSubmit } from 'react-hook-form';
 import { OverlayBg } from '../../../../Tools/overlay';
 import { PostModal } from '../../../../../styles/post';
-import { MsgModal } from '../../../../Tools/msg_modal';
+import { MsgModal } from '../../../../Tools/Msg';
 import { scaleVar } from '../../../../../styles/variants';
 import useMutation from '../../../../libs/client/useMutation';
 import { IPostForm, IPostType } from '../../../../types/post';

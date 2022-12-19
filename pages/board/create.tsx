@@ -7,7 +7,7 @@ import { IRes } from '../../src/types/global';
 import { variants } from '../../styles/variants';
 import { IBoardForm } from '../../src/types/board';
 import { Head_ } from '../../src/Tools/head_title';
-import { MsgModal } from '../../src/Tools/msg_modal';
+import { MsgModal } from '../../src/Tools/Msg';
 import { useUser } from '../../src/libs/client/useUser';
 import { Box, FlexPage, Form } from '../../styles/global';
 import { useLogin } from '../../src/libs/client/useLogin';
@@ -39,13 +39,13 @@ const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
   const error = errors.title?.message!;
   const onValid = async ({ title, genre, description }: IBoardForm) => {
     if (loading) return;
-    setLoading(true);
-    const desc_len = useLength(title);
     const title_len = useLength(title);
-    if (title_len > 30)
+    const desc_len = useLength(description!);
+    if (title_len >= 30)
       return setError('title', { message: 'max_board_title' });
-    if (desc_len > 700)
+    if (desc_len >= 700)
       return setError('description', { message: 'max_board_desc' });
+    setLoading(true);
     return POST({ title, genre, user_id, posts: [], description });
   };
 
@@ -87,8 +87,8 @@ const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
                   label: 'Description',
                   text: watch('description'),
                   placeholder: 'Fill this blank...',
+                  register: register('description'),
                   error: errors.description?.message,
-                  register: register('description', { required: 'need_txt' }),
                 }}
               />
             </Form>

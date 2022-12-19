@@ -2,9 +2,9 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../styles/global';
 import { Head_ } from '../../../src/Tools/head_title';
-import { BoardsGrid } from '../../../src/components/Board/Read/Grid';
-import { useGetAllBoards } from '../../../src/libs/client/useBoards';
 import { PageHeading } from '../../../src/components/PageHeading';
+import { useGetAllBoards } from '../../../src/libs/client/useBoards';
+import { BoardsGrid } from '../../../src/components/Board/Read/Grid';
 
 const AllBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { boards, isBoard } = useGetAllBoards();

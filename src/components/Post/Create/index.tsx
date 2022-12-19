@@ -1,12 +1,12 @@
 import { Modal } from './Modal';
 import { SelectModal } from './Select';
 import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { MsgModal } from '../../../Tools/msg_modal';
+import { MsgModal } from '../../../Tools/Msg';
 import { ICreatePostRes } from '../../../types/post';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface ICreatePost {
   _data: {

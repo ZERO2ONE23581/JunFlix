@@ -20,6 +20,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const isUpdated = Boolean(
     await client.user.update({ where: { id: target.id }, data: { avatar } })
   );
-  return res.json({ ok: isUpdated });
+  return res.json({ ok: isUpdated, msg: 'updated' });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

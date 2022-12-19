@@ -1,17 +1,18 @@
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
-import { Btn } from '../../../Tools/Button';
 import { useEffect, useState } from 'react';
-import { BtnWrap, Form } from '../../../../styles/global';
-import { AvatarInput } from '../../../Tools/Avatar/Input';
-import { useUploadImg } from '../../../libs/client/useTools';
-import { IUpdateUser, IUserForm } from '../../../types/user';
+import { Btn } from '../../../../Tools/Button';
+import { BtnWrap, Form } from '../../../../../styles/global';
+import { AvatarInput } from '../../../../Tools/Avatar/Input';
+import { useUploadImg } from '../../../../libs/client/useTools';
+import { IUpdateUser, IUserForm } from '../../../../types/user';
 
 export const UserAvatar = ({ _data }: IUpdateUser) => {
   const { User, type, update, theme, loading, setLoading } = _data;
-  const { watch, reset, register, handleSubmit } = useForm<IUserForm>({
-    mode: 'onSubmit',
-  });
+  const { watch, reset, register, handleSubmit, clearErrors } =
+    useForm<IUserForm>({
+      mode: 'onSubmit',
+    });
   const avatar = watch('avatar');
   const [preview, setPreview] = useState('');
   const [delAvatar, setDelAvatar] = useState(false);

@@ -15,25 +15,23 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       where: { email },
       select: { id: true, userId: true, password: true },
     });
-    if (!user)
-      return res.json({ ok: false, error: '존재하지 않는 아이디 입니다.' });
+    if (!user) return res.json({ ok: false, error: 'email_not_exists' });
 
     //password check
     const isMatch = await bcrypt.compare(password, user.password!);
-    if (!isMatch)
-      return res.json({ ok: false, error: '비밀번호가 일치하지 않습니다.' });
+    if (!isMatch) return res.json({ ok: false, error: 'invalid_pw' });
 
     //save user_id in Cookie session
     req.session.user = {
       id: user.id,
     };
     await req.session.save();
-    return res.json({ ok: true });
+    return res.json({ ok: true, msg: 'logged' });
   }
 
   if (req.method === 'GET') {
     const { user } = req.session;
-    if (!user) return res.json({ ok: false, error: 'no loggedin user.' });
+    if (!user) return res.json({ ok: false, error: 'no_data' });
     const loggedInUser = await client.user.findUnique({
       where: { id: +user?.id.toString() },
       include: {

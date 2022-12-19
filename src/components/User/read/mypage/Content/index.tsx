@@ -22,7 +22,6 @@ export const UserContent = ({ _data }: IUserContent) => {
   const { theme, setFixed, clicked } = _data;
   const host_id = Number(router.query.user_id!);
   const isMy = Boolean(user_id === host_id);
-  //console.log(user_id, host_id, isMy);
   const [createPost, setCreatePost] = useState(false);
   const closeModal = () => {
     setFixed(false);

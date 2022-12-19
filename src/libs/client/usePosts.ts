@@ -10,8 +10,8 @@ export interface IUseGetAllPosts {
 }
 interface IUseGetPosts {
   isQs?: boolean;
-  host_id: number | string;
-  board_id: number | string;
+  host_id: number;
+  board_id: number;
 }
 interface useGetLikedPosts {
   host_id: number | string;

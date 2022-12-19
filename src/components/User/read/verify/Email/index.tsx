@@ -1,19 +1,19 @@
 import { Title } from '../Title';
 import styled from '@emotion/styled';
+import { FindUser } from '../../../Find';
 import { useForm } from 'react-hook-form';
 import { AnimatePresence } from 'framer-motion';
 import { Btn } from '../../../../../Tools/Button';
 import { IRes } from '../../../../../types/global';
 import { IUserForm } from '../../../../../types/user';
 import { InputWrap } from '../../../../../Tools/Input';
-import { MsgModal } from '../../../../../Tools/msg_modal';
+import { MsgModal } from '../../../../../Tools/Msg';
 import { Box, Form } from '../../../../../../styles/global';
 import { ErrMsg } from '../../../../../Tools/Error/Message';
 import { variants } from '../../../../../../styles/variants';
 import useMutation from '../../../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { LoadingModal } from '../../../../../Tools/Modal/loading_modal';
-import { FindUser } from '../../../Find';
 
 interface IVerifyEmail {
   _data: {
@@ -51,45 +51,47 @@ export const Email = ({ _data }: IVerifyEmail) => {
       }, 1000);
     }
   }, [data, setToken, setMsg, setLoading, setTimeout]);
-
+  console.log(data);
   return (
     <AnimatePresence>
-      {isBox && !Loading && (
-        <Cont
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          className="loading"
-          custom={theme}
-          variants={variants}
-        >
-          <Title theme={theme} type="email" />
-          <Form onSubmit={handleSubmit(onValid)}>
-            <InputWrap
-              _data={{
-                theme,
-                clearErrors,
-                id: 'email',
-                type: 'text',
-                label: 'email',
-                text: watch('email'),
-                register: register('email', {
-                  required: 'need_email',
-                  pattern: {
-                    value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                    message: '이메일 형식이 올바르지 않습니다.',
-                  },
-                }),
-              }}
-            />
-            <ErrMsg theme={theme} error={errors.email?.message!} />
-            <Btn item={{ theme, name: 'Submit' }} type="submit" />
-          </Form>
-          <FindUser theme={theme} />
-        </Cont>
-      )}
-      <MsgModal _data={{ msg, theme, layoutId }} />
-      {isBox && Loading && <LoadingModal theme={theme} />}
+      <>
+        {isBox && !Loading && (
+          <Cont
+            exit="exit"
+            initial="initial"
+            animate="animate"
+            className="loading"
+            custom={theme}
+            variants={variants}
+          >
+            <Title theme={theme} type="email" />
+            <Form onSubmit={handleSubmit(onValid)}>
+              <InputWrap
+                _data={{
+                  theme,
+                  clearErrors,
+                  id: 'email',
+                  type: 'text',
+                  label: 'email',
+                  text: watch('email'),
+                  register: register('email', {
+                    required: 'need_email',
+                    pattern: {
+                      value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                      message: '이메일 형식이 올바르지 않습니다.',
+                    },
+                  }),
+                }}
+              />
+              <ErrMsg theme={theme} error={errors.email?.message!} />
+              <Btn item={{ theme, name: 'Submit' }} type="submit" />
+            </Form>
+            <FindUser theme={theme} />
+          </Cont>
+        )}
+        <MsgModal _data={{ msg, theme, layoutId }} />
+        {isBox && Loading && <LoadingModal theme={theme} />}
+      </>
     </AnimatePresence>
   );
 };

@@ -3,7 +3,7 @@ import { Svg } from '../../../Tools/Svg';
 import { NoData } from '../../../Tools/NoData';
 import { PostSchema } from '../../Post/Schema';
 import { CreatePost } from '../../Post/Create';
-import { MsgModal } from '../../../Tools/msg_modal';
+import { MsgModal } from '../../../Tools/Msg';
 import { Blur, FlexPage } from '../../../../styles/global';
 import { useGetPosts } from '../../../libs/client/usePosts';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';

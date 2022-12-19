@@ -5,7 +5,7 @@ import { Btn } from '../../../Tools/Button';
 import { IPostType } from '../../../types/post';
 import { Modal } from '../../../../styles/global';
 import { color } from '../../../../styles/variants';
-import { MsgModal } from '../../../Tools/msg_modal';
+import { MsgModal } from '../../../Tools/Msg';
 import { OverlayBg } from '../../../Tools/overlay';
 import { useUser } from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';

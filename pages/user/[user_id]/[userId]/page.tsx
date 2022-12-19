@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import { Svg } from '../../../../src/Tools/Svg';
 import { Blur, Page } from '../../../../styles/global';
 import { Head_ } from '../../../../src/Tools/head_title';
-import { MsgModal } from '../../../../src/Tools/msg_modal';
+import { MsgModal } from '../../../../src/Tools/Msg';
 import { useLogin } from '../../../../src/libs/client/useLogin';
 import { useCapLetter } from '../../../../src/libs/client/useTools';
 import { Host } from '../../../../src/components/User/Read/MyPage/Host';

@@ -1,4 +1,4 @@
-import { MsgModal } from '../msg_modal';
+import { MsgModal } from '../Msg';
 import { useRouter } from 'next/router';
 import { IRes } from '../../types/global';
 import { useEffect, useState } from 'react';
@@ -14,7 +14,7 @@ interface IBoardSchema {
     modal: boolean;
     theme: boolean;
     board: IBoardType;
-    closeBoard: () => void;
+    closeModal: () => void;
   };
 }
 export const BoardSchema = ({ _data }: IBoardSchema) => {
@@ -24,7 +24,7 @@ export const BoardSchema = ({ _data }: IBoardSchema) => {
   const [layoutId, setLayoutId] = useState('');
   const [Loading, setLoading] = useState(false);
   const [post, { data, loading }] = useMutation<IRes>(api && api);
-  const { type, modal, theme, board: original, closeBoard } = _data;
+  const { type, modal, theme, board: original, closeModal } = _data;
   const open = (Type: string) => Boolean(modal && !Loading && type === Type);
   const __data = {
     post,
@@ -32,8 +32,8 @@ export const BoardSchema = ({ _data }: IBoardSchema) => {
     loading,
     original,
     layoutId,
+    closeModal,
     setLoading,
-    closeModal: closeBoard,
   };
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export const BoardSchema = ({ _data }: IBoardSchema) => {
           }, 2000);
         }
         if (data.ok) {
-          closeBoard();
+          closeModal();
           if (type === 'update-board') {
             setMsg('updated');
             setTimeout(() => {
@@ -65,13 +65,13 @@ export const BoardSchema = ({ _data }: IBoardSchema) => {
           if (type === 'delete-board') {
             setMsg('deleted');
             setTimeout(() => {
-              return router.replace(`/all/boards`);
+              return router.replace(`/board/all`);
             }, 1000);
           }
         }
       }, 1000);
     }
-  }, [type, data, setLoading, setTimeout, router, setMsg, closeBoard]);
+  }, [type, data, setLoading, setTimeout, router, setMsg, closeModal]);
   return (
     <>
       <UpdateBoard _data={{ ...__data, open: open('update-board') }} />

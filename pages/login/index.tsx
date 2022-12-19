@@ -10,7 +10,7 @@ import { IUserForm } from '../../src/types/user';
 import { InputWrap } from '../../src/Tools/Input';
 import { AnimatePresence } from 'framer-motion';
 import { Head_ } from '../../src/Tools/head_title';
-import { MsgModal } from '../../src/Tools/msg_modal';
+import { MsgModal } from '../../src/Tools/Msg';
 import { ErrMsg } from '../../src/Tools/Error/Message';
 import { Box, FlexPage, Form } from '../../styles/global';
 import { FindUser } from '../../src/components/User/Find';
@@ -35,13 +35,8 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
   };
   useEffect(() => {
     if (data) {
-      if (data?.error) {
-        setMsg(data.error);
-        setTimeout(() => {
-          return setMsg('');
-        }, 2000);
-      }
-      if (data?.ok) router.replace('/');
+      if (data?.msg) return setMsg(data.msg);
+      if (data?.error) return setMsg(data.error);
     }
   }, [data, router, setMsg, setTimeout]);
   //
@@ -104,7 +99,7 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
               </Box>
             </>
           )}
-          {loading && <LoadingModal theme={theme} />}
+          {loading && <LoadingModal theme={theme} layoutId="login" />}
           <MsgModal _data={{ msg, theme, layoutId: 'login' }} />
         </Cont>
       </AnimatePresence>

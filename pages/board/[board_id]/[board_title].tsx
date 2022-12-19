@@ -27,7 +27,7 @@ const BoardPage: NextPage<IPage> = ({ theme, setFixed }) => {
   const [createPost, setCreatePost] = useState(false);
   const host_id = board?.host_id!;
   const modal = Boolean(type && isMyBoard);
-  const closeBoard = () => {
+  const closeModal = () => {
     setType('');
     setFixed(false);
   };
@@ -67,7 +67,7 @@ const BoardPage: NextPage<IPage> = ({ theme, setFixed }) => {
                 _mode={{ onPrivate: isPrivate('board')!, onMode }}
                 _data={{ theme, board, setType, setCreatePost, setFixed }}
               />
-              <BoardSchema _data={{ type, modal, theme, board, closeBoard }} />
+              <BoardSchema _data={{ type, modal, theme, board, closeModal }} />
               <BoardContent
                 _set={{ setFixed, setCreatePost }}
                 _data={{ theme, host_id, board_id, createPost }}

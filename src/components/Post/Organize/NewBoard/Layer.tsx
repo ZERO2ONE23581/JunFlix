@@ -10,12 +10,7 @@ export const Layer = ({ theme, closeModal }: ILayer) => {
   return (
     <Layer_ className="layer">
       <div>
-        <Svg
-          theme={theme}
-          type="left-chev"
-          onClick={closeModal}
-          //item={{ size: '1.7rem' }}
-        />
+        <Svg theme={theme} type="left-chev" onClick={closeModal} />
       </div>
       <div>
         <h1>Create Board</h1>

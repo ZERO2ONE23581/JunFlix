@@ -77,18 +77,19 @@ const Lists = styled(motion.ul)`
   width: 100%;
   gap: 1.5rem;
   display: flex;
+  max-width: 600px;
+  border-radius: 5px;
   padding: 0.5rem 2rem;
   justify-content: flex-start;
+  border: 1px solid #636e72;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  border: 5px solid blueviolet;
 `;
 const Cover = styled.li`
   padding: 0;
-  border: 2px solid hotpink;
   .cover-img {
     width: 3.5rem;
     height: 3.5rem;
-    border-radius: 10px;
+    border-radius: 5px;
   }
 `;
 const Info = styled.li`

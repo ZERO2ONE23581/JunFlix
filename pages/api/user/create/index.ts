@@ -25,10 +25,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       data: { email, userId, password: hasedPassword, avatar },
     });
     if (user) {
-      //save user_id in Cookie session
-      req.session.user = {
-        id: user.id,
-      };
+      req.session.user = { id: user.id }; //save user_id in Cookie session
       await req.session.save();
       return res.json({ ok: true });
     }

@@ -93,8 +93,8 @@ export const Layer_ = styled(Flex)`
   }
   button {
     width: 100px;
-    padding: 0.3rem;
-    font-size: 1.1rem;
+    padding: 0.4rem;
+    font-size: 1.2rem;
     border-radius: 40px;
   }
   > div {

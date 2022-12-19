@@ -85,5 +85,4 @@ const Cont = styled(FlexCol)`
   width: fit-content;
   align-items: flex-end;
   justify-content: flex-start;
-  //border: 10px solid blue;
 `;

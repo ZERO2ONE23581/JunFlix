@@ -11,7 +11,6 @@ export const useUploadImg = async (image: FileList | undefined) => {
     const {
       result: { id },
     } = await (await fetch(uploadURL, { method: 'POST', body: form })).json();
-    alert(id);
     return id;
   }
 };

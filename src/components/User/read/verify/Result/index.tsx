@@ -19,21 +19,23 @@ export const Result = ({ _data }: IVerifyResult) => {
   const { theme, userId, verify: open } = _data;
   return (
     <AnimatePresence>
-      {open && (
-        <>
-          <Cont
-            custom={theme}
-            variants={variants}
-            exit="exit"
-            initial="initial"
-            animate="animate"
-          >
-            <Svg type="close" theme={theme} onClick={onSvg} />
-            <Wrap _data={{ theme, userId }} />
-          </Cont>
-          <Overlay exit={{ opacity: 0 }} animate={{ opacity: 1 }} />
-        </>
-      )}
+      <>
+        {open && (
+          <>
+            <Cont
+              custom={theme}
+              variants={variants}
+              exit="exit"
+              initial="initial"
+              animate="animate"
+            >
+              <Svg type="close" theme={theme} onClick={onSvg} />
+              <Wrap _data={{ theme, userId }} />
+            </Cont>
+            <Overlay exit={{ opacity: 0 }} animate={{ opacity: 1 }} />
+          </>
+        )}
+      </>
     </AnimatePresence>
   );
 };

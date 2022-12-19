@@ -31,6 +31,7 @@ export const PostsModal = ({ _data, _useform }: IPostsModal) => {
     setFixed(false);
   };
   const isClicked = Boolean(array?.length > 0);
+  const error = errors?.chosenId?.message!;
   return (
     <AnimatePresence>
       <>
@@ -49,14 +50,7 @@ export const PostsModal = ({ _data, _useform }: IPostsModal) => {
               />
               <Main _data={{ array, theme, posts, register }} />
             </Modal>
-            <ErrModal
-              _data={{
-                theme,
-                id: 'chosenId',
-                clearErrors: clearErrors!,
-                error: errors?.chosenId?.message,
-              }}
-            />
+            <ErrModal _data={{ theme, error, clearErrors, id: 'chosenId' }} />
             <OverlayBg />
           </>
         )}

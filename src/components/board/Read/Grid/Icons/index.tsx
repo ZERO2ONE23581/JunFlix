@@ -54,6 +54,7 @@ export const Icons = ({ _data }: IBoardIcons) => {
 const Cont = styled(Flex)`
   gap: 1.5rem;
   width: fit-content;
+  margin-bottom: 1rem;
 `;
 const Icon = styled(Flex)`
   cursor: pointer;

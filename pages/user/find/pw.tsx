@@ -6,7 +6,7 @@ import { Head_ } from '../../../src/Tools/head_title';
 import { NewPassord } from '../../../src/components/User/NewPassword';
 import { Token } from '../../../src/components/User/Read/Verify/Token';
 import { Result } from '../../../src/components/User/Read/Verify/result';
-import { VerifyID } from '../../../src/components/User/Read/Verify/userId';
+import { VerifyID } from '../../../src/components/User/Read/Verify/UserID';
 
 const FindPassword: NextPage<{ theme: boolean }> = ({ theme }) => {
   const type = 'token_pw';

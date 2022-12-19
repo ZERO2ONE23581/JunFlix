@@ -6,9 +6,9 @@ import { CreatePost } from '../../../Create';
 import { Svg } from '../../../../../Tools/Svg';
 import { OrganizePosts } from './Modal/Organize';
 import { Flex } from '../../../../../../styles/global';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useUser } from '../../../../../libs/client/useUser';
 import { Answer } from '../../../../../Tools/Modal/answer_modal';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IPostsIcon {
   _data: {

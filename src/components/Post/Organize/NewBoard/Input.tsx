@@ -28,7 +28,7 @@ export const Inputs = ({ _data }: IInputs) => {
         animate="animate"
         whileFocus="focus"
         placeholder="보드 제목을 작성하세요."
-        {...register!('title', { required: '제목을 추가해주세요.' })}
+        {...register!('title', { required: 'need_title' })}
       />
       <TextLength theme={theme} number={{ max, typed }} />
     </Cont>

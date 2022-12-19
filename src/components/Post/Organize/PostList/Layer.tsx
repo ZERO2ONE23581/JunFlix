@@ -18,7 +18,7 @@ export const Layer = ({ _data }: ILayer) => {
   const { closeModal, theme, setModal, setError, isClicked } = _data;
   const onClick = () => {
     if (!isClicked) {
-      return setError!('chosenId', { message: '포스트를 선택해주세요.' });
+      return setError!('chosenId', { message: 'need_post_select' });
     } else return setModal('boards');
   };
   return (

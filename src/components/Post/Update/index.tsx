@@ -1,7 +1,7 @@
 import {
-  useCapLetters,
-  useTextLimit,
+  useLength,
   useUploadImg,
+  useCapLetters,
 } from '../../../libs/client/useTools';
 import { Modal } from './Modal';
 import styled from '@emotion/styled';
@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { IRes } from '../../../types/global';
 import { AnimatePresence } from 'framer-motion';
-import { MsgModal } from '../../../Tools/msg_modal';
+import { MsgModal } from '../../../Tools/Msg';
 import useMutation from '../../../libs/client/useMutation';
 import { IPostForm, IPostType } from '../../../types/post';
 import { LoadingModal } from '../../../Tools/Modal/loading_modal';
@@ -97,15 +97,10 @@ export const UpdatePost = ({ _data }: IUpdate) => {
       setLoading!(true);
       return _delete!({ isDelete });
     } else {
-      const { ok } = useTextLimit({
-        _data: {
-          setError,
-          max: [50, 1000],
-          types: ['title', 'description'],
-          texts: [inputs.title, inputs.description!],
-        },
-      });
-      if (!ok) return;
+      if (useLength(inputs?.title!) >= 50)
+        return setError('title', { message: 'max_post_title' });
+      if (useLength(inputs?.description!) >= 1000)
+        return setError('description', { message: 'max_post_desc' });
       setLoading!(true);
       const board_id = new_boardId;
       const file_id = await useUploadImg(inputs?.post_image);
@@ -119,10 +114,9 @@ export const UpdatePost = ({ _data }: IUpdate) => {
       setModal('');
       setTimeout(() => {
         if (data) {
-          if (data?.error) alert(data.error);
+          if (data?.error) console.log(data.error);
           if (data?.ok) {
             setLoading(false);
-
             setMsg('updated');
             setTimeout(() => {
               router.reload();

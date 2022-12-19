@@ -38,7 +38,6 @@ export const UserInfo = ({ _data }: IUpdateUser) => {
     setLoading(true);
     update({ name, birth, gender, location, username });
   };
-
   return (
     <>
       {type === 'userInfo' && (

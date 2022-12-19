@@ -11,14 +11,14 @@ export const OverlayBg = ({ dark, zIndex, closeModal }: IOverlayBg) => {
   return (
     <AnimatePresence>
       <Overlay
-        className="overlay"
         dark={dark}
         zindex={zIndex}
         variants={opacityVar}
         onClick={closeModal}
+        exit="exit"
         animate="animate"
         initial="initial"
-        exit="exit"
+        className="overlay"
       />
     </AnimatePresence>
   );

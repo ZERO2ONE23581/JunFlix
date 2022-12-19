@@ -22,7 +22,6 @@ export const Box = ({ _data }: IPostBox) => {
   const host_id = post?.host_id!;
   const board_id = post?.board_id!;
   const hostId = post?.host?.userId!;
-  const isPostPrivate = post?.onPrivate!;
   const board_title = post?.board?.title!;
   const Image = avatarLink(post?.post_image)!;
 
@@ -36,7 +35,7 @@ export const Box = ({ _data }: IPostBox) => {
   };
   const msg = IsBlur({ host_id, board_id })?.msg!;
   const isBlur = IsBlur({ host_id, board_id })?.isBlur!;
-  const blur = isPostPrivate ? isPostPrivate : isBlur;
+
   const onSvg = () => {
     const type = msg!;
     if (type === 'my_post') return;
@@ -47,8 +46,8 @@ export const Box = ({ _data }: IPostBox) => {
   };
   return (
     <Cont>
-      {blur && <Svg onClick={onSvg} theme={theme} type="lock" />}
-      <Blur isBlur={blur!}>
+      {isBlur && <Svg onClick={onSvg} theme={theme} type="lock" />}
+      <Blur isBlur={isBlur!}>
         {Image && (
           <PostBox__
             exit="exit"
