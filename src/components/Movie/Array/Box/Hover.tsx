@@ -1,28 +1,18 @@
-import { Svg } from '../../../../../../Tools/Svg';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { MovieInfo } from './Info';
 import { useEffect, useState } from 'react';
-import { Flex } from '../../../../../../../styles/global';
-import { ITheme } from '../../../../../../../styles/theme';
+import { Flex, FlexCol } from '../../../../../styles/global';
 
-interface IMovieHover extends ITheme {
+interface IMovieHover {
   data: {
-    id: number;
     title?: string;
-    overview?: string;
     poster_path?: string;
     vote_average?: number;
     release_date?: string;
-    backdrop_path?: string;
     original_name?: string;
     original_title?: string;
-    original_language?: string;
   };
 }
-export const MovieHover = ({ data, theme }: IMovieHover) => {
-  const router = useRouter();
-  const movie_id = data.id!;
+export const MovieHover = ({ data }: IMovieHover) => {
   const date = data.release_date!;
   const rate = data.vote_average!;
   const [title, setTitle] = useState('');
@@ -36,21 +26,25 @@ export const MovieHover = ({ data, theme }: IMovieHover) => {
       if (title.length > 10) setSliced(title.slice(0, 8) + '...');
     }
   }, [data, setTitle, setSliced, title]);
+  const Date = date ? date : '-';
+  const Rate = rate ? Math.round(rate! * 100) / 100 : '-';
   return (
     <Cont>
       <Front variants={{ hover: { opacity: 0 } }}>
-        <h1>{sliced}</h1>
+        <span>{sliced}</span>
       </Front>
       <Hovered variants={{ hover: { opacity: 1 } }}>
-        <Flex className="title">
-          <h2>{title}</h2>
-          <Svg
-            theme={theme}
-            type="caret-down"
-            onClick={() => router.replace(`/home/${movie_id}`)}
-          />
-        </Flex>
-        <MovieInfo rate={rate} date={date} />
+        <Info>
+          <Txt className="date">
+            <span>Date:</span>
+            <span className="data">{Date}</span>
+          </Txt>
+          <Txt>
+            <span>Rate:</span>
+            <span className="data">{Rate}</span>
+          </Txt>
+        </Info>
+        <Title>{title}</Title>
       </Hovered>
     </Cont>
   );
@@ -59,7 +53,6 @@ const Cont = styled(Flex)`
   opacity: 1;
   font-weight: 500;
   position: relative;
-  align-items: flex-end;
 `;
 const Front = styled(Flex)`
   padding: 8px;
@@ -69,22 +62,31 @@ const Front = styled(Flex)`
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
 `;
-const Hovered = styled(Flex)`
+const Hovered = styled(FlexCol)`
   bottom: 0;
   opacity: 0;
   position: absolute;
-  flex-direction: column-reverse;
+  padding-bottom: 0.5rem;
+  justify-content: center;
   color: ${(p) => p.theme.color.font};
   background-color: ${(p) => p.theme.color.bg};
-  > .title {
-    gap: 0.2rem;
-    //border: 2px solid lightblue;
-    h2 {
-      max-width: 70%;
-      font-size: 1rem;
-      width: fit-content;
-      text-align: center;
-      //border: 2px solid lightblue;
-    }
+`;
+const Title = styled(Flex)`
+  gap: 0.2rem;
+  font-size: 1.2rem;
+  width: fit-content;
+  text-align: center;
+`;
+const Info = styled(Flex)`
+  gap: 0.5rem;
+  padding: 0.5rem;
+`;
+const Txt = styled(Flex)`
+  gap: 0.2rem;
+  width: fit-content;
+  align-items: flex-end;
+  .data {
+    font-size: 0.9rem;
+    color: ${(p) => p.theme.color.logo};
   }
 `;

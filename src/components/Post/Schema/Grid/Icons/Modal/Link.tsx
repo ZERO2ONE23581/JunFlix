@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { AnimatePresence } from 'framer-motion';
-import { OverlayBg } from '../../../../../../Tools/Overlay';
+import { OverlayBg } from '../../../../../../Tools/OverlayBg';
 import { List } from '../../../../../User/Read/MyPage/List';
 import { MiniModal } from '../../../../../../../styles/global';
 import { useUser } from '../../../../../../libs/client/useUser';

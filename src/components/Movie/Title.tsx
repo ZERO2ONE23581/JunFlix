@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { Flex } from '../../../../styles/global';
-import { hoverVars } from '../../../../styles/variants';
-import { useCapLetters } from '../../../libs/client/useTools';
+import { Flex } from '../../../styles/global';
+import { hoverVars } from '../../../styles/variants';
+import { useCapLetters } from '../../libs/client/useTools';
 
 interface ISlideTitle {
   _data: {
@@ -16,7 +16,7 @@ export const Title = ({ _data }: ISlideTitle) => {
   const { theme, type } = _data;
   useEffect(() => {
     if (type) {
-      if (type === 'tv') return setTxt('TV');
+      if (type === 'tv') return setTxt('TV Shows & Series');
       else return setTxt(useCapLetters(type));
     }
   }, [type, setTxt]);

@@ -5,7 +5,7 @@ import { Btn } from '../../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { IForm } from '../../../types/global';
 import { InputWrap } from '../../../Tools/Input';
-import { OverlayBg } from '../../../Tools/Overlay';
+import { OverlayBg } from '../../../Tools/OverlayBg';
 import { BoardModal, ITypeModal } from '../Update';
 import { useUser } from '../../../libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';

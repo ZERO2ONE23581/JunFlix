@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { IRes } from '../../../../types/global';
 import { UseFormHandleSubmit } from 'react-hook-form';
-import { OverlayBg } from '../../../../Tools/Overlay';
+import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { PostModal } from '../../../../../styles/post';
 import { MsgModal } from '../../../../Tools/Modal/Message';
 import { scaleVar } from '../../../../../styles/variants';

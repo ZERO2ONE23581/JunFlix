@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { OverlayBg } from '../../overlay';
+import { OverlayBg } from '../../OverlayBg';
 import { Modal } from '../../../../styles/global';
 import { AnimatePresence } from 'framer-motion';
 import { UseFormClearErrors } from 'react-hook-form';

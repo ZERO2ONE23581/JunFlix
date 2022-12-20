@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { OverlayBg } from '../Overlay';
+import { OverlayBg } from '../OverlayBg';
 import { UseMsg } from '../../libs/client/useMsg';
 import { AnimatePresence } from 'framer-motion';
 import { variants } from '../../../styles/variants';

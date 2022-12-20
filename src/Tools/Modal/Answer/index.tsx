@@ -1,7 +1,7 @@
 import { Svg } from '../../Svg';
 import { TxtLists } from './Txts';
 import styled from '@emotion/styled';
-import { OverlayBg } from '../../Overlay';
+import { OverlayBg } from '../../OverlayBg';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { Modal } from '../../../../styles/global';

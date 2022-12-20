@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import { OverlayBg } from '../../../../../Tools/Overlay';
+import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   color,

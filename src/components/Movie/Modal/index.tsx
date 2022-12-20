@@ -1,12 +1,12 @@
 import { Info } from './Info';
-import { Svg } from '../../../Tools/Svg';
 import styled from '@emotion/styled';
-import { OverlayBg } from '../../../Tools/Overlay';
-import { Dispatch, SetStateAction } from 'react';
+import { Svg } from '../../../Tools/Svg';
 import { IMovie } from '../../../types/global';
+import { Dispatch, SetStateAction } from 'react';
 import { Flex } from '../../../../styles/global';
 import { PostModal } from '../../../../styles/post';
 import { color } from '../../../../styles/variants';
+import { OverlayBg } from '../../../Tools/OverlayBg';
 
 interface IMovieModal {
   _data: {

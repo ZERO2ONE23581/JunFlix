@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { IRes } from '../../../../types/global';
 import { AnimatePresence } from 'framer-motion';
-import { OverlayBg } from '../../../../Tools/Overlay';
+import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { ICmtForm } from '../../../../types/comments';
 import { color } from '../../../../../styles/variants';
 import { useUser } from '../../../../libs/client/useUser';

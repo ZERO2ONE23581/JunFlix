@@ -10,7 +10,7 @@ import useMutation from '../../../../../libs/client/useMutation';
 import { useCapLetter, useLength } from '../../../../../libs/client/useTools';
 import { useUser } from '../../../../../libs/client/useUser';
 import { LoadingModal } from '../../../../../Tools/Modal/Loading';
-import { OverlayBg } from '../../../../../Tools/Overlay';
+import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { ICmtForm } from '../../../../../types/comments';
 import { IRes } from '../../../../../types/global';
 import { Inputs } from '../../../Create/Modal/Inputs';

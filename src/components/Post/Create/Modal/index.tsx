@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { ImageInput } from './Image_Input';
 import { AnimatePresence } from 'framer-motion';
 import { IPostForm } from '../../../../types/post';
-import { OverlayBg } from '../../../../Tools/Overlay';
+import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { PostModal } from '../../../../../styles/post';
 import { useUser } from '../../../../libs/client/useUser';
 import { Dispatch, SetStateAction, useState } from 'react';

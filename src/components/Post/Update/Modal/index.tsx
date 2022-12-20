@@ -3,7 +3,7 @@ import { Layer } from './Layer';
 import styled from '@emotion/styled';
 import { SelectModal } from './Select';
 import { AnimatePresence } from 'framer-motion';
-import { OverlayBg } from '../../../../Tools/Overlay';
+import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { PostModal } from '../../../../../styles/post';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { IPostType, IPostUseform } from '../../../../types/post';

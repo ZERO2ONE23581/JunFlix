@@ -1,13 +1,12 @@
 import { MovieHover } from './Hover';
 import styled from '@emotion/styled';
-import { BoardBoxInfo } from './Board';
-import { MovieModal } from '../../../Modal';
+import { MovieModal } from '../../Modal';
 import { AnimatePresence } from 'framer-motion';
-import { IMovie } from '../../../../../types/global';
-import { FlexCol } from '../../../../../../styles/global';
+import { IMovie } from '../../../../types/global';
+import { FlexCol } from '../../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
 
-interface IBoxArray {
+interface IEachMovie {
   _data: {
     theme: boolean;
     array: [] | any;
@@ -15,7 +14,7 @@ interface IBoxArray {
   };
 }
 
-export const Array = ({ _data }: IBoxArray) => {
+export const MovieBox = ({ _data }: IEachMovie) => {
   const { theme, array, setFixed } = _data;
   const [select, setSelect] = useState(0);
   const [modal, setModal] = useState(false);
@@ -29,7 +28,7 @@ export const Array = ({ _data }: IBoxArray) => {
   return (
     <AnimatePresence initial={false}>
       {array?.map((data: any) => (
-        <Box
+        <Cont
           exit="exit"
           initial="initial"
           animate="animate"
@@ -42,20 +41,20 @@ export const Array = ({ _data }: IBoxArray) => {
           img={img(data?.backdrop_path)}
           onClick={() => onClick(data.id)}
         >
-          <BoardBoxInfo data={data} theme={theme} />
-          <MovieHover data={data} theme={theme} />
-        </Box>
+          <MovieHover data={data} />
+        </Cont>
       ))}
       <MovieModal _data={{ theme, select, setModal, movie, modal, setFixed }} />
     </AnimatePresence>
   );
 };
 
-const Box = styled(FlexCol)<{ length: number; img?: string }>`
+const Cont = styled(FlexCol)<{ length: number; img?: string }>`
   height: 10rem;
   cursor: pointer;
   overflow: hidden;
   border-radius: 5px;
+  justify-content: flex-end;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   :nth-of-type(1) {
     transform-origin: center left;

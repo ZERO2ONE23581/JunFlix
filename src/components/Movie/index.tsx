@@ -1,9 +1,10 @@
 import useSWR from 'swr';
-import { Row } from './Row';
 import { Title } from './Title';
 import styled from '@emotion/styled';
-import { IMovie } from '../../../types/global';
-import { FlexCol } from '../../../../styles/global';
+import { MovieArray } from './Array';
+import { Svg } from '../../Tools/Svg';
+import { IMovie } from '../../types/global';
+import { Flex, FlexCol } from '../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface ISlider {
@@ -14,7 +15,7 @@ interface ISlider {
     setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const Slider = ({ _data }: ISlider) => {
+export const Movies = ({ _data }: ISlider) => {
   const [page, setPage] = useState(0);
   const [boxes, setBoxes] = useState(6);
   const [leave, setLeave] = useState(false);
@@ -46,16 +47,24 @@ export const Slider = ({ _data }: ISlider) => {
   }, [type, setBoxes]);
 
   return (
-    <Cont className="slider">
+    <Cont>
       {!hideTitle && <Title _data={{ theme, type }} />}
-      <Row
-        _set={{ setFixed, setLeave }}
-        _data={{ theme, array, page, boxes, reverse, onClick }}
-      />
+      <Slider>
+        <Svg theme={theme} type="left-chev" onClick={() => onClick('left')} />
+        <MovieArray
+          _data={{ theme, array, page, boxes, reverse, setFixed, setLeave }}
+        />
+        <Svg theme={theme} type="right-chev" onClick={() => onClick('right')} />
+      </Slider>
     </Cont>
   );
 };
 const Cont = styled(FlexCol)`
   padding: 0 5rem;
   align-items: flex-start;
+`;
+const Slider = styled(Flex)`
+  gap: 0.5rem;
+  height: fit-content;
+  margin-bottom: 2rem;
 `;

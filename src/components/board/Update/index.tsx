@@ -6,7 +6,7 @@ import { IForm } from '../../../types/global';
 import { Avatar } from '../../../Tools/Avatar';
 import { InputWrap } from '../../../Tools/Input';
 import { IBoardType } from '../../../types/board';
-import { OverlayBg } from '../../../Tools/Overlay';
+import { OverlayBg } from '../../../Tools/OverlayBg';
 import { scaleVar } from '../../../../styles/variants';
 import { useUser } from '../../../libs/client/useUser';
 import { SelectWrap } from '../../../Tools/Input/Select';

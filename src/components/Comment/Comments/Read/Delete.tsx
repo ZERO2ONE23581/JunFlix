@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../../../Tools/Button';
 import { IRes } from '../../../../types/global';
-import { OverlayBg } from '../../../../Tools/Overlay';
+import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { cmtModalVar } from '../../../../../styles/variants';

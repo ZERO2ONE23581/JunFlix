@@ -9,7 +9,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Overlay } from '../../../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useUser } from '../../../../../libs/client/useUser';
-import { OverlayBg } from '../../../../../Tools/Overlay';
+import { OverlayBg } from '../../../../../Tools/OverlayBg';
 
 interface ISettingModal {
   _data: {

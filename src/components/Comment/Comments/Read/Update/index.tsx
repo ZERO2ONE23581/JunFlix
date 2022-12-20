@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { IRes } from '../../../../../types/global';
 import { Inputs } from '../../../Create/Modal/Inputs';
 import { AnimatePresence } from 'framer-motion';
-import { OverlayBg } from '../../../../../Tools/Overlay';
+import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { ICmtForm } from '../../../../../types/comments';
 import { useUser } from '../../../../../libs/client/useUser';
 import { Form, Modal } from '../../../../../../styles/global';

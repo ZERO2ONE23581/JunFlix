@@ -6,7 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import { IRes } from '../../../../types/global';
 import { IPostType } from '../../../../types/post';
 import { IBoardForm } from '../../../../types/board';
-import { OverlayBg } from '../../../../Tools/Overlay';
+import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { PostModal } from '../../../../../styles/post';
 import { ErrModal } from '../../../../Tools/Modal/Error';
 import { MsgModal } from '../../../../Tools/Modal/Message';
