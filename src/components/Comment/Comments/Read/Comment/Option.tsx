@@ -3,7 +3,7 @@ import { IClickSvg } from './Content';
 import { Svg } from '../../../../../Tools/Svg';
 import { Modal } from '../../../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
-import { OverlayBg } from '../../../../../Tools/overlay';
+import { OverlayBg } from '../../../../../Tools/Overlay';
 import { TheComment } from '../../../../../libs/client/useComment';
 import { cmtModalVar, hoverBgColor } from '../../../../../../styles/variants';
 

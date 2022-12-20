@@ -7,13 +7,13 @@ import { Btn } from '../../../../Tools/Button';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { InputWrap } from '../../../../Tools/Input';
-import { MsgModal } from '../../../../Tools/Msg';
+import { MsgModal } from '../../../../Tools/Modal/Message';
 import { Box, Form } from '../../../../../styles/global';
-import { ErrMsg } from '../../../../Tools/Error/Message';
+import { ErrTxt } from '../../../../Tools/ErrTxt';
 import { variants } from '../../../../../styles/variants';
 import useMutation from '../../../../libs/client/useMutation';
 import { IFindID, IUserForm } from '../../../../types/user';
-import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
+import { LoadingModal } from '../../../../Tools/Modal/Loading';
 
 interface VerifyToken {
   _data: {
@@ -88,7 +88,7 @@ export const Token = ({ _data }: VerifyToken) => {
                   }),
                 }}
               />
-              <ErrMsg error={errors.token?.message!} theme={theme} />
+              <ErrTxt error={errors.token?.message!} theme={theme} />
               <Btn item={{ theme, name: 'Submit' }} type="submit" />
             </Form>
             <FindUser theme={theme} />

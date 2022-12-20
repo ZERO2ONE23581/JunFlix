@@ -5,7 +5,7 @@ import { PostCmt } from '../PostCmt';
 import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { IPostType } from '../../../../../types/post';
-import { OverlayBg } from '../../../../../Tools/overlay';
+import { OverlayBg } from '../../../../../Tools/Overlay';
 import { avatarLink } from '../../../../../Tools/Avatar';
 import { ISetFixed } from '../../../../../../pages/_app';
 import { useUser } from '../../../../../libs/client/useUser';

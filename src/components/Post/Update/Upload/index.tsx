@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { IPostUseform } from '../../../../types/post';
-import { OverlayBg } from '../../../../Tools/overlay';
+import { OverlayBg } from '../../../../Tools/Overlay';
 import { PostModal } from '../../../../../styles/post';
 
 interface IUploadFile extends IPostUseform {

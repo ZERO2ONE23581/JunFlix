@@ -8,7 +8,7 @@ import { OrganizePosts } from './Modal/Organize';
 import { Flex } from '../../../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useUser } from '../../../../../libs/client/useUser';
-import { Answer } from '../../../../../Tools/Modal/answer_modal';
+import { Answer } from '../../../../../Tools/Modal/Answer';
 
 interface IPostsIcon {
   _data: {

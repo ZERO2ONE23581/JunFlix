@@ -9,7 +9,7 @@ import {
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { ErrModal } from '../Error/Modal';
+import { ErrModal } from '../Modal/Error';
 import { FlexCol } from '../../../styles/global';
 import { UseFormClearErrors, UseFormRegisterReturn } from 'react-hook-form';
 

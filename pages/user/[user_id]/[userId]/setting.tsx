@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { IPage } from '../../../_app';
 import { useEffect, useState } from 'react';
 import { Svg } from '../../../../src/Tools/Svg';
-import { Head_ } from '../../../../src/Tools/head_title';
+import { Head_ } from '../../../../src/Tools/Title/Head';
 import { Flex, FlexPage } from '../../../../styles/global';
 import { useLogin } from '../../../../src/libs/client/useLogin';
 import { BoxType } from '../../../../src/components/User/Update';

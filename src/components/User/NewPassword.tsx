@@ -6,12 +6,12 @@ import { IRes } from '../../types/global';
 import { IUserForm } from '../../types/user';
 import { InputWrap } from '../../Tools/Input';
 import { AnimatePresence } from 'framer-motion';
-import { MsgModal } from '../../Tools/Msg';
+import { MsgModal } from '../../Tools/Modal/Message';
 import { Box, Form } from '../../../styles/global';
-import { ErrMsg } from '../../Tools/Error/Message';
+import { ErrTxt } from '../../Tools/ErrTxt';
 import { variants } from '../../../styles/variants';
 import useMutation from '../../libs/client/useMutation';
-import { LoadingModal } from '../../Tools/Modal/loading_modal';
+import { LoadingModal } from '../../Tools/Modal/Loading';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Title } from './Read/Verify/Title';
 
@@ -94,7 +94,7 @@ export const NewPassord = ({ _data }: INewPassword) => {
                   }),
                 }}
               />
-              <ErrMsg theme={theme} error={errors.password?.message!} />
+              <ErrTxt theme={theme} error={errors.password?.message!} />
               <InputWrap
                 _data={{
                   theme,
@@ -108,7 +108,7 @@ export const NewPassord = ({ _data }: INewPassword) => {
                   }),
                 }}
               />
-              <ErrMsg theme={theme} error={errors.password_confirm?.message!} />
+              <ErrTxt theme={theme} error={errors.password_confirm?.message!} />
               <Btn item={{ theme, name: 'Submit' }} type="submit" />
             </Form>
             <FindUser theme={theme} />

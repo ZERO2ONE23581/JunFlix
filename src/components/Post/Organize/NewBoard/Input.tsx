@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { IBoardForm } from '../../../../types/board';
 import { FlexCol } from '../../../../../styles/global';
 import { redColor } from '../../../../../styles/variants';
-import { TextLength } from '../../../../Tools/TextLength';
+import { TextLength } from '../../../../Tools/Input/TextLength';
 import { useLength } from '../../../../libs/client/useTools';
 import { UseFormRegister, UseFormWatch } from 'react-hook-form';
 

@@ -7,13 +7,13 @@ import { Btn } from '../../../../../Tools/Button';
 import { IRes } from '../../../../../types/global';
 import { IUserForm } from '../../../../../types/user';
 import { InputWrap } from '../../../../../Tools/Input';
-import { MsgModal } from '../../../../../Tools/Msg';
+import { MsgModal } from '../../../../../Tools/Modal/Message';
 import { Box, Form } from '../../../../../../styles/global';
-import { ErrMsg } from '../../../../../Tools/Error/Message';
+import { ErrTxt } from '../../../../../Tools/ErrTxt';
 import { variants } from '../../../../../../styles/variants';
 import useMutation from '../../../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { LoadingModal } from '../../../../../Tools/Modal/loading_modal';
+import { LoadingModal } from '../../../../../Tools/Modal/Loading';
 
 interface IVerifyEmail {
   _data: {
@@ -83,7 +83,7 @@ export const Email = ({ _data }: IVerifyEmail) => {
                   }),
                 }}
               />
-              <ErrMsg theme={theme} error={errors.email?.message!} />
+              <ErrTxt theme={theme} error={errors.email?.message!} />
               <Btn item={{ theme, name: 'Submit' }} type="submit" />
             </Form>
             <FindUser theme={theme} />

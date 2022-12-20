@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { PostPage } from '../../../post/all';
 import { useGetPosts } from '../../../../src/libs/client/usePosts';
 import { PostSchema } from '../../../../src/components/Post/Schema';
-import { PageHeading } from '../../../../src/components/PageHeading';
+import { PageTitle } from '../../../../src/Tools/Title/Page';
 import { useLogin, useValidHost } from '../../../../src/libs/client/useLogin';
 
 const QuckSavedPosts: NextPage<IPage> = ({ theme, setFixed }) => {
@@ -15,7 +15,7 @@ const QuckSavedPosts: NextPage<IPage> = ({ theme, setFixed }) => {
   const { posts } = useGetPosts({ host_id, board_id: 0, isQs: true });
   return (
     <PostPage>
-      <PageHeading theme={theme} type={'qs'} />
+      <PageTitle theme={theme} type={'qs'} />
       <PostSchema setFixed={setFixed} _data={{ theme, posts, grid: 5 }} />
     </PostPage>
   );

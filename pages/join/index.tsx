@@ -8,14 +8,14 @@ import { IRes } from '../../src/types/global';
 import { variants } from '../../styles/variants';
 import { IUserForm } from '../../src/types/user';
 import { InputWrap } from '../../src/Tools/Input';
-import { MsgModal } from '../../src/Tools/Msg';
-import { ErrMsg } from '../../src/Tools/Error/Message';
+import { MsgModal } from '../../src/Tools/Modal/Message';
+import { ErrTxt } from '../../src/Tools/ErrTxt';
 import { FindUser } from '../../src/components/User/Find';
 import { AvatarInput } from '../../src/Tools/Avatar/Input';
 import useMutation from '../../src/libs/client/useMutation';
 import { Flex, FlexCol, FlexPage } from '../../styles/global';
 import { useUploadImg } from '../../src/libs/client/useTools';
-import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
+import { LoadingModal } from '../../src/Tools/Modal/Loading';
 
 const JoinPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   const [post, { loading, data }] = useMutation<IRes>(`/api/user/create`);
@@ -111,7 +111,7 @@ const JoinPage: NextPage<{ theme: boolean }> = ({ theme }) => {
                       }),
                     }}
                   />
-                  <ErrMsg error={errors.email?.message!} theme={theme} />
+                  <ErrTxt error={errors.email?.message!} theme={theme} />
                   <InputWrap
                     _data={{
                       theme,
@@ -132,7 +132,7 @@ const JoinPage: NextPage<{ theme: boolean }> = ({ theme }) => {
                       }),
                     }}
                   />
-                  <ErrMsg error={errors.password?.message!} theme={theme} />
+                  <ErrTxt error={errors.password?.message!} theme={theme} />
                   <InputWrap
                     _data={{
                       theme,
@@ -146,7 +146,7 @@ const JoinPage: NextPage<{ theme: boolean }> = ({ theme }) => {
                       }),
                     }}
                   />
-                  <ErrMsg
+                  <ErrTxt
                     theme={theme}
                     error={errors.password_confirm?.message!}
                   />

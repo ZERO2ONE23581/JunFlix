@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
 import { InputWrap } from '../../../Tools/Input';
-import { ErrMsg } from '../../../Tools/Error/Message';
+import { ErrTxt } from '../../../Tools/ErrTxt';
 import { Flex, Form } from '../../../../styles/global';
 import { SelectWrap } from '../../../Tools/Input/Select';
 import { IUpdateUser, IUserForm } from '../../../types/user';
@@ -104,8 +104,8 @@ export const UserInfo = ({ _data }: IUpdateUser) => {
               }}
             />
           </Flex>
-          <ErrMsg error={errors.username?.message!} theme={theme} />
-          <ErrMsg error={errors.name?.message!} theme={theme} />
+          <ErrTxt error={errors.username?.message!} theme={theme} />
+          <ErrTxt error={errors.name?.message!} theme={theme} />
           <Btn item={{ theme, name: 'Save' }} type="submit" />
         </Cont>
       )}

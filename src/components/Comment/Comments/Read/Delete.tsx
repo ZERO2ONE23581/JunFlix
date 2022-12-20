@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../../../Tools/Button';
 import { IRes } from '../../../../types/global';
-import { OverlayBg } from '../../../../Tools/overlay';
+import { OverlayBg } from '../../../../Tools/Overlay';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { cmtModalVar } from '../../../../../styles/variants';
 import { BtnWrap, Modal } from '../../../../../styles/global';
 import useMutation from '../../../../libs/client/useMutation';
-import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
+import { LoadingModal } from '../../../../Tools/Modal/Loading';
 import { TheComment, useCmtRes } from '../../../../libs/client/useComment';
 
 interface IDeleteModal {

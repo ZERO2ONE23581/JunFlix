@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Page } from '../../../../styles/global';
-import { Head_ } from '../../../../src/Tools/head_title';
+import { Head_ } from '../../../../src/Tools/Title/Head';
 import { useUser } from '../../../../src/libs/client/useUser';
 import { useLogin, useValidHost } from '../../../../src/libs/client/useLogin';
 import { useGetBoards } from '../../../../src/libs/client/useBoards';
-import { PageHeading } from '../../../../src/components/PageHeading';
+import { PageTitle } from '../../../../src/Tools/Title/Page';
 import { BoardsGrid } from '../../../../src/components/Board/Read/Grid';
 import { useGetQuickSaved } from '../../../../src/libs/client/usePosts';
 
@@ -19,7 +19,7 @@ const UserBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
     <>
       <Head_ title={`${username}'s Board`} />
       <Cont>
-        <PageHeading type="user_board" theme={theme} />
+        <PageTitle type="user_board" theme={theme} />
         <BoardsGrid _data={{ theme, isBoard, boards, quickSaved, user_id }} />
       </Cont>
     </>

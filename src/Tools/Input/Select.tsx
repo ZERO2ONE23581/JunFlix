@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { InpBorderVar } from '.';
 import styled from '@emotion/styled';
-import { ErrModal } from '../Error/Modal';
+import { ErrModal } from '../Modal/Error';
 import { AnimatePresence } from 'framer-motion';
 import { FlexCol } from '../../../styles/global';
 import { color, greyColor, redColor } from '../../../styles/variants';

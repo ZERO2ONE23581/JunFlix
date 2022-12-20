@@ -9,12 +9,12 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IRes } from '../../../types/global';
 import { AnimatePresence } from 'framer-motion';
-import { MsgModal } from '../../../Tools/Msg';
+import { MsgModal } from '../../../Tools/Modal/Message';
 import { Box, Flex } from '../../../../styles/global';
 import { useUser } from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';
-import { LoadingModal } from '../../../Tools/Modal/loading_modal';
-import { ErrModal } from '../../../Tools/Error/Modal';
+import { LoadingModal } from '../../../Tools/Modal/Loading';
+import { ErrModal } from '../../../Tools/Modal/Error';
 
 interface IBoxType {
   _data: {

@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Comments } from '../Comments';
 import { CreateModal } from '../Create/Modal';
 import { postVar } from '../../../../styles/post';
-import { OverlayBg } from '../../../Tools/overlay';
+import { OverlayBg } from '../../../Tools/Overlay';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { FlexCol, Modal } from '../../../../styles/global';
 

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Btn } from '../../Tools/Button';
 import { useForm } from 'react-hook-form';
 import { InputWrap } from '../../Tools/Input';
-import { ErrMsg } from '../../Tools/Error/Message';
+import { ErrTxt } from '../../Tools/ErrTxt';
 import { Dispatch, SetStateAction } from 'react';
 import { opacityVar } from '../../../styles/variants';
 import { IUserForm, IUserType } from '../../types/user';
@@ -81,7 +81,7 @@ export const DeleteUser = ({ _data }: IDeleteUser) => {
                   }),
                 }}
               />
-              <ErrMsg error={errors.password?.message!} theme={theme} />
+              <ErrTxt error={errors.password?.message!} theme={theme} />
               <BtnWrap className="btn_wrap">
                 <Btn
                   type="button"

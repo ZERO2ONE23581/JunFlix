@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import { IRes } from '../../src/types/global';
 import { variants } from '../../styles/variants';
 import { IBoardForm } from '../../src/types/board';
-import { Head_ } from '../../src/Tools/head_title';
-import { MsgModal } from '../../src/Tools/Msg';
+import { Head_ } from '../../src/Tools/Title/Head';
+import { MsgModal } from '../../src/Tools/Modal/Message';
 import { useUser } from '../../src/libs/client/useUser';
 import { Box, FlexPage, Form } from '../../styles/global';
 import { useLogin } from '../../src/libs/client/useLogin';
@@ -16,7 +16,7 @@ import useMutation from '../../src/libs/client/useMutation';
 import { Wrap } from '../../src/components/Board/Create/Wrap';
 import { TextAreaWrap } from '../../src/Tools/Input/TextArea';
 import { Title } from '../../src/components/Board/Create/Title';
-import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
+import { LoadingModal } from '../../src/Tools/Modal/Loading';
 
 const CreateBoard: NextPage<{ theme: boolean }> = ({ theme }) => {
   useLogin();

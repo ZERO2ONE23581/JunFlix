@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
 import { InputWrap } from '../../../Tools/Input';
-import { ErrMsg } from '../../../Tools/Error/Message';
+import { ErrTxt } from '../../../Tools/ErrTxt';
 import { IUpdateUser, IUserForm } from '../../../types/user';
 import { Flex, FlexCol, Form } from '../../../../styles/global';
 
@@ -42,7 +42,7 @@ export const Password = ({ _data }: IUpdateUser) => {
                 register: register!('password', { required: 'need_password' }),
               }}
             />
-            <ErrMsg error={errors.password?.message!} theme={theme} />
+            <ErrTxt error={errors.password?.message!} theme={theme} />
           </FlexCol>
           <Flex className="flex">
             <FlexCol className="inp_err_wrap">
@@ -66,7 +66,7 @@ export const Password = ({ _data }: IUpdateUser) => {
                   }),
                 }}
               />
-              <ErrMsg error={errors.new_password?.message!} theme={theme} />
+              <ErrTxt error={errors.new_password?.message!} theme={theme} />
             </FlexCol>
             <FlexCol className="inp_err_wrap">
               <InputWrap
@@ -82,7 +82,7 @@ export const Password = ({ _data }: IUpdateUser) => {
                   }),
                 }}
               />
-              <ErrMsg error={errors.password_confirm?.message!} theme={theme} />
+              <ErrTxt error={errors.password_confirm?.message!} theme={theme} />
             </FlexCol>
           </Flex>
           <Btn item={{ theme, name: 'Save' }} type="submit" />

@@ -2,7 +2,7 @@ import { IPage } from './_app';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { Head_ } from '../src/Tools/head_title';
+import { Head_ } from '../src/Tools/Title/Head';
 import { AnimatePresence } from 'framer-motion';
 import { opacityVar } from '../styles/variants';
 import { Txts } from '../src/Layout/Home/Txts';

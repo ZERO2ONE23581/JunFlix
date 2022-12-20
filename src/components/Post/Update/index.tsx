@@ -10,10 +10,10 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { IRes } from '../../../types/global';
 import { AnimatePresence } from 'framer-motion';
-import { MsgModal } from '../../../Tools/Msg';
+import { MsgModal } from '../../../Tools/Modal/Message';
 import useMutation from '../../../libs/client/useMutation';
 import { IPostForm, IPostType } from '../../../types/post';
-import { LoadingModal } from '../../../Tools/Modal/loading_modal';
+import { LoadingModal } from '../../../Tools/Modal/Loading';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IUpdate {

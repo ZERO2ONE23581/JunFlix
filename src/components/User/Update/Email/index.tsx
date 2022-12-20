@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Btn } from '../../../../Tools/Button';
 import { Form } from '../../../../../styles/global';
 import { InputWrap } from '../../../../Tools/Input';
-import { ErrMsg } from '../../../../Tools/Error/Message';
+import { ErrTxt } from '../../../../Tools/ErrTxt';
 import { IUpdateUser, IUserForm } from '../../../../types/user';
 
 export const Email = ({ _data }: IUpdateUser) => {
@@ -49,7 +49,7 @@ export const Email = ({ _data }: IUpdateUser) => {
               }),
             }}
           />
-          <ErrMsg error={errors.email?.message!} theme={theme} />
+          <ErrTxt error={errors.email?.message!} theme={theme} />
           <Btn item={{ theme, name: 'Save' }} type="submit" />
         </Cont>
       )}

@@ -4,7 +4,7 @@ import { QuickSave } from './QuickSave';
 import { useRouter } from 'next/router';
 import { BoardsList } from './MyBoards';
 import { IRes } from '../../../../types/global';
-import { OverlayBg } from '../../../../Tools/overlay';
+import { OverlayBg } from '../../../../Tools/Overlay';
 import { variants } from '../../../../../styles/variants';
 import { useUser } from '../../../../libs/client/useUser';
 import { Dispatch, SetStateAction, useEffect } from 'react';

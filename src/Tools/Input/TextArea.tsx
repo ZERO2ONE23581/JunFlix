@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { ErrModal } from '../Error/Modal';
-import { TextLength } from '../TextLength';
+import { TextLength } from './TextLength';
 import { FlexCol } from '../../../styles/global';
 import { color } from '../../../styles/variants';
 import { useLength } from '../../libs/client/useTools';
 import { AnimatePresence, motion } from 'framer-motion';
 import { InpBorderVar, InpColorVar, InpLabelColor } from '.';
 import { UseFormClearErrors, UseFormRegisterReturn } from 'react-hook-form';
+import { ErrModal } from '../Modal/Error';
 
 interface ITextAreaWrap {
   _data: {

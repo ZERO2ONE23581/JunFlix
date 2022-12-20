@@ -2,9 +2,9 @@ import { IPage } from '../_app';
 import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
-import { Slider } from '../../src/Tools/Slider';
-import { Head_ } from '../../src/Tools/head_title';
-import { PageHeading } from '../../src/components/PageHeading';
+import { Slider } from '../../src/components/Movie/Slider';
+import { Head_ } from '../../src/Tools/Title/Head';
+import { PageTitle } from '../../src/Tools/Title/Page';
 
 const Movies: NextPage<IPage> = ({ theme, setFixed }) => {
   const array = ['trending', 'upcoming', 'tv', 'now', 'top'];
@@ -12,7 +12,7 @@ const Movies: NextPage<IPage> = ({ theme, setFixed }) => {
     <>
       <Head_ title="영화" />
       <Cont>
-        <PageHeading theme={theme} type="movie" />
+        <PageTitle theme={theme} type="movie" />
         {array.map((type) => (
           <Slider key={array.indexOf(type)} _data={{ theme, setFixed, type }} />
         ))}

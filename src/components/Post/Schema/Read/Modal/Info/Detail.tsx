@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { IGetPostType } from '../../../../../../types/post';
 import { Flex } from '../../../../../../../styles/global';
-import { TrimText } from '../../../../../../Tools/trimText';
+import { TrimText } from '../../../../../../Tools/Trim';
 import { useCapLetters } from '../../../../../../libs/client/useTools';
 
 export const Detail = ({ post }: IGetPostType) => {

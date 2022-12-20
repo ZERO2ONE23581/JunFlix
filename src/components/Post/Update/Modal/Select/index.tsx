@@ -1,4 +1,4 @@
-import { OverlayBg } from '../../../../../Tools/overlay';
+import { OverlayBg } from '../../../../../Tools/Overlay';
 import { PostModal } from '../../../../../../styles/post';
 import { FlexCol } from '../../../../../../styles/global';
 import { variants } from '../../../../../../styles/variants';

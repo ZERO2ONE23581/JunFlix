@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { Follower, Following } from '@prisma/client';
 import { Flex } from '../../../../../../../../styles/global';
-import { OverlayBg } from '../../../../../../../Tools/overlay';
+import { OverlayBg } from '../../../../../../../Tools/Overlay';
 import { PostModal } from '../../../../../../../../styles/post';
 import { scaleVar } from '../../../../../../../../styles/variants';
 import { useUser } from '../../../../../../../libs/client/useUser';

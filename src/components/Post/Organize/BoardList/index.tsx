@@ -3,13 +3,13 @@ import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { IRes } from '../../../../types/global';
 import { UseFormHandleSubmit } from 'react-hook-form';
-import { OverlayBg } from '../../../../Tools/overlay';
+import { OverlayBg } from '../../../../Tools/Overlay';
 import { PostModal } from '../../../../../styles/post';
-import { MsgModal } from '../../../../Tools/Msg';
+import { MsgModal } from '../../../../Tools/Modal/Message';
 import { scaleVar } from '../../../../../styles/variants';
 import useMutation from '../../../../libs/client/useMutation';
 import { IPostForm, IPostType } from '../../../../types/post';
-import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
+import { LoadingModal } from '../../../../Tools/Modal/Loading';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface ISelectBoardModal {

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import { Svg } from '../../../../../../../Tools/Svg';
 import { IPostType } from '../../../../../../../types/post';
-import { MsgModal } from '../../../../../../../Tools/Msg';
+import { MsgModal } from '../../../../../../../Tools/Modal/Message';
 import { useLike } from '../../../../../../../libs/client/useLike';
 import { Flex, FlexCol } from '../../../../../../../../styles/global';
 

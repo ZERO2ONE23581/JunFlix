@@ -6,15 +6,15 @@ import { AnimatePresence } from 'framer-motion';
 import { IRes } from '../../../../types/global';
 import { IPostType } from '../../../../types/post';
 import { IBoardForm } from '../../../../types/board';
-import { OverlayBg } from '../../../../Tools/overlay';
+import { OverlayBg } from '../../../../Tools/Overlay';
 import { PostModal } from '../../../../../styles/post';
-import { ErrModal } from '../../../../Tools/Error/Modal';
-import { MsgModal } from '../../../../Tools/Msg';
+import { ErrModal } from '../../../../Tools/Modal/Error';
+import { MsgModal } from '../../../../Tools/Modal/Message';
 import { useUser } from '../../../../libs/client/useUser';
 import { scaleVar } from '../../../../../styles/variants';
 import { useLength } from '../../../../libs/client/useTools';
 import useMutation from '../../../../libs/client/useMutation';
-import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
+import { LoadingModal } from '../../../../Tools/Modal/Loading';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface ICreateNewModal {

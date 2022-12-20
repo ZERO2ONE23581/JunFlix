@@ -5,11 +5,11 @@ import { Btn } from '../../../Tools/Button';
 import { IPostType } from '../../../types/post';
 import { Modal } from '../../../../styles/global';
 import { color } from '../../../../styles/variants';
-import { MsgModal } from '../../../Tools/Msg';
-import { OverlayBg } from '../../../Tools/overlay';
+import { MsgModal } from '../../../Tools/Modal/Message';
+import { OverlayBg } from '../../../Tools/Overlay';
 import { useUser } from '../../../libs/client/useUser';
 import useMutation from '../../../libs/client/useMutation';
-import { LoadingModal } from '../../../Tools/Modal/loading_modal';
+import { LoadingModal } from '../../../Tools/Modal/Loading';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IDeletePost {

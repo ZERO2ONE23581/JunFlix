@@ -4,7 +4,7 @@ import { IRes } from '../../../../../../../types/global';
 import useMutation from '../../../../../../../libs/client/useMutation';
 import { useUser } from '../../../../../../../libs/client/useUser';
 import { useRouter } from 'next/router';
-import { MsgModal } from '../../../../../../../Tools/Msg';
+import { MsgModal } from '../../../../../../../Tools/Modal/Message';
 import { useState } from 'react';
 import { color } from '../../../../../../../../styles/variants';
 

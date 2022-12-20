@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Svg } from '../../../../../Tools/Svg';
 import { Flex } from '../../../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { Answer } from '../../../../../Tools/Modal/answer_modal';
+import { Answer } from '../../../../../Tools/Modal/Answer';
 import { LinkModal } from '../../../../Post/Schema/Grid/Icons/Modal/Link';
 
 interface IBoardIcons {

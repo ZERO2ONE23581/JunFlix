@@ -3,9 +3,9 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Svg } from '../../src/Tools/Svg';
 import { Avatar } from '../../src/Tools/Avatar';
-import { Head_ } from '../../src/Tools/head_title';
+import { Head_ } from '../../src/Tools/Title/Head';
 import { useGetUsers } from '../../src/libs/client/useUser';
-import { PageHeading } from '../../src/components/PageHeading';
+import { PageTitle } from '../../src/Tools/Title/Page';
 import { Flex, FlexCol, FlexPage, Grid } from '../../styles/global';
 
 const Users: NextPage<IPage> = ({ theme }) => {
@@ -24,7 +24,7 @@ const Users: NextPage<IPage> = ({ theme }) => {
     <>
       <Head_ title="Users" />
       <Cont>
-        <PageHeading type="users" theme={theme} />
+        <PageTitle type="users" theme={theme} />
         <Ranks>
           {tops?.map((user) => (
             <User key={user.id} className="user">

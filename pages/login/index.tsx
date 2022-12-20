@@ -9,13 +9,13 @@ import { variants } from '../../styles/variants';
 import { IUserForm } from '../../src/types/user';
 import { InputWrap } from '../../src/Tools/Input';
 import { AnimatePresence } from 'framer-motion';
-import { Head_ } from '../../src/Tools/head_title';
-import { MsgModal } from '../../src/Tools/Msg';
-import { ErrMsg } from '../../src/Tools/Error/Message';
+import { Head_ } from '../../src/Tools/Title/Head';
+import { MsgModal } from '../../src/Tools/Modal/Message';
+import { ErrTxt } from '../../src/Tools/ErrTxt';
 import { Box, FlexPage, Form } from '../../styles/global';
 import { FindUser } from '../../src/components/User/Find';
 import useMutation from '../../src/libs/client/useMutation';
-import { LoadingModal } from '../../src/Tools/Modal/loading_modal';
+import { LoadingModal } from '../../src/Tools/Modal/Loading';
 
 const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
   const router = useRouter();
@@ -78,7 +78,7 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
                       }),
                     }}
                   />
-                  <ErrMsg error={errors.email?.message!} theme={theme} />
+                  <ErrTxt error={errors.email?.message!} theme={theme} />
                   <InputWrap
                     _data={{
                       theme,
@@ -92,7 +92,7 @@ const Login: NextPage<{ theme: boolean }> = ({ theme }) => {
                       }),
                     }}
                   />
-                  <ErrMsg error={errors.password?.message!} theme={theme} />
+                  <ErrTxt error={errors.password?.message!} theme={theme} />
                   <Btn type="submit" item={{ theme, name: 'Submit' }} />
                 </Form>
                 <FindUser theme={theme} type="login" />

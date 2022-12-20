@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Page } from '../../styles/global';
-import { Slider } from '../../src/Tools/Slider';
-import { Head_ } from '../../src/Tools/head_title';
-import { PageHeading } from '../../src/components/PageHeading';
+import { Head_ } from '../../src/Tools/Title/Head';
+import { PageTitle } from '../../src/Tools/Title/Page';
+import { Slider } from '../../src/components/Movie/Slider';
 
 const GenreMovie: NextPage<IPage> = ({ theme, setFixed }) => {
   const router = useRouter();
@@ -14,7 +14,7 @@ const GenreMovie: NextPage<IPage> = ({ theme, setFixed }) => {
     <>
       <Head_ title="영화" />
       <Cont>
-        <PageHeading theme={theme} type={type} />
+        <PageTitle theme={theme} type={type} />
         <Slider _data={{ theme, setFixed, type, hideTitle: true }} />
       </Cont>
     </>

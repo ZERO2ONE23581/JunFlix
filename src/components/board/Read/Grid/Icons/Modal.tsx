@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
-import { OverlayBg } from '../../../../../Tools/overlay';
+import { OverlayBg } from '../../../../../Tools/Overlay';
 import { List } from '../../../../User/Read/MyPage/List';
 import { MiniModal } from '../../../../../../styles/global';
 import { smallModalVar } from '../../Each/Title/Setting_Modal';

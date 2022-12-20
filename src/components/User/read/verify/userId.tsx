@@ -1,19 +1,19 @@
 import { Title } from './Title';
 import styled from '@emotion/styled';
+import { FindUser } from '../../Find';
 import { useForm } from 'react-hook-form';
 import { Btn } from '../../../../Tools/Button';
 import { IRes } from '../../../../types/global';
 import { AnimatePresence } from 'framer-motion';
 import { IUserForm } from '../../../../types/user';
 import { InputWrap } from '../../../../Tools/Input';
-import { MsgModal } from '../../../../Tools/Msg';
+import { ErrTxt } from '../../../../Tools/ErrTxt';
 import { Box, Form } from '../../../../../styles/global';
-import { ErrMsg } from '../../../../Tools/Error/Message';
 import { variants } from '../../../../../styles/variants';
+import { MsgModal } from '../../../../Tools/Modal/Message';
 import useMutation from '../../../../libs/client/useMutation';
-import { LoadingModal } from '../../../../Tools/Modal/loading_modal';
+import { LoadingModal } from '../../../../Tools/Modal/Loading';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { FindUser } from '../../Find';
 
 interface IVerfiyID {
   _data: {
@@ -80,7 +80,7 @@ export const VerifyID = ({ _data }: IVerfiyID) => {
                     register: register('userId', { required: 'need_userId' }),
                   }}
                 />
-                <ErrMsg theme={theme} error={errors.userId?.message!} />
+                <ErrTxt theme={theme} error={errors.userId?.message!} />
                 <Btn item={{ theme, name: 'Submit' }} type="submit" />
               </Form>
               <FindUser theme={theme} />

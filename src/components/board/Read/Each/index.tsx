@@ -5,9 +5,9 @@ import { BtnWrap } from './BtnWrap';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 import { IBoardType } from '../../../../types/board';
-import { TrimText } from '../../../../Tools/trimText';
+import { TrimText } from '../../../../Tools/Trim';
 import { FlexCol } from '../../../../../styles/global';
-import { OnPrivateBtn } from '../../../../Tools/Private';
+import { OnPrivateBtn } from '../../../../Tools/Button/Private';
 import { useUser } from '../../../../libs/client/useUser';
 
 interface IBoardBox {

@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Avatar } from '../../../../../Tools/Avatar';
 import { IUserType } from '../../../../../types/user';
 import { FlexCol } from '../../../../../../styles/global';
-import { OnPrivateBtn } from '../../../../../Tools/Private';
+import { OnPrivateBtn } from '../../../../../Tools/Button/Private';
 import { useCapLetter } from '../../../../../libs/client/useTools';
 import useFollowUser from '../../../../../libs/client/useFollowing/User';
 

@@ -1,6 +1,6 @@
 import { ListModal } from './List';
 import styled from '@emotion/styled';
-import { OverlayBg } from '../../../../Tools/overlay';
+import { OverlayBg } from '../../../../Tools/Overlay';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CreatePost } from '../../../../components/Post/Create';
 import { Dispatch, SetStateAction, useState } from 'react';
