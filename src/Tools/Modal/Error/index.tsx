@@ -1,10 +1,11 @@
+import { Svg } from '../../Svg';
 import styled from '@emotion/styled';
 import { OverlayBg } from '../../OverlayBg';
-import { Modal } from '../../../../styles/global';
 import { AnimatePresence } from 'framer-motion';
 import { UseFormClearErrors } from 'react-hook-form';
 import { UseMsg } from '../../../libs/client/useMsg';
-import { color, redColor } from '../../../../styles/variants';
+import { modalVar } from '../../../../styles/variants';
+import { Modal, Text } from '../../../../styles/global';
 
 interface IErrMsg {
   _data: {
@@ -24,16 +25,16 @@ export const ErrModal = ({ _data }: IErrMsg) => {
         <>
           <Cont
             exit="exit"
-            custom={theme}
             initial="initial"
             animate="animate"
-            className="err-modal"
-            variants={errModalVar}
+            variants={modalVar}
+            custom={{ theme, isRed: true }}
           >
-            <span className="txt">
+            <Svg type="close" theme={theme} />
+            <Text className="txt">
               {txt.kor && <span className="kor">{txt.kor}</span>}
               {txt.eng && <span>{txt.eng}</span>}
-            </span>
+            </Text>
           </Cont>
           <OverlayBg dark={0.8} zIndex={221} closeModal={closeModal} />
         </>
@@ -43,16 +44,9 @@ export const ErrModal = ({ _data }: IErrMsg) => {
 };
 const Cont = styled(Modal)`
   z-index: 222;
-  height: 200px;
-  min-height: 150px;
-  margin-top: 20rem;
-  font-size: 1.3rem;
-  width: fit-content;
-  height: fit-content;
+  min-height: 30vh;
   .txt {
-    text-align: center;
-    span {
-      display: block;
+    > span {
       font-size: 1.6rem;
     }
     .kor {
@@ -60,21 +54,3 @@ const Cont = styled(Modal)`
     }
   }
 `;
-const errModalVar = {
-  initial: (theme: boolean) => ({
-    scale: 0.1,
-    opacity: 0,
-  }),
-  animate: (theme: boolean) => ({
-    scale: 1,
-    opacity: 1,
-    color: redColor,
-    transition: { duration: 0.3 },
-    backgroundColor: color(!theme),
-  }),
-  exit: (theme: boolean) => ({
-    scale: 0.1,
-    opacity: 0,
-    transition: { duration: 0.3 },
-  }),
-};

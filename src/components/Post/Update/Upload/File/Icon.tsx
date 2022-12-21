@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Svg } from '../../../../../Tools/Svg';
 import { Dispatch, SetStateAction } from 'react';
-import { scaleVar } from '../../../../../../styles/variants';
+import { modalVar } from '../../../../../../styles/variants';
 
 interface IIcon {
   theme: boolean;
@@ -18,7 +18,7 @@ export const Icon = ({ theme, preview, setPreview }: IIcon) => {
           initial="initial"
           animate="animate"
           className="delete-icon"
-          variants={scaleVar}
+          variants={modalVar}
           onClick={() => setPreview('')}
           custom={{ theme, duration: 0.6 }}
         >

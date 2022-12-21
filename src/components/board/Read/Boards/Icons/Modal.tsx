@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { List } from '../../../../User/Read/MyPage/List';
 import { MiniModal } from '../../../../../../styles/global';
-import { smallModalVar } from '../../Each/Title/Setting_Modal';
+import { smallModalVar } from '../../Board/Title/Setting_Modal';
 import { useCapLetters } from '../../../../../libs/client/useTools';
 
 interface IFilterModal {

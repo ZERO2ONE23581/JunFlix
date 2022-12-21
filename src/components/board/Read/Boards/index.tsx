@@ -6,7 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import { NoData } from '../../../../Tools/NoData';
 import { IPostType } from '../../../../types/post';
 import { IBoardType } from '../../../../types/board';
-import { scaleVar } from '../../../../../styles/variants';
+import { modalVar, pageVar, variants } from '../../../../../styles/variants';
 import { FlexCol, Grid } from '../../../../../styles/global';
 
 interface IBoards {
@@ -46,8 +46,8 @@ export const BoardsGrid = ({ _data, _genre }: IBoards) => {
             exit="exit"
             animate="animate"
             initial="initial"
-            variants={scaleVar}
-            custom={{ theme, duration: 0.6 }}
+            custom={theme}
+            variants={pageVar}
           >
             {isQuickSaved && (
               <GridBox

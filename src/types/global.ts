@@ -12,7 +12,6 @@ export interface IForm {
   description?: string;
   boardAvatar?: FileList;
 }
-
 export interface IMovie {
   id: number;
   title: string;

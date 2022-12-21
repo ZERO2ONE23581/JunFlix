@@ -7,7 +7,7 @@ import { Follower, Following } from '@prisma/client';
 import { Flex } from '../../../../../../../../styles/global';
 import { OverlayBg } from '../../../../../../../Tools/OverlayBg';
 import { PostModal } from '../../../../../../../../styles/post';
-import { scaleVar } from '../../../../../../../../styles/variants';
+import { modalVar } from '../../../../../../../../styles/variants';
 import { useUser } from '../../../../../../../libs/client/useUser';
 
 interface IFollowModal {
@@ -41,7 +41,7 @@ export const FollowModal = ({ _data, _follow }: IFollowModal) => {
             initial="initial"
             animate="animate"
             layoutId={layoutId}
-            variants={scaleVar}
+            variants={modalVar}
             custom={{ theme, duration: 0.5 }}
           >
             <Layer _data={{ theme, closeModal, isFollower }} />

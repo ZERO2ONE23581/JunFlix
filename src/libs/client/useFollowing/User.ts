@@ -33,5 +33,5 @@ export default function useFollowUser<T = any>(user_id: number): IResult<T> {
     if (post_data?.error) console.log(post_data.error);
   }, [post_data, useMutation]);
 
-  return { follower: length, onClick, isFollowing, name };
+  return { follower: length, onClick, isFollowing: isFollowing!, name };
 }

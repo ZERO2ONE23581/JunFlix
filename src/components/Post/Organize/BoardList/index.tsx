@@ -6,7 +6,7 @@ import { UseFormHandleSubmit } from 'react-hook-form';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { PostModal } from '../../../../../styles/post';
 import { MsgModal } from '../../../../Tools/Modal/Message';
-import { scaleVar } from '../../../../../styles/variants';
+import { modalVar } from '../../../../../styles/variants';
 import useMutation from '../../../../libs/client/useMutation';
 import { IPostForm, IPostType } from '../../../../types/post';
 import { LoadingModal } from '../../../../Tools/Modal/Loading';
@@ -56,7 +56,7 @@ export const SelectBoard = ({ _data }: ISelectBoardModal) => {
                 initial="initial"
                 animate="animate"
                 layoutId={layoutId}
-                variants={scaleVar}
+                variants={modalVar}
                 custom={{ theme, duration: 0.7 }}
               >
                 <Form

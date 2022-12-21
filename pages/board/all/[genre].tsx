@@ -6,7 +6,7 @@ import { NoData } from '../../../src/Tools/NoData';
 import { Head_ } from '../../../src/Tools/Title/Head';
 import { useCapLetters } from '../../../src/libs/client/useTools';
 import { PageTitle } from '../../../src/Tools/Title/Page';
-import { BoardsGrid } from '../../../src/components/Board/Read/Grid';
+import { BoardsGrid } from '../../../src/components/Board/Read/Boards';
 import { useGenreBoards } from '../../../src/libs/client/useBoards';
 
 const GenreBoards: NextPage<{ theme: boolean }> = ({ theme }) => {

@@ -5,34 +5,33 @@ import {
 } from 'react-hook-form';
 import styled from '@emotion/styled';
 import { Btn } from '../../../Tools/Button';
-import { InputWrap } from '../../../Tools/Input';
+import { IForm } from '../../../types/global';
 import { Flex } from '../../../../styles/global';
-import { IBoardForm } from '../../../types/board';
+import { InputWrap } from '../../../Tools/Input';
 import { SelectWrap } from '../../../Tools/Input/Select';
 
-interface ICreateBoardWrap {
+interface IInputs {
   _data: {
-    error: string;
     theme: boolean;
-    watch: UseFormWatch<IBoardForm>;
-    register: UseFormRegister<IBoardForm>;
-    clearErrors: UseFormClearErrors<IBoardForm>;
+    err_title: string;
+    watch: UseFormWatch<IForm>;
+    register: UseFormRegister<IForm>;
+    clearErrors: UseFormClearErrors<IForm>;
   };
 }
-
-export const Wrap = ({ _data }: ICreateBoardWrap) => {
-  const { theme, clearErrors, watch, register, error } = _data;
+export const Inputs = ({ _data }: IInputs) => {
+  const { theme, watch, register, clearErrors, err_title } = _data;
   return (
     <Cont>
       <InputWrap
         _data={{
           theme,
-          error,
           clearErrors,
           id: 'title',
           type: 'text',
           label: 'Title',
           text: watch('title'),
+          error: err_title!,
           register: register('title', { required: 'need_title' }),
         }}
       />
@@ -50,13 +49,10 @@ export const Wrap = ({ _data }: ICreateBoardWrap) => {
   );
 };
 const Cont = styled(Flex)`
-  gap: 15px;
+  gap: 1rem;
   align-items: flex-end;
-  .select-wrap {
-    width: fit-content;
-  }
   button {
     width: fit-content;
-    padding: 11px 30px;
+    padding: 0.8rem 1rem;
   }
 `;

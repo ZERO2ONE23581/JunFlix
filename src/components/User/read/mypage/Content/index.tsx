@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { CreatePost } from '../../../../Post/Create';
 import { PostSchema } from '../../../../Post/Schema';
 import { NoData } from '../../../../../Tools/NoData';
-import { BoardsGrid } from '../../../../Board/Read/Grid';
+import { BoardsGrid } from '../../../../Board/Read/Boards';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useUser } from '../../../../../libs/client/useUser';
 import { useGetPosts } from '../../../../../libs/client/usePosts';

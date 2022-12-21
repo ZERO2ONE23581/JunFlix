@@ -1,47 +1,22 @@
+import { useEffect } from 'react';
+import { UpdateForm } from './Form';
 import styled from '@emotion/styled';
 import { Svg } from '../../../Tools/Svg';
-import { Btn } from '../../../Tools/Button';
 import { useForm } from 'react-hook-form';
+import { IBoardSetting } from '../Read/Modals';
 import { IForm } from '../../../types/global';
-import { Avatar } from '../../../Tools/Avatar';
-import { InputWrap } from '../../../Tools/Input';
-import { IBoardType } from '../../../types/board';
+import { AnimatePresence } from 'framer-motion';
+import { Modal } from '../../../../styles/global';
 import { OverlayBg } from '../../../Tools/OverlayBg';
-import { scaleVar } from '../../../../styles/variants';
-import { useUser } from '../../../libs/client/useUser';
-import { SelectWrap } from '../../../Tools/Input/Select';
-import { AnimatePresence, motion } from 'framer-motion';
-import { TextAreaWrap } from '../../../Tools/Input/TextArea';
-import { Dispatch, SetStateAction, useEffect } from 'react';
-import { Flex, Modal, SetPrivate } from '../../../../styles/global';
-import { useCapLetters, useLength } from '../../../libs/client/useTools';
+import { modalVar } from '../../../../styles/variants';
+import { useCapLetters } from '../../../libs/client/useTools';
 
-export interface ITypeModal {
-  _data: {
-    open: boolean;
-    theme: boolean;
-    loading: boolean;
-    layoutId: string;
-    original: IBoardType;
-    post: ({}) => void;
-    closeModal: () => void;
-    setLoading: Dispatch<SetStateAction<boolean>>;
-  };
-}
-export const UpdateBoard = ({ _data }: ITypeModal) => {
-  const { loggedInUser } = useUser();
-  const {
-    post,
-    open,
-    theme,
-    loading,
-    original,
-    layoutId,
-    closeModal,
-    setLoading,
-  } = _data;
+export const UpdateBoard = ({ _data, _modal }: IBoardSetting) => {
+  const { POST, theme, layoutId, board } = _data;
+  const { Loading, type, loading, closeModal, setLoading } = _modal;
   const {
     watch,
+    reset,
     setValue,
     setError,
     register,
@@ -50,158 +25,64 @@ export const UpdateBoard = ({ _data }: ITypeModal) => {
     formState: { errors },
   } = useForm<IForm>({ mode: 'onSubmit' });
 
+  const genre = board?.genre!;
+  const title = board?.title!;
+  const onPrivate = board?.onPrivate!;
+  const description = board?.description!;
   useEffect(() => {
-    if (original) {
-      if (original.genre) setValue('genre', original.genre);
-      if (original.onPrivate) setValue('onPrivate', original.onPrivate);
-      if (original.title) setValue('title', useCapLetters(original.title));
-      if (original.description) setValue('description', original.description);
+    if (board) {
+      if (genre) setValue('genre', genre);
+      if (onPrivate) setValue('onPrivate', onPrivate);
+      if (title) setValue('title', useCapLetters(title));
+      if (description) setValue('description', description);
     }
-  }, [original, setValue]);
-
-  const onValid = async ({ title, genre, onPrivate, description }: IForm) => {
-    const user_id = loggedInUser?.id;
-    const title_len = useLength(title);
-    const desc_len = useLength(description!);
-    if (title_len >= 30)
-      return setError('title', { message: 'max_board_title' });
-    if (desc_len >= 700)
-      return setError('description', { message: 'max_board_desc' });
-    setLoading(true);
-    if (loading) return;
-    return post({ title, genre, onPrivate, description, user_id });
+  }, [genre, onPrivate, title, description, setValue, board]);
+  const onClose = () => {
+    closeModal();
+    reset({ title, genre, onPrivate, description });
   };
-  //
+  const __useform = {
+    watch,
+    register,
+    setError,
+    clearErrors,
+    handleSubmit,
+    errors: {
+      err_desc: errors.title?.message!,
+      err_title: errors.description?.message!,
+    },
+  };
+  const modal = !Loading && Boolean(type === 'update-board');
   return (
-    <AnimatePresence>
-      {open && (
-        <>
-          <BoardModal
-            variants={scaleVar}
+    <>
+      <AnimatePresence>
+        {modal && (
+          <Cont
+            custom={theme}
+            variants={modalVar}
             layoutId={layoutId}
-            custom={{ theme, duration: 0.6 }}
             exit="exit"
             initial="initial"
             animate="animate"
-            className="board-modal"
           >
-            <Svg
-              type="close"
-              theme={theme}
-              onClick={closeModal}
-              item={{ size: '2rem' }}
-            />
+            <Svg type="close" theme={theme} onClick={onClose} />
             <h1>Edit Board</h1>
-            <Form onSubmit={handleSubmit(onValid)}>
-              <Wrap>
-                <InputWrap
-                  _data={{
-                    theme,
-                    clearErrors,
-                    id: 'title',
-                    type: 'text',
-                    label: 'Title',
-                    text: watch('title'),
-                    error: errors.title?.message!,
-                    register: register('title', {
-                      required: 'need_title',
-                    }),
-                  }}
-                />
-                <Btn type="submit" item={{ theme, name: 'Save' }} />
-              </Wrap>
-              <Flex>
-                <SelectWrap
-                  _data={{
-                    theme,
-                    clearErrors,
-                    id: 'genre',
-                    text: watch('genre'),
-                    register: register('genre'),
-                    error: errors.genre?.message!,
-                  }}
-                />
-              </Flex>
-              <TextAreaWrap
-                _data={{
-                  theme,
-                  min: 120,
-                  max: 700,
-                  clearErrors,
-                  id: 'description',
-                  label: 'Description',
-                  text: watch('description'),
-                  register: register('description'),
-                  error: errors.description?.message,
-                }}
-              />
-              <IsPrivate>
-                <label htmlFor="private-mode">
-                  <span>비공개 보드로 전환</span>
-                  <span>(On private mode)</span>
-                </label>
-                <input
-                  type="checkbox"
-                  id="private-mode"
-                  {...register('onPrivate')}
-                />
-              </IsPrivate>
-              <Host>
-                <Avatar
-                  _data={{ theme, size: '3.3rem', host_id: original.host_id }}
-                />
-
-                <span>Board Host:</span>
-                <span>@{original.host.userId}</span>
-              </Host>
-            </Form>
-          </BoardModal>
-          <OverlayBg closeModal={closeModal} />
-        </>
-      )}
-    </AnimatePresence>
+            <UpdateForm
+              _useform={__useform}
+              _data={{ theme, loading, POST, setLoading }}
+            />
+          </Cont>
+        )}
+      </AnimatePresence>
+      {modal && <OverlayBg closeModal={onClose} />}
+    </>
   );
 };
-
-export const BoardModal = styled(Modal)`
-  z-index: 100;
-  padding: 2.5rem;
-  min-width: 520px;
-  margin: 3rem auto;
-  width: fit-content;
-  h1 {
-    font-size: 2rem;
+const Cont = styled(Modal)`
+  top: 8vh;
+  max-height: 85vh;
+  form {
+    gap: 2rem 1.5rem;
+    padding: 0.2rem;
   }
-`;
-const Wrap = styled(Flex)`
-  align-items: flex-end;
-  gap: 1rem;
-  button {
-    width: 100px;
-    padding: 10px;
-    border-radius: 10px;
-  }
-`;
-const Form = styled(motion.form)`
-  gap: 1.2rem;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  padding: 1rem;
-  overflow-y: auto;
-  flex-direction: column;
-  justify-content: flex-start;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-const IsPrivate = styled(SetPrivate)`
-  font-size: 1.1rem;
-  justify-content: space-between;
-`;
-const Host = styled(Flex)`
-  gap: 10px;
-  opacity: 0.8;
-  font-style: italic;
-  justify-content: flex-start;
 `;

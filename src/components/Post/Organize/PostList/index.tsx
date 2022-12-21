@@ -7,7 +7,7 @@ import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { IPostUseform } from '../../../../types/post';
 import { PostModal } from '../../../../../styles/post';
 import { ErrModal } from '../../../../Tools/Modal/Error';
-import { scaleVar } from '../../../../../styles/variants';
+import { modalVar } from '../../../../../styles/variants';
 import { useUser } from '../../../../libs/client/useUser';
 import { useGetPosts } from '../../../../libs/client/usePosts';
 
@@ -42,7 +42,7 @@ export const PostsModal = ({ _data, _useform }: IPostsModal) => {
               initial="initial"
               animate="animate"
               layoutId={layoutId}
-              variants={scaleVar}
+              variants={modalVar}
               custom={{ theme, duration: 0.5 }}
             >
               <Layer

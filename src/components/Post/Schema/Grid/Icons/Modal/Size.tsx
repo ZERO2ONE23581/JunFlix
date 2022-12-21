@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { OverlayBg } from '../../../../../../Tools/OverlayBg';
 import { List } from '../../../../../User/Read/MyPage/List';
 import { MiniModal } from '../../../../../../../styles/global';
-import { smallModalVar } from '../../../../../Board/Read/Each/Title/Setting_Modal';
+import { smallModalVar } from '../../../../../Board/Read/Board/Title/Setting_Modal';
 
 interface ISetGridModal {
   _data: {

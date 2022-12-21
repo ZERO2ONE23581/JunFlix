@@ -4,7 +4,7 @@ import { Page } from '../../../styles/global';
 import { Head_ } from '../../../src/Tools/Title/Head';
 import { PageTitle } from '../../../src/Tools/Title/Page';
 import { useGetAllBoards } from '../../../src/libs/client/useBoards';
-import { BoardsGrid } from '../../../src/components/Board/Read/Grid';
+import { BoardsGrid } from '../../../src/components/Board/Read/Boards';
 
 const AllBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   const { boards, isBoard } = useGetAllBoards();

@@ -40,11 +40,9 @@ export const MsgModal = ({ _data }: IMsgModal) => {
   );
 };
 const Cont = styled(Modal)`
-  z-index: 999;
   top: 30%;
-  width: fit-content;
-  height: fit-content;
   z-index: 201;
+  z-index: 999;
   padding: 40px;
   font-size: 1.5rem;
 `;

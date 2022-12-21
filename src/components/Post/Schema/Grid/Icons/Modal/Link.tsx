@@ -5,7 +5,7 @@ import { OverlayBg } from '../../../../../../Tools/OverlayBg';
 import { List } from '../../../../../User/Read/MyPage/List';
 import { MiniModal } from '../../../../../../../styles/global';
 import { useUser } from '../../../../../../libs/client/useUser';
-import { smallModalVar } from '../../../../../Board/Read/Each/Title/Setting_Modal';
+import { smallModalVar } from '../../../../../Board/Read/Board/Title/Setting_Modal';
 
 interface ILinkModal {
   _data: {

@@ -3,7 +3,7 @@ import { EllipsModal } from './EllipsModal';
 import { Svg } from '../../../../../Tools/Svg';
 import { Circle } from '../../../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { scaleVar } from '../../../../../../styles/variants';
+import { modalVar } from '../../../../../../styles/variants';
 
 interface ISetting {
   theme: boolean;
@@ -21,7 +21,7 @@ export const Setting = ({ host_id, theme, isMyPost, setModal }: ISetting) => {
         <Close
           className="icon"
           animate="animate"
-          variants={scaleVar}
+          variants={modalVar}
           custom={{ theme, duration: 0.6 }}
         >
           <Svg
@@ -36,7 +36,7 @@ export const Setting = ({ host_id, theme, isMyPost, setModal }: ISetting) => {
           <Ellips
             className="icon"
             animate="animate"
-            variants={scaleVar}
+            variants={modalVar}
             custom={{ theme, duration: 0.6 }}
           >
             <Svg

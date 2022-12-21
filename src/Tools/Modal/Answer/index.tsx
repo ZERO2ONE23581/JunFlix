@@ -5,7 +5,7 @@ import { OverlayBg } from '../../OverlayBg';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { Modal } from '../../../../styles/global';
-import { scaleVar } from '../../../../styles/variants';
+import { modalVar } from '../../../../styles/variants';
 
 interface IAnswer {
   _data: {
@@ -35,7 +35,7 @@ export const Answer = ({ _data }: IAnswer) => {
             exit="exit"
             initial="initial"
             animate="animate"
-            variants={scaleVar}
+            variants={modalVar}
             custom={{ theme, duration: 0.6 }}
           >
             <Svg

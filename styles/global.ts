@@ -77,14 +77,28 @@ export const MiniModal = styled(motion.div)`
       padding: 0.3rem 1rem;
       justify-content: space-between;
     }
-    li {
-    }
   }
 `;
 export const FlexCol = styled(Flex)`
   flex-direction: column;
   justify-content: flex-start;
 `;
+export const Text = styled(FlexCol)`
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  > span {
+    font-size: 1.2rem;
+    .kor {
+      font-size: 1.1rem;
+    }
+    span {
+      display: block;
+      text-align: center;
+    }
+  }
+`;
+
 export const Layer_ = styled(Flex)`
   padding: 0.6rem 1rem;
   justify-content: space-between;
@@ -150,34 +164,33 @@ export const ERROR = styled.div`
     }
   }
 `;
-export const Modal = styled(motion.article)`
-  top: 0;
+export const Modal = styled(FlexCol)`
   left: 0;
   right: 0;
+  top: 40vh;
   bottom: 0;
-  position: fixed;
-  margin: 0 auto;
-  //
+  z-index: 100;
   padding: 20px;
+  margin: 0 auto;
+  position: fixed;
   overflow: hidden;
   overflow-y: auto;
-  width: fit-content;
-  //
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  //
-  border-width: 1px;
   border-radius: 5px;
-  border-style: solid;
+  width: fit-content;
+  height: fit-content;
+  justify-content: center;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   ::-webkit-scrollbar {
     display: none;
   }
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    //color: ${(p) => p.theme.color.logo};
+  }
   .close {
-    top: 1rem;
-    left: 1.5rem;
+    top: 0.8rem;
+    left: 0.8rem;
     position: absolute;
   }
 `;

@@ -18,7 +18,7 @@ export const GreyBorder = (dark: boolean) => (dark ? whiteBrdr : greyBrdr);
 
 const scale = { scale: 0.2, opacity: 0, transition: { duration: 0.8 } };
 const __scale = { scale: 1, opacity: 1, transition: { duration: 0.8 } };
-export const onlyScaleVar = {
+export const onlymodalVar = {
   initial: { ...scale },
   animate: { ...__scale },
   exit: { ...scale },
@@ -67,28 +67,27 @@ export const hoverScale = {
 export const hoverColor = {
   hover: { scale: 1.1, transition: { duration: 0.3 }, color: redColor },
 };
-export const scaleVar = {
-  initial: ({ theme, duration }: any) => ({
-    scale: 0.2,
+export const modalVar = {
+  exit: () => ({
+    scale: 0,
     opacity: 0,
-    color: color(theme),
-    transition: { duration },
-    backgroundColor: color(!theme),
+    transition: { duration: 0.4 },
   }),
-  animate: ({ theme, duration }: any) => ({
+  initial: () => ({
+    scale: 0,
+    opacity: 0,
+    transition: { duration: 0.4 },
+  }),
+  animate: ({ theme, isRed }: any) => ({
     scale: 1,
     opacity: 1,
-    color: color(theme),
+    transition: { duration: 0.4 },
     backgroundColor: color(!theme),
-    transition: { duration },
-  }),
-  exit: ({ theme, duration }: any) => ({
-    scale: 0.2,
-    opacity: 0,
-    transition: { duration },
+    color: isRed ? redColor : color(theme),
+    border: isRed ? `3px solid ${redColor}` : TransBorder(!theme),
   }),
 };
-export const variants = {
+export const pageVar = {
   initial: (theme: boolean) => ({
     opacity: 0,
     color: color(theme),
@@ -97,12 +96,34 @@ export const variants = {
   animate: (theme: boolean) => ({
     opacity: 1,
     color: color(theme),
-    backgroundColor: color(!theme),
     transition: { duration: 0.5 },
+    backgroundColor: color(!theme),
   }),
   exit: (theme: boolean) => ({
     opacity: 0,
     color: color(theme),
+    backgroundColor: color(!theme),
+    transition: { duration: 0.5 },
+  }),
+};
+export const variants = {
+  initial: (theme: boolean) => ({
+    opacity: 0,
+    color: color(theme),
+    border: TransBorder(!theme),
+    backgroundColor: color(!theme),
+  }),
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    color: color(theme),
+    border: TransBorder(!theme),
+    transition: { duration: 0.5 },
+    backgroundColor: color(!theme),
+  }),
+  exit: (theme: boolean) => ({
+    opacity: 0,
+    color: color(theme),
+    border: TransBorder(!theme),
     backgroundColor: color(!theme),
     transition: { duration: 0.5 },
   }),

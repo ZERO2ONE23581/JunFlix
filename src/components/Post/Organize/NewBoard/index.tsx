@@ -11,7 +11,7 @@ import { PostModal } from '../../../../../styles/post';
 import { ErrModal } from '../../../../Tools/Modal/Error';
 import { MsgModal } from '../../../../Tools/Modal/Message';
 import { useUser } from '../../../../libs/client/useUser';
-import { scaleVar } from '../../../../../styles/variants';
+import { modalVar } from '../../../../../styles/variants';
 import { useLength } from '../../../../libs/client/useTools';
 import useMutation from '../../../../libs/client/useMutation';
 import { LoadingModal } from '../../../../Tools/Modal/Loading';
@@ -60,7 +60,7 @@ export const CreateNewModal = ({ _data }: ICreateNewModal) => {
       }, 1000);
     }
   }, [data, setMsg, setLoading]);
-  console.log(errors.title?.message);
+
   return (
     <>
       <AnimatePresence>
@@ -73,7 +73,7 @@ export const CreateNewModal = ({ _data }: ICreateNewModal) => {
                 animate="animate"
                 initial="initial"
                 layoutId={layoutId}
-                variants={scaleVar}
+                variants={modalVar}
                 custom={{ theme, duration: 0.4 }}
               >
                 <form onSubmit={handleSubmit(onValid)}>

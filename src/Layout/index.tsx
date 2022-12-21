@@ -9,7 +9,7 @@ import { Header } from './Header';
 import { Footer } from './footer';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { variants } from '../../styles/variants';
+import { pageVar, variants } from '../../styles/variants';
 
 interface ILayoutProps {
   children: ReactElement;
@@ -29,11 +29,11 @@ export const Layout = ({ _data, children }: ILayoutProps) => {
   return (
     <Cont
       width={width}
+      custom={theme}
+      variants={pageVar}
       exit="exit"
       animate="animate"
       initial="initial"
-      custom={theme}
-      variants={variants}
     >
       {!hide && <Header _data={{ theme, setTheme, setFixed }} />}
       <section className="children">{children}</section>

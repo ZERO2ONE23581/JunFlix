@@ -79,15 +79,14 @@ const Cont = styled(FlexCol)`
   padding: 0 3rem;
   min-height: 44px;
   border-radius: 8px;
+  width: fit-content;
   select {
-    padding: 11px 0;
-    width: 100%;
-    height: 100%;
     border: none;
-    //  border: 1px solid yellow;
     outline: none;
     color: inherit;
+    padding: 11px 0;
     font-size: 1.1rem;
+    width: fit-content;
     text-align: center;
     background-color: inherit;
   }
