@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Svg } from '../../../Tools/Svg';
-import { Layer_ } from '../../../../styles/global';
+import { Flex } from '../../../../styles/global';
 
 interface ICmtModalLayer {
   _data: {
@@ -20,23 +20,22 @@ export const Layer = ({ _data }: ICmtModalLayer) => {
           item={{ size: '1.8rem' }}
         />
       </div>
-      <div>
-        <h1 className="title">Comments</h1>
+      <Flex className="flex">
+        <h1>Comments</h1>
         <Svg type="comments" theme={theme} onClick={closeModal} />
-      </div>
+      </Flex>
       <div />
     </Cont>
   );
 };
-const Cont = styled(Layer_)`
+const Cont = styled(Flex)`
   padding: 0.8rem 1rem;
   border-bottom: 1px dotted ${(p) => p.theme.color.font};
-  > div {
-    :nth-of-type(2) {
-      h1 {
-        font-size: 1.6rem;
-        margin-right: 1rem;
-      }
+  .flex {
+    gap: 1rem;
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 0;
     }
   }
 `;

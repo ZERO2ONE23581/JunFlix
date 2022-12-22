@@ -32,4 +32,7 @@ export default GenreBoards;
 
 const Cont = styled(Page)`
   padding: 0 8rem;
+  .boards_grid {
+    margin-top: 1rem;
+  }
 `;

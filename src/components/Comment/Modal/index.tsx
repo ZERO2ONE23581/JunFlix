@@ -28,8 +28,8 @@ export const CommentModal = ({ _data }: ICommentModal) => {
     cmtModal,
     layoutId,
     isBlocked,
-    setModal: setPost,
     setCmtModal,
+    setModal: setPost,
   } = _data;
   const [create, setCreate] = useState(false);
   const closeCreate = () => setCreate(false);

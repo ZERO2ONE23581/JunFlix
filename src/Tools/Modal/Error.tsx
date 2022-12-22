@@ -44,6 +44,7 @@ export const ErrModal = ({ _data }: IErrMsg) => {
 };
 const Cont = styled(Modal)`
   z-index: 222;
+  padding: 1rem;
   min-height: 30vh;
   .txt {
     > span {

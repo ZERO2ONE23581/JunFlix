@@ -49,6 +49,7 @@ export const DeleteBoard = ({ _data, _modal }: IBoardSetting) => {
   );
 };
 const Cont = styled(Modal)`
+  padding: 1.5rem 1rem;
   h1 {
     color: ${(p) => p.theme.color.logo};
   }

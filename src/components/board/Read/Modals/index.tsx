@@ -33,7 +33,6 @@ export const BoardModals = ({ _data }: IBoardSet) => {
   const __modal = { type, Loading, loading, setLoading, closeModal };
   useBoardApi({ _data: { type, original: board, setLayoutId, setApi } });
   useBoardResult({ _data: { data, type, closeModal, setMsg, setLoading } });
-
   return (
     <>
       <MsgModal _data={{ msg, theme, layoutId }} />

@@ -17,13 +17,12 @@ interface IBtnWrap {
     theme: boolean;
     genre: string;
     isMyBoard: boolean;
-    setFixed: Dispatch<SetStateAction<boolean>>;
     setCreatePost: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Btns = ({ _data, _follow }: IBtnWrap) => {
   const { name, onClick, isFollowing } = _follow;
-  const { theme, genre, isMyBoard, setFixed, setCreatePost } = _data;
+  const { theme, genre, isMyBoard, setCreatePost } = _data;
   const router = useRouter();
   const handleClick = () => {
     if (isMyBoard) return setCreatePost(true);
@@ -31,11 +30,12 @@ export const Btns = ({ _data, _follow }: IBtnWrap) => {
   };
   const clickGen = () => {
     if (genre) router.push(`/board/all/${genre}`);
-    else router.push(`/board/all`);
+    else allboard();
   };
+  const allboard = () => router.push(`/board/all`);
   return (
     <Cont>
-      <Btn onClick={() => router.push(`/all/boards`)}>
+      <Btn onClick={allboard}>
         <Box
           animate="animate"
           whileHover="hover"

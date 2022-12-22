@@ -3,32 +3,34 @@ import { FilterModal } from './Modal';
 import { useRouter } from 'next/router';
 import { Svg } from '../../../../../Tools/Svg';
 import { Flex } from '../../../../../../styles/global';
-import { Dispatch, SetStateAction, useState } from 'react';
 import { Answer } from '../../../../../Tools/Modal/Answer';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { LinkModal } from '../../../../Post/Schema/Grid/Icons/Modal/Link';
 
 interface IBoardIcons {
   _data: {
     theme: boolean;
-    hideFilter: boolean;
+    isHide: boolean;
+    setEdit: Dispatch<SetStateAction<boolean>>;
     setGenre: Dispatch<SetStateAction<{ select: boolean; type: string }>>;
   };
 }
 export const Icons = ({ _data }: IBoardIcons) => {
   const router = useRouter();
   const [modal, setModal] = useState('');
-  const { theme, setGenre, hideFilter } = _data;
+  const { theme, setGenre, isHide, setEdit } = _data;
   const onClick = (type: string) => {
+    if (type === 'edit') return setEdit((p) => !p);
     if (type === 'boards') return router.push(`/board/all`);
     if (type === 'plus') return router.push(`/board/create`);
     else return setModal(type);
   };
   const closeModal = () => setModal('');
-
-  const icons = hideFilter
-    ? ['compass', 'question', 'plus', 'boards']
-    : ['compass', 'question', 'plus', 'filter'];
-
+  const icons = () => {
+    //if (useIsMeHost()) return ['edit', 'compass', 'question', 'plus', 'boards'];
+    if (isHide) return ['compass', 'question', 'plus', 'boards'];
+    else return ['compass', 'question', 'plus', 'filter'];
+  };
   const __data = { theme, closeModal, modal };
   const __answer = {
     theme,
@@ -37,8 +39,8 @@ export const Icons = ({ _data }: IBoardIcons) => {
     answer: modal === 'question',
   };
   return (
-    <Cont className="icons">
-      {icons.map((el) => (
+    <Cont>
+      {icons().map((el) => (
         <Icon key={el}>
           <Svg type={el} theme={theme} onClick={() => onClick(el)} />
           <>

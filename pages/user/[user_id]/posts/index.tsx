@@ -2,9 +2,9 @@ import type { NextPage } from 'next';
 import { IPage } from '../../../_app';
 import { useRouter } from 'next/router';
 import { PostPage } from '../../../post/all';
+import { PageTitle } from '../../../../src/Tools/Title/Page';
 import { useGetPosts } from '../../../../src/libs/client/usePosts';
 import { PostSchema } from '../../../../src/components/Post/Schema';
-import { PageTitle } from '../../../../src/Tools/Title/Page';
 import { useLogin, useValidHost } from '../../../../src/libs/client/useLogin';
 
 const MyPostsPage: NextPage<IPage> = ({ theme, setFixed }) => {
@@ -16,7 +16,7 @@ const MyPostsPage: NextPage<IPage> = ({ theme, setFixed }) => {
   return (
     <PostPage>
       <PageTitle type={'user_posts'} theme={theme} />
-      <PostSchema setFixed={setFixed} _data={{ theme, posts, grid: 4 }} />
+      <PostSchema setFixed={setFixed} _data={{ theme, posts, grid: 5 }} />
     </PostPage>
   );
 };

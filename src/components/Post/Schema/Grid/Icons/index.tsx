@@ -6,9 +6,9 @@ import { CreatePost } from '../../../Create';
 import { Svg } from '../../../../../Tools/Svg';
 import { OrganizePosts } from './Modal/Organize';
 import { Flex } from '../../../../../../styles/global';
+import { Answer } from '../../../../../Tools/Modal/Answer';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useUser } from '../../../../../libs/client/useUser';
-import { Answer } from '../../../../../Tools/Modal/Answer';
 
 interface IPostsIcon {
   _data: {
@@ -48,7 +48,7 @@ export const Icons = ({ _data }: IPostsIcon) => {
   return (
     <>
       {!isHome && (
-        <Cont className="icons">
+        <Cont>
           {array.map((el) => (
             <Icon key={array.indexOf(el)}>
               <Svg

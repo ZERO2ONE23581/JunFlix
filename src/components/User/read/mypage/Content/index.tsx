@@ -23,22 +23,21 @@ export const UserContent = ({ _data }: IUserContent) => {
   const host_id = Number(router.query.user_id!);
   const isMy = Boolean(user_id === host_id);
   const [createPost, setCreatePost] = useState(false);
-  const closeModal = () => {
-    setFixed(false);
-    setCreatePost(false);
-  };
   const { boards, isBoard, Saved, isSaved } = useGetBoards(host_id);
   const {
     QS,
     posts,
     likedPosts,
     noData: noPosts,
-  } = useGetPosts({
-    host_id,
-    board_id: 0,
-  });
+  } = useGetPosts({ host_id, board_id: 0 });
   const noBoards = !Boolean(boards?.length! > 0);
   const noLikes = !Boolean(likedPosts?.length! > 0);
+  const closeModal = () => {
+    setFixed(false);
+    setCreatePost(false);
+  };
+  const onClick = () => setCreatePost(true);
+  const allPosts = () => router.push(`/post/all`);
   return (
     <Cont>
       {clicked === 'posts' && (
@@ -48,14 +47,7 @@ export const UserContent = ({ _data }: IUserContent) => {
           )}
           {noPosts && (
             <>
-              <NoData
-                _data={{
-                  theme,
-                  isMy,
-                  type: 'post',
-                  onClick: () => setCreatePost(true),
-                }}
-              />
+              <NoData _data={{ theme, isMy, onClick, type: 'post' }} />
               <CreatePost _data={{ theme, createPost, closeModal, setFixed }} />
             </>
           )}
@@ -70,14 +62,7 @@ export const UserContent = ({ _data }: IUserContent) => {
             />
           )}
           {noLikes && (
-            <NoData
-              _data={{
-                isMy,
-                theme,
-                type: 'likes',
-                onClick: () => router.push(`/post/all`),
-              }}
-            />
+            <NoData _data={{ isMy, theme, type: 'likes', onClick: allPosts }} />
           )}
         </>
       )}
@@ -126,17 +111,7 @@ export const UserContent = ({ _data }: IUserContent) => {
     </Cont>
   );
 };
-
 const Cont = styled.article`
-  border: 2px solid red;
   min-height: 50vh;
   padding: 1rem 10rem;
-  .boards_grid {
-    margin-top: 2.2rem;
-    .icons {
-      z-index: 1;
-      margin-top: 0.7rem;
-    }
-    //border: 2px solid red;
-  }
 `;

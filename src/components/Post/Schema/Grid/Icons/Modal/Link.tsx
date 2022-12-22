@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { AnimatePresence } from 'framer-motion';
-import { OverlayBg } from '../../../../../../Tools/OverlayBg';
 import { List } from '../../../../../User/Read/MyPage/List';
+import { OverlayBg } from '../../../../../../Tools/OverlayBg';
 import { MiniModal } from '../../../../../../../styles/global';
 import { useUser } from '../../../../../../libs/client/useUser';
 import { smallModalVar } from '../../../../../Board/Read/Board/Title/Setting';
@@ -36,7 +36,7 @@ export const LinkModal = ({ _data }: ILinkModal) => {
               <List
                 _data={{
                   theme,
-                  onClick: () => router.push('/all/posts'),
+                  onClick: () => router.push('/post/all'),
                   name: { eng: 'All Posts', kor: '모든 포스트' },
                 }}
               />
@@ -52,7 +52,7 @@ export const LinkModal = ({ _data }: ILinkModal) => {
               <List
                 _data={{
                   theme,
-                  onClick: () => router.push('/all/boards'),
+                  onClick: () => router.push('/board/all'),
                   name: { eng: 'All Boards', kor: '모든 보드' },
                 }}
               />

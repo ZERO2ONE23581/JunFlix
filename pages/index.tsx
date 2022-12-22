@@ -65,8 +65,4 @@ const Front = styled(FlexCol)`
 `;
 const Clicked = styled(Page)`
   padding: 1rem 10rem;
-  .posts_schema {
-    //padding-top: 1.4rem;
-    //border: 5px solid cornflowerblue;
-  }
 `;

@@ -53,7 +53,6 @@ export const Box = ({ _data }: IPostBox) => {
             initial="initial"
             animate="animate"
             whileHover="hover"
-            className="grid_box"
             key={post_id}
             custom={theme}
             variants={vars}
@@ -80,37 +79,31 @@ const Cont = styled.article`
   }
 `;
 export const PostBox__ = styled(FlexCol)`
-  gap: 10px;
-  margin: 0 auto;
+  gap: 1rem;
   cursor: pointer;
   overflow: hidden;
-  align-items: center;
   height: fit-content;
   img {
     width: 100%;
-    max-height: 600px;
     height: fit-content;
     border-radius: 0.5rem;
     box-shadow: ${(p) => p.theme.boxShadow.nav};
   }
   h2 {
     font-weight: 400;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     text-align: center;
   }
 `;
 const vars = {
-  initial: (theme: boolean) => ({
-    opacity: 0,
-  }),
+  exit: () => ({ opacity: 0 }),
+  initial: () => ({ opacity: 0 }),
   animate: (theme: boolean) => ({
     opacity: 1,
     color: color(theme),
     transition: { duration: 0.3 },
   }),
-  exit: () => ({
-    opacity: 0,
-  }),
+
   hover: () => ({
     scale: 1.15,
     color: '#E50914',

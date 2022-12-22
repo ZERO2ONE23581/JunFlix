@@ -28,3 +28,10 @@ export const useValidHost = (type: string) => {
     }
   }, [isMatch, router, type, host_id]);
 };
+export const useIsMeHost = () => {
+  const router = useRouter();
+  const { user_id } = router.query;
+  const { user_id: host_id } = useUser();
+  const isMeHost = Boolean(host_id === Number(user_id));
+  return isMeHost;
+};

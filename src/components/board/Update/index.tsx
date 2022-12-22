@@ -79,6 +79,7 @@ export const UpdateBoard = ({ _data, _modal }: IBoardSetting) => {
   );
 };
 const Cont = styled(Modal)`
+  padding: 1rem;
   top: 8vh;
   max-height: 85vh;
   form {

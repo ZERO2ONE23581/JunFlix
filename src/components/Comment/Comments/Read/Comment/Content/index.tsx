@@ -6,6 +6,7 @@ import { Btns } from '../../Btns';
 import { UserDate } from './Date';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
+import { TrimText } from '../../../../../../Tools/Trim';
 import { FlexCol } from '../../../../../../../styles/global';
 import { useTimeDiff } from '../../../../../../libs/client/useTools';
 
@@ -43,14 +44,15 @@ export const Content = ({ _data }: IContent) => {
     setCmtModal,
   });
   const { isUpdated } = useTimeDiff({ createdAt, updatedAt });
-
   return (
     <Cont>
-      <UserDate _data={{ userId: comment.host.userId, createdAt, updatedAt }} />
+      <UserDate
+        _data={{ userId: comment?.host?.userId!, createdAt, updatedAt }}
+      />
       <p>
         {replied_to && <span className="replied_to">@{replied_to}</span>}
         {isUpdated && <span className="update">{isUpdated}</span>}
-        <span>{comment.text}</span>
+        <TrimText text={comment?.text!} max={200} />
       </p>
       <Btns _data={{ theme, comment, setModal, setSelect, clickSvg }} />
     </Cont>

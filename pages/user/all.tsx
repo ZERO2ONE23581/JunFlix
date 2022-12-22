@@ -4,12 +4,12 @@ import styled from '@emotion/styled';
 import { Svg } from '../../src/Tools/Svg';
 import { Avatar } from '../../src/Tools/Avatar';
 import { Head_ } from '../../src/Tools/Title/Head';
-import { useGetUsers } from '../../src/libs/client/useUser';
 import { PageTitle } from '../../src/Tools/Title/Page';
+import { useGetUsers } from '../../src/libs/client/useUser';
 import { Flex, FlexCol, FlexPage, Grid } from '../../styles/global';
 
 const Users: NextPage<IPage> = ({ theme }) => {
-  const { users, noData } = useGetUsers();
+  const { users } = useGetUsers();
   const length = users?.length!;
   const tops = users?.slice(0, 3);
   const rests = users?.slice(3, length);
@@ -19,7 +19,6 @@ const Users: NextPage<IPage> = ({ theme }) => {
     if (num > 1) return `${num} ${type}s`;
     else return `${num} ${type}`;
   };
-
   return (
     <>
       <Head_ title="Users" />
@@ -100,5 +99,4 @@ const Info = styled(Flex)`
 const Rest = styled(Grid)`
   gap: 4rem;
   width: fit-content;
-  border: 5px solid hotpink;
 `;

@@ -12,6 +12,7 @@ import { Board } from '../../../src/components/Board/Read/Board';
 import { useModalFixed } from '../../../src/libs/client/useTools';
 import { BoardPosts } from '../../../src/components/Board/Read/Posts';
 import { BoardModals } from '../../../src/components/Board/Read/Modals';
+import { LoadingModal } from '../../../src/Tools/Modal/Loading';
 
 const BoardPage: NextPage<IPage> = ({ theme, setFixed }) => {
   useLogin();
@@ -30,11 +31,14 @@ const BoardPage: NextPage<IPage> = ({ theme, setFixed }) => {
     <>
       <Head_ title={board?.title!} />
       <AnimatePresence>
-        <Cont>
-          <Board _data={{ ...__must, setType, setCreatePost }} />
-          <BoardPosts _data={{ ...__must, createPost, setCreatePost }} />
-          <BoardModals _data={{ type, ...__must, setType }} />
-        </Cont>
+        {!board && <LoadingModal theme={theme} />}
+        {board && (
+          <Cont>
+            <Board _data={{ ...__must, setType, setCreatePost }} />
+            <BoardPosts _data={{ ...__must, createPost, setCreatePost }} />
+            <BoardModals _data={{ type, ...__must, setType }} />
+          </Cont>
+        )}
       </AnimatePresence>
     </>
   );

@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
 import styled from '@emotion/styled';
+import type { NextPage } from 'next';
 import { Page } from '../../../../styles/global';
 import { Head_ } from '../../../../src/Tools/Title/Head';
-import { useUser } from '../../../../src/libs/client/useUser';
-import { useLogin, useValidHost } from '../../../../src/libs/client/useLogin';
-import { useGetBoards } from '../../../../src/libs/client/useBoards';
 import { PageTitle } from '../../../../src/Tools/Title/Page';
-import { BoardsGrid } from '../../../../src/components/Board/Read/Boards';
+import { useUser } from '../../../../src/libs/client/useUser';
+import { useGetBoards } from '../../../../src/libs/client/useBoards';
 import { useGetQuickSaved } from '../../../../src/libs/client/usePosts';
+import { BoardsGrid } from '../../../../src/components/Board/Read/Boards';
+import { useLogin, useValidHost } from '../../../../src/libs/client/useLogin';
 
 const UserBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
   useLogin();
@@ -28,5 +28,5 @@ const UserBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
 export default UserBoards;
 
 const Cont = styled(Page)`
-  padding: 0 8rem;
+  padding: 0 10rem;
 `;

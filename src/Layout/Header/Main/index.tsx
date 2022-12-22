@@ -60,7 +60,6 @@ const Cont = styled(Flex)`
 
 const Txt = styled(Flex)`
   cursor: pointer;
-  //border: 2px solid blue;
 `;
 const Array = styled(Flex)`
   position: relative;

@@ -39,7 +39,6 @@ export const PostGrid = ({ _data }: IPostGrid) => {
   );
 };
 const Cont = styled(FlexCol)`
-  min-width: 1200px;
   position: relative;
   align-items: flex-end;
 `;

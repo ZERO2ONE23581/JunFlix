@@ -5,16 +5,16 @@ import { Grid } from '../../../../../styles/global';
 import { avatarLink } from '../../../../Tools/Avatar';
 
 interface ICover {
+  edit?: boolean;
   posts: IPostType[];
 }
-export const Cover = ({ posts }: ICover) => {
-  const length = posts.length;
+export const Cover = ({ posts, edit }: ICover) => {
+  const length = posts?.length!;
+  const array = posts?.slice(0, 3)!;
   const noPost = Boolean(length === 0);
-  const array = posts.slice(0, 3);
-
   return (
-    <Cont className="board_cover">
-      {array.map((post) => (
+    <Cont custom={edit} variants={vars} animate="animate">
+      {array?.map((post) => (
         <Img
           alt="보드커버"
           key={post.id}
@@ -37,7 +37,9 @@ export const Cover = ({ posts }: ICover) => {
 const Cont = styled(Grid)`
   gap: 0;
   width: 100%;
-  height: 16rem;
+  height: 22rem;
+  min-width: 300px;
+  max-width: 400px;
   overflow: hidden;
   border-radius: 10px;
   grid-template-rows: repeat(4, 1fr);
@@ -60,3 +62,8 @@ const Img = styled(motion.img)<{ length: number }>`
     grid-column: 3/5;
   }
 `;
+const vars = {
+  animate: (edit: boolean) => ({
+    //border: edit ? '10px solid #E50914' : '1px solid transparent',
+  }),
+};

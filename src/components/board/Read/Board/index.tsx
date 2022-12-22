@@ -1,7 +1,7 @@
 import { Host } from './Host';
+import { Btns } from './Btns';
 import { Title } from './Title';
 import { Detail } from './Detail';
-import { Btns } from './Btns';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 import { TrimText } from '../../../../Tools/Trim';
@@ -30,39 +30,22 @@ export const Board = ({ _data }: IBoardBox) => {
   const isMyBoard = Boolean(loggedInUser?.id === host_id);
   const { onPrivate, handleBoard } = useBoardPrivate({ host_id, board_id });
   const { name, Saved, onClick, isFollowing } = useFollowingBoard(board_id);
+  const __data = { theme, setFixed, isMyBoard };
+  const _follow = { name, onClick, isFollowing };
+  const __btn = { ...__data, board_id, setCreatePost, genre: board?.genre! };
   const onMode = () => {
     if (!isMyBoard) alert('no_right');
     else handleBoard();
   };
-  const __btn = {
-    theme,
-    board_id,
-    isMyBoard,
-    setFixed,
-    setCreatePost,
-    genre: board?.genre!,
-  };
   return (
-    <>
-      {board && (
-        <Cont>
-          <Title
-            _data={{
-              theme,
-              setType,
-              setFixed,
-              isMyBoard,
-              title: board?.title!,
-            }}
-          />
-          <Host _data={{ theme, userId: host?.userId!, host_id }} />
-          {isMyBoard && <OnPrivateBtn _data={{ theme, onMode, onPrivate }} />}
-          <Detail _data={{ onPrivate, Posts: board?.posts?.length!, Saved }} />
-          <Btns _data={__btn} _follow={{ name, onClick, isFollowing }} />
-          <TrimText text={board?.description} max={200} />
-        </Cont>
-      )}
-    </>
+    <Cont>
+      <Title _data={{ ...__data, setType, title: board?.title! }} />
+      <Host _data={{ theme, userId: host?.userId!, host_id }} />
+      {isMyBoard && <OnPrivateBtn _data={{ theme, onMode, onPrivate }} />}
+      <Detail _data={{ onPrivate, Posts: board?.posts?.length!, Saved }} />
+      <Btns _data={__btn} _follow={_follow} />
+      <TrimText text={board?.description} max={200} />
+    </Cont>
   );
 };
 const Cont = styled(FlexCol)`
