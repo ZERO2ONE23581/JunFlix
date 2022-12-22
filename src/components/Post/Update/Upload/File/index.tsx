@@ -3,8 +3,8 @@ import { Click } from './Click';
 import { Preview } from './Preview';
 import styled from '@emotion/styled';
 import { IPostUseform } from '../../../../../types/post';
-import { Dispatch, SetStateAction, useEffect } from 'react';
 import { FlexCol } from '../../../../../../styles/global';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 
 interface IFileInput extends IPostUseform {
   _data: {
@@ -50,8 +50,18 @@ export const FileInput = ({ _data, _useform }: IFileInput) => {
   );
 };
 const Cont = styled(FlexCol)`
+  height: 80vh;
+  min-width: 30vw;
   overflow: hidden;
   position: relative;
+  label {
+    width: 100%;
+    height: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
   .delete-icon {
     top: 1rem;
     left: 1.5rem;
@@ -72,20 +82,8 @@ const Label = styled.label<{ isNext: boolean }>`
   cursor: ${(p) => !p.isNext && 'pointer'};
 `;
 const vars = {
-  initial: () => ({
-    //scale: 0.2,
-    opacity: 0,
-    transition: { duration: 0.8 },
-  }),
-  animate: () => ({
-    //scale: 1,
-    opacity: 1,
-    transition: { duration: 0.8 },
-  }),
-  exit: () => ({
-    //scale: 0.2,
-    opacity: 0,
-    transition: { duration: 0.8 },
-  }),
+  exit: () => ({ opacity: 0, transition: { duration: 0.8 } }),
+  initial: () => ({ opacity: 0, transition: { duration: 0.8 } }),
+  animate: () => ({ opacity: 1, transition: { duration: 0.8 } }),
   hover: { color: '#E50914', scale: 1.5, transition: { duration: 0.5 } },
 };

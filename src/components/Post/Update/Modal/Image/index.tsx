@@ -2,14 +2,17 @@ import { PostImg } from './Img';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { avatarLink } from '../../../../../../Tools/Avatar';
+import { avatarLink } from '../../../../../Tools/Avatar';
 
 interface IPostImage {
-  hide: boolean;
-  preview: string;
-  original: string | null;
+  _data: {
+    hide: boolean;
+    preview: string;
+    original: string | null;
+  };
 }
-export const PostImage = ({ hide, preview, original }: IPostImage) => {
+export const PostImage = ({ _data }: IPostImage) => {
+  const { hide, preview, original } = _data;
   const [imgSrc, setImgSrc] = useState('');
   useEffect(() => {
     if (preview) setImgSrc(preview);
@@ -29,7 +32,6 @@ export const PostImage = ({ hide, preview, original }: IPostImage) => {
         exit="exit"
         initial="initial"
         animate="animate"
-        className="post-image"
       >
         <PostImg open={isPreview} type="preview" imgSrc={imgSrc} />
         <PostImg open={isOriginal} type="original" imgSrc={imgSrc} />
@@ -38,6 +40,8 @@ export const PostImage = ({ hide, preview, original }: IPostImage) => {
   );
 };
 const Cont = styled(motion.div)`
+  width: 15rem;
+  height: 15rem;
   position: relative;
 `;
 const vars = {

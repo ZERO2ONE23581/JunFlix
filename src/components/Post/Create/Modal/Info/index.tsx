@@ -43,11 +43,8 @@ export const PostInfo = ({ _data, _useform }: IPostInfo) => {
   );
 };
 const Cont = styled(FlexCol)`
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  padding: 1rem 2.5rem 2rem;
-  //border: 1px solid yellow;
+  padding: 2rem;
+  padding-top: 1rem;
   h2 {
     width: 100%;
     font-weight: 400;

@@ -12,11 +12,13 @@ export const useLogin = () => {
 export const useValidHost = (type: string) => {
   const router = useRouter();
   const { user_id } = router.query;
-  const { loggedInUser } = useUser();
-  const host_id = loggedInUser?.id!;
+  const { user_id: host_id, userId } = useUser();
   const isMatch = Boolean(host_id === Number(user_id));
   useEffect(() => {
     if (type) {
+      if (type === 'user_setting') {
+        if (!isMatch) router.push(`/user/${host_id}/${userId}/setting`);
+      }
       if (!isMatch && host_id) {
         if (type === 'posts') router.push(`/user/${host_id}/posts`);
         if (type === 'posts_quick')

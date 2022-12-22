@@ -1,16 +1,12 @@
-import { IPostType } from './post';
-import { IUserType } from './user';
-import { IBoardType } from './board';
-import { Dispatch, SetStateAction } from 'react';
-
 export interface IForm {
   userId: string;
   title: string;
   genre?: string;
   avatar?: FileList;
+  hashtags?: string;
+  pageLink?: string;
   onPrivate?: boolean;
   description?: string;
-  boardAvatar?: FileList;
 }
 export interface IMovie {
   id: number;
@@ -24,24 +20,8 @@ export interface IMovie {
   original_title: string;
   original_language: string;
 }
-export interface IMovie {
-  movies: [IMovie];
-}
-export interface IApi {
-  movies: [IMovie];
-  users?: IUserType[];
-  posts?: IPostType[];
-  boards?: IBoardType[];
-  MyPostLikes?: IPostType[];
-}
-
-export interface IQuery {
-  query: {
-    userId?: number;
-    boardId?: number;
-    postId?: number;
-    reveiwId?: number;
-  };
+export interface IMovieRes extends IRes {
+  movies: IMovie[];
 }
 export interface IRes {
   ok?: boolean;
@@ -50,16 +30,14 @@ export interface IRes {
   noData?: boolean;
   [key: string]: any;
 }
-export interface ICreateUserRes extends IRes {
-  type: string;
-  userId: string;
-  user_id: number;
+export interface ICmtForm {
+  text: string;
 }
-export interface IModal {
-  item: {
-    theme: boolean;
-    modal: boolean;
-    onClick: (data: any) => void;
-    setModal: Dispatch<SetStateAction<boolean>>;
-  };
+export interface IGetFollowing extends IRes {
+  length: number;
+  isFollowing: boolean;
+}
+export interface IGetFollowingBoard extends IRes {
+  length: number;
+  isFollowing: boolean;
 }

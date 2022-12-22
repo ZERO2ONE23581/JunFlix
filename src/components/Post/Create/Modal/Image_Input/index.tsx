@@ -1,4 +1,5 @@
 import { Label } from './Label';
+import styled from '@emotion/styled';
 import { DeleteIcon } from './Delete_Icon';
 import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
@@ -7,25 +8,20 @@ import { FlexCol } from '../../../../../../styles/global';
 import { UseFormRegister, UseFormWatch } from 'react-hook-form';
 
 interface IImageInput {
-  data: {
+  _data: {
     theme: boolean;
-    inputId?: string;
-    isNext?: boolean;
-    _useform: {
-      watch: UseFormWatch<IPostForm>;
-      register: UseFormRegister<IPostForm>;
-    };
+    isNext: boolean;
+    _watch: UseFormWatch<IPostForm>;
+    _register: UseFormRegister<IPostForm>;
   };
 }
-export const ImageInput = ({ data }: IImageInput) => {
+export const ImageInput = ({ _data }: IImageInput) => {
+  const { theme, isNext, _watch, _register } = _data;
   const id = 'post_image';
-  const theme = data?.theme!;
-  const isNext = data?.isNext!;
-  const watch = data?._useform?.watch('post_image')!;
-  const register = data?._useform?.register('post_image')!;
+  const watch = _watch('post_image')!;
+  const register = _register('post_image')!;
   const [preview, setPreview] = useState('');
-  const custom = { isNext, hidePrev: Boolean(!preview && isNext) };
-
+  const custom = { preview, isNext, hidePrev: Boolean(!preview && isNext) };
   useEffect(() => {
     if (watch && watch.length > 0) {
       const file = watch[0];
@@ -35,7 +31,7 @@ export const ImageInput = ({ data }: IImageInput) => {
 
   return (
     <AnimatePresence>
-      <FlexCol
+      <Cont
         exit="exit"
         initial="initial"
         animate="animate"
@@ -57,11 +53,14 @@ export const ImageInput = ({ data }: IImageInput) => {
           disabled={isNext}
           style={{ display: 'none' }}
         />
-      </FlexCol>
+      </Cont>
     </AnimatePresence>
   );
 };
-
+const Cont = styled(FlexCol)`
+  overflow: hidden;
+  position: relative;
+`;
 const create_vars = {
   initial: ({ isNext, hidePrev }: any) => ({
     ...scale_zero,
@@ -69,11 +68,13 @@ const create_vars = {
     width: hidePrev ? '0%' : isNext ? '35%' : '100%',
     height: hidePrev ? '0%' : isNext ? '30%' : '100%',
   }),
-  animate: ({ isNext, hidePrev }: any) => ({
+  animate: ({ preivew, isNext, hidePrev }: any) => ({
     ...scale_one,
     x: isNext ? 30 : 0,
     y: isNext ? 10 : 0,
     transition: { duration: 0.5 },
+    minHeight: preivew ? '10rem' : '0rem',
+    marginBottom: isNext ? '0.5rem' : '0rem',
     width: hidePrev ? '0%' : isNext ? '30%' : '100%',
     height: hidePrev ? '0%' : isNext ? '30%' : '92%',
   }),

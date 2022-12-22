@@ -38,9 +38,7 @@ export const Box = ({ _data }: ICreateCmtBox) => {
 };
 const Cont = styled(Flex)`
   gap: 1rem;
-  width: 100%;
   justify-content: flex-start;
-  justify-content: space-between;
 `;
 const FakeInput = styled(Flex)`
   max-width: 70%;

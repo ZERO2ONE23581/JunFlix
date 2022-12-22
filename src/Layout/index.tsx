@@ -9,7 +9,7 @@ import { Header } from './Header';
 import { Footer } from './footer';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { pageVar, variants } from '../../styles/variants';
+import { noneBorderVar } from '../../styles/variants';
 
 interface ILayoutProps {
   children: ReactElement;
@@ -30,7 +30,7 @@ export const Layout = ({ _data, children }: ILayoutProps) => {
     <Cont
       width={width}
       custom={theme}
-      variants={pageVar}
+      variants={noneBorderVar}
       exit="exit"
       animate="animate"
       initial="initial"

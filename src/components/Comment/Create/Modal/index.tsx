@@ -2,16 +2,15 @@ import { Layer } from './Layer';
 import { Inputs } from './Inputs';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
-import { IRes } from '../../../../types/global';
 import { AnimatePresence } from 'framer-motion';
+import { Modal } from '../../../../../styles/global';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
-import { ICmtForm } from '../../../../types/comments';
-import { color } from '../../../../../styles/variants';
 import { useUser } from '../../../../libs/client/useUser';
-import { Form, Modal } from '../../../../../styles/global';
+import { ICmtForm, IRes } from '../../../../types/global';
 import { useLength } from '../../../../libs/client/useTools';
 import useMutation from '../../../../libs/client/useMutation';
 import { LoadingModal } from '../../../../Tools/Modal/Loading';
+import { color, greyBrdr } from '../../../../../styles/variants';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface ICreateModal {
@@ -28,7 +27,6 @@ export const CreateModal = ({ _data }: ICreateModal) => {
   const { user_id } = useUser();
   const [Loading, setLoading] = useState(false);
   const { theme, post_id, create, closeCreate, setPost, setCmtModal } = _data;
-
   const {
     watch,
     register,
@@ -75,7 +73,7 @@ export const CreateModal = ({ _data }: ICreateModal) => {
             animate="animate"
             className="modal"
           >
-            <Form onSubmit={handleSubmit(onValid)}>
+            <form onSubmit={handleSubmit(onValid)}>
               <Layer _data={{ theme, closeCreate }} />
               <Inputs
                 _data={{ theme, host_id: user_id, setPost }}
@@ -86,7 +84,7 @@ export const CreateModal = ({ _data }: ICreateModal) => {
                   error: errors.text?.message!,
                 }}
               />
-            </Form>
+            </form>
           </Cont>
           <OverlayBg closeModal={closeCreate} />
         </>
@@ -95,44 +93,18 @@ export const CreateModal = ({ _data }: ICreateModal) => {
   );
 };
 const Cont = styled(Modal)`
-  top: 33vh;
-  width: 33vw;
-  min-width: 500px;
-  z-index: 100;
   color: inherit;
-  height: fit-content;
-  background-color: inherit;
-  form {
-    width: 100%;
-    gap: 1.2rem;
-    h1 {
-      font-size: 1.5rem;
-      .userId {
-        color: #3498db;
-        font-weight: 500;
-      }
-    }
-  }
+  padding: 1rem 2rem;
 `;
 const vars = {
-  initial: (theme: boolean) => ({
-    y: 999,
-    opacity: 0,
-    color: color(theme),
-    backgroundColor: color(!theme),
-  }),
   animate: (theme: boolean) => ({
     y: 0,
     opacity: 1,
+    border: greyBrdr,
     color: color(theme),
-    backgroundColor: color(!theme),
     transition: { duration: 0.5 },
-  }),
-  exit: (theme: boolean) => ({
-    y: 999,
-    opacity: 0,
-    color: color(theme),
     backgroundColor: color(!theme),
-    transition: { duration: 0.5 },
   }),
+  initial: () => ({ y: 999, opacity: 0 }),
+  exit: () => ({ y: 999, opacity: 0, transition: { duration: 0.5 } }),
 };

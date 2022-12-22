@@ -1,13 +1,13 @@
+import {
+  TheComment,
+  useGetRepHost,
+} from '../../../../../../libs/client/useComment';
 import { Btns } from '../../Btns';
 import { UserDate } from './Date';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 import { FlexCol } from '../../../../../../../styles/global';
-import { useTimeDiff } from '../../../../../../libs/client/useTime';
-import {
-  TheComment,
-  useGetRepHost,
-} from '../../../../../../libs/client/useComment';
+import { useTimeDiff } from '../../../../../../libs/client/useTools';
 
 export interface IClickSvg {
   type: string;

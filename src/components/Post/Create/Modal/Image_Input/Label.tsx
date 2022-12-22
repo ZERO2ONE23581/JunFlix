@@ -43,39 +43,3 @@ const Cont = styled.label<{ isNext: boolean }>`
     position: absolute;
   }
 `;
-const scale_one = { scale: 1, opacity: 1 };
-const scale_zero = { scale: 0.1, opacity: 0 };
-const isHover = { color: '#E50914', scale: 1.5, transition: { duration: 0.5 } };
-const create_vars = {
-  initial: ({ isNext, isHide }: any) => ({
-    ...scale_zero,
-    transition: { duration: 0.5 },
-    width: isHide ? '0%' : isNext ? '35%' : '100%',
-    height: isHide ? '0%' : isNext ? '30%' : '100%',
-  }),
-  animate: ({ isNext, isHide }: any) => ({
-    ...scale_one,
-    x: isNext ? 30 : 0,
-    y: isNext ? 10 : 0,
-    transition: { duration: 0.5 },
-    width: isHide ? '0%' : isNext ? '30%' : '100%',
-    height: isHide ? '0%' : isNext ? '30%' : '92%',
-  }),
-  hover: { ...isHover },
-};
-const update_vars = {
-  initial: () => ({
-    ...scale_zero,
-    transition: { duration: 0.8 },
-  }),
-  animate: () => ({
-    ...scale_one,
-    transition: { duration: 0.8 },
-  }),
-  exit: () => ({
-    x: 999,
-    ...scale_zero,
-    transition: { duration: 0.8 },
-  }),
-  hover: { ...isHover },
-};

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { UseFormRegister } from 'react-hook-form';
-import { IPostForm } from '../../../../../../types/post';
-import { SetPrivate } from '../../../../../../../styles/global';
+import { IPostForm } from '../../../../../types/post';
+import { Flex } from '../../../../../../styles/global';
 
 interface IBlockComment {
   register: UseFormRegister<IPostForm>;
@@ -17,7 +17,19 @@ export const BlockComment = ({ register }: IBlockComment) => {
     </Cont>
   );
 };
-const Cont = styled(SetPrivate)`
+const Cont = styled(Flex)`
+  gap: 12px;
   padding: 0 10px;
+  font-style: italic;
   justify-content: space-between;
+  label {
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  input {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
 `;

@@ -1,25 +1,19 @@
-import { Dispatch, SetStateAction, useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { Btn } from '../../../../../../Tools/Button';
-import { BtnWrap, Flex } from '../../../../../../../styles/global';
-import { color, opacityVar } from '../../../../../../../styles/variants';
+import { Btn } from '../../../../../Tools/Button';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { BtnWrap, Flex } from '../../../../../../styles/global';
+import { color, opacityVar } from '../../../../../../styles/variants';
 
-interface IDangerZone {
+interface IRemovePost {
   theme: boolean;
   setIsDelete: Dispatch<SetStateAction<boolean>>;
 }
-export const DangerZone = ({ theme, setIsDelete }: IDangerZone) => {
-  const delete_vars = {
-    animate: (theme: boolean) => ({
-      color: '#E50914',
-      backgroundColor: color(!theme),
-    }),
-  };
+export const RemovePost = ({ theme, setIsDelete }: IRemovePost) => {
   const [confirm, setConfirm] = useState(false);
   return (
     <Container className="danger-zone">
-      <Title variants={delete_vars} custom={theme} animate="animate">
+      <Title variants={vars} custom={theme} animate="animate">
         Danger zone
       </Title>
       {!confirm && (
@@ -113,3 +107,9 @@ const Title = styled(motion.h3)`
   position: absolute;
   border-radius: 20px;
 `;
+const vars = {
+  animate: (theme: boolean) => ({
+    color: '#E50914',
+    backgroundColor: color(!theme),
+  }),
+};

@@ -1,27 +1,12 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../../../../Tools/Svg';
+import { Svg } from '../../../../Tools/Svg';
 import { Dispatch, SetStateAction } from 'react';
-import { Flex } from '../../../../../../../styles/global';
+import { Flex } from '../../../../../styles/global';
 
-interface ISetting {
-  _data: {
-    theme: boolean;
-    hide: boolean;
-    original: string | null;
-    resetPreview: () => void;
-    preview: string | undefined;
-    setModal: Dispatch<SetStateAction<string>>;
-    setHide: Dispatch<SetStateAction<boolean>>;
-  };
-}
-export const Setting = ({ _data }: ISetting) => {
-  const hide = _data?.hide!;
-  const theme = _data?.theme!;
-  const setHide = _data?.setHide!;
-  const preview = _data?.preview!;
-  const original = _data?.original!;
-  const setModal = _data?.setModal!;
-  const resetPreview = _data?.resetPreview!;
+export const Icons = ({ _data, _boolean, _set }: Icons) => {
+  const { hide, theme } = _boolean;
+  const { setModal, setHide } = _set;
+  const { original, resetPreview, preview } = _data;
   const noImage = !Boolean(original || preview);
   const onClick = (type: string) => {
     if (type === 'add') {
@@ -36,9 +21,8 @@ export const Setting = ({ _data }: ISetting) => {
       else if (original) return setHide(true);
     }
   };
-
   return (
-    <Cont className="setting">
+    <Cont>
       <div>
         <Svg type="plus" theme={theme} onClick={() => onClick('add')} />
       </div>
@@ -60,7 +44,26 @@ export const Setting = ({ _data }: ISetting) => {
   );
 };
 const Cont = styled(Flex)`
-  gap: 20px;
+  top: 0;
+  right: 0;
+  gap: 1rem;
   z-index: 1;
+  width: fit-content;
+  position: absolute;
   justify-content: flex-end;
 `;
+interface Icons {
+  _data: {
+    original: string | null;
+    resetPreview: () => void;
+    preview: string | undefined;
+  };
+  _boolean: {
+    hide: boolean;
+    theme: boolean;
+  };
+  _set: {
+    setModal: Dispatch<SetStateAction<string>>;
+    setHide: Dispatch<SetStateAction<boolean>>;
+  };
+}

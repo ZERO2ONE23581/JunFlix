@@ -4,7 +4,7 @@ import { Svg } from '../../../Tools/Svg';
 import { IMovie } from '../../../types/global';
 import { Dispatch, SetStateAction } from 'react';
 import { Flex } from '../../../../styles/global';
-import { PostModal } from '../../../../styles/post';
+import { PostModalStyle } from '../../../../styles/post';
 import { color } from '../../../../styles/variants';
 import { OverlayBg } from '../../../Tools/OverlayBg';
 
@@ -64,7 +64,7 @@ export const MovieModal = ({ _data }: IMovieModal) => {
     </>
   );
 };
-const Cont = styled(PostModal)`
+const Cont = styled(PostModalStyle)`
   top: 10%;
   z-index: 100;
   border: none;

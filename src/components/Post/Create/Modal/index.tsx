@@ -7,17 +7,13 @@ import { ImageInput } from './Image_Input';
 import { AnimatePresence } from 'framer-motion';
 import { IPostForm } from '../../../../types/post';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
-import { PostModal } from '../../../../../styles/post';
+import { PostModalStyle } from '../../../../../styles/post';
 import { useUser } from '../../../../libs/client/useUser';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { TransBorderVar } from '../../../../../styles/variants';
-import {
-  useLength,
-  useTextLimit,
-  useUploadImg,
-} from '../../../../libs/client/useTools';
+import { useLength, useUploadImg } from '../../../../libs/client/useTools';
 
-interface ICreatePostModal {
+interface ICreatePostModalStyle {
   _data: {
     modal: boolean;
     theme: boolean;
@@ -28,7 +24,7 @@ interface ICreatePostModal {
     setLoading: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const Modal = ({ _data }: ICreatePostModal) => {
+export const Modal = ({ _data }: ICreatePostModalStyle) => {
   const {
     post,
     theme,
@@ -91,47 +87,32 @@ export const Modal = ({ _data }: ICreatePostModal) => {
   const __data = { theme, isNext };
   const layer_data = { ...__data, setStep, closeModal };
   const _useform = { watch, errors, register, clearErrors };
-  const ImageInput_data = { ...__data, _useform, isCreate: true };
-
   return (
     <AnimatePresence>
       {modal && (
         <>
-          <Cont
-            exit="exit"
-            animate="animate"
-            initial="initial"
-            custom={theme}
-            layoutId={layoutId}
-            variants={TransBorderVar}
-          >
-            <form onSubmit={handleSubmit(onValid)}>
+          <form onSubmit={handleSubmit(onValid)}>
+            <Cont
+              exit="exit"
+              animate="animate"
+              initial="initial"
+              custom={theme}
+              layoutId={layoutId}
+              variants={TransBorderVar}
+            >
               <Layer _data={{ ...layer_data }} />
-              <ImageInput data={{ ...ImageInput_data }} />
+              <ImageInput
+                _data={{ theme, isNext, _watch: watch, _register: register }}
+              />
               <PostInfo _data={{ ...__data }} _useform={_useform} />
-            </form>
-          </Cont>
+            </Cont>
+          </form>
           <OverlayBg closeModal={closeModal} />
         </>
       )}
     </AnimatePresence>
   );
 };
-const Cont = styled(PostModal)`
-  .layer {
-  }
-  form {
-    width: 100%;
-    height: 100%;
-    .image-input {
-      margin-bottom: 10px;
-      .circle-svg {
-        top: 4.5rem;
-        left: 1.5rem;
-      }
-    }
-    .post-info {
-      height: fit-content;
-    }
-  }
+const Cont = styled(PostModalStyle)`
+  align-items: flex-start;
 `;

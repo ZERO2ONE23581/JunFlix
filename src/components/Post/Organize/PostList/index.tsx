@@ -5,7 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { IPostUseform } from '../../../../types/post';
-import { PostModal } from '../../../../../styles/post';
+import { PostModalStyle } from '../../../../../styles/post';
 import { ErrModal } from '../../../../Tools/Modal/Error';
 import { modalVar } from '../../../../../styles/variants';
 import { useUser } from '../../../../libs/client/useUser';
@@ -59,7 +59,7 @@ export const PostsModal = ({ _data, _useform }: IPostsModal) => {
   );
 };
 
-const Modal = styled(PostModal)`
+const Modal = styled(PostModalStyle)`
   top: 2rem;
   width: 40vw;
   height: fit-content;

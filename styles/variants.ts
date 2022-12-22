@@ -1,3 +1,4 @@
+//border: theme ? '1px solid transparent' : '1px solid #636e72',
 //theme은 dark가 default, 즉 boolean값은 기본적으로 false가 들어오게 됨.
 export const redColor = '#E50914';
 export const blackColor = '#000000';
@@ -15,14 +16,6 @@ export const TransBorder = (dark: boolean) => (dark ? whiteBrdr : transBrdr);
 export const greyColor = '#bdc3c7';
 export const greyBrdr = `1px solid ${greyColor}`;
 export const GreyBorder = (dark: boolean) => (dark ? whiteBrdr : greyBrdr);
-
-const scale = { scale: 0.2, opacity: 0, transition: { duration: 0.8 } };
-const __scale = { scale: 1, opacity: 1, transition: { duration: 0.8 } };
-export const onlymodalVar = {
-  initial: { ...scale },
-  animate: { ...__scale },
-  exit: { ...scale },
-};
 
 export const colorVar = {
   exit: (theme: boolean) => ({ color: color(theme) }),
@@ -87,7 +80,7 @@ export const modalVar = {
     border: isRed ? `3px solid ${redColor}` : TransBorder(!theme),
   }),
 };
-export const pageVar = {
+export const noneBorderVar = {
   initial: (theme: boolean) => ({
     opacity: 0,
     color: color(theme),
@@ -153,16 +146,6 @@ export const menuModalVar = {
   hover: { backgroundColor: redColor, transition: { duration: 0.3 } },
   animate: { x: '-50%', y: '30px', opacity: 1, transition: { duration: 0.3 } },
 };
-export const inputVar = {
-  animate: ({ theme, isFocus, disabled }: any) => ({
-    transition: { duration: 0.4 },
-    backgroundColor: color(theme),
-    color: disabled ? redColor : color(!theme),
-    outline: isFocus ? redBrdr : TransBorder(theme),
-  }),
-  hover: () => ({ transition: { duration: 0.3 }, outline: redBrdr }),
-  focus: () => ({ outline: redBrdr, transition: { duration: 0.3 } }),
-};
 export const cmtModalVar = {
   initial: (theme: boolean) => ({
     y: 999,
@@ -183,5 +166,28 @@ export const cmtModalVar = {
     color: color(theme),
     backgroundColor: color(!theme),
     transition: { duration: 0.5 },
+  }),
+};
+export const leftToRight = {
+  initial: () => ({
+    x: -9999,
+    scale: 0.5,
+    opacity: 0,
+    transition: { duration: 0.8 },
+  }),
+  animate: (theme: boolean) => ({
+    x: 0,
+    scale: 1,
+    opacity: 1,
+    color: color(theme),
+    border: TransBorder(!theme),
+    backgroundColor: color(!theme),
+    transition: { duration: 0.8 },
+  }),
+  exit: () => ({
+    x: 9999,
+    scale: 0.5,
+    opacity: 0,
+    transition: { duration: 0.8 },
   }),
 };

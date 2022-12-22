@@ -1,11 +1,11 @@
 import { Svg } from '../Svg';
+import { avatarLink } from '.';
 import styled from '@emotion/styled';
 import { Flex } from '../../../styles/global';
 import { border } from '../../../styles/variants';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { UseFormRegister, UseFormReset } from 'react-hook-form';
-import { avatarLink } from '.';
 
 export interface IAvatarInput {
   _data: {

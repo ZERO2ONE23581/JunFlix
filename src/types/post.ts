@@ -11,8 +11,38 @@ import {
 import { IRes } from './global';
 import { IUserType } from './user';
 import { IBoardType } from './board';
-import { Board, Comment, Like, Post, User } from '@prisma/client';
+import { Comment, Like, Post } from '@prisma/client';
 
+export interface IGetPostType {
+  post: IPostType;
+}
+export interface IPostType extends Post {
+  likes: Like[];
+  host: IUserType;
+  board: IBoardType;
+  comments: Comment[];
+  _count: {
+    likes: number;
+    comments: number;
+  };
+}
+export interface ICreatePostRes extends IRes {
+  post_id: number;
+}
+export interface IPostForm {
+  title: string;
+  chosenId: [any];
+  pageLink?: string;
+  hashtags?: string;
+  onPrivate?: boolean;
+  description?: string;
+  post_image?: FileList;
+}
+
+export interface IGetPosts {
+  ok: boolean;
+  posts: IPostType[];
+}
 export interface IPostUseform {
   _useform: {
     errors?: {
@@ -29,60 +59,7 @@ export interface IPostUseform {
     setError?: UseFormSetError<IPostForm>;
     register?: UseFormRegister<IPostForm>;
     setValue?: UseFormSetValue<IPostForm>;
-    handleSubmit?: UseFormHandleSubmit<IPostForm>;
     clearErrors?: UseFormClearErrors<IPostForm>;
+    handleSubmit?: UseFormHandleSubmit<IPostForm>;
   };
-}
-export interface IGetPostType {
-  post: IPostType;
-}
-export interface IPostType extends Post {
-  host: IUserType;
-  board: IBoardType;
-  likes: Like[];
-  comments: Comment[];
-  _count: {
-    likes: number;
-    comments: number;
-  };
-}
-export interface ICreatePostRes extends IRes {
-  post_id: number;
-}
-export interface IPostComment {
-  ok?: boolean;
-  error?: string;
-  post: IPostType;
-}
-export interface IPostList {
-  size: number;
-  from: number;
-  isBlur?: boolean;
-  isLikesType?: boolean;
-  postsArray: IPostType[];
-}
-export interface LikesWithPost extends Like {
-  post: Post;
-}
-
-export interface IPost {
-  post: IPostType;
-}
-export interface IGetPost extends IPost {
-  ok?: boolean;
-  error?: string;
-}
-export interface IPostForm {
-  title: string;
-  chosenId: [any];
-  pageLink?: string;
-  hashtags?: string;
-  onPrivate?: boolean;
-  description?: string;
-  post_image?: FileList;
-}
-
-export interface IGetPosts {
-  ok: boolean;
-  posts: IPostType[];
 }

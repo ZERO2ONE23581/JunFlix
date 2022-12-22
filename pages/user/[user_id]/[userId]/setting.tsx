@@ -5,11 +5,12 @@ import { useEffect, useState } from 'react';
 import { Svg } from '../../../../src/Tools/Svg';
 import { Head_ } from '../../../../src/Tools/Title/Head';
 import { Flex, FlexPage } from '../../../../styles/global';
-import { useLogin } from '../../../../src/libs/client/useLogin';
 import { BoxType } from '../../../../src/components/User/Update';
+import { useLogin, useValidHost } from '../../../../src/libs/client/useLogin';
 
 const UserSetting: NextPage<IPage> = ({ theme }) => {
   useLogin();
+  useValidHost('user_setting');
   const [page, setPage] = useState(0);
   const [back, setBack] = useState(false);
   const clickArrow = (type: string) => {

@@ -1,9 +1,6 @@
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { Btn } from '../../Tools/Button';
-import { ITheme } from '../../../styles/theme';
 import { FlexCol } from '../../../styles/global';
-import { useUser } from '../../libs/client/useUser';
 import { Dispatch, SetStateAction } from 'react';
 
 interface IStart {

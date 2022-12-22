@@ -3,8 +3,9 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Svg } from '../../../../../Tools/Svg';
 import { AnimatePresence } from 'framer-motion';
+import { Modal } from '../../../../../../styles/global';
+import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { variants } from '../../../../../../styles/variants';
-import { Modal, Overlay } from '../../../../../../styles/global';
 
 interface IVerifyResult {
   _data: {
@@ -32,7 +33,7 @@ export const Result = ({ _data }: IVerifyResult) => {
               <Svg type="close" theme={theme} onClick={onSvg} />
               <Wrap _data={{ theme, userId }} />
             </Cont>
-            <Overlay exit={{ opacity: 0 }} animate={{ opacity: 1 }} />
+            <OverlayBg />
           </>
         )}
       </>

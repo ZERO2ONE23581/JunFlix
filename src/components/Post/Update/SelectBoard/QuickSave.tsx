@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { ListWrap } from '../../../Create/Select/MyBoards';
-import { useGetQuickSaved } from '../../../../../libs/client/usePosts';
-import { select_board_ul_var } from '../../../../../../styles/post';
+import { ListWrap } from '../../Create/Select/MyBoards';
+import { useGetQuickSaved } from '../../../../libs/client/usePosts';
+import { select_board_ul_var } from '../../../../../styles/post';
 
 interface IQuickSave {
   _data: {

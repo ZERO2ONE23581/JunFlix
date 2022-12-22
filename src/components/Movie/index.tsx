@@ -3,7 +3,7 @@ import { Title } from './Title';
 import styled from '@emotion/styled';
 import { MovieArray } from './Array';
 import { Svg } from '../../Tools/Svg';
-import { IMovie } from '../../types/global';
+import { IMovie, IMovieRes } from '../../types/global';
 import { Flex, FlexCol } from '../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
@@ -22,7 +22,7 @@ export const Movies = ({ _data }: ISlider) => {
   const [reverse, setReverse] = useState(false);
 
   const { theme, type, setFixed, hideTitle } = _data;
-  const { data } = useSWR<IMovie>(`/api/movie/${type}`);
+  const { data } = useSWR<IMovieRes>(`/api/movie/${type}`);
 
   const MOVIES = data?.movies!;
   const LastPage = Math.ceil(MOVIES?.length / boxes);

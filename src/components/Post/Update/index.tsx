@@ -1,20 +1,19 @@
 import {
-  useLength,
-  useUploadImg,
-  useCapLetters,
-} from '../../../libs/client/useTools';
-import { Modal } from './Modal';
-import styled from '@emotion/styled';
-import { UploadFile } from './Upload';
-import { useRouter } from 'next/router';
+  useSetPost,
+  useFetchPost,
+  usePostReset,
+  usePostResult,
+} from '../../../libs/client/usePosts';
+import { UploadModal } from './Upload';
+import { UpdateModal } from './Modal';
 import { useForm } from 'react-hook-form';
+import { SelectModal } from './SelectBoard';
 import { IRes } from '../../../types/global';
-import { AnimatePresence } from 'framer-motion';
 import { MsgModal } from '../../../Tools/Modal/Message';
 import useMutation from '../../../libs/client/useMutation';
 import { IPostForm, IPostType } from '../../../types/post';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IUpdate {
   _data: {
@@ -25,22 +24,25 @@ interface IUpdate {
   };
 }
 export const UpdatePost = ({ _data }: IUpdate) => {
-  const router = useRouter();
+  const { theme, post, modal, setModal } = _data;
+  const [update, { data, loading: loading_u }] = useMutation<IRes>(
+    `/api/post/${post?.id}/update`
+  );
+  const [remove, { data: del_data, loading: loading_d }] = useMutation<IRes>(
+    `/api/post/${post?.id}/delete`
+  );
   const [msg, setMsg] = useState('');
   const [hide, setHide] = useState(false);
   const [preview, setPreview] = useState('');
   const [Loading, setLoading] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [new_boardId, setNewBoardId] = useState(0);
-  const { theme, post, modal, setModal } = _data;
+  const [quickSave, setQuickSave] = useState(false);
+  const [selectModal, setSelectModal] = useState(false);
   const layoutId = post?.id! + 'update' + '';
-  //
-  const [update, { data, loading }] = useMutation<IRes>(
-    `/api/post/${post?.id}/update`
-  );
-  const [_delete, { data: deleteData, loading: deleteLoading }] =
-    useMutation<IRes>(`/api/post/${post?.id}/delete`);
-  //
+  const isUpdate = Boolean(modal === 'update');
+  const resetPreview = () => usePostReset({ post, setPreview, reset });
+
   const {
     reset,
     watch,
@@ -52,151 +54,42 @@ export const UpdatePost = ({ _data }: IUpdate) => {
     formState: { errors },
   } = useForm<IPostForm>({ mode: 'onBlur' });
 
-  const _useform = {
-    reset,
-    watch,
-    errors,
-    register,
-    setValue,
-    clearErrors,
-  };
-  useEffect(() => {
-    if (post) {
-      if (post?.hashtags) setValue('hashtags', post.hashtags);
-      if (post?.pageLink) setValue('pageLink', post.pageLink);
-      if (post?.onPrivate) setValue('onPrivate', post.onPrivate);
-      if (post?.title) setValue('title', useCapLetters(post.title));
-      if (post?.description) setValue('description', post.description);
-    }
-  }, [post, setValue, useCapLetters]);
-
-  const resetPreview = () => {
-    setPreview('');
-    if (post) {
-      reset({
-        title: post.title,
-        post_image: undefined,
-        hashtags: post.hashtags!,
-        pageLink: post.pageLink!,
-        description: post.description!,
-      });
-    }
-  };
-  const __data = {
-    modal,
-    theme,
-    preview,
-    layoutId,
-    setModal,
-    resetPreview,
-  };
-  const onValid = async (inputs: IPostForm) => {
-    if (loading!) return;
-    if (isDelete) {
-      if (deleteLoading!) return;
-      setLoading!(true);
-      return _delete!({ isDelete });
-    } else {
-      if (useLength(inputs?.title!) >= 50)
-        return setError('title', { message: 'max_post_title' });
-      if (useLength(inputs?.description!) >= 1000)
-        return setError('description', { message: 'max_post_desc' });
-      setLoading!(true);
-      const board_id = new_boardId;
-      const file_id = await useUploadImg(inputs?.post_image);
-      if (hide) return update({ ...inputs, board_id, post_image: null });
-      if (file_id) return update({ ...inputs, post_image: file_id, board_id });
-      else return update({ ...inputs, board_id });
-    }
-  };
-  useEffect(() => {
-    if (data) {
-      setModal('');
-      setTimeout(() => {
-        if (data) {
-          if (data?.error) console.log(data.error);
-          if (data?.ok) {
-            setLoading(false);
-            setMsg('updated');
-            setTimeout(() => {
-              router.reload();
-            }, 2000);
-          }
-        }
-      }, 1000);
-    }
-  }, [data, router, setLoading, setMsg]);
-
-  useEffect(() => {
-    if (deleteData) {
-      setModal('');
-      setTimeout(() => {
-        setLoading(false);
-        if (deleteData) {
-          if (deleteData?.error) alert(deleteData.error);
-          if (deleteData?.ok) {
-            setMsg('deleted');
-            setTimeout(() => {
-              router.reload();
-            }, 2000);
-          }
-        }
-      }, 1000);
-    }
-  }, [deleteData, router, setLoading, setMsg]);
-  //
+  useSetPost({ post, setValue });
+  const { onValid } = useFetchPost({
+    POST: { update, remove },
+    Loading: { loading_u, loading_d },
+    _data: { hide, isDelete, new_boardId, setError, setLoading },
+  });
+  const __result = { setMsg, setModal, setLoading };
+  usePostResult({ ...__result, type: 'updated', data });
+  usePostResult({ ...__result, type: 'deleted', data: del_data });
+  const _useform = { reset, watch, errors, register, setValue, clearErrors };
   return (
     <>
-      <AnimatePresence>
-        <Form onSubmit={handleSubmit(onValid)}>
-          <Modal
-            _useform={_useform}
-            _data={{
-              ...__data,
-              hide,
-              post,
-              setHide,
-              setIsDelete,
-              new_boardId,
-              setNewBoardId,
-            }}
-          />
-          <UploadFile _useform={_useform} _data={{ ...__data, setPreview }} />
-        </Form>
-      </AnimatePresence>
+      <form onSubmit={handleSubmit(onValid)}>
+        <UploadModal
+          _useform={_useform}
+          _data={{ theme, resetPreview }}
+          _set={{ setModal, setPreview }}
+          _string={{ modal, preview, layoutId }}
+        />
+        <UpdateModal
+          _useform={_useform}
+          resetPreview={resetPreview}
+          _set={{ setModal, setNewBoardId }}
+          _boolean={{ hide, theme, isUpdate, quickSave }}
+          _id={{ board_id: post?.board_id!, new_boardId }}
+          _string={{ layoutId, preview, original: post?.post_image! }}
+          _set_B={{ setHide, setIsDelete, setQuickSave, setSelectModal }}
+        />
+        <SelectModal
+          _data={{ host_id: post?.host_id!, layoutId }}
+          _boolean={{ theme, isUpdate, selectModal }}
+          _set={{ setQuickSave, setNewBoardId, setSelectModal }}
+        />
+      </form>
       {Loading && <LoadingModal layoutId={layoutId + 'submit'} theme={theme} />}
       <MsgModal _data={{ msg, theme, layoutId: layoutId + 'submit' }} />
     </>
   );
 };
-const Form = styled.form`
-  .update-modal {
-    .wrapper {
-      .image-setting {
-        justify-content: flex-start;
-      }
-    }
-  }
-  .select-modal {
-    z-index: 114;
-    margin-top: 12rem;
-    height: fit-content;
-    .wrap {
-      padding: 10px;
-    }
-  }
-  .upload-modal {
-    .file-input {
-      width: 100%;
-      height: 80vh;
-      label {
-        width: 100%;
-        height: 100%;
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-    }
-  }
-`;

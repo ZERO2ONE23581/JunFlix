@@ -1,20 +1,19 @@
-import styled from '@emotion/styled';
-import { AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction } from 'react';
-import { useForm } from 'react-hook-form';
-import { Form, Modal } from '../../../../../../styles/global';
-import { cmtModalVar, color } from '../../../../../../styles/variants';
-import { TheComment, useCmtRes } from '../../../../../libs/client/useComment';
-import useMutation from '../../../../../libs/client/useMutation';
-import { useCapLetter, useLength } from '../../../../../libs/client/useTools';
-import { useUser } from '../../../../../libs/client/useUser';
-import { LoadingModal } from '../../../../../Tools/Modal/Loading';
-import { OverlayBg } from '../../../../../Tools/OverlayBg';
-import { ICmtForm } from '../../../../../types/comments';
-import { IRes } from '../../../../../types/global';
-import { Inputs } from '../../../Create/Modal/Inputs';
 import { Layer } from './Layer';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import { AnimatePresence } from 'framer-motion';
+import { Dispatch, SetStateAction } from 'react';
+import { Inputs } from '../../../Create/Modal/Inputs';
+import { OverlayBg } from '../../../../../Tools/OverlayBg';
+import { useUser } from '../../../../../libs/client/useUser';
+import { ICmtForm, IRes } from '../../../../../types/global';
+import { Form, Modal } from '../../../../../../styles/global';
+import { cmtModalVar } from '../../../../../../styles/variants';
+import useMutation from '../../../../../libs/client/useMutation';
+import { LoadingModal } from '../../../../../Tools/Modal/Loading';
+import { TheComment, useCmtRes } from '../../../../../libs/client/useComment';
+import { useCapLetter, useLength } from '../../../../../libs/client/useTools';
 
 interface IReplyModal {
   _data: {

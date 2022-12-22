@@ -1,11 +1,11 @@
-import { Svg } from '../../Svg';
+import { Svg } from '../Svg';
 import styled from '@emotion/styled';
-import { OverlayBg } from '../../OverlayBg';
+import { OverlayBg } from '../OverlayBg';
 import { AnimatePresence } from 'framer-motion';
 import { UseFormClearErrors } from 'react-hook-form';
-import { UseMsg } from '../../../libs/client/useMsg';
-import { modalVar } from '../../../../styles/variants';
-import { Modal, Text } from '../../../../styles/global';
+import { UseMsg } from '../../libs/client/useMsg';
+import { modalVar } from '../../../styles/variants';
+import { Modal, Text } from '../../../styles/global';
 
 interface IErrMsg {
   _data: {

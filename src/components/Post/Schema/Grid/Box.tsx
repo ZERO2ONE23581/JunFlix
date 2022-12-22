@@ -3,10 +3,9 @@ import { useRouter } from 'next/router';
 import { Svg } from '../../../../Tools/Svg';
 import { IPostType } from '../../../../types/post';
 import { avatarLink } from '../../../../Tools/Avatar';
-import { IsBlur } from '../../../../libs/client/useBlur';
 import { Blur, FlexCol } from '../../../../../styles/global';
-import { useCapLetters } from '../../../../libs/client/useTools';
 import { TweenTrans, color } from '../../../../../styles/variants';
+import { IsBlur, useCapLetters } from '../../../../libs/client/useTools';
 
 interface IPostBox {
   _data: {

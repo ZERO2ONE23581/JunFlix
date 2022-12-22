@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import { IRes } from '../../../../types/global';
 import { UseFormHandleSubmit } from 'react-hook-form';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
-import { PostModal } from '../../../../../styles/post';
+import { PostModalStyle } from '../../../../../styles/post';
 import { MsgModal } from '../../../../Tools/Modal/Message';
 import { modalVar } from '../../../../../styles/variants';
 import useMutation from '../../../../libs/client/useMutation';
@@ -80,7 +80,7 @@ export const SelectBoard = ({ _data }: ISelectBoardModal) => {
     </>
   );
 };
-const Cont = styled(PostModal)`
+const Cont = styled(PostModalStyle)`
   top: 0rem;
   z-index: 114;
   min-height: 85vh;

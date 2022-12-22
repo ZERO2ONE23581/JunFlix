@@ -1,11 +1,8 @@
 import { IRes } from './global';
-import { Board, Follower, Following, Post, User } from '@prisma/client';
 import { IPostType } from './post';
 import { IUserType } from './user';
+import { Board, Follower } from '@prisma/client';
 
-export interface IUseGetBoards {
-  boards: IGetBoards;
-}
 export interface IBoardType extends Board {
   host: IUserType;
   posts: IPostType[];
@@ -27,17 +24,4 @@ export interface IBoardForm {
   avatar?: FileList;
   isPrivate?: boolean;
   description?: string;
-  boardAvatar?: FileList;
-}
-interface FollowingWithUser extends Following {
-  user: User;
-}
-export interface BoardWithRecords extends Board {
-  user: User;
-  followers?: Following[];
-  post?: Post[];
-  _count: {
-    followers: number;
-    posts: number;
-  };
 }

@@ -1,16 +1,14 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Flex, Modal } from './global';
-import { color, TransBorder } from './variants';
+import { color, greyBrdr } from './variants';
 
-export const PostModal = styled(Modal)`
-  z-index: 100;
-  width: 33vw;
-  height: 80vh;
-  min-width: 520px;
-  gap: 0;
-  padding: 0;
-  margin-top: 3rem;
+export const PostModalStyle = styled(Modal)`
+  top: 5vh;
+  width: 35vw;
+  height: 85vh;
+  min-width: 500px;
+  min-height: 600px;
   font-size: 1.1rem;
   justify-content: flex-start;
   img {
@@ -67,7 +65,7 @@ export const select_board_ul_var = {
   }),
 };
 
-export const PostModalStyle = styled(Modal)`
+export const PostModalStyleStyle = styled(Modal)`
   padding: 0;
   width: 40vw;
   height: 90vh;
@@ -144,22 +142,14 @@ export const Span = styled(motion.span)`
   }
 `;
 export const postVar = {
-  initial: () => ({
-    scale: 0.1,
-    opacity: 0,
-    transition: { duration: 0.8 },
-  }),
   animate: (theme: boolean) => ({
     scale: 1,
     opacity: 1,
+    border: greyBrdr,
     color: color(theme),
-    border: TransBorder(!theme),
+    transition: { duration: 0.8 },
     backgroundColor: color(!theme),
-    transition: { duration: 0.8 },
   }),
-  exit: () => ({
-    opacity: 0,
-    scale: 0.1,
-    transition: { duration: 0.8 },
-  }),
+  exit: () => ({ opacity: 0, scale: 0.1, transition: { duration: 0.8 } }),
+  initial: () => ({ scale: 0.1, opacity: 0, transition: { duration: 0.8 } }),
 };

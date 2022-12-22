@@ -1,45 +1,32 @@
 import { Layer } from './Layer';
-import { vars } from '../Modal';
 import { FileInput } from './File';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { IPostUseform } from '../../../../types/post';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
-import { PostModal } from '../../../../../styles/post';
+import { PostModalStyle } from '../../../../../styles/post';
+import { leftToRight } from '../../../../../styles/variants';
 
-interface IUploadFile extends IPostUseform {
-  _data: {
-    modal: string;
-    theme: boolean;
-    preview: string;
-    layoutId: string;
-    resetPreview: () => void;
-    setModal: Dispatch<SetStateAction<string>>;
-    setPreview: Dispatch<SetStateAction<string>>;
-  };
-}
-export const UploadFile = ({ _data, _useform }: IUploadFile) => {
-  const {
-    modal,
-    theme,
-    preview,
-    layoutId,
-    setModal,
-    setPreview,
-    resetPreview,
-  } = _data;
+export const UploadModal = ({
+  _set,
+  _data,
+  _string,
+  _useform,
+}: IUploadModal) => {
+  const { setModal, setPreview } = _set;
+  const { theme, resetPreview } = _data;
+  const { modal, preview, layoutId } = _string;
   return (
     <AnimatePresence>
       {modal === 'upload' && (
         <>
-          <Modal
+          <Cont
             exit="exit"
             initial="initial"
             animate="animate"
-            className="upload-modal"
             custom={theme}
-            variants={vars}
+            variants={leftToRight}
             layoutId={layoutId + 'upload'}
           >
             <Layer _data={{ theme, preview, setModal, resetPreview }} />
@@ -47,13 +34,28 @@ export const UploadFile = ({ _data, _useform }: IUploadFile) => {
               _useform={_useform}
               _data={{ theme, preview, setPreview }}
             />
-          </Modal>
+          </Cont>
           <OverlayBg dark={0.8} zIndex={111} />
         </>
       )}
     </AnimatePresence>
   );
 };
-const Modal = styled(PostModal)`
+const Cont = styled(PostModalStyle)`
   z-index: 112;
 `;
+interface IUploadModal extends IPostUseform {
+  _string: {
+    modal: string;
+    preview: string;
+    layoutId: string;
+  };
+  _data: {
+    theme: boolean;
+    resetPreview: () => void;
+  };
+  _set: {
+    setModal: Dispatch<SetStateAction<string>>;
+    setPreview: Dispatch<SetStateAction<string>>;
+  };
+}

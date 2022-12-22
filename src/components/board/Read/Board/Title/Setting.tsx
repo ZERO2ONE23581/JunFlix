@@ -6,10 +6,9 @@ import {
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import { Overlay } from '../../../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useUser } from '../../../../../libs/client/useUser';
 import { OverlayBg } from '../../../../../Tools/OverlayBg';
+import { useUser } from '../../../../../libs/client/useUser';
 
 interface ISettingModal {
   _data: {

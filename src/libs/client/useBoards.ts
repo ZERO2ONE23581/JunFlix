@@ -27,11 +27,6 @@ export const useGetBoards = (host_id: any) => {
   const isSaved = Boolean(Saved?.length! > 0);
   return { boards, isBoard, Saved, isSaved };
 };
-export const useGetFollowingBoards = ({ saves }: any) => {
-  const { data } = useSWR<IGetBoards>(`/api/board/all`);
-  const boards = data?.boards?.filter((board) => saves?.includes(board.id));
-  return { SavedBoards: boards, isSaved: Boolean(boards?.length! > 0) };
-};
 export const useGetBoard = (board_id: any) => {
   const { data } = useSWR<IGetBoard>(board_id && `/api/board/${board_id}`);
   const board = data?.board!;

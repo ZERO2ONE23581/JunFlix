@@ -1,33 +1,31 @@
 import { Info } from './Info';
-import styled from '@emotion/styled';
+import { Close } from './Close';
 import { Setting } from '../Setting';
-import { PostCmt } from '../PostCmt';
-import { motion } from 'framer-motion';
+import styled from '@emotion/styled';
+import { PostCmt } from './PostCmt';
 import { Dispatch, SetStateAction } from 'react';
 import { IPostType } from '../../../../../types/post';
-import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { avatarLink } from '../../../../../Tools/Avatar';
-import { ISetFixed } from '../../../../../../pages/_app';
+import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { useUser } from '../../../../../libs/client/useUser';
-import { PostModal, postVar } from '../../../../../../styles/post';
+import { PostModalStyle, postVar } from '../../../../../../styles/post';
 
-export interface IReadPostModal extends ISetFixed {
+export interface IPostModal {
   _data: {
+    modal: boolean;
     theme: boolean;
     post: IPostType;
     layoutId: string;
-  };
-  _modal: {
-    modal: boolean;
     setModal: Dispatch<SetStateAction<string>>;
+    setFixed: Dispatch<SetStateAction<boolean>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const ReadPost = ({ _data, _modal, setFixed }: IReadPostModal) => {
-  const { loggedInUser } = useUser();
-  const { layoutId, post, theme } = _data;
-  const { modal, setModal, setCmtModal } = _modal;
+export const PostModal = ({ _data }: IPostModal) => {
+  const { layoutId, post, theme, modal, setModal, setCmtModal, setFixed } =
+    _data;
   const host_id = post?.host_id!;
+  const { loggedInUser } = useUser();
   const isCmtBlocked = post?.onPrivate!;
   const isMyPost = Boolean(host_id === loggedInUser?.id);
   const closeModal = () => {
@@ -46,13 +44,11 @@ export const ReadPost = ({ _data, _modal, setFixed }: IReadPostModal) => {
             variants={postVar}
             layoutId={layoutId}
           >
-            <Setting
-              theme={theme}
-              host_id={host_id}
-              isMyPost={isMyPost}
-              setModal={setModal}
-            />
-            <motion.img alt="post image" src={avatarLink(post?.post_image)} />
+            <Icons className="setting">
+              <Close _data={{ theme, setModal }} />
+              <Setting _data={{ theme, host_id, isMyPost, setModal }} />
+            </Icons>
+            <img alt="post image" src={avatarLink(post?.post_image)} />
             <Info _data={{ theme, post, setCmtModal }} />
             {!isCmtBlocked && (
               <PostCmt _data={{ theme, post, setModal, setCmtModal }} />
@@ -64,4 +60,14 @@ export const ReadPost = ({ _data, _modal, setFixed }: IReadPostModal) => {
     </>
   );
 };
-const Cont = styled(PostModal)``;
+const Cont = styled(PostModalStyle)``;
+const Icons = styled.div`
+  width: 100%;
+  position: relative;
+  .icon {
+    top: 1rem;
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+  }
+`;

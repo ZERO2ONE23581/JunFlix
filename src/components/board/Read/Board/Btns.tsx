@@ -21,7 +21,7 @@ interface IBtnWrap {
     setCreatePost: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const BtnWrap = ({ _data, _follow }: IBtnWrap) => {
+export const Btns = ({ _data, _follow }: IBtnWrap) => {
   const { name, onClick, isFollowing } = _follow;
   const { theme, genre, isMyBoard, setFixed, setCreatePost } = _data;
   const router = useRouter();

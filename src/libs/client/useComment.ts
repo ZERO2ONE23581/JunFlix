@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { IRes } from '../../types/global';
 import { IUserType } from '../../types/user';
-import useMutation from './useMutation';
 
 export interface TheComment extends Comment {
   host: IUserType;

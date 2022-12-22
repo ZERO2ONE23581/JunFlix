@@ -7,9 +7,9 @@ import { AnimatePresence } from 'framer-motion';
 import { FlexPage } from '../../../styles/global';
 import { Head_ } from '../../../src/Tools/Title/Head';
 import { useLogin } from '../../../src/libs/client/useLogin';
-import { Board } from '../../../src/components/Board/Read/Board';
 import { useGetBoard } from '../../../src/libs/client/useBoards';
-import { useModalFixed } from '../../../src/libs/client/useModal';
+import { Board } from '../../../src/components/Board/Read/Board';
+import { useModalFixed } from '../../../src/libs/client/useTools';
 import { BoardPosts } from '../../../src/components/Board/Read/Posts';
 import { BoardModals } from '../../../src/components/Board/Read/Modals';
 

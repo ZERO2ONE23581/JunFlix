@@ -15,16 +15,22 @@ interface ICommentModal {
     host_id: number;
     layoutId: string;
     isBlocked: boolean;
-  };
-  _modal: {
     cmtModal: boolean;
     setModal: Dispatch<SetStateAction<string>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const CommentModal = ({ _data, _modal }: ICommentModal) => {
-  const { cmtModal, setModal: setPost, setCmtModal } = _modal;
-  const { theme, post_id, host_id, layoutId, isBlocked } = _data;
+export const CommentModal = ({ _data }: ICommentModal) => {
+  const {
+    theme,
+    post_id,
+    host_id,
+    cmtModal,
+    layoutId,
+    isBlocked,
+    setModal: setPost,
+    setCmtModal,
+  } = _data;
   const [create, setCreate] = useState(false);
   const closeCreate = () => setCreate(false);
   const closeModal = () => setCmtModal(false);

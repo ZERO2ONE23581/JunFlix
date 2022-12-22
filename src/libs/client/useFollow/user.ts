@@ -1,8 +1,7 @@
 import useSWR from 'swr';
 import { useEffect } from 'react';
 import useMutation from '../useMutation';
-import { IRes } from '../../../types/global';
-import { IGetFollowing } from '../../../types/following';
+import { IGetFollowing, IRes } from '../../../types/global';
 
 interface IResult<T> {
   name: string;

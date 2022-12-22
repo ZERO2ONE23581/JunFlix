@@ -1,17 +1,16 @@
 import { Layer } from './Layer';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
-import { IRes } from '../../../../../types/global';
-import { Inputs } from '../../../Create/Modal/Inputs';
 import { AnimatePresence } from 'framer-motion';
+import { Inputs } from '../../../Create/Modal/Inputs';
 import { OverlayBg } from '../../../../../Tools/OverlayBg';
-import { ICmtForm } from '../../../../../types/comments';
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import { ICmtForm, IRes } from '../../../../../types/global';
 import { useUser } from '../../../../../libs/client/useUser';
 import { Form, Modal } from '../../../../../../styles/global';
 import { cmtModalVar } from '../../../../../../styles/variants';
 import { useLength } from '../../../../../libs/client/useTools';
 import useMutation from '../../../../../libs/client/useMutation';
-import { Dispatch, SetStateAction, useEffect } from 'react';
 import { LoadingModal } from '../../../../../Tools/Modal/Loading';
 import { TheComment, useCmtRes } from '../../../../../libs/client/useComment';
 

@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
-import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { List } from '../../../../User/Read/MyPage/List';
+import { smallModalVar } from '../../Board/Title/Setting';
+import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { MiniModal } from '../../../../../../styles/global';
-import { smallModalVar } from '../../Board/Title/Setting_Modal';
 import { useCapLetters } from '../../../../../libs/client/useTools';
 
 interface IFilterModal {

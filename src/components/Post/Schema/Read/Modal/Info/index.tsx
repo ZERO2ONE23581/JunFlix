@@ -5,7 +5,7 @@ import { Detail } from './Detail';
 import { Dispatch, SetStateAction } from 'react';
 import { IPostType } from '../../../../../../types/post';
 import { FlexCol } from '../../../../../../../styles/global';
-import { variants } from '../../../../../../../styles/variants';
+import { noneBorderVar, variants } from '../../../../../../../styles/variants';
 
 export interface IInfo {
   _data: {
@@ -17,7 +17,7 @@ export interface IInfo {
 export const Info = ({ _data }: IInfo) => {
   const { post, theme, setCmtModal } = _data;
   return (
-    <Cont custom={theme} animate="animate" variants={variants}>
+    <Cont custom={theme} animate="animate" variants={noneBorderVar}>
       <Icons _data={{ theme, post, setCmtModal }} />
       <Host theme={theme} post={post} />
       <Detail post={post} />

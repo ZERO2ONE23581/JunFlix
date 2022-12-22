@@ -1,5 +1,5 @@
-import { Svg } from '../../../../../Tools/Svg';
-import { Layer_ } from '../../../../../../styles/global';
+import { Svg } from '../../../../Tools/Svg';
+import { Flex, Layer_ } from '../../../../../styles/global';
 
 interface ILayer {
   theme: boolean;
@@ -8,18 +8,18 @@ interface ILayer {
 export const Layer = ({ theme, closeModal }: ILayer) => {
   return (
     <Layer_ className="layer">
-      <div>
+      <Flex>
         <Svg
           theme={theme}
           type="left-chev"
           onClick={closeModal}
           item={{ size: '1.7rem' }}
         />
-      </div>
-      <div>
+      </Flex>
+      <Flex>
         <h1>Select Board</h1>
-      </div>
-      <div />
+      </Flex>
+      <Flex />
     </Layer_>
   );
 };

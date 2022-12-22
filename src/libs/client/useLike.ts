@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useUser } from './useUser';
 import useMutation from './useMutation';
 import { IRes } from '../../types/global';
@@ -8,11 +8,6 @@ import { color } from '../../../styles/variants';
 interface IUseLike {
   theme: boolean;
   post_id: number;
-}
-interface IUseCmtLike {
-  theme: boolean;
-  isLiked: boolean;
-  comment_id: number;
 }
 export const useLike = ({ post_id, theme }: IUseLike) => {
   const { isLoggedIn } = useUser();

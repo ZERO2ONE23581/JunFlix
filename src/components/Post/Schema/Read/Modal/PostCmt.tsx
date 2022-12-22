@@ -1,11 +1,10 @@
 import styled from '@emotion/styled';
-import { Box } from '../../../Comment/Create/Box';
-import { IPostType } from '../../../../types/post';
-import { Text } from '../../../Comment/Create/Text';
-import { Comments } from '../../../Comment/Comments';
-import { FlexCol } from '../../../../../styles/global';
+import { Box } from '../../../../Comment/Create/Box';
+import { IPostType } from '../../../../../types/post';
+import { Text } from '../../../../Comment/Create/Text';
+import { Comments } from '../../../../Comment/Comments';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { CreateModal } from '../../../Comment/Create/Modal';
+import { CreateModal } from '../../../../Comment/Create/Modal';
 
 export interface IPostCmt {
   _data: {
@@ -22,16 +21,16 @@ export const PostCmt = ({ _data }: IPostCmt) => {
   const closeCreate = () => setCreate(false);
   const [create, setCreate] = useState(false);
   return (
-    <Cont>
-      <FlexCol className="wrap">
+    <>
+      <Cont>
         <Text _data={{ theme, setCmtModal }} />
         <Box _data={{ theme, host_id, setCreate }} />
-        <CreateModal
-          _data={{ theme, create, post_id, setPost, closeCreate, setCmtModal }}
-        />
-      </FlexCol>
-      <Comments _data={{ theme, post_id, og_id: 0, setCmtModal, setPost }} />
-    </Cont>
+        <Comments _data={{ theme, post_id, og_id: 0, setCmtModal, setPost }} />
+      </Cont>
+      <CreateModal
+        _data={{ theme, create, post_id, setPost, closeCreate, setCmtModal }}
+      />
+    </>
   );
 };
 const Cont = styled.article`
@@ -39,8 +38,4 @@ const Cont = styled.article`
   height: 100%;
   padding: 1rem 2rem;
   border-top: 1px dotted ${(p) => p.theme.color.font};
-  > .wrap {
-    gap: 0.8rem;
-    margin-bottom: 1rem;
-  }
 `;

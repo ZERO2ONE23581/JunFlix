@@ -6,7 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import { Follower, Following } from '@prisma/client';
 import { Flex } from '../../../../../../../../styles/global';
 import { OverlayBg } from '../../../../../../../Tools/OverlayBg';
-import { PostModal } from '../../../../../../../../styles/post';
+import { PostModalStyle } from '../../../../../../../../styles/post';
 import { modalVar } from '../../../../../../../../styles/variants';
 import { useUser } from '../../../../../../../libs/client/useUser';
 
@@ -56,7 +56,7 @@ export const FollowModal = ({ _data, _follow }: IFollowModal) => {
     </>
   );
 };
-const Cont = styled(PostModal)`
+const Cont = styled(PostModalStyle)`
   min-width: 400px;
   min-height: 400px;
   width: fit-content;

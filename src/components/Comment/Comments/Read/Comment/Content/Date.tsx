@@ -1,7 +1,9 @@
+import {
+  useCapLetter,
+  useTimeDiff,
+} from '../../../../../../libs/client/useTools';
 import styled from '@emotion/styled';
 import { Flex } from '../../../../../../../styles/global';
-import { useTimeDiff } from '../../../../../../libs/client/useTime';
-import { useCapLetter } from '../../../../../../libs/client/useTools';
 
 interface IComment {
   _data: {

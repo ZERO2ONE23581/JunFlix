@@ -3,8 +3,7 @@ import { useEffect } from 'react';
 import { useUser } from '../useUser';
 import { useRouter } from 'next/router';
 import useMutation from '../useMutation';
-import { IRes } from '../../../types/global';
-import { IGetFollowingBoard } from '../../../types/following';
+import { IGetFollowingBoard, IRes } from '../../../types/global';
 
 interface IResult<T> {
   name: string;

@@ -5,7 +5,7 @@ import { NoData } from '../../../../Tools/NoData';
 import { PostSchema } from '../../../Post/Schema';
 import { CreatePost } from '../../../Post/Create';
 import { IBoardType } from '../../../../types/board';
-import { IsBlur } from '../../../../libs/client/useBlur';
+import { IsBlur } from '../../../../libs/client/useTools';
 import { MsgModal } from '../../../../Tools/Modal/Message';
 import { Blur, FlexPage } from '../../../../../styles/global';
 import { useGetPosts } from '../../../../libs/client/usePosts';

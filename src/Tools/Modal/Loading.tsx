@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import { OverlayBg } from '../../OverlayBg';
-import { Modal } from '../../../../styles/global';
-import { variants } from '../../../../styles/variants';
+import { OverlayBg } from '../OverlayBg';
+import { Modal } from '../../../styles/global';
+import { variants } from '../../../styles/variants';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface ILoadingModal {
   theme: boolean;
@@ -10,7 +10,7 @@ interface ILoadingModal {
 }
 export const LoadingModal = ({ theme, layoutId }: ILoadingModal) => {
   return (
-    <>
+    <AnimatePresence>
       <Cont
         exit="exit"
         initial="initial"
@@ -46,7 +46,7 @@ export const LoadingModal = ({ theme, layoutId }: ILoadingModal) => {
         </motion.svg>
       </Cont>
       <OverlayBg dark={0.3} zIndex={888} />
-    </>
+    </AnimatePresence>
   );
 };
 const Cont = styled(Modal)`

@@ -1,3 +1,7 @@
+import {
+  TheComment,
+  useGetRepHost,
+} from '../../../../../libs/client/useComment';
 import { Option } from './Option';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
@@ -6,10 +10,6 @@ import { Dispatch, SetStateAction } from 'react';
 import { Avatar } from '../../../../../Tools/Avatar';
 import { Flex } from '../../../../../../styles/global';
 import { useUser } from '../../../../../libs/client/useUser';
-import {
-  TheComment,
-  useGetRepHost,
-} from '../../../../../libs/client/useComment';
 
 interface IComment {
   _data: {

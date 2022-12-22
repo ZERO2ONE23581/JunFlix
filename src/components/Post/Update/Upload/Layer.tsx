@@ -1,8 +1,7 @@
-import styled from '@emotion/styled';
-import { Btn } from '../../../../Tools/Button';
-import { Flex, Layer_, MotionBox } from '../../../../../styles/global';
-import { Dispatch, SetStateAction } from 'react';
 import { motion } from 'framer-motion';
+import { Btn } from '../../../../Tools/Button';
+import { Dispatch, SetStateAction } from 'react';
+import { Layer_ } from '../../../../../styles/global';
 
 interface ILayer {
   _data: {

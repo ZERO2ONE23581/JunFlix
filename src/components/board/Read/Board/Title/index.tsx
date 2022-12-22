@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Svg } from '../../../../../Tools/Svg';
-import { SettingModal } from './Setting_Modal';
+import { SettingModal } from './Setting';
 import { Circle } from '../../../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { hoverBgVars } from '../../../../../../styles/variants';

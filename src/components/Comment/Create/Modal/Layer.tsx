@@ -28,6 +28,14 @@ export const Layer = ({ _data }: ICreateModalLayer) => {
 };
 const Cont = styled(Flex)`
   justify-content: space-between;
+  border: 2px solid blue;
+  h1 {
+    font-size: 1.5rem;
+    .userId {
+      color: #3498db;
+      font-weight: 500;
+    }
+  }
   button {
     border: none;
     outline: none;

@@ -14,22 +14,6 @@ import { useUser } from '../../../libs/client/useUser';
 import { useLength } from '../../../libs/client/useTools';
 import { TextAreaWrap } from '../../../Tools/Input/TextArea';
 
-interface IUpdateForm {
-  _data: {
-    theme: boolean;
-    loading: boolean;
-    POST: ({}) => void;
-    setLoading: Dispatch<SetStateAction<boolean>>;
-  };
-  _useform: {
-    watch: UseFormWatch<IForm>;
-    setError: UseFormSetError<IForm>;
-    register: UseFormRegister<IForm>;
-    clearErrors: UseFormClearErrors<IForm>;
-    handleSubmit: UseFormHandleSubmit<IForm>;
-    errors: { err_title: string; err_desc: string };
-  };
-}
 export const UpdateForm = ({ _data, _useform }: IUpdateForm) => {
   const { user_id } = useUser();
   const { err_desc, err_title } = _useform?.errors!;
@@ -67,3 +51,19 @@ export const UpdateForm = ({ _data, _useform }: IUpdateForm) => {
     </Form>
   );
 };
+interface IUpdateForm {
+  _data: {
+    theme: boolean;
+    loading: boolean;
+    POST: ({}) => void;
+    setLoading: Dispatch<SetStateAction<boolean>>;
+  };
+  _useform: {
+    watch: UseFormWatch<IForm>;
+    setError: UseFormSetError<IForm>;
+    register: UseFormRegister<IForm>;
+    clearErrors: UseFormClearErrors<IForm>;
+    handleSubmit: UseFormHandleSubmit<IForm>;
+    errors: { err_title: string; err_desc: string };
+  };
+}

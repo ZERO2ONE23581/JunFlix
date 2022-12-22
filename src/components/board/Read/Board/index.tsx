@@ -1,7 +1,7 @@
 import { Host } from './Host';
 import { Title } from './Title';
 import { Detail } from './Detail';
-import { BtnWrap } from './BtnWrap';
+import { Btns } from './Btns';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 import { TrimText } from '../../../../Tools/Trim';
@@ -10,7 +10,7 @@ import { FlexCol } from '../../../../../styles/global';
 import { useUser } from '../../../../libs/client/useUser';
 import { OnPrivateBtn } from '../../../../Tools/Button/Private';
 import { useBoardPrivate } from '../../../../libs/client/useBoards';
-import useFollowingBoard from '../../../../libs/client/useFollowing/Board';
+import useFollowingBoard from '../../../../libs/client/useFollow/board';
 
 interface IBoardBox {
   _data: {
@@ -58,7 +58,7 @@ export const Board = ({ _data }: IBoardBox) => {
           <Host _data={{ theme, userId: host?.userId!, host_id }} />
           {isMyBoard && <OnPrivateBtn _data={{ theme, onMode, onPrivate }} />}
           <Detail _data={{ onPrivate, Posts: board?.posts?.length!, Saved }} />
-          <BtnWrap _data={__btn} _follow={{ name, onClick, isFollowing }} />
+          <Btns _data={__btn} _follow={{ name, onClick, isFollowing }} />
           <TrimText text={board?.description} max={200} />
         </Cont>
       )}

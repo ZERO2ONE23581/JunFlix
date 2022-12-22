@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Svg } from '../../../../../Tools/Svg';
-import { opacityVar } from '../../../../../../styles/variants';
+import { color } from '../../../../../../styles/variants';
 
 interface IDeleteIcon {
   _data: {
@@ -12,9 +12,8 @@ interface IDeleteIcon {
   };
 }
 export const DeleteIcon = ({ _data }: IDeleteIcon) => {
-  const theme = _data?.theme;
-  const onClick = _data?.onClick;
-  const open = Boolean(_data?.preview && !_data?.isNext);
+  const { theme, preview, isNext, onClick } = _data;
+  const open = Boolean(preview && !isNext);
   return (
     <>
       {open && (
@@ -22,19 +21,31 @@ export const DeleteIcon = ({ _data }: IDeleteIcon) => {
           exit="exit"
           initial="initial"
           animate="animate"
-          className="circle-svg"
           custom={!theme}
           onClick={onClick}
-          variants={opacityVar}
+          variants={vars}
         >
-          <Svg type="trash" theme={!theme} />
+          <Svg type="trash" theme={theme} />
         </Cont>
       )}
     </>
   );
 };
 const Cont = styled(motion.div)`
+  top: 1rem;
+  left: 1.5rem;
   z-index: 112;
   padding: 0.5rem;
-  border-radius: 10px;
+  position: absolute;
+  border-radius: 8px;
 `;
+const vars = {
+  exit: { scale: 0, opacity: 0, transition: { duration: 0.3 } },
+  initial: { scale: 0, opacity: 0, transition: { duration: 0.3 } },
+  animate: (theme: boolean) => ({
+    scale: 1,
+    opacity: 1,
+    transition: { duration: 0.3 },
+    backgroundColor: color(theme),
+  }),
+};

@@ -5,11 +5,9 @@ import { Grid } from '../../../../../styles/global';
 import { avatarLink } from '../../../../Tools/Avatar';
 
 interface ICover {
-  theme: boolean;
   posts: IPostType[];
 }
-
-export const Cover = ({ theme, posts }: ICover) => {
+export const Cover = ({ posts }: ICover) => {
   const length = posts.length;
   const noPost = Boolean(length === 0);
   const array = posts.slice(0, 3);
@@ -38,6 +36,8 @@ export const Cover = ({ theme, posts }: ICover) => {
 };
 const Cont = styled(Grid)`
   gap: 0;
+  width: 100%;
+  height: 16rem;
   overflow: hidden;
   border-radius: 10px;
   grid-template-rows: repeat(4, 1fr);

@@ -15,7 +15,7 @@ import { MsgModal } from '../../../../src/Tools/Modal/Message';
 import { useLogin } from '../../../../src/libs/client/useLogin';
 import { useCapLetter } from '../../../../src/libs/client/useTools';
 import { Host } from '../../../../src/components/User/Read/MyPage/Host';
-import useFollowUser from '../../../../src/libs/client/useFollowing/User';
+import useFollowUser from '../../../../src/libs/client/useFollow/user';
 import { UserContent } from '../../../../src/components/User/Read/MyPage/Content';
 import { UserBtns } from '../../../../src/components/User/Read/MyPage/Content/Btns';
 

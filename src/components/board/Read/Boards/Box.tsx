@@ -1,11 +1,10 @@
 import { Cover } from './Cover';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { Svg } from '../../../../Tools/Svg';
 import { IPostType } from '../../../../types/post';
-import { Flex } from '../../../../../styles/global';
 import { hoverVars } from '../../../../../styles/variants';
+import { Flex, FlexCol } from '../../../../../styles/global';
 import { useCapLetters } from '../../../../libs/client/useTools';
 
 interface IBoardsGridBox {
@@ -19,18 +18,14 @@ interface IBoardsGridBox {
   };
 }
 export const GridBox = ({ _data }: IBoardsGridBox) => {
-  const title = _data?.title!;
-  const genre = _data?.genre!;
-  const theme = _data?.theme!;
-  const posts = _data?.posts!;
-  const user_id = _data?.user_id!;
-  const board_id = _data?.board_id!;
-  //
   const router = useRouter();
+  const { title, genre, theme, posts, user_id, board_id } = _data;
   const onClick = () => {
     if (!board_id) return router.push(`/user/${user_id}/posts/quick_saved`);
     else return router.push(`/board/${board_id}/${title}`);
   };
+  const len = posts.length!;
+  const txt = len > 1 ? 'Posts' : 'Post';
   return (
     <Box
       custom={theme}
@@ -41,52 +36,42 @@ export const GridBox = ({ _data }: IBoardsGridBox) => {
       className="grid_box"
       variants={hoverVars}
     >
-      <Cover theme={theme} posts={posts} />
-      <Info className="info">
-        <Flex className="flex-wrap">
+      <Cover posts={posts} />
+      <Info>
+        <Title>
           <h1>{useCapLetters(title)}</h1>
           <Svg
             theme={theme}
             item={{ size: '1.6rem' }}
             type={genre ? genre : 'film'}
           />
-        </Flex>
-        <div className="post-length">
-          <span>{posts.length}</span>
-          <span>Posts</span>
-        </div>
+        </Title>
+        <Len>
+          <span>{len}</span>
+          <span>{txt}</span>
+        </Len>
       </Info>
     </Box>
   );
 };
-const Box = styled(motion.div)`
+
+const Box = styled(FlexCol)`
   cursor: pointer;
-  .board_cover {
-    width: 100%;
-    //height: 100%;
-    height: 16rem;
-    //min-width: 16rem;
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
+  align-items: flex-start;
 `;
-const Info = styled.div`
-  height: 5rem;
+const Info = styled(FlexCol)`
+  gap: 0.25rem;
   padding: 1rem;
   font-size: 1.4rem;
-  h1 {
-    margin-bottom: 8px;
-  }
-  .flex-wrap {
-    justify-content: space-between;
-  }
-  .post-length {
-    font-size: 1.1rem;
-    font-style: italic;
-    span {
-      margin-right: 5px;
-    }
+  align-items: flex-start;
+`;
+const Title = styled(Flex)`
+  justify-content: space-between;
+`;
+const Len = styled.div`
+  font-size: 1.2rem;
+  //font-style: italic;
+  span {
+    margin-right: 5px;
   }
 `;

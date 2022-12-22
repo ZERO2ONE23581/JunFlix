@@ -1,7 +1,8 @@
-import { useUser } from './useUser';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { UseFormSetError } from 'react-hook-form';
+import { useBoardPrivate } from './useBoards';
+import useFollowUser from './useFollow/user';
+import { useUser, useUserPrivate } from './useUser';
+import useFollowingBoard from './useFollow/board';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 
 export const useUploadImg = async (image: FileList | undefined) => {
   if (image && image.length > 0) {
@@ -14,43 +15,6 @@ export const useUploadImg = async (image: FileList | undefined) => {
     return id;
   }
 };
-interface IUseError {
-  _data: {
-    max: [number, number];
-    types: [string, string];
-    texts: [string, string];
-    setError: UseFormSetError<any>;
-  };
-}
-export const useTextLimit = ({ _data }: IUseError) => {
-  const maxArr = _data?.max!;
-  const typeArr = _data?.types!;
-  const textArr = _data?.texts!;
-  const setError = _data?.setError!;
-  const max = (e: string) => maxArr[textArr.indexOf(e)]!;
-  const type = (e: string) => typeArr[textArr.indexOf(e)]!;
-  const message = (e: string) => `글자는 ${max(e)}를 초과할수 없습니다.`;
-  const length = (e: string) => useLength(textArr[textArr.indexOf(e)]!);
-  //
-  const [first, sec] = textArr.map((element) => {
-    if (length(element!) > max(element!)) {
-      setError(type(element!), { message: message(element!) });
-      return false;
-    } else return true;
-  });
-  if (first && sec) return { ok: true };
-  else return { ok: false };
-};
-
-interface IUseMax {
-  sec: number;
-  first: number;
-}
-export const useMaxLength = (title: number, desc: number) => {
-  const [max] = useState({ title, desc });
-  return { max };
-};
-export const isOverMax = (typed: number, max: number) => Boolean(typed > max);
 export const useCapLetters = (word: string) => {
   return word?.replace(/(?:^|\s)\S/g, function (a) {
     return a.toUpperCase();
@@ -63,30 +27,76 @@ export const useCapLetter = (word: string) => {
 };
 export const useLength = (text: string) =>
   String(text).replace(/\s/gi, '').length;
+export interface IDate {
+  createdAt: Date;
+  updatedAt: Date;
+}
+export const useTimeDiff = ({ createdAt, updatedAt }: IDate) => {
+  const today = new Date().getTime();
+  const start = new Date(createdAt).getTime();
+  const update = new Date(updatedAt).getTime();
+  const diff =
+    start === update ? Math.abs(today - start) : Math.abs(today - update);
+  const getSec = (time: number) => time / 1000;
+  const getMin = (time: number) => time / (1000 * 60);
+  const getHour = (time: number) => time / (1000 * 60 * 60);
+  const getDay = (time: number) => time / (1000 * 60 * 60 * 24);
+  const getTime = () => {
+    const sec = getSec(diff);
+    if (sec > 60 * 60 * 24)
+      return { time: Math.floor(getDay(diff)), type: 'day' };
+    else if (sec > 60 * 60)
+      return { time: Math.floor(getHour(diff)), type: 'hour' };
+    else if (sec > 60)
+      return { time: Math.floor(getMin(diff)), type: 'minute' };
+    else return { time: Math.floor(sec), type: 'second' };
+  };
+  const { time, type } = getTime();
+  const isUpdated = Boolean(
+    createdAt.toString().slice(0, 20) === updatedAt.toString().slice(0, 20)
+  )
+    ? ''
+    : '(updated)';
+  return { isUpdated, time, type };
+};
 
-export const useNeedLogin = () => {
-  const router = useRouter();
-  const { isLoggedIn } = useUser();
-  useEffect(() => {
-    if (!isLoggedIn) {
-      alert('로그인이 필요합니다. You need to sign in first.');
-      router.push('/user/login');
-    }
-  }, [isLoggedIn, router]);
+interface IIsBlur {
+  host_id: number;
+  board_id: number;
+}
+export const IsBlur = ({ host_id, board_id }: IIsBlur) => {
+  const { user_id } = useUser();
+  const isMyAcct = Boolean(user_id === host_id);
+  const { isFollowing: isUserFollowing } = useFollowUser(host_id);
+  const { isFollowing: isBoardFollowing } = useFollowingBoard(board_id);
+  const { onPrivate: isUserPrivate } = useUserPrivate(host_id, isMyAcct);
+  const { onPrivate: isBoardPrivate } = useBoardPrivate({ host_id, board_id });
+
+  if (isMyAcct) return { isBlur: false, msg: 'my_post' };
+  if (isUserPrivate) {
+    if (!isUserFollowing) return { isBlur: true, msg: 'blur_user' };
+    else if (isBoardPrivate && !isBoardFollowing)
+      return { isBlur: true, msg: 'blur_board' };
+  }
+  const isPublic = !isUserPrivate;
+  if (isPublic) {
+    if (isBoardPrivate && !isBoardFollowing)
+      return { isBlur: true, msg: 'blur_board' };
+  } else return { isBlur: false, msg: '' };
 };
-export const useNoAuthority = () => {
-  const router = useRouter();
-  const { user_id } = router.query;
-  const { loggedInUser } = useUser();
-  const isMyPage = Boolean(loggedInUser?.id === Number(user_id));
+
+interface IUseModalFixed {
+  modal: boolean;
+  restrict?: boolean;
+  setFixed: Dispatch<SetStateAction<boolean>>;
+}
+export const useModalFixed = ({
+  modal,
+  setFixed,
+  restrict,
+}: IUseModalFixed) => {
   useEffect(() => {
-    if (!isMyPage) router.push('/');
-  }, [router, isMyPage]);
-};
-export const useNeedLogout = () => {
-  const router = useRouter();
-  const { isLoggedIn } = useUser();
-  useEffect(() => {
-    if (isLoggedIn) router.push('/');
-  }, [isLoggedIn, router]);
+    if (restrict) return;
+    if (modal) setFixed(true);
+  }, [modal, setFixed, restrict]);
 };

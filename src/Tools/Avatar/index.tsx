@@ -6,20 +6,6 @@ import { border } from '../../../styles/variants';
 import { useGetUser } from '../../libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export interface IAvatarInput {
-  _modal?: {
-    isModal?: boolean;
-    closeModal?: () => void;
-  };
-  _data: {
-    size: string;
-    theme: boolean;
-    host_id: number;
-    isRound?: boolean;
-    isOther?: boolean;
-    handleClick?: () => void;
-  };
-}
 export const Avatar = ({ _data, _modal }: IAvatarInput) => {
   const router = useRouter();
   const { isRound, size, theme, host_id, isOther, handleClick } = _data;
@@ -96,3 +82,17 @@ export const avatarLink = (url: string | any) => {
   if (!Boolean(url)) return no_img;
   else return `${base}/${url}/${variant}`;
 };
+export interface IAvatarInput {
+  _modal?: {
+    isModal?: boolean;
+    closeModal?: () => void;
+  };
+  _data: {
+    size: string;
+    theme: boolean;
+    host_id: number;
+    isRound?: boolean;
+    isOther?: boolean;
+    handleClick?: () => void;
+  };
+}

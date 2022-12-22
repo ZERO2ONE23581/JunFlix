@@ -1,6 +1,6 @@
-import { AnimatePresence } from 'framer-motion';
-import { Overlay } from '../../../styles/global';
+import styled from '@emotion/styled';
 import { opacityVar } from '../../../styles/variants';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface IOverlayBg {
   dark?: number;
@@ -10,7 +10,7 @@ interface IOverlayBg {
 export const OverlayBg = ({ dark, zIndex, closeModal }: IOverlayBg) => {
   return (
     <AnimatePresence>
-      <Overlay
+      <Cont
         dark={dark}
         zindex={zIndex}
         variants={opacityVar}
@@ -23,3 +23,14 @@ export const OverlayBg = ({ dark, zIndex, closeModal }: IOverlayBg) => {
     </AnimatePresence>
   );
 };
+export const Cont = styled(motion.div)<{ dark?: number; zindex?: number }>`
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: ${(p) => (p.zindex ? p.zindex : '99')};
+  background-color: ${(p) => p.dark && `rgba(0, 0, 0, ${p.dark})`};
+`;

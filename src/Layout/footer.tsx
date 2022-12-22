@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { Flex, Page } from '../../styles/global';
+import { Flex } from '../../styles/global';
 import { ITheme } from '../../styles/theme';
-import { variants } from '../../styles/variants';
 
 export const Footer = ({ theme }: ITheme) => {
   const date = new Date();

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../../../../../../Tools/Button';
-import useFollowUser from '../../../../../../../libs/client/useFollowing/User';
+import useFollowUser from '../../../../../../../libs/client/useFollow/user';
 
 interface IFollowerModal {
   theme: boolean;
@@ -8,7 +8,7 @@ interface IFollowerModal {
 }
 
 export const FollowBtn = ({ user_id, theme }: IFollowerModal) => {
-  const { onClick, name, isFollowing, follower } = useFollowUser(user_id);
+  const { onClick, name, isFollowing } = useFollowUser(user_id);
   return (
     <Cont>
       <Btn

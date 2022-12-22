@@ -1,49 +1,30 @@
-import { Main } from './Main';
+import { Info } from './Info';
 import { Layer } from './Layer';
+import { Icons } from './Icons';
+import { PostImage } from './Image';
 import styled from '@emotion/styled';
-import { SelectModal } from './Select';
 import { AnimatePresence } from 'framer-motion';
+import { Dispatch, SetStateAction } from 'react';
+import { IPostUseform } from '../../../../types/post';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
-import { PostModal } from '../../../../../styles/post';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { IPostType, IPostUseform } from '../../../../types/post';
-import { color, TransBorder } from '../../../../../styles/variants';
+import { PostModalStyle } from '../../../../../styles/post';
+import { leftToRight } from '../../../../../styles/variants';
+import { Flex, FlexCol } from '../../../../../styles/global';
 
-interface IModal extends IPostUseform {
-  _data: {
-    theme: boolean;
-    modal: string;
-    post: IPostType;
-    layoutId: string;
-    hide: boolean;
-    preview: string;
-    new_boardId: number;
-    resetPreview: () => void;
-    setHide: Dispatch<SetStateAction<boolean>>;
-    setModal: Dispatch<SetStateAction<string>>;
-    setIsDelete: Dispatch<SetStateAction<boolean>>;
-    setNewBoardId: Dispatch<SetStateAction<number>>;
-  };
-}
-export const Modal = ({ _data, _useform }: IModal) => {
-  const {
-    theme,
-    modal,
-    post,
-    layoutId,
-    hide,
-    preview,
-    new_boardId,
-    resetPreview,
-    setHide,
-    setModal,
-    setIsDelete,
-    setNewBoardId,
-  } = _data;
-  const board_id = post?.board_id;
-  const original = post?.post_image;
-  const [quickSave, setQuickSave] = useState(false);
-  const [selectModal, setSelectModal] = useState(false);
+export const UpdateModal = ({
+  _id,
+  _set,
+  _set_B,
+  _string,
+  _boolean,
+  _useform,
+  resetPreview,
+}: IUpdateModal) => {
+  const { new_boardId, board_id } = _id;
+  const { setModal, setNewBoardId } = _set;
+  const { layoutId, preview, original } = _string;
+  const { hide, theme, isUpdate, quickSave } = _boolean;
+  const { setHide, setIsDelete, setQuickSave, setSelectModal } = _set_B;
   const closeModal = () => {
     resetPreview();
     setNewBoardId(0);
@@ -52,92 +33,77 @@ export const Modal = ({ _data, _useform }: IModal) => {
   };
   return (
     <AnimatePresence>
-      {modal === 'update' && (
-        <>
-          <Modal_
-            exit="exit"
-            initial="initial"
-            animate="animate"
-            className="update-modal"
-            custom={theme}
-            variants={vars}
-            layoutId={layoutId + 'submit'}
-          >
-            <Layer theme={theme} closeModal={closeModal} />
-            <Main
-              _data={{
-                quickSave,
-                setSelectModal,
-                theme,
-                hide,
-                board_id,
-                preview,
-                setHide,
-                original,
-                setModal,
-                new_boardId,
-                setIsDelete,
-                resetPreview,
-              }}
+      {isUpdate && (
+        <Cont
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          custom={theme}
+          variants={leftToRight}
+          layoutId={layoutId + 'submit'}
+        >
+          <Layer theme={theme} closeModal={closeModal} />
+          <Main>
+            <ImageWrap>
+              <PostImage _data={{ hide, preview, original }} />
+              <Icons
+                _boolean={{ hide, theme }}
+                _set={{ setHide, setModal }}
+                _data={{ preview, original, resetPreview }}
+              />
+            </ImageWrap>
+            <Info
               _useform={_useform}
+              _boolean={{ theme, quickSave }}
+              _id={{ board_id, new_boardId }}
+              _set={{ setIsDelete, setSelectModal }}
             />
-          </Modal_>
-          <OverlayBg dark={0.5} zIndex={111} closeModal={closeModal} />
-
-          <SelectModal
-            _data={{
-              selectModal,
-              theme: _data?.theme!,
-              host_id: post?.host_id,
-              layoutId: _data?.layoutId!,
-              closeModal: () => setSelectModal(false),
-              selectClick: (type: string, id: number) => {
-                if (type === 'quick') setQuickSave(true);
-                if (type === 'board' && id) {
-                  setQuickSave(false);
-                  _data?.setNewBoardId!(id);
-                }
-                setSelectModal(false);
-              },
-            }}
-          />
-        </>
+          </Main>
+        </Cont>
+      )}
+      {isUpdate && (
+        <OverlayBg dark={0.5} zIndex={111} closeModal={closeModal} />
       )}
     </AnimatePresence>
   );
 };
-const Modal_ = styled(PostModal)`
-  gap: 1rem;
+const Cont = styled(PostModalStyle)`
+  gap: 0.2rem;
   z-index: 112;
-  .main {
-    .image-setting {
-      .post-image {
-        width: 15rem;
-        height: 15rem;
-      }
-    }
-  }
+  min-width: 30vw;
 `;
-export const vars = {
-  initial: () => ({
-    x: -9999,
-    scale: 0.5,
-    opacity: 0,
-    transition: { duration: 0.8 },
-  }),
-  animate: (theme: boolean) => ({
-    x: 0,
-    scale: 1,
-    opacity: 1,
-    color: color(theme),
-    border: TransBorder(!theme),
-    backgroundColor: color(!theme),
-    transition: { duration: 0.8 },
-  }),
-  exit: () => ({
-    x: 9999,
-    scale: 0.5,
-    opacity: 0,
-    transition: { duration: 0.8 },
-  }),
-};
+const Main = styled(FlexCol)`
+  padding: 0 2rem 3rem;
+`;
+const ImageWrap = styled(Flex)`
+  position: relative;
+  justify-content: flex-start;
+`;
+interface IUpdateModal extends IPostUseform {
+  _string: {
+    preview: string;
+    layoutId: string;
+    original: string | null;
+  };
+  resetPreview: () => void;
+  _id: {
+    new_boardId: number;
+    board_id: number | null;
+  };
+  _boolean: {
+    hide: boolean;
+    theme: boolean;
+    isUpdate: boolean;
+    quickSave: boolean;
+  };
+  _set: {
+    setModal: Dispatch<SetStateAction<string>>;
+    setNewBoardId: Dispatch<SetStateAction<number>>;
+  };
+  _set_B: {
+    setHide: Dispatch<SetStateAction<boolean>>;
+    setIsDelete: Dispatch<SetStateAction<boolean>>;
+    setQuickSave: Dispatch<SetStateAction<boolean>>;
+    setSelectModal: Dispatch<SetStateAction<boolean>>;
+  };
+}

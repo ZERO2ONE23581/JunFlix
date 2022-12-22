@@ -8,7 +8,7 @@ import { IUserType } from '../../../../../types/user';
 import { FlexCol } from '../../../../../../styles/global';
 import { OnPrivateBtn } from '../../../../../Tools/Button/Private';
 import { useCapLetter } from '../../../../../libs/client/useTools';
-import useFollowUser from '../../../../../libs/client/useFollowing/User';
+import useFollowUser from '../../../../../libs/client/useFollow/user';
 
 interface IUserBox {
   _mode: {

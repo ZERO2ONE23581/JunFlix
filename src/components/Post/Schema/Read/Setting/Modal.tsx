@@ -1,15 +1,15 @@
+import {
+  color,
+  greyBrdr,
+  hoverBgColor,
+} from '../../../../../../styles/variants';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  color,
-  hoverBgColor,
-  TransBorder,
-} from '../../../../../../styles/variants';
+import { OverlayBg } from '../../../../../Tools/OverlayBg';
 
-interface IPostSettingBtnModal {
+interface IPostSetModal {
   _data: {
     theme: boolean;
     host_id: number;
@@ -19,14 +19,9 @@ interface IPostSettingBtnModal {
     setModal: Dispatch<SetStateAction<string>>;
   };
 }
-export const EllipsModal = ({ _data }: IPostSettingBtnModal) => {
+export const PostSetModal = ({ _data }: IPostSetModal) => {
   const router = useRouter();
-  const theme = _data?.theme;
-  const open = _data?.setting;
-  const host_id = _data?.host_id;
-  const isMyPost = _data?.isMyPost;
-  const setModal = _data?.setModal;
-  const closeSetting = _data?.closeSetting;
+  const { theme, setting, host_id, isMyPost, setModal, closeSetting } = _data;
   const onClick = (type: string) => {
     if (type) {
       if (type === 'all') return router.push(`/post/all`);
@@ -40,14 +35,14 @@ export const EllipsModal = ({ _data }: IPostSettingBtnModal) => {
   };
   return (
     <AnimatePresence>
-      {open && (
+      {setting && (
         <>
           <Cont
             exit="exit"
             initial="initial"
             animate="animate"
             custom={theme}
-            variants={variants}
+            variants={vars}
           >
             <ul>
               <List className="small">Post Options</List>
@@ -110,22 +105,15 @@ const List = styled(motion.li)<{ hidden?: boolean }>`
   min-width: 150px;
   display: ${(p) => p.hidden && 'none'};
 `;
-const variants = {
-  initial: (theme: boolean) => ({
-    opacity: 0,
-    color: color(theme),
-    border: TransBorder(!theme),
-    backgroundColor: color(!theme),
-  }),
+const vars = {
   animate: (theme: boolean) => ({
+    y: 0,
     opacity: 1,
+    border: greyBrdr,
     color: color(theme),
-    border: TransBorder(!theme),
+    transition: { duration: 0.3 },
     backgroundColor: color(!theme),
-    transition: { duration: 0.3 },
   }),
-  exit: (theme: boolean) => ({
-    opacity: 0,
-    transition: { duration: 0.3 },
-  }),
+  initial: () => ({ y: -99, opacity: 0 }),
+  exit: () => ({ y: -99, opacity: 0, transition: { duration: 0.3 } }),
 };
