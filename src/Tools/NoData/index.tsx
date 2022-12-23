@@ -2,6 +2,8 @@ import { Btn } from '../Button';
 import styled from '@emotion/styled';
 import { FlexCol } from '../../../styles/global';
 import { useEffect, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { noneBorderVar } from '../../../styles/variants';
 
 interface IUserContent {
   _data: {
@@ -67,35 +69,45 @@ export const NoData = ({ _data }: IUserContent) => {
     }
   }, [type, setTxt, setSub, isMy, setBtn]);
   return (
-    <Cont>
-      <span className="main">
-        <span>{txt.eng}</span>
-        <span className="kor">{txt.kor}</span>
-      </span>
-      {isMy && (
-        <>
-          <span className="sub">
-            <span>{sub.eng}</span>
-            <span className="kor">{sub.kor}</span>
-          </span>
-          <Btn
-            type="button"
-            onClick={onClick}
-            item={{ theme, name: btn.toUpperCase() }}
-          />
-        </>
-      )}
-    </Cont>
+    <AnimatePresence>
+      <Cont
+        custom={theme}
+        variants={noneBorderVar}
+        exit="exit"
+        initial="initial"
+        animate="animate"
+      >
+        <span className="main">
+          <span>{txt.eng}</span>
+          <span className="kor">{txt.kor}</span>
+        </span>
+        {isMy && (
+          <>
+            <span className="sub">
+              <span>{sub.eng}</span>
+              <span className="kor">{sub.kor}</span>
+            </span>
+            <Btn
+              type="button"
+              onClick={onClick}
+              item={{ theme, name: btn.toUpperCase() }}
+            />
+          </>
+        )}
+      </Cont>
+    </AnimatePresence>
   );
 };
 const Cont = styled(FlexCol)`
   gap: 0.5rem;
-  opacity: 0.9;
-  min-height: 50vh;
-  font-size: 1.6rem;
+  min-width: 660px;
+  font-size: 1.5rem;
+  margin: 1rem auto;
+  padding: 1rem 2rem;
   justify-content: center;
+  border: 2px solid red;
   .kor {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
   > .main,
   > .sub {

@@ -5,15 +5,16 @@ import { Head_ } from '../../../src/Tools/Title/Head';
 import { PageTitle } from '../../../src/Tools/Title/Page';
 import { useGetAllBoards } from '../../../src/libs/client/useBoards';
 import { BoardsGrid } from '../../../src/components/Board/Read/Boards';
+import { IPage } from '../../_app';
 
-const AllBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
+const AllBoards: NextPage<IPage> = ({ theme, mobile }) => {
   const { boards, isBoard } = useGetAllBoards();
   return (
     <>
       <Head_ title="All Boards" />
       <Cont>
         <PageTitle type="all_board" theme={theme} />
-        <BoardsGrid _data={{ theme, isBoard, boards }} />
+        <BoardsGrid _data={{ theme, isBoard, boards }} mobile={mobile} />
       </Cont>
     </>
   );
@@ -21,5 +22,5 @@ const AllBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
 export default AllBoards;
 
 const Cont = styled(Page)`
-  padding: 0 8rem;
+  padding: 0 2rem;
 `;

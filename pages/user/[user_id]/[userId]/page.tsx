@@ -64,7 +64,7 @@ const Layer = styled.section`
   .lock {
     top: 50%;
     left: 50%;
-    z-index: 999;
+    z-index: 1;
     position: absolute;
   }
 `;

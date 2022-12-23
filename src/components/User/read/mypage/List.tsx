@@ -42,7 +42,6 @@ const Cont = styled(motion.li)<{ hidden?: boolean }>`
     span {
       margin-right: 0.5rem;
       :nth-of-type(2) {
-        font-size: 0.9rem;
       }
     }
   }

@@ -53,6 +53,4 @@ const Cont = styled(FlexCol)`
   padding-top: 1rem;
   width: fit-content;
   justify-content: center;
-  .content-text {
-  }
 `;

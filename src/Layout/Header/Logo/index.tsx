@@ -1,22 +1,19 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { IResponsive } from '../../../types/global';
 
-export const Logo = () => {
+export const Logo = ({ _res }: IResponsive) => {
   const router = useRouter();
+  const { isMobile } = _res;
   return (
-    <Cont className="logo" onClick={() => router.push('/')}>
+    <Cont mobile={isMobile} className="logo" onClick={() => router.push('/')}>
       <Path />
     </Cont>
   );
 };
-const Cont = styled.div`
-  width: 8rem;
-  cursor: pointer;
-  position: relative;
-`;
 const Path = () => {
   return (
-    <Path_>
+    <PathCont className="svg_path">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1399.000000 393.000000"
@@ -35,17 +32,28 @@ const Path = () => {
           <path d="M801 3831 l-185 -6 5 -200 c2 -110 4 -699 4 -1310 0 -1036 -1 -1117 -19 -1215 -10 -57 -27 -128 -38 -158 -65 -174 -213 -236 -423 -178 -50 13 -93 21 -98 17 -4 -4 -6 -142 -5 -307 l3 -299 55 -19 c41 -14 83 -20 165 -20 134 0 213 18 344 81 82 39 108 58 191 142 159 157 234 310 286 581 14 75 17 252 26 1455 5 754 10 1386 11 1405 l2 35 -70 1 c-38 0 -153 -2 -254 -5z" />
         </g>
       </svg>
-    </Path_>
+    </PathCont>
   );
 };
-const Path_ = styled.div`
+const Cont = styled.div<{ mobile: boolean }>`
+  cursor: pointer;
+  position: relative;
+  .svg_path {
+    margin-top: ${(p) => p.mobile && '0.2rem'};
+    margin-left: ${(p) => p.mobile && '1.5rem'};
+    width: ${(p) => (p.mobile ? '1rem' : '11rem')};
+    svg {
+      width: ${(p) => (p.mobile ? '14rem' : '8rem')};
+      height: ${(p) => (p.mobile ? '14rem' : '8rem')};
+    }
+  }
+`;
+const PathCont = styled.div`
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   position: absolute;
+  transform: translate(-50%, -50%);
   svg {
-    width: 7rem;
-    height: 7rem;
     z-index: 999;
     g {
       fill: ${(p) => p.theme.color.logo};

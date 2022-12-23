@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { OverlayBg } from '../OverlayBg';
 import { Modal } from '../../../styles/global';
-import { variants } from '../../../styles/variants';
+import { color, variants } from '../../../styles/variants';
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface ILoadingModal {
@@ -10,7 +10,7 @@ interface ILoadingModal {
 }
 export const LoadingModal = ({ theme, layoutId }: ILoadingModal) => {
   return (
-    <AnimatePresence>
+    <>
       <Cont
         exit="exit"
         initial="initial"
@@ -45,25 +45,18 @@ export const LoadingModal = ({ theme, layoutId }: ILoadingModal) => {
           />
         </motion.svg>
       </Cont>
-      <OverlayBg dark={0.3} zIndex={888} />
-    </AnimatePresence>
+      <OverlayBg dark={0.5} zIndex={888} />
+    </>
   );
 };
 const Cont = styled(Modal)`
-  top: 20rem;
-  width: 25vw;
-  height: 40vh;
-
-  min-height: 300px;
-  gap: 20px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
+  top: 50vh;
+  gap: 1rem;
   z-index: 999;
+  padding: 4rem;
+  font-size: 2.2rem;
   span {
     opacity: 0;
-    font-size: 2.2rem;
   }
   svg {
     width: 3rem;
@@ -72,14 +65,14 @@ const Cont = styled(Modal)`
 `;
 const svgVar = {
   initial: (theme: boolean) => ({
-    fill: theme ? '#000000' : '#ffffff',
+    fill: color(theme),
   }),
   animate: (theme: boolean) => ({
     rotate: '360deg',
+    fill: color(theme),
     transition: {
       duration: 1.5,
       repeat: Infinity,
     },
-    fill: theme ? '#000000' : '#ffffff',
   }),
 };

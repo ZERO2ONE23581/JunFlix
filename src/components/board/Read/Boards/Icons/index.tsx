@@ -57,14 +57,9 @@ const Cont = styled(Flex)`
   gap: 1.5rem;
   width: fit-content;
   margin-bottom: 1rem;
+  padding-right: 3rem;
 `;
 const Icon = styled(Flex)`
   cursor: pointer;
   position: relative;
-  .link_modal,
-  .filter-modal {
-    top: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-  }
 `;

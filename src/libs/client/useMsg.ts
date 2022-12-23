@@ -16,6 +16,13 @@ export const UseMsg = ({ msg, error }: IUseMsg) => {
   };
   useEffect(() => {
     if (msg || error) {
+      if (msg === 'no_user') {
+        setTxt({
+          eng: "User doesn't exist.",
+          kor: '존재하지 않는 사용자입니다.',
+        });
+        reload();
+      }
       if (msg === 'logged') {
         setTxt({ eng: 'Logged In.', kor: '로그인 되었습니다.' });
         router.push('/');

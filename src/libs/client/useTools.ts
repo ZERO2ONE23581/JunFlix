@@ -2,7 +2,24 @@ import { useBoardPrivate } from './useBoards';
 import useFollowUser from './useFollow/user';
 import { useUser, useUserPrivate } from './useUser';
 import useFollowingBoard from './useFollow/board';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+
+export const useResponsive = () => {
+  const [desk, setDesk] = useState(false);
+  const [mobile, setMobile] = useState(false);
+  const isMobile = useMediaQuery({
+    query: '(min-width : 350px) and (max-width : 500px)',
+  });
+  const isDesk = useMediaQuery({
+    query: '(min-width : 500px)',
+  });
+  useEffect(() => {
+    if (isDesk) setDesk(true);
+    if (isMobile) setMobile(true);
+  }, [setMobile, isMobile, setDesk, isDesk]);
+  return { isMobile: !desk && mobile, isDesk: desk && !mobile };
+};
 
 export const useUploadImg = async (image: FileList | undefined) => {
   if (image && image.length > 0) {

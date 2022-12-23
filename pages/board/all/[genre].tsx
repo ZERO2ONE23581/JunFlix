@@ -1,15 +1,16 @@
+import { IPage } from '../../_app';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Page } from '../../../styles/global';
 import { NoData } from '../../../src/Tools/NoData';
 import { Head_ } from '../../../src/Tools/Title/Head';
-import { useCapLetters } from '../../../src/libs/client/useTools';
 import { PageTitle } from '../../../src/Tools/Title/Page';
-import { BoardsGrid } from '../../../src/components/Board/Read/Boards';
+import { useCapLetters } from '../../../src/libs/client/useTools';
 import { useGenreBoards } from '../../../src/libs/client/useBoards';
+import { BoardsGrid } from '../../../src/components/Board/Read/Boards';
 
-const GenreBoards: NextPage<{ theme: boolean }> = ({ theme }) => {
+const GenreBoards: NextPage<IPage> = ({ theme }) => {
   const router = useRouter();
   const { genre } = router.query;
   const Genre = genre?.toString()!;

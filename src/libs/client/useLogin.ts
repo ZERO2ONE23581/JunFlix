@@ -1,7 +1,14 @@
 import { useEffect } from 'react';
 import { useUser } from './useUser';
 import { useRouter } from 'next/router';
+import { IRes } from '../../types/global';
 
+export const useLogout = ({ data }: IRes) => {
+  const router = useRouter();
+  useEffect(() => {
+    if (data && data.ok) router.reload();
+  }, [data, router]);
+};
 export const useLogin = () => {
   const router = useRouter();
   const { isLoggedIn: data } = useUser();

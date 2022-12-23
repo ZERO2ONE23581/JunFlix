@@ -92,7 +92,7 @@ export const Answer = ({ _data }: IAnswer) => {
   );
 };
 const Cont = styled(Modal)`
-  top: 30vh;
+  top: 50vh;
   font-size: 1.4rem;
   padding: 2.5rem 2rem;
   ul {

@@ -1,3 +1,4 @@
+import { IPage } from '../_app';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
@@ -8,8 +9,8 @@ import { IRes } from '../../src/types/global';
 import { variants } from '../../styles/variants';
 import { IUserForm } from '../../src/types/user';
 import { InputWrap } from '../../src/Tools/Input';
-import { MsgModal } from '../../src/Tools/Modal/Message';
 import { ErrTxt } from '../../src/Tools/ErrTxt';
+import { MsgModal } from '../../src/Tools/Modal/Message';
 import { FindUser } from '../../src/components/User/Find';
 import { AvatarInput } from '../../src/Tools/Avatar/Input';
 import useMutation from '../../src/libs/client/useMutation';
@@ -17,7 +18,7 @@ import { Flex, FlexCol, FlexPage } from '../../styles/global';
 import { useUploadImg } from '../../src/libs/client/useTools';
 import { LoadingModal } from '../../src/Tools/Modal/Loading';
 
-const JoinPage: NextPage<{ theme: boolean }> = ({ theme }) => {
+const JoinPage: NextPage<IPage> = ({ theme }) => {
   const [post, { loading, data }] = useMutation<IRes>(`/api/user/create`);
   const {
     reset,
@@ -73,91 +74,90 @@ const JoinPage: NextPage<{ theme: boolean }> = ({ theme }) => {
   //
   return (
     <FlexPage>
-      <>
-        {msg && <MsgModal _data={{ theme, msg }} />}
-        {Loading && <LoadingModal theme={theme} />}
-        {!Loading && (
-          <Box
-            exit="exit"
-            custom={theme}
-            initial="initial"
-            animate="animate"
-            variants={variants}
-          >
-            <form onSubmit={handleSubmit(onValid)}>
-              <h1>
-                <span>Join</span>
-                <span className="kor">회원가입</span>
-              </h1>
-              <Wrap>
-                <AvatarInput
-                  _data={{ register, theme, preview, setPreview, reset }}
+      {!Loading && (
+        <Box
+          exit="exit"
+          layoutId="join"
+          initial="initial"
+          animate="animate"
+          custom={theme}
+          variants={variants}
+        >
+          <form onSubmit={handleSubmit(onValid)}>
+            <h1>
+              <span>Join</span>
+              <span className="kor">회원가입</span>
+            </h1>
+            <Wrap>
+              <AvatarInput
+                _data={{ register, theme, preview, setPreview, reset }}
+              />
+              <Inputs>
+                <InputWrap
+                  _data={{
+                    theme,
+                    id: 'email',
+                    clearErrors,
+                    type: 'text',
+                    label: 'Email',
+                    text: watch('email')!,
+                    register: register('email', {
+                      required: 'need_email',
+                      pattern: {
+                        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                        message: 'invalid_email',
+                      },
+                    }),
+                  }}
                 />
-                <Inputs>
-                  <InputWrap
-                    _data={{
-                      theme,
-                      id: 'email',
-                      clearErrors,
-                      type: 'text',
-                      label: 'Email',
-                      text: watch('email')!,
-                      register: register('email', {
-                        required: 'need_email',
-                        pattern: {
-                          value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                          message: 'invalid_email',
-                        },
-                      }),
-                    }}
-                  />
-                  <ErrTxt error={errors.email?.message!} theme={theme} />
-                  <InputWrap
-                    _data={{
-                      theme,
-                      clearErrors,
-                      id: 'password',
-                      type: 'password',
-                      label: 'password',
-                      text: watch('password')!,
-                      register: register!('password', {
-                        required: 'need_password',
-                        minLength: { value: 8, message: 'min_password' },
-                        maxLength: { value: 16, message: 'max_password' },
-                        pattern: {
-                          value:
-                            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
-                          message: 'invalid_password',
-                        },
-                      }),
-                    }}
-                  />
-                  <ErrTxt error={errors.password?.message!} theme={theme} />
-                  <InputWrap
-                    _data={{
-                      theme,
-                      clearErrors,
-                      type: 'password',
-                      id: 'password_confirm',
-                      label: 'Confirm Password',
-                      text: watch('password_confirm')!,
-                      register: register('password_confirm', {
-                        required: 'need_password_confirm',
-                      }),
-                    }}
-                  />
-                  <ErrTxt
-                    theme={theme}
-                    error={errors.password_confirm?.message!}
-                  />
-                </Inputs>
-              </Wrap>
-              <Btn type="submit" item={{ theme, name: 'Submit' }} />
-            </form>
-            <FindUser theme={theme} type="join" />
-          </Box>
-        )}
-      </>
+                <ErrTxt error={errors.email?.message!} theme={theme} />
+                <InputWrap
+                  _data={{
+                    theme,
+                    clearErrors,
+                    id: 'password',
+                    type: 'password',
+                    label: 'password',
+                    text: watch('password')!,
+                    register: register!('password', {
+                      required: 'need_password',
+                      minLength: { value: 8, message: 'min_password' },
+                      maxLength: { value: 16, message: 'max_password' },
+                      pattern: {
+                        value:
+                          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
+                        message: 'invalid_password',
+                      },
+                    }),
+                  }}
+                />
+                <ErrTxt error={errors.password?.message!} theme={theme} />
+                <InputWrap
+                  _data={{
+                    theme,
+                    clearErrors,
+                    type: 'password',
+                    id: 'password_confirm',
+                    label: 'Confirm Password',
+                    text: watch('password_confirm')!,
+                    register: register('password_confirm', {
+                      required: 'need_password_confirm',
+                    }),
+                  }}
+                />
+                <ErrTxt
+                  theme={theme}
+                  error={errors.password_confirm?.message!}
+                />
+              </Inputs>
+            </Wrap>
+            <Btn type="submit" item={{ theme, name: 'Submit' }} />
+          </form>
+          <FindUser theme={theme} type="join" />
+          {msg && <MsgModal _data={{ theme, msg }} />}
+        </Box>
+      )}
+      {Loading && <LoadingModal theme={theme} layoutId="join" />}
     </FlexPage>
   );
 };
@@ -165,15 +165,14 @@ export default JoinPage;
 
 const Box = styled(FlexCol)`
   padding: 2rem;
+  max-width: 500px;
   border-radius: 10px;
   align-items: flex-start;
   border: 1px solid ${(p) => p.theme.color.font};
-  width: fit-content;
-  height: fit-content;
   form {
     display: flex;
-    align-items: flex-start;
     flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
   }
   h1 {

@@ -1,11 +1,14 @@
 import { Logo } from './Logo';
 import { Main } from './Main';
-import { LoginMenu } from './Login';
 import styled from '@emotion/styled';
 import { ThemeBtn } from './Btn/Theme';
+import { UnLogged } from './Login/UnLogged';
+import { LoginAvatar } from './Login/Avatar';
 import { Flex } from '../../../styles/global';
 import { Dispatch, SetStateAction } from 'react';
+import { useUser } from '../../libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useResponsive } from '../../libs/client/useTools';
 
 interface IHeader {
   _data: {
@@ -15,7 +18,10 @@ interface IHeader {
   };
 }
 export const Header = ({ _data }: IHeader) => {
+  const { isLoggedIn } = useUser();
   const { theme, setTheme, setFixed } = _data;
+  const { isDesk, isMobile } = useResponsive();
+  const _res = { theme, isDesk, isMobile };
   return (
     <AnimatePresence>
       <Cont
@@ -25,34 +31,47 @@ export const Header = ({ _data }: IHeader) => {
         initial="initial"
         className="header"
       >
-        <Flex className="wrap">
+        <Wrap>
           <Left>
-            <Logo />
-            <Main theme={theme} setFixed={setFixed} />
+            <Logo _res={_res} />
+            {isDesk && <Main _res={_res} setFixed={setFixed} />}
           </Left>
           <Right>
+            <UnLogged isLoggedIn={isLoggedIn} _res={_res} />
+            <LoginAvatar _res={_res} />
             <ThemeBtn theme={theme} setTheme={setTheme} />
-            <LoginMenu theme={theme} />
           </Right>
-        </Flex>
+        </Wrap>
       </Cont>
     </AnimatePresence>
   );
 };
 const Cont = styled(motion.header)`
-  font-size: 1.3rem;
+  font-size: 2rem;
+  padding: 1.5rem 1rem;
   box-shadow: ${(p) => p.theme.boxShadow.input};
-  .wrap {
-    padding: 0 1rem;
-    justify-content: space-between;
-  }
+`;
+const Wrap = styled(Flex)`
+  justify-content: space-between;
 `;
 const Left = styled(Flex)`
-  gap: 1rem;
   width: fit-content;
-  height: fit-content;
+  justify-content: space-between;
+  .logo {
+    //border: 3px solid yellow;
+  }
+  .menu {
+    gap: 2rem;
+    width: fit-content;
+    //border: 5px solid blueviolet;
+  }
 `;
-const Right = styled(Left)``;
+const Right = styled(Left)`
+  gap: 2rem;
+  width: fit-content;
+  justify-content: flex-end;
+  //border: 5px solid blueviolet;
+`;
 const vars = {
   animate: (theme: boolean) => ({
     borderBottom: theme ? '1px solid transparent' : '1px solid #636e72',

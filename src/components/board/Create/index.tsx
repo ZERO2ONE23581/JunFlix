@@ -96,6 +96,7 @@ export const BoardBox = ({ _data }: ICreateBox) => {
   );
 };
 const Cont = styled(Box)`
+  max-width: fit-content;
   form {
     gap: 2rem;
     .textarea-wrap {

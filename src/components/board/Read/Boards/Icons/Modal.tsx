@@ -6,6 +6,7 @@ import { smallModalVar } from '../../Board/Title/Setting';
 import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { MiniModal } from '../../../../../../styles/global';
 import { useCapLetters } from '../../../../../libs/client/useTools';
+import { cmtModalVar, fromTopVar } from '../../../../../../styles/variants';
 
 interface IFilterModal {
   _data: {
@@ -49,7 +50,7 @@ export const FilterModal = ({ _data }: IFilterModal) => {
             custom={theme}
             initial="initial"
             animate="animate"
-            variants={smallModalVar}
+            variants={fromTopVar}
             className="filter-modal"
           >
             <ul>
@@ -77,15 +78,9 @@ export const FilterModal = ({ _data }: IFilterModal) => {
   );
 };
 const Cont = styled(MiniModal)`
-  ul {
-    li {
-      gap: 0rem;
-      display: flex;
-      align-items: center;
-      padding: 0.3rem 1rem;
-      justify-content: space-between;
-    }
-  }
+  top: 2rem;
+  right: -5rem;
+  //font-size: 2rem;
 `;
 const array = [
   'all',

@@ -5,7 +5,11 @@ import { IPostType } from '../../../../types/post';
 import { avatarLink } from '../../../../Tools/Avatar';
 import { Blur, FlexCol } from '../../../../../styles/global';
 import { TweenTrans, color } from '../../../../../styles/variants';
-import { IsBlur, useCapLetters } from '../../../../libs/client/useTools';
+import {
+  IsBlur,
+  useCapLetters,
+  useResponsive,
+} from '../../../../libs/client/useTools';
 
 interface IPostBox {
   _data: {
@@ -43,9 +47,10 @@ export const Box = ({ _data }: IPostBox) => {
     if (type === 'blur_board')
       return router.push(`/board/${board_id}/${board_title}`);
   };
+  const { isDesk } = useResponsive();
   return (
     <Cont>
-      {isBlur && <Svg onClick={onSvg} theme={theme} type="lock" />}
+      {isBlur && isDesk && <Svg onClick={onSvg} theme={theme} type="lock" />}
       <Blur isBlur={isBlur!}>
         {Image && (
           <PostBox__

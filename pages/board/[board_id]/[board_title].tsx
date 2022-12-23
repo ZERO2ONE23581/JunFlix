@@ -46,5 +46,7 @@ const BoardPage: NextPage<IPage> = ({ theme, setFixed }) => {
 export default BoardPage;
 
 const Cont = styled(FlexPage)`
+  padding-top: 0;
   flex-direction: column;
+  border: 2px solid blueviolet;
 `;

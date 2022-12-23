@@ -67,6 +67,7 @@ export const BoardPosts = ({ _data }: IBoardPosts) => {
 const Cont = styled(FlexPage)`
   padding: 0 10rem;
   position: relative;
+  min-height: fit-content;
   justify-content: flex-start;
   .lock {
     top: 25%;

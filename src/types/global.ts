@@ -1,3 +1,11 @@
+export interface IResponsive {
+  _res: {
+    theme: boolean;
+    isDesk: boolean;
+    isMobile: boolean;
+  };
+}
+
 export interface IForm {
   userId: string;
   title: string;

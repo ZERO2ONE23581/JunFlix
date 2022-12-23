@@ -27,7 +27,7 @@ export const VerifyID = ({ _data }: IVerfiyID) => {
   const [msg, setMsg] = useState('');
   const [Loading, setLoading] = useState(false);
   const { isBox, setToken, theme, layoutId } = _data;
-  const [post, { loading, data }] = useMutation<IRes>(
+  const [POST, { loading, data }] = useMutation<IRes>(
     `/api/user/verify/userId`
   );
   const {
@@ -41,9 +41,10 @@ export const VerifyID = ({ _data }: IVerfiyID) => {
   const onValid = ({ userId }: IUserForm) => {
     setLoading(true);
     if (loading) return;
-    return post({ userId });
+    return POST({ userId });
   };
   //
+  console.log(data, '??');
   useEffect(() => {
     if (data) {
       setTimeout(() => {

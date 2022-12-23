@@ -6,6 +6,7 @@ import { OverlayBg } from '../../../../../../Tools/OverlayBg';
 import { MiniModal } from '../../../../../../../styles/global';
 import { useUser } from '../../../../../../libs/client/useUser';
 import { smallModalVar } from '../../../../../Board/Read/Board/Title/Setting';
+import { fromTopVar } from '../../../../../../../styles/variants';
 
 interface ILinkModal {
   _data: {
@@ -25,11 +26,10 @@ export const LinkModal = ({ _data }: ILinkModal) => {
         <>
           <Cont
             exit="exit"
-            custom={theme}
             initial="initial"
             animate="animate"
-            className="link_modal"
-            variants={smallModalVar}
+            custom={theme}
+            variants={fromTopVar}
           >
             <ul>
               <li className="small">Options</li>
@@ -73,4 +73,10 @@ export const LinkModal = ({ _data }: ILinkModal) => {
     </AnimatePresence>
   );
 };
-const Cont = styled(MiniModal)``;
+const Cont = styled(MiniModal)`
+  top: 2rem;
+  right: -10rem;
+  span {
+    font-size: 1.6rem;
+  }
+`;

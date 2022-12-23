@@ -27,8 +27,8 @@ export const Cont = styled(motion.div)<{ dark?: number; zindex?: number }>`
   top: 0;
   left: 0;
   opacity: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: ${(p) => (p.zindex ? p.zindex : '99')};

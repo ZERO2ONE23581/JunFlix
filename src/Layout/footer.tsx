@@ -1,39 +1,48 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 import { Flex } from '../../styles/global';
-import { ITheme } from '../../styles/theme';
 
-export const Footer = ({ theme }: ITheme) => {
+export const Footer = () => {
   const date = new Date();
-  const currentYear = date.getFullYear();
+  const router = useRouter();
+  const thisYear = date.getFullYear();
+  const isFoundYear = Boolean(thisYear === 2022);
+  const YEAR = isFoundYear ? '2022' : `2022 - ${thisYear}`;
   return (
-    <Cont className="footer">
-      <Flex className="flex">
-        <h1>Junflix.com</h1>
-        <CopyRight>
-          <span>&copy;</span>
-          <span>{currentYear !== 2022 && '2022 -'}</span>
-          <span>{currentYear}</span>
-          <span>Junflix.</span>
-          <span>All Rights Reserved.</span>
-        </CopyRight>
+    <Cont>
+      <Flex className="copy">
+        <span className="dim">&copy;{YEAR}</span>
+        <h1 onClick={() => router.push('/')}>
+          <span className="isred">JUNFLIX</span>
+          <span className="dim">.</span>
+        </h1>
+        <span className="dim">All Rights Reserved.</span>
       </Flex>
     </Cont>
   );
 };
 
 const Cont = styled(motion.footer)`
-  margin-top: 100px;
-  padding: 20px;
-  font-size: 1.3rem;
-  background-color: #636e72;
-  .flex {
-    justify-content: flex-end;
+  padding: 1rem;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: flex-end;
+  > .copy {
+    gap: 0.2rem;
+    font-style: italic;
+    width: fit-content;
   }
-`;
-const CopyRight = styled.article`
-  font-style: italic;
-  span {
-    margin-right: 3px;
+  .isred {
+    font-weight: 800;
+    color: ${(p) => p.theme.color.logo};
+  }
+  h1 {
+    margin: 0 0.2rem;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .dim {
+    opacity: 0.8;
   }
 `;

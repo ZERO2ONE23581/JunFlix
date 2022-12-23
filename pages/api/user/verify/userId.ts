@@ -11,7 +11,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     where: { userId },
     select: { id: true, userId: true },
   });
-  if (!found) return res.json({ ok: false, error: 'no_data' });
+  if (!found) return res.json({ ok: false, error: 'no_user' });
   //
   const digits = Math.floor(Math.random() * 90000) + 100000;
   const token = await client.token.create({

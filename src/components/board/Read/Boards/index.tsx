@@ -10,8 +10,10 @@ import { IPostType } from '../../../../types/post';
 import { IBoardType } from '../../../../types/board';
 import { color } from '../../../../../styles/variants';
 import { FlexCol, Grid } from '../../../../../styles/global';
+import { Btn } from '../../../../Tools/Button';
 
 interface IBoards {
+  mobile?: boolean;
   _genre?: string;
   _data: {
     theme: boolean;
@@ -22,10 +24,11 @@ interface IBoards {
     quickSaved?: IPostType[];
   };
 }
-export const BoardsGrid = ({ _data, _genre }: IBoards) => {
+export const BoardsGrid = ({ _data, _genre, mobile }: IBoards) => {
   const { theme, user_id, isBoard, hideFilter, boards, quickSaved } = _data;
   const isHide = Boolean(hideFilter! || _genre);
   const [genre, setGenre] = useState({ select: false, type: 'all' });
+  const clickBack = () => setGenre({ select: false, type: 'all' });
   const array = () => {
     const type = genre.type;
     const selected = genre.select;
@@ -48,7 +51,7 @@ export const BoardsGrid = ({ _data, _genre }: IBoards) => {
   const isAnyQuick = Boolean(quickSaved?.length! > 0);
   const isAllBoardPage = Boolean(router.asPath === '/board/all');
   const isQS = isAnyQuick && !edit;
-  const max = 5;
+  const max = mobile ? 3 : 5;
   const plused = length + 1;
   const isMax = Boolean(length >= max);
   const isPlused = Boolean(plused >= max);
@@ -79,7 +82,16 @@ export const BoardsGrid = ({ _data, _genre }: IBoards) => {
             {!isAllBoardPage && <QuickBox _data={{ ...__isQuick, isQS }} />}
           </Array>
         )}
-        {!IsBoard && <NoData _data={{ theme, isMy: false, type: 'board' }} />}
+        {!IsBoard && (
+          <>
+            <NoData _data={{ theme, isMy: false, type: 'board' }} />
+            <Btn
+              type="button"
+              onClick={clickBack}
+              item={{ name: 'Back', theme, className: 'back_btn' }}
+            />
+          </>
+        )}
       </AnimatePresence>
     </Cont>
   );
@@ -87,6 +99,10 @@ export const BoardsGrid = ({ _data, _genre }: IBoards) => {
 const Cont = styled(FlexCol)`
   width: fit-content;
   align-items: flex-end;
+  .back_btn {
+    margin: 0 auto;
+    width: 100px;
+  }
 `;
 const Array = styled(Grid)`
   width: fit-content;

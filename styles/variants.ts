@@ -140,12 +140,6 @@ export const TransBorderVar = {
     transition: { duration: 0.5 },
   }),
 };
-export const menuModalVar = {
-  initial: { y: '0', x: '-50%', opacity: 0 },
-  exit: { y: '0', opacity: 0, transition: { duration: 0.3 } },
-  hover: { backgroundColor: redColor, transition: { duration: 0.3 } },
-  animate: { x: '-50%', y: '30px', opacity: 1, transition: { duration: 0.3 } },
-};
 export const cmtModalVar = {
   initial: (theme: boolean) => ({
     y: 999,
@@ -189,5 +183,27 @@ export const leftToRight = {
     scale: 0.5,
     opacity: 0,
     transition: { duration: 0.8 },
+  }),
+};
+export const fromTopVar = {
+  initial: (theme: boolean) => ({
+    y: -999,
+    opacity: 0,
+    color: color(theme),
+    backgroundColor: color(!theme),
+  }),
+  animate: (theme: boolean) => ({
+    y: 0,
+    opacity: 1,
+    color: color(theme),
+    backgroundColor: color(!theme),
+    transition: { duration: 0.5 },
+  }),
+  exit: (theme: boolean) => ({
+    y: -999,
+    opacity: 0,
+    color: color(theme),
+    backgroundColor: color(!theme),
+    transition: { duration: 0.5 },
   }),
 };

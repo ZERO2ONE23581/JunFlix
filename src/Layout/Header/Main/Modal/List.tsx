@@ -33,6 +33,7 @@ export const ListModal = ({ _data }: IListModal) => {
       if (txt === 'trending') return `Trending`;
     } else if (txt === 'quick') return useCapLetters(`Quick Saved`);
     else if (isHideTxt) return useCapLetters(`${txt} `);
+    else if (txt === 'create') return 'Create';
     else return useCapLetters(`${txt} ${selected}`);
   };
   const isGenre = Boolean(

@@ -4,13 +4,14 @@ import { motion } from 'framer-motion';
 export const Page = styled(motion.section)`
   width: 100%;
   height: 100%;
-  position: relative; ;
+  padding: 0 2rem;
+  position: relative;
 `;
 export const FlexPage = styled(Page)`
   display: flex;
+  padding-top: 30vh;
   align-items: center;
   flex-direction: column;
-  justify-content: center;
 `;
 export const Flex = styled(motion.div)`
   width: 100%;
@@ -32,32 +33,6 @@ export const Circle = styled(Flex)`
   border-radius: 100%;
   svg {
     display: block;
-  }
-`;
-export const MiniModal = styled(motion.div)`
-  top: 0rem;
-  right: 0rem;
-  position: absolute;
-  z-index: 100;
-  padding: 5px;
-  font-size: 1.2em;
-  overflow: hidden;
-  border-radius: 5px;
-  ul {
-    width: fit-content;
-    .small {
-      font-size: 1rem;
-    }
-    li {
-      gap: 0rem;
-      display: flex;
-      cursor: pointer;
-
-      font-size: 1.1rem;
-      align-items: center;
-      padding: 0.3rem 1rem;
-      justify-content: space-between;
-    }
   }
 `;
 export const Text = styled(FlexCol)`
@@ -121,6 +96,32 @@ export const Modal = styled(FlexCol)`
     position: absolute;
   }
 `;
+export const MiniModal = styled(motion.div)`
+  top: 0;
+  right: 0rem;
+  z-index: 100;
+  padding: 5px;
+  overflow: hidden;
+  min-width: 280px;
+  position: absolute;
+  border-radius: 5px;
+  font-size: 1.6rem;
+  .small {
+    opacity: 0.8;
+    font-size: 1.4rem;
+  }
+  ul {
+    width: fit-content;
+    li {
+      gap: 0rem;
+      display: flex;
+      cursor: pointer;
+      align-items: center;
+      padding: 0.3rem 1rem;
+      justify-content: space-between;
+    }
+  }
+`;
 export const BtnWrap = styled(Flex)`
   gap: 0.5rem;
   button {
@@ -156,8 +157,8 @@ export const Form = styled(motion.form)`
 `;
 export const Box = styled(FlexCol)`
   padding: 40px;
+  max-width: 500px;
   position: relative;
-  width: fit-content;
   border-radius: 5px;
   align-items: flex-start;
   border: ${(p) => p.theme.border.thick};
