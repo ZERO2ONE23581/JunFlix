@@ -39,7 +39,6 @@ const Cont = styled(Flex)`
   align-items: flex-start;
   justify-content: flex-start;
   .textarea-wrap {
-    min-width: 350px;
     width: fit-content;
   }
 `;

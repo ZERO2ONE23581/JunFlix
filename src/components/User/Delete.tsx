@@ -105,7 +105,6 @@ const IsConfirm = styled(motion.article)`
   .btn_wrap {
     margin-top: 1rem;
     button {
-      min-width: 100px;
       width: fit-content;
     }
   }
@@ -117,7 +116,6 @@ const IsConfirm = styled(motion.article)`
 const One = styled(Flex)`
   width: 100%;
   button {
-    min-width: 120px;
     margin-top: 1rem;
     width: fit-content;
   }

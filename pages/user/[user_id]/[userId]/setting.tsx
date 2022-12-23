@@ -53,7 +53,6 @@ const UserSetting: NextPage<IPage> = ({ theme }) => {
 export default UserSetting;
 
 const Slider = styled(Flex)`
-  min-width: 700px;
   position: relative;
   width: fit-content;
   height: fit-content;

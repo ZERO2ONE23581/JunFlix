@@ -1,16 +1,16 @@
 import styled from '@emotion/styled';
-import { Btn } from '../../Tools/Button';
-import { FlexCol } from '../../../styles/global';
+import { Btn } from '../../../Tools/Button';
+import { FlexCol } from '../../../../styles/global';
 import { Dispatch, SetStateAction } from 'react';
 
-interface IStart {
+interface IStartBtn {
   _data: {
     theme: boolean;
     setStart: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const Start = ({ _data }: IStart) => {
-  const { theme, setStart } = _data;
+export const StartBtn = ({ _data }: IStartBtn) => {
+  const { setStart } = _data;
   const onClick = () => setStart(true);
   return (
     <Cont>

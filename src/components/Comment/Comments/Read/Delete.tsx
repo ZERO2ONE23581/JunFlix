@@ -72,12 +72,12 @@ export const DeleteModal = ({ _data }: IDeleteModal) => {
 const Cont = styled(Modal)`
   top: 40%;
   z-index: 100;
-  min-width: 500px;
+
   padding-top: 2rem;
   height: fit-content;
   .btn_wrap {
     width: fit-content;
-    min-width: 300px;
+
     margin-top: 1rem;
     button {
       padding: 0.6rem 1rem;

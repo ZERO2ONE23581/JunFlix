@@ -70,5 +70,4 @@ const Layer = styled.section`
 `;
 const Cont = styled(Page)`
   padding: 1.1rem;
-  min-width: 1200px;
 `;

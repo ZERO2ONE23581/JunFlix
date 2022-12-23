@@ -102,7 +102,6 @@ const Cont = styled(motion.div)`
 const List = styled(motion.li)<{ hidden?: boolean }>`
   padding: 5px;
   cursor: pointer;
-  min-width: 150px;
   display: ${(p) => p.hidden && 'none'};
 `;
 const vars = {

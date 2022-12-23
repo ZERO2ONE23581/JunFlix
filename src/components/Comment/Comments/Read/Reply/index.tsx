@@ -91,7 +91,6 @@ const Cont = styled(Modal)`
   width: 33vw;
   z-index: 100;
   color: inherit;
-  min-width: 500px;
   height: fit-content;
   background-color: inherit;
   form {

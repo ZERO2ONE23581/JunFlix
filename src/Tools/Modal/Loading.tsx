@@ -53,7 +53,7 @@ const Cont = styled(Modal)`
   top: 20rem;
   width: 25vw;
   height: 40vh;
-  min-width: 400px;
+
   min-height: 300px;
   gap: 20px;
   display: flex;

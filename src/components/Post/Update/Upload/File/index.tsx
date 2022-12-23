@@ -51,7 +51,6 @@ export const FileInput = ({ _data, _useform }: IFileInput) => {
 };
 const Cont = styled(FlexCol)`
   height: 80vh;
-  min-width: 30vw;
   overflow: hidden;
   position: relative;
   label {

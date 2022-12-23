@@ -53,8 +53,7 @@ export const Main = ({ theme, setFixed }: IMain) => {
   );
 };
 const Cont = styled(Flex)`
-  gap: 7rem;
-  padding: 0 2rem;
+  gap: 1rem;
   width: fit-content;
 `;
 

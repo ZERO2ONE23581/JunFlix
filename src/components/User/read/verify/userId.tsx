@@ -93,6 +93,4 @@ export const VerifyID = ({ _data }: IVerfiyID) => {
     </AnimatePresence>
   );
 };
-const Cont = styled(Box)`
-  max-width: 500px;
-`;
+const Cont = styled(Box)``;

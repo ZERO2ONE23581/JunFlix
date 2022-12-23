@@ -100,6 +100,4 @@ export const Token = ({ _data }: VerifyToken) => {
     </AnimatePresence>
   );
 };
-const Cont = styled(Box)`
-  max-width: 500px;
-`;
+const Cont = styled(Box)``;

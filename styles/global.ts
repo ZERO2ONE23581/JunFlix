@@ -4,10 +4,7 @@ import { motion } from 'framer-motion';
 export const Page = styled(motion.section)`
   width: 100%;
   height: 100%;
-  width: 100vw;
-  min-width: 100vw;
-  min-height: 100vh;
-  position: relative;
+  position: relative; ;
 `;
 export const FlexPage = styled(Page)`
   display: flex;
@@ -55,7 +52,7 @@ export const MiniModal = styled(motion.div)`
       gap: 0rem;
       display: flex;
       cursor: pointer;
-      min-width: 120px;
+
       font-size: 1.1rem;
       align-items: center;
       padding: 0.3rem 1rem;
@@ -129,7 +126,6 @@ export const BtnWrap = styled(Flex)`
   button {
     width: 100%;
     padding: 5px;
-    min-width: 80px;
   }
 `;
 export const Grid = styled(motion.article)<{ box?: number }>`

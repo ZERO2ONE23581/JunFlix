@@ -70,7 +70,6 @@ export const UpdateModal = ({
 const Cont = styled(PostModalStyle)`
   gap: 0.2rem;
   z-index: 112;
-  min-width: 30vw;
 `;
 const Main = styled(FlexCol)`
   padding: 0 2rem 3rem;

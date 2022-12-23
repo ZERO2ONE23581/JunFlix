@@ -37,9 +37,6 @@ export const Cover = ({ posts, edit }: ICover) => {
 const Cont = styled(Grid)`
   gap: 0;
   width: 100%;
-  height: 22rem;
-  min-width: 300px;
-  max-width: 400px;
   overflow: hidden;
   border-radius: 10px;
   grid-template-rows: repeat(4, 1fr);

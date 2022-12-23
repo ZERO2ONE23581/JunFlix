@@ -57,7 +57,6 @@ export const FollowModal = ({ _data, _follow }: IFollowModal) => {
   );
 };
 const Cont = styled(PostModalStyle)`
-  min-width: 400px;
   min-height: 400px;
   width: fit-content;
   height: fit-content;

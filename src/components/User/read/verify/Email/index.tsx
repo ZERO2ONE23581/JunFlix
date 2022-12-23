@@ -95,6 +95,4 @@ export const Email = ({ _data }: IVerifyEmail) => {
     </AnimatePresence>
   );
 };
-const Cont = styled(Box)`
-  max-width: 500px;
-`;
+const Cont = styled(Box)``;

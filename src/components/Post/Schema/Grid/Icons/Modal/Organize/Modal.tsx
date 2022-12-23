@@ -51,6 +51,4 @@ export const OptionModal = ({ _data }: IOptionModal) => {
     </AnimatePresence>
   );
 };
-const Cont = styled(MiniModal)`
-  min-width: 16rem;
-`;
+const Cont = styled(MiniModal)``;

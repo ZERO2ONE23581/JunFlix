@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { FlexCol } from '../../../styles/global';
+import { FlexCol } from '../../../../styles/global';
 
 interface ITxts {
   type: string;

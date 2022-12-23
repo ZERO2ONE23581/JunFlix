@@ -7,7 +7,7 @@ export const PostModalStyle = styled(Modal)`
   top: 5vh;
   width: 35vw;
   height: 85vh;
-  min-width: 500px;
+
   min-height: 600px;
   font-size: 1.1rem;
   justify-content: flex-start;
@@ -21,8 +21,6 @@ export const SelectModal = styled(Modal)`
   top: 10rem;
   padding: 0;
   z-index: 113;
-  max-width: 30vw;
-  min-width: 520px;
   font-size: 1.2rem;
   width: fit-content;
   height: fit-content;
@@ -69,7 +67,6 @@ export const PostModalStyleStyle = styled(Modal)`
   padding: 0;
   width: 40vw;
   height: 90vh;
-  min-width: 520px;
   font-size: 1.1rem;
   justify-content: flex-start;
   form {

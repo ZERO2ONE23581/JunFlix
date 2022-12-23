@@ -98,10 +98,8 @@ const Icon = styled.div`
   }
   .grid_modal {
     left: -70%;
-    min-width: 10rem;
   }
   .link_modal {
-    min-width: 13rem;
   }
   svg {
     cursor: pointer;

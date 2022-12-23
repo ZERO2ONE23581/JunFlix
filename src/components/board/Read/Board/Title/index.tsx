@@ -46,7 +46,6 @@ export const Title = ({ _data }: IBoardTitle) => {
   );
 };
 const Cont = styled.div`
-  max-width: 60vw;
   .setting-modal {
     top: 3.3rem;
     right: -10rem;

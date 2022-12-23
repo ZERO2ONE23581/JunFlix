@@ -77,7 +77,6 @@ const Lists = styled(motion.ul)`
   width: 100%;
   gap: 1.5rem;
   display: flex;
-  max-width: 600px;
   border-radius: 5px;
   padding: 0.5rem 2rem;
   justify-content: flex-start;

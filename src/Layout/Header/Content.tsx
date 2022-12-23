@@ -2,10 +2,11 @@ import { Logo } from './Logo';
 import { Main } from './Main';
 import { LoginMenu } from './Login';
 import styled from '@emotion/styled';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ThemeBtn } from './Btn/Theme';
 import { Flex } from '../../../styles/global';
 import { Dispatch, SetStateAction } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useMediaQuery } from 'react-responsive';
 
 interface IHeader {
   _data: {
@@ -14,8 +15,11 @@ interface IHeader {
     setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const Header = ({ _data }: IHeader) => {
+export const Content = ({ _data }: IHeader) => {
   const { theme, setTheme, setFixed } = _data;
+  const isMobile = useMediaQuery({
+    query: '(min-width:570px)',
+  });
   return (
     <AnimatePresence>
       <Cont
@@ -25,21 +29,24 @@ export const Header = ({ _data }: IHeader) => {
         initial="initial"
         className="header"
       >
-        <Flex className="wrap">
-          <Left>
-            <Logo />
-            <Main theme={theme} setFixed={setFixed} />
-          </Left>
-          <Right>
-            <ThemeBtn theme={theme} setTheme={setTheme} />
-            <LoginMenu theme={theme} />
-          </Right>
-        </Flex>
+        {isMobile && (
+          <Flex className="wrap">
+            <Left>
+              <Logo />
+              <Main theme={theme} setFixed={setFixed} />
+            </Left>
+            <Right>
+              <ThemeBtn theme={theme} setTheme={setTheme} />
+              <LoginMenu theme={theme} />
+            </Right>
+          </Flex>
+        )}
       </Cont>
     </AnimatePresence>
   );
 };
 const Cont = styled(motion.header)`
+  padding: 0 10rem;
   font-size: 1.3rem;
   box-shadow: ${(p) => p.theme.boxShadow.input};
   .wrap {
@@ -48,7 +55,7 @@ const Cont = styled(motion.header)`
   }
 `;
 const Left = styled(Flex)`
-  gap: 1rem;
+  gap: 2rem;
   width: fit-content;
   height: fit-content;
 `;

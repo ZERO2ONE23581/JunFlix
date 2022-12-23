@@ -56,7 +56,6 @@ const Cont = styled(Modal)`
   top: 50%;
   width: 40vw;
   z-index: 100;
-  min-width: 500px;
   height: fit-content;
 `;
 const Btn = styled(motion.div)`

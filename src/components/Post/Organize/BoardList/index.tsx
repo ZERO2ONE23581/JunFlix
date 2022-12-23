@@ -84,7 +84,6 @@ const Cont = styled(PostModalStyle)`
   top: 0rem;
   z-index: 114;
   min-height: 85vh;
-  min-width: 500px;
   width: fit-content;
   padding: 0.5rem 1rem;
   align-items: flex-start;

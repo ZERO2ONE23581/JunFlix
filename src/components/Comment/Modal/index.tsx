@@ -93,7 +93,6 @@ const Cont = styled(Modal)`
   z-index: 101;
   width: 33vw;
   padding: 0;
-  min-width: 500px;
   height: fit-content;
 `;
 

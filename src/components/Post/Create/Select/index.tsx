@@ -103,8 +103,6 @@ const Cont = styled(Modal)`
   padding: 0;
   width: 33vw;
   z-index: 114;
-  max-width: 40vw;
-  min-width: 500px;
   margin-top: 10rem;
   height: fit-content;
   .wrap {

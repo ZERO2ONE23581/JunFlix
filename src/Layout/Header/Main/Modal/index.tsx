@@ -80,7 +80,7 @@ const Cont = styled(motion.div)`
 const Lists = styled.ul`
   padding: 6px 0;
   overflow: hidden;
-  min-width: 140px;
+
   border-radius: 5px;
   background-color: ${(p) => p.theme.color.bg};
   border: 1px solid ${(p) => p.theme.color.font};

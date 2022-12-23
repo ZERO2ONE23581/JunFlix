@@ -54,6 +54,5 @@ const Cont = styled(FlexCol)`
   width: fit-content;
   justify-content: center;
   .content-text {
-    max-width: 30vw;
   }
 `;

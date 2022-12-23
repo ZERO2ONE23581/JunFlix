@@ -65,7 +65,6 @@ const Icon = styled(Flex)`
   .filter-modal {
     top: 2rem;
     left: 50%;
-    min-width: 13rem;
     transform: translateX(-50%);
   }
 `;
