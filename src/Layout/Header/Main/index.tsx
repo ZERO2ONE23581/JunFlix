@@ -1,24 +1,21 @@
 import { Modal } from './Modal';
+import { useState } from 'react';
+import { Mobile } from './Mobile';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Flex } from '../../../../styles/global';
 import { IResponsive } from '../../../types/global';
-import { Dispatch, SetStateAction, useState } from 'react';
 import { useCapLetter } from '../../../libs/client/useTools';
 import { colorVar, hoverScale } from '../../../../styles/variants';
-import { Mobile } from './Mobile';
 
-interface IMain extends IResponsive {
-  setFixed: Dispatch<SetStateAction<boolean>>;
-}
-export const Main = ({ _res, setFixed }: IMain) => {
+export const Main = ({ _res }: IResponsive) => {
   const router = useRouter();
   const { theme, isMobile, isDesk } = _res;
   const [selected, setSelected] = useState('');
   const textVar = { ...colorVar, ...hoverScale };
+  const _modal = { theme, selected, setSelected };
   const array = ['board', 'post', 'movie', 'user'];
   const mob_arr = ['home', 'board', 'post', 'movie', 'user'];
-  const _modal = { theme, setFixed, selected, setSelected };
   const index = (element: string) => Number(array.indexOf(element));
   const isModal = (element: string) =>
     Boolean(selected === element) && Boolean(selected !== 'home');
@@ -30,7 +27,7 @@ export const Main = ({ _res, setFixed }: IMain) => {
     <>
       <Mobile
         _res={{ theme, isMobile, isDesk }}
-        _set={{ selected, setFixed, setSelected }}
+        _set={{ selected, setSelected }}
         _data={{ array: mob_arr, isModal, onClick }}
       />
       {isDesk && (
@@ -64,7 +61,6 @@ const Cont = styled(Flex)`
 
 const Txt = styled(Flex)`
   cursor: pointer;
-  border: 2px solid blue;
 `;
 const Array = styled(Flex)`
   position: relative;

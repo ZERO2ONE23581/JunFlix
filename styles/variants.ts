@@ -100,25 +100,14 @@ export const noneBorderVar = {
   }),
 };
 export const variants = {
-  initial: (theme: boolean) => ({
-    opacity: 0,
-    color: color(theme),
-    border: TransBorder(!theme),
-    backgroundColor: color(!theme),
-  }),
+  exit: () => ({ opacity: 0 }),
+  initial: () => ({ opacity: 0 }),
   animate: (theme: boolean) => ({
     opacity: 1,
     color: color(theme),
     border: TransBorder(!theme),
     transition: { duration: 0.5 },
     backgroundColor: color(!theme),
-  }),
-  exit: (theme: boolean) => ({
-    opacity: 0,
-    color: color(theme),
-    border: TransBorder(!theme),
-    backgroundColor: color(!theme),
-    transition: { duration: 0.5 },
   }),
 };
 export const TransBorderVar = {
@@ -169,14 +158,14 @@ export const leftToRight = {
     opacity: 0,
     transition: { duration: 0.8 },
   }),
-  animate: (theme: boolean) => ({
+  animate: ({ theme, isMobile }: any) => ({
     x: 0,
     scale: 1,
     opacity: 1,
     color: color(theme),
-    border: TransBorder(!theme),
     backgroundColor: color(!theme),
     transition: { duration: 0.8 },
+    border: isMobile ? '1px solid transparent' : TransBorder(!theme),
   }),
   exit: () => ({
     x: 9999,

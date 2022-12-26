@@ -11,13 +11,12 @@ interface ILayoutProps extends IResponsive {
   children: ReactElement;
   _data: {
     hide: boolean;
-    setFixed: Dispatch<SetStateAction<boolean>>;
     setTheme: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Layout = ({ _data, children, _res }: ILayoutProps) => {
+  const { hide, setTheme } = _data;
   const { theme, isDesk, isMobile } = _res;
-  const { hide, setTheme, setFixed } = _data;
   const isFooter = Boolean(!hide && isDesk);
   const isMenu = Boolean(!hide && isMobile);
   return (
@@ -29,9 +28,9 @@ export const Layout = ({ _data, children, _res }: ILayoutProps) => {
         custom={theme}
         variants={noneBorderVar}
       >
-        {!hide && <Header _data={{ theme, setTheme, setFixed }} />}
+        {!hide && <Header _data={{ theme, setTheme }} />}
         <section className="children">{children}</section>
-        {isMenu && <Main setFixed={setFixed} _res={_res} />}
+        {isMenu && <Main _res={_res} />}
         {isFooter && <Footer />}
       </Cont>
     </>

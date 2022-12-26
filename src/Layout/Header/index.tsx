@@ -14,12 +14,11 @@ interface IHeader {
   _data: {
     theme: boolean;
     setTheme: Dispatch<SetStateAction<boolean>>;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Header = ({ _data }: IHeader) => {
   const { isLoggedIn } = useUser();
-  const { theme, setTheme, setFixed } = _data;
+  const { theme, setTheme } = _data;
   const { isDesk, isMobile } = useResponsive();
   const _res = { theme, isDesk, isMobile };
   return (
@@ -34,12 +33,12 @@ export const Header = ({ _data }: IHeader) => {
         <Wrap>
           <Left>
             <Logo _res={_res} />
-            {isDesk && <Main _res={_res} setFixed={setFixed} />}
+            {isDesk && <Main _res={_res} />}
           </Left>
           <Right>
+            <ThemeBtn theme={theme} setTheme={setTheme} />
             <UnLogged isLoggedIn={isLoggedIn} _res={_res} />
             <LoginAvatar _res={_res} />
-            <ThemeBtn theme={theme} setTheme={setTheme} />
           </Right>
         </Wrap>
       </Cont>
@@ -58,19 +57,16 @@ const Left = styled(Flex)`
   width: fit-content;
   justify-content: space-between;
   .logo {
-    //border: 3px solid yellow;
   }
   .menu {
     gap: 2rem;
     width: fit-content;
-    //border: 5px solid blueviolet;
   }
 `;
 const Right = styled(Left)`
   gap: 2rem;
   width: fit-content;
   justify-content: flex-end;
-  //border: 5px solid blueviolet;
 `;
 const vars = {
   animate: (theme: boolean) => ({

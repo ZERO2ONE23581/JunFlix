@@ -11,11 +11,10 @@ interface IOrgPosts {
     theme: boolean;
     modal: string;
     closeModal: () => void;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const OrganizePosts = ({ _data }: IOrgPosts) => {
-  const { theme, modal: mdoal_, closeModal, setFixed } = _data;
+  const { theme, modal: mdoal_, closeModal } = _data;
   const [modal, setModal] = useState('');
   const [array, setArray] = useState<any>();
   const layoutId = 'organize_posts';
@@ -36,10 +35,10 @@ export const OrganizePosts = ({ _data }: IOrgPosts) => {
   const open = Boolean(mdoal_ === 'posts');
   return (
     <>
-      <OptionModal _data={{ open, theme, setModal, closeModal, setFixed }} />
+      <OptionModal _data={{ open, theme, setModal, closeModal }} />
       <PostsModal
         _useform={{ register, clearErrors, setError, errors }}
-        _data={{ array, modal, theme, layoutId, setModal, setFixed }}
+        _data={{ array, modal, theme, layoutId, setModal }}
       />
       <SelectBoard
         _data={{ theme, modal, layoutId, posts: array, handleSubmit, setModal }}

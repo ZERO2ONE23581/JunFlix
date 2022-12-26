@@ -2,12 +2,12 @@ import type { NextPage } from 'next';
 import { IPage } from '../../../_app';
 import { useRouter } from 'next/router';
 import { PostPage } from '../../../post/all';
+import { PageTitle } from '../../../../src/Tools/Title/Page';
 import { useGetPosts } from '../../../../src/libs/client/usePosts';
 import { PostSchema } from '../../../../src/components/Post/Schema';
-import { PageTitle } from '../../../../src/Tools/Title/Page';
 import { useLogin, useValidHost } from '../../../../src/libs/client/useLogin';
 
-const QuckSavedPosts: NextPage<IPage> = ({ theme, setFixed }) => {
+const QuckSavedPosts: NextPage<IPage> = ({ theme }) => {
   useLogin();
   const router = useRouter();
   useValidHost('posts_quick');
@@ -16,7 +16,7 @@ const QuckSavedPosts: NextPage<IPage> = ({ theme, setFixed }) => {
   return (
     <PostPage>
       <PageTitle theme={theme} type={'qs'} />
-      <PostSchema setFixed={setFixed} _data={{ theme, posts, grid: 5 }} />
+      <PostSchema _data={{ theme, posts, grid: 5 }} />
     </PostPage>
   );
 };

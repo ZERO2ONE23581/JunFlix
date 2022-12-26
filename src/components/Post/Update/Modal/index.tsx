@@ -5,11 +5,12 @@ import { PostImage } from './Image';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
+import { PostSt } from '../../../../../styles/post';
 import { IPostUseform } from '../../../../types/post';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
-import { PostModalStyle } from '../../../../../styles/post';
 import { leftToRight } from '../../../../../styles/variants';
 import { Flex, FlexCol } from '../../../../../styles/global';
+import { useResponsive } from '../../../../libs/client/useTools';
 
 export const UpdateModal = ({
   _id,
@@ -20,6 +21,7 @@ export const UpdateModal = ({
   _useform,
   resetPreview,
 }: IUpdateModal) => {
+  const { isMobile } = useResponsive();
   const { new_boardId, board_id } = _id;
   const { setModal, setNewBoardId } = _set;
   const { layoutId, preview, original } = _string;
@@ -33,41 +35,43 @@ export const UpdateModal = ({
   };
   return (
     <AnimatePresence>
-      {isUpdate && (
-        <Cont
-          exit="exit"
-          initial="initial"
-          animate="animate"
-          custom={theme}
-          variants={leftToRight}
-          layoutId={layoutId + 'submit'}
-        >
-          <Layer theme={theme} closeModal={closeModal} />
-          <Main>
-            <ImageWrap>
-              <PostImage _data={{ hide, preview, original }} />
-              <Icons
-                _boolean={{ hide, theme }}
-                _set={{ setHide, setModal }}
-                _data={{ preview, original, resetPreview }}
-              />
-            </ImageWrap>
-            <Info
-              _useform={_useform}
-              _boolean={{ theme, quickSave }}
-              _id={{ board_id, new_boardId }}
-              _set={{ setIsDelete, setSelectModal }}
-            />
-          </Main>
-        </Cont>
-      )}
-      {isUpdate && (
-        <OverlayBg dark={0.5} zIndex={111} closeModal={closeModal} />
-      )}
+      <>
+        {isUpdate && (
+          <>
+            <Cont
+              exit="exit"
+              initial="initial"
+              animate="animate"
+              variants={leftToRight}
+              custom={{ theme, isMobile }}
+              layoutId={layoutId + 'submit'}
+            >
+              <Layer theme={theme} closeModal={closeModal} />
+              <Main>
+                <ImageWrap>
+                  <PostImage _data={{ hide, preview, original }} />
+                  <Icons
+                    _boolean={{ hide, theme }}
+                    _set={{ setHide, setModal }}
+                    _data={{ preview, original, resetPreview }}
+                  />
+                </ImageWrap>
+                <Info
+                  _useform={_useform}
+                  _boolean={{ theme, quickSave }}
+                  _id={{ board_id, new_boardId }}
+                  _set={{ setIsDelete, setSelectModal }}
+                />
+              </Main>
+            </Cont>
+            <OverlayBg dark={0.5} zIndex={111} closeModal={closeModal} />
+          </>
+        )}
+      </>
     </AnimatePresence>
   );
 };
-const Cont = styled(PostModalStyle)`
+const Cont = styled(PostSt)`
   gap: 0.2rem;
   z-index: 112;
 `;

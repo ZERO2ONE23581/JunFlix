@@ -1,13 +1,18 @@
 import styled from '@emotion/styled';
-import { IGetPostType } from '../../../../../../types/post';
-import { Flex } from '../../../../../../../styles/global';
 import { TrimText } from '../../../../../../Tools/Trim';
+import { IPostType } from '../../../../../../types/post';
+import { FlexCol_, Flex_ } from '../../../../../../../styles/global';
 import { useCapLetters } from '../../../../../../libs/client/useTools';
 
-export const Detail = ({ post }: IGetPostType) => {
+interface IDetail {
+  post: IPostType;
+  isDesk: boolean;
+}
+
+export const Detail = ({ post, isDesk }: IDetail) => {
   const { description, title, hashtags, pageLink } = post;
   return (
-    <Cont className="detail">
+    <Cont isDesk={isDesk}>
       <h1 className="title">
         <TrimText text={useCapLetters(title)} max={30} />
       </h1>
@@ -30,34 +35,22 @@ export const Detail = ({ post }: IGetPostType) => {
     </Cont>
   );
 };
-const Cont = styled(Flex)`
-  form {
-    height: fit-content;
-  }
-  gap: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+const Cont = styled(FlexCol_)`
+  gap: 0.2rem;
   align-items: flex-start;
   h1 {
     span {
-      font-size: 1.4rem;
+      font-size: ${(p) => (p.isDesk ? '1.4rem' : '3.8rem')};
     }
   }
   p {
-    font-size: 1.2rem;
     word-break: break-all;
+    font-size: ${(p) => (p.isDesk ? '1.2rem' : '2.2rem')};
   }
   ul {
-    font-size: 1.05rem;
+    opacity: 0.8;
     font-style: italic;
-    li {
-      .hash {
-        color: ${(p) => p.theme.color.logo};
-      }
-      span {
-        line-height: 15px;
-      }
-    }
+    color: ${(p) => p.theme.color.logo};
+    font-size: ${(p) => (p.isDesk ? '1.3rem' : '2.4rem')};
   }
 `;

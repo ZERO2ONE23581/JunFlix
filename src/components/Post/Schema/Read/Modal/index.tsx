@@ -1,36 +1,39 @@
 import { Info } from './Info';
 import { Close } from './Close';
-import { Setting } from '../Setting';
-import styled from '@emotion/styled';
 import { PostCmt } from './PostCmt';
+import styled from '@emotion/styled';
+import { Setting } from '../Setting';
 import { Dispatch, SetStateAction } from 'react';
 import { IPostType } from '../../../../../types/post';
 import { avatarLink } from '../../../../../Tools/Avatar';
 import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { useUser } from '../../../../../libs/client/useUser';
-import { PostModalStyle, postVar } from '../../../../../../styles/post';
+import { PostSt, postVar } from '../../../../../../styles/post';
+import { useResponsive } from '../../../../../libs/client/useTools';
 
 export interface IPostModal {
   _data: {
     modal: boolean;
     theme: boolean;
     post: IPostType;
-    layoutId: string;
-    setModal: Dispatch<SetStateAction<string>>;
-    setFixed: Dispatch<SetStateAction<boolean>>;
+  };
+  _set: {
+    edit: Dispatch<SetStateAction<string>>;
+    setModal: Dispatch<SetStateAction<boolean>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const PostModal = ({ _data }: IPostModal) => {
-  const { layoutId, post, theme, modal, setModal, setCmtModal, setFixed } =
-    _data;
+export const PostModal = ({ _data, _set }: IPostModal) => {
+  const { isDesk } = useResponsive();
+  const { post, theme, modal } = _data;
+  const { setCmtModal, setModal, edit } = _set;
   const host_id = post?.host_id!;
   const { loggedInUser } = useUser();
   const isCmtBlocked = post?.onPrivate!;
   const isMyPost = Boolean(host_id === loggedInUser?.id);
   const closeModal = () => {
-    setModal('');
-    setFixed(false);
+    edit('');
+    setModal(false);
   };
   return (
     <>
@@ -42,16 +45,18 @@ export const PostModal = ({ _data }: IPostModal) => {
             animate="animate"
             custom={theme}
             variants={postVar}
-            layoutId={layoutId}
+            layoutId={post?.id + ''}
           >
             <Icons className="setting">
-              <Close _data={{ theme, setModal }} />
-              <Setting _data={{ theme, host_id, isMyPost, setModal }} />
+              <Close _data={{ theme, setModal, isDesk, edit }} />
+              <Setting
+                _data={{ isDesk, theme, host_id, isMyPost, setModal, edit }}
+              />
             </Icons>
-            <img alt="post image" src={avatarLink(post?.post_image)} />
+            <Img alt="post image" src={avatarLink(post?.post_image)} />
             <Info _data={{ theme, post, setCmtModal }} />
             {!isCmtBlocked && (
-              <PostCmt _data={{ theme, post, setModal, setCmtModal }} />
+              <PostCmt _data={{ theme, post, setModal, setCmtModal, isDesk }} />
             )}
           </Cont>
           <OverlayBg dark={0.3} closeModal={closeModal} />
@@ -60,14 +65,9 @@ export const PostModal = ({ _data }: IPostModal) => {
     </>
   );
 };
-const Cont = styled(PostModalStyle)``;
+const Cont = styled(PostSt)``;
+const Img = styled.img``;
 const Icons = styled.div`
   width: 100%;
   position: relative;
-  .icon {
-    top: 1rem;
-    width: 2rem;
-    height: 2rem;
-    position: absolute;
-  }
 `;

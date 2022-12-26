@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Svg } from '../../../Tools/Svg';
 import { Avatar } from '../../../Tools/Avatar';
-import { Flex } from '../../../../styles/global';
+import { Flex, Flex_ } from '../../../../styles/global';
 import { color } from '../../../../styles/variants';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -9,58 +9,56 @@ interface ICreateCmtBox {
   _data: {
     theme: boolean;
     host_id: number;
+    isDesk: boolean;
     setCreate: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Box = ({ _data }: ICreateCmtBox) => {
-  const { theme, host_id, setCreate } = _data;
+  const { isDesk, theme, host_id, setCreate } = _data;
   const openCreate = () => setCreate(true);
+  const size = isDesk ? '3.5rem' : '7rem';
+  const svg_size = isDesk ? '1.8rem' : '4rem';
   return (
-    <Cont>
-      <Avatar _data={{ size: '3.5rem', isRound: true, theme, host_id }} />
-      <FakeInput
-        animate="animate"
-        whileHover="hover"
+    <Cont isDesk={isDesk}>
+      <Avatar _data={{ size, isRound: true, theme, host_id }} />
+      <Inp
+        variants={vars}
         custom={{ theme }}
         onClick={openCreate}
-        variants={fakeInputVar}
+        animate="animate"
+        whileHover="hover"
+        className="input_box"
       >
-        <span>Leave comments on this post...</span>
-      </FakeInput>
+        <span>Leave comments...</span>
+      </Inp>
       <Svg
         type="reply"
         theme={theme}
         onClick={openCreate}
-        item={{ size: '1.8rem' }}
+        item={{ size: svg_size }}
       />
     </Cont>
   );
 };
-const Cont = styled(Flex)`
+const Cont = styled(Flex_)`
   gap: 1rem;
   justify-content: flex-start;
+  .input_box {
+    max-width: 70%;
+    font-size: ${(p) => (p.isDesk ? '1.4rem' : '2.5rem')};
+    padding: ${(p) => (p.isDesk ? '0.8rem 1rem' : '1.5rem')};
+  }
 `;
-const FakeInput = styled(Flex)`
-  max-width: 70%;
+const Inp = styled(Flex)`
   cursor: pointer;
   font-size: 1rem;
   border-radius: 5px;
-  padding: 0.8rem 1rem;
   outline: 1px solid ${(p) => p.theme.color.font};
   span {
     width: 100%;
   }
-  ::placeholder {
-    color: inherit;
-  }
-  :hover {
-    ::placeholder {
-      color: inherit;
-      color: ${(p) => p.theme.color.font};
-    }
-  }
 `;
-const fakeInputVar = {
+const vars = {
   hover: () => ({
     scale: 1.05,
     color: '#E50914',
@@ -69,7 +67,7 @@ const fakeInputVar = {
   }),
   animate: ({ theme }: any) => ({
     scale: 1,
-    opacity: 1,
+    opacity: 0.8,
     color: color(theme),
     transition: { duration: 0.3 },
     outline: `1px solid ${color(theme)}`,

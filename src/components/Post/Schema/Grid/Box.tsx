@@ -1,15 +1,15 @@
-import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { Svg } from '../../../../Tools/Svg';
-import { IPostType } from '../../../../types/post';
-import { avatarLink } from '../../../../Tools/Avatar';
-import { Blur, FlexCol } from '../../../../../styles/global';
-import { TweenTrans, color } from '../../../../../styles/variants';
 import {
   IsBlur,
   useCapLetters,
   useResponsive,
 } from '../../../../libs/client/useTools';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { Svg } from '../../../../Tools/Svg';
+import { IPostType } from '../../../../types/post';
+import { avatarLink } from '../../../../Tools/Avatar';
+import { Blur, PostCover } from '../../../../../styles/global';
+import { TweenTrans, color } from '../../../../../styles/variants';
 
 interface IPostBox {
   _data: {
@@ -47,13 +47,13 @@ export const Box = ({ _data }: IPostBox) => {
     if (type === 'blur_board')
       return router.push(`/board/${board_id}/${board_title}`);
   };
-  const { isDesk } = useResponsive();
+  const { isDesk, isMobile } = useResponsive();
   return (
     <Cont>
       {isBlur && isDesk && <Svg onClick={onSvg} theme={theme} type="lock" />}
       <Blur isBlur={isBlur!}>
         {Image && (
-          <PostBox__
+          <Cover
             exit="exit"
             initial="initial"
             animate="animate"
@@ -67,12 +67,13 @@ export const Box = ({ _data }: IPostBox) => {
           >
             <img alt="박스커버이미지" src={Image} />
             <h2>{Title(post?.title)}</h2>
-          </PostBox__>
+          </Cover>
         )}
       </Blur>
     </Cont>
   );
 };
+const Cover = styled(PostCover)``;
 const Cont = styled.article`
   position: relative;
   .lock {
@@ -83,23 +84,6 @@ const Cont = styled.article`
     transform: translate(-50%, -50%);
   }
 `;
-export const PostBox__ = styled(FlexCol)`
-  gap: 1rem;
-  cursor: pointer;
-  overflow: hidden;
-  height: fit-content;
-  img {
-    width: 100%;
-    height: fit-content;
-    border-radius: 0.5rem;
-    box-shadow: ${(p) => p.theme.boxShadow.nav};
-  }
-  h2 {
-    font-weight: 400;
-    font-size: 1.4rem;
-    text-align: center;
-  }
-`;
 const vars = {
   exit: () => ({ opacity: 0 }),
   initial: () => ({ opacity: 0 }),
@@ -108,7 +92,6 @@ const vars = {
     color: color(theme),
     transition: { duration: 0.3 },
   }),
-
   hover: () => ({
     scale: 1.15,
     color: '#E50914',

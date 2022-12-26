@@ -7,7 +7,7 @@ import { Head_ } from '../../src/Tools/Title/Head';
 import { PageTitle } from '../../src/Tools/Title/Page';
 import { Movies } from '../../src/components/Movie';
 
-const GenreMovies: NextPage<IPage> = ({ theme, setFixed }) => {
+const GenreMovies: NextPage<IPage> = ({ theme }) => {
   const router = useRouter();
   const type = router.query.genre!;
   return (
@@ -15,7 +15,7 @@ const GenreMovies: NextPage<IPage> = ({ theme, setFixed }) => {
       <Head_ title="영화" />
       <Cont>
         <PageTitle theme={theme} type={type} />
-        <Movies _data={{ theme, setFixed, type, hideTitle: true }} />
+        <Movies _data={{ theme, type, hideTitle: true }} />
       </Cont>
     </>
   );

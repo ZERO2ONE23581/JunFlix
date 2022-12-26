@@ -7,7 +7,7 @@ import { IRes } from '../../../../types/global';
 import { IPostType } from '../../../../types/post';
 import { IBoardForm } from '../../../../types/board';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
-import { PostModalStyle } from '../../../../../styles/post';
+import { PostSt } from '../../../../../styles/post';
 import { ErrModal } from '../../../../Tools/Modal/Error';
 import { MsgModal } from '../../../../Tools/Modal/Message';
 import { useUser } from '../../../../libs/client/useUser';
@@ -98,7 +98,7 @@ export const CreateNewModal = ({ _data }: ICreateNewModal) => {
     </>
   );
 };
-const Cont = styled(PostModalStyle)`
+const Cont = styled(PostSt)`
   top: 0rem;
   z-index: 114;
   min-height: 85vh;

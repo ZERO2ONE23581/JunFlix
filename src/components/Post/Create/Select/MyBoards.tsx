@@ -27,7 +27,7 @@ export const BoardsList = ({ _data }: IBoardsList) => {
           onClick={() => clickBoard(board.id)}
         >
           <motion.li className="board_cover">
-            <img src="/img/home-bg-dn.jpg" alt="board cover" />
+            <img src="/img/1.jpg" alt="board cover" />
           </motion.li>
           <motion.li className="board-title">
             <h2>{useCapLetters(board.title)}</h2>
@@ -42,24 +42,16 @@ export const BoardsList = ({ _data }: IBoardsList) => {
   );
 };
 export const ListWrap = styled(motion.ul)`
-  gap: 15px;
-  width: 100%;
+  gap: 2rem;
   width: 100%;
   display: flex;
-  padding: 15px;
+  padding: 2rem;
   cursor: pointer;
   border-radius: 10px;
   justify-content: center;
+  align-items: flex-start;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  .board_cover {
-    padding: 0;
-    width: fit-content;
-    img {
-      width: 3.5rem;
-      height: 3.5rem;
-      border-radius: 10px;
-    }
-  }
+  border: 2px solid ${(p) => p.theme.color.font};
   .board-title {
     gap: 5px;
     width: 100%;
@@ -68,7 +60,6 @@ export const ListWrap = styled(motion.ul)`
     justify-content: center;
     h2 {
       font-weight: 500;
-      font-size: 1.4rem;
     }
     .post-num {
       display: block;

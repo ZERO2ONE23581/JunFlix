@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { FollowModal } from './Modal/Follower';
 import { Follower, Following } from '@prisma/client';
 import { Flex } from '../../../../../../styles/global';
-import { Dispatch, SetStateAction, useState } from 'react';
 import { hoverVars } from '../../../../../../styles/variants';
 
 interface IFollowInfo {
@@ -11,20 +11,17 @@ interface IFollowInfo {
     theme: boolean;
     Follower: Follower[];
     Following: Following[];
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const FollowInfo = ({ _data }: IFollowInfo) => {
   const layoutId = 'follow';
-  const { setFixed, theme, num, Follower, Following } = _data;
+  const { theme, num, Follower, Following } = _data;
   const count_following = Following.filter((e) => !e.board_id)?.length!;
   const [type, setType] = useState('');
   const onClick = (type: string) => {
-    setFixed(true);
     return setType(type);
   };
   const closeModal = () => {
-    setFixed(false);
     return setType('');
   };
   return (

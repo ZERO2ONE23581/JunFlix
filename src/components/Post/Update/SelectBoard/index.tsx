@@ -3,11 +3,12 @@ import styled from '@emotion/styled';
 import { QuickSave } from './QuickSave';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
-import { FlexCol } from '../../../../../styles/global';
+import { FlexCol, FlexCol_ } from '../../../../../styles/global';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
-import { variants } from '../../../../../styles/variants';
+import { color, variants } from '../../../../../styles/variants';
 import { BoardsList } from '../../Create/Select/MyBoards';
-import { PostModalStyle } from '../../../../../styles/post';
+import { PostSt } from '../../../../../styles/post';
+import { useResponsive } from '../../../../libs/client/useTools';
 
 export const SelectModal = ({ _boolean, _data, _set }: ISelectModal) => {
   const { host_id, layoutId } = _data;
@@ -29,37 +30,56 @@ export const SelectModal = ({ _boolean, _data, _set }: ISelectModal) => {
     }
     setSelectModal(false);
   };
+  const { isDesk } = useResponsive();
   return (
     <AnimatePresence>
       {open && (
-        <>
+        <Container isDesk={isDesk}>
           <Cont
             exit="exit"
+            custom={theme}
+            variants={vars}
             animate="animate"
             initial="initial"
-            className="select-modal"
-            custom={theme}
-            variants={variants}
+            className="select_modal"
             layoutId={layoutId + 'submit'}
           >
-            <Layer theme={theme} closeModal={closeSelect} />
-            <FlexCol className="wrap">
+            <Layer isDesk={isDesk} theme={theme} closeModal={closeSelect} />
+            <Wrap isDesk={isDesk}>
               <QuickSave _data={{ ..._select }} />
               <BoardsList _data={{ ..._select }} />
-            </FlexCol>
+            </Wrap>
           </Cont>
           <OverlayBg dark={0.6} zIndex={113} />
-        </>
+        </Container>
       )}
     </AnimatePresence>
   );
 };
-const Cont = styled(PostModalStyle)`
-  z-index: 114;
-  .wrap {
-    padding: 1rem 0.5rem;
-    gap: 0.5rem;
+const Container = styled.article<{ isDesk: boolean }>`
+  .select_modal {
+    font-size: ${(p) => (p.isDesk ? '1.5rem' : '3rem')};
+    .board-title {
+      h2 {
+        font-size: ${(p) => (p.isDesk ? '1.5rem' : '3rem')};
+      }
+    }
+    .board_cover {
+      width: fit-content;
+      img {
+        border-radius: 10px;
+        width: ${(p) => (p.isDesk ? '3.5rem' : '8rem')};
+        height: ${(p) => (p.isDesk ? '3.5rem' : '8rem')};
+      }
+    }
   }
+`;
+const Wrap = styled(FlexCol_)`
+  gap: 1.5rem;
+  padding: 0 2rem;
+`;
+const Cont = styled(PostSt)`
+  z-index: 114;
 `;
 interface ISelectModal {
   _boolean: {
@@ -77,3 +97,13 @@ interface ISelectModal {
     setSelectModal: Dispatch<SetStateAction<boolean>>;
   };
 }
+const vars = {
+  exit: () => ({ opacity: 0 }),
+  initial: () => ({ opacity: 0 }),
+  animate: (theme: boolean) => ({
+    opacity: 1,
+    color: color(theme),
+    transition: { duration: 0.5 },
+    backgroundColor: color(!theme),
+  }),
+};

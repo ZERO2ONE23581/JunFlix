@@ -2,20 +2,22 @@ import { More } from './More';
 import { ReadCmt } from './Read';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
-import { FlexCol } from '../../../../styles/global';
+import { FlexCol, FlexCol_ } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useAllCmts, useReplies } from '../../../libs/client/useComment';
+import { useResponsive } from '../../../libs/client/useTools';
 
 interface IComments {
   _data: {
     og_id: number;
     post_id: number;
     theme: boolean;
-    setPost: Dispatch<SetStateAction<string>>;
+    setPost: Dispatch<SetStateAction<boolean>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Comments = ({ _data }: IComments) => {
+  const { isDesk } = useResponsive();
   const { theme, setPost, post_id, og_id, setCmtModal } = _data;
   const { replies, isReplies } = useReplies({ post_id, og_id });
   const { isOriginals, total_length, originals } = useAllCmts({ post_id });
@@ -32,7 +34,7 @@ export const Comments = ({ _data }: IComments) => {
   return (
     <AnimatePresence>
       {isArray && (
-        <Cont>
+        <Cont isDesk={isDesk}>
           {!isReply && <h1>Total Comments: ({total_length})</h1>}
           {isReply && !isZero && (
             <More _data={{ theme, sliced, rep_length, setSliced }} />
@@ -47,13 +49,14 @@ export const Comments = ({ _data }: IComments) => {
     </AnimatePresence>
   );
 };
-const Cont = styled(FlexCol)`
+const Cont = styled(FlexCol_)`
   gap: 1rem;
   margin: 0.5rem 0;
   align-items: flex-start;
+  font-size: ${(p) => (p.isDesk ? '1.1rem' : '2.5rem')};
   h1 {
-    font-size: 1.3rem;
     font-style: italic;
+    font-size: ${(p) => (p.isDesk ? '1.3rem' : '2.5rem')};
   }
 `;
 const Arr = styled.div<{ isReply: boolean }>`

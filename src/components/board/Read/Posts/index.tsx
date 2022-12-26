@@ -16,12 +16,11 @@ interface IBoardPosts {
     theme: boolean;
     board: IBoardType;
     createPost: boolean;
-    setFixed: Dispatch<SetStateAction<boolean>>;
     setCreatePost: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const BoardPosts = ({ _data }: IBoardPosts) => {
-  const { board, theme, createPost, setFixed, setCreatePost } = _data;
+  const { board, theme, createPost, setCreatePost } = _data;
   const router = useRouter();
   const host_id = board?.host_id!;
   const [msg, setMsg] = useState('');
@@ -30,16 +29,11 @@ export const BoardPosts = ({ _data }: IBoardPosts) => {
   const { posts } = useGetPosts({ host_id, board_id });
   const isBlur = IsBlur({ host_id, board_id })?.isBlur!;
   const closeModal = () => {
-    setFixed(false);
     setCreatePost(false);
   };
   const onSvg = () => {
-    setFixed(true);
     setMsg(result);
   };
-  useEffect(() => {
-    if (createPost) setFixed(true);
-  }, [setFixed, createPost]);
   const length = posts?.length!;
   const noPosts = !Boolean(length > 0);
   const grid = length > 6 ? 6 : length;
@@ -51,11 +45,9 @@ export const BoardPosts = ({ _data }: IBoardPosts) => {
           <Svg type="lock" theme={theme} onClick={onSvg} />
         </>
       )}
-      <CreatePost _data={{ theme, createPost, closeModal, setFixed }} />
+      <CreatePost _data={{ theme, createPost, closeModal }} />
       <Blur isBlur={isBlur!}>
-        {!noPosts && (
-          <PostSchema setFixed={setFixed} _data={{ theme, posts, grid }} />
-        )}
+        {!noPosts && <PostSchema _data={{ theme, posts, grid }} />}
         {noPosts && (
           <NoData _data={{ theme, isMy: false, type: 'board_post' }} />
         )}

@@ -9,17 +9,19 @@ import { color } from '../../../../../../styles/variants';
 import { useUser } from '../../../../../libs/client/useUser';
 import useMutation from '../../../../../libs/client/useMutation';
 import { TheComment } from '../../../../../libs/client/useComment';
+import { Flex_ } from '../../../../../../styles/global';
 
 interface ILike {
   _data: {
     theme: boolean;
+    isDesk: boolean;
     comment: TheComment;
     setModal: Dispatch<SetStateAction<string>>;
     setSelect: Dispatch<SetStateAction<number>>;
   };
 }
 export const Like = ({ _data }: ILike) => {
-  const { theme, comment, setModal, setSelect } = _data;
+  const { theme, comment, setModal, setSelect, isDesk } = _data;
   const [post, { data, loading }] = useMutation('/api/like/comment/create');
   const { data: getData, mutate } = useSWR<IRes>(
     Boolean(comment.id) && ` /api/like/comment/${comment.id}`
@@ -44,6 +46,7 @@ export const Like = ({ _data }: ILike) => {
     );
     return post({ comment_id: comment.id });
   };
+  const size = isDesk ? '1.5rem' : '3rem';
   const fill = isLiked ? '#E50914' : color(theme);
   return (
     <Cont>
@@ -51,24 +54,25 @@ export const Like = ({ _data }: ILike) => {
         type="like"
         theme={theme}
         onClick={clickLike}
-        item={{ fill, size: '1.5rem' }}
+        item={{ fill, size }}
       />
-      <Number>{count}</Number>
+      <Number isDesk={isDesk} className="num">
+        {count}
+      </Number>
     </Cont>
   );
 };
 
-const Cont = styled(motion.div)`
+const Cont = styled.div`
   width: 1.8rem;
   position: relative;
 `;
-const Number = styled(motion.span)`
+const Number = styled(Flex_)`
   top: -0.4rem;
-  right: -0.4rem;
-  right: -10px;
-  right: -0.5rem;
   font-weight: 700;
   font-size: 0.9rem;
   position: absolute;
   color: ${(p) => p.theme.color.logo};
+  right: ${(p) => (p.isDesk ? '-0.5rem' : '-3rem')};
+  font-size: ${(p) => (p.isDesk ? '1rem' : '2rem')};
 `;

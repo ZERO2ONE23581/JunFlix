@@ -5,7 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { IPostUseform } from '../../../../types/post';
-import { PostModalStyle } from '../../../../../styles/post';
+import { PostSt } from '../../../../../styles/post';
 import { ErrModal } from '../../../../Tools/Modal/Error';
 import { modalVar } from '../../../../../styles/variants';
 import { useUser } from '../../../../libs/client/useUser';
@@ -18,18 +18,14 @@ interface IPostsModal extends IPostUseform {
     theme: boolean;
     layoutId: string;
     setModal: Dispatch<SetStateAction<string>>;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const PostsModal = ({ _data, _useform }: IPostsModal) => {
   const { user_id } = useUser();
+  const { theme, modal, array, layoutId, setModal } = _data;
   const { register, clearErrors, setError, errors } = _useform;
   const { posts } = useGetPosts({ board_id: 0, host_id: user_id! });
-  const { theme, modal, array, layoutId, setModal, setFixed } = _data;
-  const closeModal = () => {
-    setModal('');
-    setFixed(false);
-  };
+  const closeModal = () => setModal('');
   const isClicked = Boolean(array?.length > 0);
   const error = errors?.chosenId?.message!;
   return (
@@ -59,7 +55,7 @@ export const PostsModal = ({ _data, _useform }: IPostsModal) => {
   );
 };
 
-const Modal = styled(PostModalStyle)`
+const Modal = styled(PostSt)`
   top: 2rem;
   width: 40vw;
   height: fit-content;

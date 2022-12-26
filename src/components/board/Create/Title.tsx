@@ -35,9 +35,9 @@ const Txt = styled(FlexCol)`
   font-size: 1.2rem;
   font-style: italic;
   padding-top: 0.5rem;
-  align-items: flex-start;
   line-height: 1.3rem;
-  //border: 1px solid yellow;
+  align-items: flex-start;
+
   .kor {
     font-size: 1.1rem;
   }

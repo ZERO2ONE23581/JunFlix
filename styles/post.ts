@@ -3,12 +3,10 @@ import { motion } from 'framer-motion';
 import { Flex, Modal } from './global';
 import { color, greyBrdr } from './variants';
 
-export const PostModalStyle = styled(Modal)`
-  top: 5vh;
-  width: 35vw;
-  height: 85vh;
-
-  min-height: 600px;
+export const PostSt = styled(Modal)`
+  top: 0vh;
+  width: 100%;
+  height: 100%;
   font-size: 1.1rem;
   justify-content: flex-start;
   img {
@@ -63,7 +61,7 @@ export const select_board_ul_var = {
   }),
 };
 
-export const PostModalStyleStyle = styled(Modal)`
+export const PostStStyle = styled(Modal)`
   padding: 0;
   width: 40vw;
   height: 90vh;

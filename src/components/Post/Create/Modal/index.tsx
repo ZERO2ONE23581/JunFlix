@@ -7,13 +7,13 @@ import { ImageInput } from './Image_Input';
 import { AnimatePresence } from 'framer-motion';
 import { IPostForm } from '../../../../types/post';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
-import { PostModalStyle } from '../../../../../styles/post';
+import { PostSt } from '../../../../../styles/post';
 import { useUser } from '../../../../libs/client/useUser';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { TransBorderVar } from '../../../../../styles/variants';
 import { useLength, useUploadImg } from '../../../../libs/client/useTools';
 
-interface ICreatePostModalStyle {
+interface ICreatePostSt {
   _data: {
     modal: boolean;
     theme: boolean;
@@ -24,7 +24,7 @@ interface ICreatePostModalStyle {
     setLoading: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const Modal = ({ _data }: ICreatePostModalStyle) => {
+export const Modal = ({ _data }: ICreatePostSt) => {
   const {
     post,
     theme,
@@ -113,6 +113,6 @@ export const Modal = ({ _data }: ICreatePostModalStyle) => {
     </AnimatePresence>
   );
 };
-const Cont = styled(PostModalStyle)`
+const Cont = styled(PostSt)`
   align-items: flex-start;
 `;

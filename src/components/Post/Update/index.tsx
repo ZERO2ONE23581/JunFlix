@@ -42,7 +42,6 @@ export const UpdatePost = ({ _data }: IUpdate) => {
   const layoutId = post?.id! + 'update' + '';
   const isUpdate = Boolean(modal === 'update');
   const resetPreview = () => usePostReset({ post, setPreview, reset });
-
   const {
     reset,
     watch,

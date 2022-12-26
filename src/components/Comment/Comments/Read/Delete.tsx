@@ -16,7 +16,7 @@ interface IDeleteModal {
     modal: boolean;
     comment: TheComment;
     closeModal: () => void;
-    setPost: Dispatch<SetStateAction<string>>;
+    setPost: Dispatch<SetStateAction<boolean>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }

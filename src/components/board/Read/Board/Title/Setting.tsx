@@ -17,20 +17,15 @@ interface ISettingModal {
     isMyBoard: boolean;
     setType: Dispatch<SetStateAction<string>>;
     setModal: Dispatch<SetStateAction<boolean>>;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const SettingModal = ({ _data }: ISettingModal) => {
   const router = useRouter();
   const { user_id } = useUser();
-  const { modal, theme, setType, setModal, isMyBoard, setFixed } = _data;
+  const { modal, theme, setType, setModal, isMyBoard } = _data;
   const onClick = (type: string) => {
-    const mustFix = Boolean(
-      type === 'create' || type === 'update' || type === 'delete'
-    );
     if (!isMyBoard) return alert('not allowed.');
     if (isMyBoard) {
-      if (mustFix) setFixed(true);
       if (type === 'my') router.push(`/user/${user_id}/boards`);
       if (type === 'create') router.push(`/board/create`);
       if (type === 'update') setType('update-board');
@@ -101,7 +96,7 @@ const Cont = styled(motion.div)`
   border-radius: 5px;
   ul {
     width: fit-content;
-    //border: 1px solid yellow;
+
     li {
       text-align: center;
     }

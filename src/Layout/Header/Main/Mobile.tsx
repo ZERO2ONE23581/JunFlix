@@ -1,13 +1,11 @@
 import { Modal } from './Modal';
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Flex } from '../../../../styles/global';
-import { useCapLetter } from '../../../libs/client/useTools';
-import { colorVar, hoverScale } from '../../../../styles/variants';
-import { Svg } from '../../../Tools/Svg';
 import { useRouter } from 'next/router';
-import { LoginAvatar } from '../Login/Avatar';
+import { Svg } from '../../../Tools/Svg';
+import { Dispatch, SetStateAction } from 'react';
+import { Flex } from '../../../../styles/global';
 import { IResponsive } from '../../../types/global';
+import { colorVar, hoverScale } from '../../../../styles/variants';
 
 interface IMobile extends IResponsive {
   _data: {
@@ -17,7 +15,6 @@ interface IMobile extends IResponsive {
   };
   _set: {
     selected: string;
-    setFixed: Dispatch<SetStateAction<boolean>>;
     setSelected: Dispatch<SetStateAction<string>>;
   };
 }
@@ -66,18 +63,16 @@ export const Mobile = ({ _data, _set, _res }: IMobile) => {
   );
 };
 const Cont = styled(Flex)`
+  bottom: 0;
   gap: 1rem;
   padding: 2rem;
-  bottom: 0;
   position: fixed;
-  border: 5px solid yellow;
-  justify-content: space-around;
-  background-color: inherit;
   font-size: 2rem;
+  background-color: inherit;
+  justify-content: space-around;
 `;
 const Txt = styled(Flex)`
   cursor: pointer;
-  border: 2px solid blue;
 `;
 const Array = styled(Flex)`
   position: relative;

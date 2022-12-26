@@ -7,27 +7,41 @@ import { noneBorderVar } from '../../../../../../styles/variants';
 interface IClose {
   _data: {
     theme: boolean;
-    setModal: Dispatch<SetStateAction<string>>;
+    isDesk: boolean;
+    edit: Dispatch<SetStateAction<string>>;
+    setModal: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Close = ({ _data }: IClose) => {
-  const { theme, setModal } = _data;
+  const { theme, setModal, isDesk, edit } = _data;
+  const size = isDesk ? '1.5rem' : '3rem';
   return (
-    <Cont
-      className="icon"
-      animate="animate"
-      custom={theme}
-      variants={noneBorderVar}
-    >
-      <Svg
-        type="close_"
-        theme={theme}
-        onClick={() => setModal('')}
-        item={{ size: '1.5rem' }}
-      />
+    <Cont isDesk={isDesk}>
+      <Circle
+        custom={theme}
+        animate="animate"
+        className="close_icon"
+        variants={noneBorderVar}
+      >
+        <Svg
+          type="close_"
+          theme={theme}
+          item={{ size }}
+          onClick={() => {
+            edit('');
+            setModal(false);
+          }}
+        />
+      </Circle>
     </Cont>
   );
 };
-const Cont = styled(Circle)`
-  left: 1.2rem;
+const Cont = styled.div<{ isDesk: boolean }>`
+  > .close_icon {
+    top: 1rem;
+    left: 1rem;
+    position: absolute;
+    width: ${(p) => (p.isDesk ? '2rem' : '4.5rem')};
+    height: ${(p) => (p.isDesk ? '2rem' : '4.5rem')};
+  }
 `;

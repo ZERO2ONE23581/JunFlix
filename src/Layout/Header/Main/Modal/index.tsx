@@ -13,14 +13,13 @@ interface IMenuModal {
     theme: boolean;
     selected: string;
     isModal: boolean;
-    setFixed: Dispatch<SetStateAction<boolean>>;
     setSelected: Dispatch<SetStateAction<string>>;
   };
 }
 export const Modal = ({ _data }: IMenuModal) => {
   const { isMobile, isDesk } = useResponsive();
   const [createPost, setCreatePost] = useState(false);
-  const { theme, isModal, selected, setSelected, setFixed } = _data;
+  const { theme, isModal, selected, setSelected } = _data;
 
   const closeModal = () => {
     setSelected('');
@@ -82,12 +81,11 @@ export const Modal = ({ _data }: IMenuModal) => {
           </Cont>
         )}
       </AnimatePresence>
-      <CreatePost _data={{ theme, createPost, closeModal, setFixed }} />
+      <CreatePost _data={{ theme, createPost, closeModal }} />
     </>
   );
 };
 const Cont = styled.div`
-  border: 2px solid red;
   position: relative;
 `;
 const Wrap = styled(motion.div)`

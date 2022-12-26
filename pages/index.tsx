@@ -5,9 +5,8 @@ import { Head_ } from '../src/Tools/Title/Head';
 import { Start } from '../src/components/Home/Start';
 import { useUser } from '../src/libs/client/useUser';
 import { LoggedIn } from '../src/components/Home/LoggedIn';
-import { useRouter } from 'next/router';
 
-const Home: NextPage<IPage> = ({ theme, setHide, setFixed }) => {
+const Home: NextPage<IPage> = ({ theme, setHide }) => {
   const { isLoggedIn } = useUser();
   const [start, setStart] = useState(false);
   const isHide = !isLoggedIn && !start;
@@ -19,7 +18,7 @@ const Home: NextPage<IPage> = ({ theme, setHide, setFixed }) => {
     <>
       <Head_ title="Home" />
       {!start && <Start _data={{ theme, isHide, setStart }} />}
-      <LoggedIn _data={{ theme, isHide, setFixed }} />
+      <LoggedIn _data={{ theme, isHide }} />
     </>
   );
 };

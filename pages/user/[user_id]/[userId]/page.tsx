@@ -19,7 +19,7 @@ import useFollowUser from '../../../../src/libs/client/useFollow/user';
 import { UserContent } from '../../../../src/components/User/Read/MyPage/Content';
 import { UserBtns } from '../../../../src/components/User/Read/MyPage/Content/Btns';
 
-const UserPage: NextPage<IPage> = ({ theme, setFixed }) => {
+const UserPage: NextPage<IPage> = ({ theme }) => {
   useLogin();
   const router = useRouter();
   const { user_id } = useUser();
@@ -38,7 +38,7 @@ const UserPage: NextPage<IPage> = ({ theme, setFixed }) => {
       <Cont>
         <Host
           _mode={{ onPrivate, onClick }}
-          _data={{ theme, host, isMyAcct, setFixed }}
+          _data={{ theme, host, isMyAcct }}
         />
         <Layer>
           {IsBlur && (
@@ -49,7 +49,7 @@ const UserPage: NextPage<IPage> = ({ theme, setFixed }) => {
           )}
           <Blur isBlur={IsBlur}>
             <UserBtns _data={{ theme, clicked, setClicked }} />
-            <UserContent _data={{ theme, clicked, setFixed }} />
+            <UserContent _data={{ theme, clicked }} />
           </Blur>
         </Layer>
       </Cont>

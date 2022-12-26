@@ -5,8 +5,9 @@ import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { IPostUseform } from '../../../../types/post';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
-import { PostModalStyle } from '../../../../../styles/post';
+import { PostSt } from '../../../../../styles/post';
 import { leftToRight } from '../../../../../styles/variants';
+import { useResponsive } from '../../../../libs/client/useTools';
 
 export const UploadModal = ({
   _set,
@@ -14,6 +15,7 @@ export const UploadModal = ({
   _string,
   _useform,
 }: IUploadModal) => {
+  const { isMobile } = useResponsive();
   const { setModal, setPreview } = _set;
   const { theme, resetPreview } = _data;
   const { modal, preview, layoutId } = _string;
@@ -25,8 +27,8 @@ export const UploadModal = ({
             exit="exit"
             initial="initial"
             animate="animate"
-            custom={theme}
             variants={leftToRight}
+            custom={{ theme, isMobile }}
             layoutId={layoutId + 'upload'}
           >
             <Layer _data={{ theme, preview, setModal, resetPreview }} />
@@ -41,7 +43,7 @@ export const UploadModal = ({
     </AnimatePresence>
   );
 };
-const Cont = styled(PostModalStyle)`
+const Cont = styled(PostSt)`
   z-index: 112;
 `;
 interface IUploadModal extends IPostUseform {

@@ -1,14 +1,18 @@
 import styled from '@emotion/styled';
 import { UseFormRegister } from 'react-hook-form';
 import { IPostForm } from '../../../../../types/post';
-import { Flex } from '../../../../../../styles/global';
+import { Flex_ } from '../../../../../../styles/global';
 
 interface IBlockComment {
-  register: UseFormRegister<IPostForm>;
+  _data: {
+    isDesk: boolean;
+    register: UseFormRegister<IPostForm>;
+  };
 }
-export const BlockComment = ({ register }: IBlockComment) => {
+export const BlockComment = ({ _data }: IBlockComment) => {
+  const { register, isDesk } = _data;
   return (
-    <Cont className="block_cmt">
+    <Cont isDesk={isDesk}>
       <label htmlFor="private-mode">
         <span>댓글 기능 제한</span>
         <span>(Block Comment)</span>
@@ -17,19 +21,20 @@ export const BlockComment = ({ register }: IBlockComment) => {
     </Cont>
   );
 };
-const Cont = styled(Flex)`
+const Cont = styled(Flex_)`
   gap: 12px;
   padding: 0 10px;
   font-style: italic;
   justify-content: space-between;
+  font-size: ${(p) => (p.isDesk ? '1.1rem' : '2.5rem')};
   label {
-    gap: 5px;
+    gap: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   input {
-    width: 1.4rem;
-    height: 1.4rem;
+    width: ${(p) => (p.isDesk ? '1.4rem' : '3rem')};
+    height: ${(p) => (p.isDesk ? '1.4rem' : '3rem')};
   }
 `;

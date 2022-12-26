@@ -66,7 +66,6 @@ export const TrimText = ({ text, max }: ITrimText) => {
 const Cont = styled(motion.span)``;
 const Text = styled(motion.span)`
   width: fit-content;
-  font-size: 1.1rem;
   line-height: 21px;
   word-break: break-all;
 `;

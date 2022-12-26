@@ -26,6 +26,18 @@ export const FlexCol = styled(Flex)`
   flex-direction: column;
   justify-content: flex-start;
 `;
+export const Flex_ = styled.div<{ isDesk: boolean }>`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+export const FlexCol_ = styled(Flex_)<{ isDesk: boolean }>`
+  flex-direction: column;
+`;
 export const Circle = styled(Flex)`
   width: 2rem;
   height: 2rem;
@@ -50,22 +62,30 @@ export const Text = styled(FlexCol)`
     }
   }
 `;
-export const Layer_ = styled(Flex)`
-  padding: 0.6rem 1rem;
+export const Layer_ = styled(Flex_)`
   justify-content: space-between;
+  padding: ${(p) => (p.isDesk ? '0.6rem 1rem' : '2rem')};
   h1 {
-    font-size: 1.7rem;
+    font-size: ${(p) => (p.isDesk ? '2rem' : '4rem')};
+  }
+  .close_ {
+    width: ${(p) => (p.isDesk ? '2rem' : '4rem')};
+    height: ${(p) => (p.isDesk ? '2rem' : '4rem')};
+  }
+  button {
+    padding: 0.4rem;
+    border-radius: 40px;
+    width: ${(p) => (p.isDesk ? '100px' : '10rem')};
+    font-size: ${(p) => (p.isDesk ? '2rem' : '2.5rem')};
   }
   > div {
+    width: 100%;
     :first-of-type {
       justify-content: flex-start;
     }
-  }
-  button {
-    width: 100px;
-    padding: 0.4rem;
-    font-size: 1.2rem;
-    border-radius: 40px;
+    :last-of-type {
+      justify-content: flex-end;
+    }
   }
 `;
 export const Modal = styled(FlexCol)`
@@ -136,6 +156,10 @@ export const Grid = styled(motion.article)<{ box?: number }>`
   position: relative;
   background-color: inherit;
   grid-template-columns: ${(p) => p.box && `repeat(${p.box}, 1fr)`};
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 export const Blur = styled.div<{ isBlur: boolean }>`
   pointer-events: ${(p) => p.isBlur && 'none'};
@@ -167,5 +191,21 @@ export const Box = styled(FlexCol)`
     .flex {
       align-items: flex-start;
     }
+  }
+`;
+export const PostCover = styled(FlexCol)`
+  gap: 1rem;
+  cursor: pointer;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: fit-content;
+    border-radius: 0.5rem;
+    box-shadow: ${(p) => p.theme.boxShadow.nav};
+  }
+  h2 {
+    font-weight: 400;
+    font-size: 1.4rem;
+    text-align: center;
   }
 `;

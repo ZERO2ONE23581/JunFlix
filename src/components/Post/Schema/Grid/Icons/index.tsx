@@ -14,20 +14,15 @@ interface IPostsIcon {
   _data: {
     theme: boolean;
     setMax: Dispatch<SetStateAction<number>>;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Icons = ({ _data }: IPostsIcon) => {
   const router = useRouter();
   const { isLoggedIn } = useUser();
+  const { theme, setMax } = _data;
+  const closeModal = () => setModal('');
   const [modal, setModal] = useState('');
-  const { theme, setMax, setFixed } = _data;
   const isHome = Boolean(router.asPath === '/');
-  const closeModal = () => {
-    setModal('');
-    setFixed(false);
-  };
-
   const item = { theme, modal, setModal, closeModal };
   const _grid = { ...item, svg: 'grid' };
   const _org = { ...item, svg: 'posts' };
@@ -57,14 +52,10 @@ export const Icons = ({ _data }: IPostsIcon) => {
                 onClick={() => onClick(el.svg)}
               />
               {el.svg === 'plus' && (
-                <CreatePost
-                  _data={{ theme, createPost, closeModal, setFixed }}
-                />
+                <CreatePost _data={{ theme, createPost, closeModal }} />
               )}
               {el.svg === 'compass' && <LinkModal _data={{ ...item }} />}
-              {el.svg === 'posts' && (
-                <OrganizePosts _data={{ ...item, setFixed }} />
-              )}
+              {el.svg === 'posts' && <OrganizePosts _data={{ ...item }} />}
               {el.svg === 'question' && <Answer _data={{ ..._answerModal }} />}
               {el.svg === 'grid' && (
                 <SetGridModal _data={{ ..._grid, setMax }} />

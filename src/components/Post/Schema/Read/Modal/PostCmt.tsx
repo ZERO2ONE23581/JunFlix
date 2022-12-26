@@ -9,13 +9,14 @@ import { CreateModal } from '../../../../Comment/Create/Modal';
 export interface IPostCmt {
   _data: {
     theme: boolean;
+    isDesk: boolean;
     post: IPostType;
-    setModal: Dispatch<SetStateAction<string>>;
+    setModal: Dispatch<SetStateAction<boolean>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const PostCmt = ({ _data }: IPostCmt) => {
-  const { post, theme, setCmtModal, setModal: setPost } = _data;
+  const { post, theme, setCmtModal, setModal: setPost, isDesk } = _data;
   const post_id = post?.id!;
   const host_id = post?.host_id!;
   const closeCreate = () => setCreate(false);
@@ -23,8 +24,8 @@ export const PostCmt = ({ _data }: IPostCmt) => {
   return (
     <>
       <Cont>
-        <Text _data={{ theme, setCmtModal }} />
-        <Box _data={{ theme, host_id, setCreate }} />
+        <Text _data={{ theme, setCmtModal, isDesk }} />
+        <Box _data={{ theme, host_id, setCreate, isDesk }} />
         <Comments _data={{ theme, post_id, og_id: 0, setCmtModal, setPost }} />
       </Cont>
       <CreateModal

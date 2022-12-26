@@ -5,27 +5,31 @@ import { Svg } from '../../../../../Tools/Svg';
 import { IGetBoard } from '../../../../../types/board';
 import { avatarLink } from '../../../../../Tools/Avatar';
 import { useUser } from '../../../../../libs/client/useUser';
-import { Flex, FlexCol } from '../../../../../../styles/global';
+import { Flex, FlexCol_ } from '../../../../../../styles/global';
 import { color, redBrdr } from '../../../../../../styles/variants';
 import { useCapLetters } from '../../../../../libs/client/useTools';
 import { useGetQuickSaved } from '../../../../../libs/client/usePosts';
 
 interface ISelectBoardBtn {
-  _data: {
+  _boolean: {
     theme: boolean;
+    isDesk: boolean;
     quickSave: boolean;
+  };
+  _data: {
     new_boardId: number;
-    board_id: number | null;
     openSelect: () => void;
+    board_id: number | null;
   };
 }
-export const SelectBtn = ({ _data }: ISelectBoardBtn) => {
-  const { theme, board_id, new_boardId: new_id, quickSave, openSelect } = _data;
+export const SelectBtn = ({ _data, _boolean }: ISelectBoardBtn) => {
+  const { theme, isDesk, quickSave } = _boolean;
+  const { board_id, openSelect, new_boardId } = _data;
   const [select, setSelect] = useState(board_id);
   useEffect(() => {
-    if (new_id) setSelect(new_id);
+    if (new_boardId) setSelect(new_boardId);
     if (quickSave) setSelect(0);
-  }, [board_id, new_id, quickSave, setSelect]);
+  }, [board_id, new_boardId, quickSave, setSelect]);
 
   const { data } = useSWR<IGetBoard>(
     Boolean(select) && ` /api/board/${select}`
@@ -33,24 +37,27 @@ export const SelectBtn = ({ _data }: ISelectBoardBtn) => {
   const board = data?.board;
   const { loggedInUser } = useUser();
   const counts = board?._count?.posts;
-  const isRed = Boolean(new_id || quickSave);
+  const isRed = Boolean(new_boardId || quickSave);
   const { counts: num } = useGetQuickSaved(loggedInUser?.id!);
   const quick_counts = num < 1 ? 0 : quickSave ? num + 1 : num;
   return (
-    <Cont>
+    <Cont isDesk={isDesk}>
       <h3>Board</h3>
       <Wrap
+        className="wrap"
+        animate="animate"
+        whileHover={'hover'}
         onClick={openSelect}
         variants={openBoardVar}
         custom={{ theme, isRed }}
-        animate="animate"
-        whileHover={'hover'}
       >
         <img src={avatarLink(board?.cover)} alt="board cover" />
         <Info>
           <div className="txt">
-            {board && <Title>{useCapLetters(board?.title)} </Title>}
-            {!board && <Title>{'QuickSave'} </Title>}
+            {board && (
+              <Title className="title">{useCapLetters(board?.title)} </Title>
+            )}
+            {!board && <Title className="title">{'QuickSave'} </Title>}
             <span className="txt-post-counts">
               {board && (
                 <>
@@ -72,14 +79,27 @@ export const SelectBtn = ({ _data }: ISelectBoardBtn) => {
     </Cont>
   );
 };
-const Cont = styled(FlexCol)`
+const Cont = styled(FlexCol_)`
   align-items: flex-start;
+  font-size: ${(p) => (p.isDesk ? '1.2rem' : '2.5rem')};
   h3 {
     font-weight: 500;
     font-size: 1.2rem;
     margin-left: 1rem;
     margin-bottom: 10px;
     color: ${(p) => p.theme.color.logo};
+    font-size: ${(p) => (p.isDesk ? '1.2rem' : '3rem')};
+  }
+  .title {
+    font-size: ${(p) => (p.isDesk ? '1.2rem' : '2.2rem')};
+  }
+  img {
+    border-radius: 5px;
+    width: ${(p) => (p.isDesk ? '3rem' : '6rem')};
+    height: ${(p) => (p.isDesk ? '3rem' : '6rem')};
+  }
+  > .wrap {
+    padding: ${(p) => (p.isDesk ? '0.5rem 1rem' : '1rem 2rem')};
   }
 `;
 const Title = styled.span`
@@ -92,25 +112,13 @@ const Wrap = styled(Flex)`
   width: 100%;
   display: flex;
   cursor: pointer;
-  padding: 13px 20px;
   border-radius: 5px;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  img {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 5px;
-  }
 `;
 const Info = styled(Flex)`
-  width: 100%;
-  display: flex;
-  align-items: center;
   justify-content: space-between;
-  span {
-  }
   .txt {
     .txt-post-counts {
-      font-size: 1rem;
       span {
         margin-right: 5px;
       }

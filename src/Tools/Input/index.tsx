@@ -12,6 +12,7 @@ import { motion } from 'framer-motion';
 import { ErrModal } from '../Modal/Error';
 import { FlexCol } from '../../../styles/global';
 import { UseFormClearErrors, UseFormRegisterReturn } from 'react-hook-form';
+import { useResponsive } from '../../libs/client/useTools';
 
 interface IInput {
   _data: {
@@ -40,13 +41,14 @@ export const InputWrap = ({ _data }: IInput) => {
     placeholder,
     clearErrors,
   } = _data;
+  const { isDesk } = useResponsive();
   const [focus, setFocus] = useState(false);
   const isRed = Boolean(focus || text);
   const isDate = !isRed && Boolean(type === 'date');
   const custom = { isRed, theme, disabled };
   return (
     <>
-      <Cont className={id} isDate={isDate}>
+      <Cont className={id} isDate={isDate} isDesk={isDesk}>
         <FlexCol className="input_wrap_flex">
           <Style
             className="input-style"
@@ -81,33 +83,38 @@ export const InputWrap = ({ _data }: IInput) => {
     </>
   );
 };
-const Cont = styled.div<{ isDate: boolean }>`
+const Cont = styled.div<{ isDate: boolean; isDesk: boolean }>`
+  gap: 20px;
   width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  gap: 20px;
   .input_wrap_flex {
     padding-top: 1rem;
     position: relative;
+    .input-style {
+      padding: ${(p) => (p.isDesk ? '10px 20px' : '15px 20px ')};
+    }
+    input {
+      font-size: ${(p) => (p.isDesk ? '1.1rem' : '3rem')};
+    }
     label {
       width: fit-content;
       width: ${(p) => p.isDate && '80%'};
       top: 63%;
       left: 1rem;
       z-index: 1;
-      font-size: 1.1rem;
       padding: 5px 10px;
       position: absolute;
       border-radius: 10px;
       display: inline-block;
+      top: ${(p) => (p.isDesk ? '60%' : '55%')};
+      font-size: ${(p) => (p.isDesk ? '1.1rem' : '3rem')};
     }
   }
 `;
 const Style = styled(FlexCol)`
-  width: 100%;
-  padding: 10px 20px;
   border-radius: 8px;
   justify-content: center;
   input {
@@ -115,7 +122,6 @@ const Style = styled(FlexCol)`
     border: none;
     outline: none;
     color: inherit;
-    font-size: 1.2rem;
     background-color: inherit;
     ::placeholder {
       color: ${(p) => p.theme.color.grey.reg};

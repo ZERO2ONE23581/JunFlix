@@ -4,7 +4,7 @@ import { Svg } from '../../../Tools/Svg';
 import { IMovie } from '../../../types/global';
 import { Dispatch, SetStateAction } from 'react';
 import { Flex } from '../../../../styles/global';
-import { PostModalStyle } from '../../../../styles/post';
+import { PostSt } from '../../../../styles/post';
 import { color } from '../../../../styles/variants';
 import { OverlayBg } from '../../../Tools/OverlayBg';
 
@@ -15,7 +15,6 @@ interface IMovieModal {
     modal: boolean;
     select: number;
     setModal: Dispatch<SetStateAction<boolean>>;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const MovieModal = ({ _data }: IMovieModal) => {
@@ -27,11 +26,10 @@ export const MovieModal = ({ _data }: IMovieModal) => {
   const backdrop_path = movie?.backdrop_path!;
   const original_name = movie?.original_name!;
   const original_language = movie?.original_language!;
-  const { modal, setFixed, theme, select, setModal } = _data;
+  const { modal, theme, select, setModal } = _data;
   const bg = `https://image.tmdb.org/t/p/original${backdrop_path}`;
   const closeModal = () => {
     setModal(false);
-    setFixed(false);
   };
   return (
     <>
@@ -64,7 +62,7 @@ export const MovieModal = ({ _data }: IMovieModal) => {
     </>
   );
 };
-const Cont = styled(PostModalStyle)`
+const Cont = styled(PostSt)`
   top: 10%;
   z-index: 100;
   border: none;

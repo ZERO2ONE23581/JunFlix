@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { CreatePost } from '../../../../Post/Create';
 import { PostSchema } from '../../../../Post/Schema';
 import { NoData } from '../../../../../Tools/NoData';
 import { BoardsGrid } from '../../../../Board/Read/Boards';
-import { Dispatch, SetStateAction, useState } from 'react';
 import { useUser } from '../../../../../libs/client/useUser';
 import { useGetPosts } from '../../../../../libs/client/usePosts';
 import { useGetBoards } from '../../../../../libs/client/useBoards';
@@ -13,13 +13,12 @@ interface IUserContent {
   _data: {
     theme: boolean;
     clicked: string;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const UserContent = ({ _data }: IUserContent) => {
   const router = useRouter();
   const { user_id } = useUser();
-  const { theme, setFixed, clicked } = _data;
+  const { theme, clicked } = _data;
   const host_id = Number(router.query.user_id!);
   const isMy = Boolean(user_id === host_id);
   const [createPost, setCreatePost] = useState(false);
@@ -33,7 +32,6 @@ export const UserContent = ({ _data }: IUserContent) => {
   const noBoards = !Boolean(boards?.length! > 0);
   const noLikes = !Boolean(likedPosts?.length! > 0);
   const closeModal = () => {
-    setFixed(false);
     setCreatePost(false);
   };
   const onClick = () => setCreatePost(true);
@@ -42,13 +40,11 @@ export const UserContent = ({ _data }: IUserContent) => {
     <Cont>
       {clicked === 'posts' && (
         <>
-          {!noPosts && (
-            <PostSchema setFixed={setFixed} _data={{ grid: 5, theme, posts }} />
-          )}
+          {!noPosts && <PostSchema _data={{ grid: 5, theme, posts }} />}
           {noPosts && (
             <>
               <NoData _data={{ theme, isMy, onClick, type: 'post' }} />
-              <CreatePost _data={{ theme, createPost, closeModal, setFixed }} />
+              <CreatePost _data={{ theme, createPost, closeModal }} />
             </>
           )}
         </>
@@ -56,10 +52,7 @@ export const UserContent = ({ _data }: IUserContent) => {
       {clicked === 'likes' && (
         <>
           {!noLikes && (
-            <PostSchema
-              setFixed={setFixed}
-              _data={{ grid: 5, theme, posts: likedPosts! }}
-            />
+            <PostSchema _data={{ grid: 5, theme, posts: likedPosts! }} />
           )}
           {noLikes && (
             <NoData _data={{ isMy, theme, type: 'likes', onClick: allPosts }} />

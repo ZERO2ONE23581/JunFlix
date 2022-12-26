@@ -5,9 +5,8 @@ import { Layout } from '../src/Layout';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@emotion/react';
 import { AnimatePresence } from 'framer-motion';
-import { useMediaQuery } from 'react-responsive';
 import { darkTheme, lightTheme } from '../styles/theme';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useResponsive } from '../src/libs/client/useTools';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -26,8 +25,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           <ThemeProvider theme={theme ? lightTheme : darkTheme}>
             <Fixed isFixed={fixed}>
               <Layout
+                _data={{ setTheme, hide }}
                 _res={{ theme, isMobile, isDesk }}
-                _data={{ setTheme, hide, setFixed }}
               >
                 <Component
                   {...pageProps}
@@ -50,9 +49,6 @@ export default MyApp;
 const Fixed = styled.section<{ isFixed: boolean }>`
   position: ${(p) => p.isFixed && 'fixed'};
 `;
-export interface ISetFixed {
-  setFixed: Dispatch<SetStateAction<boolean>>;
-}
 export interface IPage {
   theme: boolean;
   setHide: Dispatch<SetStateAction<boolean>>;

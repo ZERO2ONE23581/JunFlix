@@ -10,17 +10,15 @@ interface IEachMovie {
   _data: {
     theme: boolean;
     array: [] | any;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 
 export const MovieBox = ({ _data }: IEachMovie) => {
-  const { theme, array, setFixed } = _data;
+  const { theme, array } = _data;
   const [select, setSelect] = useState(0);
   const [modal, setModal] = useState(false);
   const onClick = (id: number) => {
     setSelect(id);
-    setFixed(true);
     setModal(true);
   };
   const img = (img: string) => `https://image.tmdb.org/t/p/original${img}`;
@@ -44,7 +42,7 @@ export const MovieBox = ({ _data }: IEachMovie) => {
           <MovieHover data={data} />
         </Cont>
       ))}
-      <MovieModal _data={{ theme, select, setModal, movie, modal, setFixed }} />
+      <MovieModal _data={{ theme, select, setModal, movie, modal }} />
     </AnimatePresence>
   );
 };

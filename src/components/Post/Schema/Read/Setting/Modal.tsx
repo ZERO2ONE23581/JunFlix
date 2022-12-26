@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { OverlayBg } from '../../../../../Tools/OverlayBg';
+import { MiniModal } from '../../../../../../styles/global';
 
 interface IPostSetModal {
   _data: {
@@ -16,19 +17,24 @@ interface IPostSetModal {
     setting: boolean;
     isMyPost: boolean;
     closeSetting: () => void;
-    setModal: Dispatch<SetStateAction<string>>;
+    edit: Dispatch<SetStateAction<string>>;
+    setModal: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const PostSetModal = ({ _data }: IPostSetModal) => {
   const router = useRouter();
-  const { theme, setting, host_id, isMyPost, setModal, closeSetting } = _data;
+  const { edit, theme, setting, host_id, isMyPost, setModal, closeSetting } =
+    _data;
   const onClick = (type: string) => {
     if (type) {
       if (type === 'all') return router.push(`/post/all`);
       if (!isMyPost) return alert('not allowed.');
       if (isMyPost) {
         if (type === 'my_post') return router.push(`/user/${host_id}/posts`);
-        else setModal(type);
+        else {
+          edit(type);
+          setModal(false);
+        }
       }
       return closeSetting();
     }
@@ -37,12 +43,13 @@ export const PostSetModal = ({ _data }: IPostSetModal) => {
     <AnimatePresence>
       {setting && (
         <>
-          <Cont
+          <Modal
+            custom={theme}
+            variants={vars}
             exit="exit"
             initial="initial"
             animate="animate"
-            custom={theme}
-            variants={vars}
+            className="setting_modal"
           >
             <ul>
               <List className="small">Post Options</List>
@@ -77,7 +84,7 @@ export const PostSetModal = ({ _data }: IPostSetModal) => {
                 Delete Post
               </List>
             </ul>
-          </Cont>
+          </Modal>
           <OverlayBg closeModal={closeSetting} dark={0.4} />
         </>
       )}
@@ -85,16 +92,12 @@ export const PostSetModal = ({ _data }: IPostSetModal) => {
   );
 };
 
-const Cont = styled(motion.div)`
-  z-index: 111;
+const Modal = styled(MiniModal)`
   top: 100%;
   right: -20%;
+  z-index: 111;
   position: absolute;
-  padding: 5px;
-  font-size: 1.2em;
-  overflow: hidden;
-  width: fit-content;
-  border-radius: 5px;
+  padding: 1rem;
   .small {
     font-size: 1rem;
   }

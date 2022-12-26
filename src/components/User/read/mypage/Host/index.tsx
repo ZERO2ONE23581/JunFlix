@@ -2,12 +2,11 @@ import { Btns } from './Btns';
 import styled from '@emotion/styled';
 import { FollowInfo } from './Follow';
 import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction } from 'react';
 import { Avatar } from '../../../../../Tools/Avatar';
 import { IUserType } from '../../../../../types/user';
 import { FlexCol } from '../../../../../../styles/global';
-import { OnPrivateBtn } from '../../../../../Tools/Button/Private';
 import { useCapLetter } from '../../../../../libs/client/useTools';
+import { OnPrivateBtn } from '../../../../../Tools/Button/Private';
 import useFollowUser from '../../../../../libs/client/useFollow/user';
 
 interface IUserBox {
@@ -19,13 +18,12 @@ interface IUserBox {
     theme: boolean;
     host: IUserType;
     isMyAcct: boolean;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Host = ({ _data, _mode }: IUserBox) => {
   const router = useRouter();
+  const { theme, host, isMyAcct } = _data;
   const { onClick: onMode, onPrivate } = _mode;
-  const { theme, host, isMyAcct, setFixed } = _data;
   const host_id = host?.id!;
   const userId = host?.userId!;
   const username = host?.username!;
@@ -51,9 +49,7 @@ export const Host = ({ _data, _mode }: IUserBox) => {
             <span className="name">{useCapLetter(Name)}</span>
             <span className="small">@{userId.toUpperCase()}</span>
             {isMyAcct && <OnPrivateBtn _data={{ theme, onMode, onPrivate }} />}
-            <FollowInfo
-              _data={{ theme, setFixed, Follower, Following, num: follower }}
-            />
+            <FollowInfo _data={{ theme, Follower, Following, num: follower }} />
           </Info>
           <Btns
             _data={{ name, theme, onClick, isMyAcct, onSetting, isFollowing }}
@@ -69,7 +65,6 @@ const Cont = styled(FlexCol)`
   margin: 0 auto;
   width: fit-content;
   justify-content: center;
-  //border: 2px solid red;
 `;
 const Info = styled(FlexCol)`
   gap: 0.8rem;

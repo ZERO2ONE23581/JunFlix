@@ -2,14 +2,16 @@ import styled from '@emotion/styled';
 import { ITheme } from '../../../styles/theme';
 import { opacityVar } from '../../../styles/variants';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Flex } from '../../../styles/global';
 
 interface ITextLength extends ITheme {
+  isDesk: boolean;
   number: {
     max: number;
     typed: number;
   };
 }
-export const TextLength = ({ theme, number }: ITextLength) => {
+export const TextLength = ({ theme, number, isDesk }: ITextLength) => {
   const isZero = Boolean(number?.typed === 0);
   const isOver = Boolean(number?.typed > number?.max);
   const max = number?.max;
@@ -21,7 +23,7 @@ export const TextLength = ({ theme, number }: ITextLength) => {
       initial="initial"
       animate="animate"
       variants={numVar}
-      className="text-length"
+      className="text_length"
       custom={{ theme, isOver }}
     >
       <AnimatePresence>
@@ -43,15 +45,10 @@ export const TextLength = ({ theme, number }: ITextLength) => {
     </Cont>
   );
 };
-const Cont = styled(motion.div)`
-  width: 100%;
-  display: flex;
-  font-size: 1.1rem;
-  align-items: center;
-  justify-content: flex-end;
-  span {
-    margin-right: 5px;
-  }
+const Cont = styled(Flex)`
+  padding-top: 1rem;
+  width: fit-content;
+  padding-right: 0rem;
 `;
 const numVar = {
   animate: ({ isOver, theme }: any) => ({

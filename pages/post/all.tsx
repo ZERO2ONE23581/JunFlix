@@ -6,12 +6,12 @@ import { PostSchema } from '../../src/components/Post/Schema';
 import { useGetAllPosts } from '../../src/libs/client/usePosts';
 import { useLogin } from '../../src/libs/client/useLogin';
 
-const AllPosts: NextPage<IPage> = ({ theme, setFixed }) => {
+const AllPosts: NextPage<IPage> = ({ theme }) => {
   useLogin();
   const { posts } = useGetAllPosts();
   return (
     <PostPage>
-      <PostSchema _data={{ theme, posts, grid: 6 }} setFixed={setFixed} />
+      <PostSchema _data={{ theme, posts, grid: 6 }} />
     </PostPage>
   );
 };

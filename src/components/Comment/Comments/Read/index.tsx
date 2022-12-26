@@ -14,7 +14,7 @@ interface IReadCmt {
   _data: {
     theme: boolean;
     comment: TheComment;
-    setPost: Dispatch<SetStateAction<string>>;
+    setPost: Dispatch<SetStateAction<boolean>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }

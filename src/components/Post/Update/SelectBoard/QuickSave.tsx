@@ -25,7 +25,7 @@ export const QuickSave = ({ _data }: IQuickSave) => {
       variants={select_board_ul_var}
     >
       <motion.li className="board_cover">
-        <img src="/img/home-bg-dn.jpg" alt="board cover" />
+        <img src="/img/1.jpg" alt="board cover" />
       </motion.li>
       <motion.li className="board-title">
         <h2>Quick Save</h2>

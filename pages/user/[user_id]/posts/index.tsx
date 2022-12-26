@@ -7,7 +7,7 @@ import { useGetPosts } from '../../../../src/libs/client/usePosts';
 import { PostSchema } from '../../../../src/components/Post/Schema';
 import { useLogin, useValidHost } from '../../../../src/libs/client/useLogin';
 
-const MyPostsPage: NextPage<IPage> = ({ theme, setFixed }) => {
+const MyPostsPage: NextPage<IPage> = ({ theme }) => {
   useLogin();
   useValidHost('posts');
   const router = useRouter();
@@ -16,7 +16,7 @@ const MyPostsPage: NextPage<IPage> = ({ theme, setFixed }) => {
   return (
     <PostPage>
       <PageTitle type={'user_posts'} theme={theme} />
-      <PostSchema setFixed={setFixed} _data={{ theme, posts, grid: 5 }} />
+      <PostSchema _data={{ theme, posts, grid: 5 }} />
     </PostPage>
   );
 };

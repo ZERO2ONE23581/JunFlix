@@ -14,7 +14,6 @@ interface IBoardSet {
     theme: boolean;
     board: IBoardType;
     setType: Dispatch<SetStateAction<string>>;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 
@@ -23,12 +22,9 @@ export const BoardModals = ({ _data }: IBoardSet) => {
   const [msg, setMsg] = useState('');
   const [layoutId, setLayoutId] = useState('');
   const [Loading, setLoading] = useState(false);
-  const { type, theme, board, setType, setFixed } = _data;
+  const { type, theme, board, setType } = _data;
   const [POST, { data, loading }] = useMutation<IRes>(api && api);
-  const closeModal = () => {
-    setType('');
-    setFixed(false);
-  };
+  const closeModal = () => setType('');
   const __data = { theme, layoutId, POST, board };
   const __modal = { type, Loading, loading, setLoading, closeModal };
   useBoardApi({ _data: { type, original: board, setLayoutId, setApi } });

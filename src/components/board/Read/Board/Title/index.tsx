@@ -12,12 +12,11 @@ interface IBoardTitle {
     theme: boolean;
     isMyBoard: boolean;
     setType: Dispatch<SetStateAction<string>>;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Title = ({ _data }: IBoardTitle) => {
   const [modal, setModal] = useState(false);
-  const { title, theme, setType, isMyBoard, setFixed } = _data;
+  const { title, theme, setType, isMyBoard } = _data;
   return (
     <Cont>
       <h1>{useCapLetters(title)}</h1>
@@ -38,7 +37,7 @@ export const Title = ({ _data }: IBoardTitle) => {
             />
           </Setting>
           <SettingModal
-            _data={{ modal, theme, isMyBoard, setType, setModal, setFixed }}
+            _data={{ modal, theme, isMyBoard, setType, setModal }}
           />
         </>
       )}

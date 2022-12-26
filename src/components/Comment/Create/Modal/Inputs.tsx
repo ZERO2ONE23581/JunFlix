@@ -46,7 +46,7 @@ interface ICreateModalInputs {
   _data: {
     theme: boolean;
     host_id: number;
-    setPost: Dispatch<SetStateAction<string>>;
+    setPost: Dispatch<SetStateAction<boolean>>;
   };
   _useform: {
     error: string;

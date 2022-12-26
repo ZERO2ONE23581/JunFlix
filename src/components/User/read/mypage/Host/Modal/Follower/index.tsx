@@ -6,7 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import { Follower, Following } from '@prisma/client';
 import { Flex } from '../../../../../../../../styles/global';
 import { OverlayBg } from '../../../../../../../Tools/OverlayBg';
-import { PostModalStyle } from '../../../../../../../../styles/post';
+import { PostSt } from '../../../../../../../../styles/post';
 import { modalVar } from '../../../../../../../../styles/variants';
 import { useUser } from '../../../../../../../libs/client/useUser';
 
@@ -56,7 +56,7 @@ export const FollowModal = ({ _data, _follow }: IFollowModal) => {
     </>
   );
 };
-const Cont = styled(PostModalStyle)`
+const Cont = styled(PostSt)`
   min-height: 400px;
   width: fit-content;
   height: fit-content;
@@ -69,7 +69,6 @@ export const Array = styled(Flex)`
   gap: 1rem;
   padding: 0.6rem 1.2rem;
   justify-content: space-between;
-  //border: 2px solid red;
   > .wrap {
     gap: 1rem;
     width: fit-content;

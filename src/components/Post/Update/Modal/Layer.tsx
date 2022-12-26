@@ -1,24 +1,29 @@
-import { motion } from 'framer-motion';
+import styled from '@emotion/styled';
 import { Svg } from '../../../../Tools/Svg';
 import { Btn } from '../../../../Tools/Button';
-import { Layer_ } from '../../../../../styles/global';
+import { Flex, Layer_ } from '../../../../../styles/global';
+import { useResponsive } from '../../../../libs/client/useTools';
 
 interface ILayer {
   theme: boolean;
   closeModal: () => void;
 }
 export const Layer = ({ theme, closeModal }: ILayer) => {
+  const { isDesk } = useResponsive();
   return (
-    <Layer_ className="layer">
-      <motion.div>
+    <Cont isDesk={isDesk}>
+      <Flex>
         <Svg type="close_" theme={theme} onClick={closeModal} />
-      </motion.div>
-      <motion.div>
-        <h1>Edit Post</h1>
-      </motion.div>
-      <motion.div>
+      </Flex>
+      <Flex>
+        <h1>Edit</h1>
+      </Flex>
+      <Flex>
         <Btn type="submit" item={{ name: 'Done', theme }} />
-      </motion.div>
-    </Layer_>
+      </Flex>
+    </Cont>
   );
 };
+const Cont = styled(Layer_)`
+  padding: ${(p) => (p.isDesk ? '0.6rem 1rem' : '1rem 2rem')};
+`;

@@ -10,6 +10,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Avatar } from '../../../../../Tools/Avatar';
 import { Flex } from '../../../../../../styles/global';
 import { useUser } from '../../../../../libs/client/useUser';
+import { useResponsive } from '../../../../../libs/client/useTools';
 
 interface IComment {
   _data: {
@@ -17,7 +18,7 @@ interface IComment {
     isOption: boolean;
     comment: TheComment;
     closeModal: () => void;
-    setPost: Dispatch<SetStateAction<string>>;
+    setPost: Dispatch<SetStateAction<boolean>>;
     setModal: Dispatch<SetStateAction<string>>;
     setSelect: Dispatch<SetStateAction<number>>;
     setOption: Dispatch<SetStateAction<boolean>>;
@@ -61,23 +62,27 @@ export const Comment = ({ _data }: IComment) => {
       if (type === 'delete') return setModal('delete');
     }
   };
-  const __cmt = { theme, comment, clickSvg };
-  const __cnt = { ...__cmt, setModal, setSelect };
-  const __option = { ...__cmt, closeModal, modal };
-  const __avatar = { theme, host_id, size: replied_to ? '3.2rem' : '3.5rem' };
+  const { isDesk } = useResponsive();
+  const rep_size = isDesk ? '3.2rem' : '5.8rem';
+  const cmt_size = isDesk ? '3.5rem' : '6rem';
+  const size = replied_to ? rep_size : cmt_size;
+  const __cmt = { theme, comment, clickSvg, isDesk };
   return (
     <>
       <Cont
+        exit="exit"
         key={cmt_id}
         variants={cmtVar}
-        exit="exit"
         initial="initial"
         animate="animate"
       >
-        <Avatar _data={{ ...__avatar }} />
-        <Content _data={{ ...__cnt, setPost, setCmtModal }} />
+        <Avatar _data={{ size, theme, host_id, isRound: true }} />
+        <Content
+          _data={{ theme, comment, clickSvg, isDesk }}
+          _set={{ setPost, setModal, setSelect, setCmtModal }}
+        />
       </Cont>
-      <Option _data={{ ...__option }} />
+      <Option _data={{ ...__cmt, closeModal, modal }} />
     </>
   );
 };

@@ -12,14 +12,12 @@ interface IOptionModal {
     theme: boolean;
     closeModal: () => void;
     setModal: Dispatch<SetStateAction<string>>;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const OptionModal = ({ _data }: IOptionModal) => {
-  const { open, theme, setModal, closeModal, setFixed } = _data;
+  const { open, theme, setModal, closeModal } = _data;
   const onClick = () => {
     closeModal();
-    setFixed(true);
     setModal('posts');
   };
   return (

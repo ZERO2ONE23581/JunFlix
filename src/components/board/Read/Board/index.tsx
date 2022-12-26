@@ -17,12 +17,11 @@ interface IBoardBox {
     theme: boolean;
     board: IBoardType;
     setType: Dispatch<SetStateAction<string>>;
-    setFixed: Dispatch<SetStateAction<boolean>>;
     setCreatePost: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Board = ({ _data }: IBoardBox) => {
-  const { board, theme, setType, setCreatePost, setFixed } = _data;
+  const { board, theme, setType, setCreatePost } = _data;
   const host = board?.host!;
   const host_id = host?.id!;
   const board_id = board?.id;
@@ -30,7 +29,7 @@ export const Board = ({ _data }: IBoardBox) => {
   const isMyBoard = Boolean(loggedInUser?.id === host_id);
   const { onPrivate, handleBoard } = useBoardPrivate({ host_id, board_id });
   const { name, Saved, onClick, isFollowing } = useFollowingBoard(board_id);
-  const __data = { theme, setFixed, isMyBoard };
+  const __data = { theme, isMyBoard };
   const _follow = { name, onClick, isFollowing };
   const __btn = { ...__data, board_id, setCreatePost, genre: board?.genre! };
   const onMode = () => {

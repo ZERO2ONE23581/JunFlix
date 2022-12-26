@@ -16,7 +16,7 @@ export const UserDate = ({ _data }: IComment) => {
   const { userId, createdAt, updatedAt } = _data;
   const { time, type } = useTimeDiff({ createdAt, updatedAt });
   return (
-    <Cont>
+    <Cont className="date">
       <Host>{useCapLetter(userId)}</Host>
       <Date>
         <span>{time}</span>
@@ -27,7 +27,7 @@ export const UserDate = ({ _data }: IComment) => {
   );
 };
 const Cont = styled(Flex)`
-  gap: 0.5rem;
+  gap: 1rem;
   width: fit-content;
   justify-content: flex-start;
 `;
@@ -37,7 +37,6 @@ const Host = styled.div`
 `;
 const Date = styled(Flex)`
   gap: 0.3rem;
-  opacity: 0.9;
-  font-size: 1rem;
+  opacity: 0.8;
   font-style: italic;
 `;

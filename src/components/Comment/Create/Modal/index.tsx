@@ -19,7 +19,7 @@ interface ICreateModal {
     post_id: number;
     create: boolean;
     closeCreate: () => void;
-    setPost: Dispatch<SetStateAction<string>>;
+    setPost: Dispatch<SetStateAction<boolean>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
@@ -49,11 +49,11 @@ export const CreateModal = ({ _data }: ICreateModal) => {
     if (data) {
       setLoading(false);
       if (data.ok) {
-        setPost('');
+        setPost(false);
         closeCreate();
         setCmtModal(false);
         setTimeout(() => {
-          setPost('read');
+          setPost(true);
           setCmtModal(true);
         }, 500);
       }

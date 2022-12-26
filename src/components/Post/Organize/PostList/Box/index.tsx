@@ -1,9 +1,9 @@
 import { CheckBox } from './CheckBox';
 import styled from '@emotion/styled';
 import { UseFormRegister } from 'react-hook-form';
-import { PostBox__ } from '../../../Schema/Grid/Box';
 import { avatarLink } from '../../../../../Tools/Avatar';
 import { useCapLetters } from '../../../../../libs/client/useTools';
+import { PostCover } from '../../../../../../styles/global';
 
 interface IPostBox {
   _data: {
@@ -38,9 +38,9 @@ export const PostBox = ({ _data }: IPostBox) => {
     </>
   );
 };
-const Cont = styled(PostBox__)`
-  width: 100%;
-  max-height: 70%;
+const Cont = styled(PostCover)`
+  //width: 100%;
+  //max-height: 70%;
   position: relative;
   img {
     width: 100%;

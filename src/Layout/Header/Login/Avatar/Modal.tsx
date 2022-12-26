@@ -44,7 +44,6 @@ const Cont = styled.div<{ mobile: boolean }>`
   right: 0rem;
   z-index: 100;
   position: absolute;
-  border: 10px solid yellow;
 `;
 const Modal = styled(motion.div)`
   border-radius: 5px;

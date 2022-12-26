@@ -4,35 +4,41 @@ import { RemovePost } from './Remove';
 import { BlockComment } from './Block';
 import { Dispatch, SetStateAction } from 'react';
 import { IPostUseform } from '../../../../../types/post';
-import { FlexCol } from '../../../../../../styles/global';
 import { PostInputs } from '../../../Create/Modal/Info/Inputs';
+import { useResponsive } from '../../../../../libs/client/useTools';
+import { FlexCol, FlexCol_ } from '../../../../../../styles/global';
 
 export const Info = ({ _boolean, _useform, _id, _set }: IInfo) => {
+  const { register } = _useform;
+  const { isDesk } = useResponsive();
   const { theme, quickSave } = _boolean;
   const { board_id, new_boardId } = _id;
   const { setIsDelete, setSelectModal } = _set;
   const openSelect = () => setSelectModal(true);
   return (
-    <Cont>
+    <Cont isDesk={isDesk}>
       <PostInputs theme={theme} _useform={_useform} />
       <Wrap>
         <SelectBtn
-          _data={{ theme, board_id, quickSave, openSelect, new_boardId }}
+          _boolean={{ theme, isDesk, quickSave }}
+          _data={{ board_id, openSelect, new_boardId }}
         />
-        <BlockComment register={_useform?.register!} />
-        <RemovePost theme={theme} setIsDelete={setIsDelete!} />
+        <BlockComment _data={{ register: register!, isDesk }} />
+        <RemovePost _data={{ theme, setIsDelete, isDesk }} />
       </Wrap>
     </Cont>
   );
 };
-const Cont = styled(FlexCol)`
+const Cont = styled(FlexCol_)`
+  gap: 2rem;
   width: 100%;
-  gap: 1.2rem;
+  .textarea-wrap {
+    margin-top: 1rem;
+  }
 `;
 const Wrap = styled(FlexCol)`
   gap: 1.5rem;
 `;
-
 interface IInfo extends IPostUseform {
   _boolean: {
     theme: boolean;

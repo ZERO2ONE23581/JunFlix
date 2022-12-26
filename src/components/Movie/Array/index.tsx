@@ -13,12 +13,11 @@ interface IMovieArray {
     theme: boolean;
     array: IMovie[];
     reverse: boolean;
-    setFixed: Dispatch<SetStateAction<boolean>>;
     setLeave: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const MovieArray = ({ _data }: IMovieArray) => {
-  const { theme, array, page, boxes, reverse, setFixed, setLeave } = _data;
+  const { theme, array, page, boxes, reverse, setLeave } = _data;
   return (
     <Cont>
       <AnimatePresence
@@ -37,7 +36,7 @@ export const MovieArray = ({ _data }: IMovieArray) => {
           animate="animate"
           className="slide"
         >
-          <MovieBox _data={{ theme, array, setFixed }} />
+          <MovieBox _data={{ theme, array }} />
         </Grid>
       </AnimatePresence>
     </Cont>

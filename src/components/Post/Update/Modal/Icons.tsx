@@ -2,10 +2,12 @@ import styled from '@emotion/styled';
 import { Svg } from '../../../../Tools/Svg';
 import { Dispatch, SetStateAction } from 'react';
 import { Flex } from '../../../../../styles/global';
+import { useResponsive } from '../../../../libs/client/useTools';
 
 export const Icons = ({ _data, _boolean, _set }: Icons) => {
   const { hide, theme } = _boolean;
   const { setModal, setHide } = _set;
+  const { isDesk, isMobile } = useResponsive();
   const { original, resetPreview, preview } = _data;
   const noImage = !Boolean(original || preview);
   const onClick = (type: string) => {
@@ -21,20 +23,32 @@ export const Icons = ({ _data, _boolean, _set }: Icons) => {
       else if (original) return setHide(true);
     }
   };
+  const size = isDesk ? '2rem' : '5rem';
   return (
     <Cont>
       <div>
-        <Svg type="plus" theme={theme} onClick={() => onClick('add')} />
+        <Svg
+          type="plus"
+          theme={theme}
+          item={{ size }}
+          onClick={() => onClick('add')}
+        />
       </div>
       {!noImage && !hide && (
         <div>
-          <Svg type="trash" theme={theme} onClick={() => onClick('delete')} />
+          <Svg
+            type="trash"
+            theme={theme}
+            item={{ size }}
+            onClick={() => onClick('delete')}
+          />
         </div>
       )}
       {hide && (
         <div>
           <Svg
             theme={theme}
+            item={{ size }}
             type="back-arrow"
             onClick={() => onClick('restore')}
           />
@@ -46,7 +60,7 @@ export const Icons = ({ _data, _boolean, _set }: Icons) => {
 const Cont = styled(Flex)`
   top: 0;
   right: 0;
-  gap: 1rem;
+  gap: 2rem;
   z-index: 1;
   width: fit-content;
   position: absolute;

@@ -12,7 +12,6 @@ interface ISlider {
     theme: boolean;
     hideTitle?: boolean;
     type: string | any;
-    setFixed: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Movies = ({ _data }: ISlider) => {
@@ -21,7 +20,7 @@ export const Movies = ({ _data }: ISlider) => {
   const [leave, setLeave] = useState(false);
   const [reverse, setReverse] = useState(false);
 
-  const { theme, type, setFixed, hideTitle } = _data;
+  const { theme, type, hideTitle } = _data;
   const { data } = useSWR<IMovieRes>(`/api/movie/${type}`);
 
   const MOVIES = data?.movies!;
@@ -51,9 +50,7 @@ export const Movies = ({ _data }: ISlider) => {
       {!hideTitle && <Title _data={{ theme, type }} />}
       <Slider>
         <Svg theme={theme} type="left-chev" onClick={() => onClick('left')} />
-        <MovieArray
-          _data={{ theme, array, page, boxes, reverse, setFixed, setLeave }}
-        />
+        <MovieArray _data={{ theme, array, page, boxes, reverse, setLeave }} />
         <Svg theme={theme} type="right-chev" onClick={() => onClick('right')} />
       </Slider>
     </Cont>

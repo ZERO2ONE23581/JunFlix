@@ -105,7 +105,6 @@ const Cont = styled(FlexCol)`
   margin: 1rem auto;
   padding: 1rem 2rem;
   justify-content: center;
-  border: 2px solid red;
   .kor {
     font-size: 1.3rem;
   }

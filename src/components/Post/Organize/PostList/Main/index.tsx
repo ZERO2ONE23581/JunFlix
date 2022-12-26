@@ -3,11 +3,10 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { CheckBox } from '../Box/CheckBox';
 import { UseFormRegister } from 'react-hook-form';
-import { PostBox__ } from '../../../Schema/Grid/Box';
 import { avatarLink } from '../../../../../Tools/Avatar';
-import { FlexCol, Grid } from '../../../../../../styles/global';
 import { IPostForm, IPostType } from '../../../../../types/post';
 import { usePostTitle } from '../../../../../libs/client/usePosts';
+import { FlexCol, Grid, PostCover } from '../../../../../../styles/global';
 
 interface IMain {
   _data: {
@@ -57,19 +56,11 @@ const Cont = styled(FlexCol)`
   height: 100%;
   .grid {
     gap: 1rem;
-    height: 100%;
-    height: 100%;
     padding: 2rem;
-
-    overflow-y: auto;
-    ::-webkit-scrollbar {
-      display: none;
-    }
   }
 `;
-const Box = styled(PostBox__)`
-  width: 100%;
-  //max-height: 70%;
+const Box = styled(PostCover)`
+  width: 100px;
   position: relative;
 `;
 const Img = styled(motion.img)`
@@ -77,14 +68,9 @@ const Img = styled(motion.img)`
   height: 100%;
 `;
 const vars = {
-  initial: ({ theme, isChecked }: any) => ({
-    //borderRadius: isChecked ? '8%' : '5%',
-    //border: '3px solid transparent',
-    //transition: { duration: 0.4 },
-  }),
-  animate: ({ theme, isChecked }: any) => ({
-    transition: { duration: 0.3 },
+  animate: ({ isChecked }: any) => ({
     scale: isChecked ? 0.98 : 1,
+    transition: { duration: 0.3 },
     borderRadius: isChecked ? '10%' : '5%',
     border: isChecked ? '5px solid #E50914' : '5px solid transparent',
   }),
