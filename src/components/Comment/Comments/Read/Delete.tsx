@@ -9,6 +9,8 @@ import { BtnWrap, Modal } from '../../../../../styles/global';
 import useMutation from '../../../../libs/client/useMutation';
 import { LoadingModal } from '../../../../Tools/Modal/Loading';
 import { TheComment, useCmtRes } from '../../../../libs/client/useComment';
+import { MobModal } from '../../../../../styles/mobile';
+import { useResponsive } from '../../../../libs/client/useTools';
 
 interface IDeleteModal {
   _data: {
@@ -16,7 +18,7 @@ interface IDeleteModal {
     modal: boolean;
     comment: TheComment;
     closeModal: () => void;
-    setPost: Dispatch<SetStateAction<boolean>>;
+    setPost: Dispatch<SetStateAction<string>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
@@ -32,12 +34,13 @@ export const DeleteModal = ({ _data }: IDeleteModal) => {
   const { Loading, setLoading } = useCmtRes({
     _data: { closeModal, setPost, setCmtModal, data },
   });
+  const { isDesk } = useResponsive();
   return (
     <AnimatePresence>
       {Loading && <LoadingModal theme={theme} />}
       {modal && !Loading && (
-        <>
-          <Cont
+        <Cont isDesk={isDesk}>
+          <Modal
             exit="exit"
             initial="initial"
             animate="animate"
@@ -47,7 +50,7 @@ export const DeleteModal = ({ _data }: IDeleteModal) => {
             variants={cmtModalVar}
           >
             <h1>
-              <span className="kor">댓글은 삭제 후 복구 할 수 없습니다.</span>
+              <span>댓글은 삭제 후 복구 할 수 없습니다.</span>
               <span>Comment can't be recovered once it is deleted.</span>
             </h1>
             <BtnWrap className="btn_wrap">
@@ -62,35 +65,34 @@ export const DeleteModal = ({ _data }: IDeleteModal) => {
                 item={{ name: 'Delete', theme }}
               />
             </BtnWrap>
-          </Cont>
+          </Modal>
           <OverlayBg closeModal={closeModal} />
-        </>
+        </Cont>
       )}
     </AnimatePresence>
   );
 };
-const Cont = styled(Modal)`
-  top: 40%;
-  z-index: 100;
-
-  padding-top: 2rem;
-  height: fit-content;
-  .btn_wrap {
-    width: fit-content;
-
-    margin-top: 1rem;
-    button {
-      padding: 0.6rem 1rem;
+const Cont = styled(MobModal)`
+  .modal {
+    top: 40%;
+    z-index: 100;
+    padding-top: 2rem;
+    color: ${(p) => p.theme.color.logo};
+    padding: ${(p) => (p.isDesk ? '2rem' : '4rem 2rem')};
+    height: ${(p) => (p.isDesk ? 'fit-content' : '100%')};
+    h1 {
+      span {
+        display: block;
+        font-size: ${(p) => (p.isDesk ? '1.1rem' : '3rem')};
+      }
     }
-  }
-  h1 {
-    font-size: 1.5rem;
-    text-align: center;
-    .kor {
-      font-size: 1.4rem;
-    }
-    span {
-      display: block;
+    .btn_wrap {
+      gap: 1.2rem;
+      margin-top: ${(p) => !p.isDesk && '2rem'};
+      button {
+        padding: ${(p) => (p.isDesk ? '1.1rem' : '2rem')};
+        font-size: ${(p) => (p.isDesk ? '1.1rem' : '2.8rem')};
+      }
     }
   }
 `;

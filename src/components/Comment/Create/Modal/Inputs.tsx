@@ -14,7 +14,7 @@ export const Inputs = ({ _data, _useform }: ICreateModalInputs) => {
   const { theme, host_id } = _data;
   const { clearErrors, watch, register, error } = _useform;
   return (
-    <Cont>
+    <Cont className="inps">
       <Avatar _data={{ size: '4rem', isRound: true, theme, host_id }} />
       <TextAreaWrap
         _data={{
@@ -38,15 +38,13 @@ const Cont = styled(Flex)`
   padding-left: 0.2rem;
   align-items: flex-start;
   justify-content: flex-start;
-  .textarea-wrap {
-    width: fit-content;
-  }
 `;
 interface ICreateModalInputs {
   _data: {
     theme: boolean;
+    isDesk: boolean;
     host_id: number;
-    setPost: Dispatch<SetStateAction<boolean>>;
+    setPost: Dispatch<SetStateAction<string>>;
   };
   _useform: {
     error: string;

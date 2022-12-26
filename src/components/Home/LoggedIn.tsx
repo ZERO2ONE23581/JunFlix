@@ -28,6 +28,11 @@ export const LoggedIn = ({ _data }: ILoggedIn) => {
 };
 
 const Cont = styled(Page)`
-  padding: 1rem 2rem;
+  padding: 2.5rem;
   background: url('/img/up.jpg') center / cover no-repeat;
+  .post_cover {
+    h2 {
+      color: whitesmoke;
+    }
+  }
 `;

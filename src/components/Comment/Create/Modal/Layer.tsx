@@ -11,7 +11,7 @@ interface ICreateModalLayer {
 export const Layer = ({ _data }: ICreateModalLayer) => {
   const { theme, closeCreate } = _data;
   return (
-    <Cont>
+    <Cont className="layer">
       <div>
         <Svg type="close_" theme={theme} onClick={closeCreate} />
       </div>
@@ -29,7 +29,6 @@ export const Layer = ({ _data }: ICreateModalLayer) => {
 const Cont = styled(Flex)`
   justify-content: space-between;
   h1 {
-    font-size: 1.5rem;
     .userId {
       color: #3498db;
       font-weight: 500;

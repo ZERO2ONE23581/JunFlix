@@ -11,12 +11,12 @@ export interface IPostCmt {
     theme: boolean;
     isDesk: boolean;
     post: IPostType;
-    setModal: Dispatch<SetStateAction<boolean>>;
+    setModal: Dispatch<SetStateAction<string>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const PostCmt = ({ _data }: IPostCmt) => {
-  const { post, theme, setCmtModal, setModal: setPost, isDesk } = _data;
+  const { post, theme, setCmtModal, setModal, isDesk } = _data;
   const post_id = post?.id!;
   const host_id = post?.host_id!;
   const closeCreate = () => setCreate(false);
@@ -26,10 +26,17 @@ export const PostCmt = ({ _data }: IPostCmt) => {
       <Cont>
         <Text _data={{ theme, setCmtModal, isDesk }} />
         <Box _data={{ theme, host_id, setCreate, isDesk }} />
-        <Comments _data={{ theme, post_id, og_id: 0, setCmtModal, setPost }} />
+        <Comments _data={{ theme, post_id, og_id: 0, setCmtModal, setModal }} />
       </Cont>
       <CreateModal
-        _data={{ theme, create, post_id, setPost, closeCreate, setCmtModal }}
+        _data={{
+          theme,
+          create,
+          post_id,
+          closeCreate,
+          setCmtModal,
+          setPost: setModal,
+        }}
       />
     </>
   );

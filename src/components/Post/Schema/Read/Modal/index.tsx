@@ -13,45 +13,36 @@ import { useResponsive } from '../../../../../libs/client/useTools';
 
 export interface IPostModal {
   _data: {
-    modal: boolean;
+    modal: string;
     theme: boolean;
     post: IPostType;
-  };
-  _set: {
-    edit: Dispatch<SetStateAction<string>>;
-    setModal: Dispatch<SetStateAction<boolean>>;
+    setModal: Dispatch<SetStateAction<string>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
-export const PostModal = ({ _data, _set }: IPostModal) => {
+export const PostModal = ({ _data }: IPostModal) => {
+  const { post, theme, modal, setCmtModal, setModal } = _data;
   const { isDesk } = useResponsive();
-  const { post, theme, modal } = _data;
-  const { setCmtModal, setModal, edit } = _set;
   const host_id = post?.host_id!;
   const { loggedInUser } = useUser();
+  const closeModal = () => setModal('');
   const isCmtBlocked = post?.onPrivate!;
   const isMyPost = Boolean(host_id === loggedInUser?.id);
-  const closeModal = () => {
-    edit('');
-    setModal(false);
-  };
   return (
     <>
-      {modal && (
+      {modal === 'read' && (
         <>
           <Cont
             exit="exit"
             initial="initial"
             animate="animate"
-            custom={theme}
             variants={postVar}
             layoutId={post?.id + ''}
+            custom={{ theme, isDesk }}
           >
             <Icons className="setting">
-              <Close _data={{ theme, setModal, isDesk, edit }} />
-              <Setting
-                _data={{ isDesk, theme, host_id, isMyPost, setModal, edit }}
-              />
+              <Close _data={{ theme, setModal, isDesk }} />
+              <Setting _data={{ isDesk, theme, host_id, isMyPost, setModal }} />
             </Icons>
             <Img alt="post image" src={avatarLink(post?.post_image)} />
             <Info _data={{ theme, post, setCmtModal }} />

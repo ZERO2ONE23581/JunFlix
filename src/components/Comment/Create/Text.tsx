@@ -26,7 +26,7 @@ export const Text = ({ _data }: ICreateCommentText) => {
         />
       </Title>
       <Txt isDesk={isDesk}>
-        <span>"Share your feedbacks!"</span>
+        <span>"Share your Feedbacks!"</span>
         <span className="kor">"포스트에 대해 의견을 남겨주세요!"</span>
       </Txt>
     </Cont>
@@ -39,17 +39,17 @@ const Title = styled(Flex_)`
   gap: 1rem;
   font-size: 1.5rem;
   h1 {
-    font-size: ${(p) => (p.isDesk ? '1.5rem' : '2.6rem')};
+    font-size: ${(p) => (p.isDesk ? '1.5rem' : '3.1rem')};
   }
 `;
 const Txt = styled(FlexCol_)`
   gap: 0rem;
   font-size: 1.2rem;
   font-style: italic;
-  font-size: ${(p) => (p.isDesk ? '1.2rem' : '2.5rem')};
+  align-items: flex-start;
+  font-size: ${(p) => (p.isDesk ? '1.1rem' : '2.8rem')};
   .kor {
-    font-size: 1.1rem;
-    font-size: ${(p) => (p.isDesk ? '1.1rem' : '2.4rem')};
+    font-size: ${(p) => (p.isDesk ? '1.1rem' : '2.7rem')};
   }
   span {
     display: block;

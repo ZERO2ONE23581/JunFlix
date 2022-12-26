@@ -18,7 +18,7 @@ interface IComment {
     isOption: boolean;
     comment: TheComment;
     closeModal: () => void;
-    setPost: Dispatch<SetStateAction<boolean>>;
+    setPost: Dispatch<SetStateAction<string>>;
     setModal: Dispatch<SetStateAction<string>>;
     setSelect: Dispatch<SetStateAction<number>>;
     setOption: Dispatch<SetStateAction<boolean>>;

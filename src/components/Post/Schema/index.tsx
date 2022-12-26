@@ -27,7 +27,7 @@ export const PostSchema = ({ _data }: IPostSchema) => {
     <Cont className="posts_schema">
       <PostGrid
         _data={{ grid, theme, posts, post }}
-        _set={{ setPostId, setCmtModal, setModal }}
+        _set={{ modal, setPostId, setCmtModal, setModal }}
       />
       <>
         <UpdatePost _data={{ modal, theme, post, setModal }} />

@@ -14,7 +14,7 @@ interface IReadCmt {
   _data: {
     theme: boolean;
     comment: TheComment;
-    setPost: Dispatch<SetStateAction<boolean>>;
+    setModal: Dispatch<SetStateAction<string>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
@@ -22,7 +22,7 @@ export const ReadCmt = ({ _data }: IReadCmt) => {
   const [modal, setModal] = useState('');
   const [select, setSelect] = useState(0);
   const [option, setOption] = useState(false);
-  const { theme, comment, setPost, setCmtModal } = _data;
+  const { theme, comment, setModal: setPost, setCmtModal } = _data;
 
   const closeModal = () => {
     setModal('');
@@ -40,7 +40,9 @@ export const ReadCmt = ({ _data }: IReadCmt) => {
       <Comment
         _data={{ ...__data, isOption, ...__state, setPost, setCmtModal }}
       />
-      <Comments _data={{ theme, post_id, og_id, setPost, setCmtModal }} />
+      <Comments
+        _data={{ theme, post_id, og_id, setModal: setPost, setCmtModal }}
+      />
       <>
         <ReplyModal _data={{ ...__data, modal: isModal('reply') }} />
         <UpdateModal _data={{ ...__data, modal: isModal('update') }} />

@@ -137,13 +137,13 @@ export const Span = styled(motion.span)`
   }
 `;
 export const postVar = {
-  animate: (theme: boolean) => ({
+  animate: ({ theme, isDesk }: any) => ({
     scale: 1,
     opacity: 1,
-    border: greyBrdr,
     color: color(theme),
     transition: { duration: 0.8 },
     backgroundColor: color(!theme),
+    border: !isDesk ? '1px solid transparent' : greyBrdr,
   }),
   exit: () => ({ opacity: 0, scale: 0.1, transition: { duration: 0.8 } }),
   initial: () => ({ scale: 0.1, opacity: 0, transition: { duration: 0.8 } }),

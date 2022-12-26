@@ -6,6 +6,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { TheComment } from '../../../../../libs/client/useComment';
 import { cmtModalVar, hoverBgColor } from '../../../../../../styles/variants';
+import { MobModal } from '../../../../../../styles/mobile';
+import { useResponsive } from '../../../../../libs/client/useTools';
 
 interface IOption {
   _data: {
@@ -18,19 +20,27 @@ interface IOption {
 }
 export const Option = ({ _data }: IOption) => {
   const { theme, clickSvg, comment, modal, closeModal } = _data;
+  const { isDesk } = useResponsive();
+  const size = isDesk ? '2rem' : '4rem';
   return (
     <AnimatePresence>
       {modal && (
-        <>
-          <Cont
+        <Cont isDesk={isDesk}>
+          <Modal
             exit="exit"
             layoutId="option"
             initial="initial"
             animate="animate"
+            className="modal"
             custom={theme}
             variants={cmtModalVar}
           >
-            <Svg type="close" theme={theme} onClick={closeModal} />
+            <Svg
+              type="close"
+              theme={theme}
+              item={{ size }}
+              onClick={closeModal}
+            />
             <Btn
               whileHover="hover"
               variants={hoverBgColor}
@@ -45,24 +55,24 @@ export const Option = ({ _data }: IOption) => {
             >
               Delete
             </Btn>
-          </Cont>
+          </Modal>
           <OverlayBg closeModal={closeModal} />
-        </>
+        </Cont>
       )}
     </AnimatePresence>
   );
 };
-const Cont = styled(Modal)`
-  top: 50%;
-  width: 40vw;
-  z-index: 100;
-  height: fit-content;
+const Cont = styled(MobModal)`
+  .modal {
+    top: 50%;
+    z-index: 100;
+    font-size: ${(p) => (p.isDesk ? '1.3rem' : '3rem')};
+  }
 `;
 const Btn = styled(motion.div)`
   width: 100%;
   padding: 5px;
   cursor: pointer;
-  font-size: 1.5rem;
   text-align: center;
   border-radius: 10px;
   padding: 0.5rem 1rem;

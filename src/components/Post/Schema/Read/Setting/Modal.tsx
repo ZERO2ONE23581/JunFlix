@@ -17,24 +17,19 @@ interface IPostSetModal {
     setting: boolean;
     isMyPost: boolean;
     closeSetting: () => void;
-    edit: Dispatch<SetStateAction<string>>;
-    setModal: Dispatch<SetStateAction<boolean>>;
+    setModal: Dispatch<SetStateAction<string>>;
   };
 }
 export const PostSetModal = ({ _data }: IPostSetModal) => {
   const router = useRouter();
-  const { edit, theme, setting, host_id, isMyPost, setModal, closeSetting } =
-    _data;
+  const { theme, setting, host_id, isMyPost, setModal, closeSetting } = _data;
   const onClick = (type: string) => {
     if (type) {
       if (type === 'all') return router.push(`/post/all`);
       if (!isMyPost) return alert('not allowed.');
       if (isMyPost) {
         if (type === 'my_post') return router.push(`/user/${host_id}/posts`);
-        else {
-          edit(type);
-          setModal(false);
-        }
+        else return setModal(type);
       }
       return closeSetting();
     }

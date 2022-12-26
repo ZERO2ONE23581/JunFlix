@@ -9,10 +9,11 @@ import { ICmtForm, IRes } from '../../../../../types/global';
 import { useUser } from '../../../../../libs/client/useUser';
 import { Form, Modal } from '../../../../../../styles/global';
 import { cmtModalVar } from '../../../../../../styles/variants';
-import { useLength } from '../../../../../libs/client/useTools';
+import { useLength, useResponsive } from '../../../../../libs/client/useTools';
 import useMutation from '../../../../../libs/client/useMutation';
 import { LoadingModal } from '../../../../../Tools/Modal/Loading';
 import { TheComment, useCmtRes } from '../../../../../libs/client/useComment';
+import { MobModal } from '../../../../../../styles/mobile';
 
 interface IUpdateModal {
   _data: {
@@ -20,7 +21,7 @@ interface IUpdateModal {
     modal: boolean;
     comment: TheComment;
     closeModal: () => void;
-    setPost: Dispatch<SetStateAction<boolean>>;
+    setPost: Dispatch<SetStateAction<string>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
@@ -53,12 +54,14 @@ export const UpdateModal = ({ _data }: IUpdateModal) => {
   const { Loading, setLoading } = useCmtRes({
     _data: { closeModal, setPost, setCmtModal, data },
   });
+  const { isDesk } = useResponsive();
+  const error = errors.text?.message!;
   return (
     <AnimatePresence>
       {Loading && <LoadingModal theme={theme} />}
       {modal && !Loading && (
-        <>
-          <Cont
+        <Cont isDesk={isDesk}>
+          <Modal
             exit="exit"
             initial="initial"
             animate="animate"
@@ -70,56 +73,21 @@ export const UpdateModal = ({ _data }: IUpdateModal) => {
             <Form onSubmit={handleSubmit(onValid)}>
               <Layer _data={{ theme, closeModal }} />
               <Inputs
-                _data={{ theme, host_id, setPost }}
-                _useform={{
-                  watch,
-                  register,
-                  clearErrors,
-                  error: errors.text?.message!,
-                }}
+                _data={{ theme, host_id, setPost, isDesk }}
+                _useform={{ watch, error, register, clearErrors }}
               />
-              {/* <Inputs>
-                <Avatar
-                  _data={{ size: '4rem', isRound: true, theme, host_id }}
-                />
-                <TextAreaWrap
-                  _data={{
-                    theme,
-                    min: 150,
-                    max: 700,
-                    id: 'text',
-                    clearErrors,
-                    text: watch('text'),
-                    error: errors.text?.message,
-                    placeholder: 'Leave comments on this post...',
-                    register: register('text', { required: 'need_comment' }),
-                  }}
-                />
-              </Inputs> */}
             </Form>
-          </Cont>
+          </Modal>
           <OverlayBg closeModal={closeModal} />
-        </>
+        </Cont>
       )}
     </AnimatePresence>
   );
 };
-const Cont = styled(Modal)`
-  top: 33vh;
-  width: 33vw;
-  z-index: 100;
-  color: inherit;
-  height: fit-content;
-  background-color: inherit;
-  form {
-    width: 100%;
-    gap: 1.2rem;
-    h1 {
-      font-size: 1.5rem;
-      .userId {
-        color: #3498db;
-        font-weight: 500;
-      }
-    }
+const Cont = styled(MobModal)`
+  .modal {
+    top: 33vh;
+    z-index: 100;
+    height: ${(p) => (p.isDesk ? 'fit-content' : '70%')};
   }
 `;

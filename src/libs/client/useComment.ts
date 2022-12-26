@@ -24,7 +24,7 @@ interface IUseCmtRes {
   _data: {
     data: IRes | undefined;
     closeModal: () => void;
-    setPost: Dispatch<SetStateAction<boolean>>;
+    setPost: Dispatch<SetStateAction<string>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
@@ -50,7 +50,7 @@ interface IUseGetRepHost {
   cmt_id: number;
   post_id: number;
   reply_id: number;
-  setPost: Dispatch<SetStateAction<boolean>>;
+  setPost: Dispatch<SetStateAction<string>>;
   setCmtModal: Dispatch<SetStateAction<boolean>>;
 }
 export const useGetRepHost = ({
@@ -72,10 +72,10 @@ export const useGetRepHost = ({
   useEffect(() => {
     if (data_) {
       if (data_.ok) {
-        setPost(false);
+        setPost('');
         setCmtModal(false);
         setTimeout(() => {
-          setPost(true);
+          setPost('read');
           setCmtModal(true);
         }, 500);
       }
@@ -90,11 +90,11 @@ export const useCmtRes = ({ _data }: IUseCmtRes) => {
     if (data) {
       setLoading(false);
       if (data.ok) {
-        setPost(false);
+        setPost('');
         closeModal();
         setCmtModal(false);
         setTimeout(() => {
-          setPost(true);
+          setPost('read');
           setCmtModal(true);
         }, 500);
       }

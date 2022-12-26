@@ -3,15 +3,16 @@ import { Inputs } from './Inputs';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { AnimatePresence } from 'framer-motion';
-import { Modal } from '../../../../../styles/global';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { useUser } from '../../../../libs/client/useUser';
 import { ICmtForm, IRes } from '../../../../types/global';
-import { useLength } from '../../../../libs/client/useTools';
 import useMutation from '../../../../libs/client/useMutation';
 import { LoadingModal } from '../../../../Tools/Modal/Loading';
+import { FlexCol_, Modal } from '../../../../../styles/global';
 import { color, greyBrdr } from '../../../../../styles/variants';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useLength, useResponsive } from '../../../../libs/client/useTools';
+import { MobModal } from '../../../../../styles/mobile';
 
 interface ICreateModal {
   _data: {
@@ -19,7 +20,7 @@ interface ICreateModal {
     post_id: number;
     create: boolean;
     closeCreate: () => void;
-    setPost: Dispatch<SetStateAction<boolean>>;
+    setPost: Dispatch<SetStateAction<string>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
@@ -49,34 +50,34 @@ export const CreateModal = ({ _data }: ICreateModal) => {
     if (data) {
       setLoading(false);
       if (data.ok) {
-        setPost(false);
+        setPost('');
         closeCreate();
         setCmtModal(false);
         setTimeout(() => {
-          setPost(true);
+          setPost('read');
           setCmtModal(true);
         }, 500);
       }
     }
   }, [data, closeCreate, setPost, setCmtModal]);
-
+  const { isDesk } = useResponsive();
   return (
     <AnimatePresence>
       {Loading && <LoadingModal theme={theme} />}
       {create && !Loading && (
-        <>
-          <Cont
-            custom={theme}
-            variants={vars}
+        <Cont isDesk={isDesk}>
+          <Modal
             exit="exit"
+            variants={vars}
+            className="modal"
             initial="initial"
             animate="animate"
-            className="modal"
+            custom={{ theme, isDesk }}
           >
             <form onSubmit={handleSubmit(onValid)}>
               <Layer _data={{ theme, closeCreate }} />
               <Inputs
-                _data={{ theme, host_id: user_id, setPost }}
+                _data={{ isDesk, theme, host_id: user_id, setPost }}
                 _useform={{
                   watch,
                   register,
@@ -85,25 +86,22 @@ export const CreateModal = ({ _data }: ICreateModal) => {
                 }}
               />
             </form>
-          </Cont>
+          </Modal>
           <OverlayBg closeModal={closeCreate} />
-        </>
+        </Cont>
       )}
     </AnimatePresence>
   );
 };
-const Cont = styled(Modal)`
-  color: inherit;
-  padding: 1rem 2rem;
-`;
+const Cont = styled(MobModal)``;
 const vars = {
-  animate: (theme: boolean) => ({
+  animate: ({ theme, isDesk }: any) => ({
     y: 0,
     opacity: 1,
-    border: greyBrdr,
     color: color(theme),
     transition: { duration: 0.5 },
     backgroundColor: color(!theme),
+    border: !isDesk ? '1px solid transparent' : greyBrdr,
   }),
   initial: () => ({ y: 999, opacity: 0 }),
   exit: () => ({ y: 999, opacity: 0, transition: { duration: 0.5 } }),

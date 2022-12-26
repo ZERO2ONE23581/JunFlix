@@ -18,15 +18,12 @@ export const Text = () => {
 };
 const Cont = styled.h2`
   text-align: center;
-  font-size: 1.4rem;
   .small {
     opacity: 0.7;
-    font-size: 1.3rem;
     font-style: italic;
   }
   span {
     display: block;
-    line-height: 30px;
   }
   > span {
     padding: 10px;

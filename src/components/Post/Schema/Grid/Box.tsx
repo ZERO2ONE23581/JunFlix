@@ -47,20 +47,21 @@ export const Box = ({ _data }: IPostBox) => {
     if (type === 'blur_board')
       return router.push(`/board/${board_id}/${board_title}`);
   };
-  const { isDesk, isMobile } = useResponsive();
+  const { isDesk } = useResponsive();
   return (
-    <Cont>
+    <Cont isDesk={isDesk}>
       {isBlur && isDesk && <Svg onClick={onSvg} theme={theme} type="lock" />}
       <Blur isBlur={isBlur!}>
         {Image && (
           <Cover
             exit="exit"
-            initial="initial"
-            animate="animate"
-            whileHover="hover"
             key={post_id}
             custom={theme}
             variants={vars}
+            initial="initial"
+            animate="animate"
+            whileHover="hover"
+            className="post_cover"
             transition={TweenTrans}
             layoutId={post_id + ''}
             onClick={() => onClick(post_id)}
@@ -73,9 +74,11 @@ export const Box = ({ _data }: IPostBox) => {
     </Cont>
   );
 };
-const Cover = styled(PostCover)``;
-const Cont = styled.article`
+const Cont = styled.article<{ isDesk: boolean }>`
   position: relative;
+  h2 {
+    font-size: ${(p) => (p.isDesk ? '1.4rem' : '3rem')};
+  }
   .lock {
     top: 50%;
     left: 50%;
@@ -84,6 +87,7 @@ const Cont = styled.article`
     transform: translate(-50%, -50%);
   }
 `;
+const Cover = styled(PostCover)``;
 const vars = {
   exit: () => ({ opacity: 0 }),
   initial: () => ({ opacity: 0 }),

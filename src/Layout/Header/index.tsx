@@ -56,8 +56,6 @@ const Wrap = styled(Flex)`
 const Left = styled(Flex)`
   width: fit-content;
   justify-content: space-between;
-  .logo {
-  }
   .menu {
     gap: 2rem;
     width: fit-content;

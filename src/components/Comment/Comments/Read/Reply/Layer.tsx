@@ -12,14 +12,14 @@ interface IReplyModalLayer {
 export const Layer = ({ _data }: IReplyModalLayer) => {
   const { userId, theme, closeModal } = _data;
   return (
-    <Cont>
+    <Cont className="layer">
       <div>
         <Svg type="close_" theme={theme} onClick={closeModal} />
       </div>
       <div>
         <h1>
           <span>Reply to</span>
-          <span className="userId">@{userId}</span>
+          <span className="userId">@{userId.toUpperCase()}</span>
         </h1>
       </div>
       <div>

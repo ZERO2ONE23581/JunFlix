@@ -11,7 +11,7 @@ interface ICmtModalLayer {
 export const Layer = ({ _data }: ICmtModalLayer) => {
   const { theme, closeModal } = _data;
   return (
-    <Cont>
+    <Cont className="layer">
       <div>
         <Svg
           type="close_"
@@ -33,9 +33,5 @@ const Cont = styled(Flex)`
   border-bottom: 1px dotted ${(p) => p.theme.color.font};
   .flex {
     gap: 1rem;
-    h1 {
-      font-size: 1.6rem;
-      margin-bottom: 0;
-    }
   }
 `;

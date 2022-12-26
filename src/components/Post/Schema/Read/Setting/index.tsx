@@ -11,12 +11,11 @@ interface ISetting {
     host_id: number;
     isDesk: boolean;
     isMyPost: boolean;
-    edit: Dispatch<SetStateAction<string>>;
-    setModal: Dispatch<SetStateAction<boolean>>;
+    setModal: Dispatch<SetStateAction<string>>;
   };
 }
 export const Setting = ({ _data }: ISetting) => {
-  const { theme, isMyPost, isDesk, edit } = _data;
+  const { theme, isMyPost, isDesk } = _data;
   const size = isDesk ? '1.5rem' : '3rem';
   const closeSetting = () => setSetting(false);
   const [setting, setSetting] = useState(false);

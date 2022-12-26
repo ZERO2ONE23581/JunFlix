@@ -5,11 +5,13 @@ import { Btn } from '../../../Tools/Button';
 import { IPostType } from '../../../types/post';
 import { Modal } from '../../../../styles/global';
 import { color } from '../../../../styles/variants';
-import { MsgModal } from '../../../Tools/Modal/Message';
 import { OverlayBg } from '../../../Tools/OverlayBg';
+import { MobModal } from '../../../../styles/mobile';
 import { useUser } from '../../../libs/client/useUser';
+import { MsgModal } from '../../../Tools/Modal/Message';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
+import { useResponsive } from '../../../libs/client/useTools';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface IDeletePost {
@@ -52,51 +54,55 @@ export const DeletePost = ({ _data }: IDeletePost) => {
   }, [data, setLoading, setMsg]);
 
   const open = Boolean(modal === 'delete') && !Loading;
+  const { isDesk } = useResponsive();
+  const size = isDesk ? '2rem' : '3.3rem';
   return (
     <>
       {open && (
-        <>
-          <DeleteModal
+        <Cont isDesk={isDesk}>
+          <Modal
             exit="exit"
-            initial="initial"
-            animate="animate"
             custom={theme}
             variants={vars}
+            initial="initial"
+            animate="animate"
+            className="modal"
             layoutId={layoutId}
           >
-            <Svg type="close" theme={theme} onClick={() => setModal('read')} />
+            <Svg
+              type="close"
+              theme={theme}
+              item={{ size }}
+              onClick={() => setModal('read')}
+            />
             <Text />
             <Btn
               type="button"
               onClick={onClick}
               item={{ theme, name: 'Delete' }}
             />
-          </DeleteModal>
+          </Modal>
           <OverlayBg
             dark={0.8}
             zIndex={112}
             closeModal={() => setModal('read')}
           />
-        </>
+        </Cont>
       )}
       {Loading && <LoadingModal layoutId={layoutId} theme={theme} />}
       <MsgModal _data={{ msg, theme, layoutId }} />
     </>
   );
 };
-const DeleteModal = styled(Modal)`
-  top: 15rem;
-  z-index: 114;
-  padding: 3rem 2rem;
-  height: fit-content;
-  button {
-    width: 150px;
-    font-size: 1.3rem;
-    padding: 10px 20px;
-  }
-  .close {
-    top: 1.3rem;
-    left: 1.7rem;
+const Cont = styled(MobModal)`
+  .modal {
+    z-index: 114;
+    h2 {
+      .small {
+        font-size: ${(p) => (p.isDesk ? '1.3rem' : '2.4rem')};
+      }
+      font-size: ${(p) => (p.isDesk ? '1.5rem' : '2.5rem')};
+    }
   }
 `;
 const vars = {

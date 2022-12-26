@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 import { Flex } from '../../../../styles/global';
 import { color } from '../../../../styles/variants';
+import { useResponsive } from '../../../libs/client/useTools';
 
 interface IComments {
   _data: {
@@ -19,6 +20,7 @@ export const More = ({ _data }: IComments) => {
       initial="initial"
       animate="animate"
       whileHover="hover"
+      className="hide_cmt"
       custom={{ theme }}
       variants={moreVar}
       onClick={() => setSliced((p) => !p)}

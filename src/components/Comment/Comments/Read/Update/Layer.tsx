@@ -11,7 +11,7 @@ interface IUpdateModalLayer {
 export const Layer = ({ _data }: IUpdateModalLayer) => {
   const { theme, closeModal } = _data;
   return (
-    <Cont>
+    <Cont className="layer">
       <div>
         <Svg type="close_" theme={theme} onClick={closeModal} />
       </div>
@@ -29,8 +29,8 @@ export const Layer = ({ _data }: IUpdateModalLayer) => {
 const Cont = styled(Flex)`
   justify-content: space-between;
   button {
-    background-color: inherit;
     border: none;
     outline: none;
+    background-color: inherit;
   }
 `;

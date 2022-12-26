@@ -2,23 +2,23 @@ import { More } from './More';
 import { ReadCmt } from './Read';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
-import { FlexCol, FlexCol_ } from '../../../../styles/global';
+import { FlexCol_ } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { useAllCmts, useReplies } from '../../../libs/client/useComment';
 import { useResponsive } from '../../../libs/client/useTools';
+import { useAllCmts, useReplies } from '../../../libs/client/useComment';
 
 interface IComments {
   _data: {
     og_id: number;
     post_id: number;
     theme: boolean;
-    setPost: Dispatch<SetStateAction<boolean>>;
+    setModal: Dispatch<SetStateAction<string>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
 export const Comments = ({ _data }: IComments) => {
   const { isDesk } = useResponsive();
-  const { theme, setPost, post_id, og_id, setCmtModal } = _data;
+  const { theme, setModal, post_id, og_id, setCmtModal } = _data;
   const { replies, isReplies } = useReplies({ post_id, og_id });
   const { isOriginals, total_length, originals } = useAllCmts({ post_id });
   const isReply = Boolean(og_id);
@@ -35,13 +35,13 @@ export const Comments = ({ _data }: IComments) => {
     <AnimatePresence>
       {isArray && (
         <Cont isDesk={isDesk}>
-          {!isReply && <h1>Total Comments: ({total_length})</h1>}
+          {!isReply && <h2>Total Comments: ({total_length})</h2>}
           {isReply && !isZero && (
             <More _data={{ theme, sliced, rep_length, setSliced }} />
           )}
           {Array?.map((comment) => (
             <Arr key={comment.id} isReply={isReply}>
-              <ReadCmt _data={{ theme, comment, setPost, setCmtModal }} />
+              <ReadCmt _data={{ theme, comment, setModal, setCmtModal }} />
             </Arr>
           ))}
         </Cont>
@@ -50,13 +50,16 @@ export const Comments = ({ _data }: IComments) => {
   );
 };
 const Cont = styled(FlexCol_)`
-  gap: 1rem;
+  gap: 2rem;
   margin: 0.5rem 0;
   align-items: flex-start;
   font-size: ${(p) => (p.isDesk ? '1.1rem' : '2.5rem')};
-  h1 {
+  .hide_cmt {
+    font-size: ${(p) => (p.isDesk ? '1.1rem' : '2.5rem')};
+  }
+  h2 {
     font-style: italic;
-    font-size: ${(p) => (p.isDesk ? '1.3rem' : '2.5rem')};
+    font-size: ${(p) => (p.isDesk ? '1.3rem' : '2.8rem')};
   }
 `;
 const Arr = styled.div<{ isReply: boolean }>`

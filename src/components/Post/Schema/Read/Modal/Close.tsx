@@ -8,13 +8,13 @@ interface IClose {
   _data: {
     theme: boolean;
     isDesk: boolean;
-    edit: Dispatch<SetStateAction<string>>;
-    setModal: Dispatch<SetStateAction<boolean>>;
+    setModal: Dispatch<SetStateAction<string>>;
   };
 }
 export const Close = ({ _data }: IClose) => {
-  const { theme, setModal, isDesk, edit } = _data;
+  const { theme, setModal, isDesk } = _data;
   const size = isDesk ? '1.5rem' : '3rem';
+  const onClick = () => setModal('');
   return (
     <Cont isDesk={isDesk}>
       <Circle
@@ -23,15 +23,7 @@ export const Close = ({ _data }: IClose) => {
         className="close_icon"
         variants={noneBorderVar}
       >
-        <Svg
-          type="close_"
-          theme={theme}
-          item={{ size }}
-          onClick={() => {
-            edit('');
-            setModal(false);
-          }}
-        />
+        <Svg type="close_" theme={theme} item={{ size }} onClick={onClick} />
       </Circle>
     </Cont>
   );

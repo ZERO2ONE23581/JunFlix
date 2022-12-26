@@ -13,7 +13,12 @@ import { cmtModalVar } from '../../../../../../styles/variants';
 import useMutation from '../../../../../libs/client/useMutation';
 import { LoadingModal } from '../../../../../Tools/Modal/Loading';
 import { TheComment, useCmtRes } from '../../../../../libs/client/useComment';
-import { useCapLetter, useLength } from '../../../../../libs/client/useTools';
+import {
+  useCapLetter,
+  useLength,
+  useResponsive,
+} from '../../../../../libs/client/useTools';
+import { MobModal } from '../../../../../../styles/mobile';
 
 interface IReplyModal {
   _data: {
@@ -21,7 +26,7 @@ interface IReplyModal {
     modal: boolean;
     comment: TheComment;
     closeModal: () => void;
-    setPost: Dispatch<SetStateAction<boolean>>;
+    setPost: Dispatch<SetStateAction<string>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;
   };
 }
@@ -54,12 +59,13 @@ export const ReplyModal = ({ _data }: IReplyModal) => {
   const { Loading, setLoading } = useCmtRes({
     _data: { closeModal, setPost, setCmtModal, data },
   });
+  const { isDesk } = useResponsive();
   return (
     <AnimatePresence>
       {Loading && <LoadingModal theme={theme} />}
       {modal && !Loading && (
-        <>
-          <Cont
+        <Cont isDesk={isDesk}>
+          <Modal
             exit="exit"
             initial="initial"
             animate="animate"
@@ -67,10 +73,10 @@ export const ReplyModal = ({ _data }: IReplyModal) => {
             custom={theme}
             variants={cmtModalVar}
           >
-            <Form onSubmit={handleSubmit(onValid)}>
+            <form onSubmit={handleSubmit(onValid)}>
               <Layer _data={{ theme, userId, closeModal }} />
               <Inputs
-                _data={{ theme, host_id, setPost }}
+                _data={{ theme, host_id, setPost, isDesk }}
                 _useform={{
                   watch,
                   register,
@@ -78,35 +84,20 @@ export const ReplyModal = ({ _data }: IReplyModal) => {
                   error: errors.text?.message!,
                 }}
               />
-            </Form>
-          </Cont>
+            </form>
+          </Modal>
           <OverlayBg closeModal={closeModal} />
-        </>
+        </Cont>
       )}
     </AnimatePresence>
   );
 };
-const Cont = styled(Modal)`
-  top: 33vh;
-  width: 33vw;
-  z-index: 100;
-  color: inherit;
-  height: fit-content;
-  background-color: inherit;
-  form {
-    width: 100%;
-    gap: 1.2rem;
-    h1 {
-      font-size: 1.5rem;
-      span {
-        :first-of-type {
-          margin-right: 0.5rem;
-        }
-      }
-      .userId {
-        color: #3498db;
-        font-weight: 500;
-      }
+const Cont = styled(MobModal)`
+  .modal {
+    .userId {
+      color: #3498db;
+      font-weight: 500;
+      margin-left: 1rem;
     }
   }
 `;

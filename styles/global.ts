@@ -106,6 +106,9 @@ export const Modal = styled(FlexCol)`
   ::-webkit-scrollbar {
     display: none;
   }
+  form {
+    width: 100%;
+  }
   h1 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
@@ -200,12 +203,11 @@ export const PostCover = styled(FlexCol)`
   img {
     width: 100%;
     height: fit-content;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     box-shadow: ${(p) => p.theme.boxShadow.nav};
   }
   h2 {
     font-weight: 400;
-    font-size: 1.4rem;
     text-align: center;
   }
 `;

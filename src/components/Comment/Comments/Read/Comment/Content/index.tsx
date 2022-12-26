@@ -68,11 +68,10 @@ interface IContent {
     theme: boolean;
     isDesk: boolean;
     comment: TheComment;
-
     clickSvg: ({ type, comment }: IClickSvg) => void;
   };
   _set: {
-    setPost: Dispatch<SetStateAction<boolean>>;
+    setPost: Dispatch<SetStateAction<string>>;
     setModal: Dispatch<SetStateAction<string>>;
     setSelect: Dispatch<SetStateAction<number>>;
     setCmtModal: Dispatch<SetStateAction<boolean>>;

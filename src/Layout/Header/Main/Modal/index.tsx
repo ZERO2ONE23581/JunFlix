@@ -121,7 +121,7 @@ const vars = {
   animate: ({ isMobile }: any) => ({
     opacity: 1,
     x: '-50%',
-    y: isMobile ? -999 : 30,
+    y: isMobile ? -1100 : 30,
     transition: { duration: 0.3 },
   }),
 
