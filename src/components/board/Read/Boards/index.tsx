@@ -4,27 +4,16 @@ import { BoardBox } from './Box';
 import { QuickBox } from './Quick';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { Btn } from '../../../../Tools/Button';
 import { AnimatePresence } from 'framer-motion';
 import { NoData } from '../../../../Tools/NoData';
 import { IPostType } from '../../../../types/post';
 import { IBoardType } from '../../../../types/board';
 import { color } from '../../../../../styles/variants';
-import { FlexCol, Grid } from '../../../../../styles/global';
-import { Btn } from '../../../../Tools/Button';
+import { FlexCol_, Grid } from '../../../../../styles/global';
+import { useResponsive } from '../../../../libs/client/useTools';
 
-interface IBoards {
-  mobile?: boolean;
-  _genre?: string;
-  _data: {
-    theme: boolean;
-    user_id?: number;
-    isBoard: boolean;
-    hideFilter?: boolean;
-    boards: IBoardType[];
-    quickSaved?: IPostType[];
-  };
-}
-export const BoardsGrid = ({ _data, _genre, mobile }: IBoards) => {
+export const BoardsGrid = ({ _data, _genre }: IBoards) => {
   const { theme, user_id, isBoard, hideFilter, boards, quickSaved } = _data;
   const isHide = Boolean(hideFilter! || _genre);
   const [genre, setGenre] = useState({ select: false, type: 'all' });
@@ -37,6 +26,20 @@ export const BoardsGrid = ({ _data, _genre, mobile }: IBoards) => {
       else return boards?.filter((e) => e.genre === genre.type);
     } else return boards;
   };
+
+  const router = useRouter();
+  const length = array()?.length;
+  const [edit, setEdit] = useState(false);
+  const { isMobile, isDesk } = useResponsive();
+  const isAnyQuick = Boolean(quickSaved?.length! > 0);
+  const isAllBoardPage = Boolean(router.asPath === '/board/all');
+  const isQS = isAnyQuick && !edit;
+  const plused = length + 1;
+  const max = isMobile ? 2 : 5;
+  const isMax = Boolean(length >= max);
+  const isPlused = Boolean(plused >= max);
+  const IsBoard = Boolean(isBoard! && length! > 0);
+  const boxes = isQS ? (isPlused ? max : plused) : isMax ? max : length;
   const __isQuick = {
     theme,
     user_id,
@@ -45,30 +48,19 @@ export const BoardsGrid = ({ _data, _genre, mobile }: IBoards) => {
     posts: quickSaved!,
     title: 'Quick Saved',
   };
-  const router = useRouter();
-  const length = array()?.length;
-  const [edit, setEdit] = useState(false);
-  const isAnyQuick = Boolean(quickSaved?.length! > 0);
-  const isAllBoardPage = Boolean(router.asPath === '/board/all');
-  const isQS = isAnyQuick && !edit;
-  const max = mobile ? 3 : 5;
-  const plused = length + 1;
-  const isMax = Boolean(length >= max);
-  const isPlused = Boolean(plused >= max);
-  const IsBoard = Boolean(isBoard! && length! > 0);
-  const boxes = isQS ? (isPlused ? max : plused) : isMax ? max : length;
   return (
-    <Cont className="boards_grid">
+    <Cont isDesk={isDesk} className="boards_grid">
       {IsBoard && <Icons _data={{ theme, setGenre, isHide, setEdit }} />}
       <AnimatePresence>
         {IsBoard && (
           <Array
             exit="exit"
-            animate="animate"
-            initial="initial"
             box={boxes}
             custom={theme}
             variants={vars}
+            className="grid"
+            initial="initial"
+            animate="animate"
           >
             {array()?.map((board) => (
               <BoardBox
@@ -96,12 +88,17 @@ export const BoardsGrid = ({ _data, _genre, mobile }: IBoards) => {
     </Cont>
   );
 };
-const Cont = styled(FlexCol)`
+const Cont = styled(FlexCol_)`
   width: fit-content;
   align-items: flex-end;
+  .grid {
+    gap: ${(p) => !p.isDesk && '2.1rem'};
+  }
   .back_btn {
     margin: 0 auto;
-    width: 100px;
+    border-radius: 40px;
+    width: ${(p) => (p.isDesk ? '100px' : '200px')};
+    font-size: ${(p) => (p.isDesk ? '1.1rem' : '2.5rem')};
   }
 `;
 const Array = styled(Grid)`
@@ -117,3 +114,14 @@ const vars = {
     transition: { duration: 0.8 },
   }),
 };
+interface IBoards {
+  _genre?: string;
+  _data: {
+    theme: boolean;
+    user_id?: number;
+    isBoard: boolean;
+    hideFilter?: boolean;
+    boards: IBoardType[];
+    quickSaved?: IPostType[];
+  };
+}

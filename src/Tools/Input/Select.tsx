@@ -6,6 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import { FlexCol } from '../../../styles/global';
 import { color, greyColor, redColor } from '../../../styles/variants';
 import { UseFormClearErrors, UseFormRegisterReturn } from 'react-hook-form';
+import { useResponsive } from '../../libs/client/useTools';
 
 interface ISelectWrap {
   _data: {
@@ -20,12 +21,13 @@ interface ISelectWrap {
 }
 
 export const SelectWrap = ({ _data }: ISelectWrap) => {
+  const { isDesk } = useResponsive();
   const { id, text, theme, error, disabled, register, clearErrors } = _data;
   const [focus, setFocus] = useState(false);
   const isRed = Boolean(focus || text);
   return (
     <AnimatePresence initial={false}>
-      <>
+      <Mob isDesk={isDesk}>
         <label htmlFor={id} style={{ display: 'none' }} />
         <Cont
           variants={vars}
@@ -70,23 +72,28 @@ export const SelectWrap = ({ _data }: ISelectWrap) => {
           </select>
         </Cont>
         <ErrModal _data={{ id, theme, error, clearErrors }} />
-      </>
+      </Mob>
     </AnimatePresence>
   );
 };
+const Mob = styled.div<{ isDesk: boolean }>`
+  .select-wrap {
+    padding: 0 3rem;
+    select {
+      font-size: ${(p) => (p.isDesk ? '1.1rem' : '2rem')};
+      padding: ${(p) => (p.isDesk ? '1rem 0' : '1.2rem 0')};
+      width: ${(p) => (p.isDesk ? 'fit-content' : '100vw')};
+    }
+  }
+`;
 const Cont = styled(FlexCol)`
   overflow: hidden;
-  padding: 0 3rem;
   min-height: 44px;
   border-radius: 8px;
-  width: fit-content;
   select {
     border: none;
     outline: none;
     color: inherit;
-    padding: 11px 0;
-    font-size: 1.1rem;
-    width: fit-content;
     text-align: center;
     background-color: inherit;
   }
@@ -97,6 +104,5 @@ const vars = {
     backgroundColor: color(!theme),
     border: InpBorderVar(isRed, theme, disabled),
     color: disabled ? greyColor : isRed ? redColor : color(theme),
-    //border: disabled ? greyBrdr : isRed ? redBrdr : TransBorder(!theme),
   }),
 };

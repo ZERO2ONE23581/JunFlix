@@ -2,7 +2,7 @@ import { Box } from './Box';
 import { Icons } from './Icons';
 import styled from '@emotion/styled';
 import { PostModal } from '../Read/Modal';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IPostType } from '../../../../types/post';
 import { usePostsGrid } from '../../../../libs/client/usePosts';
 import { useResponsive } from '../../../../libs/client/useTools';
@@ -10,7 +10,6 @@ import { FlexCol, FlexCol_, Grid } from '../../../../../styles/global';
 
 interface IPostGrid {
   _data: {
-    grid: number;
     theme: boolean;
     post: IPostType;
     posts: IPostType[];
@@ -24,17 +23,17 @@ interface IPostGrid {
 }
 export const PostGrid = ({ _data, _set }: IPostGrid) => {
   const { isDesk } = useResponsive();
-  const { theme, posts, grid, post } = _data;
+  const { theme, posts, post } = _data;
   const { modal, setPostId, setCmtModal, setModal } = _set;
-  const { ColArr, PostArr, max, setMax } = usePostsGrid({ posts, grid });
   const onClick = (id: number) => {
     setPostId(id);
     setModal('read');
   };
+  const { ColArr, PostArr, max, setMax } = usePostsGrid({ posts });
   return (
     <>
       <Cont isDesk={isDesk}>
-        <Icons _data={{ theme, setMax }} />
+        {isDesk && <Icons _data={{ theme, setMax }} />}
         <Grid className="grid" box={max}>
           {ColArr.map((column) => (
             <Array key={column}>

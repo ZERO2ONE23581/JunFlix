@@ -2,6 +2,9 @@ import styled from '@emotion/styled';
 import { FlexCol_ } from './global';
 
 export const MobModal = styled(FlexCol_)`
+  form {
+    width: 100%;
+  }
   .modal {
     justify-content: flex-start;
     width: ${(p) => (p.isDesk ? 'fit-content' : '100%')};

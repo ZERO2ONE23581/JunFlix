@@ -43,8 +43,6 @@ export const VerifyID = ({ _data }: IVerfiyID) => {
     if (loading) return;
     return POST({ userId });
   };
-  //
-  console.log(data, '??');
   useEffect(() => {
     if (data) {
       setTimeout(() => {

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Flex } from '../../../../../styles/global';
 
 interface IBoardDetail {
   _data: {
@@ -10,43 +11,29 @@ interface IBoardDetail {
 export const Detail = ({ _data }: IBoardDetail) => {
   const { onPrivate, Posts, Saved } = _data;
   return (
-    <Container className="board-detail">
-      <ul>
-        {onPrivate && (
-          <li>
-            <span>Private</span>
-          </li>
-        )}
-        {!onPrivate && (
-          <li>
-            <span>Public</span>
-          </li>
-        )}
-        <li>
+    <Cont className="detail">
+      <Flex>
+        <Flex>
+          <span>{onPrivate ? 'private' : 'public'}</span>
+        </Flex>
+        <Flex>
           <span>{Saved}</span>
           <span>saved</span>
-        </li>
-        <li>
+        </Flex>
+        <Flex>
           <span>{Posts}</span>
           <span>posts</span>
-        </li>
-      </ul>
-    </Container>
+        </Flex>
+      </Flex>
+    </Cont>
   );
 };
-const Container = styled.div`
+const Cont = styled.div`
   opacity: 0.9;
-  ul {
-    gap: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    li {
-      gap: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  > div {
+    gap: 1rem;
+    > div {
+      gap: 1rem;
     }
   }
 `;

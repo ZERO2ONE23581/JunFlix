@@ -1,12 +1,24 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
-export const Page = styled(motion.section)`
+export const Page = styled.section`
   width: 100%;
   height: 100%;
   padding: 0 2rem;
   position: relative;
 `;
+export const BG = styled(Page)<{ isDesk: boolean }>`
+  padding: 2.5rem;
+  color: whitesmoke;
+  min-height: ${(p) => (p.isDesk ? '100%' : '166vh')};
+  background: url('/img/up.jpg') center / cover no-repeat;
+  .post_cover {
+    h2 {
+      color: whitesmoke;
+    }
+  }
+`;
+export const Mob = styled.article<{ isDesk: boolean }>``;
 export const FlexPage = styled(Page)`
   display: flex;
   padding-top: 30vh;
@@ -52,10 +64,6 @@ export const Text = styled(FlexCol)`
   align-items: center;
   justify-content: center;
   > span {
-    font-size: 1.2rem;
-    .kor {
-      font-size: 1.1rem;
-    }
     span {
       display: block;
       text-align: center;
@@ -101,7 +109,6 @@ export const Modal = styled(FlexCol)`
   border-radius: 5px;
   width: fit-content;
   height: fit-content;
-  justify-content: center;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   ::-webkit-scrollbar {
     display: none;
@@ -110,7 +117,6 @@ export const Modal = styled(FlexCol)`
     width: 100%;
   }
   h1 {
-    font-size: 1.8rem;
     margin-bottom: 0.5rem;
   }
   .close {
@@ -125,10 +131,9 @@ export const MiniModal = styled(motion.div)`
   z-index: 100;
   padding: 5px;
   overflow: hidden;
-  min-width: 280px;
+  font-size: 1.6rem;
   position: absolute;
   border-radius: 5px;
-  font-size: 1.6rem;
   .small {
     opacity: 0.8;
     font-size: 1.4rem;

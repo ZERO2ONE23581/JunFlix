@@ -10,8 +10,13 @@ import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { PostSt } from '../../../../../styles/post';
 import { useUser } from '../../../../libs/client/useUser';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { TransBorderVar } from '../../../../../styles/variants';
-import { useLength, useUploadImg } from '../../../../libs/client/useTools';
+import { color, TransBorder } from '../../../../../styles/variants';
+import {
+  useLength,
+  useUploadImg,
+  useResponsive,
+} from '../../../../libs/client/useTools';
+import { MobModal } from '../../../../../styles/mobile';
 
 interface ICreatePostSt {
   _data: {
@@ -85,34 +90,55 @@ export const Modal = ({ _data }: ICreatePostSt) => {
     setStep(1);
   };
   const __data = { theme, isNext };
+  const { isDesk } = useResponsive();
   const layer_data = { ...__data, setStep, closeModal };
   const _useform = { watch, errors, register, clearErrors };
   return (
     <AnimatePresence>
       {modal && (
-        <>
-          <form onSubmit={handleSubmit(onValid)}>
-            <Cont
-              exit="exit"
-              animate="animate"
-              initial="initial"
-              custom={theme}
-              layoutId={layoutId}
-              variants={TransBorderVar}
-            >
-              <Layer _data={{ ...layer_data }} />
+        <Cont isDesk={isDesk}>
+          <PostSt
+            exit="exit"
+            animate="animate"
+            initial="initial"
+            className="modal"
+            variants={vars}
+            layoutId={layoutId}
+            custom={{ theme, isDesk }}
+          >
+            <form onSubmit={handleSubmit(onValid)}>
+              <Layer _data={{ ...layer_data, isDesk }} />
               <ImageInput
                 _data={{ theme, isNext, _watch: watch, _register: register }}
               />
               <PostInfo _data={{ ...__data }} _useform={_useform} />
-            </Cont>
-          </form>
+            </form>
+          </PostSt>
           <OverlayBg closeModal={closeModal} />
-        </>
+        </Cont>
       )}
     </AnimatePresence>
   );
 };
-const Cont = styled(PostSt)`
-  align-items: flex-start;
+const Cont = styled(MobModal)`
+  .modal {
+    color: inherit;
+    align-items: flex-start;
+    background-color: inherit;
+    .layer {
+      padding: 0;
+    }
+  }
 `;
+const transition = { duration: 0.5 };
+const vars = {
+  animate: ({ theme, isDesk }: any) => ({
+    scale: 1,
+    opacity: 1,
+    transition,
+    backgroundColor: color(!theme),
+    border: !isDesk ? '1px solid transparent' : TransBorder(!theme),
+  }),
+  exit: () => ({ opacity: 0, scale: 0.1, transition }),
+  initial: () => ({ opacity: 0, scale: 0.1, transition }),
+};

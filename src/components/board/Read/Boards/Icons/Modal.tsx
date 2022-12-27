@@ -2,11 +2,13 @@ import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import { List } from '../../../../User/Read/MyPage/List';
-import { smallModalVar } from '../../Board/Title/Setting';
 import { OverlayBg } from '../../../../../Tools/OverlayBg';
-import { MiniModal } from '../../../../../../styles/global';
-import { useCapLetters } from '../../../../../libs/client/useTools';
-import { cmtModalVar, fromTopVar } from '../../../../../../styles/variants';
+import { MiniModal, Mob } from '../../../../../../styles/global';
+import { fromTopVar } from '../../../../../../styles/variants';
+import {
+  useCapLetters,
+  useResponsive,
+} from '../../../../../libs/client/useTools';
 
 interface IFilterModal {
   _data: {
@@ -16,8 +18,8 @@ interface IFilterModal {
     setGenre: Dispatch<SetStateAction<{ select: boolean; type: string }>>;
   };
 }
-
 export const FilterModal = ({ _data }: IFilterModal) => {
+  const { isDesk } = useResponsive();
   const { theme, modal, closeModal, setGenre } = _data;
   const useName = (txt: string) => {
     const kor = () => {
@@ -44,8 +46,8 @@ export const FilterModal = ({ _data }: IFilterModal) => {
   return (
     <AnimatePresence>
       {modal === 'filter' && (
-        <>
-          <Cont
+        <Cont isDesk={isDesk}>
+          <Modal
             exit="exit"
             custom={theme}
             initial="initial"
@@ -61,7 +63,7 @@ export const FilterModal = ({ _data }: IFilterModal) => {
                   _data={{
                     theme,
                     onClick: () => onClick(genre),
-                    svg: genre === 'all' ? 'film' : genre ? genre : 'film',
+                    svg: genre === 'all' ? 'movie' : genre ? genre : 'movie',
                     name: {
                       eng: useName(genre)?.eng!,
                       kor: useName(genre)?.kor!,
@@ -70,18 +72,32 @@ export const FilterModal = ({ _data }: IFilterModal) => {
                 />
               ))}
             </ul>
-          </Cont>
+          </Modal>
           <OverlayBg closeModal={closeModal} />
-        </>
+        </Cont>
       )}
     </AnimatePresence>
   );
 };
-const Cont = styled(MiniModal)`
-  top: 2rem;
-  right: -5rem;
-  //font-size: 2rem;
+const Cont = styled(Mob)`
+  .filter-modal {
+    top: 2rem;
+    right: ${(p) => (p.isDesk ? '-5rem' : '0rem')};
+    font-size: ${(p) => (p.isDesk ? '2rem' : '3rem')};
+    min-width: ${(p) => (p.isDesk ? '300px' : '440px')};
+    .list {
+      padding: ${(p) => (p.isDesk ? '0.5rem' : '0.8rem')};
+      min-width: ${(p) => (p.isDesk ? '300px' : '440px')};
+    }
+    .kor {
+      font-size: ${(p) => (p.isDesk ? '2rem' : '2.5rem')};
+    }
+    .small {
+      font-size: ${(p) => (p.isDesk ? '1rem' : '2rem')};
+    }
+  }
 `;
+const Modal = styled(MiniModal)``;
 const array = [
   'all',
   'sf',

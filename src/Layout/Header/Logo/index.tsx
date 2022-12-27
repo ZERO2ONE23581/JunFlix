@@ -43,8 +43,8 @@ const Cont = styled.div<{ mobile: boolean }>`
     margin-left: ${(p) => p.mobile && '1.5rem'};
     width: ${(p) => (p.mobile ? '1rem' : '11rem')};
     svg {
-      width: ${(p) => (p.mobile ? '14rem' : '8rem')};
-      height: ${(p) => (p.mobile ? '14rem' : '8rem')};
+      width: ${(p) => (p.mobile ? '17rem' : '8rem')};
+      height: ${(p) => (p.mobile ? '17rem' : '8rem')};
     }
   }
 `;

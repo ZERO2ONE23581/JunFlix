@@ -5,9 +5,9 @@ import { NoData } from '../../../../Tools/NoData';
 import { PostSchema } from '../../../Post/Schema';
 import { CreatePost } from '../../../Post/Create';
 import { IBoardType } from '../../../../types/board';
-import { IsBlur } from '../../../../libs/client/useTools';
+import { IsBlur, useResponsive } from '../../../../libs/client/useTools';
 import { MsgModal } from '../../../../Tools/Modal/Message';
-import { Blur, FlexPage } from '../../../../../styles/global';
+import { Blur, FlexPage, Page } from '../../../../../styles/global';
 import { useGetPosts } from '../../../../libs/client/usePosts';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
@@ -35,14 +35,16 @@ export const BoardPosts = ({ _data }: IBoardPosts) => {
     setMsg(result);
   };
   const length = posts?.length!;
+  const { isDesk } = useResponsive();
   const noPosts = !Boolean(length > 0);
   const grid = length > 6 ? 6 : length;
+  const size = isDesk ? '2rem' : '4rem';
   return (
-    <Cont>
+    <Cont isDesk={isDesk}>
       {isBlur && (
         <>
           <MsgModal _data={{ msg, theme }} />
-          <Svg type="lock" theme={theme} onClick={onSvg} />
+          <Svg item={{ size }} type="lock" theme={theme} onClick={onSvg} />
         </>
       )}
       <CreatePost _data={{ theme, createPost, closeModal }} />
@@ -56,11 +58,8 @@ export const BoardPosts = ({ _data }: IBoardPosts) => {
   );
 };
 
-const Cont = styled(FlexPage)`
-  padding: 0 10rem;
-  position: relative;
-  min-height: fit-content;
-  justify-content: flex-start;
+const Cont = styled(Page)<{ isDesk: boolean }>`
+  padding: 2rem 0;
   .lock {
     top: 25%;
     left: 50%;

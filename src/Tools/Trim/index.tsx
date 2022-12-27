@@ -65,22 +65,17 @@ export const TrimText = ({ text, max }: ITrimText) => {
 };
 const Cont = styled(motion.span)``;
 const Text = styled(motion.span)`
-  width: fit-content;
   line-height: 21px;
+  width: fit-content;
   word-break: break-all;
 `;
-const variants = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.3 } },
-  exit: { opacity: 0 },
-  hover: {
-    scale: 1.05,
-    color: '#E50914',
-    transition: { duration: 0.3 },
-  },
-};
 const Span = styled(motion.span)`
   opacity: 0.8;
-  font-size: 1rem;
   cursor: pointer;
 `;
+const variants = {
+  exit: { opacity: 0 },
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.3 } },
+  hover: { scale: 1.05, color: '#E50914', transition: { duration: 0.3 } },
+};

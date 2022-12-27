@@ -81,23 +81,14 @@ export const modalVar = {
   }),
 };
 export const noneBorderVar = {
-  initial: (theme: boolean) => ({
-    opacity: 0,
-    color: color(theme),
-    backgroundColor: color(!theme),
-  }),
   animate: (theme: boolean) => ({
     opacity: 1,
     color: color(theme),
     transition: { duration: 0.5 },
     backgroundColor: color(!theme),
   }),
-  exit: (theme: boolean) => ({
-    opacity: 0,
-    color: color(theme),
-    backgroundColor: color(!theme),
-    transition: { duration: 0.5 },
-  }),
+  initial: () => ({ opacity: 0 }),
+  exit: () => ({ opacity: 0, transition: { duration: 0.5 } }),
 };
 export const variants = {
   exit: () => ({ opacity: 0 }),
@@ -108,25 +99,6 @@ export const variants = {
     border: TransBorder(!theme),
     transition: { duration: 0.5 },
     backgroundColor: color(!theme),
-  }),
-};
-export const TransBorderVar = {
-  initial: (theme: boolean) => ({
-    opacity: 0,
-    scale: 0.1,
-    transition: { duration: 0.5 },
-  }),
-  animate: (theme: boolean) => ({
-    scale: 1,
-    opacity: 1,
-    border: TransBorder(!theme),
-    transition: { duration: 0.5 },
-    backgroundColor: color(!theme),
-  }),
-  exit: (theme: boolean) => ({
-    scale: 0.1,
-    opacity: 0,
-    transition: { duration: 0.5 },
   }),
 };
 export const cmtModalVar = {
@@ -183,5 +155,16 @@ export const fromTopVar = {
     color: color(theme),
     backgroundColor: color(!theme),
     transition: { duration: 0.5 },
+  }),
+};
+export const mobVars = {
+  initial: () => ({ opacity: 0 }),
+  exit: () => ({ opacity: 0, transition: { duration: 0.5 } }),
+  animate: ({ theme, isDesk, isRed }: any) => ({
+    opacity: 1,
+    transition: { duration: 0.5 },
+    backgroundColor: color(!theme),
+    color: isRed ? redColor : color(theme),
+    border: !isDesk ? '1px solid transparent' : TransBorder(!theme),
   }),
 };

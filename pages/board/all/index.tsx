@@ -1,26 +1,23 @@
 import type { NextPage } from 'next';
-import styled from '@emotion/styled';
-import { Page } from '../../../styles/global';
+import { IPage } from '../../_app';
+import { PostPage } from '../../../styles/post';
 import { Head_ } from '../../../src/Tools/Title/Head';
 import { PageTitle } from '../../../src/Tools/Title/Page';
+import { useResponsive } from '../../../src/libs/client/useTools';
 import { useGetAllBoards } from '../../../src/libs/client/useBoards';
 import { BoardsGrid } from '../../../src/components/Board/Read/Boards';
-import { IPage } from '../../_app';
 
-const AllBoards: NextPage<IPage> = ({ theme, mobile }) => {
+const AllBoards: NextPage<IPage> = ({ theme }) => {
+  const { isDesk } = useResponsive();
   const { boards, isBoard } = useGetAllBoards();
   return (
     <>
       <Head_ title="All Boards" />
-      <Cont>
+      <PostPage isDesk={isDesk}>
         <PageTitle type="all_board" theme={theme} />
-        <BoardsGrid _data={{ theme, isBoard, boards }} mobile={mobile} />
-      </Cont>
+        <BoardsGrid _data={{ theme, isBoard, boards }} />
+      </PostPage>
     </>
   );
 };
 export default AllBoards;
-
-const Cont = styled(Page)`
-  padding: 0 2rem;
-`;

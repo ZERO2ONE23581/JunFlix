@@ -23,8 +23,8 @@ export const BoardModals = ({ _data }: IBoardSet) => {
   const [layoutId, setLayoutId] = useState('');
   const [Loading, setLoading] = useState(false);
   const { type, theme, board, setType } = _data;
-  const [POST, { data, loading }] = useMutation<IRes>(api && api);
   const closeModal = () => setType('');
+  const [POST, { data, loading }] = useMutation<IRes>(api && api);
   const __data = { theme, layoutId, POST, board };
   const __modal = { type, Loading, loading, setLoading, closeModal };
   useBoardApi({ _data: { type, original: board, setLayoutId, setApi } });

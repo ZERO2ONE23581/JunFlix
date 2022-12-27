@@ -132,7 +132,7 @@ const TextArea = styled.textarea`
 `;
 const Label = styled(motion.label)`
   left: 1rem;
-  z-index: 1;
+  //z-index: 1;
   font-size: 1.1rem;
   padding: 5px 10px;
   width: fit-content;

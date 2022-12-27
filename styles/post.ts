@@ -1,8 +1,23 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import { Flex, Modal } from './global';
+import { Modal, Page } from './global';
 import { color, greyBrdr } from './variants';
 
+export const PostPage = styled(Page)<{ isDesk: boolean }>`
+  padding: 0 2.5rem;
+  min-height: 166vh;
+  padding-bottom: 4rem;
+  .page-title {
+    margin-bottom: 2rem;
+    font-size: ${(p) => (p.isDesk ? '2rem' : '4rem')};
+    svg {
+      width: ${(p) => (p.isDesk ? '2rem' : '4rem')};
+      height: ${(p) => (p.isDesk ? '2rem' : '4rem')};
+    }
+    .txt {
+      padding: ${(p) => (p.isDesk ? '0.5rem 2rem' : '1rem 3rem')};
+    }
+  }
+`;
 export const PostSt = styled(Modal)`
   top: 0vh;
   width: 100%;
@@ -12,40 +27,6 @@ export const PostSt = styled(Modal)`
   img {
     width: 100%;
     height: 100%;
-  }
-`;
-
-export const SelectModal = styled(Modal)`
-  top: 10rem;
-  padding: 0;
-  z-index: 113;
-  font-size: 1.2rem;
-  width: fit-content;
-  height: fit-content;
-  border-radius: 20px;
-  justify-content: flex-start;
-  form {
-    width: 100%;
-    height: 100%;
-  }
-`;
-export const ModalLayer = styled(Flex)`
-  width: 100%;
-  display: flex;
-  font-size: 1.5rem;
-  padding: 10px 20px;
-  border-bottom: 2px solid ${(p) => p.theme.color.font};
-  > div {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    :nth-of-type(1) {
-      justify-content: flex-start;
-    }
-    :nth-of-type(3) {
-      justify-content: flex-end;
-    }
   }
 `;
 export const select_board_ul_var = {
@@ -60,82 +41,6 @@ export const select_board_ul_var = {
     transition: { duration: 0.6 },
   }),
 };
-
-export const PostStStyle = styled(Modal)`
-  padding: 0;
-  width: 40vw;
-  height: 90vh;
-  font-size: 1.1rem;
-  justify-content: flex-start;
-  form {
-    width: 100%;
-    height: 100%;
-  }
-`;
-export const Postlayer = styled(motion.div)`
-  gap: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  h1 {
-    font-size: 1.3rem;
-    font-weight: 500;
-  }
-  button {
-    padding: 5px 20px;
-    border-radius: 20px;
-    width: fit-content;
-  }
-  .absolute-layer {
-    padding: 0 15px;
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-`;
-export const Absolutelayer = styled(motion.div)`
-  padding: 0 15px;
-  top: 50%;
-  left: 50%;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-export const CreatePostMain = styled(motion.div)`
-  overflow: auto;
-  position: relative;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-export const Span = styled(motion.span)`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  :first-of-type {
-    justify-content: flex-start;
-  }
-  :nth-of-type(2) {
-  }
-  :last-of-type {
-    justify-content: flex-end;
-  }
-  svg {
-    display: block;
-    position: static;
-  }
-`;
 export const postVar = {
   animate: ({ theme, isDesk }: any) => ({
     scale: 1,

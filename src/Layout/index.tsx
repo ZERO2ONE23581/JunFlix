@@ -6,6 +6,7 @@ import { Page } from '../../styles/global';
 import { IResponsive } from '../types/global';
 import { noneBorderVar } from '../../styles/variants';
 import { Dispatch, ReactElement, SetStateAction } from 'react';
+import { motion } from 'framer-motion';
 
 interface ILayoutProps extends IResponsive {
   children: ReactElement;
@@ -37,8 +38,10 @@ export const Layout = ({ _data, children, _res }: ILayoutProps) => {
   );
 };
 
-const Cont = styled(Page)`
+const Cont = styled(motion.section)`
   padding: 0;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
   min-width: 768px;
+  position: relative;
 `;

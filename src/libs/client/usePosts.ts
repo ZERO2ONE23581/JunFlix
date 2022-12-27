@@ -2,7 +2,12 @@ import useSWR from 'swr';
 import { useGetUser } from './useUser';
 import { useRouter } from 'next/router';
 import { IRes } from '../../types/global';
-import { useCapLetters, useLength, useUploadImg } from './useTools';
+import {
+  useCapLetters,
+  useLength,
+  useResponsive,
+  useUploadImg,
+} from './useTools';
 import {
   UseFormReset,
   UseFormSetError,
@@ -71,11 +76,11 @@ export const usePostTitle = (title: string) => {
 };
 
 interface IUsePostsGrid {
-  grid: number;
   posts: IPostType[];
 }
-export const usePostsGrid = ({ posts, grid }: IUsePostsGrid) => {
-  const [max, setMax] = useState(grid);
+export const usePostsGrid = ({ posts }: IUsePostsGrid) => {
+  const [max, setMax] = useState(2);
+  const { isDesk, isMobile } = useResponsive();
   const ColArr = [...new Array(max)].map((_, p) => p + 1);
   const PostArr = (col: number) =>
     posts?.filter(
@@ -83,6 +88,9 @@ export const usePostsGrid = ({ posts, grid }: IUsePostsGrid) => {
         posts.indexOf(post) === ColArr.indexOf(col) || // first row
         posts.indexOf(post) % max === ColArr.indexOf(col) // second row ++
     );
+  useEffect(() => {
+    if (isMobile) setMax(2);
+  }, [setMax, isDesk]);
   return { ColArr, PostArr, max, setMax };
 };
 interface IUsePostResult {

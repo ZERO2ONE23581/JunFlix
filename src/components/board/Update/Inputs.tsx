@@ -6,13 +6,14 @@ import {
 import styled from '@emotion/styled';
 import { Btn } from '../../../Tools/Button';
 import { IForm } from '../../../types/global';
-import { Flex } from '../../../../styles/global';
+import { Flex, Flex_ } from '../../../../styles/global';
 import { InputWrap } from '../../../Tools/Input';
 import { SelectWrap } from '../../../Tools/Input/Select';
 
 interface IInputs {
   _data: {
     theme: boolean;
+    isDesk: boolean;
     err_title: string;
     watch: UseFormWatch<IForm>;
     register: UseFormRegister<IForm>;
@@ -20,9 +21,9 @@ interface IInputs {
   };
 }
 export const Inputs = ({ _data }: IInputs) => {
-  const { theme, watch, register, clearErrors, err_title } = _data;
+  const { theme, watch, register, clearErrors, err_title, isDesk } = _data;
   return (
-    <Cont>
+    <Cont className="inputs" isDesk={isDesk}>
       <InputWrap
         _data={{
           theme,
@@ -44,15 +45,10 @@ export const Inputs = ({ _data }: IInputs) => {
           register: register('genre'),
         }}
       />
-      <Btn type="submit" item={{ theme, name: 'Save' }} />
     </Cont>
   );
 };
-const Cont = styled(Flex)`
-  gap: 1rem;
+const Cont = styled(Flex_)`
+  gap: 1.2rem;
   align-items: flex-end;
-  button {
-    width: fit-content;
-    padding: 0.8rem 1rem;
-  }
 `;

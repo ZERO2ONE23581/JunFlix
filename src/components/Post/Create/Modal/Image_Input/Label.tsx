@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useResponsive } from '../../../../../libs/client/useTools';
 import { Click } from '../../../Update/Upload/File/Click';
 import { Preview } from '../../../Update/Upload/File/Preview';
 
@@ -11,27 +12,30 @@ interface ILabel {
   };
 }
 export const Label = ({ _data }: ILabel) => {
-  const id = _data?.id!;
-  const theme = _data?.theme!;
-  const preview = _data?.preview!;
-  const isNext = _data?.isNext!;
+  const { isDesk } = useResponsive();
+  const { id, theme, preview, isNext } = _data;
   return (
-    <Cont isNext={isNext!} htmlFor={id} className="img-label">
+    <Cont isDesk={isDesk} isNext={isNext!} htmlFor={id} className="img-label">
       <Preview _data={{ preview, isNext }} />
       <Click _data={{ theme, preview }} />
     </Cont>
   );
 };
-const Cont = styled.label<{ isNext: boolean }>`
+
+const Cont = styled.label<{ isNext: boolean; isDesk: boolean }>`
   cursor: ${(p) => !p.isNext && 'pointer'};
   width: 100%;
   height: 100%;
+  height: 166vh;
   display: flex;
   font-size: 2rem;
   font-weight: 400;
   position: relative;
   align-items: center;
+  border-radius: 20px;
   justify-content: center;
+  font-size: ${(p) => (p.isDesk ? '2rem' : '4rem')};
+  border: 2px solid ${(p) => p.theme.color.font};
   img {
     width: 100%;
     height: 100%;

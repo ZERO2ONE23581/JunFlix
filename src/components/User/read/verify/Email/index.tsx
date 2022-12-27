@@ -51,7 +51,6 @@ export const Email = ({ _data }: IVerifyEmail) => {
       }, 1000);
     }
   }, [data, setToken, setMsg, setLoading, setTimeout]);
-  console.log(data);
   return (
     <AnimatePresence>
       <>

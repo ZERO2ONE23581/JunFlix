@@ -1,20 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PostGrid } from './Grid';
 import styled from '@emotion/styled';
 import { UpdatePost } from '../Update';
 import { DeletePost } from '../Delete';
 import { IPostType } from '../../../types/post';
 import { CommentModal } from '../../Comment/Modal';
+import { useResponsive } from '../../../libs/client/useTools';
 
 interface IPostSchema {
   _data: {
-    grid: number;
+    grid?: number;
     theme: boolean;
     posts: IPostType[];
   };
 }
 export const PostSchema = ({ _data }: IPostSchema) => {
-  const { theme, posts, grid } = _data;
+  const { theme, posts } = _data;
   const [modal, setModal] = useState('');
   const [postId, setPostId] = useState(0);
   const [cmtModal, setCmtModal] = useState(false);
@@ -26,7 +27,7 @@ export const PostSchema = ({ _data }: IPostSchema) => {
   return (
     <Cont className="posts_schema">
       <PostGrid
-        _data={{ grid, theme, posts, post }}
+        _data={{ theme, posts, post }}
         _set={{ modal, setPostId, setCmtModal, setModal }}
       />
       <>

@@ -2,9 +2,10 @@ import styled from '@emotion/styled';
 import { FilterModal } from './Modal';
 import { useRouter } from 'next/router';
 import { Svg } from '../../../../../Tools/Svg';
-import { Flex } from '../../../../../../styles/global';
 import { Answer } from '../../../../../Tools/Modal/Answer';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { Flex, Flex_ } from '../../../../../../styles/global';
+import { useResponsive } from '../../../../../libs/client/useTools';
 import { LinkModal } from '../../../../Post/Schema/Grid/Icons/Modal/Link';
 
 interface IBoardIcons {
@@ -27,7 +28,6 @@ export const Icons = ({ _data }: IBoardIcons) => {
   };
   const closeModal = () => setModal('');
   const icons = () => {
-    //if (useIsMeHost()) return ['edit', 'compass', 'question', 'plus', 'boards'];
     if (isHide) return ['compass', 'question', 'plus', 'boards'];
     else return ['compass', 'question', 'plus', 'filter'];
   };
@@ -38,11 +38,18 @@ export const Icons = ({ _data }: IBoardIcons) => {
     type: 'board',
     answer: modal === 'question',
   };
+  const { isDesk } = useResponsive();
+  const size = isDesk ? '2rem' : '4rem';
   return (
-    <Cont>
+    <Cont isDesk={isDesk}>
       {icons().map((el) => (
         <Icon key={el}>
-          <Svg type={el} theme={theme} onClick={() => onClick(el)} />
+          <Svg
+            type={el}
+            theme={theme}
+            item={{ size }}
+            onClick={() => onClick(el)}
+          />
           <>
             {el === 'question' && <Answer _data={{ ...__answer }} />}
             {el === 'compass' && <LinkModal _data={{ ...__data }} />}
@@ -53,11 +60,10 @@ export const Icons = ({ _data }: IBoardIcons) => {
     </Cont>
   );
 };
-const Cont = styled(Flex)`
+const Cont = styled(Flex_)`
   gap: 1.5rem;
   width: fit-content;
-  margin-bottom: 1rem;
-  padding-right: 3rem;
+  margin-bottom: ${(p) => (p.isDesk ? '1rem' : '2rem')};
 `;
 const Icon = styled(Flex)`
   cursor: pointer;

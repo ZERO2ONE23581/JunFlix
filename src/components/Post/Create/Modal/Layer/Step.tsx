@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Svg } from '../../../../../Tools/Svg';
 import { Btn } from '../../../../../Tools/Button';
+import { Flex } from '../../../../../../styles/global';
 
 export interface IStep {
   _data: {
@@ -12,32 +13,29 @@ export interface IStep {
   };
 }
 export const StepFirst = ({ _data }: IStep) => {
-  const theme = _data?.theme!;
-  const isNext = _data?.isNext!;
-  const clickNext = _data?.clickNext!;
-  const closeModal = _data?.closeModal!;
+  const { theme, isNext, clickNext, closeModal } = _data;
   return (
     <>
       {!isNext && (
         <>
-          <motion.div>
+          <Flex>
             <Svg
               theme={theme}
               type={'close_'}
               onClick={closeModal}
               item={{ size: '1.8rem' }}
             />
-          </motion.div>
-          <motion.div>
-            <h1>Upload Image</h1>
-          </motion.div>
-          <motion.div>
+          </Flex>
+          <Flex>
+            <h1>Upload</h1>
+          </Flex>
+          <Flex>
             <Btn
               type="button"
               onClick={clickNext}
               item={{ theme, name: 'Next' }}
             />
-          </motion.div>
+          </Flex>
         </>
       )}
     </>

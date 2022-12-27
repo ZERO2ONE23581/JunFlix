@@ -2,8 +2,9 @@ import styled from '@emotion/styled';
 import { OverlayBg } from '../OverlayBg';
 import { UseMsg } from '../../libs/client/useMsg';
 import { AnimatePresence } from 'framer-motion';
-import { variants } from '../../../styles/variants';
-import { FlexCol, Modal } from '../../../styles/global';
+import { mobVars, variants } from '../../../styles/variants';
+import { FlexCol, Mob, Modal } from '../../../styles/global';
+import { useResponsive } from '../../libs/client/useTools';
 
 interface IMsgModal {
   _data: {
@@ -15,39 +16,42 @@ interface IMsgModal {
 export const MsgModal = ({ _data }: IMsgModal) => {
   const { msg, theme, layoutId } = _data;
   const { txt } = UseMsg({ msg });
+  const { isDesk } = useResponsive();
   return (
     <AnimatePresence>
       {msg && (
-        <>
-          <Cont
+        <Cont isDesk={isDesk}>
+          <Modal
             exit="exit"
-            custom={theme}
             initial="initial"
             animate="animate"
+            variants={mobVars}
             layoutId={layoutId}
-            variants={variants}
-            className="msg-modal"
+            className="msg_modal"
+            custom={{ theme, isDesk }}
           >
             <Text>
               {txt.kor && <span className="kor">{txt.kor}</span>}
               {txt.eng && <span className="eng">{txt.eng}</span>}
             </Text>
-          </Cont>
+          </Modal>
           <OverlayBg zIndex={200} />
-        </>
+        </Cont>
       )}
     </AnimatePresence>
   );
 };
-const Cont = styled(Modal)`
-  top: 30%;
-  z-index: 201;
-  z-index: 999;
-  padding: 40px;
-  font-size: 1.5rem;
+const Cont = styled(Mob)`
+  .msg_modal {
+    z-index: 999;
+    top: ${(p) => (p.isDesk ? '30vh' : '60vh')};
+    padding: ${(p) => (p.isDesk ? '1.5rem' : '2rem')};
+    height: ${(p) => (p.isDesk ? 'fit-content' : '60%')};
+    font-size: ${(p) => (p.isDesk ? '1.5rem' : '2.8rem')};
+  }
 `;
 const Text = styled(FlexCol)`
-  gap: 10px;
-  align-items: center;
+  gap: 1rem;
+  text-align: center;
   justify-content: center;
 `;

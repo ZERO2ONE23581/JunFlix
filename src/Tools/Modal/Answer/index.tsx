@@ -3,8 +3,9 @@ import styled from '@emotion/styled';
 import { OverlayBg } from '../../OverlayBg';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
-import { Modal } from '../../../../styles/global';
+import { Mob, Modal } from '../../../../styles/global';
 import { modalVar } from '../../../../styles/variants';
+import { useResponsive } from '../../../libs/client/useTools';
 
 interface IAnswer {
   _data: {
@@ -15,21 +16,25 @@ interface IAnswer {
   };
 }
 export const Answer = ({ _data }: IAnswer) => {
+  const { isDesk } = useResponsive();
   const { type, theme, answer, closeModal } = _data;
+  const size = isDesk ? '2rem' : '4rem';
   return (
     <AnimatePresence>
       {answer && (
-        <>
-          <Cont
+        <Cont isDesk={isDesk}>
+          <Modal
             exit="exit"
             initial="initial"
             animate="animate"
+            className="modal"
             variants={modalVar}
             custom={{ theme, duration: 0.6 }}
           >
             <Svg
               type="close"
               theme={theme!}
+              item={{ size }}
               onClick={() => closeModal(false)}
             />
             <ul>
@@ -84,25 +89,27 @@ export const Answer = ({ _data }: IAnswer) => {
                 </>
               )}
             </ul>
-          </Cont>
+          </Modal>
           <OverlayBg closeModal={() => closeModal(false)} />
-        </>
+        </Cont>
       )}
     </AnimatePresence>
   );
 };
-const Cont = styled(Modal)`
-  top: 50vh;
-  font-size: 1.4rem;
-  padding: 2.5rem 2rem;
-  ul {
-    li {
-      text-align: center;
-      line-height: 30px;
-      font-style: italic;
-      .red {
-        margin: 0 8px;
-        color: ${(p) => p.theme.color.logo};
+const Cont = styled(Mob)`
+  > .modal {
+    top: 50vh;
+    font-size: 1.4rem;
+    padding: 2rem 5rem;
+    font-size: ${(p) => (p.isDesk ? '1.3rem' : '2.5rem')};
+    ul {
+      li {
+        text-align: center;
+        font-style: italic;
+        .red {
+          margin: 0 8px;
+          color: ${(p) => p.theme.color.logo};
+        }
       }
     }
   }

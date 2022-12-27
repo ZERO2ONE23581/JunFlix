@@ -11,15 +11,15 @@ import { IForm } from '../../../types/global';
 import { Form } from '../../../../styles/global';
 import { Dispatch, SetStateAction } from 'react';
 import { useUser } from '../../../libs/client/useUser';
-import { useLength } from '../../../libs/client/useTools';
+import { useLength, useResponsive } from '../../../libs/client/useTools';
 import { TextAreaWrap } from '../../../Tools/Input/TextArea';
+import styled from '@emotion/styled';
 
 export const UpdateForm = ({ _data, _useform }: IUpdateForm) => {
   const { user_id } = useUser();
   const { err_desc, err_title } = _useform?.errors!;
   const { POST, theme, setLoading, loading } = _data;
   const { setError, handleSubmit, watch, register, clearErrors } = _useform;
-
   const onValid = async ({ title, genre, onPrivate, description }: IForm) => {
     const title_len = useLength(title);
     const desc_len = useLength(description!);
@@ -31,13 +31,16 @@ export const UpdateForm = ({ _data, _useform }: IUpdateForm) => {
     if (loading) return;
     return POST({ title, genre, onPrivate, description, user_id });
   };
+  const { isDesk } = useResponsive();
   return (
-    <Form onSubmit={handleSubmit(onValid)}>
-      <Inputs _data={{ watch, theme, register, err_title, clearErrors }} />
+    <Cont isDesk={isDesk} onSubmit={handleSubmit(onValid)}>
+      <Inputs
+        _data={{ watch, theme, register, err_title, clearErrors, isDesk }}
+      />
       <TextAreaWrap
         _data={{
           theme,
-          min: 120,
+          min: 200,
           max: 700,
           clearErrors,
           error: err_desc,
@@ -47,10 +50,21 @@ export const UpdateForm = ({ _data, _useform }: IUpdateForm) => {
           register: register('description'),
         }}
       />
-      <Private register={register} />
-    </Form>
+    </Cont>
   );
 };
+const Cont = styled.form<{ isDesk: boolean }>`
+  width: 100%;
+  display: flex;
+  overflow-y: auto;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  .inputs {
+    margin: ${(p) => (p.isDesk ? '0' : '2rem auto')};
+    flex-direction: ${(p) => (p.isDesk ? 'row' : 'column')};
+  }
+`;
 interface IUpdateForm {
   _data: {
     theme: boolean;

@@ -104,7 +104,7 @@ const Cont = styled.div<{ isDate: boolean; isDesk: boolean }>`
       width: ${(p) => p.isDate && '80%'};
       top: 63%;
       left: 1rem;
-      z-index: 1;
+      //z-index: 1;
       padding: 5px 10px;
       position: absolute;
       border-radius: 10px;

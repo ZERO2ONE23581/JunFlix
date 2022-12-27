@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import { hoverBgColor } from '../../../../../styles/variants';
 import { Svg } from '../../../../Tools/Svg';
+import { Flex } from '../../../../../styles/global';
+import { hoverBgColor } from '../../../../../styles/variants';
+import { useResponsive } from '../../../../libs/client/useTools';
 
 interface IList {
   _data: {
@@ -13,36 +14,32 @@ interface IList {
   };
 }
 export const List = ({ _data }: IList) => {
+  const { isDesk } = useResponsive();
+  const size = isDesk ? '1.5rem' : '3rem';
   const { svg, name, theme, hidden, onClick } = _data;
   return (
     <Cont
-      className="list"
-      animate="aniamte"
-      whileHover="hover"
       custom={theme}
       hidden={hidden}
+      className="list"
+      animate="aniamte"
       onClick={onClick}
+      whileHover="hover"
       variants={hoverBgColor}
     >
-      <span className="name">
+      <Flex className="txt">
         <span>{name?.eng}</span>
-        <span>{name?.kor}</span>
-      </span>
-      {svg && (
-        <span>
-          <Svg type={svg!} theme={theme} item={{ size: '1.5rem' }} />
-        </span>
-      )}
+        <span className="kor">{name?.kor}</span>
+      </Flex>
+      <Svg type={svg!} theme={theme} item={{ size }} />
     </Cont>
   );
 };
-const Cont = styled(motion.li)<{ hidden?: boolean }>`
-  display: ${(p) => p.hidden && 'none'};
-  .name {
-    span {
-      margin-right: 0.5rem;
-      :nth-of-type(2) {
-      }
-    }
+const Cont = styled(Flex)`
+  width: 100%;
+  justify-content: space-between;
+  > .txt {
+    gap: 1rem;
+    justify-content: flex-start;
   }
 `;

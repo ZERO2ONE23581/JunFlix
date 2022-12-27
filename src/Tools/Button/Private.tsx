@@ -5,27 +5,39 @@ import { color } from '../../../styles/variants';
 interface IUserPrivate {
   _data: {
     theme: boolean;
+    isDesk: boolean;
     onMode: () => void;
     onPrivate: boolean;
   };
 }
 export const OnPrivateBtn = ({ _data }: IUserPrivate) => {
-  const { theme, onMode: onClick, onPrivate } = _data;
+  const { theme, onMode: onClick, onPrivate, isDesk } = _data;
+  const isPri = () => {
+    if (isDesk) {
+      if (onPrivate) return 25;
+      else return 0;
+    } else {
+      if (onPrivate) return 60;
+      else return 0;
+    }
+  };
   return (
     <>
       <Box
-        onClick={onClick}
-        variants={boxVar}
-        custom={{ theme, onPrivate }}
         animate="animate"
+        variants={boxVar}
+        onClick={onClick}
         whileHover="hover"
+        className="private_btn"
+        custom={{ theme, onPrivate, isPri: isPri() }}
       >
         <Circle
-          variants={circleVar}
-          custom={{ theme, onPrivate }}
           initial="initial"
           animate="animate"
           whileHover="hover"
+          className="circle"
+          variants={circleVar}
+          custom={{ theme, onPrivate, isPri: isPri() }}
         />
       </Box>
     </>
@@ -45,20 +57,18 @@ const Circle = styled(motion.div)`
   background-color: ${(p) => p.theme.color.font};
 `;
 const boxVar = {
+  hover: () => ({ outline: '3px solid #d63031' }),
   animate: ({ theme, onPrivate }: any) => ({
-    outline: theme ? '2px solid #000000' : '2px solid #ffffff',
     backgroundColor: onPrivate ? '#d63031' : color(!theme),
-  }),
-  hover: ({ theme }: any) => ({
-    outline: '3px solid #d63031',
+    outline: theme ? '2px solid #000000' : '2px solid #ffffff',
   }),
 };
 const circleVar = {
-  initial: ({ theme, onPrivate }: any) => ({
+  initial: ({ onPrivate }: any) => ({
     x: onPrivate ? 0 : 0,
   }),
-  animate: ({ theme, onPrivate }: any) => ({
-    x: onPrivate ? 25 : 0,
+  animate: ({ theme, isPri }: any) => ({
+    x: isPri,
     backgroundColor: color(theme),
   }),
   hover: ({ theme, onPrivate }: any) => ({

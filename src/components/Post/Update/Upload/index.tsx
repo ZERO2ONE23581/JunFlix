@@ -3,9 +3,9 @@ import { FileInput } from './File';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
+import { PostSt } from '../../../../../styles/post';
 import { IPostUseform } from '../../../../types/post';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
-import { PostSt } from '../../../../../styles/post';
 import { leftToRight } from '../../../../../styles/variants';
 import { useResponsive } from '../../../../libs/client/useTools';
 
@@ -16,8 +16,8 @@ export const UploadModal = ({
   _useform,
 }: IUploadModal) => {
   const { isMobile } = useResponsive();
-  const { setModal, setPreview } = _set;
   const { theme, resetPreview } = _data;
+  const { setModal, setPreview } = _set;
   const { modal, preview, layoutId } = _string;
   return (
     <AnimatePresence>

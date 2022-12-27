@@ -46,11 +46,10 @@ export const Mobile = ({ _data, _set, _res }: IMobile) => {
                 variants={textVar}
                 onClick={() => onClick(item)}
               >
-                {/* {useCapLetter(item)} */}
                 <Svg
                   theme={theme}
                   type={setSvg(item)}
-                  item={{ size: '4rem' }}
+                  item={{ size: '5rem' }}
                   onClick={() => onSvg(item)}
                 />
               </Txt>

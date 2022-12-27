@@ -4,6 +4,7 @@ import { FlexCol } from '../../../styles/global';
 import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { noneBorderVar } from '../../../styles/variants';
+import { useResponsive } from '../../libs/client/useTools';
 
 interface IUserContent {
   _data: {
@@ -14,9 +15,8 @@ interface IUserContent {
   };
 }
 export const NoData = ({ _data }: IUserContent) => {
-  const { theme, type, isMy } = _data;
-  const onClick = _data?.onClick!;
   const [btn, setBtn] = useState('');
+  const { theme, type, isMy, onClick } = _data;
   const [txt, setTxt] = useState({ kor: '', eng: '' });
   const [sub, setSub] = useState({ kor: '', eng: '' });
   useEffect(() => {
@@ -68,52 +68,64 @@ export const NoData = ({ _data }: IUserContent) => {
       });
     }
   }, [type, setTxt, setSub, isMy, setBtn]);
+  const { isDesk } = useResponsive();
   return (
     <AnimatePresence>
-      <Cont
-        custom={theme}
-        variants={noneBorderVar}
-        exit="exit"
-        initial="initial"
-        animate="animate"
-      >
-        <span className="main">
-          <span>{txt.eng}</span>
-          <span className="kor">{txt.kor}</span>
-        </span>
-        {isMy && (
-          <>
-            <span className="sub">
-              <span>{sub.eng}</span>
-              <span className="kor">{sub.kor}</span>
-            </span>
-            <Btn
-              type="button"
-              onClick={onClick}
-              item={{ theme, name: btn.toUpperCase() }}
-            />
-          </>
-        )}
-      </Cont>
+      <Container isDesk={isDesk}>
+        <Cont
+          custom={theme}
+          variants={noneBorderVar}
+          exit="exit"
+          initial="initial"
+          animate="animate"
+          className="cont"
+        >
+          <span className="main">
+            <span>{txt.eng}</span>
+            <span className="kor">{txt.kor}</span>
+          </span>
+          {isMy && (
+            <>
+              <span className="sub">
+                <span>{sub.eng}</span>
+                <span className="kor">{sub.kor}</span>
+              </span>
+              <Btn
+                type="button"
+                onClick={onClick}
+                item={{ theme, name: btn.toUpperCase() }}
+              />
+            </>
+          )}
+        </Cont>
+      </Container>
     </AnimatePresence>
   );
 };
+const Container = styled.article<{ isDesk: boolean }>`
+  .cont {
+    font-size: ${(p) => (p.isDesk ? '1.5rem' : '3rem')};
+    .kor {
+      font-size: 1.3rem;
+      font-size: ${(p) => (p.isDesk ? '1.3rem' : '2.7rem')};
+    }
+    button {
+      font-size: ${(p) => (p.isDesk ? '1.3rem' : '2.5rem')};
+    }
+  }
+`;
 const Cont = styled(FlexCol)`
   gap: 0.5rem;
   min-width: 660px;
-  font-size: 1.5rem;
   margin: 1rem auto;
   padding: 1rem 2rem;
   justify-content: center;
-  .kor {
-    font-size: 1.3rem;
-  }
   > .main,
   > .sub {
     span {
       display: block;
       text-align: center;
-      line-height: 1.8rem;
+      //line-height: 1.8rem;
     }
   }
   button {

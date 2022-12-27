@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Svg } from '../../../../../Tools/Svg';
 import { color } from '../../../../../../styles/variants';
+import { useResponsive } from '../../../../../libs/client/useTools';
 
 interface IDeleteIcon {
   _data: {
@@ -14,6 +15,8 @@ interface IDeleteIcon {
 export const DeleteIcon = ({ _data }: IDeleteIcon) => {
   const { theme, preview, isNext, onClick } = _data;
   const open = Boolean(preview && !isNext);
+  const { isDesk } = useResponsive();
+  const size = isDesk ? '2rem' : '5rem';
   return (
     <>
       {open && (
@@ -25,7 +28,7 @@ export const DeleteIcon = ({ _data }: IDeleteIcon) => {
           onClick={onClick}
           variants={vars}
         >
-          <Svg type="trash" theme={theme} />
+          <Svg item={{ size }} type="trash" theme={theme} />
         </Cont>
       )}
     </>

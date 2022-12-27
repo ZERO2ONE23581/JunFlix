@@ -48,7 +48,7 @@ export const SettingModal = ({ _data }: ISettingModal) => {
             className="setting-modal"
           >
             <ul>
-              <List className="small">Board Options</List>
+              <List className="small">Options</List>
               <List
                 whileHover={'hover'}
                 variants={hoverBgColor}
@@ -90,19 +90,15 @@ export const SettingModal = ({ _data }: ISettingModal) => {
 
 const Cont = styled(motion.div)`
   z-index: 2;
-  padding: 5px;
   font-size: 1.2em;
   overflow: hidden;
-  border-radius: 5px;
+  position: absolute;
+  border-radius: 20px;
   ul {
     width: fit-content;
-
     li {
-      text-align: center;
+      //text-align: center;
     }
-  }
-  .small {
-    font-size: 1rem;
   }
 `;
 const List = styled(motion.li)<{ hidden?: boolean }>`

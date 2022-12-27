@@ -3,8 +3,8 @@ import { SelectModal } from './Select';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { MsgModal } from '../../../Tools/Modal/Message';
 import { ICreatePostRes } from '../../../types/post';
+import { MsgModal } from '../../../Tools/Modal/Message';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
 
@@ -24,7 +24,7 @@ export const CreatePost = ({ _data }: ICreatePost) => {
   const [listModal, setListModal] = useState(false);
   const [post, { data, loading }] =
     useMutation<ICreatePostRes>(`/api/post/create`);
-  //
+
   useEffect(() => {
     if (data) {
       setTimeout(() => {
@@ -40,7 +40,7 @@ export const CreatePost = ({ _data }: ICreatePost) => {
       }, 1000);
     }
   }, [data, setLoading, setMsg, board_id]);
-  //
+
   const post_id = data?.post_id;
   const layoutId = 'create_post';
   const modal = open && !Loading;

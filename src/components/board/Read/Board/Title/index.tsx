@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { Svg } from '../../../../../Tools/Svg';
 import { SettingModal } from './Setting';
-import { Circle } from '../../../../../../styles/global';
+import { Svg } from '../../../../../Tools/Svg';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { Circle, Mob } from '../../../../../../styles/global';
 import { hoverBgVars } from '../../../../../../styles/variants';
 import { useCapLetters } from '../../../../../libs/client/useTools';
 
@@ -10,31 +10,30 @@ interface IBoardTitle {
   _data: {
     title: string;
     theme: boolean;
+    isDesk: boolean;
     isMyBoard: boolean;
     setType: Dispatch<SetStateAction<string>>;
   };
 }
 export const Title = ({ _data }: IBoardTitle) => {
   const [modal, setModal] = useState(false);
-  const { title, theme, setType, isMyBoard } = _data;
+  const onClick = () => setModal((p) => !p);
+  const { isDesk, title, theme, setType, isMyBoard } = _data;
+  const size = isDesk ? '2rem' : '2.5rem';
   return (
-    <Cont>
-      <h1>{useCapLetters(title)}</h1>
+    <Cont isDesk={isDesk}>
+      <h1 className="board_title">{useCapLetters(title)}</h1>
       {isMyBoard && (
         <>
           <Setting
             custom={!theme}
-            variants={hoverBgVars}
-            onClick={() => setModal((p) => !p)}
             animate="animate"
+            onClick={onClick}
             whileHover="hover"
             className="setting"
+            variants={hoverBgVars}
           >
-            <Svg
-              type="more"
-              theme={!theme}
-              item={{ isClicked: modal, size: '1.5rem' }}
-            />
+            <Svg type="more" theme={!theme} item={{ isClicked: modal, size }} />
           </Setting>
           <SettingModal
             _data={{ modal, theme, isMyBoard, setType, setModal }}
@@ -44,24 +43,33 @@ export const Title = ({ _data }: IBoardTitle) => {
     </Cont>
   );
 };
-const Cont = styled.div`
-  .setting-modal {
-    top: 3.3rem;
-    right: -10rem;
-    position: absolute;
-  }
+const Cont = styled(Mob)`
   gap: 10px;
   display: flex;
   position: relative;
   align-items: flex-end;
-  h1 {
-    font-size: 2.7rem;
+  .setting {
+    width: ${(p) => (p.isDesk ? '2rem' : '3rem')};
+    height: ${(p) => (p.isDesk ? '2rem' : '3rem')};
+    top: ${(p) => (p.isDesk ? '0.6rem' : '0rem')};
+    right: ${(p) => (p.isDesk ? '-3.5rem' : '-4rem')};
+  }
+  .setting-modal {
+    top: ${(p) => (p.isDesk ? '3.3rem' : '2.2rem')};
+    right: ${(p) => (p.isDesk ? '-10rem' : '-10rem')};
+    font-size: ${(p) => (p.isDesk ? '1rem' : '3rem')};
+    width: ${(p) => (p.isDesk ? 'fit-content' : '400px')};
+    padding: ${(p) => (p.isDesk ? '0.5rem 1rem' : '0.8rem 1.5rem')};
+    li {
+      padding: ${(p) => (p.isDesk ? '0.5rem' : '0.8rem')};
+    }
+    .small {
+      font-size: ${(p) => (p.isDesk ? '1rem' : '2rem')};
+    }
   }
 `;
 
 const Setting = styled(Circle)`
-  top: 0.6rem;
-  right: -3.5rem;
   cursor: pointer;
   position: absolute;
   svg {

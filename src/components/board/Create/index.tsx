@@ -8,10 +8,11 @@ import { IBoardForm } from '../../../types/board';
 import { Box, Form } from '../../../../styles/global';
 import { variants } from '../../../../styles/variants';
 import { useUser } from '../../../libs/client/useUser';
-import { useLength } from '../../../libs/client/useTools';
+import { useLength, useResponsive } from '../../../libs/client/useTools';
 import useMutation from '../../../libs/client/useMutation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { TextAreaWrap } from '../../../Tools/Input/TextArea';
+import { postVar } from '../../../../styles/post';
 
 interface ICreateBox {
   _data: {
@@ -48,7 +49,6 @@ export const BoardBox = ({ _data }: ICreateBox) => {
     setLoading(true);
     return POST({ title, genre, user_id, posts: [], description });
   };
-  console.log(data, '??');
 
   useEffect(() => {
     if (data) {
@@ -61,16 +61,18 @@ export const BoardBox = ({ _data }: ICreateBox) => {
     }
   }, [data, router, setMsg, setTimeout, setLoading]);
 
+  const { isDesk } = useResponsive();
   return (
-    <>
+    <Cont isDesk={isDesk}>
       {!Loading && (
-        <Cont
+        <Box
           exit="exit"
-          initial="initial"
-          animate="animate"
           custom={theme}
+          className="box"
+          animate="animate"
+          initial="initial"
+          variants={postVar}
           layoutId={layoutId}
-          variants={variants}
         >
           <Title />
           <Form onSubmit={handleSubmit(onValid)}>
@@ -90,19 +92,26 @@ export const BoardBox = ({ _data }: ICreateBox) => {
               }}
             />
           </Form>
-        </Cont>
+        </Box>
       )}
-    </>
+    </Cont>
   );
 };
-const Cont = styled(Box)`
-  max-width: fit-content;
-  form {
-    gap: 2rem;
-    .textarea-wrap {
-      textarea {
-        font-size: 1.2rem;
-        max-height: 50vh;
+const Cont = styled.article<{ isDesk: boolean }>`
+  .box {
+    max-width: fit-content;
+    h1 {
+      font-size: ${(p) => (p.isDesk ? '2rem' : '3.6rem')};
+    }
+    font-size: ${(p) => (p.isDesk ? '2rem' : '2.2rem')};
+    .kor {
+      font-size: ${(p) => (p.isDesk ? '2rem' : '2rem')};
+    }
+    form {
+      gap: 2rem;
+      .textarea-wrap {
+        textarea {
+        }
       }
     }
   }

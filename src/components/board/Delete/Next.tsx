@@ -72,11 +72,12 @@ export const Next = ({ _data }: IDeleteBoardNext) => {
 };
 const Cont = styled(Form)`
   width: fit-content;
+  padding: 1rem;
   h2 {
     width: 100%;
-    font-size: 1.3rem;
+    //font-size: 1.3rem;
     .eng {
-      font-size: 1.5rem;
+      //  font-size: 1.5rem;
     }
     span {
       display: block;

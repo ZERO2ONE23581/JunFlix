@@ -5,7 +5,11 @@ import { useEffect, useState } from 'react';
 import { ITheme } from '../../../styles/theme';
 import { useUser } from '../../libs/client/useUser';
 import { Flex, FlexCol } from '../../../styles/global';
-import { useCapLetter, useCapLetters } from '../../libs/client/useTools';
+import {
+  useCapLetter,
+  useCapLetters,
+  useResponsive,
+} from '../../libs/client/useTools';
 
 interface IPageTitle extends ITheme {
   _genre?: string;
@@ -38,7 +42,7 @@ export const PageTitle = ({ type, theme, _genre }: IPageTitle) => {
 
   const svg = () => {
     if (type === 'users') return 'crown';
-    else if (type === 'qs') return 'posts';
+    else if (type === 'qs' || type === 'user_posts') return 'posts';
     else if (type === 'all_board' || type === 'user_board') return 'grid';
     else return 'film';
   };
@@ -46,7 +50,7 @@ export const PageTitle = ({ type, theme, _genre }: IPageTitle) => {
     <Cont className="page-title">
       <Wrap>
         <Ropes theme={theme} />
-        <Txt>
+        <Txt className="txt">
           <span>
             <span>{txt.eng}</span>
             <span className="kor">{txt.kor}</span>
@@ -76,10 +80,8 @@ const Wrap = styled(FlexCol)`
 `;
 const Txt = styled(Flex)`
   gap: 1rem;
-  font-size: 1.8rem;
   width: fit-content;
   border-radius: 5px;
-  padding: 0.5rem 2rem;
   border: 4px solid ${(p) => p.theme.color.logo};
   .kor {
     margin-left: 0.5rem;

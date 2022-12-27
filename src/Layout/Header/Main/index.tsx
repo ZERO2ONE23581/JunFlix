@@ -58,7 +58,6 @@ const Cont = styled(Flex)`
   gap: 1rem;
   justify-content: space-between;
 `;
-
 const Txt = styled(Flex)`
   cursor: pointer;
 `;

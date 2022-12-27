@@ -11,6 +11,7 @@ import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { leftToRight } from '../../../../../styles/variants';
 import { Flex, FlexCol } from '../../../../../styles/global';
 import { useResponsive } from '../../../../libs/client/useTools';
+import { MobModal } from '../../../../../styles/mobile';
 
 export const UpdateModal = ({
   _id,
@@ -21,9 +22,9 @@ export const UpdateModal = ({
   _useform,
   resetPreview,
 }: IUpdateModal) => {
-  const { isMobile } = useResponsive();
   const { new_boardId, board_id } = _id;
   const { setModal, setNewBoardId } = _set;
+  const { isMobile, isDesk } = useResponsive();
   const { layoutId, preview, original } = _string;
   const { hide, theme, isUpdate, quickSave } = _boolean;
   const { setHide, setIsDelete, setQuickSave, setSelectModal } = _set_B;
@@ -37,11 +38,12 @@ export const UpdateModal = ({
     <AnimatePresence>
       <>
         {isUpdate && (
-          <>
-            <Cont
+          <Cont isDesk={isDesk}>
+            <PostSt
               exit="exit"
               initial="initial"
               animate="animate"
+              className="modal"
               variants={leftToRight}
               custom={{ theme, isMobile }}
               layoutId={layoutId + 'submit'}
@@ -63,17 +65,22 @@ export const UpdateModal = ({
                   _set={{ setIsDelete, setSelectModal }}
                 />
               </Main>
-            </Cont>
+            </PostSt>
             <OverlayBg dark={0.5} zIndex={111} closeModal={closeModal} />
-          </>
+          </Cont>
         )}
       </>
     </AnimatePresence>
   );
 };
-const Cont = styled(PostSt)`
-  gap: 0.2rem;
-  z-index: 112;
+const Cont = styled(MobModal)`
+  .modal {
+    gap: 0.2rem;
+    z-index: 112;
+    .layer {
+      padding: 0;
+    }
+  }
 `;
 const Main = styled(FlexCol)`
   padding: 0 2rem 3rem;
