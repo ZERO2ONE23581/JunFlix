@@ -20,7 +20,7 @@ export const Avatar = ({ _data, _modal }: IAvatarInput) => {
   return (
     <AnimatePresence>
       <Cont
-        size={size}
+        size={size!}
         variants={vars}
         onClick={onClick}
         custom={{ theme, isRound }}
@@ -88,7 +88,7 @@ export interface IAvatarInput {
     closeModal?: () => void;
   };
   _data: {
-    size: string;
+    size?: string;
     theme: boolean;
     host_id: number;
     isRound?: boolean;

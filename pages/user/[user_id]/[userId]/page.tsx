@@ -69,5 +69,5 @@ const Layer = styled.section`
   }
 `;
 const Cont = styled(Page)`
-  padding: 1.1rem;
+  padding: 2rem;
 `;

@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 import { Btn } from '../../../../../Tools/Button';
-import { BtnWrap } from '../../../../../../styles/global';
-import { useCapLetter } from '../../../../../libs/client/useTools';
+import { BtnWrap, Flex_ } from '../../../../../../styles/global';
+import {
+  useCapLetter,
+  useResponsive,
+} from '../../../../../libs/client/useTools';
 import { color, redColor } from '../../../../../../styles/variants';
 
 interface IUserBtns {
@@ -13,10 +16,11 @@ interface IUserBtns {
   };
 }
 export const UserBtns = ({ _data }: IUserBtns) => {
+  const { isDesk } = useResponsive();
   const { theme, setClicked, clicked } = _data;
   const Array = ['posts', 'likes', 'boards', 'saved'];
   return (
-    <Cont>
+    <Cont isDesk={isDesk}>
       {Array.map((element) => (
         <Btn
           type="button"
@@ -33,11 +37,12 @@ export const UserBtns = ({ _data }: IUserBtns) => {
     </Cont>
   );
 };
-export const Cont = styled(BtnWrap)`
+export const Cont = styled(Flex_)`
   gap: 3rem;
   button {
-    width: 10rem;
     border-radius: 0;
+    width: ${(p) => (p.isDesk ? '100px' : '200px')};
+    font-size: ${(p) => (p.isDesk ? '1.5rem' : '3rem')};
   }
 `;
 const vars = {

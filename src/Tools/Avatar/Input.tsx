@@ -6,6 +6,7 @@ import { border } from '../../../styles/variants';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { UseFormRegister, UseFormReset } from 'react-hook-form';
+import { useResponsive } from '../../libs/client/useTools';
 
 export interface IAvatarInput {
   _data: {
@@ -18,6 +19,7 @@ export interface IAvatarInput {
   };
 }
 export const AvatarInput = ({ _data }: IAvatarInput) => {
+  const { isDesk } = useResponsive();
   const { avatar, register, theme, preview, setPreview } = _data;
   const [disabled, setDisabled] = useState(false);
   const clickTrash = () => {
@@ -65,7 +67,7 @@ export const AvatarInput = ({ _data }: IAvatarInput) => {
                 />
               )}
               {!avatar && (
-                <NoPreview>
+                <NoPreview className="no_preview">
                   <Svg type="user" theme={theme} item={{ size: '4rem' }} />
                 </NoPreview>
               )}
@@ -85,16 +87,14 @@ export const AvatarInput = ({ _data }: IAvatarInput) => {
   );
 };
 const Cont = styled(Flex)`
-  position: relative;
-  width: 10rem;
-  height: 10rem;
+  overflow: hidden;
   cursor: pointer;
   margin-top: 1rem;
-  overflow: hidden;
+  position: relative;
   .trash {
+    z-index: 111;
     left: 1.8rem;
     bottom: 1.8rem;
-    z-index: 111;
     position: absolute;
   }
   input {
@@ -106,8 +106,6 @@ const Img = styled(motion.img)`
   height: 100%;
 `;
 const NoPreview = styled(Flex)`
-  width: 7rem;
-  height: 7rem;
   border-radius: 100%;
   svg {
     pointer-events: none;

@@ -17,7 +17,13 @@ export const LoginAvatar = ({ _res }: IResponsive) => {
       {isLoggedIn && (
         <Cont>
           <Avatar
-            _data={{ theme, host_id, size, isOther: true, handleClick }}
+            _data={{
+              theme,
+              host_id,
+              size,
+              isOther: true,
+              handleClick,
+            }}
           />
           <AvatarModal _res={_res} _data={{ modal, setModal }} />
         </Cont>

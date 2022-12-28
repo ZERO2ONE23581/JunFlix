@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { CreatePost } from '../../../../Post/Create';
 import { PostSchema } from '../../../../Post/Schema';
 import { NoData } from '../../../../../Tools/NoData';
+import { CreatePost } from '../../../../Post/Create';
 import { BoardsGrid } from '../../../../Board/Read/Boards';
 import { useUser } from '../../../../../libs/client/useUser';
 import { useGetPosts } from '../../../../../libs/client/usePosts';
 import { useGetBoards } from '../../../../../libs/client/useBoards';
+import { useResponsive } from '../../../../../libs/client/useTools';
 
 interface IUserContent {
   _data: {
@@ -36,8 +37,9 @@ export const UserContent = ({ _data }: IUserContent) => {
   };
   const onClick = () => setCreatePost(true);
   const allPosts = () => router.push(`/post/all`);
+  const { isDesk } = useResponsive();
   return (
-    <Cont>
+    <Cont isDesk={isDesk}>
       {clicked === 'posts' && (
         <>
           {!noPosts && <PostSchema _data={{ grid: 5, theme, posts }} />}
@@ -104,7 +106,7 @@ export const UserContent = ({ _data }: IUserContent) => {
     </Cont>
   );
 };
-const Cont = styled.article`
-  min-height: 50vh;
-  padding: 1rem 10rem;
+const Cont = styled.article<{ isDesk: boolean }>`
+  min-height: ${(p) => (p.isDesk ? '50vh' : '100vh')};
+  padding: ${(p) => (p.isDesk ? '1rem 10rem' : '2rem 1rem')};
 `;

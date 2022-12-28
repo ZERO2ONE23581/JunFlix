@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../../../Tools/Button';
-import { BtnWrap, Form } from '../../../../../styles/global';
+import { BtnWrap, Flex_, Form } from '../../../../../styles/global';
 import { AvatarInput } from '../../../../Tools/Avatar/Input';
-import { useUploadImg } from '../../../../libs/client/useTools';
+import { useResponsive, useUploadImg } from '../../../../libs/client/useTools';
 import { IUpdateUser, IUserForm } from '../../../../types/user';
 
 export const UserAvatar = ({ _data }: IUpdateUser) => {
@@ -33,11 +33,12 @@ export const UserAvatar = ({ _data }: IUpdateUser) => {
     return update({ avatar: avatar_id });
   };
   //
+  const { isDesk } = useResponsive();
   const userAvatar = !delAvatar ? User?.avatar : null;
   return (
     <>
       {type === 'avatar' && (
-        <Cont onSubmit={handleSubmit(onValid)}>
+        <Cont isDesk={isDesk} onSubmit={handleSubmit(onValid)}>
           <AvatarInput
             _data={{
               theme,
@@ -48,7 +49,7 @@ export const UserAvatar = ({ _data }: IUpdateUser) => {
               avatar: userAvatar,
             }}
           />
-          <BtnWrap>
+          <Btns isDesk={isDesk}>
             {!delAvatar && (
               <Btn
                 type="button"
@@ -64,17 +65,25 @@ export const UserAvatar = ({ _data }: IUpdateUser) => {
               />
             )}
             <Btn item={{ theme, name: 'Save' }} type="submit" />
-          </BtnWrap>
+          </Btns>
         </Cont>
       )}
     </>
   );
 };
-const Cont = styled(Form)`
+const Cont = styled(Form)<{ isDesk: boolean }>`
   width: 100%;
-  .btn_wrap {
-    button {
-      width: fit-content;
-    }
+  .avatar_input {
+    margin-top: 2rem;
+    width: ${(p) => (p.isDesk ? '10rem' : '16rem')};
+    height: ${(p) => (p.isDesk ? '10rem' : '16rem')};
   }
+  .no_preview {
+    width: ${(p) => (p.isDesk ? '7rem' : '15rem')};
+    height: ${(p) => (p.isDesk ? '7rem' : '15rem')};
+  }
+`;
+const Btns = styled(Flex_)`
+  gap: 1rem;
+  margin-top: 2rem;
 `;

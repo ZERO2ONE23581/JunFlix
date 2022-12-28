@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { PostGrid } from './Grid';
 import styled from '@emotion/styled';
 import { UpdatePost } from '../Update';
 import { DeletePost } from '../Delete';
 import { IPostType } from '../../../types/post';
 import { CommentModal } from '../../Comment/Modal';
-import { useResponsive } from '../../../libs/client/useTools';
 
 interface IPostSchema {
   _data: {
@@ -51,5 +50,5 @@ export const PostSchema = ({ _data }: IPostSchema) => {
 };
 const Cont = styled.section`
   overflow: auto;
-  max-height: 165vh;
+  max-height: 180vh;
 `;

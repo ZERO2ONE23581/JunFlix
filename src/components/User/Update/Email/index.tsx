@@ -57,8 +57,7 @@ export const Email = ({ _data }: IUpdateUser) => {
   );
 };
 const Cont = styled(Form)`
-  gap: 0;
   button {
-    margin-top: 0.7rem;
+    margin-top: 2rem;
   }
 `;

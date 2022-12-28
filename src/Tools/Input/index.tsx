@@ -10,7 +10,7 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { ErrModal } from '../Modal/Error';
-import { FlexCol } from '../../../styles/global';
+import { FlexCol, Flex_ } from '../../../styles/global';
 import { UseFormClearErrors, UseFormRegisterReturn } from 'react-hook-form';
 import { useResponsive } from '../../libs/client/useTools';
 
@@ -83,16 +83,13 @@ export const InputWrap = ({ _data }: IInput) => {
     </>
   );
 };
-const Cont = styled.div<{ isDate: boolean; isDesk: boolean }>`
+const Cont = styled(Flex_)<{ isDate: boolean; isDesk: boolean }>`
   gap: 20px;
   width: 100%;
-  display: flex;
-  align-items: center;
   flex-direction: column;
-  justify-content: center;
   .input_wrap_flex {
-    padding-top: 1rem;
     position: relative;
+    padding-top: ${(p) => (p.isDesk ? '3rem' : '2rem')};
     .input-style {
       padding: ${(p) => (p.isDesk ? '10px 20px' : '15px 20px ')};
     }
@@ -100,16 +97,14 @@ const Cont = styled.div<{ isDate: boolean; isDesk: boolean }>`
       font-size: ${(p) => (p.isDesk ? '1.1rem' : '3rem')};
     }
     label {
-      width: fit-content;
-      width: ${(p) => p.isDate && '80%'};
-      top: 63%;
       left: 1rem;
-      //z-index: 1;
-      padding: 5px 10px;
+      padding: 1px 10px;
+      width: fit-content;
       position: absolute;
       border-radius: 10px;
       display: inline-block;
-      top: ${(p) => (p.isDesk ? '60%' : '55%')};
+      width: ${(p) => p.isDate && '80%'};
+      top: ${(p) => (p.isDesk ? '60%' : '60%')};
       font-size: ${(p) => (p.isDesk ? '1.1rem' : '3rem')};
     }
   }

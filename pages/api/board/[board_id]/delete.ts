@@ -47,9 +47,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       error: '이 보드의 호스트가 아닙니다. (invalid board host)',
     });
   //
-  await client.board.delete({
-    where: { id: board.id },
-  });
+  await client.follower.deleteMany({ where: { board_id: board.id } });
+  await client.following.deleteMany({ where: { board_id: board.id } });
+  await client.board.delete({ where: { id: board.id } });
   return res.json({ ok: true });
 }
 export default withApiSession(withHandler({ methods: ['POST'], handler }));

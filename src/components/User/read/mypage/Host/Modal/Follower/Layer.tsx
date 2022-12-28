@@ -13,7 +13,7 @@ export const Layer = ({ _data }: ILayer) => {
   const { theme, closeModal, isFollower } = _data;
   const TITLE = isFollower ? 'Follower' : 'Following';
   return (
-    <Cont>
+    <Cont className="layer">
       <div>
         <Svg type="close_" theme={theme} onClick={closeModal} />
       </div>

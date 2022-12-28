@@ -10,7 +10,7 @@ export const Page = styled.section`
 export const BG = styled(Page)<{ isDesk: boolean }>`
   padding: 2.5rem;
   color: whitesmoke;
-  min-height: ${(p) => (p.isDesk ? '100%' : '166vh')};
+  min-height: ${(p) => (p.isDesk ? '100%' : '180vh')};
   background: url('/img/up.jpg') center / cover no-repeat;
   .post_cover {
     h2 {
@@ -180,16 +180,12 @@ export const Form = styled(motion.form)`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  button {
-    margin-top: 0.8rem;
-  }
   ::-webkit-scrollbar {
     display: none;
   }
 `;
 export const Box = styled(FlexCol)`
   padding: 40px;
-  max-width: 500px;
   position: relative;
   border-radius: 5px;
   align-items: flex-start;

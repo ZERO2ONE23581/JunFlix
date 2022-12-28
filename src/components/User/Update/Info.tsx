@@ -55,57 +55,54 @@ export const UserInfo = ({ _data }: IUpdateUser) => {
               }),
             }}
           />
-          <Flex className="flex">
-            <InputWrap
-              _data={{
-                theme,
-                clearErrors,
-                type: 'text',
-                id: 'name',
-                label: 'name',
-                text: watch('name')!,
-                register: register('name', {
-                  maxLength: { value: 20, message: 'max_name' },
-                }),
-              }}
-            />
-            <SelectWrap
-              _data={{
-                theme,
-                clearErrors,
-                id: 'gender',
-                text: watch('gender'),
-                error: errors.gender?.message,
-                register: register('gender'),
-              }}
-            />
-          </Flex>
-          <Flex className="flex">
-            <InputWrap
-              _data={{
-                theme,
-                clearErrors,
-                type: 'date',
-                id: 'birth',
-                label: 'Birth',
-                text: watch('birth')!,
-                register: register('birth'),
-              }}
-            />
-            <InputWrap
-              _data={{
-                theme,
-                clearErrors,
-                type: 'text',
-                id: 'location',
-                label: 'location',
-                text: watch('location')!,
-                register: register('location'),
-              }}
-            />
-          </Flex>
-          <ErrTxt error={errors.username?.message!} theme={theme} />
+          <InputWrap
+            _data={{
+              theme,
+              clearErrors,
+              type: 'text',
+              id: 'name',
+              label: 'name',
+              text: watch('name')!,
+              register: register('name', {
+                maxLength: { value: 20, message: 'max_name' },
+              }),
+            }}
+          />
+          <SelectWrap
+            _data={{
+              theme,
+              clearErrors,
+              id: 'gender',
+              text: watch('gender'),
+              error: errors.gender?.message,
+              register: register('gender'),
+            }}
+          />
+
+          <InputWrap
+            _data={{
+              theme,
+              clearErrors,
+              type: 'date',
+              id: 'birth',
+              label: 'Birth',
+              text: watch('birth')!,
+              register: register('birth'),
+            }}
+          />
           <ErrTxt error={errors.name?.message!} theme={theme} />
+          <InputWrap
+            _data={{
+              theme,
+              clearErrors,
+              type: 'text',
+              id: 'location',
+              label: 'location',
+              text: watch('location')!,
+              register: register('location'),
+            }}
+          />
+          <ErrTxt error={errors.username?.message!} theme={theme} />
           <Btn item={{ theme, name: 'Save' }} type="submit" />
         </Cont>
       )}

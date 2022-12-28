@@ -1,14 +1,15 @@
 import { IsMe } from './IsMe';
 import { Layer } from './Layer';
-import { FollowArr } from './Array';
+import { Lists } from './Lists';
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { Follower, Following } from '@prisma/client';
-import { Flex } from '../../../../../../../../styles/global';
-import { OverlayBg } from '../../../../../../../Tools/OverlayBg';
 import { PostSt } from '../../../../../../../../styles/post';
-import { modalVar } from '../../../../../../../../styles/variants';
+import { MobModal } from '../../../../../../../../styles/mobile';
+import { OverlayBg } from '../../../../../../../Tools/OverlayBg';
+import { mobVars } from '../../../../../../../../styles/variants';
 import { useUser } from '../../../../../../../libs/client/useUser';
+import { useResponsive } from '../../../../../../../libs/client/useTools';
 
 interface IFollowModal {
   _data: {
@@ -24,6 +25,7 @@ interface IFollowModal {
 }
 export const FollowModal = ({ _data, _follow }: IFollowModal) => {
   const { user_id } = useUser();
+  const { isDesk } = useResponsive();
   const { theme, layoutId, closeModal } = _data;
   const { Follower, Following, type } = _follow;
   const isFollower = Boolean(type === 'follower');
@@ -36,19 +38,22 @@ export const FollowModal = ({ _data, _follow }: IFollowModal) => {
     <>
       <AnimatePresence>
         {type && (
-          <Cont
-            exit="exit"
-            initial="initial"
-            animate="animate"
-            layoutId={layoutId}
-            variants={modalVar}
-            custom={{ theme, duration: 0.5 }}
-          >
-            <Layer _data={{ theme, closeModal, isFollower }} />
-            <IsMe _data={{ isFollower, theme, follower, closeModal }} />
-            <FollowArr
-              _data={{ theme, isFollower, closeModal, Filtered, array }}
-            />
+          <Cont isDesk={isDesk}>
+            <PostSt
+              exit="exit"
+              initial="initial"
+              animate="animate"
+              className="modal"
+              layoutId={layoutId}
+              variants={mobVars}
+              custom={{ theme, duration: 0.5 }}
+            >
+              <Layer _data={{ theme, closeModal, isFollower }} />
+              <IsMe _data={{ isFollower, theme, follower, closeModal }} />
+              <Lists
+                _data={{ array, theme, Filtered, closeModal, isFollower }}
+              />
+            </PostSt>
           </Cont>
         )}
       </AnimatePresence>
@@ -56,25 +61,25 @@ export const FollowModal = ({ _data, _follow }: IFollowModal) => {
     </>
   );
 };
-const Cont = styled(PostSt)`
-  min-height: 400px;
-  width: fit-content;
-  height: fit-content;
-  h1 {
-    font-size: 1.5rem;
-  }
-`;
-
-export const Array = styled(Flex)`
-  gap: 1rem;
-  padding: 0.6rem 1.2rem;
-  justify-content: space-between;
-  > .wrap {
-    gap: 1rem;
-    width: fit-content;
-    justify-content: flex-start;
-  }
-  button {
-    width: fit-content;
+const Cont = styled(MobModal)`
+  .modal {
+    gap: 2rem;
+    padding: 2rem 3rem;
+    width: ${(p) => (p.isDesk ? 'fit-content' : '100%')};
+    height: ${(p) => (p.isDesk ? 'fit-content' : '100%')};
+    .avatar {
+      width: ${(p) => (p.isDesk ? '2rem' : '9rem')};
+      height: ${(p) => (p.isDesk ? '2rem' : '9rem')};
+    }
+    .userId {
+      width: fit-content;
+      font-size: ${(p) => (p.isDesk ? '1.4rem' : '3rem')};
+    }
+    button {
+      border-radius: 40px;
+      width: ${(p) => (p.isDesk ? '100px' : '200px')};
+      padding: ${(p) => (p.isDesk ? '0.5rem' : '1rem')};
+      font-size: ${(p) => (p.isDesk ? '1.2rem' : '2.5rem')};
+    }
   }
 `;

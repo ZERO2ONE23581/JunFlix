@@ -1,10 +1,11 @@
-import { Array } from '.';
 import { FollowBtn } from './Btn';
-import { FollowUserId } from './userID';
+import { UserID } from './userID';
+import styled from '@emotion/styled';
 import { Follower } from '@prisma/client';
 import { Avatar } from '../../../../../../../Tools/Avatar';
 import { Flex } from '../../../../../../../../styles/global';
-interface IFollowArr {
+
+interface IFollowLists {
   _data: {
     theme: boolean;
     array: Follower[];
@@ -13,30 +14,37 @@ interface IFollowArr {
     closeModal: () => void;
   };
 }
-
-export const FollowArr = ({ _data }: IFollowArr) => {
+export const Lists = ({ _data }: IFollowLists) => {
   const { theme, isFollower, closeModal, Filtered, array } = _data;
   return (
     <>
-      {Filtered.map((el) => (
-        <Array key={array.indexOf(el)}>
+      {Filtered.map((item) => (
+        <Cont key={array.indexOf(item)}>
           <Flex className="wrap">
             <Avatar
               _modal={{ closeModal, isModal: true }}
               _data={{
                 theme,
-                size: '3.5rem',
-                host_id: isFollower ? el.host_id : el.user_id!,
+                isRound: true,
+                host_id: isFollower ? item.host_id : item.user_id!,
               }}
             />
-            <FollowUserId host_id={el.host_id} />
+            <UserID host_id={item.host_id} />
           </Flex>
           <FollowBtn
             theme={theme}
-            user_id={isFollower ? el.host_id : el.user_id!}
+            user_id={isFollower ? item.host_id : item.user_id!}
           />
-        </Array>
+        </Cont>
       ))}
     </>
   );
 };
+const Cont = styled(Flex)`
+  gap: 2rem;
+  justify-content: space-between;
+  .wrap {
+    gap: 2rem;
+    width: fit-content;
+  }
+`;

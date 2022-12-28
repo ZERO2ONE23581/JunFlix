@@ -39,8 +39,6 @@ export const PostBox = ({ _data }: IPostBox) => {
   );
 };
 const Cont = styled(PostCover)`
-  //width: 100%;
-  //max-height: 70%;
   position: relative;
   img {
     width: 100%;

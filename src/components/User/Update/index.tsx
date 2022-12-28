@@ -8,13 +8,14 @@ import { DeleteUser } from '../Delete';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IRes } from '../../../types/global';
-import { AnimatePresence } from 'framer-motion';
-import { MsgModal } from '../../../Tools/Modal/Message';
-import { Box, Flex } from '../../../../styles/global';
+import { ErrModal } from '../../../Tools/Modal/Error';
 import { useUser } from '../../../libs/client/useUser';
+import { AnimatePresence, motion } from 'framer-motion';
+import { MsgModal } from '../../../Tools/Modal/Message';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
-import { ErrModal } from '../../../Tools/Modal/Error';
+import { useResponsive } from '../../../libs/client/useTools';
+import { FlexCol_ } from '../../../../styles/global';
 
 interface IBoxType {
   _data: {
@@ -66,66 +67,67 @@ export const BoxType = ({ _data }: IBoxType) => {
     data_err: msg,
   };
   const layoutId = 'user_setting';
+  const { isDesk } = useResponsive();
   return (
     <>
-      <>
-        <AnimatePresence initial={false} custom={back}>
-          <Cont
-            key={page}
-            custom={back}
-            variants={slideVar}
-            exit="exit"
-            initial="initial"
-            animate="animate"
-          >
-            {!Loading && (
-              <Box>
-                <Title _data={{ theme, type, delAcct, setDelAcct }} />
-                <Email _data={__data} />
-                <Password _data={__data} />
-                <UserInfo _data={__data} />
-                <UserAvatar _data={__data} />
-                <DeleteUser _data={__data} />
-              </Box>
-            )}
-          </Cont>
-        </AnimatePresence>
-        <ErrModal _data={{ theme, error: msg }} />
-        <MsgModal _data={{ msg: data?.msg!, theme, layoutId }} />
-        {Loading && <LoadingModal theme={theme} layoutId={layoutId} />}
-      </>
+      <AnimatePresence initial={false} custom={back}>
+        <Cont
+          key={page}
+          exit="exit"
+          custom={back}
+          variants={vars}
+          initial="initial"
+          animate="animate"
+        >
+          {!Loading && (
+            <Box className="box" isDesk={isDesk}>
+              <Title _data={{ theme, type, delAcct, setDelAcct }} />
+              <Email _data={__data} />
+              <Password _data={__data} />
+              <UserInfo _data={__data} />
+              <UserAvatar _data={__data} />
+              <DeleteUser _data={__data} />
+            </Box>
+          )}
+        </Cont>
+      </AnimatePresence>
+      <ErrModal _data={{ theme, error: msg }} />
+      <MsgModal _data={{ msg: data?.msg!, theme, layoutId }} />
+      {Loading && <LoadingModal theme={theme} layoutId={layoutId} />}
     </>
   );
 };
-const Cont = styled(Flex)`
+const Cont = styled(motion.div)`
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   margin: 0 auto;
-  width: fit-content;
   position: absolute;
-  .overlay {
-    // background-color: palevioletred;
+`;
+const Box = styled(FlexCol_)`
+  width: 80%;
+  padding: 40px;
+  margin: 0 auto;
+  border-radius: 5px;
+  align-items: flex-start;
+  border: ${(p) => p.theme.border.thick};
+  box-shadow: ${(p) => p.theme.boxShadow.nav};
+  form {
+    .flex {
+      align-items: flex-start;
+    }
+    button {
+      font-size: ${(p) => (p.isDesk ? '1.2rem' : '3rem')};
+    }
   }
 `;
 
-const slideVar = {
-  initial: (back: boolean) => ({
-    scale: 0,
-    opacity: 0,
-    x: back ? -1000 : 1000,
-  }),
-  animate: () => ({
-    x: 0,
-    scale: 1,
-    opacity: 1,
-    transition: { type: 'tween', duration: 1 },
-  }),
+const vars = {
   exit: (back: boolean) => ({
-    scale: 0,
-    opacity: 0,
     x: back ? 1000 : -1000,
-    transition: { type: 'tween', duration: 1 },
+    transition: { duration: 1 },
   }),
+  animate: () => ({ x: 0, transition: { duration: 1 } }),
+  initial: (back: boolean) => ({ x: back ? -1000 : 1000 }),
 };

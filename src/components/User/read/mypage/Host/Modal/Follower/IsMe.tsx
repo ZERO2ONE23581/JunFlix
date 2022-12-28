@@ -1,40 +1,45 @@
-import { FollowUserId } from './userID';
+import { UserID } from './userID';
+import styled from '@emotion/styled';
 import { Follower } from '@prisma/client';
 import { Avatar } from '../../../../../../../Tools/Avatar';
 import { Flex } from '../../../../../../../../styles/global';
-import { Array } from '.';
 
 interface IIsMe {
   _data: {
     theme: boolean;
-    isFollower: boolean;
     follower: Follower;
+    isFollower: boolean;
     closeModal: () => void;
   };
 }
-
 export const IsMe = ({ _data }: IIsMe) => {
   const { closeModal, theme, follower, isFollower } = _data;
   const open = Boolean(follower && isFollower);
+  const _avatar = { theme, isRound: true };
   return (
     <>
       {open && (
-        <Array>
+        <Cont>
           {follower && (
             <Flex className="wrap">
               <Avatar
                 _modal={{ closeModal, isModal: true }}
-                _data={{
-                  theme,
-                  size: '3.5rem',
-                  host_id: follower.host_id,
-                }}
+                _data={{ ..._avatar, host_id: follower.host_id }}
               />
-              <FollowUserId host_id={follower.host_id} />
+              <UserID host_id={follower.host_id} />
             </Flex>
           )}
-        </Array>
+        </Cont>
       )}
     </>
   );
 };
+const Cont = styled(Flex)`
+  gap: 2rem;
+  justify-content: space-between;
+  .wrap {
+    gap: 2rem;
+    width: fit-content;
+    border: 5px solid pink;
+  }
+`;

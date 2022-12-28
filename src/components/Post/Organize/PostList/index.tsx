@@ -58,7 +58,7 @@ export const PostsModal = ({ _data, _useform }: IPostsModal) => {
 const Modal = styled(PostSt)`
   top: 2rem;
   width: 40vw;
-  height: fit-content;
-  max-height: 85vh;
   min-height: 60vh;
+  max-height: 85vh;
+  height: fit-content;
 `;
