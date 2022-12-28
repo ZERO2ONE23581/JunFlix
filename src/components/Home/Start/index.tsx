@@ -1,11 +1,11 @@
 import { Txts } from './Txts';
 import { StartBtn } from './Btn';
 import styled from '@emotion/styled';
-import { AnimatePresence } from 'framer-motion';
+import { Dispatch, SetStateAction } from 'react';
+import { FlexCol } from '../../../../styles/global';
+import { AnimatePresence, motion } from 'framer-motion';
 import { opacityVar } from '../../../../styles/variants';
-import { FlexCol, FlexPage } from '../../../../styles/global';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useResponsive } from '../../../libs/client/useTools';
 
 interface IStartPage {
   _data: {
@@ -15,19 +15,21 @@ interface IStartPage {
   };
 }
 export const Start = ({ _data }: IStartPage) => {
+  const { isDesk } = useResponsive();
   const { theme, isHide, setStart } = _data;
   return (
     <AnimatePresence>
       {isHide && (
         <Cont
           exit="exit"
+          isDesk={isDesk}
           initial="initial"
           animate="animate"
           variants={opacityVar}
         >
-          <Front>
+          <Front className="front">
             <Txts type="main" />
-            <StartBtn _data={{ theme, setStart }} />
+            <StartBtn _data={{ isDesk, theme, setStart }} />
             <Txts type="sub" />
           </Front>
         </Cont>
@@ -36,11 +38,25 @@ export const Start = ({ _data }: IStartPage) => {
   );
 };
 
-const Cont = styled(FlexPage)`
-  padding: 0 2rem;
-  justify-content: center;
-  background: linear-gradient(to top, black, transparent),
-    url('/img/1.jpg') center / cover no-repeat;
+const Cont = styled(motion.section)<{ isDesk: boolean }>`
+  padding: 2.5rem;
+  padding-top: 20vh;
+  color: whitesmoke;
+  min-height: ${(p) => (p.isDesk ? '100%' : '220vh')};
+  font-size: ${(p) => (p.isDesk ? '1.4rem' : '2.8rem')};
+  background: url('/img/up.jpg') center / cover no-repeat;
+  .start_btn {
+  }
+  > .kor {
+    font-size: 1.4rem;
+    font-size: ${(p) => (p.isDesk ? '1.4rem' : '2.5rem')};
+  }
+  .main {
+    font-size: 2rem;
+    .kor {
+      font-size: 1.8rem;
+    }
+  }
 `;
 const Front = styled(FlexCol)`
   gap: 2rem;

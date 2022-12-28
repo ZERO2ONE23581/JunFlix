@@ -16,7 +16,7 @@ export const Txts = ({ type }: ITxts) => {
 
           <span className="kor">
             <span className="red">JUNFLIX </span>는 영화인을 위한
-            <span className="bold">소셜 플랫폼 </span>으로서 <br /> 영화에 대한
+            <span className="bold">소셜 플랫폼 </span>으로서 영화에 대한
             <span className="bold"> 아이디어, 글, 이미지 </span>등을 공유하는
             공간입니다.
           </span>
@@ -24,7 +24,7 @@ export const Txts = ({ type }: ITxts) => {
           <span>
             <span className="red">JUNFLIX </span> is a
             <span className="bold"> social platform </span>
-            where people <br /> who love movies can share their
+            where people who love movies can share their
             <span className="bold"> ideas, articles and images.</span>
           </span>
         </Cont>
@@ -35,16 +35,14 @@ export const Txts = ({ type }: ITxts) => {
           <span className="kor">
             <span>사용자는 </span>
             <span className="bold">
-              상영예정작, 현재상영작, TV, 드라마, <br />
-              고전명작 등
+              상영예정작, 현재상영작, TV, 드라마, 고전명작 등
             </span>
             <span> 다양한 영화정보를 얻을 수 있습니다.</span>
           </span>
           <span>
             <span>User can get information such as </span>
             <span className="bold">
-              upcoming <br />
-              and now playing movies, tv shows, classic movies
+              upcoming and now playing movies, tv shows, classic movies
             </span>
           </span>
         </Cont>
@@ -55,14 +53,9 @@ export const Txts = ({ type }: ITxts) => {
 
 const Cont = styled(FlexCol)`
   color: #b2bec3;
-  font-size: 1.5rem;
-  font-style: italic;
   text-align: center;
+  font-style: italic;
   > span {
-    line-height: 25px;
-  }
-  > .kor {
-    font-size: 1.4rem;
   }
   .bold {
     color: white;
@@ -76,10 +69,6 @@ const Cont = styled(FlexCol)`
 const Main = styled(FlexCol)`
   gap: 0.2rem;
   color: white;
-  font-size: 2rem;
   text-align: center;
   margin-bottom: 1rem;
-  .kor {
-    font-size: 1.8rem;
-  }
 `;

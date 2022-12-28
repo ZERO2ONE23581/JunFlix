@@ -31,11 +31,11 @@ export const UnLogged = ({ _res, isLoggedIn }: IUnLogged) => {
   );
 };
 const Cont = styled(Flex)`
-  gap: 1.5rem;
+  gap: 1rem;
   height: 4rem;
+  width: fit-content;
   button {
     font-weight: 600;
-    font-size: 2.2rem;
     border-radius: 40px;
     padding: 0.7rem 1.5rem;
   }

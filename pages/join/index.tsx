@@ -6,17 +6,17 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../src/Tools/Button';
 import { IRes } from '../../src/types/global';
+import { ErrTxt } from '../../src/Tools/ErrTxt';
 import { variants } from '../../styles/variants';
 import { IUserForm } from '../../src/types/user';
 import { InputWrap } from '../../src/Tools/Input';
-import { ErrTxt } from '../../src/Tools/ErrTxt';
+import { BG, Box, FlexCol_ } from '../../styles/global';
 import { MsgModal } from '../../src/Tools/Modal/Message';
 import { FindUser } from '../../src/components/User/Find';
 import { AvatarInput } from '../../src/Tools/Avatar/Input';
 import useMutation from '../../src/libs/client/useMutation';
-import { Flex, FlexCol, FlexPage } from '../../styles/global';
-import { useUploadImg } from '../../src/libs/client/useTools';
 import { LoadingModal } from '../../src/Tools/Modal/Loading';
+import { useResponsive, useUploadImg } from '../../src/libs/client/useTools';
 
 const JoinPage: NextPage<IPage> = ({ theme }) => {
   const [post, { loading, data }] = useMutation<IRes>(`/api/user/create`);
@@ -72,10 +72,11 @@ const JoinPage: NextPage<IPage> = ({ theme }) => {
     }
   }, [data, router, setLoading, setMsg]);
   //
+  const { isDesk } = useResponsive();
   return (
-    <FlexPage>
+    <Cont isDesk={isDesk}>
       {!Loading && (
-        <Box
+        <Box_
           exit="exit"
           layoutId="join"
           initial="initial"
@@ -84,124 +85,111 @@ const JoinPage: NextPage<IPage> = ({ theme }) => {
           variants={variants}
         >
           <form onSubmit={handleSubmit(onValid)}>
-            <h1>
+            <h1 className="title">
               <span>Join</span>
               <span className="kor">회원가입</span>
             </h1>
-            <Wrap>
+            <Wrap isDesk={isDesk}>
               <AvatarInput
                 _data={{ register, theme, preview, setPreview, reset }}
               />
-              <Inputs>
-                <InputWrap
-                  _data={{
-                    theme,
-                    id: 'email',
-                    clearErrors,
-                    type: 'text',
-                    label: 'Email',
-                    text: watch('email')!,
-                    register: register('email', {
-                      required: 'need_email',
-                      pattern: {
-                        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                        message: 'invalid_email',
-                      },
-                    }),
-                  }}
-                />
-                <ErrTxt error={errors.email?.message!} theme={theme} />
-                <InputWrap
-                  _data={{
-                    theme,
-                    clearErrors,
-                    id: 'password',
-                    type: 'password',
-                    label: 'password',
-                    text: watch('password')!,
-                    register: register!('password', {
-                      required: 'need_password',
-                      minLength: { value: 8, message: 'min_password' },
-                      maxLength: { value: 16, message: 'max_password' },
-                      pattern: {
-                        value:
-                          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
-                        message: 'invalid_password',
-                      },
-                    }),
-                  }}
-                />
-                <ErrTxt error={errors.password?.message!} theme={theme} />
-                <InputWrap
-                  _data={{
-                    theme,
-                    clearErrors,
-                    type: 'password',
-                    id: 'password_confirm',
-                    label: 'Confirm Password',
-                    text: watch('password_confirm')!,
-                    register: register('password_confirm', {
-                      required: 'need_password_confirm',
-                    }),
-                  }}
-                />
-                <ErrTxt
-                  theme={theme}
-                  error={errors.password_confirm?.message!}
-                />
-              </Inputs>
+              <InputWrap
+                _data={{
+                  theme,
+                  id: 'email',
+                  clearErrors,
+                  type: 'text',
+                  label: 'Email',
+                  text: watch('email')!,
+                  register: register('email', {
+                    required: 'need_email',
+                    pattern: {
+                      value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                      message: 'invalid_email',
+                    },
+                  }),
+                }}
+              />
+              <ErrTxt error={errors.email?.message!} theme={theme} />
+              <InputWrap
+                _data={{
+                  theme,
+                  clearErrors,
+                  id: 'password',
+                  type: 'password',
+                  label: 'password',
+                  text: watch('password')!,
+                  register: register!('password', {
+                    required: 'need_password',
+                    minLength: { value: 8, message: 'min_password' },
+                    maxLength: { value: 16, message: 'max_password' },
+                    pattern: {
+                      value:
+                        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\d~!@#$%^&*()+|=]{8,16}$/,
+                      message: 'invalid_password',
+                    },
+                  }),
+                }}
+              />
+              <ErrTxt error={errors.password?.message!} theme={theme} />
+              <InputWrap
+                _data={{
+                  theme,
+                  clearErrors,
+                  type: 'password',
+                  id: 'password_confirm',
+                  label: 'Confirm Password',
+                  text: watch('password_confirm')!,
+                  register: register('password_confirm', {
+                    required: 'need_password_confirm',
+                  }),
+                }}
+              />
+              <ErrTxt theme={theme} error={errors.password_confirm?.message!} />
             </Wrap>
             <Btn type="submit" item={{ theme, name: 'Submit' }} />
           </form>
           <FindUser theme={theme} type="join" />
           {msg && <MsgModal _data={{ theme, msg }} />}
-        </Box>
+        </Box_>
       )}
       {Loading && <LoadingModal theme={theme} layoutId="join" />}
-    </FlexPage>
+    </Cont>
   );
 };
 export default JoinPage;
 
-const Box = styled(FlexCol)`
-  padding: 2rem;
-  max-width: 500px;
-  border-radius: 10px;
-  align-items: flex-start;
-  border: 1px solid ${(p) => p.theme.color.font};
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-  }
-  h1 {
-    font-size: 2rem;
+const Cont = styled(BG)`
+  padding-top: 15vh;
+  .title {
+    font-size: ${(p) => (p.isDesk ? '2rem' : '4rem')};
     .kor {
-      font-size: 1.5rem;
+      margin-left: 12px;
+      font-size: ${(p) => (p.isDesk ? '1.5rem' : '3rem')};
     }
-    span {
-      margin-right: 0.5rem;
-    }
-  }
-
-  .err_msg {
-    margin-top: 1rem;
   }
   button {
-    margin-top: 1rem;
+    padding: 0.5rem;
+    margin-top: 2rem;
+    font-size: ${(p) => (p.isDesk ? '1.1rem' : '3rem')};
   }
 `;
-const Wrap = styled(Flex)`
+const Box_ = styled(Box)`
+  form {
+    width: 100%;
+  }
+`;
+const Wrap = styled(FlexCol_)`
   gap: 1rem;
-  align-items: flex-start;
+  padding-top: 2rem;
+  .avatar_input {
+    width: ${(p) => (p.isDesk ? '5rem' : '15rem')};
+    height: ${(p) => (p.isDesk ? '5rem' : '15rem')};
+  }
   .avatar {
     margin-top: 1rem;
   }
   button {
     margin-top: 1rem;
   }
-`;
-const Inputs = styled(FlexCol)`
-  width: fit-content;
 `;

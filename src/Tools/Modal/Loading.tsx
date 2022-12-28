@@ -55,6 +55,7 @@ const Cont = styled.section<{ isDesk: boolean }>`
   .loading_modal {
     z-index: 999;
     padding: 4rem;
+    justify-content: center;
     top: ${(p) => (p.isDesk ? '50vh' : '0vh')};
     gap: ${(p) => (p.isDesk ? '1rem' : '3rem')};
     font-size: ${(p) => (p.isDesk ? '2.2rem' : '6rem')};

@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import { ThemeBtn } from './Btn/Theme';
 import { UnLogged } from './Login/UnLogged';
 import { LoginAvatar } from './Login/Avatar';
-import { Flex } from '../../../styles/global';
 import { Dispatch, SetStateAction } from 'react';
+import { Flex, Mob } from '../../../styles/global';
 import { useUser } from '../../libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useResponsive } from '../../libs/client/useTools';
@@ -23,31 +23,39 @@ export const Header = ({ _data }: IHeader) => {
   const _res = { theme, isDesk, isMobile };
   return (
     <AnimatePresence>
-      <Cont
-        custom={theme}
-        variants={vars}
-        animate="animate"
-        initial="initial"
-        className="header"
-      >
-        <Wrap>
-          <Left>
-            <Logo _res={_res} />
-            {isDesk && <Main _res={_res} />}
-          </Left>
-          <Right>
-            <ThemeBtn theme={theme} setTheme={setTheme} />
-            <UnLogged isLoggedIn={isLoggedIn} _res={_res} />
-            <LoginAvatar _res={_res} />
-          </Right>
-        </Wrap>
+      <Cont isDesk={isDesk}>
+        <Header_
+          custom={theme}
+          variants={vars}
+          animate="animate"
+          initial="initial"
+          className="header"
+        >
+          <Wrap>
+            <Left>
+              <Logo _res={_res} />
+              {isDesk && <Main _res={_res} />}
+            </Left>
+            <Right>
+              <ThemeBtn theme={theme} setTheme={setTheme} />
+              <UnLogged isLoggedIn={isLoggedIn} _res={_res} />
+              <LoginAvatar _res={_res} />
+            </Right>
+          </Wrap>
+        </Header_>
       </Cont>
     </AnimatePresence>
   );
 };
-const Cont = styled(motion.header)`
-  font-size: 2rem;
-  padding: 1.5rem 1rem;
+const Cont = styled(Mob)`
+  .header {
+    button {
+      font-size: ${(p) => (p.isDesk ? '2.2rem' : '2.7rem')};
+    }
+    padding: ${(p) => (p.isDesk ? '1.5rem 1rem' : '2rem')};
+  }
+`;
+const Header_ = styled(motion.header)`
   box-shadow: ${(p) => p.theme.boxShadow.input};
 `;
 const Wrap = styled(Flex)`

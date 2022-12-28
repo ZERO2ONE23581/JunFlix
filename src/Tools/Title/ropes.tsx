@@ -2,11 +2,22 @@ import { Svg } from '../Svg';
 import styled from '@emotion/styled';
 import { ITheme } from '../../../styles/theme';
 
-export const Ropes = ({ theme }: ITheme) => {
+interface IRopes extends ITheme {
+  isWhite: boolean;
+}
+export const Ropes = ({ theme, isWhite }: IRopes) => {
   return (
     <Cont>
-      <Svg type="ellipsis-v" theme={theme} />
-      <Svg type="ellipsis-v" theme={theme} />
+      <Svg
+        theme={theme}
+        type="ellipsis-v"
+        item={{ fill: isWhite ? 'whitesmoke' : '' }}
+      />
+      <Svg
+        theme={theme}
+        type="ellipsis-v"
+        item={{ fill: isWhite ? 'whitesmoke' : '' }}
+      />
     </Cont>
   );
 };

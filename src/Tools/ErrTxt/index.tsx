@@ -1,9 +1,8 @@
-import { UseMsg } from '../../libs/client/useMsg';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import { ITheme } from '../../../styles/theme';
-import { useResponsive } from '../../libs/client/useTools';
+import { UseMsg } from '../../libs/client/useMsg';
 import { FlexCol, Mob } from '../../../styles/global';
+import { useResponsive } from '../../libs/client/useTools';
 
 interface IErrTxt extends ITheme {
   error: string;
@@ -33,6 +32,7 @@ export const ErrTxt = ({ theme, error }: IErrTxt) => {
 const Cont = styled(Mob)`
   .err_msg {
     margin: 1rem auto;
+    margin-top: 2rem;
     font-size: ${(p) => (p.isDesk ? '1.2rem' : '2.5rem')};
     .kor {
       margin-bottom: 0.2rem;

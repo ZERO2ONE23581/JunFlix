@@ -2,7 +2,8 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { ITheme } from '../../../styles/theme';
 import { hoverVars } from '../../../styles/variants';
-import { Flex, FlexCol } from '../../../styles/global';
+import { FlexCol, Flex_ } from '../../../styles/global';
+import { useResponsive } from '../../libs/client/useTools';
 
 interface IFindUser extends ITheme {
   type?: string;
@@ -29,8 +30,9 @@ export const FindUser = ({ theme, type }: IFindUser) => {
       else return router.push(`/user/find/${type}`);
     }
   };
+  const { isDesk } = useResponsive();
   return (
-    <Cont>
+    <Cont isDesk={isDesk}>
       {array.map((element) => (
         <Arr key={array.lastIndexOf(element)} isBar={Boolean(element === '|')}>
           <Txt
@@ -51,9 +53,17 @@ export const FindUser = ({ theme, type }: IFindUser) => {
     </Cont>
   );
 };
-const Cont = styled(Flex)`
+const Cont = styled(Flex_)`
   gap: 1.2rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  .eng {
+    font-size: 1.1rem;
+    font-size: ${(p) => (p.isDesk ? '1.1rem' : '2.2rem')};
+  }
+  .kor {
+    font-size: 1rem;
+    font-size: ${(p) => (p.isDesk ? '1rem' : '2.2rem')};
+  }
 `;
 const Arr = styled.div<{ isBar: boolean }>`
   width: fit-content;
@@ -64,10 +74,4 @@ const Arr = styled.div<{ isBar: boolean }>`
 const Txt = styled(FlexCol)`
   width: fit-content;
   justify-content: center;
-  .eng {
-    font-size: 1.1rem;
-  }
-  .kor {
-    font-size: 1rem;
-  }
 `;

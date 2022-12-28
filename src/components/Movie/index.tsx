@@ -3,9 +3,10 @@ import { Title } from './Title';
 import styled from '@emotion/styled';
 import { MovieArray } from './Array';
 import { Svg } from '../../Tools/Svg';
-import { IMovie, IMovieRes } from '../../types/global';
-import { Flex, FlexCol } from '../../../styles/global';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { IMovieRes } from '../../types/global';
+import { Flex, FlexCol, FlexCol_ } from '../../../styles/global';
+import { useResponsive } from '../../libs/client/useTools';
 
 interface ISlider {
   _data: {
@@ -16,11 +17,13 @@ interface ISlider {
 }
 export const Movies = ({ _data }: ISlider) => {
   const [page, setPage] = useState(0);
-  const [boxes, setBoxes] = useState(6);
+  //const [boxes, setBoxes] = useState(6);
+  const { isDesk } = useResponsive();
+  const { theme, type, hideTitle } = _data;
+  const boxes = isDesk ? 6 : 2;
+  const size = isDesk ? '2rem' : '3rem';
   const [leave, setLeave] = useState(false);
   const [reverse, setReverse] = useState(false);
-
-  const { theme, type, hideTitle } = _data;
   const { data } = useSWR<IMovieRes>(`/api/movie/${type}`);
 
   const MOVIES = data?.movies!;
@@ -41,24 +44,40 @@ export const Movies = ({ _data }: ISlider) => {
       setPage((p) => (p === LastPage - 1 ? 0 : p + 1));
     }
   };
-  useEffect(() => {
-    if (type) return setBoxes(5);
-  }, [type, setBoxes]);
+
+  // useEffect(() => {
+  //   if (isDesk) setBoxes(2);
+  //   if (type && !isDesk) setBoxes(5);
+  // }, [type, setBoxes, isDesk]);
 
   return (
-    <Cont>
+    <Cont isDesk={isDesk}>
       {!hideTitle && <Title _data={{ theme, type }} />}
       <Slider>
-        <Svg theme={theme} type="left-chev" onClick={() => onClick('left')} />
+        <Svg
+          theme={theme}
+          item={{ size }}
+          type="left-chev"
+          onClick={() => onClick('left')}
+        />
         <MovieArray _data={{ theme, array, page, boxes, reverse, setLeave }} />
-        <Svg theme={theme} type="right-chev" onClick={() => onClick('right')} />
+        <Svg
+          theme={theme}
+          item={{ size }}
+          type="right-chev"
+          onClick={() => onClick('right')}
+        />
       </Slider>
     </Cont>
   );
 };
-const Cont = styled(FlexCol)`
-  padding: 0 5rem;
+const Cont = styled(FlexCol_)`
+  //padding: 0 5rem;
   align-items: flex-start;
+  .title {
+    font-size: 1.8rem;
+    font-size: ${(p) => (p.isDesk ? '1.8rem' : '3rem')};
+  }
 `;
 const Slider = styled(Flex)`
   gap: 0.5rem;

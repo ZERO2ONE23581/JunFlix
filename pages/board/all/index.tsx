@@ -6,6 +6,7 @@ import { PageTitle } from '../../../src/Tools/Title/Page';
 import { useResponsive } from '../../../src/libs/client/useTools';
 import { useGetAllBoards } from '../../../src/libs/client/useBoards';
 import { BoardsGrid } from '../../../src/components/Board/Read/Boards';
+import styled from '@emotion/styled';
 
 const AllBoards: NextPage<IPage> = ({ theme }) => {
   const { isDesk } = useResponsive();
@@ -13,11 +14,13 @@ const AllBoards: NextPage<IPage> = ({ theme }) => {
   return (
     <>
       <Head_ title="All Boards" />
-      <PostPage isDesk={isDesk}>
+      <Cont isDesk={isDesk}>
         <PageTitle type="all_board" theme={theme} />
         <BoardsGrid _data={{ theme, isBoard, boards }} />
-      </PostPage>
+      </Cont>
     </>
   );
 };
 export default AllBoards;
+
+const Cont = styled(PostPage)``;

@@ -74,7 +74,7 @@ export const VerifyID = ({ _data }: IVerfiyID) => {
                     clearErrors,
                     id: 'userId',
                     type: 'text',
-                    label: 'userId',
+                    label: 'ID',
                     text: watch('userId')!,
                     register: register('userId', { required: 'need_userId' }),
                   }}

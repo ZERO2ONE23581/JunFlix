@@ -64,6 +64,7 @@ export const Mobile = ({ _data, _set, _res }: IMobile) => {
 const Cont = styled(Flex)`
   bottom: 0;
   gap: 1rem;
+  height: fit-content;
   padding: 2rem;
   position: fixed;
   font-size: 2rem;

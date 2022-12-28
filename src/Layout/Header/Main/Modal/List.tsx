@@ -9,9 +9,10 @@ import { SpringTrans, hoverBgColor } from '../../../../../styles/variants';
 interface IListModal {
   _data: {
     type?: string;
-    selected?: string;
+    theme: boolean;
     isMovie: boolean;
     isBoard: boolean;
+    selected?: string;
     setSelected: Dispatch<SetStateAction<string>>;
     setCreatePost: Dispatch<SetStateAction<boolean>>;
   };
@@ -19,8 +20,15 @@ interface IListModal {
 export const ListModal = ({ _data }: IListModal) => {
   const router = useRouter();
   const { user_id, isLoggedIn } = useUser();
-  const { type, selected, setSelected, setCreatePost, isMovie, isBoard } =
-    _data;
+  const {
+    type,
+    theme,
+    isMovie,
+    isBoard,
+    selected,
+    setSelected,
+    setCreatePost,
+  } = _data;
   const Text = (txt: string) => {
     const isHideTxt =
       isBoard && !Boolean(txt === 'all' || txt === 'my' || txt === 'create');
@@ -67,6 +75,7 @@ export const ListModal = ({ _data }: IListModal) => {
   };
   return (
     <Cont
+      custom={theme}
       animate="animate"
       whileHover="hover"
       onClick={onClick}

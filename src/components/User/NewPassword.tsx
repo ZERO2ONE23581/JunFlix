@@ -120,6 +120,4 @@ export const NewPassord = ({ _data }: INewPassword) => {
     </AnimatePresence>
   );
 };
-const Cont = styled(Box)`
-  width: 500px;
-`;
+const Cont = styled(Box)``;

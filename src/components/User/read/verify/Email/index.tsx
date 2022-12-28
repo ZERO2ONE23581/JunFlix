@@ -71,7 +71,7 @@ export const Email = ({ _data }: IVerifyEmail) => {
                   clearErrors,
                   id: 'email',
                   type: 'text',
-                  label: 'email',
+                  label: 'Email',
                   text: watch('email'),
                   register: register('email', {
                     required: 'need_email',

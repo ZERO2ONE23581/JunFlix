@@ -1,6 +1,5 @@
 import { ListModal } from './List';
 import styled from '@emotion/styled';
-import { LoginAvatar } from '../../Login/Avatar';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -51,7 +50,7 @@ export const Modal = ({ _data }: IMenuModal) => {
                   {arr.map((type) => (
                     <ListModal
                       key={arr.indexOf(type)}
-                      _data={{ ..._list, type }}
+                      _data={{ ..._list, type, theme }}
                     />
                   ))}
                 </Lists>
@@ -71,7 +70,7 @@ export const Modal = ({ _data }: IMenuModal) => {
                   {arr.map((type) => (
                     <ListModal
                       key={arr.indexOf(type)}
-                      _data={{ ..._list, type }}
+                      _data={{ ..._list, type, theme }}
                     />
                   ))}
                 </Lists>

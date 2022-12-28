@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { Svg } from '../../../../Tools/Svg';
 import { ITheme } from '../../../../../styles/theme';
-import { FlexCol } from '../../../../../styles/global';
+import { FlexCol_ } from '../../../../../styles/global';
+import { useResponsive } from '../../../../libs/client/useTools';
 
 interface ITitle extends ITheme {
   type: string;
@@ -18,20 +19,22 @@ export const Title = ({ theme, type }: ITitle) => {
     if (type === 'token_id' || type === 'token_pw')
       return { one: 'Step 2', two: 'Verify Token' };
   };
+  const { isDesk } = useResponsive();
+  const size = isDesk ? '1.7rem' : '3.3rem';
   const isNew = Boolean(type === 'new_password');
   const isID = Boolean(type === 'email' || type === 'token_id') && !isNew;
 
   return (
-    <Cont>
+    <Cont isDesk={isDesk}>
       <h1>
         <span>{setTitle(type)}</span>
-        <Svg type="user" theme={theme} item={{ size: '1.7rem' }} />
+        <Svg type="user" theme={theme} item={{ size }} />
       </h1>
       <h2>
         <span>{setSub(type)?.one}</span>
         <span>{setSub(type)?.two}</span>
       </h2>
-      <Txt>
+      <Txt isDesk={isDesk}>
         {isNew && (
           <>
             <span className="kor">* 새로운 아이디를 입력 해주세요.</span>
@@ -69,7 +72,7 @@ export const Title = ({ theme, type }: ITitle) => {
     </Cont>
   );
 };
-const Cont = styled.div`
+const Cont = styled.div<{ isDesk: boolean }>`
   h1,
   h2 {
     gap: 0.5rem;
@@ -80,28 +83,27 @@ const Cont = styled.div`
     }
   }
   h1 {
-    font-size: 2rem;
     margin-left: 0.2rem;
     margin-bottom: 0.5rem;
+    font-size: ${(p) => (p.isDesk ? '2rem' : '4rem')};
   }
   h2 {
-    font-size: 1.5rem;
     font-style: italic;
     color: ${(p) => p.theme.color.logo};
+    font-size: ${(p) => (p.isDesk ? '1.5rem' : '3rem')};
   }
 `;
-const Txt = styled(FlexCol)`
+const Txt = styled(FlexCol_)`
   gap: 0.2rem;
   opacity: 0.8;
   margin-top: 1rem;
-  font-size: 1.2rem;
   font-style: italic;
-  line-height: 1.2rem;
   align-items: flex-start;
+  font-size: ${(p) => (p.isDesk ? '1.2rem' : '2.5rem')};
+  .kor {
+    font-size: ${(p) => (p.isDesk ? '1.1rem' : '2.2rem')};
+  }
   span {
     word-break: all;
-  }
-  .kor {
-    font-size: 1.1rem;
   }
 `;

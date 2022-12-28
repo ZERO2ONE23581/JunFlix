@@ -20,6 +20,7 @@ export interface IAvatarInput {
 }
 export const AvatarInput = ({ _data }: IAvatarInput) => {
   const { isDesk } = useResponsive();
+  const size = isDesk ? '5rem' : '8rem';
   const { avatar, register, theme, preview, setPreview } = _data;
   const [disabled, setDisabled] = useState(false);
   const clickTrash = () => {
@@ -68,7 +69,7 @@ export const AvatarInput = ({ _data }: IAvatarInput) => {
               )}
               {!avatar && (
                 <NoPreview className="no_preview">
-                  <Svg type="user" theme={theme} item={{ size: '4rem' }} />
+                  <Svg type="user" theme={theme} item={{ size }} />
                 </NoPreview>
               )}
             </>
@@ -87,8 +88,8 @@ export const AvatarInput = ({ _data }: IAvatarInput) => {
   );
 };
 const Cont = styled(Flex)`
-  overflow: hidden;
   cursor: pointer;
+  overflow: hidden;
   margin-top: 1rem;
   position: relative;
   .trash {

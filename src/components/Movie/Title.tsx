@@ -35,7 +35,6 @@ export const Title = ({ _data }: ISlideTitle) => {
   );
 };
 const Cont = styled(Flex)`
-  font-size: 1.8rem;
   width: fit-content;
   margin-left: 3.3rem;
   margin-bottom: 1.5rem;

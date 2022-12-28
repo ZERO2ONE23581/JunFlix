@@ -13,14 +13,16 @@ import { IUserForm } from '../../src/types/user';
 import { InputWrap } from '../../src/Tools/Input';
 import { Head_ } from '../../src/Tools/Title/Head';
 import { MsgModal } from '../../src/Tools/Modal/Message';
-import { Box, FlexPage, Form } from '../../styles/global';
 import { FindUser } from '../../src/components/User/Find';
 import useMutation from '../../src/libs/client/useMutation';
 import { LoadingModal } from '../../src/Tools/Modal/Loading';
+import { BG, Box, FlexPage, Form } from '../../styles/global';
+import { useResponsive } from '../../src/libs/client/useTools';
 
 const Login: NextPage<IPage> = ({ theme }) => {
   const router = useRouter();
   const [msg, setMsg] = useState('');
+  const { isDesk } = useResponsive();
   const [login, { loading, data }] = useMutation<IRes>(`/api/login`);
   const {
     watch,
@@ -41,11 +43,12 @@ const Login: NextPage<IPage> = ({ theme }) => {
     }
   }, [data, router, setMsg, setTimeout]);
   //
+
   return (
     <>
       <Head_ title="로그인" />
       <AnimatePresence>
-        <FlexPage>
+        <Cont isDesk={isDesk}>
           {!loading && (
             <Box
               exit="exit"
@@ -56,7 +59,7 @@ const Login: NextPage<IPage> = ({ theme }) => {
               custom={theme}
               variants={variants}
             >
-              <Title>
+              <Title className="title">
                 <span>Login</span>
                 <span className="kor">로그인</span>
               </Title>
@@ -100,18 +103,32 @@ const Login: NextPage<IPage> = ({ theme }) => {
           )}
           {loading && <LoadingModal theme={theme} layoutId="login" />}
           <MsgModal _data={{ msg, theme, layoutId: 'login' }} />
-        </FlexPage>
+        </Cont>
       </AnimatePresence>
     </>
   );
 };
 export default Login;
+
+const Cont = styled(BG)`
+  padding-top: 15vh;
+  .title {
+    font-size: ${(p) => (p.isDesk ? '2rem' : '4rem')};
+    .kor {
+      margin-left: 12px;
+      font-size: ${(p) => (p.isDesk ? '1.5rem' : '3rem')};
+    }
+  }
+  button {
+    padding: 0.5rem;
+    margin-top: 2rem;
+    font-size: ${(p) => (p.isDesk ? '1.1rem' : '3rem')};
+  }
+`;
 const Title = styled.h1`
   height: 100%;
-  font-size: 2rem;
   margin-bottom: 2px;
   .kor {
-    font-size: 1.5rem;
     margin-left: 12px;
   }
 `;

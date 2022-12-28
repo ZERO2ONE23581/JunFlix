@@ -26,15 +26,15 @@ export const MovieArray = ({ _data }: IMovieArray) => {
         onExitComplete={() => setLeave((p) => !p)}
       >
         <Grid
+          exit="exit"
           key={page}
           boxes={boxes}
           variants={vars}
           custom={reverse}
-          transition={SpringTrans}
-          exit="exit"
           initial="initial"
           animate="animate"
           className="slide"
+          transition={SpringTrans}
         >
           <MovieBox _data={{ theme, array }} />
         </Grid>

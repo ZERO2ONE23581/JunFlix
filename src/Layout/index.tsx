@@ -2,11 +2,10 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import styled from '@emotion/styled';
 import { Main } from './Header/Main';
-import { Page } from '../../styles/global';
+import { motion } from 'framer-motion';
 import { IResponsive } from '../types/global';
 import { noneBorderVar } from '../../styles/variants';
 import { Dispatch, ReactElement, SetStateAction } from 'react';
-import { motion } from 'framer-motion';
 
 interface ILayoutProps extends IResponsive {
   children: ReactElement;
@@ -37,11 +36,9 @@ export const Layout = ({ _data, children, _res }: ILayoutProps) => {
     </>
   );
 };
-
 const Cont = styled(motion.section)`
   padding: 0;
   width: 100%;
-  height: 100%;
-  min-width: 768px;
+  min-width: 700px;
   position: relative;
 `;

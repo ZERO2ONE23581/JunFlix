@@ -5,17 +5,14 @@ import { useEffect, useState } from 'react';
 import { ITheme } from '../../../styles/theme';
 import { useUser } from '../../libs/client/useUser';
 import { Flex, FlexCol } from '../../../styles/global';
-import {
-  useCapLetter,
-  useCapLetters,
-  useResponsive,
-} from '../../libs/client/useTools';
+import { useCapLetter, useCapLetters } from '../../libs/client/useTools';
 
 interface IPageTitle extends ITheme {
   _genre?: string;
+  isWhite?: boolean;
   type?: string | any;
 }
-export const PageTitle = ({ type, theme, _genre }: IPageTitle) => {
+export const PageTitle = ({ type, theme, _genre, isWhite }: IPageTitle) => {
   const { username, userId } = useUser();
   const [txt, setTxt] = useState({ eng: '', kor: '' });
   const USERNAME = useCapLetter(username ? username : userId);
@@ -44,18 +41,24 @@ export const PageTitle = ({ type, theme, _genre }: IPageTitle) => {
     if (type === 'users') return 'crown';
     else if (type === 'qs' || type === 'user_posts') return 'posts';
     else if (type === 'all_board' || type === 'user_board') return 'grid';
-    else return 'film';
+    else return 'movie';
   };
   return (
     <Cont className="page-title">
       <Wrap>
-        <Ropes theme={theme} />
+        <Ropes theme={theme} isWhite={isWhite!} />
         <Txt className="txt">
           <span>
             <span>{txt.eng}</span>
             <span className="kor">{txt.kor}</span>
           </span>
-          {!_genre && <Svg theme={theme} type={svg()!} />}
+          {!_genre && (
+            <Svg
+              theme={theme}
+              type={svg()!}
+              item={{ fill: isWhite ? 'whitesmoke' : '' }}
+            />
+          )}
           {_genre === 'drama' && <Svg theme={theme} type={'drama'} />}
           {_genre === 'action' && <Svg theme={theme} type={'action'} />}
           {_genre === 'horror' && <Svg theme={theme} type={'horror'} />}

@@ -51,7 +51,7 @@ const Cont = styled(FlexCol)<{ length: number; img?: string }>`
   height: 10rem;
   cursor: pointer;
   overflow: hidden;
-  border-radius: 5px;
+  border-radius: 20px;
   justify-content: flex-end;
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   :nth-of-type(1) {

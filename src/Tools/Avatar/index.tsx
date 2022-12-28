@@ -6,7 +6,7 @@ import { border } from '../../../styles/variants';
 import { useGetUser } from '../../libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export const Avatar = ({ _data, _modal }: IAvatarInput) => {
+export const Avatar = ({ _data, _modal, isWhite }: IAvatarInput) => {
   const router = useRouter();
   const { isRound, size, theme, host_id, isOther, handleClick } = _data;
   const { avatar, userId } = useGetUser(host_id);
@@ -20,20 +20,24 @@ export const Avatar = ({ _data, _modal }: IAvatarInput) => {
   return (
     <AnimatePresence>
       <Cont
+        exit="exit"
         size={size!}
         variants={vars}
         onClick={onClick}
-        custom={{ theme, isRound }}
-        exit="exit"
         initial="initial"
         animate="animate"
         whileHover="hover"
         className="avatar"
+        custom={{ theme, isRound, isWhite }}
       >
         {avatar && <motion.img src={avatarLink(avatar)} />}
         {!avatar && (
           <NoImg>
-            <Svg type="user" theme={theme} item={{ size: '100%' }} />
+            <Svg
+              type="user"
+              theme={theme}
+              item={{ size: '100%', fill: isWhite ? 'whitesmoke' : '' }}
+            />
           </NoImg>
         )}
       </Cont>
@@ -62,12 +66,12 @@ const NoImg = styled(Flex)`
 const vars = {
   exit: () => ({ opacity: 0, scale: 0 }),
   initial: () => ({ opacity: 0, scale: 0 }),
-  animate: ({ theme, isRound }: any) => ({
+  animate: ({ theme, isRound, isWhite }: any) => ({
     scale: 1,
     opacity: 1,
-    outline: border(theme),
     borderRadius: isRound ? '100%' : '10%',
     transition: { duration: isRound ? 0.2 : 0.4 },
+    border: isWhite ? '1px solid #ffffff' : border(theme),
   }),
   hover: ({ isRound }: any) => ({
     borderRadius: '100%',
@@ -83,6 +87,7 @@ export const avatarLink = (url: string | any) => {
   else return `${base}/${url}/${variant}`;
 };
 export interface IAvatarInput {
+  isWhite?: boolean;
   _modal?: {
     isModal?: boolean;
     closeModal?: () => void;
