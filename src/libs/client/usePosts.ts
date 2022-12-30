@@ -90,7 +90,8 @@ export const usePostsGrid = ({ posts }: IUsePostsGrid) => {
     );
   useEffect(() => {
     if (isMobile) setMax(2);
-  }, [setMax, isDesk]);
+    if (isDesk) setMax(6);
+  }, [setMax, isDesk, isDesk]);
   return { ColArr, PostArr, max, setMax };
 };
 interface IUsePostResult {

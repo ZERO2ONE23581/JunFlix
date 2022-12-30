@@ -1,9 +1,9 @@
 import { Lists } from './Lists';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
+import { IResponsive } from '../../../../types/global';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { AnimatePresence, motion } from 'framer-motion';
-import { IResponsive } from '../../../../types/global';
 import { fromTopVar } from '../../../../../styles/variants';
 
 interface IAvatarModal extends IResponsive {
@@ -44,12 +44,10 @@ const Cont = styled.div<{ isMobile: boolean }>`
   right: 0rem;
   z-index: 100;
   position: absolute;
-  .modal {
-    padding: ${(p) => (p.isMobile ? '1rem 2rem' : '2rem')};
-  }
 `;
 const Modal = styled(motion.div)`
   border-radius: 5px;
+  padding: 1rem 2rem;
   color: ${(p) => p.theme.color.font};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
   background-color: ${(p) => p.theme.color.bg};

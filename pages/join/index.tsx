@@ -78,10 +78,11 @@ const JoinPage: NextPage<IPage> = ({ theme }) => {
       {!Loading && (
         <Box_
           exit="exit"
-          layoutId="join"
-          initial="initial"
-          animate="animate"
           custom={theme}
+          layoutId="join"
+          className="box"
+          animate="animate"
+          initial="initial"
           variants={variants}
         >
           <form onSubmit={handleSubmit(onValid)}>
@@ -160,7 +161,11 @@ const JoinPage: NextPage<IPage> = ({ theme }) => {
 export default JoinPage;
 
 const Cont = styled(BG)`
-  padding-top: 15vh;
+  padding: 15vh 0;
+  .box {
+    margin: 0 auto;
+    width: ${(p) => p.isDesk && 'fit-content'};
+  }
   .title {
     font-size: ${(p) => (p.isDesk ? '2rem' : '4rem')};
     .kor {
@@ -183,8 +188,8 @@ const Wrap = styled(FlexCol_)`
   gap: 1rem;
   padding-top: 2rem;
   .avatar_input {
-    width: ${(p) => (p.isDesk ? '5rem' : '15rem')};
-    height: ${(p) => (p.isDesk ? '5rem' : '15rem')};
+    width: ${(p) => (p.isDesk ? '10rem' : '15rem')};
+    height: ${(p) => (p.isDesk ? '10rem' : '15rem')};
   }
   .avatar {
     margin-top: 1rem;

@@ -5,18 +5,20 @@ import { Page } from '../../styles/global';
 import { useLogin } from '../../src/libs/client/useLogin';
 import { PostSchema } from '../../src/components/Post/Schema';
 import { useGetAllPosts } from '../../src/libs/client/usePosts';
+import { useResponsive } from '../../src/libs/client/useTools';
 
 const AllPosts: NextPage<IPage> = ({ theme }) => {
   useLogin();
   const { posts } = useGetAllPosts();
+  const { isDesk } = useResponsive();
   return (
-    <Cont>
+    <Cont isDesk={isDesk}>
       <PostSchema _data={{ theme, posts }} />
     </Cont>
   );
 };
 export default AllPosts;
 
-const Cont = styled(Page)`
-  padding: 2.5rem;
+const Cont = styled(Page)<{ isDesk: boolean }>`
+  padding: ${(p) => (p.isDesk ? '1rem 4rem' : '2rem 2.5rem')};
 `;

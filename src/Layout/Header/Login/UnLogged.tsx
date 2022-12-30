@@ -9,7 +9,7 @@ interface IUnLogged extends IResponsive {
 }
 export const UnLogged = ({ _res, isLoggedIn }: IUnLogged) => {
   const router = useRouter();
-  const { theme, isMobile } = _res;
+  const { theme } = _res;
   const onClick = (type: string) => router.push(`/${type}`);
   return (
     <>
@@ -18,7 +18,7 @@ export const UnLogged = ({ _res, isLoggedIn }: IUnLogged) => {
           <Btn
             type="button"
             onClick={() => onClick('login')}
-            item={{ name: 'Login', theme, isClicked: isMobile }}
+            item={{ name: 'Login', theme, isClicked: true }}
           />
           <Btn
             type="button"

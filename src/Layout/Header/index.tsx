@@ -5,7 +5,7 @@ import { ThemeBtn } from './Btn/Theme';
 import { UnLogged } from './Login/UnLogged';
 import { LoginAvatar } from './Login/Avatar';
 import { Dispatch, SetStateAction } from 'react';
-import { Flex, Mob } from '../../../styles/global';
+import { Flex, Flex_, Mob } from '../../../styles/global';
 import { useUser } from '../../libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useResponsive } from '../../libs/client/useTools';
@@ -31,12 +31,12 @@ export const Header = ({ _data }: IHeader) => {
           initial="initial"
           className="header"
         >
-          <Wrap>
-            <Left>
+          <Wrap className="wrap">
+            <Left className="left">
               <Logo _res={_res} />
               {isDesk && <Main _res={_res} />}
             </Left>
-            <Right>
+            <Right className="right" isDesk={isDesk}>
               <ThemeBtn theme={theme} setTheme={setTheme} />
               <UnLogged isLoggedIn={isLoggedIn} _res={_res} />
               <LoginAvatar _res={_res} />
@@ -49,10 +49,24 @@ export const Header = ({ _data }: IHeader) => {
 };
 const Cont = styled(Mob)`
   .header {
-    button {
-      font-size: ${(p) => (p.isDesk ? '2.2rem' : '2.7rem')};
+    padding: ${(p) => (p.isDesk ? '0.5rem 1rem' : '2rem')};
+    .wrap {
+      padding-left: ${(p) => p.isDesk && '10rem'};
+      padding-right: ${(p) => p.isDesk && '2rem'};
+      .left {
+        gap: 10rem;
+        .menu {
+          gap: 10rem;
+          font-size: 1.5rem;
+        }
+      }
+      .right {
+        width: fit-content;
+      }
     }
-    padding: ${(p) => (p.isDesk ? '1.5rem 1rem' : '2rem')};
+    button {
+      font-size: ${(p) => (p.isDesk ? '1.2rem' : '2.5rem')};
+    }
   }
 `;
 const Header_ = styled(motion.header)`
@@ -69,10 +83,10 @@ const Left = styled(Flex)`
     width: fit-content;
   }
 `;
-const Right = styled(Left)`
-  gap: 2rem;
+const Right = styled(Flex_)`
   width: fit-content;
   justify-content: flex-end;
+  gap: ${(p) => p.isDesk && '1rem'};
 `;
 const vars = {
   animate: (theme: boolean) => ({

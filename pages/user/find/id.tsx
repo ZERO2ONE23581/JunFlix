@@ -31,7 +31,11 @@ const FindID: NextPage<{ theme: boolean }> = ({ theme }) => {
 export default FindID;
 
 const Cont = styled(BG)`
-  padding-top: 15vh;
+  padding: 15vh 0;
+  .box {
+    margin: 0 auto;
+    width: ${(p) => p.isDesk && 'fit-content'};
+  }
   .title {
     font-size: ${(p) => (p.isDesk ? '2rem' : '4rem')};
     .kor {

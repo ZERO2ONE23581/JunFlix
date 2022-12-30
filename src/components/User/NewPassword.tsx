@@ -66,9 +66,9 @@ export const NewPassord = ({ _data }: INewPassword) => {
         {isBox && !Loading && (
           <Cont
             exit="exit"
+            className="box"
             initial="initial"
             animate="animate"
-            className="loading"
             custom={theme}
             variants={variants}
           >

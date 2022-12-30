@@ -2,9 +2,9 @@ import { Txts } from './Txts';
 import { StartBtn } from './Btn';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
-import { FlexCol } from '../../../../styles/global';
 import { AnimatePresence, motion } from 'framer-motion';
 import { opacityVar } from '../../../../styles/variants';
+import { FlexCol, Mob } from '../../../../styles/global';
 import { useResponsive } from '../../../libs/client/useTools';
 
 interface IStartPage {
@@ -20,37 +20,41 @@ export const Start = ({ _data }: IStartPage) => {
   return (
     <AnimatePresence>
       {isHide && (
-        <Cont
-          exit="exit"
-          isDesk={isDesk}
-          initial="initial"
-          animate="animate"
-          variants={opacityVar}
-        >
-          <Front className="front">
-            <Txts type="main" />
-            <StartBtn _data={{ isDesk, theme, setStart }} />
-            <Txts type="sub" />
-          </Front>
+        <Cont isDesk={isDesk}>
+          <Container
+            exit="exit"
+            initial="initial"
+            animate="animate"
+            className="start"
+            variants={opacityVar}
+          >
+            <Front className="front">
+              <Txts type="main" />
+              <StartBtn _data={{ isDesk, theme, setStart }} />
+              <Txts type="sub" />
+            </Front>
+          </Container>
         </Cont>
       )}
     </AnimatePresence>
   );
 };
-
-const Cont = styled(motion.section)<{ isDesk: boolean }>`
+const Cont = styled(Mob)`
+  .start {
+    min-height: ${(p) => (p.isDesk ? '100vh' : '220vh')};
+    font-size: ${(p) => (p.isDesk ? '1.4rem' : '2.8rem')};
+    > .kor {
+      font-size: 1.4rem;
+      font-size: ${(p) => (p.isDesk ? '1.4rem' : '2.5rem')};
+    }
+  }
+`;
+const Container = styled(motion.section)`
   padding: 2.5rem;
   padding-top: 20vh;
   color: whitesmoke;
-  min-height: ${(p) => (p.isDesk ? '100%' : '220vh')};
-  font-size: ${(p) => (p.isDesk ? '1.4rem' : '2.8rem')};
   background: url('/img/up.jpg') center / cover no-repeat;
-  .start_btn {
-  }
-  > .kor {
-    font-size: 1.4rem;
-    font-size: ${(p) => (p.isDesk ? '1.4rem' : '2.5rem')};
-  }
+
   .main {
     font-size: 2rem;
     .kor {

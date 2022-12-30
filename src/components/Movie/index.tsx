@@ -1,11 +1,11 @@
 import useSWR from 'swr';
 import { Title } from './Title';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { MovieArray } from './Array';
 import { Svg } from '../../Tools/Svg';
-import { useEffect, useState } from 'react';
 import { IMovieRes } from '../../types/global';
-import { Flex, FlexCol, FlexCol_ } from '../../../styles/global';
+import { Flex, FlexCol_ } from '../../../styles/global';
 import { useResponsive } from '../../libs/client/useTools';
 
 interface ISlider {
@@ -44,12 +44,6 @@ export const Movies = ({ _data }: ISlider) => {
       setPage((p) => (p === LastPage - 1 ? 0 : p + 1));
     }
   };
-
-  // useEffect(() => {
-  //   if (isDesk) setBoxes(2);
-  //   if (type && !isDesk) setBoxes(5);
-  // }, [type, setBoxes, isDesk]);
-
   return (
     <Cont isDesk={isDesk}>
       {!hideTitle && <Title _data={{ theme, type }} />}
@@ -72,8 +66,8 @@ export const Movies = ({ _data }: ISlider) => {
   );
 };
 const Cont = styled(FlexCol_)`
-  //padding: 0 5rem;
   align-items: flex-start;
+  padding: ${(p) => p.isDesk && '0 3rem'};
   .title {
     font-size: 1.8rem;
     font-size: ${(p) => (p.isDesk ? '1.8rem' : '3rem')};

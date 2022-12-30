@@ -37,9 +37,10 @@ export const List = ({ _data }: IList) => {
 };
 const Cont = styled(Flex)`
   width: 100%;
-  justify-content: space-between;
+  justify-content: center;
   > .txt {
     gap: 1rem;
+    padding-left: 1rem;
     justify-content: flex-start;
   }
 `;

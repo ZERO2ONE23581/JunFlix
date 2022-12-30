@@ -13,25 +13,26 @@ const AllMovies: NextPage<IPage> = ({ theme }) => {
   return (
     <>
       <Head_ title="영화" />
-      <Cont isDesk={isDesk}>
+      <MoviePG isDesk={isDesk}>
         <PageTitle theme={theme} type="movie" />
         {array.map((type) => (
           <Movies key={array.indexOf(type)} _data={{ theme, type }} />
         ))}
-      </Cont>
+      </MoviePG>
     </>
   );
 };
 export default AllMovies;
 
-const Cont = styled(BG)`
+export const MoviePG = styled(BG)`
   padding: 0 3rem;
   overflow-y: auto;
-  min-height: 200vh;
   padding: ${(p) => (p.isDesk ? '0rem' : '0 3rem')};
+  min-height: ${(p) => (p.isDesk ? '100vh' : '200vh')};
   //min-height: ${(p) => (p.isDesk ? '100%' : '100%')};
   .page-title {
     margin-bottom: 2rem;
+    margin-left: ${(p) => p.isDesk && '5rem'};
     font-size: ${(p) => (p.isDesk ? '2rem' : '4rem')};
     svg {
       width: ${(p) => (p.isDesk ? '2rem' : '4rem')};

@@ -62,7 +62,7 @@ export const VerifyID = ({ _data }: IVerfiyID) => {
               exit="exit"
               initial="initial"
               animate="animate"
-              className="loading"
+              className="box"
               custom={theme}
               variants={variants}
             >

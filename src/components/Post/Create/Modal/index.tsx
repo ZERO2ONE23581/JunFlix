@@ -1,3 +1,8 @@
+import {
+  useLength,
+  useUploadImg,
+  useResponsive,
+} from '../../../../libs/client/useTools';
 import { Layer } from './Layer';
 import { PostInfo } from './Info';
 import styled from '@emotion/styled';
@@ -6,29 +11,13 @@ import { useForm } from 'react-hook-form';
 import { ImageInput } from './Image_Input';
 import { AnimatePresence } from 'framer-motion';
 import { IPostForm } from '../../../../types/post';
-import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { PostSt } from '../../../../../styles/post';
+import { MobModal } from '../../../../../styles/mobile';
+import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { useUser } from '../../../../libs/client/useUser';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { color, TransBorder } from '../../../../../styles/variants';
-import {
-  useLength,
-  useUploadImg,
-  useResponsive,
-} from '../../../../libs/client/useTools';
-import { MobModal } from '../../../../../styles/mobile';
 
-interface ICreatePostSt {
-  _data: {
-    modal: boolean;
-    theme: boolean;
-    loading: boolean;
-    layoutId: string;
-    post: ({}) => void;
-    closeModal: () => void;
-    setLoading: Dispatch<SetStateAction<boolean>>;
-  };
-}
 export const Modal = ({ _data }: ICreatePostSt) => {
   const {
     post,
@@ -142,3 +131,14 @@ const vars = {
   exit: () => ({ opacity: 0, scale: 0.1, transition }),
   initial: () => ({ opacity: 0, scale: 0.1, transition }),
 };
+interface ICreatePostSt {
+  _data: {
+    modal: boolean;
+    theme: boolean;
+    loading: boolean;
+    layoutId: string;
+    post: ({}) => void;
+    closeModal: () => void;
+    setLoading: Dispatch<SetStateAction<boolean>>;
+  };
+}

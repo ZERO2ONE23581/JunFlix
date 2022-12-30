@@ -20,7 +20,6 @@ export const LinkModal = ({ _data }: ILinkModal) => {
   const router = useRouter();
   const { theme, modal } = _data;
   const { isDesk } = useResponsive();
-  const size = isDesk ? '2rem' : '4rem';
   const { isLoggedIn, user_id } = useUser();
   return (
     <AnimatePresence>

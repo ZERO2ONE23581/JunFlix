@@ -2,7 +2,7 @@ import { Box } from './Box';
 import { Icons } from './Icons';
 import styled from '@emotion/styled';
 import { PostModal } from '../Read/Modal';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { IPostType } from '../../../../types/post';
 import { usePostsGrid } from '../../../../libs/client/usePosts';
 import { useResponsive } from '../../../../libs/client/useTools';

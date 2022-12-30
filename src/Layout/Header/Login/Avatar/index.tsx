@@ -7,8 +7,8 @@ import { IResponsive } from '../../../../types/global';
 import { useUser } from '../../../../libs/client/useUser';
 
 export const LoginAvatar = ({ _res }: IResponsive) => {
-  const { theme, isMobile } = _res;
-  const size = isMobile ? '7rem' : '3rem';
+  const { theme, isDesk } = _res;
+  const size = isDesk ? '4rem' : '7rem';
   const [modal, setModal] = useState(false);
   const handleClick = () => setModal((p) => !p);
   const { user_id: host_id, isLoggedIn } = useUser();
@@ -21,8 +21,8 @@ export const LoginAvatar = ({ _res }: IResponsive) => {
               theme,
               host_id,
               size,
-              isOther: true,
               handleClick,
+              isOther: true,
             }}
           />
           <AvatarModal _res={_res} _data={{ modal, setModal }} />
@@ -33,7 +33,4 @@ export const LoginAvatar = ({ _res }: IResponsive) => {
 };
 const Cont = styled(Flex)`
   position: relative;
-  .avatar {
-    margin: 0.5rem 0;
-  }
 `;

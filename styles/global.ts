@@ -84,7 +84,7 @@ export const Layer_ = styled(Flex_)`
     padding: 0.4rem;
     border-radius: 40px;
     width: ${(p) => (p.isDesk ? '100px' : '10rem')};
-    font-size: ${(p) => (p.isDesk ? '2rem' : '2.5rem')};
+    font-size: ${(p) => (p.isDesk ? '1.4rem' : '2.5rem')};
   }
   > div {
     width: 100%;
@@ -126,8 +126,6 @@ export const Modal = styled(FlexCol)`
   }
 `;
 export const MiniModal = styled(motion.div)`
-  top: 0;
-  right: 0rem;
   z-index: 100;
   padding: 5px;
   overflow: hidden;

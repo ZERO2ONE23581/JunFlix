@@ -7,7 +7,9 @@ export const MobModal = styled(FlexCol_)`
   }
   .modal {
     justify-content: flex-start;
-    width: ${(p) => (p.isDesk ? 'fit-content' : '100%')};
+    top: ${(p) => p.isDesk && '10vh'};
+    width: ${(p) => (p.isDesk ? '500px' : '100%')};
+    height: ${(p) => (p.isDesk ? '600px' : '100%')};
     padding: ${(p) => (p.isDesk ? '1rem 2rem' : '2rem 2rem 4rem')};
     .inps {
       gap: ${(p) => (p.isDesk ? '1rem' : '2rem')};
@@ -27,8 +29,8 @@ export const MobModal = styled(FlexCol_)`
     }
   }
   .layer {
+    width: 100%;
     margin-bottom: ${(p) => !p.isDesk && '2rem'};
-    width: ${(p) => (p.isDesk ? 'fit-content' : '100%')};
     .comments {
       width: ${(p) => (p.isDesk ? '2rem' : '5rem')};
       height: ${(p) => (p.isDesk ? '2rem' : '5rem')};

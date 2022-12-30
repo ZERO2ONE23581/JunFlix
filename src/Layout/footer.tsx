@@ -25,8 +25,8 @@ export const Footer = () => {
 
 const Cont = styled(motion.footer)`
   display: flex;
-  padding: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  padding: 3rem 1rem;
   justify-content: flex-end;
   > .copy {
     gap: 0.2rem;

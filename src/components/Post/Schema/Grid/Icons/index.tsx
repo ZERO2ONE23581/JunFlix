@@ -77,18 +77,12 @@ const Icon = styled.div`
   .org_modal,
   .grid_modal,
   .link_modal {
-    left: 50%;
-    top: 2.5rem;
-    transform: translateX(-50%);
     ul {
       width: 100%;
       li {
         width: 100%;
       }
     }
-  }
-  .grid_modal {
-    left: -70%;
   }
   .link_modal {
   }

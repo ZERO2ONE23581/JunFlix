@@ -84,12 +84,11 @@ export const InputWrap = ({ _data }: IInput) => {
   );
 };
 const Cont = styled(Flex_)<{ isDate: boolean; isDesk: boolean }>`
-  gap: 20px;
   width: 100%;
   flex-direction: column;
   .input_wrap_flex {
     position: relative;
-    padding-top: ${(p) => (p.isDesk ? '3rem' : '2rem')};
+    padding-top: ${(p) => (p.isDesk ? '1rem' : '2.5rem')};
     .input-style {
       padding: ${(p) => (p.isDesk ? '10px 20px' : '15px 20px ')};
     }
@@ -98,10 +97,10 @@ const Cont = styled(Flex_)<{ isDate: boolean; isDesk: boolean }>`
     }
     label {
       left: 1rem;
-      padding: 1px 10px;
       width: fit-content;
       position: absolute;
       border-radius: 10px;
+      padding: 0.3rem 1rem;
       display: inline-block;
       width: ${(p) => p.isDate && '80%'};
       top: ${(p) => (p.isDesk ? '60%' : '60%')};

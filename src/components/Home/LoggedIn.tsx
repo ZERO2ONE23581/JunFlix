@@ -14,19 +14,19 @@ interface ILoggedIn {
 export const LoggedIn = ({ _data }: ILoggedIn) => {
   const { theme, isHide } = _data;
   const { posts } = useGetAllPosts();
-  const { isMobile, isDesk } = useResponsive();
-  const grid = isMobile ? 2 : 6;
+  const { isDesk } = useResponsive();
   return (
     <AnimatePresence>
       {!isHide && (
         <Cont isDesk={isDesk}>
-          <PostSchema _data={{ theme, posts, grid }} />
+          <PostSchema _data={{ theme, posts }} />
         </Cont>
       )}
     </AnimatePresence>
   );
 };
 const Cont = styled(BG)`
+  padding: ${(p) => p.isDesk && '2.5rem 4rem'};
   padding-bottom: 5rem;
   .post_cover {
     h2 {

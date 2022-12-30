@@ -24,4 +24,6 @@ export const Layer = ({ _data }: IPostLayer) => {
     </Cont>
   );
 };
-const Cont = styled(Layer_)``;
+const Cont = styled(Layer_)`
+  margin-bottom: ${(p) => p.isDesk && '1rem'};
+`;

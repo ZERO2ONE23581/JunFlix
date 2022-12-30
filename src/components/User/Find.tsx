@@ -11,8 +11,8 @@ interface IFindUser extends ITheme {
 export const FindUser = ({ theme, type }: IFindUser) => {
   const router = useRouter();
   const isJoin = Boolean(type === 'join');
-  const join_arr = ['id', '|', 'pw', , '||', `login`];
   const login_arr = ['id', '|', 'pw', '||', `join`];
+  const join_arr = ['id', '|', 'pw', , '||', `login`];
   const array = isJoin ? join_arr : login_arr;
   const setTxt = (type: string | undefined) => {
     if (type) {
@@ -54,15 +54,16 @@ export const FindUser = ({ theme, type }: IFindUser) => {
   );
 };
 const Cont = styled(Flex_)`
+  width: 100%;
   gap: 1.2rem;
   margin-top: 1.5rem;
+
+  justify-content: space-around;
   .eng {
-    font-size: 1.1rem;
-    font-size: ${(p) => (p.isDesk ? '1.1rem' : '2.2rem')};
+    font-size: ${(p) => (p.isDesk ? '1.1rem' : '2rem')};
   }
   .kor {
-    font-size: 1rem;
-    font-size: ${(p) => (p.isDesk ? '1rem' : '2.2rem')};
+    font-size: ${(p) => (p.isDesk ? '1rem' : '1.5rem')};
   }
 `;
 const Arr = styled.div<{ isBar: boolean }>`

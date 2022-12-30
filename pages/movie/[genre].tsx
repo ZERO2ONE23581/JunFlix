@@ -7,6 +7,7 @@ import { Head_ } from '../../src/Tools/Title/Head';
 import { PageTitle } from '../../src/Tools/Title/Page';
 import { Movies } from '../../src/components/Movie';
 import { useResponsive } from '../../src/libs/client/useTools';
+import { MoviePG } from './all';
 
 const GenreMovies: NextPage<IPage> = ({ theme }) => {
   const router = useRouter();
@@ -24,7 +25,7 @@ const GenreMovies: NextPage<IPage> = ({ theme }) => {
 };
 export default GenreMovies;
 
-const Cont = styled(BG)`
+const Cont = styled(MoviePG)`
   padding: 0 3rem;
   overflow-y: auto;
   //min-height: fit-content;

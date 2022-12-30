@@ -76,8 +76,10 @@ export const SetGridModal = ({ _data }: ISetGridModal) => {
   );
 };
 const Cont = styled(MiniModal)`
-  ul {
-    li {
-    }
+  top: 3rem;
+  right: 0.5rem;
+  min-width: 200px;
+  li {
+    text-align: center;
   }
 `;

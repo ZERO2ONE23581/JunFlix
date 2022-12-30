@@ -10,6 +10,7 @@ import { OverlayBg } from '../../../../../Tools/OverlayBg';
 import { useUser } from '../../../../../libs/client/useUser';
 import { PostSt, postVar } from '../../../../../../styles/post';
 import { useResponsive } from '../../../../../libs/client/useTools';
+import { Mob } from '../../../../../../styles/global';
 
 export interface IPostModal {
   _data: {
@@ -21,8 +22,8 @@ export interface IPostModal {
   };
 }
 export const PostModal = ({ _data }: IPostModal) => {
-  const { post, theme, modal, setCmtModal, setModal } = _data;
   const { isDesk } = useResponsive();
+  const { post, theme, modal, setCmtModal, setModal } = _data;
   const host_id = post?.host_id!;
   const { loggedInUser } = useUser();
   const closeModal = () => setModal('');
@@ -31,10 +32,11 @@ export const PostModal = ({ _data }: IPostModal) => {
   return (
     <>
       {modal === 'read' && (
-        <>
-          <Cont
+        <Cont isDesk={isDesk}>
+          <PostSt
             exit="exit"
             initial="initial"
+            className="modal"
             animate="animate"
             variants={postVar}
             layoutId={post?.id + ''}
@@ -49,14 +51,20 @@ export const PostModal = ({ _data }: IPostModal) => {
             {!isCmtBlocked && (
               <PostCmt _data={{ theme, post, setModal, setCmtModal, isDesk }} />
             )}
-          </Cont>
+          </PostSt>
           <OverlayBg dark={0.3} closeModal={closeModal} />
-        </>
+        </Cont>
       )}
     </>
   );
 };
-const Cont = styled(PostSt)``;
+const Cont = styled(Mob)`
+  .modal {
+    top: ${(p) => p.isDesk && '5vh'};
+    max-width: ${(p) => (p.isDesk ? '500px' : '100%')};
+    max-height: ${(p) => (p.isDesk ? '650px' : '100%')};
+  }
+`;
 const Img = styled.img``;
 const Icons = styled.div`
   width: 100%;

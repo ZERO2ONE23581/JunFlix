@@ -32,7 +32,7 @@ export const ErrTxt = ({ theme, error }: IErrTxt) => {
 const Cont = styled(Mob)`
   .err_msg {
     margin: 1rem auto;
-    margin-top: 2rem;
+    margin-top: ${(p) => !p.isDesk && '2rem'};
     font-size: ${(p) => (p.isDesk ? '1.2rem' : '2.5rem')};
     .kor {
       margin-bottom: 0.2rem;

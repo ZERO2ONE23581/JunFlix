@@ -111,8 +111,16 @@ const Login: NextPage<IPage> = ({ theme }) => {
 export default Login;
 
 const Cont = styled(BG)`
-  padding-top: 15vh;
+  padding: 15vh 0;
+  .box {
+    margin: 0 auto;
+    width: ${(p) => p.isDesk && 'fit-content'};
+    form {
+      gap: ${(p) => p.isDesk && '0.5rem'};
+    }
+  }
   .title {
+    margin-bottom: ${(p) => p.isDesk && '1rem'};
     font-size: ${(p) => (p.isDesk ? '2rem' : '4rem')};
     .kor {
       margin-left: 12px;

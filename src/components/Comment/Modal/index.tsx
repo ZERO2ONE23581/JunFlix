@@ -96,6 +96,7 @@ const Cont = styled(MobModal)`
     width: ${(p) => (p.isDesk ? '33vw' : '100%')};
     height: ${(p) => (p.isDesk ? 'fit-content' : '100%')};
     .wrap {
+      width: 100%;
       max-height: ${(p) => (p.isDesk ? '77vh' : '100%')};
     }
   }

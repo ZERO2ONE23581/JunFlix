@@ -49,6 +49,9 @@ export const PostSchema = ({ _data }: IPostSchema) => {
   );
 };
 const Cont = styled.section`
-  overflow: auto;
+  overflow-y: auto;
   max-height: 180vh;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;

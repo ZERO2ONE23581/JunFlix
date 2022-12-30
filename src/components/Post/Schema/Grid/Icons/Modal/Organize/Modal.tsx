@@ -38,7 +38,7 @@ export const OptionModal = ({ _data }: IOptionModal) => {
                 _data={{
                   theme,
                   onClick,
-                  name: { eng: 'Organize Posts', kor: '포스트 정리' },
+                  name: { eng: 'Organize', kor: '포스트 정리' },
                 }}
               />
             </ul>
@@ -49,4 +49,13 @@ export const OptionModal = ({ _data }: IOptionModal) => {
     </AnimatePresence>
   );
 };
-const Cont = styled(MiniModal)``;
+const Cont = styled(MiniModal)`
+  top: 2rem;
+  right: -5rem;
+  .small {
+    padding: 0;
+    padding-bottom: 1rem;
+  }
+  min-width: 340px;
+  padding: 1rem 2rem;
+`;

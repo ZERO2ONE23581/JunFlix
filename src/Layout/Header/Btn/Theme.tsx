@@ -13,7 +13,7 @@ export const ThemeBtn = ({ setTheme, theme }: IBtns) => {
   const isLight = theme;
   const onClick = () => setTheme((p) => !p);
   const { isDesk } = useResponsive();
-  const size = isDesk ? '2rem' : '5rem';
+  const size = isDesk ? '2rem' : '3rem';
   return (
     <Cont size={size}>
       <Svg

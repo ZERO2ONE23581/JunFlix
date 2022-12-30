@@ -25,8 +25,6 @@ export const Label = ({ _data }: ILabel) => {
 const Cont = styled.label<{ isNext: boolean; isDesk: boolean }>`
   cursor: ${(p) => !p.isNext && 'pointer'};
   width: 100%;
-  height: 100%;
-  height: 166vh;
   display: flex;
   font-size: 2rem;
   font-weight: 400;
@@ -34,6 +32,7 @@ const Cont = styled.label<{ isNext: boolean; isDesk: boolean }>`
   align-items: center;
   border-radius: 20px;
   justify-content: center;
+  height: ${(p) => (p.isDesk ? '65vh' : '166vh')};
   font-size: ${(p) => (p.isDesk ? '2rem' : '4rem')};
   border: 2px solid ${(p) => p.theme.color.font};
   img {

@@ -7,6 +7,7 @@ import { useGetPosts } from '../../../../src/libs/client/usePosts';
 import { PostSchema } from '../../../../src/components/Post/Schema';
 import { useResponsive } from '../../../../src/libs/client/useTools';
 import { useLogin, useValidHost } from '../../../../src/libs/client/useLogin';
+import styled from '@emotion/styled';
 
 const MyPostsPage: NextPage<IPage> = ({ theme }) => {
   useLogin();
@@ -16,10 +17,12 @@ const MyPostsPage: NextPage<IPage> = ({ theme }) => {
   const host_id = Number(router.query.user_id!);
   const { posts } = useGetPosts({ board_id: 0, host_id });
   return (
-    <PostPage isDesk={isDesk}>
+    <Cont isDesk={isDesk}>
       <PageTitle type={'user_posts'} theme={theme} />
       <PostSchema _data={{ theme, posts, grid: 5 }} />
-    </PostPage>
+    </Cont>
   );
 };
 export default MyPostsPage;
+
+const Cont = styled(PostPage)``;
