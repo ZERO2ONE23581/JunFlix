@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../../../Tools/Button';
-import { BtnWrap, Flex_, Form } from '../../../../../styles/global';
+import { Flex_ } from '../../../../../styles/global';
 import { AvatarInput } from '../../../../Tools/Avatar/Input';
-import { useResponsive, useUploadImg } from '../../../../libs/client/useTools';
 import { IUpdateUser, IUserForm } from '../../../../types/user';
+import { useResponsive, useUploadImg } from '../../../../libs/client/useTools';
 
 export const UserAvatar = ({ _data }: IUpdateUser) => {
   const { User, type, update, theme, loading, setLoading } = _data;
@@ -71,8 +71,17 @@ export const UserAvatar = ({ _data }: IUpdateUser) => {
     </>
   );
 };
-const Cont = styled(Form)<{ isDesk: boolean }>`
+const Cont = styled.form<{ isDesk: boolean }>`
   width: 100%;
+  width: 100%;
+  display: flex;
+  overflow-y: auto;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   .avatar_input {
     margin-top: 2rem;
     width: ${(p) => (p.isDesk ? '10rem' : '16rem')};

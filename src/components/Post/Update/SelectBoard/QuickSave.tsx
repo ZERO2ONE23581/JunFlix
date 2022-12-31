@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ListWrap } from '../../Create/Select/MyBoards';
 import { useGetQuickSaved } from '../../../../libs/client/usePosts';
-import { select_board_ul_var } from '../../../../../styles/post';
+import { selectVars } from '../../../../../styles/post';
 
 interface IQuickSave {
   _data: {
@@ -22,7 +22,7 @@ export const QuickSave = ({ _data }: IQuickSave) => {
       whileHover="hover"
       className="quick_save"
       onClick={clickQuick}
-      variants={select_board_ul_var}
+      variants={selectVars}
     >
       <motion.li className="board_cover">
         <img src="/img/1.jpg" alt="board cover" />

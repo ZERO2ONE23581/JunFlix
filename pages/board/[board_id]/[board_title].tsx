@@ -41,8 +41,4 @@ const BoardPage: NextPage<IPage> = ({ theme }) => {
 };
 export default BoardPage;
 
-const Cont = styled(BG)`
-  .board_title {
-    font-size: 5rem;
-  }
-`;
+const Cont = styled(BG)``;

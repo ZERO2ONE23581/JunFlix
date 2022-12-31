@@ -67,12 +67,12 @@ export const BoardBox = ({ _data }: ICreateBox) => {
       {!Loading && (
         <Box
           exit="exit"
-          custom={theme}
           className="box"
           animate="animate"
           initial="initial"
           variants={postVar}
           layoutId={layoutId}
+          custom={{ theme, isDesk }}
         >
           <Title />
           <Form onSubmit={handleSubmit(onValid)}>
@@ -98,6 +98,10 @@ export const BoardBox = ({ _data }: ICreateBox) => {
   );
 };
 const Cont = styled.article<{ isDesk: boolean }>`
+  display: flex;
+  margin: 0rem auto;
+  margin-top: 2rem;
+  justify-content: center;
   .box {
     max-width: fit-content;
     h1 {

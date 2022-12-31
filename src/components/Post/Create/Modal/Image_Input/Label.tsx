@@ -27,6 +27,7 @@ const Cont = styled.label<{ isNext: boolean; isDesk: boolean }>`
   width: 100%;
   display: flex;
   font-size: 2rem;
+  overflow: hidden;
   font-weight: 400;
   position: relative;
   align-items: center;

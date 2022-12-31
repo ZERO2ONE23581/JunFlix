@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { ListWrap } from './MyBoards';
 import { useGetQuickSaved } from '../../../../libs/client/usePosts';
-import { select_board_ul_var } from '../../../../../styles/post';
+import { selectVars } from '../../../../../styles/post';
+import styled from '@emotion/styled';
 
 interface IQuickSave {
   _data: {
@@ -22,18 +23,24 @@ export const QuickSave = ({ _data }: IQuickSave) => {
       whileHover="hover"
       className="quick_save"
       onClick={clickQuick}
-      variants={select_board_ul_var}
+      variants={selectVars}
     >
-      <motion.li className="board_cover">
-        <img src="/img/home-bg-dn.jpg" alt="board cover" />
-      </motion.li>
-      <motion.li className="board-title">
+      <Li className="board_cover">
+        <img src="/img/1.jpg" alt="board cover" />
+      </Li>
+      <Li className="board-title">
         <h2>Quick Save</h2>
         <span className="post-num">
           <span>{counts ? counts - 1 : 0}</span>
           <span>{counts < 1 ? 'post' : 'posts'}</span>
         </span>
-      </motion.li>
+      </Li>
     </ListWrap>
   );
 };
+const Li = styled.li`
+  img {
+    width: 3rem;
+    height: 3rem;
+  }
+`;

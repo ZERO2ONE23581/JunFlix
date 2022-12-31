@@ -48,17 +48,20 @@ const Cont = styled(Mob)`
   display: flex;
   position: relative;
   align-items: flex-end;
+  .board_title {
+    font-size: ${(p) => (p.isDesk ? '3.3rem' : '4rem')};
+  }
   .setting {
     width: ${(p) => (p.isDesk ? '2rem' : '3rem')};
     height: ${(p) => (p.isDesk ? '2rem' : '3rem')};
-    top: ${(p) => (p.isDesk ? '0.6rem' : '0rem')};
-    right: ${(p) => (p.isDesk ? '-3.5rem' : '-4rem')};
+    top: ${(p) => (p.isDesk ? '0.6rem' : '-2rem')};
+    right: ${(p) => (p.isDesk ? '-3.5rem' : '0rem')};
   }
   .setting-modal {
     top: ${(p) => (p.isDesk ? '3.3rem' : '2.2rem')};
-    right: ${(p) => (p.isDesk ? '-10rem' : '-10rem')};
-    font-size: ${(p) => (p.isDesk ? '1rem' : '3rem')};
-    width: ${(p) => (p.isDesk ? 'fit-content' : '400px')};
+    right: ${(p) => (p.isDesk ? '-10rem' : '0rem')};
+    font-size: ${(p) => (p.isDesk ? '1rem' : '2rem')};
+    width: fit-content;
     padding: ${(p) => (p.isDesk ? '0.5rem 1rem' : '0.8rem 1.5rem')};
     li {
       padding: ${(p) => (p.isDesk ? '0.5rem' : '0.8rem')};

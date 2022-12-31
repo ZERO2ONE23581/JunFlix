@@ -54,6 +54,7 @@ export const Board = ({ _data }: IBoardBox) => {
 };
 const Cont = styled(FlexCol_)`
   gap: 1.1rem;
+  margin: 0 auto;
   padding-top: 1rem;
   width: fit-content;
   justify-content: center;
@@ -71,6 +72,7 @@ const Cont = styled(FlexCol_)`
     }
   }
   .content-text {
+    max-width: 500px;
     font-size: ${(p) => (p.isDesk ? '1.2rem' : '2.2rem')};
   }
 `;

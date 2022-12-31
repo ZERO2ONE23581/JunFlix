@@ -80,9 +80,9 @@ const Mob = styled.div<{ isDesk: boolean }>`
   .select-wrap {
     padding: 0 3rem;
     select {
-      font-size: ${(p) => (p.isDesk ? '1.1rem' : '2rem')};
-      padding: ${(p) => (p.isDesk ? '1rem 0' : '1.2rem 0')};
-      width: ${(p) => (p.isDesk ? 'fit-content' : '100vw')};
+      width: ${(p) => (p.isDesk ? 'fit-content' : '100%')};
+      font-size: ${(p) => (p.isDesk ? '1.1rem' : '1.4rem')};
+      padding: ${(p) => (p.isDesk ? '0.5rem 0' : '1.1rem 0')};
     }
   }
 `;

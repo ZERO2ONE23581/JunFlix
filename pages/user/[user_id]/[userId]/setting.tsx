@@ -57,13 +57,27 @@ const UserSetting: NextPage<IPage> = ({ theme }) => {
 export default UserSetting;
 
 const Cont = styled(BG)`
+  height: 100vh;
   max-height: 166vh;
   position: relative;
+  .box {
+    .slider {
+      top: 40vh;
+      top: ${(p) => (p.isDesk ? '0vh' : '40vh')};
+    }
+    form {
+      .flex {
+        align-items: flex-start;
+      }
+      button {
+        font-size: ${(p) => (p.isDesk ? '1.2rem' : '3rem')};
+      }
+    }
+  }
 `;
 const Slider = styled(Flex)`
   left: 0;
   right: 0;
-  top: 40vh;
   bottom: 0;
   margin: 0 auto;
   position: fixed;

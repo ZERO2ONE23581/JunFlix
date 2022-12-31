@@ -12,7 +12,7 @@ interface IHost {
 }
 export const Host = ({ _data }: IHost) => {
   const { theme, userId, host_id, isDesk } = _data;
-  const size = isDesk ? '4rem' : '10rem';
+  const size = isDesk ? '7rem' : '10rem';
   return (
     <Cont isDesk={isDesk}>
       <Avatar _data={{ theme, size, host_id }} />

@@ -45,6 +45,9 @@ export const PostInfo = ({ _data, _useform }: IPostInfo) => {
 const Cont = styled(FlexCol)`
   padding: 2rem;
   padding-top: 1rem;
+  .textarea-wrap {
+    width: 100%;
+  }
   h2 {
     width: 100%;
     font-weight: 400;

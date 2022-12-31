@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { select_board_ul_var } from '../../../../../styles/post';
+import { selectVars } from '../../../../../styles/post';
 import { useGetBoards } from '../../../../libs/client/useBoards';
 import { useCapLetters } from '../../../../libs/client/useTools';
 
@@ -23,7 +23,7 @@ export const BoardsList = ({ _data }: IBoardsList) => {
           key={board.id}
           animate="animate"
           whileHover="hover"
-          variants={select_board_ul_var}
+          variants={selectVars}
           onClick={() => clickBoard(board.id)}
         >
           <motion.li className="board_cover">

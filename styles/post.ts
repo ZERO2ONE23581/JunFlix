@@ -29,7 +29,7 @@ export const PostSt = styled(Modal)`
     height: 100%;
   }
 `;
-export const select_board_ul_var = {
+export const selectVars = {
   hover: () => ({
     color: '#ffffff',
     backgroundColor: '#E50914',

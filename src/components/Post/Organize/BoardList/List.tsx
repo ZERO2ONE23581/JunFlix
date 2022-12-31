@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Flex } from '../../../../../styles/global';
 import { useUser } from '../../../../libs/client/useUser';
-import { select_board_ul_var } from '../../../../../styles/post';
+import { selectVars } from '../../../../../styles/post';
 import { useGetBoards } from '../../../../libs/client/useBoards';
 import { useCapLetters } from '../../../../libs/client/useTools';
 
@@ -29,7 +29,7 @@ export const BoardsList = ({ _data }: IBoardsList) => {
               custom={theme}
               animate="animate"
               whileHover="hover"
-              variants={select_board_ul_var}
+              variants={selectVars}
             >
               <Cover>
                 <img

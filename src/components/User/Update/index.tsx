@@ -15,7 +15,7 @@ import { MsgModal } from '../../../Tools/Modal/Message';
 import useMutation from '../../../libs/client/useMutation';
 import { LoadingModal } from '../../../Tools/Modal/Loading';
 import { useResponsive } from '../../../libs/client/useTools';
-import { FlexCol_ } from '../../../../styles/global';
+import { Flex, FlexCol, FlexCol_ } from '../../../../styles/global';
 
 interface IBoxType {
   _data: {
@@ -67,7 +67,6 @@ export const BoxType = ({ _data }: IBoxType) => {
     data_err: msg,
   };
   const layoutId = 'user_setting';
-  const { isDesk } = useResponsive();
   return (
     <>
       <AnimatePresence initial={false} custom={back}>
@@ -80,7 +79,7 @@ export const BoxType = ({ _data }: IBoxType) => {
           animate="animate"
         >
           {!Loading && (
-            <Box className="box" isDesk={isDesk}>
+            <Box className="box">
               <Title _data={{ theme, type, delAcct, setDelAcct }} />
               <Email _data={__data} />
               <Password _data={__data} />
@@ -105,22 +104,16 @@ const Cont = styled(motion.div)`
   margin: 0 auto;
   position: absolute;
 `;
-const Box = styled(FlexCol_)`
+const Box = styled(FlexCol)`
   width: 80%;
   padding: 40px;
   margin: 0 auto;
   border-radius: 5px;
   align-items: flex-start;
+  color: ${(p) => p.theme.color.font};
   border: ${(p) => p.theme.border.thick};
   box-shadow: ${(p) => p.theme.boxShadow.nav};
-  form {
-    .flex {
-      align-items: flex-start;
-    }
-    button {
-      font-size: ${(p) => (p.isDesk ? '1.2rem' : '3rem')};
-    }
-  }
+  background-color: ${(p) => p.theme.color.bg};
 `;
 
 const vars = {

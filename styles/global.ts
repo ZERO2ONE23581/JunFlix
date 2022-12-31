@@ -10,7 +10,7 @@ export const Page = styled.section`
 export const BG = styled(Page)<{ isDesk: boolean }>`
   padding: 2.5rem;
   color: whitesmoke;
-  min-height: ${(p) => (p.isDesk ? '100%' : '180vh')};
+  min-height: ${(p) => (p.isDesk ? '100vh' : '180vh')};
   background: url('/img/up.jpg') center / cover no-repeat;
   .post_cover {
     h2 {
@@ -74,7 +74,7 @@ export const Layer_ = styled(Flex_)`
   justify-content: space-between;
   padding: ${(p) => (p.isDesk ? '0.6rem 1rem' : '2rem')};
   h1 {
-    font-size: ${(p) => (p.isDesk ? '2rem' : '4rem')};
+    font-size: ${(p) => (p.isDesk ? '1.7rem' : '4rem')};
   }
   .close_ {
     width: ${(p) => (p.isDesk ? '2rem' : '4rem')};
