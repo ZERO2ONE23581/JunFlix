@@ -5,6 +5,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "typeRoots": ["src/types"],
     "forceConsistentCasingInFileNames": false,
     "noEmit": true,
     "esModuleInterop": true,

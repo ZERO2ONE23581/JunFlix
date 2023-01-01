@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { selectVars } from '../../../../../styles/post';
 import { useGetBoards } from '../../../../libs/client/useBoards';
-import { useCapLetters } from '../../../../libs/client/useTools';
+import { UseCapLetters } from '../../../../libs/client/useTools';
 
 interface IBoardsList {
   _data: {
@@ -30,7 +30,7 @@ export const BoardsList = ({ _data }: IBoardsList) => {
             <img src="/img/home-bg-dn.jpg" alt="board cover" />
           </motion.li>
           <motion.li className="board-title">
-            <h2>{useCapLetters(board.title)}</h2>
+            <h2>{UseCapLetters(board.title)}</h2>
             <span className="post-num">
               <span>{board?._count?.posts}</span>
               <span>Posts</span>

@@ -14,7 +14,9 @@ export default function useFollowUser<T = any>(user_id: number): IResult<T> {
     `/api/following/create/user`
   );
   const API = Boolean(user_id) && `/api/following/user/${user_id}`;
-  const { data, mutate } = useSWR<IGetFollowing>(API);
+  const { data, mutate } = useSWR<IGetFollowing>(
+    typeof window === 'undefined' ? null : API
+  );
 
   const length = data?.length!;
   const isFollowing = data?.isFollowing!;

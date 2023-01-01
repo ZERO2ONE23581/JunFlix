@@ -16,7 +16,7 @@ import { FindUser } from '../../src/components/User/Find';
 import { AvatarInput } from '../../src/Tools/Avatar/Input';
 import useMutation from '../../src/libs/client/useMutation';
 import { LoadingModal } from '../../src/Tools/Modal/Loading';
-import { useResponsive, useUploadImg } from '../../src/libs/client/useTools';
+import { useResponsive, UseUploadImg } from '../../src/libs/client/useTools';
 
 const JoinPage: NextPage<IPage> = ({ theme }) => {
   const [post, { loading, data }] = useMutation<IRes>(`/api/user/create`);
@@ -50,7 +50,7 @@ const JoinPage: NextPage<IPage> = ({ theme }) => {
         message: 'invalid_password_confirm',
       });
     setLoading(true);
-    const avatar_id = await useUploadImg(avatar);
+    const avatar_id = await UseUploadImg(avatar);
     return post({ email, password, password_confirm, avatar: avatar_id });
   };
   const router = useRouter();
@@ -72,6 +72,7 @@ const JoinPage: NextPage<IPage> = ({ theme }) => {
     }
   }, [data, router, setLoading, setMsg]);
   //
+  console.log(data);
   const { isDesk } = useResponsive();
   return (
     <Cont isDesk={isDesk}>

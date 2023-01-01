@@ -13,11 +13,11 @@ import { Blur, Page } from '../../../../styles/global';
 import { Head_ } from '../../../../src/Tools/Title/Head';
 import { MsgModal } from '../../../../src/Tools/Modal/Message';
 import { useLogin } from '../../../../src/libs/client/useLogin';
-import { useCapLetter } from '../../../../src/libs/client/useTools';
-import { Host } from '../../../../src/components/User/Read/MyPage/Host';
+import { UseCapLetter } from '../../../../src/libs/client/useTools';
 import useFollowUser from '../../../../src/libs/client/useFollow/user';
-import { UserContent } from '../../../../src/components/User/Read/MyPage/Content';
-import { UserBtns } from '../../../../src/components/User/Read/MyPage/Content/Btns';
+import { UserContent } from '../../../../src/components/UserContent';
+import { UserBtns } from '../../../../src/components/UserBtns';
+import { UserHost } from '../../../../src/components/UserHost';
 
 const UserPage: NextPage<IPage> = ({ theme }) => {
   useLogin();
@@ -34,9 +34,9 @@ const UserPage: NextPage<IPage> = ({ theme }) => {
   const onSvg = () => setMsg('blur_user');
   return (
     <>
-      <Head_ title={`${useCapLetter(username ? username : userId)}'s page`} />
+      <Head_ title={`${UseCapLetter(username ? username : userId)}'s page`} />
       <Cont>
-        <Host
+        <UserHost
           _mode={{ onPrivate, onClick }}
           _data={{ theme, host, isMyAcct }}
         />

@@ -4,10 +4,10 @@ import { useForm } from 'react-hook-form';
 import { Btn } from '../../../Tools/Button';
 import { InputWrap } from '../../../Tools/Input';
 import { ErrTxt } from '../../../Tools/ErrTxt';
-import { Flex, Form } from '../../../../styles/global';
+import { Form } from '../../../../styles/global';
 import { SelectWrap } from '../../../Tools/Input/Select';
 import { IUpdateUser, IUserForm } from '../../../types/user';
-import { useCapLetters } from '../../../libs/client/useTools';
+import { UseCapLetters } from '../../../libs/client/useTools';
 
 export const UserInfo = ({ _data }: IUpdateUser) => {
   const { User, type, update, theme, loading, setLoading } = _data;
@@ -27,7 +27,7 @@ export const UserInfo = ({ _data }: IUpdateUser) => {
       if (User.birth) setValue('birth', User?.birth);
       if (User.gender) setValue('gender', User?.gender);
       if (User.location) setValue('location', User?.location);
-      if (User.username) setValue('username', useCapLetters(User?.username));
+      if (User.username) setValue('username', UseCapLetters(User?.username));
     }
   }, [User, setValue]);
 

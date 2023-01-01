@@ -5,7 +5,7 @@ import { Head_ } from '../../../src/Tools/Title/Head';
 import { PageTitle } from '../../../src/Tools/Title/Page';
 import { useResponsive } from '../../../src/libs/client/useTools';
 import { useGetAllBoards } from '../../../src/libs/client/useBoards';
-import { BoardsGrid } from '../../../src/components/Board/Read/Boards';
+import { BoardsGrid } from '../../../src/components/BoardsGrid';
 import styled from '@emotion/styled';
 
 const AllBoards: NextPage<IPage> = ({ theme }) => {

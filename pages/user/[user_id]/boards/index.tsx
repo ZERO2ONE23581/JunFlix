@@ -7,7 +7,7 @@ import { useUser } from '../../../../src/libs/client/useUser';
 import { useResponsive } from '../../../../src/libs/client/useTools';
 import { useGetBoards } from '../../../../src/libs/client/useBoards';
 import { useGetQuickSaved } from '../../../../src/libs/client/usePosts';
-import { BoardsGrid } from '../../../../src/components/Board/Read/Boards';
+import { BoardsGrid } from '../../../../src/components/BoardsGrid';
 import { useLogin, useValidHost } from '../../../../src/libs/client/useLogin';
 
 const UserBoards: NextPage<IPage> = ({ theme }) => {

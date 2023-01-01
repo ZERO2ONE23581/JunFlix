@@ -1,6 +1,6 @@
 import {
   IsBlur,
-  useCapLetters,
+  UseCapLetters,
   useResponsive,
 } from '../../../../libs/client/useTools';
 import styled from '@emotion/styled';
@@ -32,9 +32,9 @@ export const Box = ({ _data }: IPostBox) => {
     const length = text.length;
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     const isKor = korean.test(post?.title);
-    if (isKor && length > 15) return useCapLetters(text.slice(0, 15)) + '...';
-    else if (length <= 24) return useCapLetters(text);
-    else return useCapLetters(text.slice(0, 24)) + '...';
+    if (isKor && length > 15) return UseCapLetters(text.slice(0, 15)) + '...';
+    else if (length <= 24) return UseCapLetters(text);
+    else return UseCapLetters(text.slice(0, 24)) + '...';
   };
   const msg = IsBlur({ host_id, board_id })?.msg!;
   const isBlur = IsBlur({ host_id, board_id })?.isBlur!;

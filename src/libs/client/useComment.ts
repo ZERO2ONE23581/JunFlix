@@ -30,7 +30,9 @@ interface IUseCmtRes {
 }
 export const useAllCmts = ({ post_id }: IUseComments) => {
   const { data } = useSWR<IGetComments>(
-    `/api/comment/post/${post_id}/comments`
+    typeof window === 'undefined'
+      ? null
+      : `/api/comment/post/${post_id}/comments`
   );
   const all = data?.comments;
   const total_length = data?.comments?.length!;
@@ -40,7 +42,11 @@ export const useAllCmts = ({ post_id }: IUseComments) => {
 };
 export const useReplies = ({ post_id, og_id }: IUseReplies) => {
   const { data } = useSWR<IGetComments>(
-    Boolean(og_id) && `/api/comment/post/${post_id}/comment/${og_id}/replies`
+    typeof window === 'undefined'
+      ? null
+      : Boolean(og_id)
+      ? `/api/comment/post/${post_id}/comment/${og_id}/replies`
+      : null
   );
   const replies = data?.comments!;
   const isReplies = Boolean(replies?.length! > 0);
@@ -61,13 +67,19 @@ export const useGetRepHost = ({
   setCmtModal,
 }: IUseGetRepHost) => {
   const { data } = useSWR<IGetComments>(
-    `/api/comment/post/${post_id}/comments`
+    typeof window === 'undefined'
+      ? null
+      : `/api/comment/post/${post_id}/comments`
   );
   const all = data?.comments;
   const reps = all?.find((cmt) => cmt.id === reply_id);
   const isReply = Boolean(cmt_id && reply_id && post_id);
   const { data: data_ } = useSWR<IGetComments>(
-    isReply && `/api/comment/${cmt_id}/delete`
+    typeof window === 'undefined'
+      ? null
+      : isReply
+      ? `/api/comment/${cmt_id}/delete`
+      : null
   );
   useEffect(() => {
     if (data_) {

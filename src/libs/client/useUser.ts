@@ -4,13 +4,17 @@ import { IRes } from '../../types/global';
 import { IGetUser, IGetUsers } from '../../types/user';
 
 export const useGetUsers = () => {
-  const { data } = useSWR<IGetUsers>('/api/user/all');
+  const { data } = useSWR<IGetUsers>(
+    typeof window === 'undefined' ? null : '/api/user/all'
+  );
   const users = data?.users;
   const noData = data?.noData;
   return { users, noData };
 };
 export const useUser = () => {
-  const { data } = useSWR<IGetUser>('/api/login');
+  const { data } = useSWR<IGetUser>(
+    typeof window === 'undefined' ? null : '/api/login'
+  );
   const isLoggedIn = data?.ok!;
   const user = data?.loggedInUser!;
   const user_id = user?.id!;
@@ -20,7 +24,13 @@ export const useUser = () => {
   return { avatar, userId, user_id, username, isLoggedIn, loggedInUser: user! };
 };
 export const useGetUser = (user_id: number) => {
-  const { data } = useSWR<IGetUser>(Boolean(user_id) && `/api/user/${user_id}`);
+  const { data } = useSWR<IGetUser>(
+    typeof window === 'undefined'
+      ? null
+      : Boolean(user_id)
+      ? `/api/user/${user_id}`
+      : null
+  );
   return {
     user: data?.user!,
     userId: data?.user?.userId!,
@@ -40,7 +50,11 @@ export const useUserPrivate = (user_id: number, isMyAcct: boolean) => {
     `/api/user/${user_id}/update/private`
   );
   const { data, mutate } = useSWR<IPrivate>(
-    Boolean(user_id) && `/api/user/${user_id}/private`
+    typeof window === 'undefined'
+      ? null
+      : Boolean(user_id)
+      ? `/api/user/${user_id}/private`
+      : null
   );
   const onPrivate = data?.onPrivate!;
   const onClick = () => {

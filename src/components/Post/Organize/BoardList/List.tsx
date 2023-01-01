@@ -4,7 +4,7 @@ import { Flex } from '../../../../../styles/global';
 import { useUser } from '../../../../libs/client/useUser';
 import { selectVars } from '../../../../../styles/post';
 import { useGetBoards } from '../../../../libs/client/useBoards';
-import { useCapLetters } from '../../../../libs/client/useTools';
+import { UseCapLetters } from '../../../../libs/client/useTools';
 
 interface IBoardsList {
   _data: {
@@ -40,7 +40,7 @@ export const BoardsList = ({ _data }: IBoardsList) => {
               </Cover>
 
               <Info>
-                <h2>{useCapLetters(board.title)}</h2>
+                <h2>{UseCapLetters(board.title)}</h2>
                 <span className="counts">
                   <span>{board?._count?.posts}</span>
                   <span>Posts</span>

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Svg } from '../../../Tools/Svg';
 import { FlexCol_, Flex_ } from '../../../../styles/global';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { useCapLetters, useResponsive } from '../../../libs/client/useTools';
+import { UseCapLetters, useResponsive } from '../../../libs/client/useTools';
 
 interface IUpdateUserTitle {
   _data: {
@@ -20,7 +20,7 @@ export const Title = ({ _data }: IUpdateUserTitle) => {
   const [title, setTitle] = useState({ eng: '', kor: '' });
   useEffect(() => {
     if (type) {
-      const eng = useCapLetters(type);
+      const eng = UseCapLetters(type);
       if (type === 'email') setTitle({ eng, kor: '이메일 수정' });
       if (type === 'password') setTitle({ eng, kor: '비밀번호 수정' });
       if (type === 'userInfo') setTitle({ eng, kor: '유저정보 수정' });

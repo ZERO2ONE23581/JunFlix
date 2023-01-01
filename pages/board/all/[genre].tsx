@@ -1,5 +1,5 @@
 import {
-  useCapLetters,
+  UseCapLetters,
   useResponsive,
 } from '../../../src/libs/client/useTools';
 import { IPage } from '../../_app';
@@ -10,7 +10,7 @@ import { NoData } from '../../../src/Tools/NoData';
 import { Head_ } from '../../../src/Tools/Title/Head';
 import { PageTitle } from '../../../src/Tools/Title/Page';
 import { useGenreBoards } from '../../../src/libs/client/useBoards';
-import { BoardsGrid } from '../../../src/components/Board/Read/Boards';
+import { BoardsGrid } from '../../../src/components/BoardsGrid';
 
 const GenreBoards: NextPage<IPage> = ({ theme }) => {
   const router = useRouter();
@@ -18,7 +18,7 @@ const GenreBoards: NextPage<IPage> = ({ theme }) => {
   const Genre = genre?.toString()!;
   const { isDesk } = useResponsive();
   const { boards, isBoard } = useGenreBoards(Genre);
-  const head_title = `${useCapLetters(Genre)} Boards`;
+  const head_title = `${UseCapLetters(Genre)} Boards`;
   const onClick = () => router.push(`/board/create`);
   return (
     <>

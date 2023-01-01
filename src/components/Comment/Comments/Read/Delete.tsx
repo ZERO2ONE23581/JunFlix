@@ -1,16 +1,16 @@
 import styled from '@emotion/styled';
 import { Btn } from '../../../../Tools/Button';
 import { IRes } from '../../../../types/global';
-import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { AnimatePresence } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
+import { MobModal } from '../../../../../styles/mobile';
+import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { cmtModalVar } from '../../../../../styles/variants';
 import { BtnWrap, Modal } from '../../../../../styles/global';
 import useMutation from '../../../../libs/client/useMutation';
 import { LoadingModal } from '../../../../Tools/Modal/Loading';
-import { TheComment, useCmtRes } from '../../../../libs/client/useComment';
-import { MobModal } from '../../../../../styles/mobile';
 import { useResponsive } from '../../../../libs/client/useTools';
+import { TheComment, useCmtRes } from '../../../../libs/client/useComment';
 
 interface IDeleteModal {
   _data: {
@@ -51,7 +51,7 @@ export const DeleteModal = ({ _data }: IDeleteModal) => {
           >
             <h1>
               <span>댓글은 삭제 후 복구 할 수 없습니다.</span>
-              <span>Comment can't be recovered once it is deleted.</span>
+              <span>Comment can not be recovered once it is deleted.</span>
             </h1>
             <BtnWrap className="btn_wrap">
               <Btn

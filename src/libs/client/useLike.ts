@@ -14,7 +14,11 @@ export const useLike = ({ post_id, theme }: IUseLike) => {
   const [msg, setMsg] = useState('');
   const isAllowed = Boolean(isLoggedIn && post_id);
   const { data, mutate } = useSWR<IRes>(
-    isAllowed && `/api/like/post/${post_id}`
+    typeof window === 'undefined'
+      ? null
+      : isAllowed
+      ? `/api/like/post/${post_id}`
+      : null
   ); //GET
   const [post, { loading }] = useMutation('/api/like/post/create'); //POST
   const num = data?.num;

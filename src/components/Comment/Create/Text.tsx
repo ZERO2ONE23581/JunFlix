@@ -26,8 +26,8 @@ export const Text = ({ _data }: ICreateCommentText) => {
         />
       </Title>
       <Txt isDesk={isDesk}>
-        <span>"Share your Feedbacks!"</span>
-        <span className="kor">"포스트에 대해 의견을 남겨주세요!"</span>
+        <span>Share your Feedbacks!</span>
+        <span className="kor">포스트에 대해 의견을 남겨주세요!</span>
       </Txt>
     </Cont>
   );

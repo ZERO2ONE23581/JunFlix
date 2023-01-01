@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { PostPage } from '../../../../styles/post';
 import { PageTitle } from '../../../../src/Tools/Title/Page';
 import { useGetPosts } from '../../../../src/libs/client/usePosts';
-import { PostSchema } from '../../../../src/components/Post/Schema';
+import { PostSchema } from '../../../../src/components/Post/Schema/PostSchema';
 import { useResponsive } from '../../../../src/libs/client/useTools';
 import { useLogin, useValidHost } from '../../../../src/libs/client/useLogin';
 

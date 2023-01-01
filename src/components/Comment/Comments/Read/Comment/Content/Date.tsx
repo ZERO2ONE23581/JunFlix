@@ -1,5 +1,5 @@
 import {
-  useCapLetter,
+  UseCapLetter,
   useTimeDiff,
 } from '../../../../../../libs/client/useTools';
 import styled from '@emotion/styled';
@@ -17,7 +17,7 @@ export const UserDate = ({ _data }: IComment) => {
   const { time, type } = useTimeDiff({ createdAt, updatedAt });
   return (
     <Cont className="date">
-      <Host>{useCapLetter(userId)}</Host>
+      <Host>{UseCapLetter(userId)}</Host>
       <Date>
         <span>{time}</span>
         <span>{time > 1 ? `${type}s` : type}</span>

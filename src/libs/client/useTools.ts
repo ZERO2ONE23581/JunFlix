@@ -21,7 +21,7 @@ export const useResponsive = () => {
   return { isMobile: !desk && mobile, isDesk: desk && !mobile };
 };
 
-export const useUploadImg = async (image: FileList | undefined) => {
+export const UseUploadImg = async (image: FileList | undefined) => {
   if (image && image.length > 0) {
     const { uploadURL } = await (await fetch(`/api/file`)).json();
     const form = new FormData();
@@ -32,17 +32,17 @@ export const useUploadImg = async (image: FileList | undefined) => {
     return id;
   }
 };
-export const useCapLetters = (word: string) => {
+export const UseCapLetters = (word: string) => {
   return word?.replace(/(?:^|\s)\S/g, function (a) {
     return a.toUpperCase();
   });
 };
-export const useCapLetter = (word: string) => {
+export const UseCapLetter = (word: string) => {
   return `${
     word?.toString()?.slice(0, 1).toUpperCase() + word?.toString().slice(1)
   }`;
 };
-export const useLength = (text: string) =>
+export const UseLength = (text: string) =>
   String(text).replace(/\s/gi, '').length;
 export interface IDate {
   createdAt: Date;

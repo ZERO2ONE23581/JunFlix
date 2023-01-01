@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { BG } from '../../styles/global';
 import { Head_ } from '../../src/Tools/Title/Head';
-import { Movies } from '../../src/components/Movie';
+import { Movies } from '../../src/components/Movie/Movies';
 import { PageTitle } from '../../src/Tools/Title/Page';
 import { useResponsive } from '../../src/libs/client/useTools';
 

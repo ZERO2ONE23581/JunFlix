@@ -9,7 +9,7 @@ import { ICmtForm, IRes } from '../../../../../types/global';
 import { useUser } from '../../../../../libs/client/useUser';
 import { Form, Modal } from '../../../../../../styles/global';
 import { cmtModalVar } from '../../../../../../styles/variants';
-import { useLength, useResponsive } from '../../../../../libs/client/useTools';
+import { UseLength, useResponsive } from '../../../../../libs/client/useTools';
 import useMutation from '../../../../../libs/client/useMutation';
 import { LoadingModal } from '../../../../../Tools/Modal/Loading';
 import { TheComment, useCmtRes } from '../../../../../libs/client/useComment';
@@ -46,7 +46,7 @@ export const UpdateModal = ({ _data }: IUpdateModal) => {
 
   const onValid = ({ text }: ICmtForm) => {
     if (loading) return;
-    if (useLength(text) > 700)
+    if (UseLength(text) > 700)
       return setError('text', { message: 'overmax_comment' });
     setLoading(true);
     return post({ text, post_id, cmt_id });

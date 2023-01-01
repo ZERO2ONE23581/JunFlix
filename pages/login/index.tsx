@@ -12,11 +12,11 @@ import { variants } from '../../styles/variants';
 import { IUserForm } from '../../src/types/user';
 import { InputWrap } from '../../src/Tools/Input';
 import { Head_ } from '../../src/Tools/Title/Head';
+import { BG, Box, Form } from '../../styles/global';
 import { MsgModal } from '../../src/Tools/Modal/Message';
 import { FindUser } from '../../src/components/User/Find';
 import useMutation from '../../src/libs/client/useMutation';
 import { LoadingModal } from '../../src/Tools/Modal/Loading';
-import { BG, Box, FlexPage, Form } from '../../styles/global';
 import { useResponsive } from '../../src/libs/client/useTools';
 
 const Login: NextPage<IPage> = ({ theme }) => {
@@ -41,7 +41,7 @@ const Login: NextPage<IPage> = ({ theme }) => {
       if (data?.msg) return setMsg(data.msg);
       if (data?.error) return setMsg(data.error);
     }
-  }, [data, router, setMsg, setTimeout]);
+  }, [data, router, setMsg]);
   //
 
   return (

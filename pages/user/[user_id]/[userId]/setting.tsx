@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Svg } from '../../../../src/Tools/Svg';
 import { BG, Flex } from '../../../../styles/global';
 import { Head_ } from '../../../../src/Tools/Title/Head';
-import { BoxType } from '../../../../src/components/User/Update';
+import { BoxType } from '../../../../src/components/User/Update/BoxType';
 import { useResponsive } from '../../../../src/libs/client/useTools';
 import { useLogin, useValidHost } from '../../../../src/libs/client/useLogin';
 

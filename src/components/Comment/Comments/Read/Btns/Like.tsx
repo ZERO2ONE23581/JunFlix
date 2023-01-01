@@ -1,7 +1,6 @@
 import useSWR from 'swr';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { motion } from 'framer-motion';
 import { Svg } from '../../../../../Tools/Svg';
 import { Dispatch, SetStateAction } from 'react';
 import { IRes } from '../../../../../types/global';
@@ -24,7 +23,11 @@ export const Like = ({ _data }: ILike) => {
   const { theme, comment, setModal, setSelect, isDesk } = _data;
   const [post, { data, loading }] = useMutation('/api/like/comment/create');
   const { data: getData, mutate } = useSWR<IRes>(
-    Boolean(comment.id) && ` /api/like/comment/${comment.id}`
+    typeof window === 'undefined'
+      ? null
+      : Boolean(comment.id)
+      ? `/api/like/comment/${comment.id}`
+      : null
   );
   const router = useRouter();
   const { isLoggedIn } = useUser();

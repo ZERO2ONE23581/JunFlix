@@ -13,7 +13,7 @@ import { variants } from '../../../styles/variants';
 import useMutation from '../../libs/client/useMutation';
 import { LoadingModal } from '../../Tools/Modal/Loading';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Title } from './Read/Verify/Title';
+import { Title } from './Title';
 
 interface INewPassword {
   _data: {

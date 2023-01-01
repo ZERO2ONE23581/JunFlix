@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { UseFormSetError } from 'react-hook-form';
 import { IPostForm } from '../../../../types/post';
 import { Layer_ } from '../../../../../styles/global';
+import { useResponsive } from '../../../../libs/client/useTools';
 
 interface ILayer {
   _data: {
@@ -15,6 +16,7 @@ interface ILayer {
   };
 }
 export const Layer = ({ _data }: ILayer) => {
+  const { isDesk } = useResponsive();
   const { closeModal, theme, setModal, setError, isClicked } = _data;
   const onClick = () => {
     if (!isClicked) {
@@ -23,7 +25,7 @@ export const Layer = ({ _data }: ILayer) => {
   };
   return (
     <>
-      <Layer_>
+      <Layer_ isDesk={isDesk}>
         <div>
           <Svg type="close_" theme={theme} onClick={closeModal} />
         </div>

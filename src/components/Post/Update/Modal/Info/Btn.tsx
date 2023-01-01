@@ -7,7 +7,7 @@ import { avatarLink } from '../../../../../Tools/Avatar';
 import { useUser } from '../../../../../libs/client/useUser';
 import { Flex, FlexCol_ } from '../../../../../../styles/global';
 import { color, redBrdr } from '../../../../../../styles/variants';
-import { useCapLetters } from '../../../../../libs/client/useTools';
+import { UseCapLetters } from '../../../../../libs/client/useTools';
 import { useGetQuickSaved } from '../../../../../libs/client/usePosts';
 
 interface ISelectBoardBtn {
@@ -32,7 +32,11 @@ export const SelectBtn = ({ _data, _boolean }: ISelectBoardBtn) => {
   }, [board_id, new_boardId, quickSave, setSelect]);
 
   const { data } = useSWR<IGetBoard>(
-    Boolean(select) && ` /api/board/${select}`
+    typeof window === 'undefined'
+      ? null
+      : Boolean(select)
+      ? ` /api/board/${select}`
+      : null
   );
   const board = data?.board;
   const { loggedInUser } = useUser();
@@ -55,7 +59,7 @@ export const SelectBtn = ({ _data, _boolean }: ISelectBoardBtn) => {
         <Info>
           <div className="txt">
             {board && (
-              <Title className="title">{useCapLetters(board?.title)} </Title>
+              <Title className="title">{UseCapLetters(board?.title)} </Title>
             )}
             {!board && <Title className="title">{'QuickSave'} </Title>}
             <span className="txt-post-counts">

@@ -4,7 +4,7 @@ import { IPostType } from '../../../../../types/post';
 import { Text } from '../../../../Comment/Create/Text';
 import { Comments } from '../../../../Comment/Comments';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { CreateModal } from '../../../../Comment/Create/Modal';
+import { CreateModal } from '../../../../Comment/Create/Modal/CreateModal';
 
 export interface IPostCmt {
   _data: {

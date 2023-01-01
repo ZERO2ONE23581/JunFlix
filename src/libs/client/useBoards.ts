@@ -7,17 +7,23 @@ import useMutation from './useMutation';
 import { IPrivate, useGetUser, useUser } from './useUser';
 
 export const useGetAllBoards = () => {
-  const { data } = useSWR<IGetBoards>(`/api/board/all`);
+  const { data } = useSWR<IGetBoards>(
+    typeof window === 'undefined' ? null : `/api/board/all`
+  );
   return { boards: data?.boards!, isBoard: Boolean(data?.boards?.length! > 0) };
 };
 export const useGenreBoards = (genre: string) => {
-  const { data } = useSWR<IGetBoards>(`/api/board/all`);
+  const { data } = useSWR<IGetBoards>(
+    typeof window === 'undefined' ? null : `/api/board/all`
+  );
   const boards = data?.boards?.filter((e) => e.genre === genre)!;
   return { boards, isBoard: Boolean(boards?.length! > 0) };
 };
 export const useGetBoards = (host_id: any) => {
   const { user } = useGetUser(host_id);
-  const { data } = useSWR<IGetBoards>(`/api/board/all`);
+  const { data } = useSWR<IGetBoards>(
+    typeof window === 'undefined' ? null : `/api/board/all`
+  );
   const length = data?.boards?.length!;
   const isBoard = Boolean(length > 0);
   const boards = data?.boards?.filter((e: IGetBoard) => e.host_id === host_id)!;
@@ -28,7 +34,13 @@ export const useGetBoards = (host_id: any) => {
   return { boards, isBoard, Saved, isSaved };
 };
 export const useGetBoard = (board_id: any) => {
-  const { data } = useSWR<IGetBoard>(board_id && `/api/board/${board_id}`);
+  const { data } = useSWR<IGetBoard>(
+    typeof window === 'undefined'
+      ? null
+      : board_id
+      ? `/api/board/${board_id}`
+      : null
+  );
   const board = data?.board!;
   const { user_id } = useUser();
   const isMyBoard = Boolean(user_id === board?.host_id);
@@ -43,7 +55,11 @@ export const useBoardPrivate = ({ host_id, board_id }: IUseBoardPrivate) => {
     `/api/board/${board_id}/update/private`
   );
   const { data, mutate } = useSWR<IPrivate>(
-    Boolean(board_id) && `/api/board/${board_id}/private`
+    typeof window === 'undefined'
+      ? null
+      : Boolean(board_id)
+      ? `/api/board/${board_id}/private`
+      : null
   );
   const onPrivate = data?.onPrivate!;
   const handleBoard = () => {

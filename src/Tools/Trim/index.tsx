@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { useCapLetter, useLength } from '../../libs/client/useTools';
+import { UseCapLetter, UseLength } from '../../libs/client/useTools';
 
 interface ITrimText {
   max: number;
@@ -9,8 +9,8 @@ interface ITrimText {
 }
 export const TrimText = ({ text, max }: ITrimText) => {
   const [trimmed, setTrimmed] = useState(text);
-  const isOver = Boolean(useLength(text)! > max);
-  const isLess = Boolean(useLength(text)! < max);
+  const isOver = Boolean(UseLength(text)! > max);
+  const isLess = Boolean(UseLength(text)! < max);
   const [isTrim, setIsTrim] = useState(isOver);
   //
   useEffect(() => {
@@ -33,7 +33,7 @@ export const TrimText = ({ text, max }: ITrimText) => {
     <>
       {text && (
         <Cont className="content-text">
-          <Text>{useCapLetter(trimmed)}</Text>
+          <Text>{UseCapLetter(trimmed)}</Text>
           {isTrim && (
             <Span
               exit="exit"

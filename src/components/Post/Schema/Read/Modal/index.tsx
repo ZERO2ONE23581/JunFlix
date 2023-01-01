@@ -1,8 +1,8 @@
-import { Info } from './Info';
+import { Info } from '../Info';
 import { Close } from './Close';
 import { PostCmt } from './PostCmt';
 import styled from '@emotion/styled';
-import { Setting } from '../Setting';
+import { Setting } from './Setting';
 import { Dispatch, SetStateAction } from 'react';
 import { IPostType } from '../../../../../types/post';
 import { avatarLink } from '../../../../../Tools/Avatar';

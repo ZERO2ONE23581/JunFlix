@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { Flex } from '../../../../styles/global';
 import { IResponsive } from '../../../types/global';
-import { useCapLetter } from '../../../libs/client/useTools';
+import { UseCapLetter } from '../../../libs/client/useTools';
 import { colorVar, hoverScale } from '../../../../styles/variants';
 
 export const Main = ({ _res }: IResponsive) => {
@@ -43,7 +43,7 @@ export const Main = ({ _res }: IResponsive) => {
                 variants={textVar}
                 onClick={() => onClick(item)}
               >
-                {useCapLetter(item)}
+                {UseCapLetter(item)}
               </Txt>
               <Modal _data={{ ..._modal, isModal: isModal(item) }} />
             </Array>

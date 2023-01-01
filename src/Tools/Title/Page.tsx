@@ -1,11 +1,11 @@
 import { Svg } from '../Svg';
-import { Ropes } from './Ropes';
+import { IsRopes } from './IsRopes';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { ITheme } from '../../../styles/theme';
 import { useUser } from '../../libs/client/useUser';
 import { Flex, FlexCol } from '../../../styles/global';
-import { useCapLetter, useCapLetters } from '../../libs/client/useTools';
+import { UseCapLetter, UseCapLetters } from '../../libs/client/useTools';
 
 interface IPageTitle extends ITheme {
   _genre?: string;
@@ -15,10 +15,10 @@ interface IPageTitle extends ITheme {
 export const PageTitle = ({ type, theme, _genre, isWhite }: IPageTitle) => {
   const { username, userId } = useUser();
   const [txt, setTxt] = useState({ eng: '', kor: '' });
-  const USERNAME = useCapLetter(username ? username : userId);
+  const USERNAME = UseCapLetter(username ? username : userId);
   useEffect(() => {
     if (_genre) {
-      return setTxt({ eng: `${useCapLetters(_genre)} Boards`, kor: '' });
+      return setTxt({ eng: `${UseCapLetters(_genre)} Boards`, kor: '' });
     } else if (type) {
       if (type === 'qs') return setTxt({ eng: 'Quick Saved', kor: '' });
       if (type === 'users') return setTxt({ eng: 'HALL of FAME', kor: '' });
@@ -35,7 +35,7 @@ export const PageTitle = ({ type, theme, _genre, isWhite }: IPageTitle) => {
         return setTxt({ eng: `Upcoming Movies`, kor: `` });
       if (type === 'trending') return setTxt({ eng: `Trending`, kor: `` });
     }
-  }, [type, setTxt, USERNAME, _genre, useCapLetters]);
+  }, [type, setTxt, USERNAME, _genre, UseCapLetters]);
 
   const svg = () => {
     if (type === 'users') return 'crown';
@@ -46,7 +46,7 @@ export const PageTitle = ({ type, theme, _genre, isWhite }: IPageTitle) => {
   return (
     <Cont className="page-title">
       <Wrap>
-        <Ropes theme={theme} isWhite={isWhite!} />
+        <IsRopes theme={theme} isWhite={isWhite!} />
         <Txt className="txt">
           <span>
             <span>{txt.eng}</span>

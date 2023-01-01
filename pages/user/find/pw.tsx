@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { BG, FlexPage } from '../../../styles/global';
+import { BG } from '../../../styles/global';
 import { Head_ } from '../../../src/Tools/Title/Head';
-import { NewPassord } from '../../../src/components/User/NewPassword';
-import { Token } from '../../../src/components/User/Read/Verify/Token';
-import { Result } from '../../../src/components/User/Read/Verify/result';
-import { VerifyID } from '../../../src/components/User/Read/Verify/UserID';
 import { useResponsive } from '../../../src/libs/client/useTools';
+import { NewPassord } from '../../../src/components/User/NewPassword';
+import { VerifyToken } from '../../../src/components/User/VerifyToken';
+import { VerifyID } from '../../../src/components/VerifyID';
+import { VerifyResult } from '../../../src/components/VerifyResult';
 
 const FindPassword: NextPage<{ theme: boolean }> = ({ theme }) => {
   const type = 'token_pw';
@@ -25,12 +25,12 @@ const FindPassword: NextPage<{ theme: boolean }> = ({ theme }) => {
       <Head_ title="비밀번호 찾기" />
       <Cont isDesk={isDesk}>
         <VerifyID _data={{ theme, isBox: !token, setToken, layoutId }} />
-        <Token _data={{ ...__data, isBox, setUserId, setVerify, type }} />
+        <VerifyToken _data={{ ...__data, isBox, setUserId, setVerify, type }} />
         <NewPassord
           _data={{ isBox: isNew, theme, userId, layoutId, setModal }}
         />
       </Cont>
-      <Result _data={{ userId: 'isPassword', verify: modal, theme }} />
+      <VerifyResult _data={{ userId: 'isPassword', verify: modal, theme }} />
     </>
   );
 };

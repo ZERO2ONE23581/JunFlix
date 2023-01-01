@@ -1,7 +1,7 @@
 import '../styles/reset.css';
 import { SWRConfig } from 'swr';
 import styled from '@emotion/styled';
-import { Layout } from '../src/Layout';
+import { Layout } from '../src/Layout/Layout';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@emotion/react';
 import { AnimatePresence } from 'framer-motion';

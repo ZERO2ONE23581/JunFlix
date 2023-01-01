@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { PostSchema } from '../Post/Schema';
+import { PostSchema } from '../Post/Schema/PostSchema';
 import { BG, Page } from '../../../styles/global';
 import { AnimatePresence } from 'framer-motion';
 import { useResponsive } from '../../libs/client/useTools';

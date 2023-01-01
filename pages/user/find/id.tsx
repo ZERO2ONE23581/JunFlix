@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { BG, FlexPage } from '../../../styles/global';
+import { BG } from '../../../styles/global';
 import { Head_ } from '../../../src/Tools/Title/Head';
-import { Email } from '../../../src/components/User/Read/Verify/email';
-import { Token } from '../../../src/components/User/Read/Verify/Token';
-import { Result } from '../../../src/components/User/Read/Verify/result';
 import { useResponsive } from '../../../src/libs/client/useTools';
+import { VerifyToken } from '../../../src/components/User/VerifyToken';
+import { VerifyEmail } from '../../../src/components/VerifyEmail';
+import { VerifyResult } from '../../../src/components/VerifyResult';
 
 const FindID: NextPage<{ theme: boolean }> = ({ theme }) => {
   const type = 'token_id';
@@ -21,10 +21,10 @@ const FindID: NextPage<{ theme: boolean }> = ({ theme }) => {
     <>
       <Head_ title="아이디 찾기" />
       <Cont isDesk={isDesk}>
-        <Email _data={{ ...__data, isBox: !token, setToken }} />
-        <Token _data={{ ...__data, isBox, setUserId, setVerify, type }} />
+        <VerifyEmail _data={{ ...__data, isBox: !token, setToken }} />
+        <VerifyToken _data={{ ...__data, isBox, setUserId, setVerify, type }} />
       </Cont>
-      <Result _data={{ userId, verify, theme }} />
+      <VerifyResult _data={{ userId, verify, theme }} />
     </>
   );
 };

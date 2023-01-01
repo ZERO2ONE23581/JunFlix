@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { OverlayBg } from '../../../../Tools/OverlayBg';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { CreatePost } from '../../../../components/Post/Create';
+import { CreatePost } from '../../../../components/Post/Create/CreatePost';
 import { useResponsive } from '../../../../libs/client/useTools';
 import { redColor, TweenTrans } from '../../../../../styles/variants';
 

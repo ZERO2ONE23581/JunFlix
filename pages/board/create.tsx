@@ -6,7 +6,7 @@ import { Head_ } from '../../src/Tools/Title/Head';
 import { MsgModal } from '../../src/Tools/Modal/Message';
 import { useLogin } from '../../src/libs/client/useLogin';
 import { LoadingModal } from '../../src/Tools/Modal/Loading';
-import { BoardBox } from '../../src/components/Board/Create';
+import { BoardBox } from '../../src/components/BoardBox';
 import styled from '@emotion/styled';
 
 const CreateBoard: NextPage<IPage> = ({ theme }) => {

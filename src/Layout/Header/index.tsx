@@ -1,14 +1,14 @@
-import { Logo } from './Logo';
+import { Logo } from '../Logo';
 import { Main } from './Main';
 import styled from '@emotion/styled';
-import { ThemeBtn } from './Btn/Theme';
-import { UnLogged } from './Login/UnLogged';
-import { LoginAvatar } from './Login/Avatar';
+import { ThemeBtn } from './ThemeBtn';
 import { Dispatch, SetStateAction } from 'react';
 import { Flex, Flex_, Mob } from '../../../styles/global';
 import { useUser } from '../../libs/client/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useResponsive } from '../../libs/client/useTools';
+import { UnLogged } from './UnLogged';
+import { LoginAvatar } from './LoginAvatar';
 
 interface IHeader {
   _data: {

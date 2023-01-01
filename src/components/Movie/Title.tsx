@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { Flex } from '../../../styles/global';
 import { hoverVars } from '../../../styles/variants';
-import { useCapLetters } from '../../libs/client/useTools';
+import { UseCapLetters } from '../../libs/client/useTools';
 
 interface ISlideTitle {
   _data: {
@@ -17,7 +17,7 @@ export const Title = ({ _data }: ISlideTitle) => {
   useEffect(() => {
     if (type) {
       if (type === 'tv') return setTxt('TV Shows & Series');
-      else return setTxt(useCapLetters(type));
+      else return setTxt(UseCapLetters(type));
     }
   }, [type, setTxt]);
   const onClick = () => {};

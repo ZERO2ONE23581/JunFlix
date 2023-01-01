@@ -4,7 +4,7 @@ import { TextLength } from './TextLength';
 import { ErrModal } from '../Modal/Error';
 import { FlexCol, FlexCol_ } from '../../../styles/global';
 import { color } from '../../../styles/variants';
-import { useLength, useResponsive } from '../../libs/client/useTools';
+import { UseLength, useResponsive } from '../../libs/client/useTools';
 import { AnimatePresence, motion } from 'framer-motion';
 import { InpBorderVar, InpColorVar, InpLabelColor } from '.';
 import { UseFormClearErrors, UseFormRegisterReturn } from 'react-hook-form';
@@ -39,7 +39,7 @@ export const TextAreaWrap = ({ _data }: ITextAreaWrap) => {
     clearErrors,
   } = _data;
   const { isDesk, isMobile } = useResponsive();
-  const textLength = useLength(text!);
+  const textLength = UseLength(text!);
   const [focus, setFocus] = useState(false);
   const isRed = Boolean(focus || text);
   const height = textLength > max ? max * 0.5 : min + textLength * 0.3;
@@ -81,7 +81,7 @@ export const TextAreaWrap = ({ _data }: ITextAreaWrap) => {
           <TextLength
             theme={theme}
             isDesk={isDesk}
-            number={{ max, typed: useLength(text!) }}
+            number={{ max, typed: UseLength(text!) }}
           />
         </Cont>
         <ErrModal _data={{ id, error, theme, clearErrors }} />

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { BG, Page } from '../../styles/global';
 import { Head_ } from '../../src/Tools/Title/Head';
 import { PageTitle } from '../../src/Tools/Title/Page';
-import { Movies } from '../../src/components/Movie';
+import { Movies } from '../../src/components/Movie/Movies';
 import { useResponsive } from '../../src/libs/client/useTools';
 import { MoviePG } from './all';
 

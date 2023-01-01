@@ -3,10 +3,10 @@ import { useGetUser } from './useUser';
 import { useRouter } from 'next/router';
 import { IRes } from '../../types/global';
 import {
-  useCapLetters,
-  useLength,
+  UseCapLetters,
+  UseLength,
   useResponsive,
-  useUploadImg,
+  UseUploadImg,
 } from './useTools';
 import {
   UseFormReset,
@@ -25,12 +25,11 @@ interface IUseGetPosts {
   host_id: number;
   board_id: number;
 }
-interface useGetLikedPosts {
-  host_id: number | string;
-}
 
 export const useGetAllPosts = () => {
-  const { data } = useSWR<IGetPosts>(`/api/post/all`);
+  const { data } = useSWR<IGetPosts>(
+    typeof window === 'undefined' ? null : `/api/post/all`
+  );
   const posts = data?.posts!;
   const isPost = data?.ok && Boolean(posts.length > 0);
   return { posts: data?.posts!, isPost };
@@ -38,7 +37,9 @@ export const useGetAllPosts = () => {
 
 export const useGetPosts = ({ host_id, board_id, isQs }: IUseGetPosts) => {
   const { user } = useGetUser(Number(host_id));
-  const { data } = useSWR<IGetPosts>(`/api/post/all`);
+  const { data } = useSWR<IGetPosts>(
+    typeof window === 'undefined' ? null : `/api/post/all`
+  );
   const posts = data?.posts!;
   const likes = user?.likes?.map((el) => el.post_id);
   const likedPosts = posts?.filter((post) => likes?.includes(post?.id));
@@ -59,20 +60,22 @@ export const useGetPosts = ({ host_id, board_id, isQs }: IUseGetPosts) => {
   }
 };
 export const useGetQuickSaved = (host_id: number) => {
-  const { data } = useSWR<IGetPosts>(`/api/post/all`);
+  const { data } = useSWR<IGetPosts>(
+    typeof window === 'undefined' ? null : `/api/post/all`
+  );
   const posts = data?.posts?.filter(
     (e) => e.host_id === host_id && e.board_id === 0
   );
   return { posts, counts: posts?.length! };
 };
 
-export const usePostTitle = (title: string) => {
+export const UsePostTitle = (title: string) => {
   const length = title.length;
   const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
   const isKor = korean.test(title);
-  if (isKor && length > 15) return useCapLetters(title.slice(0, 15)) + '...';
-  else if (length <= 24) return useCapLetters(title);
-  else return useCapLetters(title.slice(0, 24)) + '...';
+  if (isKor && length > 15) return UseCapLetters(title.slice(0, 15)) + '...';
+  else if (length <= 24) return UseCapLetters(title);
+  else return UseCapLetters(title.slice(0, 24)) + '...';
 };
 
 interface IUsePostsGrid {
@@ -138,7 +141,7 @@ export const useSetPost = ({ post, setValue }: IUseSetPost) => {
       if (post.hashtags) setValue('hashtags', post.hashtags);
       if (post.pageLink) setValue('pageLink', post.pageLink);
       if (post.onPrivate) setValue('onPrivate', post.onPrivate);
-      if (post.title) setValue('title', useCapLetters(post.title));
+      if (post.title) setValue('title', UseCapLetters(post.title));
     }
   }, [post, setValue]);
 };
@@ -148,7 +151,7 @@ interface IResetPostPrev {
   reset: UseFormReset<IPostForm>;
   setPreview: Dispatch<SetStateAction<string>>;
 }
-export const usePostReset = ({ post, setPreview, reset }: IResetPostPrev) => {
+export const UsePostReset = ({ post, setPreview, reset }: IResetPostPrev) => {
   setPreview('');
   if (post) {
     reset({
@@ -190,13 +193,13 @@ export const useFetchPost = ({ _data, POST, Loading }: IUseFetchPost) => {
       setLoading!(true);
       return remove!({ isDelete });
     } else {
-      if (useLength(inputs?.title!) >= 50)
+      if (UseLength(inputs?.title!) >= 50)
         return setError('title', { message: 'max_post_title' });
-      if (useLength(inputs?.description!) >= 1000)
+      if (UseLength(inputs?.description!) >= 1000)
         return setError('description', { message: 'max_post_desc' });
       setLoading!(true);
       const board_id = new_boardId;
-      const file_id = await useUploadImg(inputs?.post_image);
+      const file_id = await UseUploadImg(inputs?.post_image);
       if (hide) return update({ ...inputs, board_id, post_image: null });
       if (file_id) return update({ ...inputs, post_image: file_id, board_id });
       else return update({ ...inputs, board_id });

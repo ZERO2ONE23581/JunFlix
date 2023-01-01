@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import { Page } from '../../styles/global';
 import { useLogin } from '../../src/libs/client/useLogin';
-import { PostSchema } from '../../src/components/Post/Schema';
+import { PostSchema } from '../../src/components/Post/Schema/PostSchema';
 import { useGetAllPosts } from '../../src/libs/client/usePosts';
 import { useResponsive } from '../../src/libs/client/useTools';
 

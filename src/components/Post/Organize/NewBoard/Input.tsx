@@ -4,7 +4,7 @@ import { IBoardForm } from '../../../../types/board';
 import { FlexCol } from '../../../../../styles/global';
 import { redColor } from '../../../../../styles/variants';
 import { TextLength } from '../../../../Tools/Input/TextLength';
-import { useLength } from '../../../../libs/client/useTools';
+import { UseLength, useResponsive } from '../../../../libs/client/useTools';
 import { UseFormRegister, UseFormWatch } from 'react-hook-form';
 
 interface IInputs {
@@ -16,8 +16,9 @@ interface IInputs {
   };
 }
 export const Inputs = ({ _data }: IInputs) => {
+  const { isDesk } = useResponsive();
   const { register, watch, max, theme } = _data;
-  const typed = useLength(watch!('title'));
+  const typed = UseLength(watch!('title'));
   return (
     <Cont className="title-input">
       <label htmlFor="title">Title</label>
@@ -30,7 +31,7 @@ export const Inputs = ({ _data }: IInputs) => {
         placeholder="보드 제목을 작성하세요."
         {...register!('title', { required: 'need_title' })}
       />
-      <TextLength theme={theme} number={{ max, typed }} />
+      <TextLength isDesk={isDesk} theme={theme} number={{ max, typed }} />
     </Cont>
   );
 };

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import { useUser } from '../../../../libs/client/useUser';
-import { useCapLetters } from '../../../../libs/client/useTools';
+import { UseCapLetters } from '../../../../libs/client/useTools';
 import { SpringTrans, hoverBgColor } from '../../../../../styles/variants';
 
 interface IListModal {
@@ -39,10 +39,10 @@ export const ListModal = ({ _data }: IListModal) => {
       if (txt === 'now') return `Now Playing`;
       if (txt === 'upcoming') return `Upcoming`;
       if (txt === 'trending') return `Trending`;
-    } else if (txt === 'quick') return useCapLetters(`Quick Saved`);
-    else if (isHideTxt) return useCapLetters(`${txt} `);
+    } else if (txt === 'quick') return UseCapLetters(`Quick Saved`);
+    else if (isHideTxt) return UseCapLetters(`${txt} `);
     else if (txt === 'create') return 'Create';
-    else return useCapLetters(`${txt} ${selected}`);
+    else return UseCapLetters(`${txt} ${selected}`);
   };
   const isGenre = Boolean(
     type === 'drama' ||

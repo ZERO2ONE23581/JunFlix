@@ -10,8 +10,8 @@ export const Txts = ({ type }: ITxts) => {
       {type === 'main' && (
         <Cont>
           <Main>
-            <span className="kor">"영화를 사랑하는 사람들을 위한 공간."</span>
-            <span>"Place for people who love movies."</span>
+            <span className="kor">영화를 사랑하는 사람들을 위한 공간.</span>
+            <span>Place for people who love movies.</span>
           </Main>
 
           <span className="kor">

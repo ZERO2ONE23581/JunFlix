@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { TrimText } from '../../../../../../Tools/Trim';
 import { IPostType } from '../../../../../../types/post';
 import { FlexCol_, Flex_ } from '../../../../../../../styles/global';
-import { useCapLetters } from '../../../../../../libs/client/useTools';
+import { UseCapLetters } from '../../../../../../libs/client/useTools';
 
 interface IDetail {
   post: IPostType;
@@ -14,7 +14,7 @@ export const Detail = ({ post, isDesk }: IDetail) => {
   return (
     <Cont isDesk={isDesk}>
       <h1 className="title">
-        <TrimText text={useCapLetters(title)} max={30} />
+        <TrimText text={UseCapLetters(title)} max={30} />
       </h1>
       <p>
         <TrimText text={description!} max={500} />
